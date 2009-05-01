@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>attr_accessor (Module)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     attr_accessor(symbol, ...)    =&gt; nil
+ *  
+ *  Defines a named attribute for this module, where the name is
+ *  &lt;i&gt;symbol.&lt;/i&gt;&lt;code&gt;id2name&lt;/code&gt;, creating an instance variable
+ *  (&lt;code&gt;@name&lt;/code&gt;) and a corresponding access method to read it.
+ *  Also creates a method called &lt;code&gt;name=&lt;/code&gt; to set the attribute.
+ *     
+ *     module Mod
+ *       attr_accessor(:one, :two)
+ *     end
+ *     Mod.instance_methods.sort   #=&gt; [:one, :one=, :two, :two=]
+ */
+
+static VALUE
+rb_mod_attr_accessor(int argc, VALUE *argv, VALUE klass)
+{
+    int i;
+
+    for (i=0; i&lt;argc; i++) {
+        rb_attr(klass, rb_to_id(argv[i]), Qtrue, Qtrue, Qtrue);
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

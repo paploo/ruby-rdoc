@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>yaml_initialize (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">yaml_initialize</span>( <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">val</span> )
+29:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
+30:             <span class="ruby-identifier">update</span> <span class="ruby-constant">Hash</span>.[]( <span class="ruby-operator">*</span><span class="ruby-identifier">val</span> )              <span class="ruby-comment cmt"># Convert the map to a sequence</span>
+31:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
+32:             <span class="ruby-identifier">update</span> <span class="ruby-identifier">val</span>
+33:         <span class="ruby-keyword kw">else</span>
+34:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Invalid map explicitly tagged #{ tag }: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">inspect</span>
+35:         <span class="ruby-keyword kw">end</span>
+36:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

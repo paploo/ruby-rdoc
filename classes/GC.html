@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: GC [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">GC</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/gc_c.html">
+
+                gc.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <tt>GC</tt> module provides an interface to Ruby&#8217;s mark and sweep
+garbage collection mechanism. Some of the underlying methods are also
+available via the <tt>ObjectSpace</tt> module.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M003103">count</a>&nbsp;&nbsp;
+
+        <a href="#M003100">disable</a>&nbsp;&nbsp;
+
+        <a href="#M003099">enable</a>&nbsp;&nbsp;
+
+        <a href="#M003104">garbage_collect</a>&nbsp;&nbsp;
+
+        <a href="#M003105">malloc_allocated_size</a>&nbsp;&nbsp;
+
+        <a href="#M003106">malloc_allocations</a>&nbsp;&nbsp;
+
+        <a href="#M003098">start</a>&nbsp;&nbsp;
+
+        <a href="#M003101">stress</a>&nbsp;&nbsp;
+
+        <a href="#M003102">stress=</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="GC/Profiler.html" class="link">GC::Profiler</a><br />
+
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M003103" class="method-detail">
+        <a name="M003103"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003103.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003103.html');return false;">
+
+          <span class="method-name">GC.count &rarr; Integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The number of times <a href="GC.html">GC</a> occured.
+</p>
+<p>
+It returns the number of times <a href="GC.html">GC</a> occured since the
+process started.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003100" class="method-detail">
+        <a name="M003100"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003100.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003100.html');return false;">
+
+          <span class="method-name">GC.disable    => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Disables garbage collection, returning <tt>true</tt> if garbage collection
+was already disabled.
+</p>
+<pre>
+   GC.disable   #=&gt; false
+   GC.disable   #=&gt; true
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003099" class="method-detail">
+        <a name="M003099"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003099.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003099.html');return false;">
+
+          <span class="method-name">GC.enable    => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Enables garbage collection, returning <tt>true</tt> if garbage collection
+was previously disabled.
+</p>
+<pre>
+   GC.disable   #=&gt; false
+   GC.enable    #=&gt; true
+   GC.enable    #=&gt; false
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003105" class="method-detail">
+        <a name="M003105"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003105.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003105.html');return false;">
+
+          <span class="method-name">GC.malloc_allocated_size &rarr; Integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The allocated size by malloc().
+</p>
+<p>
+It returns the allocated size by malloc().
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003106" class="method-detail">
+        <a name="M003106"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003106.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003106.html');return false;">
+
+          <span class="method-name">GC.malloc_allocations &rarr; Integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The number of allocated memory object by malloc().
+</p>
+<p>
+It returns the number of allocated memory object by malloc().
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003098" class="method-detail">
+        <a name="M003098"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003098.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003098.html');return false;">
+
+          <span class="method-name">GC.start                     => nil<br />
+gc.garbage_collect           => nil<br />
+ObjectSpace.garbage_collect  => nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Initiates garbage collection, unless manually disabled.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003101" class="method-detail">
+        <a name="M003101"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003101.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003101.html');return false;">
+
+          <span class="method-name">GC.stress                 => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+returns current status of <a href="GC.html">GC</a> stress mode.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003102" class="method-detail">
+        <a name="M003102"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003102.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003102.html');return false;">
+
+          <span class="method-name">GC.stress = bool          => bool<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+updates <a href="GC.html">GC</a> stress mode.
+</p>
+<p>
+When <a href="GC.html#M003101">GC.stress</a> = true, <a
+href="GC.html">GC</a> is invoked for all <a href="GC.html">GC</a>
+opportunity: all memory and object allocation.
+</p>
+<p>
+Since it makes Ruby very slow, it is only for debugging.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M003104" class="method-detail">
+        <a name="M003104"></a>
+
+        <div class="method-heading">
+
+          <a href="GC.src/M003104.html" target="Code" class="method-signature"
+            onclick="popupCode('GC.src/M003104.html');return false;">
+
+          <span class="method-name">GC.start                     => nil<br />
+gc.garbage_collect           => nil<br />
+ObjectSpace.garbage_collect  => nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Initiates garbage collection, unless manually disabled.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

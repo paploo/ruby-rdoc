@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add_event_to_arry (REXML::Validation::Choice)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/validation/relaxng.rb, line 429</span>
+429:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_event_to_arry</span>( <span class="ruby-identifier">arry</span>, <span class="ruby-identifier">evt</span> ) 
+430:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">evt</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">State</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">evt</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Ref</span>
+431:           <span class="ruby-identifier">arry</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">evt</span>]
+432:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">evt</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:text</span> 
+433:          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">arry</span>[<span class="ruby-value">-1</span>] <span class="ruby-keyword kw">and</span>
+434:             <span class="ruby-identifier">arry</span>[<span class="ruby-value">-1</span>][<span class="ruby-value">-1</span>].<span class="ruby-identifier">kind_of?</span>( <span class="ruby-constant">Event</span> ) <span class="ruby-keyword kw">and</span> 
+435:             <span class="ruby-identifier">arry</span>[<span class="ruby-value">-1</span>][<span class="ruby-value">-1</span>].<span class="ruby-identifier">event_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:text</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@value</span>
+436: 
+437:             <span class="ruby-identifier">arry</span>[<span class="ruby-value">-1</span>][<span class="ruby-value">-1</span>].<span class="ruby-identifier">event_arg</span> = <span class="ruby-identifier">evt</span>[<span class="ruby-value">1</span>]
+438:             <span class="ruby-ivar">@value</span> = <span class="ruby-keyword kw">false</span>
+439:          <span class="ruby-keyword kw">end</span>
+440:         <span class="ruby-keyword kw">else</span>
+441:           <span class="ruby-identifier">arry</span> <span class="ruby-operator">&lt;&lt;</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">evt</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:start_element</span>
+442:           <span class="ruby-identifier">arry</span>[<span class="ruby-value">-1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">generate_event</span>( <span class="ruby-identifier">evt</span> )
+443:         <span class="ruby-keyword kw">end</span>
+444:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

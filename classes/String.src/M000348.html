@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rstrip! (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.rstrip!   =&gt; self or nil
+ *  
+ *  Removes trailing whitespace from &lt;i&gt;str&lt;/i&gt;, returning &lt;code&gt;nil&lt;/code&gt; if
+ *  no change was made. See also &lt;code&gt;String#lstrip!&lt;/code&gt; and
+ *  &lt;code&gt;String#strip!&lt;/code&gt;.
+ *     
+ *     &quot;  hello  &quot;.rstrip   #=&gt; &quot;  hello&quot;
+ *     &quot;hello&quot;.rstrip!      #=&gt; nil
+ */
+
+static VALUE
+rb_str_rstrip_bang(VALUE str)
+{
+    rb_encoding *enc;
+    char *s, *t, *e;
+
+    enc = STR_ENC_GET(str);
+    rb_str_check_dummy_enc(enc);
+    s = RSTRING_PTR(str);
+    if (!s || RSTRING_LEN(str) == 0) return Qnil;
+    t = e = RSTRING_END(str);
+
+    /* remove trailing spaces or '\0's */
+    if (single_byte_optimizable(str)) {
+        while (s &lt; t &amp;&amp; (*(t-1) == '\0' || rb_enc_isspace(*(t-1), enc))) t--;
+    }
+    else {
+        char *tp;
+
+        while ((tp = rb_enc_prev_char(s, t, e, enc)) != NULL) {
+            unsigned int c = rb_enc_codepoint(tp, e, enc);
+            if (c &amp;&amp; !rb_enc_isspace(c, enc)) break;
+            t = tp;
+        }
+    }
+    if (t &lt; e) {
+        int len = t-RSTRING_PTR(str);
+
+        str_modify_keep_cr(str);
+        STR_SET_LEN(str, len);
+        RSTRING_PTR(str)[len] = '\0';
+        return str;
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

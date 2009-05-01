@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>do_start (Net::POP3)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/pop.rb, line 533</span>
+533:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_start</span>(<span class="ruby-identifier">account</span>, <span class="ruby-identifier">password</span>)
+534:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@open_timeout</span>) { <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@address</span>, <span class="ruby-identifier">port</span>) }
+535:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">use_ssl?</span>
+536:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">'openssl library not installed'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+537:         <span class="ruby-identifier">context</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSLContext</span>.<span class="ruby-identifier">new</span>
+538:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">set_params</span>(<span class="ruby-ivar">@ssl_params</span>)
+539:         <span class="ruby-identifier">s</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSLSocket</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">context</span>)
+540:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">sync_close</span> = <span class="ruby-keyword kw">true</span>
+541:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">connect</span>
+542:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">context</span>.<span class="ruby-identifier">verify_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSL</span><span class="ruby-operator">::</span><span class="ruby-constant">VERIFY_NONE</span>
+543:           <span class="ruby-identifier">s</span>.<span class="ruby-identifier">post_connection_check</span>(<span class="ruby-ivar">@address</span>)
+544:         <span class="ruby-keyword kw">end</span>
+545:       <span class="ruby-keyword kw">end</span>
+546:       <span class="ruby-ivar">@socket</span> = <span class="ruby-constant">InternetMessageIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">s</span>)
+547:       <span class="ruby-identifier">logging</span> <span class="ruby-node">&quot;POP session started: #{@address}:#{@port} (#{@apop ? 'APOP' : 'POP'})&quot;</span>
+548:       <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">read_timeout</span> = <span class="ruby-ivar">@read_timeout</span>
+549:       <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">debug_output</span> = <span class="ruby-ivar">@debug_output</span>
+550:       <span class="ruby-identifier">on_connect</span>
+551:       <span class="ruby-ivar">@command</span> = <span class="ruby-constant">POP3Command</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@socket</span>)
+552:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">apop?</span>
+553:         <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">apop</span> <span class="ruby-identifier">account</span>, <span class="ruby-identifier">password</span>
+554:       <span class="ruby-keyword kw">else</span>
+555:         <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">auth</span> <span class="ruby-identifier">account</span>, <span class="ruby-identifier">password</span>
+556:       <span class="ruby-keyword kw">end</span>
+557:       <span class="ruby-ivar">@started</span> = <span class="ruby-keyword kw">true</span>
+558:     <span class="ruby-keyword kw">ensure</span>
+559:       <span class="ruby-comment cmt"># Authentication failed, clean up connection.</span>
+560:       <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@started</span>
+561:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">closed?</span>
+562:         <span class="ruby-ivar">@socket</span> = <span class="ruby-keyword kw">nil</span>
+563:         <span class="ruby-ivar">@command</span> = <span class="ruby-keyword kw">nil</span>
+564:       <span class="ruby-keyword kw">end</span>
+565:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

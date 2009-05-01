@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ns_declarations (RSS::RootElementMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 1322</span>
+1322:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ns_declarations</span>
+1323:       <span class="ruby-identifier">decls</span> = {}
+1324:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">NSPOOL</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">uri</span><span class="ruby-operator">|</span>
+1325:         <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;:#{prefix}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">empty?</span>
+1326:         <span class="ruby-identifier">decls</span>[<span class="ruby-node">&quot;xmlns#{prefix}&quot;</span>] = <span class="ruby-identifier">uri</span>
+1327:       <span class="ruby-keyword kw">end</span>
+1328:       <span class="ruby-identifier">decls</span>
+1329:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

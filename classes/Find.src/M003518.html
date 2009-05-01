@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find (Find)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/find.rb, line 35</span>
+35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>) <span class="ruby-comment cmt"># :yield: path</span>
+36:     <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">__method__</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">paths</span>)
+37: 
+38:     <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">collect!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">d</span>); <span class="ruby-identifier">d</span>.<span class="ruby-identifier">dup</span>}
+39:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">file</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">shift</span>
+40:       <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:prune</span>) <span class="ruby-keyword kw">do</span>
+41:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">file</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">taint</span>
+42:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">file</span>
+43:         <span class="ruby-keyword kw">begin</span>
+44:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">lstat</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">directory?</span> <span class="ruby-keyword kw">then</span>
+45:             <span class="ruby-identifier">d</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>)
+46:             <span class="ruby-keyword kw">begin</span>
+47:               <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">f</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">d</span>
+48:                 <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;.&quot;</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;..&quot;</span>
+49:                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">ALT_SEPARATOR</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(?:[\/\\]|[A-Za-z]:[\/\\]?)$/</span> <span class="ruby-keyword kw">then</span>
+50:                   <span class="ruby-identifier">f</span> = <span class="ruby-identifier">file</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">f</span>
+51:                 <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-keyword kw">then</span>
+52:                   <span class="ruby-identifier">f</span> = <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">f</span>
+53:                 <span class="ruby-keyword kw">else</span>
+54:                   <span class="ruby-identifier">f</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">f</span>)
+55:                 <span class="ruby-keyword kw">end</span>
+56:                 <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">untaint</span>
+57:               <span class="ruby-keyword kw">end</span>
+58:             <span class="ruby-keyword kw">ensure</span>
+59:               <span class="ruby-identifier">d</span>.<span class="ruby-identifier">close</span>
+60:             <span class="ruby-keyword kw">end</span>
+61:           <span class="ruby-keyword kw">end</span>
+62:        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>
+63:         <span class="ruby-keyword kw">end</span>
+64:       <span class="ruby-keyword kw">end</span>
+65:     <span class="ruby-keyword kw">end</span>
+66:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

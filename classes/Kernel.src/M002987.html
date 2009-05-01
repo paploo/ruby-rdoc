@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>String (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     String(arg)   =&gt; string
+ *  
+ *  Converts &lt;i&gt;arg&lt;/i&gt; to a &lt;code&gt;String&lt;/code&gt; by calling its
+ *  &lt;code&gt;to_s&lt;/code&gt; method.
+ *     
+ *     String(self)        #=&gt; &quot;main&quot;
+ *     String(self.class)  #=&gt; &quot;Object&quot;
+ *     String(123456)      #=&gt; &quot;123456&quot;
+ */
+
+static VALUE
+rb_f_string(VALUE obj, VALUE arg)
+{
+    return rb_String(arg);
+}</pre>
+</body>
+</html>

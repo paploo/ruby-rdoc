@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_activex_initialize (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE#ole_activex_initialize() -&gt; Qnil
+ *
+ *  Initialize WIN32OLE object(ActiveX Control) by calling 
+ *  IPersistMemory::InitNew.
+ *
+ *  Before calling OLE method, some kind of the ActiveX controls 
+ *  created with MFC should be initialized by calling 
+ *  IPersistXXX::InitNew.
+ *
+ *  If and only if you received the exception &quot;HRESULT error code:
+ *  0x8000ffff catastrophic failure&quot;, try this method before
+ *  invoking any ole_method.
+ *
+ *     obj = WIN32OLE.new(&quot;ProgID_or_GUID_of_ActiveX_Control&quot;)
+ *     obj.ole_activex_initialize
+ *     obj.method(...)
+ *  
+ */ 
+static VALUE
+fole_activex_initialize(VALUE self) 
+{
+    struct oledata *pole;
+    IPersistMemory *pPersistMemory;
+    void *p;
+
+    HRESULT hr = S_OK;
+
+    OLEData_Get_Struct(self, pole);
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;QueryInterface(pole-&gt;pDispatch, &amp;IID_IPersistMemory, &amp;p);
+    pPersistMemory = p;
+    if (SUCCEEDED(hr)) {
+        hr = pPersistMemory-&gt;lpVtbl-&gt;InitNew(pPersistMemory);
+        OLE_RELEASE(pPersistMemory);
+        if (SUCCEEDED(hr)) {
+            return Qnil;
+        }
+    }
+
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;fail to initialize ActiveX control&quot;);
+    }
+
+    return Qnil;
+}</pre>
+</body>
+</html>

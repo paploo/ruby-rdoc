@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>| (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* 
+ *  call-seq:
+ *     array | other_array     -&gt;  an_array
+ *
+ *  Set Union---Returns a new array by joining this array with
+ *  other_array, removing duplicates.
+ *
+ *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ] | [ &quot;c&quot;, &quot;d&quot;, &quot;a&quot; ]
+ *            #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
+ */
+
+static VALUE
+rb_ary_or(VALUE ary1, VALUE ary2)
+{
+    VALUE hash, ary3;
+    VALUE v, vv;
+    long i;
+
+    ary2 = to_ary(ary2);
+    ary3 = rb_ary_new2(RARRAY_LEN(ary1)+RARRAY_LEN(ary2));
+    hash = ary_make_hash(ary1, ary2);
+
+    for (i=0; i&lt;RARRAY_LEN(ary1); i++) {
+        v = vv = rb_ary_elt(ary1, i);
+        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
+            rb_ary_push(ary3, v);
+        }
+    }
+    for (i=0; i&lt;RARRAY_LEN(ary2); i++) {
+        v = vv = rb_ary_elt(ary2, i);
+        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
+            rb_ary_push(ary3, v);
+        }
+    }
+    return ary3;
+}</pre>
+</body>
+</html>

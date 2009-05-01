@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write (Rinda::TupleSpace)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rinda/tuplespace.rb, line 451</span>
+451:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">tuple</span>, <span class="ruby-identifier">sec</span>=<span class="ruby-keyword kw">nil</span>)
+452:       <span class="ruby-identifier">entry</span> = <span class="ruby-identifier">create_entry</span>(<span class="ruby-identifier">tuple</span>, <span class="ruby-identifier">sec</span>)
+453:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+454:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expired?</span>
+455:           <span class="ruby-ivar">@read_waiter</span>.<span class="ruby-identifier">find_all_template</span>(<span class="ruby-identifier">entry</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+456:             <span class="ruby-identifier">template</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">tuple</span>)
+457:           <span class="ruby-keyword kw">end</span>
+458:           <span class="ruby-identifier">notify_event</span>(<span class="ruby-value str">'write'</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">value</span>)
+459:           <span class="ruby-identifier">notify_event</span>(<span class="ruby-value str">'delete'</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">value</span>)
+460:         <span class="ruby-keyword kw">else</span>
+461:           <span class="ruby-ivar">@bag</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">entry</span>)
+462:           <span class="ruby-identifier">start_keeper</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expires</span>
+463:           <span class="ruby-ivar">@read_waiter</span>.<span class="ruby-identifier">find_all_template</span>(<span class="ruby-identifier">entry</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+464:             <span class="ruby-identifier">template</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">tuple</span>)
+465:           <span class="ruby-keyword kw">end</span>
+466:           <span class="ruby-ivar">@take_waiter</span>.<span class="ruby-identifier">find_all_template</span>(<span class="ruby-identifier">entry</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+467:             <span class="ruby-identifier">template</span>.<span class="ruby-identifier">signal</span>
+468:           <span class="ruby-keyword kw">end</span>
+469:           <span class="ruby-identifier">notify_event</span>(<span class="ruby-value str">'write'</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">value</span>)
+470:         <span class="ruby-keyword kw">end</span>
+471:       <span class="ruby-keyword kw">end</span>
+472:       <span class="ruby-identifier">entry</span>
+473:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

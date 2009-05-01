@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>search_file (WEBrick::HTTPServlet::FileHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpservlet/filehandler.rb, line 313</span>
+313:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_file</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">basename</span>)
+314:         <span class="ruby-identifier">langs</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:AcceptableLanguages</span>]
+315:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">basename</span>
+316:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path</span>)
+317:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">basename</span>
+318:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">langs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+319:           <span class="ruby-identifier">req</span>.<span class="ruby-identifier">accept_language</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">lang</span><span class="ruby-operator">|</span>
+320:             <span class="ruby-identifier">path_with_lang</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;.#{lang}&quot;</span>
+321:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">langs</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-identifier">lang</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path_with_lang</span>)
+322:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;.#{lang}&quot;</span>
+323:             <span class="ruby-keyword kw">end</span>
+324:           }
+325:           (<span class="ruby-identifier">langs</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">accept_language</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">lang</span><span class="ruby-operator">|</span>
+326:             <span class="ruby-identifier">path_with_lang</span> = <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;.#{lang}&quot;</span>
+327:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">path_with_lang</span>)
+328:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;.#{lang}&quot;</span>
+329:             <span class="ruby-keyword kw">end</span>
+330:           }
+331:         <span class="ruby-keyword kw">end</span>
+332:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+333:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

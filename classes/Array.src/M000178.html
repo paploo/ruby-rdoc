@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>shuffle! (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.shuffle!        -&gt; array
+ *  
+ *  Shuffles elements in _self_ in place.
+ */
+
+
+static VALUE
+rb_ary_shuffle_bang(VALUE ary)
+{
+    long i = RARRAY_LEN(ary);
+
+    rb_ary_modify(ary);
+    while (i) {
+        long j = rb_genrand_real()*i;
+        VALUE tmp = RARRAY_PTR(ary)[--i];
+        RARRAY_PTR(ary)[i] = RARRAY_PTR(ary)[j];
+        RARRAY_PTR(ary)[j] = tmp;
+    }
+    return ary;
+}</pre>
+</body>
+</html>

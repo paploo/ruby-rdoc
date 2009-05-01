@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>% (Float)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     flt % other         =&gt; float
+ *     flt.modulo(other)   =&gt; float
+ *
+ *  Return the modulo after division of &lt;code&gt;flt&lt;/code&gt; by &lt;code&gt;other&lt;/code&gt;.
+ *
+ *     6543.21.modulo(137)      #=&gt; 104.21
+ *     6543.21.modulo(137.24)   #=&gt; 92.9299999999996
+ */
+
+static VALUE
+flo_mod(VALUE x, VALUE y)
+{
+    double fy, mod;
+
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        fy = (double)FIX2LONG(y);
+        break;
+      case T_BIGNUM:
+        fy = rb_big2dbl(y);
+        break;
+      case T_FLOAT:
+        fy = RFLOAT_VALUE(y);
+        break;
+      default:
+        return rb_num_coerce_bin(x, y, '%');
+    }
+    flodivmod(RFLOAT_VALUE(x), fy, 0, &amp;mod);
+    return DBL2NUM(mod);
+}</pre>
+</body>
+</html>

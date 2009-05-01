@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>PrimaryExpr (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 580</span>
+580:       <span class="ruby-keyword kw">def</span> <span class="ruby-constant">PrimaryExpr</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>
+581:         <span class="ruby-identifier">arry</span> = []
+582:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">path</span>
+583:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">VARIABLE_REFERENCE</span>
+584:           <span class="ruby-identifier">varname</span> = <span class="ruby-identifier">$1</span>
+585:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">$'</span>
+586:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:variable</span>
+587:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">varname</span>
+588:           <span class="ruby-comment cmt">#arry &lt;&lt; @variables[ varname ]</span>
+589:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^(\w[-\w]*)(?:\()/</span>
+590:           <span class="ruby-comment cmt">#puts &quot;PrimaryExpr :: Function &gt;&gt;&gt; #$1 -- '#$''&quot;</span>
+591:           <span class="ruby-identifier">fname</span> = <span class="ruby-identifier">$1</span>
+592:           <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">$'</span>
+593:           <span class="ruby-comment cmt">#puts &quot;#{fname} =~ #{NT.inspect}&quot;</span>
+594:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fname</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">NT</span>
+595:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">tmp</span>
+596:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:function</span>
+597:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">fname</span>
+598:           <span class="ruby-identifier">path</span> = <span class="ruby-constant">FunctionCall</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>)
+599:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">NUMBER</span>
+600:           <span class="ruby-comment cmt">#puts &quot;LITERAL or NUMBER: #$1&quot;</span>
+601:           <span class="ruby-identifier">varname</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-identifier">$2</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">$1</span>
+602:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">$'</span>
+603:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:literal</span> 
+604:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">varname</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'.'</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">varname</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">varname</span>.<span class="ruby-identifier">to_i</span>)
+605:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">LITERAL</span>
+606:           <span class="ruby-comment cmt">#puts &quot;LITERAL or NUMBER: #$1&quot;</span>
+607:           <span class="ruby-identifier">varname</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-identifier">$2</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">$1</span>
+608:           <span class="ruby-identifier">path</span> = <span class="ruby-identifier">$'</span>
+609:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:literal</span> 
+610:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">varname</span>
+611:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\(/</span>                                               <span class="ruby-comment cmt">#/</span>
+612:           <span class="ruby-identifier">path</span>, <span class="ruby-identifier">contents</span> = <span class="ruby-identifier">get_group</span>(<span class="ruby-identifier">path</span>)
+613:           <span class="ruby-identifier">contents</span> = <span class="ruby-identifier">contents</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+614:           <span class="ruby-identifier">n</span> = []
+615:           <span class="ruby-constant">OrExpr</span>( <span class="ruby-identifier">contents</span>, <span class="ruby-identifier">n</span> )
+616:           <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">n</span>)
+617:         <span class="ruby-keyword kw">end</span>
+618:         <span class="ruby-identifier">path</span>
+619:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

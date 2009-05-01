@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>system (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     system([env,] cmd [, arg, ...] [,options])    =&gt; true, false or nil
+ *
+ *  Executes _cmd_ in a subshell, returning +true+ if the command
+ *  gives zero exit status, +false+ for non zero exit status. Returns
+ *  +nil+ if command execution fails.  An error status is available in
+ *  &lt;code&gt;$?&lt;/code&gt;. The arguments are processed in the same way as
+ *  for &lt;code&gt;Kernel::exec&lt;/code&gt;.
+ *
+ *  The hash arguments, env and options, are same as
+ *  &lt;code&gt;exec&lt;/code&gt; and &lt;code&gt;spawn&lt;/code&gt;.
+ *  See &lt;code&gt;spawn&lt;/code&gt; for details.
+ *
+ *     system(&quot;echo *&quot;)
+ *     system(&quot;echo&quot;, &quot;*&quot;)
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     config.h main.rb
+ *     *
+ */
+
+static VALUE
+rb_f_system(int argc, VALUE *argv)
+{
+    int status;
+
+#if defined(SIGCLD) &amp;&amp; !defined(SIGCHLD)
+# define SIGCHLD SIGCLD
+#endif
+
+#ifdef SIGCHLD
+    RETSIGTYPE (*chfunc)(int);
+
+    chfunc = signal(SIGCHLD, SIG_DFL);
+#endif
+    status = rb_spawn_internal(argc, argv, Qfalse);
+#if defined(HAVE_FORK) || defined(HAVE_SPAWNV)
+    if (status &gt; 0) {
+        rb_syswait(status);
+    }
+#endif
+#ifdef SIGCHLD
+    signal(SIGCHLD, chfunc);
+#endif
+    if (status &lt; 0) {
+        return Qnil;
+    }
+    status = PST2INT(rb_last_status_get());
+    if (status == EXIT_SUCCESS) return Qtrue;
+    return Qfalse;
+}</pre>
+</body>
+</html>

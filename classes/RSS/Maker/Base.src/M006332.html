@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>initialize_variables (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 196</span>
+196:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_variables</span>
+197:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">need_initialize_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">variable_name</span>, <span class="ruby-identifier">init_value</span><span class="ruby-operator">|</span>
+198:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">init_value</span>.<span class="ruby-identifier">nil?</span>
+199:             <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">nil</span>
+200:           <span class="ruby-keyword kw">else</span>
+201:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">init_value</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:call</span>)
+202:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">init_value</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
+203:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">init_value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+204:               <span class="ruby-comment cmt"># just for backward compatibility</span>
+205:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">init_value</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span>)
+206:             <span class="ruby-keyword kw">else</span>
+207:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">init_value</span>
+208:             <span class="ruby-keyword kw">end</span>
+209:           <span class="ruby-keyword kw">end</span>
+210:           <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{variable_name}&quot;</span>, <span class="ruby-identifier">value</span>)
+211:         <span class="ruby-keyword kw">end</span>
+212:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

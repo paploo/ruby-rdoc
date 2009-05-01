@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_docfile (ext/win32ole/extconf.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File ext/win32ole/extconf.rb, line 14</span>
+14: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_docfile</span>(<span class="ruby-identifier">src</span>)
+15:   <span class="ruby-identifier">open</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">$srcdir</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;/.document&quot;</span>, <span class="ruby-value str">&quot;w&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">ofs</span><span class="ruby-operator">|</span>
+16:     <span class="ruby-identifier">ofs</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">src</span>
+17:   }
+18: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

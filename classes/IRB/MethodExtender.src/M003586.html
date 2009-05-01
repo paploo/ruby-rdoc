@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_pre_proc (IRB::MethodExtender)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/extend-command.rb, line 226</span>
+226:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_pre_proc</span>(<span class="ruby-identifier">base_method</span>, <span class="ruby-identifier">extend_method</span>)
+227:       <span class="ruby-identifier">base_method</span> = <span class="ruby-identifier">base_method</span>.<span class="ruby-identifier">to_s</span>
+228:       <span class="ruby-identifier">extend_method</span> = <span class="ruby-identifier">extend_method</span>.<span class="ruby-identifier">to_s</span>
+229: 
+230:       <span class="ruby-identifier">alias_name</span> = <span class="ruby-identifier">new_alias_name</span>(<span class="ruby-identifier">base_method</span>)
+231:       <span class="ruby-identifier">module_eval</span> <span class="ruby-node">%[
+232:         alias_method alias_name, base_method
+233:         def #{base_method}(*opts)
+234:           send :#{extend_method}, *opts
+235:           send :#{alias_name}, *opts
+236:         end
+237:       ]</span>
+238:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

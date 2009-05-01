@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: WEBrick::HTTPServlet::FileHandler [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">WEBrick::HTTPServlet::FileHandler</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/webrick/httpservlet/filehandler_rb.html">
+
+                lib/webrick/httpservlet/filehandler.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="AbstractServlet.html">
+
+                WEBrick::HTTPServlet::AbstractServlet
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M006840">add_handler</a>&nbsp;&nbsp;
+
+        <a href="#M006856">call_callback</a>&nbsp;&nbsp;
+
+        <a href="#M006852">check_filename</a>&nbsp;&nbsp;
+
+        <a href="#M006844">do_GET</a>&nbsp;&nbsp;
+
+        <a href="#M006846">do_OPTIONS</a>&nbsp;&nbsp;
+
+        <a href="#M006845">do_POST</a>&nbsp;&nbsp;
+
+        <a href="#M006849">exec_handler</a>&nbsp;&nbsp;
+
+        <a href="#M006850">get_handler</a>&nbsp;&nbsp;
+
+        <a href="#M006842">new</a>&nbsp;&nbsp;
+
+        <a href="#M006858">nondisclosure_name?</a>&nbsp;&nbsp;
+
+        <a href="#M006848">prevent_directory_traversal</a>&nbsp;&nbsp;
+
+        <a href="#M006841">remove_handler</a>&nbsp;&nbsp;
+
+        <a href="#M006855">search_file</a>&nbsp;&nbsp;
+
+        <a href="#M006854">search_index_file</a>&nbsp;&nbsp;
+
+        <a href="#M006843">service</a>&nbsp;&nbsp;
+
+        <a href="#M006859">set_dir_list</a>&nbsp;&nbsp;
+
+        <a href="#M006851">set_filename</a>&nbsp;&nbsp;
+
+        <a href="#M006853">shift_path_info</a>&nbsp;&nbsp;
+
+        <a href="#M006847">trailing_pathsep?</a>&nbsp;&nbsp;
+
+        <a href="#M006857">windows_ambiguous_name?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HandlerTable</td>
+          <td>=</td>
+          <td class="context-item-value">Hash.new</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M006840" class="method-detail">
+        <a name="M006840"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006840.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006840.html');return false;">
+
+          <span class="method-name">add_handler</span><span class="method-args">(suffix, handler)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006842" class="method-detail">
+        <a name="M006842"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006842.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006842.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(server, root, options={}, default=Config::FileHandler)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006841" class="method-detail">
+        <a name="M006841"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006841.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006841.html');return false;">
+
+          <span class="method-name">remove_handler</span><span class="method-args">(suffix)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M006844" class="method-detail">
+        <a name="M006844"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006844.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006844.html');return false;">
+
+          <span class="method-name">do_GET</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006846" class="method-detail">
+        <a name="M006846"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006846.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006846.html');return false;">
+
+          <span class="method-name">do_OPTIONS</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006845" class="method-detail">
+        <a name="M006845"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006845.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006845.html');return false;">
+
+          <span class="method-name">do_POST</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006843" class="method-detail">
+        <a name="M006843"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006843.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006843.html');return false;">
+
+          <span class="method-name">service</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M006856" class="method-detail">
+        <a name="M006856"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006856.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006856.html');return false;">
+
+          <span class="method-name">call_callback</span><span class="method-args">(callback_name, req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006852" class="method-detail">
+        <a name="M006852"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006852.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006852.html');return false;">
+
+          <span class="method-name">check_filename</span><span class="method-args">(req, res, name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006849" class="method-detail">
+        <a name="M006849"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006849.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006849.html');return false;">
+
+          <span class="method-name">exec_handler</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006850" class="method-detail">
+        <a name="M006850"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006850.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006850.html');return false;">
+
+          <span class="method-name">get_handler</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006858" class="method-detail">
+        <a name="M006858"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006858.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006858.html');return false;">
+
+          <span class="method-name">nondisclosure_name?</span><span class="method-args">(name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006848" class="method-detail">
+        <a name="M006848"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006848.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006848.html');return false;">
+
+          <span class="method-name">prevent_directory_traversal</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006855" class="method-detail">
+        <a name="M006855"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006855.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006855.html');return false;">
+
+          <span class="method-name">search_file</span><span class="method-args">(req, res, basename)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006854" class="method-detail">
+        <a name="M006854"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006854.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006854.html');return false;">
+
+          <span class="method-name">search_index_file</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006859" class="method-detail">
+        <a name="M006859"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006859.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006859.html');return false;">
+
+          <span class="method-name">set_dir_list</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006851" class="method-detail">
+        <a name="M006851"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006851.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006851.html');return false;">
+
+          <span class="method-name">set_filename</span><span class="method-args">(req, res)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006853" class="method-detail">
+        <a name="M006853"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006853.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006853.html');return false;">
+
+          <span class="method-name">shift_path_info</span><span class="method-args">(req, res, path_info, base=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006847" class="method-detail">
+        <a name="M006847"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006847.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006847.html');return false;">
+
+          <span class="method-name">trailing_pathsep?</span><span class="method-args">(path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+RFC3253: Versioning Extensions to WebDAV
+</p>
+<pre>
+         (Web Distributed Authoring and Versioning)
+</pre>
+<p>
+VERSION-CONTROL REPORT CHECKOUT CHECK_IN UNCHECKOUT MKWORKSPACE UPDATE
+LABEL MERGE ACTIVITY
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006857" class="method-detail">
+        <a name="M006857"></a>
+
+        <div class="method-heading">
+
+          <a href="FileHandler.src/M006857.html" target="Code" class="method-signature"
+            onclick="popupCode('FileHandler.src/M006857.html');return false;">
+
+          <span class="method-name">windows_ambiguous_name?</span><span class="method-args">(name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

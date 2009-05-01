@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (lib/optparse.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/optparse.rb, line 785</span>
+785:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">banner</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">width</span> = <span class="ruby-value">32</span>, <span class="ruby-identifier">indent</span> = <span class="ruby-value str">' '</span> <span class="ruby-operator">*</span> <span class="ruby-value">4</span>)
+786:     <span class="ruby-ivar">@stack</span> = [<span class="ruby-constant">DefaultList</span>, <span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">List</span>.<span class="ruby-identifier">new</span>]
+787:     <span class="ruby-ivar">@program_name</span> = <span class="ruby-keyword kw">nil</span>
+788:     <span class="ruby-ivar">@banner</span> = <span class="ruby-identifier">banner</span>
+789:     <span class="ruby-ivar">@summary_width</span> = <span class="ruby-identifier">width</span>
+790:     <span class="ruby-ivar">@summary_indent</span> = <span class="ruby-identifier">indent</span>
+791:     <span class="ruby-ivar">@default_argv</span> = <span class="ruby-constant">ARGV</span>
+792:     <span class="ruby-identifier">add_officious</span>
+793:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+794:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

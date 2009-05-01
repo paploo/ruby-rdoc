@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_classed_element_without_accessor (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 77</span>
+77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_classed_element_without_accessor</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">class_name</span>=<span class="ruby-keyword kw">nil</span>)
+78:           <span class="ruby-identifier">class_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">name</span>)
+79:           <span class="ruby-identifier">add_other_element</span>(<span class="ruby-identifier">name</span>)
+80:           <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">object</span><span class="ruby-operator">|</span>
+81:             <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;make_#{name}&quot;</span>)
+82:           <span class="ruby-keyword kw">end</span>
+83:           <span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;private\ndef setup_\#{name}(feed, current)\n@\#{name}.to_feed(feed, current)\nend\n\ndef make_\#{name}\nself.class::\#{class_name}.new(@maker)\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+84:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

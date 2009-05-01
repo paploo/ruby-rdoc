@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_body (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 298</span>
+298:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_body</span>(<span class="ruby-identifier">socket</span>, <span class="ruby-identifier">block</span>)
+299:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">socket</span>
+300:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tc</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'transfer-encoding'</span>]
+301:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">tc</span>
+302:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/chunked/i</span><span class="ruby-identifier">o</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">read_chunked</span>(<span class="ruby-identifier">socket</span>, <span class="ruby-identifier">block</span>)
+303:         <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">NotImplemented</span>, <span class="ruby-node">&quot;Transfer-Encoding: #{tc}.&quot;</span>
+304:         <span class="ruby-keyword kw">end</span>
+305:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'content-length'</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@remaining_size</span>
+306:         <span class="ruby-ivar">@remaining_size</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'content-length'</span>].<span class="ruby-identifier">to_i</span>
+307:         <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@remaining_size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> 
+308:           <span class="ruby-identifier">sz</span> = [<span class="ruby-ivar">@buffer_size</span>, <span class="ruby-ivar">@remaining_size</span>].<span class="ruby-identifier">min</span>
+309:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">read_data</span>(<span class="ruby-identifier">socket</span>, <span class="ruby-identifier">sz</span>)
+310:           <span class="ruby-ivar">@remaining_size</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">bytesize</span>
+311:           <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">buf</span>)
+312:         <span class="ruby-keyword kw">end</span>
+313:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@remaining_size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">eof?</span>
+314:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">BadRequest</span>, <span class="ruby-value str">&quot;invalid body size.&quot;</span>
+315:         <span class="ruby-keyword kw">end</span>
+316:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">BODY_CONTAINABLE_METHODS</span>.<span class="ruby-identifier">member?</span>(<span class="ruby-ivar">@request_method</span>)
+317:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">LengthRequired</span>
+318:       <span class="ruby-keyword kw">end</span>
+319:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@body</span>
+320:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

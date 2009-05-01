@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sign (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Returns the sign of the value.
+ *
+ * Returns a positive value if &gt; 0, a negative value if &lt; 0, and a 
+ * zero if == 0.
+ *
+ * The specific value returned indicates the type and sign of the BigDecimal, 
+ * as follows:
+ *
+ * BigDecimal::SIGN_NaN:: value is Not a Number
+ * BigDecimal::SIGN_POSITIVE_ZERO:: value is +0
+ * BigDecimal::SIGN_NEGATIVE_ZERO:: value is -0
+ * BigDecimal::SIGN_POSITIVE_INFINITE:: value is +infinity
+ * BigDecimal::SIGN_NEGATIVE_INFINITE:: value is -infinity
+ * BigDecimal::SIGN_POSITIVE_FINITE:: value is positive
+ * BigDecimal::SIGN_NEGATIVE_FINITE:: value is negative
+ */
+static VALUE
+BigDecimal_sign(VALUE self)
+{ /* sign */
+    int s = GetVpValue(self,1)-&gt;sign;
+    return INT2FIX(s);
+}</pre>
+</body>
+</html>

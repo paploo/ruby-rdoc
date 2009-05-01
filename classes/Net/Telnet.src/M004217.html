@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>waitfor (Net::Telnet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/telnet.rb, line 531</span>
+531:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">waitfor</span>(<span class="ruby-identifier">options</span>) <span class="ruby-comment cmt"># :yield: recvdata</span>
+532:       <span class="ruby-identifier">time_out</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Timeout&quot;</span>]
+533:       <span class="ruby-identifier">waittime</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Waittime&quot;</span>]
+534:       <span class="ruby-identifier">fail_eof</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;FailEOF&quot;</span>]
+535: 
+536:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+537:         <span class="ruby-identifier">prompt</span>   = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Match&quot;</span>)
+538:                      <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Match&quot;</span>]
+539:                    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Prompt&quot;</span>)
+540:                      <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Prompt&quot;</span>]
+541:                    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;String&quot;</span>)
+542:                      <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>( <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">quote</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;String&quot;</span>]) )
+543:                    <span class="ruby-keyword kw">end</span>
+544:         <span class="ruby-identifier">time_out</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Timeout&quot;</span>]  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Timeout&quot;</span>)
+545:         <span class="ruby-identifier">waittime</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Waittime&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Waittime&quot;</span>)
+546:         <span class="ruby-identifier">fail_eof</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;FailEOF&quot;</span>]  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;FailEOF&quot;</span>)
+547:       <span class="ruby-keyword kw">else</span>
+548:         <span class="ruby-identifier">prompt</span> = <span class="ruby-identifier">options</span>
+549:       <span class="ruby-keyword kw">end</span>
+550: 
+551:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">time_out</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+552:         <span class="ruby-identifier">time_out</span> = <span class="ruby-keyword kw">nil</span>
+553:       <span class="ruby-keyword kw">end</span>
+554: 
+555:       <span class="ruby-identifier">line</span> = <span class="ruby-value str">''</span>
+556:       <span class="ruby-identifier">buf</span> = <span class="ruby-value str">''</span>
+557:       <span class="ruby-identifier">rest</span> = <span class="ruby-value str">''</span>
+558:       <span class="ruby-keyword kw">until</span>(<span class="ruby-identifier">prompt</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">line</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-identifier">select</span>([<span class="ruby-ivar">@sock</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">waittime</span>))
+559:         <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-identifier">select</span>([<span class="ruby-ivar">@sock</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">time_out</span>)
+560:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">TimeoutError</span>, <span class="ruby-value str">&quot;timed out while waiting for more data&quot;</span>
+561:         <span class="ruby-keyword kw">end</span>
+562:         <span class="ruby-keyword kw">begin</span>
+563:           <span class="ruby-identifier">c</span> = <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">readpartial</span>(<span class="ruby-value">1024</span> <span class="ruby-operator">*</span> <span class="ruby-value">1024</span>)
+564:           <span class="ruby-ivar">@dumplog</span>.<span class="ruby-identifier">log_dump</span>(<span class="ruby-value str">'&lt;'</span>, <span class="ruby-identifier">c</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Dump_log&quot;</span>)
+565:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Telnetmode&quot;</span>]
+566:             <span class="ruby-identifier">c</span> = <span class="ruby-identifier">rest</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>
+567:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-node">/#{IAC}#{SE}/n</span><span class="ruby-identifier">o</span>) <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">&lt;</span>
+568:                <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-node">/#{IAC}#{SB}/n</span><span class="ruby-identifier">o</span>) <span class="ruby-operator">||</span> <span class="ruby-value">0</span>)
+569:               <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">preprocess</span>(<span class="ruby-identifier">c</span>[<span class="ruby-value">0</span> <span class="ruby-operator">...</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-node">/#{IAC}#{SB}/n</span><span class="ruby-identifier">o</span>)])
+570:               <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">c</span>[<span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-node">/#{IAC}#{SB}/n</span><span class="ruby-identifier">o</span>) <span class="ruby-operator">..</span> <span class="ruby-value">-1</span>]
+571:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">pt</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-node">/#{IAC}[^#{IAC}#{AO}#{AYT}#{DM}#{IP}#{NOP}]?\z/n</span><span class="ruby-identifier">o</span>) <span class="ruby-operator">||</span>
+572:                        <span class="ruby-identifier">c</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-regexp re">/\r\z/n</span><span class="ruby-identifier">o</span>)
+573:               <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">preprocess</span>(<span class="ruby-identifier">c</span>[<span class="ruby-value">0</span> <span class="ruby-operator">...</span> <span class="ruby-identifier">pt</span>])
+574:               <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">c</span>[<span class="ruby-identifier">pt</span> <span class="ruby-operator">..</span> <span class="ruby-value">-1</span>]
+575:             <span class="ruby-keyword kw">else</span>
+576:               <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">preprocess</span>(<span class="ruby-identifier">c</span>)
+577:               <span class="ruby-identifier">rest</span> = <span class="ruby-value str">''</span>
+578:             <span class="ruby-keyword kw">end</span>
+579:          <span class="ruby-keyword kw">else</span>
+580:            <span class="ruby-comment cmt"># Not Telnetmode.</span>
+581:            <span class="ruby-comment cmt">#</span>
+582:            <span class="ruby-comment cmt"># We cannot use preprocess() on this data, because that</span>
+583:            <span class="ruby-comment cmt"># method makes some Telnetmode-specific assumptions.</span>
+584:            <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">rest</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">c</span>
+585:            <span class="ruby-identifier">rest</span> = <span class="ruby-value str">''</span>
+586:            <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Binmode&quot;</span>]
+587:              <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pt</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-regexp re">/\r\z/n</span><span class="ruby-identifier">o</span>)
+588:                <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">buf</span>[<span class="ruby-value">0</span> <span class="ruby-operator">...</span> <span class="ruby-identifier">pt</span>]
+589:                <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">buf</span>[<span class="ruby-identifier">pt</span> <span class="ruby-operator">..</span> <span class="ruby-value">-1</span>]
+590:              <span class="ruby-keyword kw">end</span>
+591:              <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-node">/#{EOL}/n</span><span class="ruby-identifier">o</span>, <span class="ruby-value str">&quot;\n&quot;</span>)
+592:            <span class="ruby-keyword kw">end</span>
+593:           <span class="ruby-keyword kw">end</span>
+594:           <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">buf</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Output_log&quot;</span>)
+595:           <span class="ruby-identifier">line</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">buf</span>
+596:           <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">buf</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+597:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">EOFError</span> <span class="ruby-comment cmt"># End of file reached</span>
+598:           <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fail_eof</span>
+599:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+600:             <span class="ruby-identifier">line</span> = <span class="ruby-keyword kw">nil</span>
+601:             <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+602:           <span class="ruby-keyword kw">end</span>
+603:           <span class="ruby-keyword kw">break</span>
+604:         <span class="ruby-keyword kw">end</span>
+605:       <span class="ruby-keyword kw">end</span>
+606:       <span class="ruby-identifier">line</span>
+607:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

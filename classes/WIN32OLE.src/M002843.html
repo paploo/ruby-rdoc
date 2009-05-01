@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>method_missing (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE#method_missing(id [,arg1, arg2, ...])
+ * 
+ *  Calls WIN32OLE#invoke method.
+ */
+static VALUE
+fole_missing(int argc, VALUE *argv, VALUE self)
+{
+    ID id;
+    const char* mname;
+    int n;
+    id = rb_to_id(argv[0]);
+    mname = rb_id2name(id);
+    if(!mname) {
+        rb_raise(rb_eRuntimeError, &quot;fail: unknown method or property&quot;);
+    }
+    n = strlen(mname);
+    if(mname[n-1] == '=') {
+        argv[0] = rb_enc_str_new(mname, n-1, cWIN32OLE_enc);
+
+        return ole_propertyput(self, argv[0], argv[1]);
+    }
+    else {
+        argv[0] = rb_enc_str_new(mname, n, cWIN32OLE_enc);
+        return ole_invoke(argc, argv, self, DISPATCH_METHOD|DISPATCH_PROPERTYGET, FALSE);
+    }
+}</pre>
+</body>
+</html>

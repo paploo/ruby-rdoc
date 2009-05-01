@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>hash (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.hash   -&gt; fixnum
+ *
+ *  Compute a hash-code for this array. Two arrays with the same content
+ *  will have the same hash code (and will compare using &lt;code&gt;eql?&lt;/code&gt;).
+ */
+
+static VALUE
+rb_ary_hash(VALUE ary)
+{
+    return rb_exec_recursive(recursive_hash, ary, 0);
+}</pre>
+</body>
+</html>

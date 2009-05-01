@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>handle_special_TIDYLINK (RDoc::Markup::ToHtml)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_html.rb, line 105</span>
+105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_special_TIDYLINK</span>(<span class="ruby-identifier">special</span>)
+106:     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">special</span>.<span class="ruby-identifier">text</span>
+107: 
+108:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">text</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\{(.*?)\}\[(.*?)\]/</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\S+)\[(.*?)\]/</span>
+109: 
+110:     <span class="ruby-identifier">label</span> = <span class="ruby-identifier">$1</span>
+111:     <span class="ruby-identifier">url</span>   = <span class="ruby-identifier">$2</span>
+112:     <span class="ruby-identifier">gen_url</span> <span class="ruby-identifier">url</span>, <span class="ruby-identifier">label</span>
+113:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

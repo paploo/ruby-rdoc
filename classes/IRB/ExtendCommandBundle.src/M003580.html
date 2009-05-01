@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_extend_command (IRB::ExtendCommandBundle)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/extend-command.rb, line 115</span>
+115:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">def_extend_command</span>(<span class="ruby-identifier">cmd_name</span>, <span class="ruby-identifier">cmd_class</span>, <span class="ruby-identifier">load_file</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">aliases</span>)
+116:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">cmd_class</span>
+117:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span>
+118:         <span class="ruby-identifier">cmd_class</span> = <span class="ruby-identifier">cmd_class</span>.<span class="ruby-identifier">id2name</span>
+119:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+120:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Class</span>
+121:         <span class="ruby-identifier">cmd_class</span> = <span class="ruby-identifier">cmd_class</span>.<span class="ruby-identifier">name</span>
+122:       <span class="ruby-keyword kw">end</span>
+123: 
+124:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">load_file</span>
+125:         <span class="ruby-identifier">eval</span> <span class="ruby-node">%[
+126:           def #{cmd_name}(*opts, &amp;b)
+127:             require &quot;#{load_file}&quot;
+128:             arity = ExtendCommand::#{cmd_class}.instance_method(:execute).arity
+129:             args = (1..arity.abs).map {|i| &quot;arg&quot; + i.to_s }
+130:             args &lt;&lt; &quot;*opts&quot; if arity &lt; 0
+131:             args &lt;&lt; &quot;&amp;block&quot;
+132:             args = args.join(&quot;, &quot;)
+133:             eval %[
+134:               def #{cmd_name}(\#{args})
+135:                 ExtendCommand::#{cmd_class}.execute(irb_context, \#{args})
+136:               end
+137:             ]
+138:             send :#{cmd_name}, *opts, &amp;b
+139:           end
+140:         ]</span>
+141:       <span class="ruby-keyword kw">else</span>
+142:         <span class="ruby-identifier">eval</span> <span class="ruby-node">%[
+143:           def #{cmd_name}(*opts, &amp;b)
+144:             ExtendCommand::#{cmd_class}.execute(irb_context, *opts, &amp;b)
+145:           end
+146:         ]</span>
+147:       <span class="ruby-keyword kw">end</span>
+148: 
+149:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">ali</span>, <span class="ruby-identifier">flag</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">aliases</span>
+150:         <span class="ruby-ivar">@ALIASES</span>.<span class="ruby-identifier">push</span> [<span class="ruby-identifier">ali</span>, <span class="ruby-identifier">cmd_name</span>, <span class="ruby-identifier">flag</span>]
+151:       <span class="ruby-keyword kw">end</span>
+152:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

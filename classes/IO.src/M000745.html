@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each_char (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.each_char {|c| block }  =&gt; ios
+ *
+ *  Calls the given block once for each character in &lt;em&gt;ios&lt;/em&gt;,
+ *  passing the character as an argument. The stream must be opened for
+ *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
+ *
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.each_char {|c| print c, ' ' }   #=&gt; #&lt;File:testfile&gt;
+ */
+
+static VALUE
+rb_io_each_char(VALUE io)
+{
+    rb_io_t *fptr;
+    rb_encoding *enc;
+    VALUE c;
+
+    RETURN_ENUMERATOR(io, 0, 0);
+    GetOpenFile(io, fptr);
+    rb_io_check_readable(fptr);
+
+    enc = io_input_encoding(fptr);
+    READ_CHECK(fptr);
+    while (!NIL_P(c = io_getc(fptr, enc))) {
+        rb_yield(c);
+    }
+    return io;
+}</pre>
+</body>
+</html>

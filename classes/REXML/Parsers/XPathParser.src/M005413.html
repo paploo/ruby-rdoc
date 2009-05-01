@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>expand (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 91</span>
+ 91:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">expand</span>( <span class="ruby-identifier">path</span> )
+ 92:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">parse</span>( <span class="ruby-identifier">path</span> ) <span class="ruby-operator">:</span> <span class="ruby-identifier">path</span>
+ 93:         <span class="ruby-identifier">string</span> = <span class="ruby-value str">&quot;&quot;</span>
+ 94:         <span class="ruby-identifier">document</span> = <span class="ruby-keyword kw">false</span>
+ 95:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+ 96:           <span class="ruby-identifier">op</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">shift</span>
+ 97:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">op</span>
+ 98:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:node</span>
+ 99:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;node()&quot;</span>
+100:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:attribute</span>, <span class="ruby-identifier">:child</span>, <span class="ruby-identifier">:following</span>, <span class="ruby-identifier">:following_sibling</span>, 
+101:                 <span class="ruby-identifier">:ancestor</span>, <span class="ruby-identifier">:ancestor_or_self</span>, <span class="ruby-identifier">:descendant</span>, <span class="ruby-identifier">:descendant_or_self</span>,
+102:                 <span class="ruby-identifier">:namespace</span>, <span class="ruby-identifier">:preceding</span>, <span class="ruby-identifier">:preceding_sibling</span>, <span class="ruby-identifier">:self</span>, <span class="ruby-identifier">:parent</span>
+103:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+104:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">op</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;_&quot;</span>, <span class="ruby-value str">&quot;-&quot;</span>)
+105:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;::&quot;</span>
+106:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:any</span>
+107:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;*&quot;</span>
+108:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:qname</span>
+109:             <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">shift</span>
+110:             <span class="ruby-identifier">name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">shift</span>
+111:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">prefix</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+112:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+113:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:predicate</span>
+114:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'['</span>
+115:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">predicate_to_string</span>( <span class="ruby-identifier">path</span>.<span class="ruby-identifier">shift</span> ) { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">expand</span>(<span class="ruby-identifier">x</span>) }
+116:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">']'</span>
+117:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:document</span>
+118:             <span class="ruby-identifier">document</span> = <span class="ruby-keyword kw">true</span>
+119:           <span class="ruby-keyword kw">else</span>
+120:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+121:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;UNKNOWN(&quot;</span>
+122:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">op</span>.<span class="ruby-identifier">inspect</span>
+123:             <span class="ruby-identifier">string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;)&quot;</span>
+124:           <span class="ruby-keyword kw">end</span>
+125:         <span class="ruby-keyword kw">end</span>
+126:         <span class="ruby-identifier">string</span> = <span class="ruby-value str">&quot;/&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">string</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">document</span>
+127:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">string</span>
+128:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

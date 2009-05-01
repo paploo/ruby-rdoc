@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>list (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 676</span>
+676:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: line</span>
+677:       <span class="ruby-identifier">cmd</span> = <span class="ruby-value str">&quot;LIST&quot;</span>
+678:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+679:         <span class="ruby-identifier">cmd</span> = <span class="ruby-identifier">cmd</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">arg</span>
+680:       <span class="ruby-keyword kw">end</span>
+681:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+682:         <span class="ruby-identifier">retrlines</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+683:       <span class="ruby-keyword kw">else</span>
+684:         <span class="ruby-identifier">lines</span> = []
+685:         <span class="ruby-identifier">retrlines</span>(<span class="ruby-identifier">cmd</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+686:           <span class="ruby-identifier">lines</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+687:         <span class="ruby-keyword kw">end</span>
+688:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">lines</span>
+689:       <span class="ruby-keyword kw">end</span>
+690:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

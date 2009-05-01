@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>bytes (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.bytes   =&gt; anEnumerator
+ *
+ *  Returns an enumerator that gives each byte (0..255) in &lt;em&gt;ios&lt;/em&gt;.
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
+ *  will be raised.
+ *     
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.bytes.to_a  #=&gt; [104, 101, 108, 108, 111]
+ *     f.rewind
+ *     f.bytes.sort  #=&gt; [101, 104, 108, 108, 111]
+ */
+
+static VALUE
+rb_io_bytes(VALUE io)
+{
+    return rb_enumeratorize(io, ID2SYM(rb_intern(&quot;each_byte&quot;)), 0, 0);
+}</pre>
+</body>
+</html>

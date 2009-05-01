@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>realpath (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 457</span>
+457:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">realpath</span>
+458:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+459:     <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-identifier">path</span>)
+460:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+461:       <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names2</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+462:       <span class="ruby-identifier">names</span> = <span class="ruby-identifier">names2</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">names</span>
+463:     <span class="ruby-keyword kw">end</span>
+464:     <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">names</span> = <span class="ruby-identifier">realpath_rec</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names</span>, {})
+465:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)))
+466:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

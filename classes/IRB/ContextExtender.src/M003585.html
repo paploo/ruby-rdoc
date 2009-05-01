@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_extend_command (IRB::ContextExtender)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/extend-command.rb, line 209</span>
+209:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">def_extend_command</span>(<span class="ruby-identifier">cmd_name</span>, <span class="ruby-identifier">load_file</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">aliases</span>)
+210:       <span class="ruby-constant">Context</span>.<span class="ruby-identifier">module_eval</span> <span class="ruby-node">%[
+211:         def #{cmd_name}(*opts, &amp;b)
+212:           Context.module_eval {remove_method(:#{cmd_name})}
+213:           require &quot;#{load_file}&quot;
+214:           send :#{cmd_name}, *opts, &amp;b
+215:         end
+216:         for ali in aliases
+217:           alias_method ali, cmd_name
+218:         end
+219:       ]</span>
+220:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

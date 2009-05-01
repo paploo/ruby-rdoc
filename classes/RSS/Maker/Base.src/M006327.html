@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_other_element_without_accessor (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 151</span>
+151:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_other_element_without_accessor</span>(<span class="ruby-identifier">name</span>)
+152:           <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">name</span>)
+153:           <span class="ruby-identifier">add_other_element</span>(<span class="ruby-identifier">name</span>)
+154:           <span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;def setup_\#{name}(feed, current)\nif !@\#{name}.nil? and current.respond_to?(:\#{name}=)\ncurrent.\#{name} = @\#{name}\nend\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+155:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

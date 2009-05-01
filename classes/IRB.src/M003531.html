@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>print_usage (IRB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/help.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">print_usage</span>
+16:     <span class="ruby-identifier">lc</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:LC_MESSAGES</span>]
+17:     <span class="ruby-identifier">path</span> = <span class="ruby-identifier">lc</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value str">&quot;irb/help-message&quot;</span>)
+18:     <span class="ruby-identifier">space_line</span> = <span class="ruby-keyword kw">false</span>
+19:     <span class="ruby-constant">IRB</span><span class="ruby-operator">::</span><span class="ruby-constant">MagicFile</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+20:       <span class="ruby-identifier">f</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span>
+21:         <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^\s*$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">l</span>
+22:           <span class="ruby-identifier">lc</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">l</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">space_line</span>
+23:           <span class="ruby-identifier">space_line</span> = <span class="ruby-keyword kw">true</span>
+24:           <span class="ruby-keyword kw">next</span>
+25:         <span class="ruby-keyword kw">end</span>
+26:         <span class="ruby-identifier">space_line</span> = <span class="ruby-keyword kw">false</span>
+27: 
+28:         <span class="ruby-identifier">l</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/#.*$/</span>, <span class="ruby-value str">&quot;&quot;</span>)
+29:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^\s*$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">l</span>
+30:         <span class="ruby-identifier">lc</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">l</span>
+31:       <span class="ruby-keyword kw">end</span>
+32:     }
+33:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

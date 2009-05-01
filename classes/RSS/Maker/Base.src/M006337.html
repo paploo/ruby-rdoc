@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_values (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 240</span>
+240:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_values</span>(<span class="ruby-identifier">target</span>)
+241:         <span class="ruby-identifier">set</span> = <span class="ruby-keyword kw">false</span>
+242:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">have_required_values?</span>
+243:           <span class="ruby-identifier">variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+244:             <span class="ruby-identifier">setter</span> = <span class="ruby-node">&quot;#{var}=&quot;</span>
+245:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">setter</span>)
+246:               <span class="ruby-identifier">value</span> = <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">var</span>)
+247:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>
+248:                 <span class="ruby-identifier">target</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">setter</span>, <span class="ruby-identifier">value</span>)
+249:                 <span class="ruby-identifier">set</span> = <span class="ruby-keyword kw">true</span>
+250:               <span class="ruby-keyword kw">end</span>
+251:             <span class="ruby-keyword kw">end</span>
+252:           <span class="ruby-keyword kw">end</span>
+253:         <span class="ruby-keyword kw">end</span>
+254:         <span class="ruby-identifier">set</span>
+255:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

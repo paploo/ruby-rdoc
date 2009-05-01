@@ -1,0 +1,1103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: DEBUGGER__ [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">DEBUGGER__</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/lib/debug_rb.html">
+
+                lib/debug.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M001542">break_points</a>&nbsp;&nbsp;
+
+        <a href="#M001569">break_points</a>&nbsp;&nbsp;
+
+        <a href="#M001563">check_break_points</a>&nbsp;&nbsp;
+
+        <a href="#M001544">context</a>&nbsp;&nbsp;
+
+        <a href="#M001575">context</a>&nbsp;&nbsp;
+
+        <a href="#M001553">debug_command</a>&nbsp;&nbsp;
+
+        <a href="#M001547">debug_eval</a>&nbsp;&nbsp;
+
+        <a href="#M001562">debug_funcname</a>&nbsp;&nbsp;
+
+        <a href="#M001551">debug_method_info</a>&nbsp;&nbsp;
+
+        <a href="#M001554">debug_print_help</a>&nbsp;&nbsp;
+
+        <a href="#M001548">debug_silent_eval</a>&nbsp;&nbsp;
+
+        <a href="#M001581">debug_thread_info</a>&nbsp;&nbsp;
+
+        <a href="#M001550">debug_variable_info</a>&nbsp;&nbsp;
+
+        <a href="#M001568">display</a>&nbsp;&nbsp;
+
+        <a href="#M001543">display</a>&nbsp;&nbsp;
+
+        <a href="#M001556">display_expression</a>&nbsp;&nbsp;
+
+        <a href="#M001555">display_expressions</a>&nbsp;&nbsp;
+
+        <a href="#M001558">display_frames</a>&nbsp;&nbsp;
+
+        <a href="#M001560">display_list</a>&nbsp;&nbsp;
+
+        <a href="#M001564">excn_handle</a>&nbsp;&nbsp;
+
+        <a href="#M001559">format_frame</a>&nbsp;&nbsp;
+
+        <a href="#M001557">frame_set_pos</a>&nbsp;&nbsp;
+
+        <a href="#M001577">get_thread</a>&nbsp;&nbsp;
+
+        <a href="#M001576">interrupt</a>&nbsp;&nbsp;
+
+        <a href="#M001561">line_at</a>&nbsp;&nbsp;
+
+        <a href="#M001580">make_thread_list</a>&nbsp;&nbsp;
+
+        <a href="#M001574">resume</a>&nbsp;&nbsp;
+
+        <a href="#M001572">set_last_thread</a>&nbsp;&nbsp;
+
+        <a href="#M001546">set_last_thread</a>&nbsp;&nbsp;
+
+        <a href="#M001540">set_trace</a>&nbsp;&nbsp;
+
+        <a href="#M001571">set_trace</a>&nbsp;&nbsp;
+
+        <a href="#M001545">set_trace_all</a>&nbsp;&nbsp;
+
+        <a href="#M001541">stdout</a>&nbsp;&nbsp;
+
+        <a href="#M001566">stdout</a>&nbsp;&nbsp;
+
+        <a href="#M001567">stdout=</a>&nbsp;&nbsp;
+
+        <a href="#M001573">suspend</a>&nbsp;&nbsp;
+
+        <a href="#M001552">thnum</a>&nbsp;&nbsp;
+
+        <a href="#M001578">thread_list</a>&nbsp;&nbsp;
+
+        <a href="#M001579">thread_list_all</a>&nbsp;&nbsp;
+
+        <a href="#M001539">trace?</a>&nbsp;&nbsp;
+
+        <a href="#M001565">trace_func</a>&nbsp;&nbsp;
+
+        <a href="#M001549">var_list</a>&nbsp;&nbsp;
+
+        <a href="#M001570">waiting</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="DEBUGGER__/Context.html" class="link">DEBUGGER__::Context</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MUTEX</td>
+          <td>=</td>
+          <td class="context-item-value">Mutex.new</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M001569" class="method-detail">
+        <a name="M001569"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001569.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001569.html');return false;">
+
+          <span class="method-name">break_points</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001575" class="method-detail">
+        <a name="M001575"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001575.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001575.html');return false;">
+
+          <span class="method-name">context</span><span class="method-args">(thread=Thread.current)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001581" class="method-detail">
+        <a name="M001581"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001581.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001581.html');return false;">
+
+          <span class="method-name">debug_thread_info</span><span class="method-args">(input, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001568" class="method-detail">
+        <a name="M001568"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001568.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001568.html');return false;">
+
+          <span class="method-name">display</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001577" class="method-detail">
+        <a name="M001577"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001577.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001577.html');return false;">
+
+          <span class="method-name">get_thread</span><span class="method-args">(num)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001576" class="method-detail">
+        <a name="M001576"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001576.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001576.html');return false;">
+
+          <span class="method-name">interrupt</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001580" class="method-detail">
+        <a name="M001580"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001580.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001580.html');return false;">
+
+          <span class="method-name">make_thread_list</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001574" class="method-detail">
+        <a name="M001574"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001574.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001574.html');return false;">
+
+          <span class="method-name">resume</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001572" class="method-detail">
+        <a name="M001572"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001572.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001572.html');return false;">
+
+          <span class="method-name">set_last_thread</span><span class="method-args">(th)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001571" class="method-detail">
+        <a name="M001571"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001571.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001571.html');return false;">
+
+          <span class="method-name">set_trace</span><span class="method-args">( arg )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001566" class="method-detail">
+        <a name="M001566"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001566.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001566.html');return false;">
+
+          <span class="method-name">stdout</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001567" class="method-detail">
+        <a name="M001567"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001567.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001567.html');return false;">
+
+          <span class="method-name">stdout=</span><span class="method-args">(s)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001573" class="method-detail">
+        <a name="M001573"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001573.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001573.html');return false;">
+
+          <span class="method-name">suspend</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001578" class="method-detail">
+        <a name="M001578"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001578.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001578.html');return false;">
+
+          <span class="method-name">thread_list</span><span class="method-args">(num)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001579" class="method-detail">
+        <a name="M001579"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001579.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001579.html');return false;">
+
+          <span class="method-name">thread_list_all</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001570" class="method-detail">
+        <a name="M001570"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001570.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001570.html');return false;">
+
+          <span class="method-name">waiting</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M001542" class="method-detail">
+        <a name="M001542"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001542.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001542.html');return false;">
+
+          <span class="method-name">break_points</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001563" class="method-detail">
+        <a name="M001563"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001563.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001563.html');return false;">
+
+          <span class="method-name">check_break_points</span><span class="method-args">(file, klass, pos, binding, id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001544" class="method-detail">
+        <a name="M001544"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001544.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001544.html');return false;">
+
+          <span class="method-name">context</span><span class="method-args">(th)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001553" class="method-detail">
+        <a name="M001553"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001553.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001553.html');return false;">
+
+          <span class="method-name">debug_command</span><span class="method-args">(file, line, id, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001547" class="method-detail">
+        <a name="M001547"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001547.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001547.html');return false;">
+
+          <span class="method-name">debug_eval</span><span class="method-args">(str, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001562" class="method-detail">
+        <a name="M001562"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001562.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001562.html');return false;">
+
+          <span class="method-name">debug_funcname</span><span class="method-args">(id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001551" class="method-detail">
+        <a name="M001551"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001551.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001551.html');return false;">
+
+          <span class="method-name">debug_method_info</span><span class="method-args">(input, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001554" class="method-detail">
+        <a name="M001554"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001554.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001554.html');return false;">
+
+          <span class="method-name">debug_print_help</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001548" class="method-detail">
+        <a name="M001548"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001548.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001548.html');return false;">
+
+          <span class="method-name">debug_silent_eval</span><span class="method-args">(str, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001550" class="method-detail">
+        <a name="M001550"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001550.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001550.html');return false;">
+
+          <span class="method-name">debug_variable_info</span><span class="method-args">(input, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001543" class="method-detail">
+        <a name="M001543"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001543.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001543.html');return false;">
+
+          <span class="method-name">display</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001556" class="method-detail">
+        <a name="M001556"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001556.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001556.html');return false;">
+
+          <span class="method-name">display_expression</span><span class="method-args">(exp, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001555" class="method-detail">
+        <a name="M001555"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001555.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001555.html');return false;">
+
+          <span class="method-name">display_expressions</span><span class="method-args">(binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001558" class="method-detail">
+        <a name="M001558"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001558.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001558.html');return false;">
+
+          <span class="method-name">display_frames</span><span class="method-args">(pos)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001560" class="method-detail">
+        <a name="M001560"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001560.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001560.html');return false;">
+
+          <span class="method-name">display_list</span><span class="method-args">(b, e, file, line)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001564" class="method-detail">
+        <a name="M001564"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001564.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001564.html');return false;">
+
+          <span class="method-name">excn_handle</span><span class="method-args">(file, line, id, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001559" class="method-detail">
+        <a name="M001559"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001559.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001559.html');return false;">
+
+          <span class="method-name">format_frame</span><span class="method-args">(pos)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001557" class="method-detail">
+        <a name="M001557"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001557.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001557.html');return false;">
+
+          <span class="method-name">frame_set_pos</span><span class="method-args">(file, line)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001561" class="method-detail">
+        <a name="M001561"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001561.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001561.html');return false;">
+
+          <span class="method-name">line_at</span><span class="method-args">(file, line)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001546" class="method-detail">
+        <a name="M001546"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001546.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001546.html');return false;">
+
+          <span class="method-name">set_last_thread</span><span class="method-args">(th)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001540" class="method-detail">
+        <a name="M001540"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001540.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001540.html');return false;">
+
+          <span class="method-name">set_trace</span><span class="method-args">(arg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001545" class="method-detail">
+        <a name="M001545"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001545.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001545.html');return false;">
+
+          <span class="method-name">set_trace_all</span><span class="method-args">(arg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001541" class="method-detail">
+        <a name="M001541"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001541.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001541.html');return false;">
+
+          <span class="method-name">stdout</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001552" class="method-detail">
+        <a name="M001552"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001552.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001552.html');return false;">
+
+          <span class="method-name">thnum</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001539" class="method-detail">
+        <a name="M001539"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001539.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001539.html');return false;">
+
+          <span class="method-name">trace?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001565" class="method-detail">
+        <a name="M001565"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001565.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001565.html');return false;">
+
+          <span class="method-name">trace_func</span><span class="method-args">(event, file, line, id, binding, klass)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001549" class="method-detail">
+        <a name="M001549"></a>
+
+        <div class="method-heading">
+
+          <a href="DEBUGGER__.src/M001549.html" target="Code" class="method-signature"
+            onclick="popupCode('DEBUGGER__.src/M001549.html');return false;">
+
+          <span class="method-name">var_list</span><span class="method-args">(ary, binding)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_comment (RDoc::Context::Section)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 171</span>
+171:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_comment</span>(<span class="ruby-identifier">comment</span>)
+172:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">comment</span>
+173: 
+174:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^#[ \t]*:section:.*\n/</span>
+175:           <span class="ruby-identifier">start</span> = <span class="ruby-identifier">$`</span>
+176:           <span class="ruby-identifier">rest</span> = <span class="ruby-identifier">$'</span>
+177: 
+178:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">start</span>.<span class="ruby-identifier">empty?</span>
+179:             <span class="ruby-ivar">@comment</span> = <span class="ruby-identifier">rest</span>
+180:           <span class="ruby-keyword kw">else</span>
+181:             <span class="ruby-ivar">@comment</span> = <span class="ruby-identifier">rest</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">/#{start.chomp}\Z/</span>, <span class="ruby-value str">''</span>)
+182:           <span class="ruby-keyword kw">end</span>
+183:         <span class="ruby-keyword kw">else</span>
+184:           <span class="ruby-ivar">@comment</span> = <span class="ruby-identifier">comment</span>
+185:         <span class="ruby-keyword kw">end</span>
+186:         <span class="ruby-ivar">@comment</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@comment</span>.<span class="ruby-identifier">empty?</span>
+187:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

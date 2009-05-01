@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>atan2 (Math)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Math.atan2(y, x)  =&gt; float
+ *  
+ *  Computes the arc tangent given &lt;i&gt;y&lt;/i&gt; and &lt;i&gt;x&lt;/i&gt;. Returns
+ *  -PI..PI.
+ *     
+ */
+
+static VALUE
+math_atan2(VALUE obj, VALUE y, VALUE x)
+{
+    Need_Float2(y, x);
+    return DBL2NUM(atan2(RFLOAT_VALUE(y), RFLOAT_VALUE(x)));
+}</pre>
+</body>
+</html>

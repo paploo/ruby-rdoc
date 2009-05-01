@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>drop (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ary.drop(n)               =&gt; array
+ *  
+ *  Drops first n elements from &lt;i&gt;ary&lt;/i&gt;, and returns rest elements
+ *  in an array.
+ *     
+ *     a = [1, 2, 3, 4, 5, 0]
+ *     a.drop(3)             # =&gt; [4, 5, 0]
+ *     
+ */
+
+static VALUE
+rb_ary_drop(VALUE ary, VALUE n)
+{
+    VALUE result;
+    long pos = NUM2LONG(n);
+    if (pos &lt; 0) {
+        rb_raise(rb_eArgError, &quot;attempt to drop negative size&quot;);
+    }
+
+    result = rb_ary_subseq(ary, pos, RARRAY_LEN(ary));
+    if (result == Qnil) result = rb_ary_new();
+    return result;
+}</pre>
+</body>
+</html>

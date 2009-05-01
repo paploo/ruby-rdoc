@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Enumerator [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Enumerator</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/enumerator_c.html">
+
+                enumerator.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A class which provides a method `each&#8217; to be used as an <a
+href="Enumerable.html">Enumerable</a> object.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000584">each</a>&nbsp;&nbsp;
+
+        <a href="#M000585">each_with_index</a>&nbsp;&nbsp;
+
+        <a href="#M000586">each_with_object</a>&nbsp;&nbsp;
+
+        <a href="#M000583">new</a>&nbsp;&nbsp;
+
+        <a href="#M000589">next</a>&nbsp;&nbsp;
+
+        <a href="#M000590">rewind</a>&nbsp;&nbsp;
+
+        <a href="#M000587">with_index</a>&nbsp;&nbsp;
+
+        <a href="#M000588">with_object</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Enumerable.html">Enumerable</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Enumerator/Generator.html" class="link">Enumerator::Generator</a><br />
+Class <a href="Enumerator/Yielder.html" class="link">Enumerator::Yielder</a><br />
+
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000583" class="method-detail">
+        <a name="M000583"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000583.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000583.html');return false;">
+
+          <span class="method-name">Enumerator.new(obj, method = :each, *args)<br />
+Enumerator.new { |y| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new <a href="Enumerator.html">Enumerator</a> object, which is to
+be used as an <a href="Enumerable.html">Enumerable</a> object iterating in
+a given way.
+</p>
+<p>
+In the first form, a generated <a href="Enumerator.html">Enumerator</a>
+iterates over the given object using the given method with the given
+arguments passed. Use of this form is discouraged. Use Kernel#enum_for(),
+alias to_enum, instead.
+</p>
+<pre>
+  e = Enumerator.new(ObjectSpace, :each_object)
+      #-&gt; ObjectSpace.enum_for(:each_object)
+
+  e.select { |obj| obj.is_a?(Class) }  #=&gt; array of all classes
+</pre>
+<p>
+In the second form, iteration is defined by the given block, in which a
+&#8220;yielder&#8221; object given as block parameter can be used to yield
+a value by calling the <tt>yield</tt> method, alias +<<+.
+</p>
+<pre>
+  fib = Enumerator.new { |y|
+    a = b = 1
+    loop {
+      y &lt;&lt; a
+      a, b = b, a + b
+    }
+  }
+
+  p fib.take(10) #=&gt; [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000584" class="method-detail">
+        <a name="M000584"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000584.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000584.html');return false;">
+
+          <span class="method-name">enum.each {...}<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates the given block using the object and the method specified in the
+first place. If no block is given, returns self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000585" class="method-detail">
+        <a name="M000585"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000585.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000585.html');return false;">
+
+          <span class="method-name">e.with_index {|(*args), idx| ... }<br />
+e.with_index<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates the given block for each element with an index, which start from
+0. If no block is given, returns an enumerator.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000586" class="method-detail">
+        <a name="M000586"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000586.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000586.html');return false;">
+
+          <span class="method-name">e.with_object(obj) {|(*args), memo_obj| ... }<br />
+e.with_object(obj)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates the given block for each element with an arbitrary object given,
+and returns the initially given object.
+</p>
+<p>
+If no block is given, returns an enumerator.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000589" class="method-detail">
+        <a name="M000589"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000589.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000589.html');return false;">
+
+          <span class="method-name">e.next   => object<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the next object in the enumerator, and move the internal position
+forward. When the position reached at the end, internal position is rewound
+then <a href="StopIteration.html">StopIteration</a> is raised.
+</p>
+<p>
+Note that enumeration sequence by next method does not affect other
+non-external enumeration methods, unless underlying iteration methods
+itself has side-effect, e.g. <a href="IO.html#M000743">IO#each_line</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000590" class="method-detail">
+        <a name="M000590"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000590.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000590.html');return false;">
+
+          <span class="method-name">e.rewind   => e<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Rewinds the enumeration sequence by the next method.
+</p>
+<p>
+If the enclosed object responds to a &#8220;rewind&#8221; method, it is
+called.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000587" class="method-detail">
+        <a name="M000587"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000587.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000587.html');return false;">
+
+          <span class="method-name">e.with_index {|(*args), idx| ... }<br />
+e.with_index<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates the given block for each element with an index, which start from
+0. If no block is given, returns an enumerator.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000588" class="method-detail">
+        <a name="M000588"></a>
+
+        <div class="method-heading">
+
+          <a href="Enumerator.src/M000588.html" target="Code" class="method-signature"
+            onclick="popupCode('Enumerator.src/M000588.html');return false;">
+
+          <span class="method-name">e.with_object(obj) {|(*args), memo_obj| ... }<br />
+e.with_object(obj)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates the given block for each element with an arbitrary object given,
+and returns the initially given object.
+</p>
+<p>
+If no block is given, returns an enumerator.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>avail_in (Zlib::ZStream)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Returns bytes of data in the input buffer. Normally, returns 0.
+ */
+static VALUE
+rb_zstream_avail_in(VALUE obj)
+{
+    struct zstream *z;
+    Data_Get_Struct(obj, struct zstream, z);
+    return INT2FIX(NIL_P(z-&gt;input) ? 0 : (int)(RSTRING_LEN(z-&gt;input)));
+}</pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>readline (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.readline(sep=$/)     =&gt; string
+ *     ios.readline(limit)      =&gt; string
+ *     ios.readline(sep, limit) =&gt; string
+ *
+ *  Reads a line as with &lt;code&gt;IO#gets&lt;/code&gt;, but raises an
+ *  &lt;code&gt;EOFError&lt;/code&gt; on end of file.
+ */
+
+static VALUE
+rb_io_readline(int argc, VALUE *argv, VALUE io)
+{
+    VALUE line = rb_io_gets_m(argc, argv, io);
+
+    if (NIL_P(line)) {
+        rb_eof_error();
+    }
+    return line;
+}</pre>
+</body>
+</html>

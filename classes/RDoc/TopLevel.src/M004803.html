@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (RDoc::TopLevel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 688</span>
+688:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+689:       <span class="ruby-value str">&quot;#&lt;%s:0x%x %p modules: %p classes: %p&gt;&quot;</span> <span class="ruby-operator">%</span> [
+690:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>,
+691:         <span class="ruby-identifier">file_base_name</span>,
+692:         <span class="ruby-ivar">@modules</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>,<span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span> },
+693:         <span class="ruby-ivar">@classes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>,<span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span> }
+694:       ]
+695:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

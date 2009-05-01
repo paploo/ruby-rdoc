@@ -1,0 +1,2351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: CSV [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">CSV</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/lib/csv_rb.html">
+
+                lib/csv.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This class provides a complete interface to <a href="CSV.html">CSV</a>
+files and data. It offers tools to enable you to read and write to and from
+Strings or <a href="IO.html">IO</a> objects, as needed.
+</p>
+<h2>Reading</h2>
+<h3>From a <a href="File.html">File</a></h3>
+<h4>A Line at a <a href="Time.html">Time</a></h4>
+<pre>
+  CSV.foreach(&quot;path/to/file.csv&quot;) do |row|
+    # use row here...
+  end
+</pre>
+<h4>All at Once</h4>
+<pre>
+  arr_of_arrs = CSV.read(&quot;path/to/file.csv&quot;)
+</pre>
+<h3>From a <a href="String.html">String</a></h3>
+<h4>A Line at a <a href="Time.html">Time</a></h4>
+<pre>
+  CSV.parse(&quot;CSV,data,String&quot;) do |row|
+    # use row here...
+  end
+</pre>
+<h4>All at Once</h4>
+<pre>
+  arr_of_arrs = CSV.parse(&quot;CSV,data,String&quot;)
+</pre>
+<h2>Writing</h2>
+<h3>To a <a href="File.html">File</a></h3>
+<pre>
+  CSV.open(&quot;path/to/file.csv&quot;, &quot;wb&quot;) do |csv|
+    csv &lt;&lt; [&quot;row&quot;, &quot;of&quot;, &quot;CSV&quot;, &quot;data&quot;]
+    csv &lt;&lt; [&quot;another&quot;, &quot;row&quot;]
+    # ...
+  end
+</pre>
+<h3>To a <a href="String.html">String</a></h3>
+<pre>
+  csv_string = CSV.generate do |csv|
+    csv &lt;&lt; [&quot;row&quot;, &quot;of&quot;, &quot;CSV&quot;, &quot;data&quot;]
+    csv &lt;&lt; [&quot;another&quot;, &quot;row&quot;]
+    # ...
+  end
+</pre>
+<h2>Convert a Single Line</h2>
+<pre>
+  csv_string = [&quot;CSV&quot;, &quot;data&quot;].to_csv   # to CSV
+  csv_array  = &quot;CSV,String&quot;.parse_csv   # from CSV
+</pre>
+<h2>Shortcut Interface</h2>
+<pre>
+  CSV             { |csv_out| csv_out &lt;&lt; %w{my data here} }  # to $stdout
+  CSV(csv = &quot;&quot;)   { |csv_str| csv_str &lt;&lt; %w{my data here} }  # to a String
+  CSV($stderr)    { |csv_err| csv_err &lt;&lt; %w{my data here} }  # to $stderr
+</pre>
+<h2><a href="CSV.html">CSV</a> and Character Encodings (M17n or Multilingualization)</h2>
+<p>
+This new <a href="CSV.html">CSV</a> parser is m17n savvy. The parser works
+in the <a href="Encoding.html">Encoding</a> of the <a href="IO.html">IO</a>
+or <a href="String.html">String</a> object being read from or written to.
+Your data is never transcoded (unless you ask Ruby to transcode it for you)
+and will literally be parsed in the <a href="Encoding.html">Encoding</a> it
+is in. Thus <a href="CSV.html">CSV</a> will return Arrays or Rows of
+Strings in the <a href="Encoding.html">Encoding</a> of your data. This is
+accomplished by transcoding the parser itself into your <a
+href="Encoding.html">Encoding</a>.
+</p>
+<p>
+Some transcoding must take place, of course, to accomplish this
+multiencoding support. For example, <tt>:col_sep</tt>, <tt>:row_sep</tt>,
+and <tt>:quote_char</tt> must be transcoded to match your data. Hopefully
+this makes the entire process feel transparent, since CSV&#8217;s defaults
+should just magically work for you data. However, you can set these values
+manually in the target <a href="Encoding.html">Encoding</a> to avoid the
+translation.
+</p>
+<p>
+It&#8217;s also important to note that while all of CSV&#8217;s core parser
+is now <a href="Encoding.html">Encoding</a> agnostic, some features are
+not. For example, the built-in converters will try to transcode data to
+UTF-8 before making conversions. Again, you can provide custom converters
+that are aware of your Encodings to avoid this translation. It&#8217;s just
+too hard for me to support native conversions in all of Ruby&#8217;s
+Encodings.
+</p>
+<p>
+Anyway, the practical side of this is simple: make sure <a
+href="IO.html">IO</a> and <a href="String.html">String</a> objects passed
+into <a href="CSV.html">CSV</a> have the proper <a
+href="Encoding.html">Encoding</a> set and everything should just work. <a
+href="CSV.html">CSV</a> methods that allow you to open <a
+href="IO.html">IO</a> objects (CSV::foreach(), CSV::open(), CSV::read(),
+and CSV::readlines()) do allow you to specify the <a
+href="Encoding.html">Encoding</a>.
+</p>
+<p>
+One minor exception comes when generating <a href="CSV.html">CSV</a> into a
+<a href="String.html">String</a> with an <a
+href="Encoding.html">Encoding</a> that is not ASCII compatible.
+There&#8217;s no existing data for <a href="CSV.html">CSV</a> to use to
+prepare itself and thus you will probably need to manually specify the
+desired <a href="Encoding.html">Encoding</a> for most of those cases. It
+will try to guess using the fields in a row of output though, when using
+CSV::<a href="CSV.html#M001307">generate_line</a>() or <a
+href="Array.html#M000192">Array#to_csv()</a>.
+</p>
+<p>
+I try to point out any other <a href="Encoding.html">Encoding</a> issues in
+the documentation of methods as they come up.
+</p>
+<p>
+This has been tested to the best of my ability with all
+non-&#8220;dummy&#8221; Encodings Ruby ships with. However, it is brave new
+code and may have some bugs. Please feel free to <a
+href="mailto:james@grayproductions.net">report</a> any issues you find with
+it.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M001324">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M001341">add_converter</a>&nbsp;&nbsp;
+
+        <a href="#M001325">add_row</a>&nbsp;&nbsp;
+
+        <a href="#M001344">add_unconverted_fields</a>&nbsp;&nbsp;
+
+        <a href="#M001327">convert</a>&nbsp;&nbsp;
+
+        <a href="#M001342">convert_fields</a>&nbsp;&nbsp;
+
+        <a href="#M001315">converters</a>&nbsp;&nbsp;
+
+        <a href="#M001302">dump</a>&nbsp;&nbsp;
+
+        <a href="#M001329">each</a>&nbsp;&nbsp;
+
+        <a href="#M001346">encode_re</a>&nbsp;&nbsp;
+
+        <a href="#M001347">encode_str</a>&nbsp;&nbsp;
+
+        <a href="#M001345">escape_re</a>&nbsp;&nbsp;
+
+        <a href="#M001304">filter</a>&nbsp;&nbsp;
+
+        <a href="#M001322">force_quotes?</a>&nbsp;&nbsp;
+
+        <a href="#M001305">foreach</a>&nbsp;&nbsp;
+
+        <a href="#M001306">generate</a>&nbsp;&nbsp;
+
+        <a href="#M001307">generate_line</a>&nbsp;&nbsp;
+
+        <a href="#M001334">gets</a>&nbsp;&nbsp;
+
+        <a href="#M001328">header_convert</a>&nbsp;&nbsp;
+
+        <a href="#M001320">header_converters</a>&nbsp;&nbsp;
+
+        <a href="#M001332">header_row?</a>&nbsp;&nbsp;
+
+        <a href="#M001317">headers</a>&nbsp;&nbsp;
+
+        <a href="#M001339">init_converters</a>&nbsp;&nbsp;
+
+        <a href="#M001340">init_headers</a>&nbsp;&nbsp;
+
+        <a href="#M001338">init_parsers</a>&nbsp;&nbsp;
+
+        <a href="#M001337">init_separators</a>&nbsp;&nbsp;
+
+        <a href="#M001336">inspect</a>&nbsp;&nbsp;
+
+        <a href="#M001301">instance</a>&nbsp;&nbsp;
+
+        <a href="#M001303">load</a>&nbsp;&nbsp;
+
+        <a href="#M001314">new</a>&nbsp;&nbsp;
+
+        <a href="#M001308">open</a>&nbsp;&nbsp;
+
+        <a href="#M001309">parse</a>&nbsp;&nbsp;
+
+        <a href="#M001343">parse_headers</a>&nbsp;&nbsp;
+
+        <a href="#M001310">parse_line</a>&nbsp;&nbsp;
+
+        <a href="#M001326">puts</a>&nbsp;&nbsp;
+
+        <a href="#M001311">read</a>&nbsp;&nbsp;
+
+        <a href="#M001330">read</a>&nbsp;&nbsp;
+
+        <a href="#M001348">read_to_char</a>&nbsp;&nbsp;
+
+        <a href="#M001335">readline</a>&nbsp;&nbsp;
+
+        <a href="#M001331">readlines</a>&nbsp;&nbsp;
+
+        <a href="#M001312">readlines</a>&nbsp;&nbsp;
+
+        <a href="#M001318">return_headers?</a>&nbsp;&nbsp;
+
+        <a href="#M001323">rewind</a>&nbsp;&nbsp;
+
+        <a href="#M001333">shift</a>&nbsp;&nbsp;
+
+        <a href="#M001321">skip_blanks?</a>&nbsp;&nbsp;
+
+        <a href="#M001313">table</a>&nbsp;&nbsp;
+
+        <a href="#M001316">unconverted_fields?</a>&nbsp;&nbsp;
+
+        <a href="#M001319">write_headers?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Enumerable.html">Enumerable</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="CSV/MalformedCSVError.html" class="link">CSV::MalformedCSVError</a><br />
+Class <a href="CSV/Row.html" class="link">CSV::Row</a><br />
+Class <a href="CSV/Table.html" class="link">CSV::Table</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;2.4.5&quot;.freeze</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+The version of the installed library.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FieldInfo</td>
+          <td>=</td>
+          <td class="context-item-value">Struct.new(:index, :line, :header)</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+A FieldInfo <a href="Struct.html">Struct</a> contains details about a
+field&#8217;s position in the data source it was read from. <a
+href="CSV.html">CSV</a> will pass this <a href="Struct.html">Struct</a> to
+some blocks that make decisions based on field structure. See <a
+href="CSV.html#M001342">CSV.convert_fields()</a> for an example.
+
+<table>
+<tr><td valign="top"><b><tt>index</tt></b>:</td><td>The zero-based index of the field in its row.
+
+</td></tr>
+<tr><td valign="top"><b><tt>line</tt></b>:</td><td>The line of the data source this row is from.
+
+</td></tr>
+<tr><td valign="top"><b><tt>header</tt></b>:</td><td>The header for the column, when available.
+
+</td></tr>
+</table>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DateMatcher</td>
+          <td>=</td>
+          <td class="context-item-value">/ \A(?: (\w+,?\s+)?\w+\s+\d{1,2},?\s+\d{2,4} |                             \d{4}-\d{2}-\d{2} )\z /x</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+A <a href="Regexp.html">Regexp</a> used to find and convert some common <a
+href="Date.html">Date</a> formats.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DateTimeMatcher</td>
+          <td>=</td>
+          <td class="context-item-value">/ \A(?: (\w+,?\s+)?\w+\s+\d{1,2}\s+\d{1,2}:\d{1,2}:\d{1,2},?\s+\d{2,4} |             \d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2} )\z /x</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+A <a href="Regexp.html">Regexp</a> used to find and convert some common <a
+href="DateTime.html">DateTime</a> formats.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ConverterEncoding</td>
+          <td>=</td>
+          <td class="context-item-value">Encoding.find(&quot;UTF-8&quot;)</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+The encoding used by all converters.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Converters</td>
+          <td>=</td>
+          <td class="context-item-value">{ integer:   lambda { |f|                     Integer(f.encode(ConverterEncoding)) rescue f                   },                   float:     lambda { |f|                     Float(f.encode(ConverterEncoding)) rescue f</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This <a href="Hash.html">Hash</a> holds the built-in converters of <a
+href="CSV.html">CSV</a> that can be accessed by name. You can select
+Converters with <a href="CSV.html#M001327">CSV.convert()</a> or through the
+<tt>options</tt> <a href="Hash.html">Hash</a> passed to CSV::new().
+
+<table>
+<tr><td valign="top"><b><tt>:integer</tt></b>:</td><td>Converts any field Integer() accepts.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:float</tt></b>:</td><td>Converts any field Float() accepts.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:numeric</tt></b>:</td><td>A combination of <tt>:integer</tt> and <tt>:float</tt>.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:date</tt></b>:</td><td>Converts any field Date::parse() accepts.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:date_time</tt></b>:</td><td>Converts any field DateTime::parse() accepts.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:all</tt></b>:</td><td>All built-in converters. A combination of <tt>:date_time</tt> and
+<tt>:numeric</tt>.
+
+</td></tr>
+</table>
+<p>
+All built-in converters transcode field data to UTF-8 before attempting a
+conversion. If your data cannot be transcoded to UTF-8 the conversion will
+fail and the field will remain unchanged.
+</p>
+<p>
+This <a href="Hash.html">Hash</a> is intentionally left unfrozen and users
+should feel free to add values to it that can be accessed by all <a
+href="CSV.html">CSV</a> objects.
+</p>
+<p>
+To add a combo field, the value should be an <a href="Array.html">Array</a>
+of names. Combo fields can be nested with other combo fields.
+</p>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HeaderConverters</td>
+          <td>=</td>
+          <td class="context-item-value">{     downcase: lambda { |h| h.encode(ConverterEncoding).downcase },     symbol:   lambda { |h|       h.encode(ConverterEncoding).downcase.gsub(/\s+/, &quot;_&quot;).                                            gsub(/\W+/, &quot;&quot;).to_sym</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This <a href="Hash.html">Hash</a> holds the built-in header converters of
+<a href="CSV.html">CSV</a> that can be accessed by name. You can select
+HeaderConverters with <a href="CSV.html#M001328">CSV.header_convert()</a>
+or through the <tt>options</tt> <a href="Hash.html">Hash</a> passed to
+CSV::new().
+
+<table>
+<tr><td valign="top"><b><tt>:downcase</tt></b>:</td><td>Calls downcase() on the header <a href="String.html">String</a>.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:symbol</tt></b>:</td><td>The header <a href="String.html">String</a> is downcased, spaces are
+replaced with underscores, non-word characters are dropped, and finally
+to_sym() is called.
+
+</td></tr>
+</table>
+<p>
+All built-in header converters transcode header data to UTF-8 before
+attempting a conversion. If your data cannot be transcoded to UTF-8 the
+conversion will fail and the header will remain unchanged.
+</p>
+<p>
+This <a href="Hash.html">Hash</a> is intetionally left unfrozen and users
+should feel free to add values to it that can be accessed by all <a
+href="CSV.html">CSV</a> objects.
+</p>
+<p>
+To add a combo field, the value should be an <a href="Array.html">Array</a>
+of names. Combo fields can be nested with other combo fields.
+</p>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_OPTIONS</td>
+          <td>=</td>
+          <td class="context-item-value">{ col_sep:            &quot;,&quot;,                       row_sep:            :auto,                       quote_char:         '&quot;',                        field_size_limit:   nil,                       converters:         nil,                       unconverted_fields: nil,                       headers:            false,                       return_headers:     false,                       header_converters:  nil,                       skip_blanks:        false,                       force_quotes:       false }.freeze</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+The options used when no overrides are given by calling code. They are:
+
+<table>
+<tr><td valign="top"><b><tt>:col_sep</tt></b>:</td><td><tt>&quot;,&quot;</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:row_sep</tt></b>:</td><td><tt>:auto</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:quote_char</tt></b>:</td><td><tt>'&quot;'</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:field_size_limit</tt></b>:</td><td><tt>nil</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:converters</tt></b>:</td><td><tt>nil</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:unconverted_fields</tt></b>:</td><td><tt>nil</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:headers</tt></b>:</td><td><tt>false</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:return_headers</tt></b>:</td><td><tt>false</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:<a href="CSV.html#M001320">header_converters</a></tt></b>:</td><td><tt>nil</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:skip_blanks</tt></b>:</td><td><tt>false</tt>
+
+</td></tr>
+<tr><td valign="top"><b><tt>:force_quotes</tt></b>:</td><td><tt>false</tt>
+
+</td></tr>
+</table>
+</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">col_sep</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The encoded <tt>:col_sep</tt> used in parsing and writing. See CSV::new for
+details.
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">encoding</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The <a href="Encoding.html">Encoding</a> <a href="CSV.html">CSV</a> is
+parsing or writing in. This will be the <a
+href="Encoding.html">Encoding</a> you receive parsed data in and/or the <a
+href="Encoding.html">Encoding</a> data will be written in.
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">field_size_limit</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The limit for field size, if any. See CSV::new for details.
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">lineno</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The line number of the last row read from this file. Fields with nested
+line-end characters will not affect this count.
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">quote_char</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The encoded <tt>:quote_char</tt> used in parsing and writing. See CSV::new
+for details.
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">row_sep</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The encoded <tt>:row_sep</tt> used in parsing and writing. See CSV::new for
+details.
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M001302" class="method-detail">
+        <a name="M001302"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001302.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001302.html');return false;">
+
+          <span class="method-name">dump</span><span class="method-args">(ary_of_objs, io = &quot;&quot;, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method allows you to serialize an <a href="Array.html">Array</a> of
+Ruby objects to a <a href="String.html">String</a> or <a
+href="File.html">File</a> of <a href="CSV.html">CSV</a> data. This is not
+as powerful as <a href="Marshal.html">Marshal</a> or <a
+href="YAML.html">YAML</a>, but perhaps useful for spreadsheet and database
+interaction.
+</p>
+<p>
+Out of the box, this method is intended to work with simple data objects or
+Structs. It will serialize a list of instance variables and/or <a
+href="Struct.html#M001142">Struct.members()</a>.
+</p>
+<p>
+If you need need more complicated serialization, you can control the
+process by adding methods to the class to be serialized.
+</p>
+<p>
+A class method csv_meta() is responsible for returning the first row of the
+document (as an <a href="Array.html">Array</a>). This row is considered to
+be a <a href="Hash.html">Hash</a> of the form
+key_1,value_1,key_2,value_2,&#8230; CSV::load() expects to find a class key
+with a value of the stringified class name and CSV::dump() will create
+this, if you do not define this method. This method is only called on the
+first object of the <a href="Array.html">Array</a>.
+</p>
+<p>
+The next method you can provide is an instance method called csv_headers().
+This method is expected to return the second line of the document (again as
+an <a href="Array.html">Array</a>), which is to be used to give each column
+a header. By default, CSV::load() will set an instance variable if the
+field header starts with an @ character or call send() passing the header
+as the method name and the field value as an argument. This method is only
+called on the first object of the <a href="Array.html">Array</a>.
+</p>
+<p>
+Finally, you can provide an instance method called csv_dump(), which will
+be passed the headers. This should return an <a href="Array.html">Array</a>
+of fields that can be serialized for this object. This method is called
+once for every object in the <a href="Array.html">Array</a>.
+</p>
+<p>
+The <tt>io</tt> parameter can be used to serialize to a <a
+href="File.html">File</a>, and <tt>options</tt> can be anything CSV::new()
+accepts.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001304" class="method-detail">
+        <a name="M001304"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001304.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001304.html');return false;">
+
+          <span class="method-name">filter( options = Hash.new ) { |row| ... }<br />
+filter( input, options = Hash.new ) { |row| ... }<br />
+filter( input, output, options = Hash.new ) { |row| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is a convenience for building Unix-like filters for <a
+href="CSV.html">CSV</a> data. Each row is yielded to the provided block
+which can alter it as needed. After the block returns, the row is appended
+to <tt>output</tt> altered or not.
+</p>
+<p>
+The <tt>input</tt> and <tt>output</tt> arguments can be anything CSV::new()
+accepts (generally <a href="String.html">String</a> or <a
+href="IO.html">IO</a> objects). If not given, they default to <tt>ARGF</tt>
+and <tt>$stdout</tt>.
+</p>
+<p>
+The <tt>options</tt> parameter is also filtered down to CSV::new() after
+some clever key parsing. Any key beginning with <tt>:in_</tt> or
+<tt>:input_</tt> will have that leading identifier stripped and will only
+be used in the <tt>options</tt> <a href="Hash.html">Hash</a> for the
+<tt>input</tt> object. Keys starting with <tt>:out_</tt> or
+<tt>:output_</tt> affect only <tt>output</tt>. All other keys are assigned
+to both objects.
+</p>
+<p>
+The <tt>:output_row_sep</tt> <tt>option</tt> defaults to
+<tt>$INPUT_RECORD_SEPARATOR</tt> (<tt>$/</tt>).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001305" class="method-detail">
+        <a name="M001305"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001305.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001305.html');return false;">
+
+          <span class="method-name">foreach</span><span class="method-args">(path, options = Hash.new, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is intended as the primary interface for reading <a
+href="CSV.html">CSV</a> files. You pass a <tt>path</tt> and any
+<tt>options</tt> you wish to set for the read. Each row of file will be
+passed to the provided <tt>block</tt> in turn.
+</p>
+<p>
+The <tt>options</tt> parameter can be anything CSV::new() understands. This
+method also understands an additional <tt>:encoding</tt> parameter that you
+can use to specify the <a href="Encoding.html">Encoding</a> of the data in
+the file to be read. You must provide this unless your data is in
+Encoding::default_external(). <a href="CSV.html">CSV</a> will use this to
+deterime how to parse the data. You may provide a second <a
+href="Encoding.html">Encoding</a> to have the data transcoded as it is
+read. For example, <tt>encoding: &quot;UTF-32BE:UTF-8&quot;</tt> would read
+UTF-32BE data from the file but transcode it to UTF-8 before <a
+href="CSV.html">CSV</a> parses it.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001306" class="method-detail">
+        <a name="M001306"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001306.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001306.html');return false;">
+
+          <span class="method-name">generate( str, options = Hash.new ) { |csv| ... }<br />
+generate( options = Hash.new ) { |csv| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method wraps a <a href="String.html">String</a> you provide, or an
+empty default <a href="String.html">String</a>, in a <a
+href="CSV.html">CSV</a> object which is passed to the provided block. You
+can use the block to append <a href="CSV.html">CSV</a> rows to the <a
+href="String.html">String</a> and when the block exits, the final <a
+href="String.html">String</a> will be returned.
+</p>
+<p>
+Note that a passed <a href="String.html">String</a> <b>is</b> modfied by
+this method. Call dup() before passing if you need a new <a
+href="String.html">String</a>.
+</p>
+<p>
+The <tt>options</tt> parameter can be anthing CSV::new() understands. This
+method understands an additional <tt>:encoding</tt> parameter when not
+passed a <a href="String.html">String</a> to set the base <a
+href="Encoding.html">Encoding</a> for the output. <a
+href="CSV.html">CSV</a> needs this hint if you plan to output non-ASCII
+compatible data.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001307" class="method-detail">
+        <a name="M001307"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001307.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001307.html');return false;">
+
+          <span class="method-name">generate_line</span><span class="method-args">(row, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is a shortcut for converting a single row (<a
+href="Array.html">Array</a>) into a <a href="CSV.html">CSV</a> <a
+href="String.html">String</a>.
+</p>
+<p>
+The <tt>options</tt> parameter can be anthing CSV::new() understands. This
+method understands an additional <tt>:encoding</tt> parameter to set the
+base <a href="Encoding.html">Encoding</a> for the output. This method will
+try to guess your <a href="Encoding.html">Encoding</a> from the first
+non-<tt>nil</tt> field in <tt>row</tt>, if possible, but you may need to
+use this parameter as a backup plan.
+</p>
+<p>
+The <tt>:row_sep</tt> <tt>option</tt> defaults to
+<tt>$INPUT_RECORD_SEPARATOR</tt> (<tt>$/</tt>) when calling this method.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001301" class="method-detail">
+        <a name="M001301"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001301.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001301.html');return false;">
+
+          <span class="method-name">instance</span><span class="method-args">(data = $stdout, options = Hash.new) {|instance| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method will return a <a href="CSV.html">CSV</a> instance, just like
+CSV::new(), but the instance will be cached and returned for all future
+calls to this method for the same <tt>data</tt> object (tested by <a
+href="Object.html#M000596">Object#object_id()</a>) with the same
+<tt>options</tt>.
+</p>
+<p>
+If a block is given, the instance is passed to the block and the return
+value becomes the return value of the block.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001303" class="method-detail">
+        <a name="M001303"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001303.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001303.html');return false;">
+
+          <span class="method-name">load</span><span class="method-args">(io_or_str, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is the reading counterpart to CSV::dump(). See that method for
+a detailed description of the process.
+</p>
+<p>
+You can customize loading by adding a class method called csv_load() which
+will be passed a <a href="Hash.html">Hash</a> of meta information, an <a
+href="Array.html">Array</a> of headers, and an <a
+href="Array.html">Array</a> of fields for the object the method is expected
+to return.
+</p>
+<p>
+Remember that all fields will be Strings after this load. If you need
+something else, use <tt>options</tt> to setup converters or provide a
+custom csv_load() implementation.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001314" class="method-detail">
+        <a name="M001314"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001314.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001314.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(data, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This constructor will wrap either a <a href="String.html">String</a> or <a
+href="IO.html">IO</a> object passed in <tt>data</tt> for reading and/or
+writing. In addition to the <a href="CSV.html">CSV</a> instance methods,
+several <a href="IO.html">IO</a> methods are delegated. (See CSV::open()
+for a complete list.) If you pass a <a href="String.html">String</a> for
+<tt>data</tt>, you can later retrieve it (after writing to it, for example)
+with CSV.string().
+</p>
+<p>
+Note that a wrapped <a href="String.html">String</a> will be positioned at
+at the beginning (for reading). If you want it at the end (for writing),
+use CSV::generate(). If you want any other positioning, pass a preset <a
+href="StringIO.html">StringIO</a> object instead.
+</p>
+<p>
+You may set any reading and/or writing preferences in the <tt>options</tt>
+<a href="Hash.html">Hash</a>. Available options are:
+</p>
+<table>
+<tr><td valign="top"><b><tt>:col_sep</tt></b>:</td><td>The <a href="String.html">String</a> placed between each field. This <a
+href="String.html">String</a> will be transcoded into the data&#8217;s <a
+href="Encoding.html">Encoding</a> before parsing.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:row_sep</tt></b>:</td><td>The <a href="String.html">String</a> appended to the end of each row. This
+can be set to the special <tt>:auto</tt> setting, which requests that <a
+href="CSV.html">CSV</a> automatically discover this from the data.
+Auto-discovery reads ahead in the data looking for the next
+<tt>&quot;r\n&quot;</tt>, <tt>&quot;n&quot;</tt>, or <tt>&quot;r&quot;</tt>
+sequence. A sequence will be selected even if it occurs in a quoted field,
+assuming that you would have the same line endings there. If none of those
+sequences is found, <tt>data</tt> is <tt>ARGF</tt>, <tt>STDIN</tt>,
+<tt>STDOUT</tt>, or <tt>STDERR</tt>, or the stream is only available for
+output, the default <tt>$INPUT_RECORD_SEPARATOR</tt> (<tt>$/</tt>) is used.
+Obviously, discovery takes a little time. <a href="Set.html">Set</a>
+manually if speed is important. Also note that <a href="IO.html">IO</a>
+objects should be opened in binary mode on Windows if this feature will be
+used as the line-ending translation can cause problems with resetting the
+document position to where it was before the read ahead. This <a
+href="String.html">String</a> will be transcoded into the data&#8217;s <a
+href="Encoding.html">Encoding</a> before parsing.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:quote_char</tt></b>:</td><td>The character used to quote fields. This has to be a single character <a
+href="String.html">String</a>. This is useful for application that
+incorrectly use <tt>'</tt> as the quote character instead of the correct
+<tt>&quot;</tt>. <a href="CSV.html">CSV</a> will always consider a double
+sequence this character to be an escaped quote. This <a
+href="String.html">String</a> will be transcoded into the data&#8217;s <a
+href="Encoding.html">Encoding</a> before parsing.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:field_size_limit</tt></b>:</td><td>This is a maximum size <a href="CSV.html">CSV</a> will read ahead looking
+for the closing quote for a field. (In truth, it reads to the first line
+ending beyond this size.) If a quote cannot be found within the limit <a
+href="CSV.html">CSV</a> will raise a <a
+href="CSV/MalformedCSVError.html">MalformedCSVError</a>, assuming the data
+is faulty. You can use this limit to prevent what are effectively DoS
+attacks on the parser. However, this limit can cause a legitimate parse to
+fail and thus is set to <tt>nil</tt>, or off, by default.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:converters</tt></b>:</td><td>An <a href="Array.html">Array</a> of names from the Converters <a
+href="Hash.html">Hash</a> and/or lambdas that handle custom conversion. A
+single converter doesn&#8217;t have to be in an <a
+href="Array.html">Array</a>. All built-in converters try to transcode
+fields to UTF-8 before converting. The conversion will fail if the data
+cannot be transcoded, leaving the field unchanged.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:unconverted_fields</tt></b>:</td><td>If set to <tt>true</tt>, an unconverted_fields() method will be added to
+all returned rows (<a href="Array.html">Array</a> or <a
+href="CSV/Row.html">CSV::Row</a>) that will return the fields as they were
+before conversion. Note that <tt>:headers</tt> supplied by <a
+href="Array.html">Array</a> or <a href="String.html">String</a> were not
+fields of the document and thus will have an empty <a
+href="Array.html">Array</a> attached.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:headers</tt></b>:</td><td>If set to <tt>:first_row</tt> or <tt>true</tt>, the initial row of the <a
+href="CSV.html">CSV</a> file will be treated as a row of headers. If set to
+an <a href="Array.html">Array</a>, the contents will be used as the
+headers. If set to a <a href="String.html">String</a>, the <a
+href="String.html">String</a> is run through a call of CSV::<a
+href="CSV.html#M001310">parse_line</a>() with the same <tt>:col_sep</tt>,
+<tt>:row_sep</tt>, and <tt>:quote_char</tt> as this instance to produce an
+<a href="Array.html">Array</a> of headers. This setting causes <a
+href="CSV.html#M001333">CSV#shift()</a> to return rows as <a
+href="CSV/Row.html">CSV::Row</a> objects instead of Arrays and <a
+href="CSV.html#M001311">CSV#read()</a> to return <a
+href="CSV/Table.html">CSV::Table</a> objects instead of an <a
+href="Array.html">Array</a> of Arrays.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:return_headers</tt></b>:</td><td>When <tt>false</tt>, header rows are silently swallowed. If set to
+<tt>true</tt>, header rows are returned in a <a
+href="CSV/Row.html">CSV::Row</a> object with identical headers and fields
+(save that the fields do not go through the converters).
+
+</td></tr>
+<tr><td valign="top"><b><tt>:write_headers</tt></b>:</td><td>When <tt>true</tt> and <tt>:headers</tt> is set, a header row will be added
+to the output.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:<a href="CSV.html#M001320">header_converters</a></tt></b>:</td><td>Identical in functionality to <tt>:converters</tt> save that the
+conversions are only made to header rows. All built-in converters try to
+transcode headers to UTF-8 before converting. The conversion will fail if
+the data cannot be transcoded, leaving the header unchanged.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:skip_blanks</tt></b>:</td><td>When set to a <tt>true</tt> value, <a href="CSV.html">CSV</a> will skip
+over any rows with no content.
+
+</td></tr>
+<tr><td valign="top"><b><tt>:force_quotes</tt></b>:</td><td>When set to a <tt>true</tt> value, <a href="CSV.html">CSV</a> will quote
+all <a href="CSV.html">CSV</a> fields it creates.
+
+</td></tr>
+</table>
+<p>
+See CSV::DEFAULT_OPTIONS for the default settings.
+</p>
+<p>
+Options cannot be overriden in the instance methods for performance
+reasons, so be sure to set what you want here.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001308" class="method-detail">
+        <a name="M001308"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001308.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001308.html');return false;">
+
+          <span class="method-name">open( filename, mode = "rb", options = Hash.new ) { |faster_csv| ... }<br />
+open( filename, options = Hash.new ) { |faster_csv| ... }<br />
+open( filename, mode = "rb", options = Hash.new )<br />
+open( filename, options = Hash.new )<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method opens an <a href="IO.html">IO</a> object, and wraps that with
+<a href="CSV.html">CSV</a>. This is intended as the primary interface for
+writing a <a href="CSV.html">CSV</a> file.
+</p>
+<p>
+You must pass a <tt>filename</tt> and may optionally add a <tt>mode</tt>
+for Ruby&#8217;s open(). You may also pass an optional <a
+href="Hash.html">Hash</a> containing any <tt>options</tt> CSV::new()
+understands as the final argument.
+</p>
+<p>
+This method works like Ruby&#8217;s open() call, in that it will pass a <a
+href="CSV.html">CSV</a> object to a provided block and close it when the
+block terminates, or it will return the <a href="CSV.html">CSV</a> object
+when no block is provided. (<b>Note</b>: This is different from the Ruby
+1.8 <a href="CSV.html">CSV</a> library which passed rows to the block. Use
+CSV::foreach() for that behavior.)
+</p>
+<p>
+You must provide a <tt>mode</tt> with an embedded <a
+href="Encoding.html">Encoding</a> designator unless your data is in
+Encoding::default_external(). <a href="CSV.html">CSV</a> will check the <a
+href="Encoding.html">Encoding</a> of the underlying <a
+href="IO.html">IO</a> object (set by the <tt>mode</tt> you pass) to
+deterime how to parse the data. You may provide a second <a
+href="Encoding.html">Encoding</a> to have the data transcoded as it is read
+just as you can with a normal call to IO::open(). For example,
+<tt>&quot;rb:UTF-32BE:UTF-8&quot;</tt> would read UTF-32BE data from the
+file but transcode it to UTF-8 before <a href="CSV.html">CSV</a> parses it.
+</p>
+<p>
+An opened <a href="CSV.html">CSV</a> object will delegate to many <a
+href="IO.html">IO</a> methods for convenience. You may call:
+</p>
+<ul>
+<li>binmode()
+
+</li>
+<li>binmode?()
+
+</li>
+<li>close()
+
+</li>
+<li>close_read()
+
+</li>
+<li>close_write()
+
+</li>
+<li>closed?()
+
+</li>
+<li>eof()
+
+</li>
+<li>eof?()
+
+</li>
+<li>external_encoding()
+
+</li>
+<li>fcntl()
+
+</li>
+<li>fileno()
+
+</li>
+<li>flock()
+
+</li>
+<li>flush()
+
+</li>
+<li>fsync()
+
+</li>
+<li>internal_encoding()
+
+</li>
+<li>ioctl()
+
+</li>
+<li>isatty()
+
+</li>
+<li>path()
+
+</li>
+<li>pid()
+
+</li>
+<li>pos()
+
+</li>
+<li>pos=()
+
+</li>
+<li>reopen()
+
+</li>
+<li>seek()
+
+</li>
+<li>stat()
+
+</li>
+<li>sync()
+
+</li>
+<li>sync=()
+
+</li>
+<li>tell()
+
+</li>
+<li>to_i()
+
+</li>
+<li>to_io()
+
+</li>
+<li>truncate()
+
+</li>
+<li>tty?()
+
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001309" class="method-detail">
+        <a name="M001309"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001309.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001309.html');return false;">
+
+          <span class="method-name">parse( str, options = Hash.new ) { |row| ... }<br />
+parse( str, options = Hash.new )<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method can be used to easily parse <a href="CSV.html">CSV</a> out of a
+<a href="String.html">String</a>. You may either provide a <tt>block</tt>
+which will be called with each row of the <a href="String.html">String</a>
+in turn, or just use the returned <a href="Array.html">Array</a> of Arrays
+(when no <tt>block</tt> is given).
+</p>
+<p>
+You pass your <tt>str</tt> to read from, and an optional <tt>options</tt>
+<a href="Hash.html">Hash</a> containing anything CSV::new() understands.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001310" class="method-detail">
+        <a name="M001310"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001310.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001310.html');return false;">
+
+          <span class="method-name">parse_line</span><span class="method-args">(line, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is a shortcut for converting a single line of a <a
+href="CSV.html">CSV</a> <a href="String.html">String</a> into a into an <a
+href="Array.html">Array</a>. Note that if <tt>line</tt> contains multiple
+rows, anything beyond the first row is ignored.
+</p>
+<p>
+The <tt>options</tt> parameter can be anthing CSV::new() understands.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001311" class="method-detail">
+        <a name="M001311"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001311.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001311.html');return false;">
+
+          <span class="method-name">read</span><span class="method-args">(path, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Use to slurp a <a href="CSV.html">CSV</a> file into an <a
+href="Array.html">Array</a> of Arrays. Pass the <tt>path</tt> to the file
+and any <tt>options</tt> CSV::new() understands. This method also
+understands an additional <tt>:encoding</tt> parameter that you can use to
+specify the <a href="Encoding.html">Encoding</a> of the data in the file to
+be read. You must provide this unless your data is in
+Encoding::default_external(). <a href="CSV.html">CSV</a> will use this to
+deterime how to parse the data. You may provide a second <a
+href="Encoding.html">Encoding</a> to have the data transcoded as it is
+read. For example, <tt>encoding: &quot;UTF-32BE:UTF-8&quot;</tt> would read
+UTF-32BE data from the file but transcode it to UTF-8 before <a
+href="CSV.html">CSV</a> parses it.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001312" class="method-detail">
+        <a name="M001312"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001312.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001312.html');return false;">
+
+          <span class="method-name">readlines</span><span class="method-args">(*args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for CSV::read().
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001313" class="method-detail">
+        <a name="M001313"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001313.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001313.html');return false;">
+
+          <span class="method-name">table</span><span class="method-args">(path, options = Hash.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+A shortcut for:
+</p>
+<pre>
+  CSV.read( path, { headers:           true,
+                    converters:        :numeric,
+                    header_converters: :symbol }.merge(options) )
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M001324" class="method-detail">
+        <a name="M001324"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001324.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001324.html');return false;">
+
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(row)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The primary write method for wrapped Strings and IOs, <tt>row</tt> (an <a
+href="Array.html">Array</a> or <a href="CSV/Row.html">CSV::Row</a>) is
+converted to <a href="CSV.html">CSV</a> and appended to the data source.
+When a <a href="CSV/Row.html">CSV::Row</a> is passed, only the row&#8217;s
+fields() are appended to the output.
+</p>
+<p>
+The data source must be open for writing.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001325" class="method-detail">
+        <a name="M001325"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">add_row</span><span class="method-args">(row)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #<<
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001327" class="method-detail">
+        <a name="M001327"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001327.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001327.html');return false;">
+
+          <span class="method-name">convert( name )<br />
+convert { |field| ... }<br />
+convert { |field, field_info| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+You can use this method to install a CSV::Converters built-in, or provide a
+block that handles a custom conversion.
+</p>
+<p>
+If you provide a block that takes one argument, it will be passed the field
+and is expected to return the converted value or the field itself. If your
+block takes two arguments, it will also be passed a CSV::FieldInfo <a
+href="Struct.html">Struct</a>, containing details about the field. Again,
+the block should return a converted field or the field itself.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001315" class="method-detail">
+        <a name="M001315"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001315.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001315.html');return false;">
+
+          <span class="method-name">converters</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the current list of converters in effect. See CSV::new for details.
+Built-in converters will be returned by name, while others will be returned
+as is.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001329" class="method-detail">
+        <a name="M001329"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001329.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001329.html');return false;">
+
+          <span class="method-name">each</span><span class="method-args">() {|row| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Yields each row of the data source in turn.
+</p>
+<p>
+Support for <a href="Enumerable.html">Enumerable</a>.
+</p>
+<p>
+The data source must be open for reading.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001322" class="method-detail">
+        <a name="M001322"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001322.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001322.html');return false;">
+
+          <span class="method-name">force_quotes?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if all output fields are quoted. See CSV::new for
+details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001334" class="method-detail">
+        <a name="M001334"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">gets</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CSV.html#M001333">shift</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001328" class="method-detail">
+        <a name="M001328"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001328.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001328.html');return false;">
+
+          <span class="method-name">header_convert( name )<br />
+header_convert { |field| ... }<br />
+header_convert { |field, field_info| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Identical to <a href="CSV.html#M001327">CSV#convert()</a>, but for header
+rows.
+</p>
+<p>
+Note that this method must be called before header rows are read to have
+any effect.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001320" class="method-detail">
+        <a name="M001320"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001320.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001320.html');return false;">
+
+          <span class="method-name">header_converters</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the current list of converters in effect for headers. See CSV::new
+for details. Built-in converters will be returned by name, while others
+will be returned as is.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001332" class="method-detail">
+        <a name="M001332"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001332.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001332.html');return false;">
+
+          <span class="method-name">header_row?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the next row read will be a header row.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001317" class="method-detail">
+        <a name="M001317"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001317.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001317.html');return false;">
+
+          <span class="method-name">headers</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>nil</tt> if headers will not be used, <tt>true</tt> if they
+will but have not yet been read, or the actual headers after they have been
+read. See CSV::new for details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001336" class="method-detail">
+        <a name="M001336"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001336.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001336.html');return false;">
+
+          <span class="method-name">inspect</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a simplified description of the key FasterCSV attributes in an
+ASCII compatible <a href="String.html">String</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001326" class="method-detail">
+        <a name="M001326"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">puts</span><span class="method-args">(row)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #<<
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001330" class="method-detail">
+        <a name="M001330"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001330.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001330.html');return false;">
+
+          <span class="method-name">read</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Slurps the remaining rows and returns an <a href="Array.html">Array</a> of
+Arrays.
+</p>
+<p>
+The data source must be open for reading.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001335" class="method-detail">
+        <a name="M001335"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">readline</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CSV.html#M001333">shift</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001331" class="method-detail">
+        <a name="M001331"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">readlines</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CSV.html#M001311">read</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001318" class="method-detail">
+        <a name="M001318"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001318.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001318.html');return false;">
+
+          <span class="method-name">return_headers?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if headers will be returned as a row of results. See
+CSV::new for details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001323" class="method-detail">
+        <a name="M001323"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001323.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001323.html');return false;">
+
+          <span class="method-name">rewind</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Rewinds the underlying <a href="IO.html">IO</a> object and resets
+CSV&#8217;s lineno() counter.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001333" class="method-detail">
+        <a name="M001333"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001333.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001333.html');return false;">
+
+          <span class="method-name">shift</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The primary read method for wrapped Strings and IOs, a single row is pulled
+from the data source, parsed and returned as an <a
+href="Array.html">Array</a> of fields (if header rows are not used) or a <a
+href="CSV/Row.html">CSV::Row</a> (when header rows are used).
+</p>
+<p>
+The data source must be open for reading.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001321" class="method-detail">
+        <a name="M001321"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001321.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001321.html');return false;">
+
+          <span class="method-name">skip_blanks?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> blank lines are skipped by the parser. See CSV::new
+for details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001316" class="method-detail">
+        <a name="M001316"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001316.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001316.html');return false;">
+
+          <span class="method-name">unconverted_fields?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if unconverted_fields() to parsed results. See
+CSV::new for details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001319" class="method-detail">
+        <a name="M001319"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001319.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001319.html');return false;">
+
+          <span class="method-name">write_headers?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if headers are written in output. See CSV::new for
+details.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M001341" class="method-detail">
+        <a name="M001341"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001341.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001341.html');return false;">
+
+          <span class="method-name">add_converter</span><span class="method-args">(var_name, const, name = nil, &amp;converter)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The actual work method for adding converters, used by both <a
+href="CSV.html#M001327">CSV.convert()</a> and <a
+href="CSV.html#M001328">CSV.header_convert()</a>.
+</p>
+<p>
+This method requires the <tt>var_name</tt> of the instance variable to
+place the converters in, the <tt>const</tt> <a href="Hash.html">Hash</a> to
+lookup named converters in, and the normal parameters of the <a
+href="CSV.html#M001327">CSV.convert()</a> and <a
+href="CSV.html#M001328">CSV.header_convert()</a> methods.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001344" class="method-detail">
+        <a name="M001344"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001344.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001344.html');return false;">
+
+          <span class="method-name">add_unconverted_fields</span><span class="method-args">(row, fields)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Thiw methods injects an instance variable <tt>unconverted_fields</tt> into
+<tt>row</tt> and an accessor method for it called unconverted_fields(). The
+variable is set to the contents of <tt>fields</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001342" class="method-detail">
+        <a name="M001342"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001342.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001342.html');return false;">
+
+          <span class="method-name">convert_fields</span><span class="method-args">(fields, headers = false)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Processes <tt>fields</tt> with <tt>@converters</tt>, or <tt>@<a
+href="CSV.html#M001320">header_converters</a></tt> if <tt>headers</tt> is
+passed as <tt>true</tt>, returning the converted field set. Any converter
+that changes the field into something other than a <a
+href="String.html">String</a> halts the pipeline of conversion for that
+field. This is primarily an efficiency shortcut.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001346" class="method-detail">
+        <a name="M001346"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001346.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001346.html');return false;">
+
+          <span class="method-name">encode_re</span><span class="method-args">(*chunks)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Builds a regular expression in <tt>@encoding</tt>. All <tt>chunks</tt> will
+be transcoded to that encoding.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001347" class="method-detail">
+        <a name="M001347"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001347.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001347.html');return false;">
+
+          <span class="method-name">encode_str</span><span class="method-args">(*chunks)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Builds a <a href="String.html">String</a> in <tt>@encoding</tt>. All
+<tt>chunks</tt> will be transcoded to that encoding.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001345" class="method-detail">
+        <a name="M001345"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001345.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001345.html');return false;">
+
+          <span class="method-name">escape_re</span><span class="method-args">(str)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is an encoding safe version of Regexp::escape(). I will escape
+any characters that would change the meaning of a regular expression in the
+encoding of <tt>str</tt>. Regular expression characters that cannot be
+transcoded to the target encodign will be skipped and no escaping will be
+performed if a backslash cannot be transcoded.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001339" class="method-detail">
+        <a name="M001339"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001339.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001339.html');return false;">
+
+          <span class="method-name">init_converters</span><span class="method-args">(options, field_name = :converters)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Loads any converters requested during construction.
+</p>
+<p>
+If <tt>field_name</tt> is set <tt>:converters</tt> (the default) field
+converters are set. When <tt>field_name</tt> is <tt>:<a
+href="CSV.html#M001320">header_converters</a></tt> header converters are
+added instead.
+</p>
+<p>
+The <tt>:unconverted_fields</tt> option is also actived for
+<tt>:converters</tt> calls, if requested.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001340" class="method-detail">
+        <a name="M001340"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001340.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001340.html');return false;">
+
+          <span class="method-name">init_headers</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Stores header row settings and loads header converters, if needed.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001338" class="method-detail">
+        <a name="M001338"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001338.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001338.html');return false;">
+
+          <span class="method-name">init_parsers</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Pre-compiles parsers and stores them by name for access during reads.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001337" class="method-detail">
+        <a name="M001337"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001337.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001337.html');return false;">
+
+          <span class="method-name">init_separators</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Stores the indicated separators for later use.
+</p>
+<p>
+If auto-discovery was requested for <tt>@row_sep</tt>, this method will
+read ahead in the <tt>@io</tt> and try to find one. <tt>ARGF</tt>,
+<tt>STDIN</tt>, <tt>STDOUT</tt>, <tt>STDERR</tt> and any stream open for
+output only with a default <tt>@row_sep</tt> of
+<tt>$INPUT_RECORD_SEPARATOR</tt> (<tt>$/</tt>).
+</p>
+<p>
+This method also establishes the quoting rules used for <a
+href="CSV.html">CSV</a> output.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001343" class="method-detail">
+        <a name="M001343"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001343.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001343.html');return false;">
+
+          <span class="method-name">parse_headers</span><span class="method-args">(row = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This methods is used to turn a finished <tt>row</tt> into a <a
+href="CSV/Row.html">CSV::Row</a>. Header rows are also dealt with here,
+either by returning a <a href="CSV/Row.html">CSV::Row</a> with identical
+headers and fields (save that the fields do not go through the converters)
+or by reading past them to return a field row. Headers are also saved in
+<tt>@headers</tt> for use in future rows.
+</p>
+<p>
+When <tt>nil</tt>, <tt>row</tt> is assumed to be a header row not based on
+an actual row of the stream.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001348" class="method-detail">
+        <a name="M001348"></a>
+
+        <div class="method-heading">
+
+          <a href="CSV.src/M001348.html" target="Code" class="method-signature"
+            onclick="popupCode('CSV.src/M001348.html');return false;">
+
+          <span class="method-name">read_to_char</span><span class="method-args">(bytes)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Reads at least <tt>bytes</tt> from <tt>@io</tt>, but will read up 10 bytes
+ahead if needed to ensure the data read is valid in the ecoding of that
+data. This should ensure that it is safe to use regular expressions on the
+read data, unless it is actually a broken encoding. The read data will be
+returned in <tt>@encoding</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

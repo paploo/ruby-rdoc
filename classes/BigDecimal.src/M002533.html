@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Returns debugging information about the value as a string of comma-separated
+ * values in angle brackets with a leading #:
+ *
+ * BigDecimal.new(&quot;1234.5678&quot;).inspect -&gt;
+ * &quot;#&lt;BigDecimal:b7ea1130,'0.12345678E4',8(12)&gt;&quot;
+ *
+ * The first part is the address, the second is the value as a string, and
+ * the final part ss(mm) is the current number of significant digits and the
+ * maximum number of significant digits, respectively.
+ */
+static VALUE
+BigDecimal_inspect(VALUE self)
+{
+    ENTER(5);
+    Real *vp;
+    volatile VALUE obj;
+    unsigned int nc;
+    char *psz, *tmp;
+
+    GUARD_OBJ(vp,GetVpValue(self,1));
+    nc = VpNumOfChars(vp,&quot;E&quot;);
+    nc +=(nc + 9) / 10;
+
+    obj = rb_str_new(0, nc+256);
+    psz = RSTRING_PTR(obj);
+    sprintf(psz,&quot;#&lt;BigDecimal:%lx,'&quot;,self);
+    tmp = psz + strlen(psz);
+    VpToString(vp, tmp, 10, 0);
+    tmp += strlen(tmp);
+    sprintf(tmp,&quot;',%lu(%lu)&gt;&quot;,VpPrec(vp)*VpBaseFig(),VpMaxPrec(vp)*VpBaseFig());
+    rb_str_resize(obj, strlen(psz));
+    return obj;
+}</pre>
+</body>
+</html>

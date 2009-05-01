@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>const_defined? (Module)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     mod.const_defined?(sym, inherit=true)   =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if a constant with the given name is
+ *  defined by &lt;i&gt;mod&lt;/i&gt;, or its ancestors if +inherit+ is not false.
+ *     
+ *     Math.const_defined? &quot;PI&quot;   #=&gt; true
+ *     IO.const_defined? &quot;SYNC&quot;   #=&gt; true
+ *     IO.const_defined? &quot;SYNC&quot;, false   #=&gt; false
+ */
+
+static VALUE
+rb_mod_const_defined(int argc, VALUE *argv, VALUE mod)
+{
+    VALUE name, recur;
+    ID id;
+
+    if (argc == 1) {
+        name = argv[0];
+        recur = Qtrue;
+    }
+    else {
+        rb_scan_args(argc, argv, &quot;11&quot;, &amp;name, &amp;recur);
+    }
+    id = rb_to_id(name);
+    if (!rb_is_const_id(id)) {
+        rb_name_error(id, &quot;wrong constant name %s&quot;, rb_id2name(id));
+    }
+    return RTEST(recur) ? rb_const_defined(mod, id) : rb_const_defined_at(mod, id);
+}</pre>
+</body>
+</html>

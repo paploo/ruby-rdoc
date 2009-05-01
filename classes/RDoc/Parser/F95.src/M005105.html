@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_external_aliases (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1324</span>
+1324:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_external_aliases</span>(<span class="ruby-identifier">subname</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">comment</span>, <span class="ruby-identifier">test</span>=<span class="ruby-keyword kw">nil</span>)
+1325:     <span class="ruby-ivar">@@external_aliases</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">alias_item</span><span class="ruby-operator">|</span>
+1326:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">subname</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;old_name&quot;</span>] <span class="ruby-operator">||</span>
+1327:                   <span class="ruby-identifier">subname</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;old_name&quot;</span>].<span class="ruby-identifier">upcase</span> <span class="ruby-operator">&amp;&amp;</span>
+1328:                           <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">ignore_case</span>
+1329: 
+1330:         <span class="ruby-identifier">new_meth</span> = <span class="ruby-identifier">initialize_external_method</span>(<span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;new_name&quot;</span>], 
+1331:                                               <span class="ruby-identifier">subname</span>, <span class="ruby-identifier">params</span>, <span class="ruby-ivar">@file_name</span>, 
+1332:                                               <span class="ruby-identifier">comment</span>)
+1333:         <span class="ruby-identifier">new_meth</span>.<span class="ruby-identifier">visibility</span> = <span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;visibility&quot;</span>]
+1334: 
+1335:         <span class="ruby-ivar">@stats</span>.<span class="ruby-identifier">add_method</span> <span class="ruby-identifier">new_meth</span>
+1336: 
+1337:         <span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;file_or_module&quot;</span>].<span class="ruby-identifier">add_method</span>(<span class="ruby-identifier">new_meth</span>)
+1338: 
+1339:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;file_or_module&quot;</span>].<span class="ruby-identifier">include_requires?</span>(<span class="ruby-ivar">@file_name</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">ignore_case</span>)
+1340:           <span class="ruby-identifier">alias_item</span>[<span class="ruby-value str">&quot;file_or_module&quot;</span>].<span class="ruby-identifier">add_require</span>(<span class="ruby-constant">Require</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@file_name</span>, <span class="ruby-value str">&quot;&quot;</span>))
+1341:         <span class="ruby-keyword kw">end</span>
+1342:       <span class="ruby-keyword kw">end</span>
+1343:     }
+1344:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

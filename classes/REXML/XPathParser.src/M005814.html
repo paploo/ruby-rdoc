@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>equality_relational_compare (REXML::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/xpath_parser.rb, line 675</span>
+675:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">equality_relational_compare</span>( <span class="ruby-identifier">set1</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">set2</span> )
+676:       <span class="ruby-comment cmt">#puts &quot;EQ_REL_COMP(#{set1.inspect} #{op.inspect} #{set2.inspect})&quot;</span>
+677:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">set2</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+678:         <span class="ruby-comment cmt">#puts &quot;#{set1.size} &amp; #{set2.size}&quot;</span>
+679:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">set2</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+680:           <span class="ruby-identifier">set1</span> = <span class="ruby-identifier">set1</span>[<span class="ruby-value">0</span>]
+681:           <span class="ruby-identifier">set2</span> = <span class="ruby-identifier">set2</span>[<span class="ruby-value">0</span>]
+682:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">set2</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+683:           <span class="ruby-identifier">nd</span> = <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">set2</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">set1</span>
+684:           <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">nd</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">il</span><span class="ruby-operator">|</span> <span class="ruby-identifier">compare</span>( <span class="ruby-identifier">il</span>, <span class="ruby-identifier">op</span>, <span class="ruby-keyword kw">nil</span> ) }
+685:           <span class="ruby-comment cmt">#puts &quot;RV = #{rv.inspect}&quot;</span>
+686:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rv</span>
+687:         <span class="ruby-keyword kw">else</span>
+688:           <span class="ruby-identifier">res</span> = []
+689:           <span class="ruby-identifier">enum</span> = <span class="ruby-constant">SyncEnumerator</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">set1</span>, <span class="ruby-identifier">set2</span> ).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i1</span>, <span class="ruby-identifier">i2</span><span class="ruby-operator">|</span>
+690:             <span class="ruby-comment cmt">#puts &quot;i1 = #{i1.inspect} (#{i1.class.name})&quot;</span>
+691:             <span class="ruby-comment cmt">#puts &quot;i2 = #{i2.inspect} (#{i2.class.name})&quot;</span>
+692:             <span class="ruby-identifier">i1</span> = <span class="ruby-identifier">norm</span>( <span class="ruby-identifier">i1</span> )
+693:             <span class="ruby-identifier">i2</span> = <span class="ruby-identifier">norm</span>( <span class="ruby-identifier">i2</span> )
+694:             <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">compare</span>( <span class="ruby-identifier">i1</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">i2</span> )
+695:           }
+696:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span>
+697:         <span class="ruby-keyword kw">end</span>
+698:       <span class="ruby-keyword kw">end</span>
+699:       <span class="ruby-comment cmt">#puts &quot;EQ_REL_COMP: #{set1.inspect} (#{set1.class.name}), #{op}, #{set2.inspect} (#{set2.class.name})&quot;</span>
+700:       <span class="ruby-comment cmt">#puts &quot;COMPARING VALUES&quot;</span>
+701:       <span class="ruby-comment cmt"># If one is nodeset and other is number, compare number to each item</span>
+702:       <span class="ruby-comment cmt"># in nodeset s.t. number op number(string(item))</span>
+703:       <span class="ruby-comment cmt"># If one is nodeset and other is string, compare string to each item</span>
+704:       <span class="ruby-comment cmt"># in nodeset s.t. string op string(item)</span>
+705:       <span class="ruby-comment cmt"># If one is nodeset and other is boolean, compare boolean to each item</span>
+706:       <span class="ruby-comment cmt"># in nodeset s.t. boolean op boolean(item)</span>
+707:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">set2</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+708:         <span class="ruby-comment cmt">#puts &quot;ISA ARRAY&quot;</span>
+709:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+710:           <span class="ruby-identifier">a</span> = <span class="ruby-identifier">set1</span>
+711:           <span class="ruby-identifier">b</span> = <span class="ruby-identifier">set2</span>
+712:         <span class="ruby-keyword kw">else</span>
+713:           <span class="ruby-identifier">a</span> = <span class="ruby-identifier">set2</span>
+714:           <span class="ruby-identifier">b</span> = <span class="ruby-identifier">set1</span>
+715:         <span class="ruby-keyword kw">end</span>
+716: 
+717:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">b</span>
+718:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>
+719:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">compare</span>( <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">boolean</span>(<span class="ruby-identifier">v</span>), <span class="ruby-identifier">op</span>, <span class="ruby-identifier">b</span> ) }
+720:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+721:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">compare</span>( <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>(<span class="ruby-identifier">v</span>), <span class="ruby-identifier">op</span>, <span class="ruby-identifier">b</span> )}
+722:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\d+(\.\d+)?$/</span>
+723:           <span class="ruby-identifier">b</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">b</span> )
+724:           <span class="ruby-comment cmt">#puts &quot;B = #{b.inspect}&quot;</span>
+725:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">compare</span>( <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>(<span class="ruby-identifier">v</span>), <span class="ruby-identifier">op</span>, <span class="ruby-identifier">b</span> )}
+726:         <span class="ruby-keyword kw">else</span>
+727:           <span class="ruby-comment cmt">#puts &quot;Functions::string( #{b}(#{b.class.name}) ) = #{Functions::string(b)}&quot;</span>
+728:           <span class="ruby-identifier">b</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">string</span>( <span class="ruby-identifier">b</span> )
+729:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">compare</span>( <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">string</span>(<span class="ruby-identifier">v</span>), <span class="ruby-identifier">op</span>, <span class="ruby-identifier">b</span> ) }
+730:         <span class="ruby-keyword kw">end</span>
+731:       <span class="ruby-keyword kw">else</span>
+732:         <span class="ruby-comment cmt"># If neither is nodeset,</span>
+733:         <span class="ruby-comment cmt">#   If op is = or !=</span>
+734:         <span class="ruby-comment cmt">#     If either boolean, convert to boolean</span>
+735:         <span class="ruby-comment cmt">#     If either number, convert to number</span>
+736:         <span class="ruby-comment cmt">#     Else, convert to string</span>
+737:         <span class="ruby-comment cmt">#   Else</span>
+738:         <span class="ruby-comment cmt">#     Convert both to numbers and compare</span>
+739:         <span class="ruby-identifier">s1</span> = <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">to_s</span>
+740:         <span class="ruby-identifier">s2</span> = <span class="ruby-identifier">set2</span>.<span class="ruby-identifier">to_s</span>
+741:         <span class="ruby-comment cmt">#puts &quot;EQ_REL_COMP: #{set1}=&gt;#{s1}, #{set2}=&gt;#{s2}&quot;</span>
+742:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">s1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'false'</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">s2</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">s2</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'false'</span>
+743:           <span class="ruby-comment cmt">#puts &quot;Functions::boolean(#{set1})=&gt;#{Functions::boolean(set1)}&quot;</span>
+744:           <span class="ruby-comment cmt">#puts &quot;Functions::boolean(#{set2})=&gt;#{Functions::boolean(set2)}&quot;</span>
+745:           <span class="ruby-identifier">set1</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">boolean</span>( <span class="ruby-identifier">set1</span> )
+746:           <span class="ruby-identifier">set2</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">boolean</span>( <span class="ruby-identifier">set2</span> )
+747:         <span class="ruby-keyword kw">else</span>
+748:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">op</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:eq</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">op</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:neq</span>
+749:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s1</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\d+(\.\d+)?$/</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">s2</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\d+(\.\d+)?$/</span>
+750:               <span class="ruby-identifier">set1</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">s1</span> )
+751:               <span class="ruby-identifier">set2</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">s2</span> )
+752:             <span class="ruby-keyword kw">else</span>
+753:               <span class="ruby-identifier">set1</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">string</span>( <span class="ruby-identifier">set1</span> )
+754:               <span class="ruby-identifier">set2</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">string</span>( <span class="ruby-identifier">set2</span> )
+755:             <span class="ruby-keyword kw">end</span>
+756:           <span class="ruby-keyword kw">else</span>
+757:             <span class="ruby-identifier">set1</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">set1</span> )
+758:             <span class="ruby-identifier">set2</span> = <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">set2</span> )
+759:           <span class="ruby-keyword kw">end</span>
+760:         <span class="ruby-keyword kw">end</span>
+761:         <span class="ruby-comment cmt">#puts &quot;EQ_REL_COMP: #{set1} #{op} #{set2}&quot;</span>
+762:         <span class="ruby-comment cmt">#puts &quot;&gt;&gt;&gt; #{compare( set1, op, set2 )}&quot;</span>
+763:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">compare</span>( <span class="ruby-identifier">set1</span>, <span class="ruby-identifier">op</span>, <span class="ruby-identifier">set2</span> )
+764:       <span class="ruby-keyword kw">end</span>
+765:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+766:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

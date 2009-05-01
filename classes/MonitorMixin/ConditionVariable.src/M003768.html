@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wait (MonitorMixin::ConditionVariable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/monitor.rb, line 90</span>
+ 90:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait</span>(<span class="ruby-identifier">timeout</span> = <span class="ruby-keyword kw">nil</span>)
+ 91:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">timeout</span>
+ 92:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-value str">&quot;timeout is not implemented yet&quot;</span>
+ 93:       <span class="ruby-keyword kw">end</span>
+ 94:       <span class="ruby-ivar">@monitor</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:mon_check_owner</span>)
+ 95:       <span class="ruby-identifier">count</span> = <span class="ruby-ivar">@monitor</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:mon_exit_for_cond</span>)
+ 96:       <span class="ruby-keyword kw">begin</span>
+ 97:         <span class="ruby-ivar">@cond</span>.<span class="ruby-identifier">wait</span>(<span class="ruby-ivar">@monitor</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@mon_mutex&quot;</span>))
+ 98:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+ 99:       <span class="ruby-keyword kw">ensure</span>
+100:         <span class="ruby-ivar">@monitor</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:mon_enter_for_cond</span>, <span class="ruby-identifier">count</span>)
+101:       <span class="ruby-keyword kw">end</span>
+102:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

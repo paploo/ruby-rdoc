@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read (REXML::IOSource)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/source.rb, line 194</span>
+194:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>
+195:       <span class="ruby-keyword kw">begin</span>
+196:         <span class="ruby-identifier">str</span> = <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">readline</span>(<span class="ruby-ivar">@line_break</span>)
+197:         <span class="ruby-identifier">str</span> = <span class="ruby-identifier">decode</span>(<span class="ruby-identifier">str</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@to_utf</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">str</span> 
+198:         <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
+199:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@to_utf</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:force_encoding</span>
+200:           <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">force_encoding</span> <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>
+201:         <span class="ruby-keyword kw">end</span>
+202:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>, <span class="ruby-constant">NameError</span>
+203:         <span class="ruby-ivar">@source</span> = <span class="ruby-keyword kw">nil</span>
+204:       <span class="ruby-keyword kw">end</span>
+205:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

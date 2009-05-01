@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (URI::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/ftp.rb, line 183</span>
+183:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+184:       <span class="ruby-identifier">save_path</span> = <span class="ruby-keyword kw">nil</span>
+185:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@typecode</span>
+186:         <span class="ruby-identifier">save_path</span> = <span class="ruby-ivar">@path</span>
+187:         <span class="ruby-ivar">@path</span> = <span class="ruby-ivar">@path</span> <span class="ruby-operator">+</span> <span class="ruby-constant">TYPECODE_PREFIX</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@typecode</span>
+188:       <span class="ruby-keyword kw">end</span>
+189:       <span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">super</span>
+190:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@typecode</span>
+191:         <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">save_path</span>
+192:       <span class="ruby-keyword kw">end</span>
+193: 
+194:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">str</span>
+195:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

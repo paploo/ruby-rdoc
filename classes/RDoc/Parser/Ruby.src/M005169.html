@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>scan (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 2700</span>
+2700:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scan</span>
+2701:     <span class="ruby-identifier">reset</span>
+2702: 
+2703:     <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:eof</span>) <span class="ruby-keyword kw">do</span>
+2704:       <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:enddoc</span>) <span class="ruby-keyword kw">do</span>
+2705:         <span class="ruby-keyword kw">begin</span>
+2706:           <span class="ruby-identifier">parse_toplevel_statements</span>(<span class="ruby-ivar">@top_level</span>)
+2707:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+2708:           <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\n\nRDoc failure in \#{@file_name} at or around line \#{@scanner.line_no} column\n\#{@scanner.char_no}\n\nBefore reporting this, could you check that the file you're documenting\ncompiles cleanly--RDoc is not a full Ruby parser, and gets confused easily if\nfed invalid programs.\n\nThe internal error was:\n\n&quot;</span>
+2709: 
+2710:           <span class="ruby-identifier">e</span>.<span class="ruby-identifier">set_backtrace</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>[<span class="ruby-value">0</span>,<span class="ruby-value">4</span>])
+2711:           <span class="ruby-identifier">raise</span>
+2712:         <span class="ruby-keyword kw">end</span>
+2713:       <span class="ruby-keyword kw">end</span>
+2714:     <span class="ruby-keyword kw">end</span>
+2715: 
+2716:     <span class="ruby-ivar">@top_level</span>
+2717:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

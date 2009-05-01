@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>name (WIN32OLE_VARIABLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_VARIABLE#name
+ * 
+ *  Returns the name of variable.
+ *
+ *     tobj = WIN32OLE_TYPE.new('Microsoft Excel 9.0 Object Library', 'XlSheetType')
+ *     variables = tobj.variables
+ *     variables.each do |variable|
+ *       puts &quot;#{variable.name}&quot;
+ *     end
+ *
+ *     The result of above script is following:
+ *       xlChart
+ *       xlDialogSheet
+ *       xlExcel4IntlMacroSheet
+ *       xlExcel4MacroSheet
+ *       xlWorksheet
+ *
+ */
+static VALUE
+folevariable_name(VALUE self)
+{
+    return rb_ivar_get(self, rb_intern(&quot;name&quot;));
+}</pre>
+</body>
+</html>

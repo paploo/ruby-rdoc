@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>stop (GServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/gserver.rb, line 107</span>
+107:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stop</span>
+108:     <span class="ruby-ivar">@connectionsMutex</span>.<span class="ruby-identifier">synchronize</span>  {
+109:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tcpServerThread</span>
+110:         <span class="ruby-ivar">@tcpServerThread</span>.<span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;stop&quot;</span>
+111:       <span class="ruby-keyword kw">end</span>
+112:     }
+113:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

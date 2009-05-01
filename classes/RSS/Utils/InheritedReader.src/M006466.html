@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inherited_reader (RSS::Utils::InheritedReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/utils.rb, line 82</span>
+82:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inherited_reader</span>(<span class="ruby-identifier">constant_name</span>)
+83:         <span class="ruby-identifier">base_class</span> = <span class="ruby-identifier">inherited_base</span>
+84:         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">constant_name</span>)
+85:         <span class="ruby-identifier">found_base_class</span> = <span class="ruby-keyword kw">false</span>
+86:         <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">reverse_each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
+87:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">found_base_class</span>
+88:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">constant_name</span>)
+89:               <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">constant_name</span>))
+90:             <span class="ruby-keyword kw">end</span>
+91:           <span class="ruby-keyword kw">else</span>
+92:             <span class="ruby-identifier">found_base_class</span> = <span class="ruby-identifier">klass</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">base_class</span>
+93:           <span class="ruby-keyword kw">end</span>
+94:         <span class="ruby-keyword kw">end</span>
+95:         <span class="ruby-identifier">result</span>
+96:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

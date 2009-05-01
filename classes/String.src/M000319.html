@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>codepoints (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  Document-method: each_codepoint
+ *  call-seq:
+ *     str.each_codepoint {|integer| block }    =&gt; str
+ *  
+ *  Passes the &lt;code&gt;Integer&lt;/code&gt; ordinal of each character in &lt;i&gt;str&lt;/i&gt;,
+ *  also known as a &lt;i&gt;codepoint&lt;/i&gt; when applied to Unicode strings to the
+ *  given block.
+ *     
+ *     &quot;hello\u0639&quot;.each_codepoint {|c| print c, ' ' }
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     104 101 108 108 111 1593
+ */
+
+static VALUE
+rb_str_each_codepoint(VALUE str)
+{
+    int len, n;
+    unsigned int c;
+    const char *ptr, *end;
+    rb_encoding *enc;
+
+    if (single_byte_optimizable(str)) return rb_str_each_byte(str);
+    RETURN_ENUMERATOR(str, 0, 0);
+    ptr = RSTRING_PTR(str);
+    len = RSTRING_LEN(str);
+    end = RSTRING_END(str);
+    enc = STR_ENC_GET(str);
+    while (ptr &lt; end) {
+        c = rb_enc_codepoint(ptr, end, enc);
+        n = rb_enc_codelen(c, enc);
+        rb_yield(UINT2NUM(c));
+        ptr += n;
+    }
+    return str;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Resolv::DNS [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Resolv::DNS</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/resolv_rb.html">
+
+                lib/resolv.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="DNS.html">Resolv::DNS</a> is a <a href="DNS.html">DNS</a> stub
+resolver.
+</p>
+<p>
+Information taken from the following places:
+</p>
+<ul>
+<li>STD0013
+
+</li>
+<li>RFC 1035
+
+</li>
+<li><a
+href="ftp://ftp.isi.edu/in-notes/iana/assignments/dns-parameters">ftp.isi.edu/in-notes/iana/assignments/dns-parameters</a>
+
+</li>
+<li>etc.
+
+</li>
+</ul>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M002174">close</a>&nbsp;&nbsp;
+
+        <a href="#M002177">each_address</a>&nbsp;&nbsp;
+
+        <a href="#M002180">each_name</a>&nbsp;&nbsp;
+
+        <a href="#M002183">each_resource</a>&nbsp;&nbsp;
+
+        <a href="#M002175">getaddress</a>&nbsp;&nbsp;
+
+        <a href="#M002176">getaddresses</a>&nbsp;&nbsp;
+
+        <a href="#M002178">getname</a>&nbsp;&nbsp;
+
+        <a href="#M002179">getnames</a>&nbsp;&nbsp;
+
+        <a href="#M002181">getresource</a>&nbsp;&nbsp;
+
+        <a href="#M002182">getresources</a>&nbsp;&nbsp;
+
+        <a href="#M002173">new</a>&nbsp;&nbsp;
+
+        <a href="#M002172">open</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="DNS/DecodeError.html" class="link">Resolv::DNS::DecodeError</a><br />
+Class <a href="DNS/EncodeError.html" class="link">Resolv::DNS::EncodeError</a><br />
+Class <a href="DNS/Name.html" class="link">Resolv::DNS::Name</a><br />
+Class <a href="DNS/Query.html" class="link">Resolv::DNS::Query</a><br />
+Class <a href="DNS/Resource.html" class="link">Resolv::DNS::Resource</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Port</td>
+          <td>=</td>
+          <td class="context-item-value">53</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+Default <a href="DNS.html">DNS</a> Port
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UDPSize</td>
+          <td>=</td>
+          <td class="context-item-value">512</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+Default <a href="DNS.html">DNS</a> UDP packet size
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RequestID</td>
+          <td>=</td>
+          <td class="context-item-value">{}</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RequestIDMutex</td>
+          <td>=</td>
+          <td class="context-item-value">Mutex.new</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M002173" class="method-detail">
+        <a name="M002173"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002173.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002173.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(config_info=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new <a href="DNS.html">DNS</a> resolver.
+</p>
+<p>
+<tt>config_info</tt> can be:
+</p>
+<table>
+<tr><td valign="top">nil:</td><td>Uses /etc/resolv.conf.
+
+</td></tr>
+<tr><td valign="top">String:</td><td>Path to a file using /etc/resolv.conf&#8217;s format.
+
+</td></tr>
+<tr><td valign="top">Hash:</td><td>Must contain :nameserver, :search and :ndots keys.
+
+</td></tr>
+</table>
+<p>
+Example:
+</p>
+<pre>
+  Resolv::DNS.new(:nameserver =&gt; ['210.251.121.21'],
+                  :search =&gt; ['ruby-lang.org'],
+                  :ndots =&gt; 1)
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002172" class="method-detail">
+        <a name="M002172"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002172.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002172.html');return false;">
+
+          <span class="method-name">open</span><span class="method-args">(*args) {|dns| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new <a href="DNS.html">DNS</a> resolver. See <a
+href="DNS.html#M002173">Resolv::DNS.new</a> for argument details.
+</p>
+<p>
+Yields the created <a href="DNS.html">DNS</a> resolver to the block, if
+given, otherwise returns it.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M002174" class="method-detail">
+        <a name="M002174"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002174.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002174.html');return false;">
+
+          <span class="method-name">close</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Closes the <a href="DNS.html">DNS</a> resolver.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002177" class="method-detail">
+        <a name="M002177"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002177.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002177.html');return false;">
+
+          <span class="method-name">each_address</span><span class="method-args">(name) {|resource.address| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates over all IP addresses for <tt>name</tt> retrieved from the <a
+href="DNS.html">DNS</a> resolver.
+</p>
+<p>
+<tt>name</tt> can be a <a href="DNS/Name.html">Resolv::DNS::Name</a> or a
+<a href="../String.html">String</a>. Retrieved addresses will be a <a
+href="IPv4.html">Resolv::IPv4</a> or <a href="IPv6.html">Resolv::IPv6</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002180" class="method-detail">
+        <a name="M002180"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002180.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002180.html');return false;">
+
+          <span class="method-name">each_name</span><span class="method-args">(address) {|resource.name| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates over all hostnames for <tt>address</tt> retrieved from the <a
+href="DNS.html">DNS</a> resolver.
+</p>
+<p>
+<tt>address</tt> must be a <a href="IPv4.html">Resolv::IPv4</a>, <a
+href="IPv6.html">Resolv::IPv6</a> or a <a href="../String.html">String</a>.
+Retrieved names will be <a href="DNS/Name.html">Resolv::DNS::Name</a>
+instances.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002183" class="method-detail">
+        <a name="M002183"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002183.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002183.html');return false;">
+
+          <span class="method-name">each_resource</span><span class="method-args">(name, typeclass, &amp;proc)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Iterates over all <tt>typeclass</tt> <a href="DNS.html">DNS</a> resources
+for <tt>name</tt>. See <a href="DNS.html#M002181">getresource</a> for
+argument details.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002175" class="method-detail">
+        <a name="M002175"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002175.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002175.html');return false;">
+
+          <span class="method-name">getaddress</span><span class="method-args">(name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Gets the IP address of <tt>name</tt> from the <a href="DNS.html">DNS</a>
+resolver.
+</p>
+<p>
+<tt>name</tt> can be a <a href="DNS/Name.html">Resolv::DNS::Name</a> or a
+<a href="../String.html">String</a>. Retrieved address will be a <a
+href="IPv4.html">Resolv::IPv4</a> or <a href="IPv6.html">Resolv::IPv6</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002176" class="method-detail">
+        <a name="M002176"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002176.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002176.html');return false;">
+
+          <span class="method-name">getaddresses</span><span class="method-args">(name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Gets all IP addresses for <tt>name</tt> from the <a href="DNS.html">DNS</a>
+resolver.
+</p>
+<p>
+<tt>name</tt> can be a <a href="DNS/Name.html">Resolv::DNS::Name</a> or a
+<a href="../String.html">String</a>. Retrieved addresses will be a <a
+href="IPv4.html">Resolv::IPv4</a> or <a href="IPv6.html">Resolv::IPv6</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002178" class="method-detail">
+        <a name="M002178"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002178.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002178.html');return false;">
+
+          <span class="method-name">getname</span><span class="method-args">(address)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Gets the hostname for <tt>address</tt> from the <a href="DNS.html">DNS</a>
+resolver.
+</p>
+<p>
+<tt>address</tt> must be a <a href="IPv4.html">Resolv::IPv4</a>, <a
+href="IPv6.html">Resolv::IPv6</a> or a <a href="../String.html">String</a>.
+Retrieved name will be a <a href="DNS/Name.html">Resolv::DNS::Name</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002179" class="method-detail">
+        <a name="M002179"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002179.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002179.html');return false;">
+
+          <span class="method-name">getnames</span><span class="method-args">(address)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Gets all hostnames for <tt>address</tt> from the <a href="DNS.html">DNS</a>
+resolver.
+</p>
+<p>
+<tt>address</tt> must be a <a href="IPv4.html">Resolv::IPv4</a>, <a
+href="IPv6.html">Resolv::IPv6</a> or a <a href="../String.html">String</a>.
+Retrieved names will be <a href="DNS/Name.html">Resolv::DNS::Name</a>
+instances.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002181" class="method-detail">
+        <a name="M002181"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002181.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002181.html');return false;">
+
+          <span class="method-name">getresource</span><span class="method-args">(name, typeclass)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Look up the <tt>typeclass</tt> <a href="DNS.html">DNS</a> resource of
+<tt>name</tt>.
+</p>
+<p>
+<tt>name</tt> must be a <a href="DNS/Name.html">Resolv::DNS::Name</a> or a
+<a href="../String.html">String</a>.
+</p>
+<p>
+<tt>typeclass</tt> should be one of the following:
+</p>
+<ul>
+<li><a href="DNS/Resource/IN/A.html">Resolv::DNS::Resource::IN::A</a>
+
+</li>
+<li><a href="DNS/Resource/IN/AAAA.html">Resolv::DNS::Resource::IN::AAAA</a>
+
+</li>
+<li><a href="DNS/Resource/ANY.html">Resolv::DNS::Resource::IN::ANY</a>
+
+</li>
+<li><a href="DNS/Resource/CNAME.html">Resolv::DNS::Resource::IN::CNAME</a>
+
+</li>
+<li><a href="DNS/Resource/HINFO.html">Resolv::DNS::Resource::IN::HINFO</a>
+
+</li>
+<li><a href="DNS/Resource/MINFO.html">Resolv::DNS::Resource::IN::MINFO</a>
+
+</li>
+<li><a href="DNS/Resource/MX.html">Resolv::DNS::Resource::IN::MX</a>
+
+</li>
+<li><a href="DNS/Resource/NS.html">Resolv::DNS::Resource::IN::NS</a>
+
+</li>
+<li><a href="DNS/Resource/PTR.html">Resolv::DNS::Resource::IN::PTR</a>
+
+</li>
+<li><a href="DNS/Resource/SOA.html">Resolv::DNS::Resource::IN::SOA</a>
+
+</li>
+<li><a href="DNS/Resource/TXT.html">Resolv::DNS::Resource::IN::TXT</a>
+
+</li>
+<li><a href="DNS/Resource/IN/WKS.html">Resolv::DNS::Resource::IN::WKS</a>
+
+</li>
+</ul>
+<p>
+Returned resource is represented as a <a
+href="DNS/Resource.html">Resolv::DNS::Resource</a> instance, i.e. <a
+href="DNS/Resource/IN/A.html">Resolv::DNS::Resource::IN::A</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002182" class="method-detail">
+        <a name="M002182"></a>
+
+        <div class="method-heading">
+
+          <a href="DNS.src/M002182.html" target="Code" class="method-signature"
+            onclick="popupCode('DNS.src/M002182.html');return false;">
+
+          <span class="method-name">getresources</span><span class="method-args">(name, typeclass)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Looks up all <tt>typeclass</tt> <a href="DNS.html">DNS</a> resources for
+<tt>name</tt>. See <a href="DNS.html#M002181">getresource</a> for argument
+details.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

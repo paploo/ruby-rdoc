@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>clone (UnboundMethod)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * MISSING: documentation
+ */
+
+static VALUE
+method_clone(VALUE self)
+{
+    VALUE clone;
+    struct METHOD *orig, *data;
+
+    Data_Get_Struct(self, struct METHOD, orig);
+    clone = Data_Make_Struct(CLASS_OF(self), struct METHOD, bm_mark, -1, data);
+    CLONESETUP(clone, self);
+    *data = *orig;
+
+    return clone;
+}</pre>
+</body>
+</html>

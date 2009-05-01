@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>slice! (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.slice!(fixnum)           =&gt; fixnum or nil
+ *     str.slice!(fixnum, fixnum)   =&gt; new_str or nil
+ *     str.slice!(range)            =&gt; new_str or nil
+ *     str.slice!(regexp)           =&gt; new_str or nil
+ *     str.slice!(other_str)        =&gt; new_str or nil
+ *  
+ *  Deletes the specified portion from &lt;i&gt;str&lt;/i&gt;, and returns the portion
+ *  deleted.
+ *     
+ *     string = &quot;this is a string&quot;
+ *     string.slice!(2)        #=&gt; &quot;i&quot;
+ *     string.slice!(3..6)     #=&gt; &quot; is &quot;
+ *     string.slice!(/s.*t/)   #=&gt; &quot;sa st&quot;
+ *     string.slice!(&quot;r&quot;)      #=&gt; &quot;r&quot;
+ *     string                  #=&gt; &quot;thing&quot;
+ */
+
+static VALUE
+rb_str_slice_bang(int argc, VALUE *argv, VALUE str)
+{
+    VALUE result;
+    VALUE buf[3];
+    int i;
+
+    if (argc &lt; 1 || 2 &lt; argc) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
+    }
+    for (i=0; i&lt;argc; i++) {
+        buf[i] = argv[i];
+    }
+    str_modify_keep_cr(str);
+    buf[i] = rb_str_new(0,0);
+    result = rb_str_aref_m(argc, buf, str);
+    if (!NIL_P(result)) {
+        rb_str_aset_m(argc+1, buf, str);
+    }
+    return result;
+}</pre>
+</body>
+</html>

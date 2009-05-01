@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>number (REXML::Functions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/functions.rb, line 335</span>
+335:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">number</span>( <span class="ruby-identifier">object</span>=<span class="ruby-keyword kw">nil</span> )
+336:       <span class="ruby-identifier">object</span> = <span class="ruby-ivar">@@context</span>[<span class="ruby-identifier">:node</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">object</span>
+337:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">object</span>
+338:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>
+339:         <span class="ruby-constant">Float</span>(<span class="ruby-value">1</span>)
+340:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span>
+341:         <span class="ruby-constant">Float</span>(<span class="ruby-value">0</span>)
+342:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+343:         <span class="ruby-identifier">number</span>(<span class="ruby-identifier">string</span>( <span class="ruby-identifier">object</span> ))
+344:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+345:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">to_f</span>
+346:       <span class="ruby-keyword kw">else</span>
+347:         <span class="ruby-identifier">str</span> = <span class="ruby-identifier">string</span>( <span class="ruby-identifier">object</span> )
+348:         <span class="ruby-comment cmt"># If XPath ever gets scientific notation...</span>
+349:         <span class="ruby-comment cmt">#if str =~ /^\s*-?(\d*\.?\d+|\d+\.)([Ee]\d*)?\s*$/</span>
+350:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*-?(\d*\.?\d+|\d+\.)\s*$/</span>
+351:           <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_f</span>
+352:         <span class="ruby-keyword kw">else</span>
+353:           (<span class="ruby-value">0</span><span class="ruby-value">.0</span> <span class="ruby-operator">/</span> <span class="ruby-value">0</span><span class="ruby-value">.0</span>)
+354:         <span class="ruby-keyword kw">end</span>
+355:       <span class="ruby-keyword kw">end</span>
+356:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

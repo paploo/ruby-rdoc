@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_class_comment (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 366</span>
+366:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_class_comment</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">class_meth</span>)
+367:     <span class="ruby-identifier">comment</span> = <span class="ruby-keyword kw">nil</span>
+368:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@content</span> <span class="ruby-operator">=~</span> <span class="ruby-node">%r{((?&gt;/\*.*?\*/\s+))
+369:                    (static\s+)?void\s+Init_#{class_name}\s*(?:_\(\s*)?\(\s*(?:void\s*)\)}</span><span class="ruby-identifier">xmi</span> <span class="ruby-keyword kw">then</span>
+370:       <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">$1</span>
+371:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@content</span> <span class="ruby-operator">=~</span> <span class="ruby-node">%r{Document-(?:class|module):\s#{class_name}\s*?(?:&lt;\s+[:,\w]+)?\n((?&gt;.*?\*/))}</span><span class="ruby-identifier">m</span>
+372:       <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">$1</span>
+373:     <span class="ruby-keyword kw">else</span>
+374:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@content</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/rb_define_(class|module)/</span><span class="ruby-identifier">m</span> <span class="ruby-keyword kw">then</span>
+375:         <span class="ruby-identifier">class_name</span> = <span class="ruby-identifier">class_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;::&quot;</span>).<span class="ruby-identifier">last</span>
+376:         <span class="ruby-identifier">comments</span> = []
+377:         <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/(\/\*.*?\*\/)\s*?\n/</span><span class="ruby-identifier">m</span>).<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">chunk</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+378:           <span class="ruby-identifier">comments</span>[<span class="ruby-identifier">index</span>] = <span class="ruby-identifier">chunk</span>
+379:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chunk</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/rb_define_(class|module).*?&quot;(#{class_name})&quot;/</span><span class="ruby-identifier">m</span> <span class="ruby-keyword kw">then</span>
+380:             <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">comments</span>[<span class="ruby-identifier">index</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+381:             <span class="ruby-keyword kw">break</span>
+382:           <span class="ruby-keyword kw">end</span>
+383:         <span class="ruby-keyword kw">end</span>
+384:       <span class="ruby-keyword kw">end</span>
+385:     <span class="ruby-keyword kw">end</span>
+386:     <span class="ruby-identifier">class_meth</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>
+387:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

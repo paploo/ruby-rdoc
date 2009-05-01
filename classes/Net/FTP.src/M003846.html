@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>makeport (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 309</span>
+309:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">makeport</span>
+310:       <span class="ruby-identifier">sock</span> = <span class="ruby-constant">TCPServer</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">addr</span>[<span class="ruby-value">3</span>], <span class="ruby-value">0</span>)
+311:       <span class="ruby-identifier">port</span> = <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">addr</span>[<span class="ruby-value">1</span>]
+312:       <span class="ruby-identifier">host</span> = <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">addr</span>[<span class="ruby-value">3</span>]
+313:       <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">sendport</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>)
+314:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sock</span>
+315:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

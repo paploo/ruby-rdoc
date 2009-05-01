@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[] (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Hash[ [key =&gt;|, value]* ]   =&gt; hash
+ *
+ *  Creates a new hash populated with the given objects. Equivalent to
+ *  the literal &lt;code&gt;{ &lt;i&gt;key&lt;/i&gt;, &lt;i&gt;value&lt;/i&gt;, ... }&lt;/code&gt;. Keys and
+ *  values occur in pairs, so there must be an even number of arguments.
+ *
+ *     Hash[&quot;a&quot;, 100, &quot;b&quot;, 200]       #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;200}
+ *     Hash[&quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200]   #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;200}
+ *     { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }     #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;200}
+ */
+
+static VALUE
+rb_hash_s_create(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE hash, tmp;
+    int i;
+
+    if (argc == 1) {
+        tmp = rb_hash_s_try_convert(Qnil, argv[0]);
+        if (!NIL_P(tmp)) {
+            hash = hash_alloc(klass);
+            if (RHASH(tmp)-&gt;ntbl) {
+                RHASH(hash)-&gt;ntbl = st_copy(RHASH(tmp)-&gt;ntbl);
+            }
+            return hash;
+        }
+
+        tmp = rb_check_array_type(argv[0]);
+        if (!NIL_P(tmp)) {
+            long i;
+
+            hash = hash_alloc(klass);
+            for (i = 0; i &lt; RARRAY_LEN(tmp); ++i) {
+                VALUE v = rb_check_array_type(RARRAY_PTR(tmp)[i]);
+                VALUE key, val = Qnil;
+
+                if (NIL_P(v)) continue;
+                switch (RARRAY_LEN(v)) {
+                  case 2:
+                    val = RARRAY_PTR(v)[1];
+                  case 1:
+                    key = RARRAY_PTR(v)[0];
+                    rb_hash_aset(hash, key, val);
+                }
+            }
+            return hash;
+        }
+    }
+    if (argc % 2 != 0) {
+        rb_raise(rb_eArgError, &quot;odd number of arguments for Hash&quot;);
+    }
+
+    hash = hash_alloc(klass);
+    for (i=0; i&lt;argc; i+=2) {
+        rb_hash_aset(hash, argv[i], argv[i + 1]);
+    }
+
+    return hash;
+}</pre>
+</body>
+</html>

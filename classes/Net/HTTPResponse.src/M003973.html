@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_status_line (Net::HTTPResponse)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 2134</span>
+2134:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_status_line</span>(<span class="ruby-identifier">sock</span>)
+2135:         <span class="ruby-identifier">str</span> = <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">readline</span>
+2136:         <span class="ruby-identifier">m</span> = <span class="ruby-regexp re">/\AHTTP(?:\/(\d+\.\d+))?\s+(\d\d\d)\s*(.*)\z/i</span><span class="ruby-identifier">n</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">str</span>) <span class="ruby-keyword kw">or</span>
+2137:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPBadResponse</span>, <span class="ruby-node">&quot;wrong status line: #{str.dump}&quot;</span>
+2138:         <span class="ruby-identifier">m</span>.<span class="ruby-identifier">captures</span>
+2139:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

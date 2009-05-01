@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>build_indices (RDoc::Generator::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 130</span>
+130:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build_indices</span>(<span class="ruby-identifier">toplevels</span>, <span class="ruby-identifier">options</span>)
+131:       <span class="ruby-identifier">files</span> = []
+132:       <span class="ruby-identifier">classes</span> = []
+133: 
+134:       <span class="ruby-identifier">toplevels</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">toplevel</span><span class="ruby-operator">|</span>
+135:         <span class="ruby-identifier">files</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">toplevel</span>, <span class="ruby-identifier">options</span>,
+136:                                            <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">FILE_DIR</span>)
+137:       <span class="ruby-keyword kw">end</span>
+138: 
+139:       <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TopLevel</span>.<span class="ruby-identifier">all_classes_and_modules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cls</span><span class="ruby-operator">|</span>
+140:         <span class="ruby-identifier">build_class_list</span>(<span class="ruby-identifier">classes</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">cls</span>, <span class="ruby-identifier">files</span>[<span class="ruby-value">0</span>], 
+141:                          <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">CLASS_DIR</span>)
+142:       <span class="ruby-keyword kw">end</span>
+143: 
+144:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">files</span>, <span class="ruby-identifier">classes</span>
+145:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

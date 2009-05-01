@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>trust (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.trust    =&gt; obj
+ *  
+ *  Removes the untrusted mark from &lt;i&gt;obj&lt;/i&gt;.
+ */
+
+VALUE
+rb_obj_trust(VALUE obj)
+{
+    rb_secure(3);
+    if (OBJ_UNTRUSTED(obj)) {
+        if (OBJ_FROZEN(obj)) {
+            rb_error_frozen(&quot;object&quot;);
+        }
+        FL_UNSET(obj, FL_UNTRUSTED);
+    }
+    return obj;
+}</pre>
+</body>
+</html>

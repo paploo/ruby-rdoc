@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>shift (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.shift    -&gt; obj or nil
+ *     array.shift(n) -&gt; array
+ *  
+ *  Returns the first element of &lt;i&gt;self&lt;/i&gt; and removes it (shifting all
+ *  other elements down by one). Returns &lt;code&gt;nil&lt;/code&gt; if the array
+ *  is empty.
+ *
+ *  If a number _n_ is given, returns an array of the first n elements
+ *  (or less) just like &lt;code&gt;array.slice!(0, n)&lt;/code&gt; does.
+ *     
+ *     args = [ &quot;-m&quot;, &quot;-q&quot;, &quot;filename&quot; ]
+ *     args.shift     #=&gt; &quot;-m&quot;
+ *     args           #=&gt; [&quot;-q&quot;, &quot;filename&quot;]
+ *
+ *     args = [ &quot;-m&quot;, &quot;-q&quot;, &quot;filename&quot; ]
+ *     args.shift(2)  #=&gt; [&quot;-m&quot;, &quot;-q&quot;]
+ *     args           #=&gt; [&quot;filename&quot;]
+ */
+
+static VALUE
+rb_ary_shift_m(int argc, VALUE *argv, VALUE ary)
+{
+    VALUE result;
+    long n;
+
+    if (argc == 0) {
+        return rb_ary_shift(ary);
+    }
+
+    rb_ary_modify_check(ary);
+    result = ary_take_first_or_last(argc, argv, ary, ARY_TAKE_FIRST);
+    n = RARRAY_LEN(result);
+    if (ARY_SHARED_P(ary)) {
+        ARY_INCREASE_PTR(ary, n);
+    }
+    else {
+        MEMMOVE(RARRAY_PTR(ary), RARRAY_PTR(ary)+n, VALUE, RARRAY_LEN(ary)-n);
+    }
+    ARY_INCREASE_LEN(ary, -n);
+
+    return result;
+}</pre>
+</body>
+</html>

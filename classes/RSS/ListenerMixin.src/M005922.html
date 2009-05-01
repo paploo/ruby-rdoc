@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>collect_attributes (RSS::ListenerMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/parser.rb, line 464</span>
+464:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">collect_attributes</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>, <span class="ruby-identifier">klass</span>)
+465:       <span class="ruby-identifier">attributes</span> = {}
+466:       <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">get_attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a_name</span>, <span class="ruby-identifier">a_uri</span>, <span class="ruby-identifier">required</span>, <span class="ruby-identifier">element_name</span><span class="ruby-operator">|</span>
+467:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:include?</span>)
+468:           <span class="ruby-identifier">a_uri</span> = [<span class="ruby-identifier">a_uri</span>]
+469:         <span class="ruby-keyword kw">end</span>
+470:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a_uri</span> <span class="ruby-operator">==</span> [<span class="ruby-value str">&quot;&quot;</span>]
+471:           <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">uri</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ns</span>
+472:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">uri</span>)
+473:               <span class="ruby-identifier">val</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-node">&quot;#{prefix}:#{a_name}&quot;</span>]
+474:               <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>
+475:             <span class="ruby-keyword kw">end</span>
+476:           <span class="ruby-keyword kw">end</span>
+477:         <span class="ruby-keyword kw">end</span>
+478:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;&quot;</span>)
+479:           <span class="ruby-identifier">val</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">a_name</span>]
+480:         <span class="ruby-keyword kw">end</span>
+481: 
+482:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@do_validate</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">required</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">nil?</span>
+483:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;&quot;</span>)
+484:             <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">uri</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ns</span>
+485:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a_uri</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">uri</span>)
+486:                 <span class="ruby-identifier">a_name</span> = <span class="ruby-node">&quot;#{prefix}:#{a_name}&quot;</span>
+487:               <span class="ruby-keyword kw">end</span>
+488:             <span class="ruby-keyword kw">end</span>
+489:           <span class="ruby-keyword kw">end</span>
+490:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">MissingAttributeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">a_name</span>)
+491:         <span class="ruby-keyword kw">end</span>
+492: 
+493:         <span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">a_name</span>] = <span class="ruby-identifier">val</span>
+494:       <span class="ruby-keyword kw">end</span>
+495:       <span class="ruby-identifier">attributes</span>
+496:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_body (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 271</span>
+271:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_body</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">meth_name</span>, <span class="ruby-identifier">meth_obj</span>, <span class="ruby-identifier">body</span>, <span class="ruby-identifier">quiet</span> = <span class="ruby-keyword kw">false</span>)
+272:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">body</span>
+273:     <span class="ruby-keyword kw">when</span> <span class="ruby-node">%r&quot;((?&gt;/\*.*?\*/\s*))(?:(?:static|SWIGINTERN)\s+)?(?:intern\s+)?VALUE\s+#{meth_name}
+274:             \s*(\([^)]*\))([^;]|$)&quot;</span><span class="ruby-identifier">xm</span>
+275:       <span class="ruby-identifier">comment</span>, <span class="ruby-identifier">params</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+276:       <span class="ruby-identifier">body_text</span> = <span class="ruby-identifier">$&amp;</span>
+277: 
+278:       <span class="ruby-identifier">remove_private_comments</span>(<span class="ruby-identifier">comment</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>
+279: 
+280:       <span class="ruby-comment cmt"># see if we can find the whole body</span>
+281: 
+282:       <span class="ruby-identifier">re</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">body_text</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'[^(]*^\{.*?^\}'</span>
+283:       <span class="ruby-identifier">body_text</span> = <span class="ruby-identifier">$&amp;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-node">/#{re}/</span><span class="ruby-identifier">m</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">body</span>
+284: 
+285:       <span class="ruby-comment cmt"># The comment block may have been overridden with a 'Document-method'</span>
+286:       <span class="ruby-comment cmt"># block. This happens in the interpreter when multiple methods are</span>
+287:       <span class="ruby-comment cmt"># vectored through to the same C method but those methods are logically</span>
+288:       <span class="ruby-comment cmt"># distinct (for example Kernel.hash and Kernel.object_id share the same</span>
+289:       <span class="ruby-comment cmt"># implementation</span>
+290: 
+291:       <span class="ruby-identifier">override_comment</span> = <span class="ruby-identifier">find_override_comment</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">name</span>)
+292:       <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">override_comment</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">override_comment</span>
+293: 
+294:       <span class="ruby-identifier">find_modifiers</span>(<span class="ruby-identifier">comment</span>, <span class="ruby-identifier">meth_obj</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>
+295: 
+296: <span class="ruby-comment cmt">#        meth_obj.params = params</span>
+297:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">start_collecting_tokens</span>
+298:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">add_token</span>(<span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">Token</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>,<span class="ruby-value">1</span>).<span class="ruby-identifier">set_text</span>(<span class="ruby-identifier">body_text</span>))
+299:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>)
+300:     <span class="ruby-keyword kw">when</span> <span class="ruby-node">%r{((?&gt;/\*.*?\*/\s*))^\s*\#\s*define\s+#{meth_name}\s+(\w+)}</span><span class="ruby-identifier">m</span>
+301:       <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">$1</span>
+302:       <span class="ruby-identifier">find_body</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">$2</span>, <span class="ruby-identifier">meth_obj</span>, <span class="ruby-identifier">body</span>, <span class="ruby-keyword kw">true</span>)
+303:       <span class="ruby-identifier">find_modifiers</span>(<span class="ruby-identifier">comment</span>, <span class="ruby-identifier">meth_obj</span>)
+304:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">comment</span>
+305:     <span class="ruby-keyword kw">when</span> <span class="ruby-node">%r{^\s*\#\s*define\s+#{meth_name}\s+(\w+)}</span><span class="ruby-identifier">m</span>
+306:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">find_body</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">meth_obj</span>, <span class="ruby-identifier">body</span>, <span class="ruby-keyword kw">true</span>)
+307:         <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;No definition for #{meth_name}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">quiet</span>
+308:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+309:       <span class="ruby-keyword kw">end</span>
+310:     <span class="ruby-keyword kw">else</span>
+311: 
+312:       <span class="ruby-comment cmt"># No body, but might still have an override comment</span>
+313:       <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">find_override_comment</span>(<span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">name</span>)
+314: 
+315:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>
+316:         <span class="ruby-identifier">find_modifiers</span>(<span class="ruby-identifier">comment</span>, <span class="ruby-identifier">meth_obj</span>)
+317:         <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>)
+318:       <span class="ruby-keyword kw">else</span>
+319:         <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;No definition for #{meth_name}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">quiet</span>
+320:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+321:       <span class="ruby-keyword kw">end</span>
+322:     <span class="ruby-keyword kw">end</span>
+323:     <span class="ruby-keyword kw">true</span>
+324:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

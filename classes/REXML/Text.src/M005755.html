@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (REXML::Text)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/text.rb, line 92</span>
+ 92:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">arg</span>, <span class="ruby-identifier">respect_whitespace</span>=<span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">raw</span>=<span class="ruby-keyword kw">nil</span>, 
+ 93:       <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">illegal</span>=<span class="ruby-constant">NEEDS_A_SECOND_CHECK</span> )
+ 94: 
+ 95:       <span class="ruby-ivar">@raw</span> = <span class="ruby-keyword kw">false</span>
+ 96: 
+ 97:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parent</span>
+ 98:         <span class="ruby-keyword kw">super</span>( <span class="ruby-identifier">parent</span> )
+ 99:         <span class="ruby-ivar">@raw</span> = <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">raw</span> 
+100:       <span class="ruby-keyword kw">else</span>
+101:         <span class="ruby-ivar">@parent</span> = <span class="ruby-keyword kw">nil</span>
+102:       <span class="ruby-keyword kw">end</span>
+103: 
+104:       <span class="ruby-ivar">@raw</span> = <span class="ruby-identifier">raw</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">nil?</span>
+105:       <span class="ruby-ivar">@entity_filter</span> = <span class="ruby-identifier">entity_filter</span>
+106:       <span class="ruby-ivar">@normalized</span> = <span class="ruby-ivar">@unnormalized</span> = <span class="ruby-keyword kw">nil</span>
+107: 
+108:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+109:         <span class="ruby-ivar">@string</span> = <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">clone</span>
+110:         <span class="ruby-ivar">@string</span>.<span class="ruby-identifier">squeeze!</span>(<span class="ruby-value str">&quot; \n\t&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">respect_whitespace</span>
+111:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Text</span>
+112:         <span class="ruby-ivar">@string</span> = <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">to_s</span>
+113:         <span class="ruby-ivar">@raw</span> = <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">raw</span>
+114:       <span class="ruby-keyword kw">elsif</span>
+115:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Illegal argument of type #{arg.type} for Text constructor (#{arg})&quot;</span>
+116:       <span class="ruby-keyword kw">end</span>
+117: 
+118:       <span class="ruby-ivar">@string</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-regexp re">/\r\n?/</span>, <span class="ruby-value str">&quot;\n&quot;</span> )
+119: 
+120:       <span class="ruby-constant">Text</span>.<span class="ruby-identifier">check</span>(<span class="ruby-ivar">@string</span>, <span class="ruby-constant">NEEDS_A_SECOND_CHECK</span>, <span class="ruby-identifier">doctype</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@raw</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@parent</span>
+121:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

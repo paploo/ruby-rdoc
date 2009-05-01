@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getbyte (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.getbyte(index)          =&gt; 0 .. 255
+ *
+ *  returns the &lt;i&gt;index&lt;/i&gt;th byte as an integer.
+ */
+static VALUE
+rb_str_getbyte(VALUE str, VALUE index)
+{
+    long pos = NUM2LONG(index);
+
+    if (pos &lt; 0)
+        pos += RSTRING_LEN(str);
+    if (pos &lt; 0 ||  RSTRING_LEN(str) &lt;= pos)
+        return Qnil;
+
+    return INT2FIX((unsigned char)RSTRING_PTR(str)[pos]);
+}</pre>
+</body>
+</html>

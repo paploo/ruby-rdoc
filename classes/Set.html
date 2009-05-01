@@ -1,0 +1,1287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Set [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Set</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/lib/set_rb.html">
+
+                lib/set.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Set.html">Set</a> implements a collection of unordered values with
+no duplicates. This is a hybrid of Array&#8217;s intuitive inter-operation
+facilities and Hash&#8217;s fast lookup.
+</p>
+<p>
+The equality of each couple of elements is determined according to <a
+href="Object.html#M000602">Object#eql?</a> and <a
+href="Object.html#M000594">Object#hash</a>, since <a
+href="Set.html">Set</a> uses <a href="Hash.html">Hash</a> as storage.
+</p>
+<p>
+<a href="Set.html">Set</a> is easy to use with <a
+href="Enumerable.html">Enumerable</a> objects (implementing <tt>each</tt>).
+Most of the initializer methods and binary operators accept generic <a
+href="Enumerable.html">Enumerable</a> objects besides sets and arrays. An
+<a href="Enumerable.html">Enumerable</a> object can be converted to <a
+href="Set.html">Set</a> using the <tt>to_set</tt> method.
+</p>
+<h2>Example</h2>
+<pre>
+  require 'set'
+  s1 = Set.new [1, 2]                   # -&gt; #&lt;Set: {1, 2}&gt;
+  s2 = [1, 2].to_set                    # -&gt; #&lt;Set: {1, 2}&gt;
+  s1 == s2                              # -&gt; true
+  s1.add(&quot;foo&quot;)                         # -&gt; #&lt;Set: {1, 2, &quot;foo&quot;}&gt;
+  s1.merge([2, 6])                      # -&gt; #&lt;Set: {6, 1, 2, &quot;foo&quot;}&gt;
+  s1.subset? s2                         # -&gt; false
+  s2.subset? s1                         # -&gt; true
+</pre>
+<h2>Contact</h2>
+<pre>
+  - Akinori MUSHA &lt;knu@iDaemons.org&gt; (current maintainer)
+</pre>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M002239">&amp;</a>&nbsp;&nbsp;
+
+        <a href="#M002235">+</a>&nbsp;&nbsp;
+
+        <a href="#M002237">-</a>&nbsp;&nbsp;
+
+        <a href="#M002224">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M002242">==</a>&nbsp;&nbsp;
+
+        <a href="#M002204">[]</a>&nbsp;&nbsp;
+
+        <a href="#M002241">^</a>&nbsp;&nbsp;
+
+        <a href="#M002223">add</a>&nbsp;&nbsp;
+
+        <a href="#M002225">add?</a>&nbsp;&nbsp;
+
+        <a href="#M002243">classify</a>&nbsp;&nbsp;
+
+        <a href="#M002210">clear</a>&nbsp;&nbsp;
+
+        <a href="#M002229">collect!</a>&nbsp;&nbsp;
+
+        <a href="#M002226">delete</a>&nbsp;&nbsp;
+
+        <a href="#M002227">delete?</a>&nbsp;&nbsp;
+
+        <a href="#M002228">delete_if</a>&nbsp;&nbsp;
+
+        <a href="#M002238">difference</a>&nbsp;&nbsp;
+
+        <a href="#M002244">divide</a>&nbsp;&nbsp;
+
+        <a href="#M002222">each</a>&nbsp;&nbsp;
+
+        <a href="#M002209">empty?</a>&nbsp;&nbsp;
+
+        <a href="#M002214">flatten</a>&nbsp;&nbsp;
+
+        <a href="#M002215">flatten!</a>&nbsp;&nbsp;
+
+        <a href="#M002213">flatten_merge</a>&nbsp;&nbsp;
+
+        <a href="#M002216">include?</a>&nbsp;&nbsp;
+
+        <a href="#M002206">initialize_copy</a>&nbsp;&nbsp;
+
+        <a href="#M002245">inspect</a>&nbsp;&nbsp;
+
+        <a href="#M002240">intersection</a>&nbsp;&nbsp;
+
+        <a href="#M002208">length</a>&nbsp;&nbsp;
+
+        <a href="#M002230">map!</a>&nbsp;&nbsp;
+
+        <a href="#M002217">member?</a>&nbsp;&nbsp;
+
+        <a href="#M002232">merge</a>&nbsp;&nbsp;
+
+        <a href="#M002205">new</a>&nbsp;&nbsp;
+
+        <a href="#M002221">proper_subset?</a>&nbsp;&nbsp;
+
+        <a href="#M002219">proper_superset?</a>&nbsp;&nbsp;
+
+        <a href="#M002231">reject!</a>&nbsp;&nbsp;
+
+        <a href="#M002211">replace</a>&nbsp;&nbsp;
+
+        <a href="#M002207">size</a>&nbsp;&nbsp;
+
+        <a href="#M002220">subset?</a>&nbsp;&nbsp;
+
+        <a href="#M002233">subtract</a>&nbsp;&nbsp;
+
+        <a href="#M002218">superset?</a>&nbsp;&nbsp;
+
+        <a href="#M002212">to_a</a>&nbsp;&nbsp;
+
+        <a href="#M002236">union</a>&nbsp;&nbsp;
+
+        <a href="#M002234">|</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Enumerable.html">Enumerable</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M002204" class="method-detail">
+        <a name="M002204"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002204.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002204.html');return false;">
+
+          <span class="method-name">[]</span><span class="method-args">(*ary)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new set containing the given objects.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002205" class="method-detail">
+        <a name="M002205"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002205.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002205.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(enum = nil) {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new set containing the elements of the given enumerable object.
+</p>
+<p>
+If a block is given, the elements of enum are preprocessed by the given
+block.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M002239" class="method-detail">
+        <a name="M002239"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002239.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002239.html');return false;">
+
+          <span class="method-name">&amp;</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new set containing elements common to the set and the given
+enumerable object.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002235" class="method-detail">
+        <a name="M002235"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">+</span><span class="method-args">(enum)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #|
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002237" class="method-detail">
+        <a name="M002237"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002237.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002237.html');return false;">
+
+          <span class="method-name">-</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new set built by duplicating the set, removing every element that
+appears in the given enumerable object.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002224" class="method-detail">
+        <a name="M002224"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(o)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Set.html#M002223">add</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002242" class="method-detail">
+        <a name="M002242"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002242.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002242.html');return false;">
+
+          <span class="method-name">==</span><span class="method-args">(set)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if two sets are equal. The equality of each couple of elements
+is defined according to <a href="Object.html#M000602">Object#eql?</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002241" class="method-detail">
+        <a name="M002241"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002241.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002241.html');return false;">
+
+          <span class="method-name">^</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new set containing elements exclusive between the set and the
+given enumerable object. (set ^ enum) is equivalent to ((set | enum) - (set
+&amp; enum)).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002223" class="method-detail">
+        <a name="M002223"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002223.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002223.html');return false;">
+
+          <span class="method-name">add</span><span class="method-args">(o)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Adds the given object to the set and returns self. Use <tt>merge</tt> to
+add many elements at once.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002225" class="method-detail">
+        <a name="M002225"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002225.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002225.html');return false;">
+
+          <span class="method-name">add?</span><span class="method-args">(o)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Adds the given object to the set and returns self. If the object is already
+in the set, returns nil.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002243" class="method-detail">
+        <a name="M002243"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002243.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002243.html');return false;">
+
+          <span class="method-name">classify</span><span class="method-args">( {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Classifies the set by the return value of the given block and returns a
+hash of {value => set of elements} pairs. The block is called once for each
+element of the set, passing the element as parameter.
+</p>
+<p>
+e.g.:
+</p>
+<pre>
+  require 'set'
+  files = Set.new(Dir.glob(&quot;*.rb&quot;))
+  hash = files.classify { |f| File.mtime(f).year }
+  p hash    # =&gt; {2000=&gt;#&lt;Set: {&quot;a.rb&quot;, &quot;b.rb&quot;}&gt;,
+            #     2001=&gt;#&lt;Set: {&quot;c.rb&quot;, &quot;d.rb&quot;, &quot;e.rb&quot;}&gt;,
+            #     2002=&gt;#&lt;Set: {&quot;f.rb&quot;}&gt;}
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002210" class="method-detail">
+        <a name="M002210"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002210.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002210.html');return false;">
+
+          <span class="method-name">clear</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Removes all elements and returns self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002229" class="method-detail">
+        <a name="M002229"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002229.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002229.html');return false;">
+
+          <span class="method-name">collect!</span><span class="method-args">() {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Replaces the elements with ones returned by collect().
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002226" class="method-detail">
+        <a name="M002226"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002226.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002226.html');return false;">
+
+          <span class="method-name">delete</span><span class="method-args">(o)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Deletes the given object from the set and returns self. Use
+<tt>subtract</tt> to delete many items at once.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002227" class="method-detail">
+        <a name="M002227"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002227.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002227.html');return false;">
+
+          <span class="method-name">delete?</span><span class="method-args">(o)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Deletes the given object from the set and returns self. If the object is
+not in the set, returns nil.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002228" class="method-detail">
+        <a name="M002228"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002228.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002228.html');return false;">
+
+          <span class="method-name">delete_if</span><span class="method-args">() {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Deletes every element of the set for which block evaluates to true, and
+returns self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002238" class="method-detail">
+        <a name="M002238"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">difference</span><span class="method-args">(enum)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #-
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002244" class="method-detail">
+        <a name="M002244"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002244.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002244.html');return false;">
+
+          <span class="method-name">divide</span><span class="method-args">(&amp;func)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Divides the set into a set of subsets according to the commonality defined
+by the given block.
+</p>
+<p>
+If the arity of the block is 2, elements o1 and o2 are in common if
+block.call(o1, o2) is true. Otherwise, elements o1 and o2 are in common if
+block.call(o1) == block.call(o2).
+</p>
+<p>
+e.g.:
+</p>
+<pre>
+  require 'set'
+  numbers = Set[1, 3, 4, 6, 9, 10, 11]
+  set = numbers.divide { |i,j| (i - j).abs == 1 }
+  p set     # =&gt; #&lt;Set: {#&lt;Set: {1}&gt;,
+            #            #&lt;Set: {11, 9, 10}&gt;,
+            #            #&lt;Set: {3, 4}&gt;,
+            #            #&lt;Set: {6}&gt;}&gt;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002222" class="method-detail">
+        <a name="M002222"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002222.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002222.html');return false;">
+
+          <span class="method-name">each</span><span class="method-args">() {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Calls the given block once for each element in the set, passing the element
+as parameter. Returns an enumerator if no block is given.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002209" class="method-detail">
+        <a name="M002209"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002209.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002209.html');return false;">
+
+          <span class="method-name">empty?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set contains no elements.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002214" class="method-detail">
+        <a name="M002214"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002214.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002214.html');return false;">
+
+          <span class="method-name">flatten</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new set that is a copy of the set, flattening each containing set
+recursively.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002215" class="method-detail">
+        <a name="M002215"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002215.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002215.html');return false;">
+
+          <span class="method-name">flatten!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Equivalent to <a href="Set.html#M002214">Set#flatten</a>, but replaces the
+receiver with the result in place. Returns nil if no modifications were
+made.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002216" class="method-detail">
+        <a name="M002216"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002216.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002216.html');return false;">
+
+          <span class="method-name">include?</span><span class="method-args">(o)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set contains the given object.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002206" class="method-detail">
+        <a name="M002206"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002206.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002206.html');return false;">
+
+          <span class="method-name">initialize_copy</span><span class="method-args">(orig)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Copy internal hash.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002245" class="method-detail">
+        <a name="M002245"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002245.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002245.html');return false;">
+
+          <span class="method-name">inspect</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a string containing a human-readable representation of the set.
+(&#8220;#<Set: {element1, element2, &#8230;}>&#8221;)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002240" class="method-detail">
+        <a name="M002240"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">intersection</span><span class="method-args">(enum)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #&amp;
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002208" class="method-detail">
+        <a name="M002208"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">length</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Set.html#M002207">size</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002230" class="method-detail">
+        <a name="M002230"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">map!</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Set.html#M002229">collect!</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002217" class="method-detail">
+        <a name="M002217"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">member?</span><span class="method-args">(o)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Set.html#M002216">include?</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002232" class="method-detail">
+        <a name="M002232"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002232.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002232.html');return false;">
+
+          <span class="method-name">merge</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Merges the elements of the given enumerable object to the set and returns
+self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002221" class="method-detail">
+        <a name="M002221"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002221.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002221.html');return false;">
+
+          <span class="method-name">proper_subset?</span><span class="method-args">(set)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set is a proper subset of the given set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002219" class="method-detail">
+        <a name="M002219"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002219.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002219.html');return false;">
+
+          <span class="method-name">proper_superset?</span><span class="method-args">(set)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set is a proper superset of the given set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002231" class="method-detail">
+        <a name="M002231"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002231.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002231.html');return false;">
+
+          <span class="method-name">reject!</span><span class="method-args">() {|o| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Equivalent to <a href="Set.html#M002228">Set#delete_if</a>, but returns nil
+if no changes were made.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002211" class="method-detail">
+        <a name="M002211"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002211.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002211.html');return false;">
+
+          <span class="method-name">replace</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Replaces the contents of the set with the contents of the given enumerable
+object and returns self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002207" class="method-detail">
+        <a name="M002207"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002207.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002207.html');return false;">
+
+          <span class="method-name">size</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the number of elements.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002220" class="method-detail">
+        <a name="M002220"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002220.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002220.html');return false;">
+
+          <span class="method-name">subset?</span><span class="method-args">(set)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set is a subset of the given set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002233" class="method-detail">
+        <a name="M002233"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002233.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002233.html');return false;">
+
+          <span class="method-name">subtract</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Deletes every element that appears in the given enumerable object and
+returns self.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002218" class="method-detail">
+        <a name="M002218"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002218.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002218.html');return false;">
+
+          <span class="method-name">superset?</span><span class="method-args">(set)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the set is a superset of the given set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002212" class="method-detail">
+        <a name="M002212"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002212.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002212.html');return false;">
+
+          <span class="method-name">to_a</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Converts the set to an array. The order of elements is uncertain.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002236" class="method-detail">
+        <a name="M002236"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">union</span><span class="method-args">(enum)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #|
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002234" class="method-detail">
+        <a name="M002234"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002234.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002234.html');return false;">
+
+          <span class="method-name">|</span><span class="method-args">(enum)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new set built by merging the set and the elements of the given
+enumerable object.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+
+      <div id="method-M002213" class="method-detail">
+        <a name="M002213"></a>
+
+        <div class="method-heading">
+
+          <a href="Set.src/M002213.html" target="Code" class="method-signature"
+            onclick="popupCode('Set.src/M002213.html');return false;">
+
+          <span class="method-name">flatten_merge</span><span class="method-args">(set, seen = Set.new)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

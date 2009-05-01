@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>typelibs (WIN32OLE_TYPE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_TYPE.typelibs
+ * 
+ *  Returns array of type libraries.
+ *  This method will be OBSOLETE. Use WIN32OLE_TYPELIB.typelibs.collect{|t| t.name} instead.
+ *
+ */
+static VALUE
+foletype_s_typelibs(VALUE self)
+{
+    /*
+    rb_warn(&quot;%s is obsolete. use %s instead.&quot;,
+            &quot;WIN32OLE_TYPE.typelibs&quot;,
+            &quot;WIN32OLE_TYPELIB.typelibs.collect{t|t.name}&quot;);
+    */
+    return rb_eval_string(&quot;WIN32OLE_TYPELIB.typelibs.collect{|t|t.name}&quot;);
+}</pre>
+</body>
+</html>

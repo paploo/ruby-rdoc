@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (CGI::Session)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/cgi/session.rb, line 251</span>
+251:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">request</span>, <span class="ruby-identifier">option</span>={})
+252:       <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword kw">false</span>
+253:       <span class="ruby-identifier">session_key</span> = <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_key'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'_session_id'</span>
+254:       <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_id'</span>]
+255:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session_id</span>
+256:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'new_session'</span>]
+257:           <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">create_new_id</span>
+258:           <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword kw">true</span>
+259:         <span class="ruby-keyword kw">end</span>
+260:       <span class="ruby-keyword kw">end</span>
+261:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session_id</span>
+262:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">session_key</span>)
+263:           <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">request</span>[<span class="ruby-identifier">session_key</span>]
+264:           <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">session_id</span>.<span class="ruby-identifier">read</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session_id</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:read</span>)
+265:         <span class="ruby-keyword kw">end</span>
+266:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session_id</span>
+267:           <span class="ruby-identifier">session_id</span>, = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">cookies</span>[<span class="ruby-identifier">session_key</span>]
+268:         <span class="ruby-keyword kw">end</span>
+269:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session_id</span>
+270:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value str">'new_session'</span>, <span class="ruby-keyword kw">true</span>)
+271:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;session_key `%s' should be supplied&quot;</span><span class="ruby-operator">%</span><span class="ruby-identifier">session_key</span>
+272:           <span class="ruby-keyword kw">end</span>
+273:           <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">create_new_id</span>
+274:           <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword kw">true</span>
+275:         <span class="ruby-keyword kw">end</span>
+276:       <span class="ruby-keyword kw">end</span>
+277:       <span class="ruby-ivar">@session_id</span> = <span class="ruby-identifier">session_id</span>
+278:       <span class="ruby-identifier">dbman</span> = <span class="ruby-identifier">option</span>[<span class="ruby-value str">'database_manager'</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">FileStore</span>
+279:       <span class="ruby-keyword kw">begin</span>
+280:         <span class="ruby-ivar">@dbman</span> = <span class="ruby-identifier">dbman</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">option</span>)
+281:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoSession</span>
+282:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value str">'new_session'</span>, <span class="ruby-keyword kw">true</span>)
+283:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;invalid session_id `%s'&quot;</span><span class="ruby-operator">%</span><span class="ruby-identifier">session_id</span>
+284:         <span class="ruby-keyword kw">end</span>
+285:         <span class="ruby-identifier">session_id</span> = <span class="ruby-ivar">@session_id</span> = <span class="ruby-identifier">create_new_id</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session_id</span>
+286:         <span class="ruby-ivar">@new_session</span>=<span class="ruby-keyword kw">true</span>
+287:         <span class="ruby-keyword kw">retry</span>
+288:       <span class="ruby-keyword kw">end</span>
+289:       <span class="ruby-identifier">request</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword kw">do</span>
+290:         <span class="ruby-ivar">@output_hidden</span> = {<span class="ruby-identifier">session_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_id</span>} <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'no_hidden'</span>]
+291:         <span class="ruby-ivar">@output_cookies</span> =  [
+292:           <span class="ruby-constant">Cookie</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_key</span>,
+293:           <span class="ruby-value str">&quot;value&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_id</span>,
+294:           <span class="ruby-value str">&quot;expires&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_expires'</span>],
+295:           <span class="ruby-value str">&quot;domain&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_domain'</span>],
+296:           <span class="ruby-value str">&quot;secure&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_secure'</span>],
+297:           <span class="ruby-value str">&quot;path&quot;</span> =<span class="ruby-operator">&gt;</span> 
+298:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_path'</span>]
+299:             <span class="ruby-identifier">option</span>[<span class="ruby-value str">'session_path'</span>]
+300:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>]
+301:             <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">dirname</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>])
+302:           <span class="ruby-keyword kw">else</span>
+303:           <span class="ruby-value str">&quot;&quot;</span>
+304:           <span class="ruby-keyword kw">end</span>)
+305:         ] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">option</span>[<span class="ruby-value str">'no_cookies'</span>]
+306:       <span class="ruby-keyword kw">end</span>
+307:       <span class="ruby-ivar">@dbprot</span> = [<span class="ruby-ivar">@dbman</span>]
+308:       <span class="ruby-constant">ObjectSpace</span><span class="ruby-operator">::</span><span class="ruby-identifier">define_finalizer</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-constant">Session</span><span class="ruby-operator">::</span><span class="ruby-identifier">callback</span>(<span class="ruby-ivar">@dbprot</span>))
+309:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

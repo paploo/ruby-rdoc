@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_yaml (Range)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 229</span>
+229:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+230:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+231:             <span class="ruby-comment cmt"># if self.begin.is_complex_yaml? or self.begin.respond_to? :to_str or</span>
+232:             <span class="ruby-comment cmt">#   self.end.is_complex_yaml? or self.end.respond_to? :to_str or</span>
+233:             <span class="ruby-comment cmt">#   not to_yaml_properties.empty?</span>
+234:                 <span class="ruby-identifier">out</span>.<span class="ruby-identifier">map</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-identifier">to_yaml_style</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">map</span><span class="ruby-operator">|</span>
+235:                     <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'begin'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">begin</span> )
+236:                     <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'end'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">end</span> )
+237:                     <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'excl'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">exclude_end?</span> )
+238:                     <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+239:                         <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-identifier">m</span>, <span class="ruby-identifier">instance_variable_get</span>( <span class="ruby-identifier">m</span> ) )
+240:                     <span class="ruby-keyword kw">end</span>
+241:                 <span class="ruby-keyword kw">end</span>
+242:             <span class="ruby-comment cmt"># else</span>
+243:             <span class="ruby-comment cmt">#     out.scalar( taguri ) do |sc|</span>
+244:             <span class="ruby-comment cmt">#         sc.embed( self.begin )</span>
+245:             <span class="ruby-comment cmt">#         sc.concat( self.exclude_end? ? &quot;...&quot; : &quot;..&quot; )</span>
+246:             <span class="ruby-comment cmt">#         sc.embed( self.end )</span>
+247:             <span class="ruby-comment cmt">#     end</span>
+248:             <span class="ruby-comment cmt"># end</span>
+249:         <span class="ruby-keyword kw">end</span>
+250:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>load_html_template (RDoc::Generator::HTML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html.rb, line 95</span>
+ 95:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_html_template</span>
+ 96:     <span class="ruby-comment cmt">#</span>
+ 97:     <span class="ruby-comment cmt"># If the template is not a path, first look for it</span>
+ 98:     <span class="ruby-comment cmt"># in rdoc's HTML template directory.  Perhaps this behavior should</span>
+ 99:     <span class="ruby-comment cmt"># be reversed (first try to include the template and, only if that</span>
+100:     <span class="ruby-comment cmt"># fails, try to include it in the default template directory).</span>
+101:     <span class="ruby-comment cmt"># One danger with reversing the behavior, however, is that</span>
+102:     <span class="ruby-comment cmt"># if something like require 'html' could load up an</span>
+103:     <span class="ruby-comment cmt"># unrelated file in the standard library or in a gem.</span>
+104:     <span class="ruby-comment cmt">#</span>
+105:     <span class="ruby-identifier">template</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">template</span>
+106: 
+107:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">template</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">%r{/|\\}</span> <span class="ruby-keyword kw">then</span>
+108:       <span class="ruby-identifier">template</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'rdoc'</span>, <span class="ruby-value str">'generator'</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">generator</span>.<span class="ruby-identifier">key</span>,
+109:                            <span class="ruby-identifier">template</span>)
+110:     <span class="ruby-keyword kw">end</span>
+111: 
+112:     <span class="ruby-keyword kw">begin</span>
+113:       <span class="ruby-identifier">require</span> <span class="ruby-identifier">template</span>
+114: 
+115:       <span class="ruby-ivar">@template</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">const_get</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">template</span>.<span class="ruby-identifier">upcase</span>
+116:       <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">template_class</span> = <span class="ruby-ivar">@template</span>
+117:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+118:       <span class="ruby-comment cmt">#</span>
+119:       <span class="ruby-comment cmt"># The template did not exist in the default template directory, so</span>
+120:       <span class="ruby-comment cmt"># see if require can find the template elsewhere (in a gem, for</span>
+121:       <span class="ruby-comment cmt"># instance).</span>
+122:       <span class="ruby-comment cmt">#</span>
+123:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>[<span class="ruby-identifier">template</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">template</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">template</span>)
+124:         <span class="ruby-identifier">template</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">template</span>
+125:         <span class="ruby-keyword kw">retry</span>
+126:       <span class="ruby-keyword kw">end</span>
+127: 
+128:       <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Could not find HTML template '#{template}': #{e.message}&quot;</span>
+129:       <span class="ruby-identifier">exit</span> <span class="ruby-value">99</span>
+130:     <span class="ruby-keyword kw">end</span>
+131:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

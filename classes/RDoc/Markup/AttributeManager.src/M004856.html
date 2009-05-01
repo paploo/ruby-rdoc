@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>changed_attribute_by_name (RDoc::Markup::AttributeManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/markup/attribute_manager.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">changed_attribute_by_name</span>(<span class="ruby-identifier">current_set</span>, <span class="ruby-identifier">new_set</span>)
+53:     <span class="ruby-identifier">current</span> = <span class="ruby-identifier">new</span> = <span class="ruby-value">0</span>
+54:     <span class="ruby-identifier">current_set</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+55:       <span class="ruby-identifier">current</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Attribute</span>.<span class="ruby-identifier">bitmap_for</span>(<span class="ruby-identifier">name</span>)
+56:     <span class="ruby-keyword kw">end</span>
+57: 
+58:     <span class="ruby-identifier">new_set</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+59:       <span class="ruby-identifier">new</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Attribute</span>.<span class="ruby-identifier">bitmap_for</span>(<span class="ruby-identifier">name</span>)
+60:     <span class="ruby-keyword kw">end</span>
+61: 
+62:     <span class="ruby-identifier">change_attribute</span>(<span class="ruby-identifier">current</span>, <span class="ruby-identifier">new</span>)
+63:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

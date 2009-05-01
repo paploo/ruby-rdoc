@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ascend (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 573</span>
+573:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ascend</span>
+574:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+575:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+576:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+577:       <span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">r</span>
+578:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
+579:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>))
+580:     <span class="ruby-keyword kw">end</span>
+581:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

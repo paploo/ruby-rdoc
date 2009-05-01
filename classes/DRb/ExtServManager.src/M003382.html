@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>invoke_service_command (DRb::ExtServManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/drb/extservm.rb, line 75</span>
+75:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">invoke_service_command</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">command</span>)
+76:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid command. name: #{name}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">command</span>
+77:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+78:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@servers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)
+79:         <span class="ruby-ivar">@servers</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-keyword kw">false</span>
+80:       <span class="ruby-keyword kw">end</span>
+81:       <span class="ruby-identifier">uri</span> = <span class="ruby-ivar">@uri</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DRb</span>.<span class="ruby-identifier">uri</span>
+82:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/mswin32/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/NT/</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;OS&quot;</span>]
+83:         <span class="ruby-identifier">system</span>(<span class="ruby-node">%Q'cmd /c start &quot;ruby&quot; /b #{command} #{uri} #{name}'</span>)
+84:       <span class="ruby-keyword kw">else</span>
+85:         <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;#{command} #{uri} #{name} &amp;&quot;</span>)
+86:       <span class="ruby-keyword kw">end</span>
+87:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

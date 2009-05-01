@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>url_encode (ERB::Util)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 845</span>
+845:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_encode</span>(<span class="ruby-identifier">s</span>)
+846:       <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;ASCII-8BIT&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[^a-zA-Z0-9_\-.]/n</span>) {
+847:         <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%%%02X&quot;</span>, <span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;C&quot;</span>)[<span class="ruby-value">0</span>])
+848:       }
+849:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

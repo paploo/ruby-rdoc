@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>next (Enumerator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   e.next   =&gt; object
+ *
+ * Returns the next object in the enumerator, and move the internal
+ * position forward.  When the position reached at the end, internal
+ * position is rewound then StopIteration is raised.
+ *
+ * Note that enumeration sequence by next method does not affect other
+ * non-external enumeration methods, unless underlying iteration
+ * methods itself has side-effect, e.g. IO#each_line.
+ *
+ */
+
+static VALUE
+enumerator_next(VALUE obj)
+{
+    struct enumerator *e = enumerator_ptr(obj);
+    VALUE curr, v;
+    curr = rb_fiber_current();
+
+    if (!e-&gt;fib || !rb_fiber_alive_p(e-&gt;fib)) {
+        next_init(obj, e);
+    }
+
+    v = rb_fiber_resume(e-&gt;fib, 1, &amp;curr);
+    if (e-&gt;no_next) {
+        e-&gt;fib = 0;
+        e-&gt;dst = Qnil;
+        e-&gt;no_next = Qfalse;
+        rb_raise(rb_eStopIteration, &quot;iteration reached at end&quot;);
+    }
+    return v;
+}</pre>
+</body>
+</html>

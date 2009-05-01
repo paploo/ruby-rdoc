@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getmultiline (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 238</span>
+238:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getmultiline</span>
+239:       <span class="ruby-identifier">line</span> = <span class="ruby-identifier">getline</span>
+240:       <span class="ruby-identifier">buff</span> = <span class="ruby-identifier">line</span>
+241:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?-</span>
+242:           <span class="ruby-identifier">code</span> = <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>]
+243:         <span class="ruby-keyword kw">begin</span>
+244:           <span class="ruby-identifier">line</span> = <span class="ruby-identifier">getline</span>
+245:           <span class="ruby-identifier">buff</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+246:         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">code</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">3</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">?-</span>
+247:       <span class="ruby-keyword kw">end</span>
+248:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">buff</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+249:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

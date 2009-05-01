@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_to (URI::MailTo)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/mailto.rb, line 158</span>
+158:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_to</span>(<span class="ruby-identifier">v</span>)
+159:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
+160:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+161: 
+162:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:OPAQUE</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">||</span> <span class="ruby-node">/\A#{MAILBOX_PATTERN}*\z/o</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span>
+163:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidComponentError</span>,
+164:           <span class="ruby-node">&quot;bad component(expected opaque component): #{v}&quot;</span>
+165:       <span class="ruby-keyword kw">end</span>
+166: 
+167:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+168:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

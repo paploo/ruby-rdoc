@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>_reverse (IPAddr)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 545</span>
+545:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_reverse</span>
+546:     <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@family</span>
+547:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET</span>
+548:       <span class="ruby-keyword kw">return</span> (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+549:         (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">&gt;&gt;</span> (<span class="ruby-value">8</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">i</span>)) <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xff</span>
+550:       }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'.'</span>)
+551:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET6</span>
+552:       <span class="ruby-keyword kw">return</span> (<span class="ruby-value str">&quot;%.32x&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-ivar">@addr</span>).<span class="ruby-identifier">reverse!</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/.(?!$)/</span>, <span class="ruby-value str">'\&amp;.'</span>)
+553:     <span class="ruby-keyword kw">else</span>
+554:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;unsupported address family&quot;</span>
+555:     <span class="ruby-keyword kw">end</span>
+556:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

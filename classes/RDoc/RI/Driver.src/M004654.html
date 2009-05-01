@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_name (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 561</span>
+561:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_name</span>(<span class="ruby-identifier">name</span>)
+562:     <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/(::|\#|\.)/</span>)
+563: 
+564:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parts</span>[<span class="ruby-value">-2</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'::'</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^[A-Z]/</span> <span class="ruby-keyword kw">then</span>
+565:       <span class="ruby-identifier">meth</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">pop</span>
+566:       <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">pop</span>
+567:     <span class="ruby-keyword kw">end</span>
+568: 
+569:     <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">join</span>
+570: 
+571:     [<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">meth</span>]
+572:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

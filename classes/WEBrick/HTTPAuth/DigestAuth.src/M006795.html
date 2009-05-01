@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate_next_nonce (WEBrick::HTTPAuth::DigestAuth)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpauth/digestauth.rb, line 253</span>
+253:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_next_nonce</span>(<span class="ruby-identifier">req</span>)
+254:         <span class="ruby-identifier">now</span> = <span class="ruby-value str">&quot;%012d&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_time</span>.<span class="ruby-identifier">to_i</span>
+255:         <span class="ruby-identifier">pk</span>  = <span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">now</span>, <span class="ruby-ivar">@instance_key</span>)[<span class="ruby-value">0</span>,<span class="ruby-value">32</span>]
+256:         <span class="ruby-identifier">nonce</span> = [<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;:&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">pk</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m*&quot;</span>).<span class="ruby-identifier">chop</span> <span class="ruby-comment cmt"># it has 60 length of chars.</span>
+257:         <span class="ruby-identifier">nonce</span>
+258:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

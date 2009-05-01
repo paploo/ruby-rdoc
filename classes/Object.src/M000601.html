@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>!~ (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj !~ other  =&gt; true or false
+ *  
+ *  Returns true if two objects do not match (using the &lt;i&gt;=~&lt;/i&gt;
+ *  method), otherwise false.
+ */
+
+static VALUE
+rb_obj_not_match(VALUE obj1, VALUE obj2)
+{
+    VALUE result = rb_funcall(obj1, id_match, 1, obj2);
+    return RTEST(result) ? Qfalse : Qtrue;
+}</pre>
+</body>
+</html>

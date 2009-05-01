@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>header_converters (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1636</span>
+1636:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">header_converters</span>
+1637:     <span class="ruby-ivar">@header_converters</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter</span><span class="ruby-operator">|</span>
+1638:       <span class="ruby-identifier">name</span> = <span class="ruby-constant">HeaderConverters</span>.<span class="ruby-identifier">rassoc</span>(<span class="ruby-identifier">converter</span>)
+1639:       <span class="ruby-identifier">name</span> <span class="ruby-value">? </span><span class="ruby-identifier">name</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">converter</span>
+1640:     <span class="ruby-keyword kw">end</span>
+1641:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

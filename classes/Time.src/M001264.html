@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rfc2822 (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 294</span>
+294:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rfc2822</span>(<span class="ruby-identifier">date</span>)
+295:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\s*
+296:           (?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s*,\s*)?
+297:           (\d{1,2})\s+
+298:           (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+
+299:           (\d{2,})\s+
+300:           (\d{2})\s*
+301:           :\s*(\d{2})\s*
+302:           (?::\s*(\d{2}))?\s+
+303:           ([+-]\d{4}|
+304:            UT|GMT|EST|EDT|CST|CDT|MST|MDT|PST|PDT|[A-IK-Z])/i</span><span class="ruby-identifier">x</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">date</span>
+305:         <span class="ruby-comment cmt"># Since RFC 2822 permit comments, the regexp has no right anchor.</span>
+306:         <span class="ruby-identifier">day</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+307:         <span class="ruby-identifier">mon</span> = <span class="ruby-constant">MonthValue</span>[<span class="ruby-identifier">$2</span>.<span class="ruby-identifier">upcase</span>]
+308:         <span class="ruby-identifier">year</span> = <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">to_i</span>
+309:         <span class="ruby-identifier">hour</span> = <span class="ruby-identifier">$4</span>.<span class="ruby-identifier">to_i</span>
+310:         <span class="ruby-identifier">min</span> = <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_i</span>
+311:         <span class="ruby-identifier">sec</span> = <span class="ruby-identifier">$6</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+312:         <span class="ruby-identifier">zone</span> = <span class="ruby-identifier">$7</span>
+313: 
+314:         <span class="ruby-comment cmt"># following year completion is compliant with RFC 2822.</span>
+315:         <span class="ruby-identifier">year</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">50</span>
+316:                  <span class="ruby-value">2000</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">year</span>
+317:                <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1000</span>
+318:                  <span class="ruby-value">1900</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">year</span>
+319:                <span class="ruby-keyword kw">else</span>
+320:                  <span class="ruby-identifier">year</span>
+321:                <span class="ruby-keyword kw">end</span>
+322: 
+323:         <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span> =
+324:           <span class="ruby-identifier">apply_offset</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">zone_offset</span>(<span class="ruby-identifier">zone</span>))
+325:         <span class="ruby-identifier">t</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>)
+326:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">localtime</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">zone_utc?</span>(<span class="ruby-identifier">zone</span>)
+327:         <span class="ruby-identifier">t</span>
+328:       <span class="ruby-keyword kw">else</span>
+329:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;not RFC 2822 compliant date: #{date.inspect}&quot;</span>)
+330:       <span class="ruby-keyword kw">end</span>
+331:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_files (RDoc::Options)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/options.rb, line 631</span>
+631:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_files</span>
+632:     <span class="ruby-ivar">@files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+633:       <span class="ruby-identifier">stat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span> <span class="ruby-identifier">f</span>
+634:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-node">&quot;file '#{f}' not readable&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">stat</span>.<span class="ruby-identifier">readable?</span>
+635:     <span class="ruby-keyword kw">end</span>
+636:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

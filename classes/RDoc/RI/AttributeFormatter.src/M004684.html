@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add_attributes_to (RDoc::RI::AttributeFormatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 327</span>
+327:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_attributes_to</span>(<span class="ruby-identifier">txt</span>)
+328:     <span class="ruby-identifier">tokens</span> = <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">%r{(&lt;/?(?:b|code|em|i|tt)&gt;)}</span>)
+329:     <span class="ruby-identifier">text</span> = <span class="ruby-constant">AttributeString</span>.<span class="ruby-identifier">new</span>
+330:     <span class="ruby-identifier">attributes</span> = <span class="ruby-value">0</span>
+331:     <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tok</span><span class="ruby-operator">|</span>
+332:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">tok</span>
+333:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">%r{^&lt;/(\w+)&gt;$}</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">attributes</span> <span class="ruby-operator">&amp;=</span> <span class="ruby-operator">~</span>(<span class="ruby-constant">ATTR_MAP</span>[<span class="ruby-identifier">$1</span>]<span class="ruby-operator">||</span><span class="ruby-value">0</span>)
+334:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">%r{^&lt;(\w+)&gt;$}</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">attributes</span>  <span class="ruby-operator">|=</span> (<span class="ruby-constant">ATTR_MAP</span>[<span class="ruby-identifier">$1</span>]<span class="ruby-operator">||</span><span class="ruby-value">0</span>)
+335:       <span class="ruby-keyword kw">else</span>
+336:         <span class="ruby-identifier">tok</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">//</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">ch</span><span class="ruby-operator">|</span> <span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">AttrChar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">ch</span>, <span class="ruby-identifier">attributes</span>)}
+337:       <span class="ruby-keyword kw">end</span>
+338:     <span class="ruby-keyword kw">end</span>
+339:     <span class="ruby-identifier">text</span>
+340:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

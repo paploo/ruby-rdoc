@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sync_unlock (Sync_m)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/sync.rb, line 157</span>
+157:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sync_unlock</span>(<span class="ruby-identifier">m</span> = <span class="ruby-constant">EX</span>)
+158:     <span class="ruby-identifier">wakeup_threads</span> = []
+159:     <span class="ruby-ivar">@sync_mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+160:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sync_mode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">UN</span>
+161:         <span class="ruby-constant">Err</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownLocker</span>.<span class="ruby-constant">Fail</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+162:       <span class="ruby-keyword kw">end</span>
+163:       
+164:       <span class="ruby-identifier">m</span> = <span class="ruby-identifier">sync_mode</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EX</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">sync_mode</span> <span class="ruby-operator">==</span> <span class="ruby-constant">SH</span>
+165:       
+166:       <span class="ruby-identifier">runnable</span> = <span class="ruby-keyword kw">false</span>
+167:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">m</span>
+168:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">UN</span>
+169:         <span class="ruby-constant">Err</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownLocker</span>.<span class="ruby-constant">Fail</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+170:         
+171:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">EX</span>
+172:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sync_ex_locker</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>
+173:           <span class="ruby-keyword kw">if</span> (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_ex_count</span> = <span class="ruby-identifier">sync_ex_count</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+174:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_ex_locker</span> = <span class="ruby-keyword kw">nil</span>
+175:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sync_sh_locker</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+176:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_mode</span> = <span class="ruby-constant">SH</span>
+177:             <span class="ruby-keyword kw">else</span>
+178:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_mode</span> = <span class="ruby-constant">UN</span>
+179:             <span class="ruby-keyword kw">end</span>
+180:             <span class="ruby-identifier">runnable</span> = <span class="ruby-keyword kw">true</span>
+181:           <span class="ruby-keyword kw">end</span>
+182:         <span class="ruby-keyword kw">else</span>
+183:           <span class="ruby-constant">Err</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownLocker</span>.<span class="ruby-constant">Fail</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+184:         <span class="ruby-keyword kw">end</span>
+185:         
+186:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">SH</span>
+187:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">count</span> = <span class="ruby-identifier">sync_sh_locker</span>[<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>]).<span class="ruby-identifier">nil?</span>
+188:           <span class="ruby-constant">Err</span><span class="ruby-operator">::</span><span class="ruby-constant">UnknownLocker</span>.<span class="ruby-constant">Fail</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+189:         <span class="ruby-keyword kw">else</span>
+190:           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">sync_sh_locker</span>[<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>] = <span class="ruby-identifier">count</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> 
+191:             <span class="ruby-identifier">sync_sh_locker</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+192:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sync_sh_locker</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">sync_ex_count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+193:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_mode</span> = <span class="ruby-constant">UN</span>
+194:               <span class="ruby-identifier">runnable</span> = <span class="ruby-keyword kw">true</span>
+195:             <span class="ruby-keyword kw">end</span>
+196:           <span class="ruby-keyword kw">end</span>
+197:         <span class="ruby-keyword kw">end</span>
+198:       <span class="ruby-keyword kw">end</span>
+199:       
+200:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">runnable</span>
+201:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sync_upgrade_waiting</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+202:           <span class="ruby-identifier">th</span>, <span class="ruby-identifier">count</span> = <span class="ruby-identifier">sync_upgrade_waiting</span>.<span class="ruby-identifier">shift</span>
+203:           <span class="ruby-identifier">sync_sh_locker</span>[<span class="ruby-identifier">th</span>] = <span class="ruby-identifier">count</span>
+204:           <span class="ruby-identifier">th</span>.<span class="ruby-identifier">wakeup</span>
+205:           <span class="ruby-identifier">wakeup_threads</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">th</span>
+206:         <span class="ruby-keyword kw">else</span>
+207:           <span class="ruby-identifier">wait</span> = <span class="ruby-identifier">sync_waiting</span>
+208:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">sync_waiting</span> = []
+209:           <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">th</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">wait</span>
+210:             <span class="ruby-identifier">th</span>.<span class="ruby-identifier">wakeup</span>
+211:             <span class="ruby-identifier">wakeup_threads</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">th</span>
+212:           <span class="ruby-keyword kw">end</span>
+213:         <span class="ruby-keyword kw">end</span>
+214:       <span class="ruby-keyword kw">end</span>
+215:     <span class="ruby-keyword kw">end</span>
+216:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">th</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">wakeup_threads</span>
+217:       <span class="ruby-identifier">th</span>.<span class="ruby-identifier">run</span>
+218:     <span class="ruby-keyword kw">end</span>
+219:     <span class="ruby-keyword kw">self</span>
+220:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

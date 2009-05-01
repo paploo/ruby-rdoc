@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_query_interface (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE#ole_query_interface(iid) -&gt; WIN32OLE object
+ * 
+ *  Returns WIN32OLE object for a specific dispatch or dual
+ *  interface specified by iid.
+ *
+ *      ie = WIN32OLE.new('InternetExplorer.Application')
+ *      ie_web_app = ie.ole_query_interface('{0002DF05-0000-0000-C000-000000000046}') # =&gt; WIN32OLE object for dispinterface IWebBrowserApp 
+ */
+static VALUE
+fole_query_interface(VALUE self, VALUE str_iid)
+{
+    HRESULT hr;
+    OLECHAR *pBuf;
+    IID iid;
+    struct oledata *pole;
+    IDispatch *pDispatch;
+    void *p;
+         
+    pBuf  = ole_vstr2wc(str_iid);
+    hr = CLSIDFromString(pBuf, &amp;iid);
+    SysFreeString(pBuf);
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, 
+                  &quot;invalid iid: `%s'&quot;,
+                  StringValuePtr(str_iid));
+    }
+
+    OLEData_Get_Struct(self, pole);
+    if(!pole-&gt;pDispatch) {
+        rb_raise(rb_eRuntimeError, &quot;failed to get dispatch interface&quot;);
+    }
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;QueryInterface(pole-&gt;pDispatch, &amp;iid,
+                                                 &amp;p);
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, 
+                  &quot;failed to get interface `%s'&quot;, 
+                  StringValuePtr(str_iid));
+    }
+
+    pDispatch = p;
+    return create_win32ole_object(cWIN32OLE, pDispatch, 0, 0);
+}</pre>
+</body>
+</html>

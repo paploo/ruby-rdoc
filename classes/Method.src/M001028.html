@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_proc (Method)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     meth.to_proc    =&gt; prc
+ *  
+ *  Returns a &lt;code&gt;Proc&lt;/code&gt; object corresponding to this method.
+ */
+
+static VALUE
+method_proc(VALUE method)
+{
+    VALUE procval;
+    rb_proc_t *proc;
+    /*
+     * class Method
+     *   def to_proc
+     *     proc{|*args|
+     *       self.call(*args)
+     *     }
+     *   end
+     * end
+     */
+    procval = rb_iterate(mlambda, 0, bmcall, method);
+    GetProcPtr(procval, proc);
+    proc-&gt;is_from_method = 1;
+    return procval;
+}</pre>
+</body>
+</html>

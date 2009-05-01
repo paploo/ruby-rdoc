@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>append (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/imap.rb, line 628</span>
+628:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append</span>(<span class="ruby-identifier">mailbox</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">flags</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">date_time</span> = <span class="ruby-keyword kw">nil</span>)
+629:       <span class="ruby-identifier">args</span> = []
+630:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">flags</span>
+631:         <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">flags</span>)
+632:       <span class="ruby-keyword kw">end</span>
+633:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">date_time</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">date_time</span>
+634:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span>(<span class="ruby-constant">Literal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">message</span>))
+635:       <span class="ruby-identifier">send_command</span>(<span class="ruby-value str">&quot;APPEND&quot;</span>, <span class="ruby-identifier">mailbox</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+636:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

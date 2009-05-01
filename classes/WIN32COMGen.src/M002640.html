@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>define_class (WIN32COMGen)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/win32ole/sample/olegen.rb, line 286</span>
+286:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define_class</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span> = <span class="ruby-constant">STDOUT</span>)
+287:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;class #{class_name(klass)} # #{klass.name}&quot;</span>
+288:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">define_include</span>
+289:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">define_instance_variables</span>
+290:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;  attr_reader :dispatch&quot;</span>
+291:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;  attr_reader :clsid&quot;</span>
+292:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;  attr_reader :progid&quot;</span>
+293:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">define_initialize</span>(<span class="ruby-identifier">klass</span>)
+294:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">define_method_missing</span>
+295:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

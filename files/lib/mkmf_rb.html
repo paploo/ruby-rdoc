@@ -1,0 +1,1060 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: mkmf.rb [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+  <div id="fileHeader">
+    <h1>mkmf.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/mkmf.rb
+
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>2009-01-28 01:23:46 -0800</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+module to create Makefile for extension modules invoke like: ruby -r mkmf
+extconf.rb
+</p>
+
+    </div>
+
+    <div id="requires-list">
+      <h3 class="section-bar">Required files</h3>
+
+      <div class="name-list">
+
+        rbconfig&nbsp;&nbsp;
+
+        fileutils&nbsp;&nbsp;
+
+        shellwords&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000018">check_sizeof</a>&nbsp;&nbsp;
+
+        <a href="#M000022">create_header</a>&nbsp;&nbsp;
+
+        <a href="#M000026">create_makefile</a>&nbsp;&nbsp;
+
+        <a href="#M000025">depend_rules</a>&nbsp;&nbsp;
+
+        <a href="#M000023">dir_config</a>&nbsp;&nbsp;
+
+        <a href="#M000024">dummy_makefile</a>&nbsp;&nbsp;
+
+        <a href="#M000021">enable_config</a>&nbsp;&nbsp;
+
+        <a href="#M000019">find_executable</a>&nbsp;&nbsp;
+
+        <a href="#M000011">find_header</a>&nbsp;&nbsp;
+
+        <a href="#M000007">find_library</a>&nbsp;&nbsp;
+
+        <a href="#M000015">find_type</a>&nbsp;&nbsp;
+
+        <a href="#M000017">have_const</a>&nbsp;&nbsp;
+
+        <a href="#M000008">have_func</a>&nbsp;&nbsp;
+
+        <a href="#M000010">have_header</a>&nbsp;&nbsp;
+
+        <a href="#M000006">have_library</a>&nbsp;&nbsp;
+
+        <a href="#M000005">have_macro</a>&nbsp;&nbsp;
+
+        <a href="#M000012">have_struct_member</a>&nbsp;&nbsp;
+
+        <a href="#M000014">have_type</a>&nbsp;&nbsp;
+
+        <a href="#M000009">have_var</a>&nbsp;&nbsp;
+
+        <a href="#M000016">try_const</a>&nbsp;&nbsp;
+
+        <a href="#M000013">try_type</a>&nbsp;&nbsp;
+
+        <a href="#M000020">with_config</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CONFIG</td>
+          <td>=</td>
+          <td class="context-item-value">RbConfig::MAKEFILE_CONFIG</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ORIG_LIBPATH</td>
+          <td>=</td>
+          <td class="context-item-value">ENV['LIB']</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CXX_EXT</td>
+          <td>=</td>
+          <td class="context-item-value">%w[cc cxx cpp]</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SRC_EXT</td>
+          <td>=</td>
+          <td class="context-item-value">%w[c m] &lt;&lt; CXX_EXT</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EXPORT_PREFIX</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('EXPORT_PREFIX') {|s| s.strip}</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMON_HEADERS</td>
+          <td>=</td>
+          <td class="context-item-value">hdr.join(&quot;\n&quot;)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMMON_LIBS</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('COMMON_LIBS', &amp;split) || []</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMPILE_RULES</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('COMPILE_RULES', &amp;split) || %w[.%s.%s:]</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RULE_SUBST</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('RULE_SUBST')</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMPILE_C</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('COMPILE_C') || '$(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) $(COUTFLAG)$@ -c $&lt;'</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMPILE_CXX</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('COMPILE_CXX') || '$(CXX) $(INCFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(COUTFLAG)$@ -c $&lt;'</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TRY_LINK</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('TRY_LINK') ||   &quot;$(CC) #{OUTFLAG}conftest $(INCFLAGS) $(CPPFLAGS) &quot; \   &quot;$(CFLAGS) $(src) $(LIBPATH) $(LDFLAGS) $(ARCH_FLAG) $(LOCAL_LIBS) $(LIBS)&quot;</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LINK_SO</td>
+          <td>=</td>
+          <td class="context-item-value">config_string('LINK_SO') ||   if CONFIG[&quot;DLEXT&quot;] == $OBJEXT</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000018.html');return false;">
+
+          <span class="method-name">check_sizeof</span><span class="method-args">(type, headers = nil, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the size of the given <tt>type</tt>. You may optionally specify
+additional <tt>headers</tt> to search in for the <tt>type</tt>.
+</p>
+<p>
+If found, a macro is passed as a preprocessor constant to the compiler
+using the type name, in uppercase, prepended with &#8216;SIZEOF_&#8217;,
+followed by the type name, followed by &#8217;=X&#8217; where
+&#8216;X&#8217; is the actual size.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000018">check_sizeof</a>(&#8216;mystruct&#8217;)
+returned 12, then the SIZEOF_MYSTRUCT=12 preprocessor macro would be passed
+to the compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000022.html');return false;">
+
+          <span class="method-name">create_header</span><span class="method-args">(header = &quot;extconf.h&quot;)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Generates a header file consisting of the various macro definitions
+generated by other methods such as <a
+href="mkmf_rb.html#M000008">have_func</a> and have_header. These are then
+wrapped in a custom ifndef based on the <tt>header</tt> file name, which
+defaults to &#8216;extconf.h&#8217;.
+</p>
+<p>
+For example:
+</p>
+<pre>
+   # extconf.rb
+   require 'mkmf'
+   have_func('realpath')
+   have_header('sys/utime.h')
+   create_header
+   create_makefile('foo')
+</pre>
+<p>
+The above script would generate the following extconf.h file:
+</p>
+<pre>
+   #ifndef EXTCONF_H
+   #define EXTCONF_H
+   #define HAVE_REALPATH 1
+   #define HAVE_SYS_UTIME_H 1
+   #endif
+</pre>
+<p>
+Given that the <a href="mkmf_rb.html#M000022">create_header</a> method
+generates a file based on definitions set earlier in your extconf.rb file,
+you will probably want to make this one of the last methods you call in
+your script.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000026.html');return false;">
+
+          <span class="method-name">create_makefile</span><span class="method-args">(target, srcprefix = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Generates the Makefile for your extension, passing along any options and
+preprocessor constants that you may have generated through other methods.
+</p>
+<p>
+The <tt>target</tt> name should correspond the name of the global function
+name defined within your C extension, minus the &#8216;Init_&#8217;. For
+example, if your C extension is defined as &#8216;Init_foo&#8217;, then
+your target would simply be &#8216;foo&#8217;.
+</p>
+<p>
+If any &#8217;/&#8217; characters are present in the target name, only the
+last name is interpreted as the target name, and the rest are considered
+toplevel directory names, and the generated Makefile will be altered
+accordingly to follow that directory structure.
+</p>
+<p>
+For example, if you pass &#8216;test/foo&#8217; as a target name, your
+extension will be installed under the &#8216;test&#8217; directory. This
+means that in order to load the file within a Ruby program later, that
+directory structure will have to be followed, e.g. &#8220;require
+&#8216;test/foo&#8217;&#8221;.
+</p>
+<p>
+The <tt>srcprefix</tt> should be used when your source files are not in the
+same directory as your build script. This will not only eliminate the need
+for you to manually copy the source files into the same directory as your
+build script, but it also sets the proper <tt>target_prefix</tt> in the
+generated Makefile.
+</p>
+<p>
+Setting the <tt>target_prefix</tt> will, in turn, install the generated
+binary in a directory under your Config::CONFIG[&#8216;sitearchdir&#8217;]
+that mimics your local filesystem when you run &#8216;make install&#8217;.
+</p>
+<p>
+For example, given the following file tree:
+</p>
+<pre>
+   ext/
+      extconf.rb
+      test/
+         foo.c
+</pre>
+<p>
+And given the following code:
+</p>
+<pre>
+   create_makefile('test/foo', 'test')
+</pre>
+<p>
+That will set the <tt>target_prefix</tt> in the generated Makefile to
+&#8216;test&#8217;. That, in turn, will create the following file tree when
+installed via the &#8216;make install&#8217; command:
+</p>
+<pre>
+   /path/to/ruby/sitearchdir/test/foo.so
+</pre>
+<p>
+It is recommended that you use this approach to generate your makefiles,
+instead of copying files around manually, because some third party
+libraries may depend on the <tt>target_prefix</tt> being set properly.
+</p>
+<p>
+The <tt>srcprefix</tt> argument can be used to override the default source
+directory, i.e. the current directory . It is included as part of the VPATH
+and added to the list of INCFLAGS.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000025.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000025.html');return false;">
+
+          <span class="method-name">depend_rules</span><span class="method-args">(depend)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000023.html');return false;">
+
+          <span class="method-name">dir_config</span><span class="method-args">(target, idefault=nil, ldefault=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sets a <tt>target</tt> name that the user can then use to configure various
+&#8216;with&#8217; options with on the command line by using that name. For
+example, if the target is set to &#8220;foo&#8221;, then the user could use
+the &#8212;with-foo-dir command line option.
+</p>
+<p>
+You may pass along additional &#8216;include&#8217; or &#8216;lib&#8217;
+defaults via the <tt>idefault</tt> and <tt>ldefault</tt> parameters,
+respectively.
+</p>
+<p>
+Note that <a href="mkmf_rb.html#M000023">dir_config</a> only adds to the
+list of places to search for libraries and include files. It does not link
+the libraries into your application.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000024.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000024.html');return false;">
+
+          <span class="method-name">dummy_makefile</span><span class="method-args">(srcdir)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000021.html');return false;">
+
+          <span class="method-name">enable_config</span><span class="method-args">(config, default=nil) {|config, default| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Tests for the presence of an &#8212;enable-<tt>config</tt> or
+&#8212;disable-<tt>config</tt> option. Returns true if the enable option is
+given, false if the disable option is given, and the default value
+otherwise.
+</p>
+<p>
+This can be useful for adding custom definitions, such as debug
+information.
+</p>
+<p>
+Example:
+</p>
+<pre>
+   if enable_config(&quot;debug&quot;)
+      $defs.push(&quot;-DOSSL_DEBUG&quot;) unless $defs.include? &quot;-DOSSL_DEBUG&quot;
+   end
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000019.html');return false;">
+
+          <span class="method-name">find_executable</span><span class="method-args">(bin, path = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Searches for the executable <tt>bin</tt> on <tt>path</tt>. The default path
+is your PATH environment variable. If that isn&#8217;t defined, it will
+resort to searching /usr/local/bin, /usr/ucb, /usr/bin and /bin.
+</p>
+<p>
+If found, it will return the full path, including the executable name, of
+where it was found.
+</p>
+<p>
+Note that this method does not actually affect the generated Makefile.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000011.html');return false;">
+
+          <span class="method-name">find_header</span><span class="method-args">(header, *paths)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Instructs mkmf to search for the given <tt>header</tt> in any of the
+<tt>paths</tt> provided, and returns whether or not it was found in those
+paths.
+</p>
+<p>
+If the header is found then the path it was found on is added to the list
+of included directories that are sent to the compiler (via the -I switch).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000007.html');return false;">
+
+          <span class="method-name">find_library</span><span class="method-args">(lib, func, *paths, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the entry point <tt>func</tt> can be found within
+the library <tt>lib</tt> in one of the <tt>paths</tt> specified, where
+<tt>paths</tt> is an array of strings. If <tt>func</tt> is nil , then the
+main() function is used as the entry point.
+</p>
+<p>
+If <tt>lib</tt> is found, then the path it was found on is added to the
+list of library paths searched and linked against.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000015.html');return false;">
+
+          <span class="method-name">find_type</span><span class="method-args">(type, opt, *headers, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns where the static type <tt>type</tt> is defined.
+</p>
+<p>
+You may also pass additional flags to <tt>opt</tt> which are then passed
+along to the compiler.
+</p>
+<p>
+See also <tt><a href="mkmf_rb.html#M000014">have_type</a></tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000017.html');return false;">
+
+          <span class="method-name">have_const</span><span class="method-args">(const, headers = nil, opt = &quot;&quot;, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the constant <tt>const</tt> is defined. You may
+optionally pass the <tt>type</tt> of <tt>const</tt> as <tt>[const,
+type]</tt>, like as:
+</p>
+<pre>
+  have_const(%w[PTHREAD_MUTEX_INITIALIZER pthread_mutex_t], &quot;pthread.h&quot;)
+</pre>
+<p>
+You may also pass additional <tt>headers</tt> to check against in addition
+to the common header files, and additional flags to <tt>opt</tt> which are
+then passed along to the compiler.
+</p>
+<p>
+If found, a macro is passed as a preprocessor constant to the compiler
+using the type name, in uppercase, prepended with
+&#8216;HAVE_CONST_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000017">have_const</a>(&#8216;foo&#8217;) returned
+true, then the HAVE_CONST_FOO preprocessor macro would be passed to the
+compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000008.html');return false;">
+
+          <span class="method-name">have_func</span><span class="method-args">(func, headers = nil, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the function <tt>func</tt> can be found in the
+common header files, or within any <tt>headers</tt> that you provide. If
+found, a macro is passed as a preprocessor constant to the compiler using
+the function name, in uppercase, prepended with &#8216;HAVE_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000008">have_func</a>(&#8216;foo&#8217;) returned true,
+then the HAVE_FOO preprocessor macro would be passed to the compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000010.html');return false;">
+
+          <span class="method-name">have_header</span><span class="method-args">(header, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the given <tt>header</tt> file can be found on your
+system. If found, a macro is passed as a preprocessor constant to the
+compiler using the header file name, in uppercase, prepended with
+&#8216;HAVE_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000010">have_header</a>(&#8216;foo.h&#8217;) returned
+true, then the HAVE_FOO_H preprocessor macro would be passed to the
+compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000006.html');return false;">
+
+          <span class="method-name">have_library</span><span class="method-args">(lib, func = nil, headers = nil, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the given entry point <tt>func</tt> can be found
+within <tt>lib</tt>. If <tt>func</tt> is nil, the &#8216;main()&#8217;
+entry point is used by default. If found, it adds the library to list of
+libraries to be used when linking your extension.
+</p>
+<p>
+If <tt>headers</tt> are provided, it will include those header files as the
+header files it looks in when searching for <tt>func</tt>.
+</p>
+<p>
+The real name of the library to be linked can be altered by
+&#8217;&#8212;with-FOOlib&#8217; configuration option.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000005.html');return false;">
+
+          <span class="method-name">have_macro</span><span class="method-args">(macro, headers = nil, opt = &quot;&quot;, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not <tt>macro</tt> is defined either in the common
+header files or within any <tt>headers</tt> you provide.
+</p>
+<p>
+Any options you pass to <tt>opt</tt> are passed along to the compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000012.html');return false;">
+
+          <span class="method-name">have_struct_member</span><span class="method-args">(type, member, headers = nil, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the struct of type <tt>type</tt> contains
+<tt>member</tt>. If it does not, or the struct type can&#8217;t be found,
+then false is returned. You may optionally specify additional
+<tt>headers</tt> in which to look for the struct (in addition to the common
+header files).
+</p>
+<p>
+If found, a macro is passed as a preprocessor constant to the compiler
+using the type name and the member name, in uppercase, prepended with
+&#8216;HAVE_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000012">have_struct_member</a>(&#8216;struct
+foo&#8217;, &#8216;bar&#8217;) returned true, then the HAVE_STRUCT_FOO_BAR
+preprocessor macro would be passed to the compiler.
+</p>
+<p>
+HAVE_ST_BAR is also defined for backward compatibility.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000014.html');return false;">
+
+          <span class="method-name">have_type</span><span class="method-args">(type, headers = nil, opt = &quot;&quot;, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the static type <tt>type</tt> is defined. You may
+optionally pass additional <tt>headers</tt> to check against in addition to
+the common header files.
+</p>
+<p>
+You may also pass additional flags to <tt>opt</tt> which are then passed
+along to the compiler.
+</p>
+<p>
+If found, a macro is passed as a preprocessor constant to the compiler
+using the type name, in uppercase, prepended with &#8216;HAVE_TYPE_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000014">have_type</a>(&#8216;foo&#8217;) returned true,
+then the HAVE_TYPE_FOO preprocessor macro would be passed to the compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000009.html');return false;">
+
+          <span class="method-name">have_var</span><span class="method-args">(var, headers = nil, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns whether or not the variable <tt>var</tt> can be found in the common
+header files, or within any <tt>headers</tt> that you provide. If found, a
+macro is passed as a preprocessor constant to the compiler using the
+variable name, in uppercase, prepended with &#8216;HAVE_&#8217;.
+</p>
+<p>
+For example, if <a
+href="mkmf_rb.html#M000009">have_var</a>(&#8216;foo&#8217;) returned true,
+then the HAVE_FOO preprocessor macro would be passed to the compiler.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000016.html');return false;">
+
+          <span class="method-name">try_const</span><span class="method-args">(const, headers = nil, opt = &quot;&quot;, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000013.html');return false;">
+
+          <span class="method-name">try_type</span><span class="method-args">(type, headers = nil, opt = &quot;&quot;, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+
+          <a href="mkmf_rb.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('mkmf_rb.src/M000020.html');return false;">
+
+          <span class="method-name">with_config</span><span class="method-args">(config, default=nil) {|config, default| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Tests for the presence of a &#8212;with-<tt>config</tt> or
+&#8212;without-<tt>config</tt> option. Returns true if the with option is
+given, false if the without option is given, and the default value
+otherwise.
+</p>
+<p>
+This can be useful for adding custom definitions, such as debug
+information.
+</p>
+<p>
+Example:
+</p>
+<pre>
+   if with_config(&quot;debug&quot;)
+      $defs.push(&quot;-DOSSL_DEBUG&quot;) unless $defs.include? &quot;-DOSSL_DEBUG&quot;
+   end
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

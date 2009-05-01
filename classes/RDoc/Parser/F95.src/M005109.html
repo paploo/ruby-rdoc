@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>comment_out? (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1471</span>
+1471:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">comment_out?</span>(<span class="ruby-identifier">line</span>)
+1472:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>
+1473:     <span class="ruby-identifier">commentout</span> = <span class="ruby-keyword kw">false</span>
+1474:     <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span>
+1475:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">char</span><span class="ruby-operator">|</span>
+1476:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">squote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">dquote</span>)
+1477:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1478:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;!&quot;</span> ; <span class="ruby-identifier">commentout</span> = <span class="ruby-keyword kw">true</span> ; <span class="ruby-keyword kw">break</span>
+1479:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">true</span>
+1480:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">true</span>
+1481:         <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span>
+1482:         <span class="ruby-keyword kw">end</span>
+1483:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">squote</span>
+1484:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1485:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span>
+1486:         <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span>
+1487:         <span class="ruby-keyword kw">end</span>
+1488:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">dquote</span>
+1489:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1490:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span>
+1491:         <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span>
+1492:         <span class="ruby-keyword kw">end</span>
+1493:       <span class="ruby-keyword kw">end</span>
+1494:     }
+1495:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">commentout</span>
+1496:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

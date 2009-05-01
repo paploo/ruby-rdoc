@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>spawn (Process)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     spawn([env,] cmd [, arg, ...] [,options])     =&gt; pid
+ *
+ *  Similar to &lt;code&gt;Kernel::system&lt;/code&gt; except for not waiting for
+ *  end of _cmd_, but returns its &lt;i&gt;pid&lt;/i&gt;.
+ *
+ *  If a hash is given as +env+, the environment is
+ *  updated by +env+ before &lt;code&gt;exec(2)&lt;/code&gt; in the child process.
+ *  If a pair in +env+ has nil as the value, the variable is deleted.
+ *
+ *    # set FOO as BAR and unset BAZ.
+ *    pid = spawn({&quot;FOO&quot;=&gt;&quot;BAR&quot;, &quot;BAZ&quot;=&gt;nil}, command)
+ *
+ *  If a hash is given as +options+,
+ *  it specifies
+ *  process group,
+ *  resource limit, 
+ *  current directory,
+ *  umask and
+ *  redirects for the child process.
+ *  Also, it can be specified to clear environment variables.
+ *
+ *  The &lt;code&gt;:unsetenv_others&lt;/code&gt; key in +options+ specifies
+ *  to clear environment variables, other than specified by +env+.
+ *
+ *    pid = spawn(command, :unsetenv_others=&gt;true) # no environment variable
+ *    pid = spawn({&quot;FOO&quot;=&gt;&quot;BAR&quot;}, command, :unsetenv_others=&gt;true) # FOO only
+ *
+ *  The &lt;code&gt;:pgroup&lt;/code&gt; key in +options+ specifies a process group.
+ *  The corresponding value should be true, zero or positive integer.
+ *  true and zero means the process should be a process leader.
+ *  Other values specifies a process group to be belongs.
+ *
+ *    pid = spawn(command, :pgroup=&gt;true) # process leader
+ *    pid = spawn(command, :pgroup=&gt;10) # belongs to the process group 10
+ *
+ *  The &lt;code&gt;:rlimit_&lt;/code&gt;&lt;em&gt;foo&lt;/em&gt; key specifies a resource limit.
+ *  &lt;em&gt;foo&lt;/em&gt; should be one of resource types such as &lt;code&gt;core&lt;/code&gt;
+ *  The corresponding value should be an integer or an array which have one or
+ *  two integers: same as cur_limit and max_limit arguments for
+ *  Process.setrlimit.
+ *
+ *    pid = spawn(command, :rlimit_core=&gt;0) # never dump core.
+ *    cur, max = Process.getrlimit(:CORE)
+ *    pid = spawn(command, :rlimit_core=&gt;[0,max]) # disable core temporary.
+ *    pid = spawn(command, :rlimit_core=&gt;max) # enable core dump
+ *
+ *  The &lt;code&gt;:chdir&lt;/code&gt; key in +options+ specifies the current directory.
+ *
+ *    pid = spawn(command, :chdir=&gt;&quot;/var/tmp&quot;)
+ *
+ *  The &lt;code&gt;:umask&lt;/code&gt; key in +options+ specifies the umask.
+ *
+ *    pid = spawn(command, :umask=&gt;077)
+ *
+ *  The :in, :out, :err, a fixnum, an IO and an array key specifies a redirect.
+ *  The redirection maps a file descriptor in the child process.
+ *
+ *  For example, stderr can be merged into stdout:
+ *
+ *    pid = spawn(command, :err=&gt;:out)
+ *    pid = spawn(command, STDERR=&gt;STDOUT)
+ *    pid = spawn(command, 2=&gt;1)
+ *
+ *  The hash keys specifies a file descriptor
+ *  in the child process started by &lt;code&gt;spawn&lt;/code&gt;.
+ *  :err, STDERR and 2 specifies the standard error stream.
+ *
+ *  The hash values specifies a file descriptor
+ *  in the parent process which invokes &lt;code&gt;spawn&lt;/code&gt;.
+ *  :out, STDOUT and 1 specifies the standard output stream.
+ *
+ *  The standard output in the child process is not specified.
+ *  So it is inherited from the parent process.
+ *
+ *  The standard input stream can be specifed by :in, STDIN and 0.
+ *  
+ *  A filename can be specified as a hash value.
+ *
+ *    pid = spawn(command, STDIN=&gt;&quot;/dev/null&quot;) # read mode
+ *    pid = spawn(command, STDOUT=&gt;&quot;/dev/null&quot;) # write mode
+ *    pid = spawn(command, STDERR=&gt;&quot;log&quot;) # write mode
+ *    pid = spawn(command, 3=&gt;&quot;/dev/null&quot;) # read mode
+ *
+ *  For standard output and standard error,
+ *  it is opened in write mode.
+ *  Otherwise read mode is used.
+ *
+ *  For specifying flags and permission of file creation explicitly,
+ *  an array is used instead.
+ *
+ *    pid = spawn(command, STDIN=&gt;[&quot;file&quot;]) # read mode is assumed
+ *    pid = spawn(command, STDIN=&gt;[&quot;file&quot;, &quot;r&quot;])
+ *    pid = spawn(command, STDOUT=&gt;[&quot;log&quot;, &quot;w&quot;]) # 0644 assumed
+ *    pid = spawn(command, STDOUT=&gt;[&quot;log&quot;, &quot;w&quot;, 0600])
+ *    pid = spawn(command, STDOUT=&gt;[&quot;log&quot;, File::WRONLY|File::EXCL|File::CREAT, 0600])
+ *
+ *  The array specifies a filename, flags and permission.
+ *  The flags can be a string or an integer.
+ *  If the flags is ommitted or nil, File::RDONLY is assumed.
+ *  The permission should be an integer.
+ *  If the permission is ommitted or nil, 0644 is assumed.
+ *
+ *  If an array of IOs and integers are specified as a hash key,
+ *  all the elemetns are redirected.
+ *
+ *    # standard output and standard error is redirected to log file.
+ *    pid = spawn(command, [STDOUT, STDERR]=&gt;[&quot;log&quot;, &quot;w&quot;])
+ *
+ *  spawn closes all non-standard unspecified descriptors by default.
+ *  The &quot;standard&quot; descriptors are 0, 1 and 2.
+ *  This behavior is specified by :close_others option.
+ *  :close_others doesn't affect the standard descriptors which are
+ *  closed only if :close is specified explicitly.
+ *
+ *    pid = spawn(command, :close_others=&gt;true)  # close 3,4,5,... (default)
+ *    pid = spawn(command, :close_others=&gt;false) # don't close 3,4,5,...
+ *
+ *  :close_others is true by default for spawn and IO.popen.
+ *
+ *  So IO.pipe and spawn can be used as IO.popen.
+ *
+ *    # similar to r = IO.popen(command)
+ *    r, w = IO.pipe
+ *    pid = spawn(command, STDOUT=&gt;w)   # r, w is closed in the child process.
+ *    w.close
+ *
+ *  :close is specified as a hash value to close a fd individualy.
+ *
+ *    f = open(foo)
+ *    system(command, f=&gt;:close)        # don't inherit f.
+ *
+ *  It is also possible to exchange file descriptors.
+ *
+ *    pid = spawn(command, STDOUT=&gt;STDERR, STDERR=&gt;STDOUT)
+ *
+ *  The hash keys specify file descriptors in the child process.
+ *  The hash values specifies file descriptors in the parent process.
+ *  So the above specifies exchanging STDOUT and STDERR.
+ *  Internally, +spawn+ uses an extra file descriptor to resolve such cyclic
+ *  file descriptor mapping.
+ *
+ */
+
+static VALUE
+rb_f_spawn(int argc, VALUE *argv)
+{
+    rb_pid_t pid;
+
+    pid = rb_spawn(argc, argv);
+    if (pid == -1) rb_sys_fail(RSTRING_PTR(argv[0]));
+#if defined(HAVE_FORK) || defined(HAVE_SPAWNV)
+    return PIDT2NUM(pid);
+#else
+    return Qnil;
+#endif
+}</pre>
+</body>
+</html>

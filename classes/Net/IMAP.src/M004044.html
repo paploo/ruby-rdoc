@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>send_literal (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1146</span>
+1146:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_literal</span>(<span class="ruby-identifier">str</span>)
+1147:       <span class="ruby-identifier">put_string</span>(<span class="ruby-value str">&quot;{&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">CRLF</span>)
+1148:       <span class="ruby-ivar">@continuation_request_arrival</span>.<span class="ruby-identifier">wait</span>
+1149:       <span class="ruby-identifier">raise</span> <span class="ruby-ivar">@exception</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@exception</span>
+1150:       <span class="ruby-identifier">put_string</span>(<span class="ruby-identifier">str</span>)
+1151:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>truncate (File)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     File.truncate(file_name, integer)  =&gt; 0
+ *  
+ *  Truncates the file &lt;i&gt;file_name&lt;/i&gt; to be at most &lt;i&gt;integer&lt;/i&gt;
+ *  bytes long. Not available on all platforms.
+ *     
+ *     f = File.new(&quot;out&quot;, &quot;w&quot;)
+ *     f.write(&quot;1234567890&quot;)     #=&gt; 10
+ *     f.close                   #=&gt; nil
+ *     File.truncate(&quot;out&quot;, 5)   #=&gt; 0
+ *     File.size(&quot;out&quot;)          #=&gt; 5
+ *     
+ */
+
+static VALUE
+rb_file_s_truncate(VALUE klass, VALUE path, VALUE len)
+{
+    off_t pos;
+
+    rb_secure(2);
+    pos = NUM2OFFT(len);
+    FilePathValue(path);
+#ifdef HAVE_TRUNCATE
+    if (truncate(StringValueCStr(path), pos) &lt; 0)
+        rb_sys_fail(RSTRING_PTR(path));
+#else
+# ifdef HAVE_CHSIZE
+    {
+        int tmpfd;
+
+#  ifdef _WIN32
+        if ((tmpfd = open(StringValueCStr(path), O_RDWR)) &lt; 0) {
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+#  else
+        if ((tmpfd = open(StringValueCStr(path), 0)) &lt; 0) {
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+#  endif
+        if (chsize(tmpfd, pos) &lt; 0) {
+            close(tmpfd);
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+        close(tmpfd);
+    }
+# else
+    rb_notimplement();
+# endif
+#endif
+    return INT2FIX(0);
+}</pre>
+</body>
+</html>

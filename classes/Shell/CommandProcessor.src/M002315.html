@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_system_command (Shell::CommandProcessor)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 350</span>
+350:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_system_command</span>(<span class="ruby-identifier">command</span>)
+351:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">command</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^\//</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">command</span>
+352:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@system_commands</span>[<span class="ruby-identifier">command</span>]
+353:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+354:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">path</span>)
+355:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">path</span>
+356:         <span class="ruby-keyword kw">else</span>
+357:           <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">command</span>
+358:         <span class="ruby-keyword kw">end</span>
+359:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span>
+360:         <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">command</span>
+361:       <span class="ruby-keyword kw">end</span>
+362: 
+363:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">p</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">system_path</span>
+364:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">join</span>(<span class="ruby-identifier">p</span>, <span class="ruby-identifier">command</span>)
+365:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">path</span>)
+366:           <span class="ruby-ivar">@system_commands</span>[<span class="ruby-identifier">command</span>] = <span class="ruby-identifier">path</span>
+367:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">path</span>
+368:         <span class="ruby-keyword kw">end</span>
+369:       <span class="ruby-keyword kw">end</span>
+370:       <span class="ruby-ivar">@system_commands</span>[<span class="ruby-identifier">command</span>] = <span class="ruby-keyword kw">false</span>
+371:       <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandNotFound</span>, <span class="ruby-identifier">command</span>
+372:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

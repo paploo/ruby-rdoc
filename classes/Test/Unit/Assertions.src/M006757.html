@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>assert_no_match (Test::Unit::Assertions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/test/unit/assertions.rb, line 99</span>
+ 99:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_no_match</span>(<span class="ruby-identifier">regexp</span>, <span class="ruby-identifier">string</span>, <span class="ruby-identifier">msg</span>=<span class="ruby-keyword kw">nil</span>)
+100:         <span class="ruby-identifier">assert_instance_of</span>(<span class="ruby-constant">Regexp</span>, <span class="ruby-identifier">regexp</span>, <span class="ruby-value str">&quot;The first argument to assert_no_match should be a Regexp.&quot;</span>)
+101:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_assertions</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+102:         <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">message</span>(<span class="ruby-identifier">msg</span>) { <span class="ruby-node">&quot;&lt;#{mu_pp(regexp)}&gt; expected to not match\n&lt;#{mu_pp(string)}&gt;&quot;</span> }
+103:         <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">regexp</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">string</span>, <span class="ruby-identifier">msg</span>)
+104:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

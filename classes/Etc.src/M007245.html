@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>group (Etc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Provides a convenient Ruby iterator which executes a block for each entry 
+ * in the /etc/group file.
+ *
+ * The code block is passed an Struct::Group struct; see getgrent above for 
+ * details.
+ *
+ * Example:
+ *
+ *     require 'etc'
+ *
+ *     Etc.group {|g|
+ *       puts g.name + &quot;: &quot; + g.mem.join(', ')
+ *     }
+ *
+ */
+static VALUE
+etc_group(VALUE obj)
+{
+#ifdef HAVE_GETGRENT
+    struct group *grp;
+
+    rb_secure(4);
+    if (rb_block_given_p()) {
+        if (group_blocking) {
+            rb_raise(rb_eRuntimeError, &quot;parallel group iteration&quot;);
+        }
+        group_blocking = Qtrue;
+        rb_ensure(group_iterate, 0, group_ensure, 0);
+    }
+    if (grp = getgrent()) {
+        return setup_group(grp);
+    }
+#endif
+    return Qnil;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Zlib::GzipWriter [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Zlib::GzipWriter</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/ext/zlib/zlib_c.html">
+
+                ext/zlib/zlib.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="GzipFile.html">
+
+                Zlib::GzipFile
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="GzipWriter.html">Zlib::GzipWriter</a> is a class for writing
+gzipped files. <a href="GzipWriter.html">GzipWriter</a> should be used with
+an instance of <a href="../IO.html">IO</a>, or IO-like, object.
+</p>
+<p>
+For example:
+</p>
+<pre>
+  Zlib::GzipWriter.open('hoge.gz') do |gz|
+    gz.write 'jugemu jugemu gokou no surikire...'
+  end
+
+  File.open('hoge.gz', 'w') do |f|
+    gz = Zlib::GzipWriter.new(f)
+    gz.write 'jugemu jugemu gokou no surikire...'
+    gz.close
+  end
+
+  # TODO: test these.  Are they equivalent?  Can GzipWriter.new take a
+  # block?
+</pre>
+<p>
+NOTE: Due to the limitation of Ruby&#8217;s finalizer, you must explicitly
+close <a href="GzipWriter.html">GzipWriter</a> objects by
+Zlib::GzipWriter#close etc. Otherwise, <a
+href="GzipWriter.html">GzipWriter</a> will be not able to write the gzip
+footer and will generate a broken gzip file.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M008032">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M008024">comment=</a>&nbsp;&nbsp;
+
+        <a href="#M008029">flush</a>&nbsp;&nbsp;
+
+        <a href="#M008022">mtime=</a>&nbsp;&nbsp;
+
+        <a href="#M008028">new</a>&nbsp;&nbsp;
+
+        <a href="#M008027">open</a>&nbsp;&nbsp;
+
+        <a href="#M008023">orig_name=</a>&nbsp;&nbsp;
+
+        <a href="#M008025">pos</a>&nbsp;&nbsp;
+
+        <a href="#M008034">print</a>&nbsp;&nbsp;
+
+        <a href="#M008033">printf</a>&nbsp;&nbsp;
+
+        <a href="#M008031">putc</a>&nbsp;&nbsp;
+
+        <a href="#M008035">puts</a>&nbsp;&nbsp;
+
+        <a href="#M008026">tell</a>&nbsp;&nbsp;
+
+        <a href="#M008030">write</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M008028" class="method-detail">
+        <a name="M008028"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008028.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008028.html');return false;">
+
+          <span class="method-name"> Zlib::GzipWriter.new(io, level, strategy)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a <a href="GzipWriter.html">GzipWriter</a> object associated with
+<tt>io</tt>. <tt>level</tt> and <tt>strategy</tt> should be the same as the
+arguments of <a href="Deflate.html#M007995">Zlib::Deflate.new</a>. The <a
+href="GzipWriter.html">GzipWriter</a> object writes gzipped data to
+<tt>io</tt>. At least, <tt>io</tt> must respond to the <tt>write</tt>
+method that behaves same as write method in <a href="../IO.html">IO</a>
+class.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008027" class="method-detail">
+        <a name="M008027"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008027.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008027.html');return false;">
+
+          <span class="method-name"> Zlib::GzipWriter.open(filename, level=nil, strategy=nil) { |gz| ... }<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Opens a file specified by <tt>filename</tt> for writing gzip compressed
+data, and returns a <a href="GzipWriter.html">GzipWriter</a> object
+associated with that file. Further details of this method are found in <a
+href="GzipWriter.html#M008028">Zlib::GzipWriter.new</a> and
+Zlib::GzipWriter#wrap.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M008032" class="method-detail">
+        <a name="M008032"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(p1)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Document-method: << Same as <a href="../IO.html">IO</a>.
+</p>
+<p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008024" class="method-detail">
+        <a name="M008024"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008024.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008024.html');return false;">
+
+          <span class="method-name">comment=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+???
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008029" class="method-detail">
+        <a name="M008029"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008029.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008029.html');return false;">
+
+          <span class="method-name"> flush(flush=nil)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Flushes all the internal buffers of the <a
+href="GzipWriter.html">GzipWriter</a> object. The meaning of <tt>flush</tt>
+is same as in <a href="Deflate.html#M007994">Zlib::Deflate#deflate</a>.
+<tt>Zlib::SYNC_FLUSH</tt> is used if <tt>flush</tt> is omitted. It is no
+use giving flush <tt>Zlib::NO_FLUSH</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008022" class="method-detail">
+        <a name="M008022"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008022.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008022.html');return false;">
+
+          <span class="method-name">mtime=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+???
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008023" class="method-detail">
+        <a name="M008023"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008023.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008023.html');return false;">
+
+          <span class="method-name">orig_name=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+???
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008025" class="method-detail">
+        <a name="M008025"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008025.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008025.html');return false;">
+
+          <span class="method-name">pos</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+???
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008034" class="method-detail">
+        <a name="M008034"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">print</span><span class="method-args">(...)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Document-method: print Same as <a href="../IO.html">IO</a>.
+</p>
+<p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008033" class="method-detail">
+        <a name="M008033"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">printf</span><span class="method-args">(...)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Document-method: printf Same as <a href="../IO.html">IO</a>.
+</p>
+<p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008031" class="method-detail">
+        <a name="M008031"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008031.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008031.html');return false;">
+
+          <span class="method-name">putc</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008035" class="method-detail">
+        <a name="M008035"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">puts</span><span class="method-args">(...)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Document-method: puts Same as <a href="../IO.html">IO</a>.
+</p>
+<p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008026" class="method-detail">
+        <a name="M008026"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008026.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008026.html');return false;">
+
+          <span class="method-name">tell</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+???
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M008030" class="method-detail">
+        <a name="M008030"></a>
+
+        <div class="method-heading">
+
+          <a href="GzipWriter.src/M008030.html" target="Code" class="method-signature"
+            onclick="popupCode('GzipWriter.src/M008030.html');return false;">
+
+          <span class="method-name">write</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Same as <a href="../IO.html">IO</a>.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

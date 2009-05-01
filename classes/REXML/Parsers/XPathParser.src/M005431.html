@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_group (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 635</span>
+635:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_group</span> <span class="ruby-identifier">string</span>
+636:         <span class="ruby-identifier">ind</span> = <span class="ruby-value">0</span>
+637:         <span class="ruby-identifier">depth</span> = <span class="ruby-value">0</span>
+638:         <span class="ruby-identifier">st</span> = <span class="ruby-identifier">string</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>]
+639:         <span class="ruby-identifier">en</span> = (<span class="ruby-identifier">st</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;(&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;)&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;]&quot;</span>)
+640:         <span class="ruby-keyword kw">begin</span>
+641:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">string</span>[<span class="ruby-identifier">ind</span>,<span class="ruby-value">1</span>]
+642:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">st</span>
+643:             <span class="ruby-identifier">depth</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+644:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">en</span>
+645:             <span class="ruby-identifier">depth</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+646:           <span class="ruby-keyword kw">end</span>
+647:           <span class="ruby-identifier">ind</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+648:         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">ind</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span>
+649:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">depth</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
+650:         [<span class="ruby-identifier">string</span>[<span class="ruby-identifier">ind</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>], <span class="ruby-identifier">string</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">ind</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]]
+651:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

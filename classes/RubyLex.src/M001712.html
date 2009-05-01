@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getc (RubyLex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 100</span>
+100:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getc</span>
+101:     <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">empty?</span>
+102: <span class="ruby-comment cmt">#      return nil unless buf_input</span>
+103:       <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">push</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">buf_input</span>
+104:     <span class="ruby-keyword kw">end</span>
+105:     <span class="ruby-identifier">c</span> = <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">shift</span>
+106:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+107:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@here_header</span>
+108:       <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">c</span>
+109:     <span class="ruby-keyword kw">else</span>
+110:       <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">c</span>
+111:     <span class="ruby-keyword kw">end</span>
+112:     <span class="ruby-ivar">@seek</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+113:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
+114:       <span class="ruby-ivar">@line_no</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> 
+115:       <span class="ruby-ivar">@char_no</span> = <span class="ruby-value">0</span>
+116:     <span class="ruby-keyword kw">else</span>
+117:       <span class="ruby-ivar">@char_no</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+118:     <span class="ruby-keyword kw">end</span>
+119:     <span class="ruby-identifier">c</span>
+120:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

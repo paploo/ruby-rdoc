@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>matches? (REXML::Validation::Event)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/validation/validation.rb, line 96</span>
+ 96:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">matches?</span>( <span class="ruby-identifier">event</span> )
+ 97:         <span class="ruby-comment cmt">#puts &quot;#@event_type =? #{event[0]} &amp;&amp; #@event_arg =? #{event[1]} &quot;</span>
+ 98:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@event_type</span>
+ 99:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">0</span>]
+100:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+101:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+102:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:start_element</span>
+103:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@event_arg</span>
+104:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:end_element</span>
+105:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+106:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:start_attribute</span>
+107:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@event_arg</span>
+108:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:end_attribute</span>
+109:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+110:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:end_document</span>
+111:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+112:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:text</span>
+113:           <span class="ruby-keyword kw">return</span> (<span class="ruby-ivar">@event_arg</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@event_arg</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">event</span>[<span class="ruby-value">1</span>])
+114: ??
+115:         <span class="ruby-keyword kw">else</span>
+116:           <span class="ruby-keyword kw">false</span>
+117:         <span class="ruby-keyword kw">end</span>
+118:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reverse (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.reverse   =&gt; new_str
+ *  
+ *  Returns a new string with the characters from &lt;i&gt;str&lt;/i&gt; in reverse order.
+ *     
+ *     &quot;stressed&quot;.reverse   #=&gt; &quot;desserts&quot;
+ */
+
+static VALUE
+rb_str_reverse(VALUE str)
+{
+    rb_encoding *enc;
+    VALUE rev;
+    char *s, *e, *p;
+    int single = 1;
+
+    if (RSTRING_LEN(str) &lt;= 1) return rb_str_dup(str);
+    enc = STR_ENC_GET(str);
+    rev = rb_str_new5(str, 0, RSTRING_LEN(str));
+    s = RSTRING_PTR(str); e = RSTRING_END(str);
+    p = RSTRING_END(rev);
+
+    if (RSTRING_LEN(str) &gt; 1) {
+        if (single_byte_optimizable(str)) {
+            while (s &lt; e) {
+                *--p = *s++;
+            }
+        }
+        else {
+            while (s &lt; e) {
+                int clen = rb_enc_mbclen(s, e, enc);
+
+                if (clen &gt; 1 || (*s &amp; 0x80)) single = 0;
+                p -= clen;
+                memcpy(p, s, clen);
+                s += clen;
+            }
+        }
+    }
+    STR_SET_LEN(rev, RSTRING_LEN(str));
+    OBJ_INFECT(rev, str);
+    if (ENC_CODERANGE(str) == ENC_CODERANGE_UNKNOWN) {
+        if (single) {
+            ENC_CODERANGE_SET(str, ENC_CODERANGE_7BIT);
+        }
+        else {
+            ENC_CODERANGE_SET(str, ENC_CODERANGE_VALID);
+        }
+    }
+    rb_enc_cr_str_copy_for_substr(rev, str);
+
+    return rev;
+}</pre>
+</body>
+</html>

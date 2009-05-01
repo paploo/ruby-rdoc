@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>have_library (lib/mkmf.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 723</span>
+723: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">have_library</span>(<span class="ruby-identifier">lib</span>, <span class="ruby-identifier">func</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+724:   <span class="ruby-identifier">func</span> = <span class="ruby-value str">&quot;main&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">func</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">func</span>.<span class="ruby-identifier">empty?</span>
+725:   <span class="ruby-identifier">lib</span> = <span class="ruby-identifier">with_config</span>(<span class="ruby-identifier">lib</span><span class="ruby-operator">+</span><span class="ruby-value str">'lib'</span>, <span class="ruby-identifier">lib</span>)
+726:   <span class="ruby-identifier">checking_for</span> <span class="ruby-identifier">checking_message</span>(<span class="ruby-node">&quot;#{func}()&quot;</span>, <span class="ruby-constant">LIBARG</span><span class="ruby-operator">%</span><span class="ruby-identifier">lib</span>) <span class="ruby-keyword kw">do</span>
+727:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">COMMON_LIBS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">lib</span>)
+728:       <span class="ruby-keyword kw">true</span>
+729:     <span class="ruby-keyword kw">else</span>
+730:       <span class="ruby-identifier">libs</span> = <span class="ruby-identifier">append_library</span>(<span class="ruby-identifier">$libs</span>, <span class="ruby-identifier">lib</span>)
+731:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_func</span>(<span class="ruby-identifier">func</span>, <span class="ruby-identifier">libs</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+732:         <span class="ruby-identifier">$libs</span> = <span class="ruby-identifier">libs</span>
+733:         <span class="ruby-keyword kw">true</span>
+734:       <span class="ruby-keyword kw">else</span>
+735:         <span class="ruby-keyword kw">false</span>
+736:       <span class="ruby-keyword kw">end</span>
+737:     <span class="ruby-keyword kw">end</span>
+738:   <span class="ruby-keyword kw">end</span>
+739: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

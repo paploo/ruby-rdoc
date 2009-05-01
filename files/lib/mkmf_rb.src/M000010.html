@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>have_header (lib/mkmf.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 815</span>
+815: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">have_header</span>(<span class="ruby-identifier">header</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+816:   <span class="ruby-identifier">checking_for</span> <span class="ruby-identifier">header</span> <span class="ruby-keyword kw">do</span>
+817:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_cpp</span>(<span class="ruby-identifier">cpp_include</span>(<span class="ruby-identifier">header</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+818:       <span class="ruby-identifier">$defs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;-DHAVE_%s&quot;</span>, <span class="ruby-identifier">header</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;a-z./\055&quot;</span>, <span class="ruby-value str">&quot;A-Z___&quot;</span>)))
+819:       <span class="ruby-keyword kw">true</span>
+820:     <span class="ruby-keyword kw">else</span>
+821:       <span class="ruby-keyword kw">false</span>
+822:     <span class="ruby-keyword kw">end</span>
+823:   <span class="ruby-keyword kw">end</span>
+824: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

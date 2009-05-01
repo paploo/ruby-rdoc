@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>exited? (Process::Status)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     stat.exited?   =&gt; true or false
+ *
+ *  Returns +true+ if _stat_ exited normally (for
+ *  example using an &lt;code&gt;exit()&lt;/code&gt; call or finishing the
+ *  program).
+ */
+
+static VALUE
+pst_wifexited(VALUE st)
+{
+    int status = PST2INT(st);
+
+    if (WIFEXITED(status))
+        return Qtrue;
+    else
+        return Qfalse;
+}</pre>
+</body>
+</html>

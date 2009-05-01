@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Net::HTTPGenericRequest [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Net::HTTPGenericRequest</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/net/http_rb.html">
+
+                lib/net/http.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Parent of <a href="HTTPRequest.html">HTTPRequest</a> class. Do not use this
+directly; use a subclass of <a href="HTTPRequest.html">HTTPRequest</a>.
+</p>
+<p>
+Mixes in the <a href="HTTPHeader.html">HTTPHeader</a> module.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M003965">body=</a>&nbsp;&nbsp;
+
+        <a href="#M003964">body_exist?</a>&nbsp;&nbsp;
+
+        <a href="#M003966">body_stream=</a>&nbsp;&nbsp;
+
+        <a href="#M003961">inspect</a>&nbsp;&nbsp;
+
+        <a href="#M003960">new</a>&nbsp;&nbsp;
+
+        <a href="#M003962">request_body_permitted?</a>&nbsp;&nbsp;
+
+        <a href="#M003963">response_body_permitted?</a>&nbsp;&nbsp;
+
+        <a href="#M003967">send_request_with_body</a>&nbsp;&nbsp;
+
+        <a href="#M003968">send_request_with_body_stream</a>&nbsp;&nbsp;
+
+        <a href="#M003969">supply_default_content_type</a>&nbsp;&nbsp;
+
+        <a href="#M003970">write_header</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="HTTPHeader.html">HTTPHeader</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">body</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">body_stream</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">method</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">path</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M003960" class="method-detail">
+        <a name="M003960"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003960.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003960.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(m, reqbody, resbody, path, initheader = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M003965" class="method-detail">
+        <a name="M003965"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003965.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003965.html');return false;">
+
+          <span class="method-name">body=</span><span class="method-args">(str)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003964" class="method-detail">
+        <a name="M003964"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003964.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003964.html');return false;">
+
+          <span class="method-name">body_exist?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003966" class="method-detail">
+        <a name="M003966"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003966.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003966.html');return false;">
+
+          <span class="method-name">body_stream=</span><span class="method-args">(input)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003961" class="method-detail">
+        <a name="M003961"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003961.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003961.html');return false;">
+
+          <span class="method-name">inspect</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003962" class="method-detail">
+        <a name="M003962"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003962.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003962.html');return false;">
+
+          <span class="method-name">request_body_permitted?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003963" class="method-detail">
+        <a name="M003963"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003963.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003963.html');return false;">
+
+          <span class="method-name">response_body_permitted?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M003967" class="method-detail">
+        <a name="M003967"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003967.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003967.html');return false;">
+
+          <span class="method-name">send_request_with_body</span><span class="method-args">(sock, ver, path, body)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003968" class="method-detail">
+        <a name="M003968"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003968.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003968.html');return false;">
+
+          <span class="method-name">send_request_with_body_stream</span><span class="method-args">(sock, ver, path, f)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003969" class="method-detail">
+        <a name="M003969"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003969.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003969.html');return false;">
+
+          <span class="method-name">supply_default_content_type</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003970" class="method-detail">
+        <a name="M003970"></a>
+
+        <div class="method-heading">
+
+          <a href="HTTPGenericRequest.src/M003970.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTPGenericRequest.src/M003970.html');return false;">
+
+          <span class="method-name">write_header</span><span class="method-args">(sock, ver, path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

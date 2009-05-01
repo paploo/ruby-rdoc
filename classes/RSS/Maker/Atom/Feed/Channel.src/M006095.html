@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>_set_default_values (RSS::Maker::Atom::Feed::Channel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/feed.rb, line 71</span>
+71:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_set_default_values</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+72:             <span class="ruby-identifier">keep</span> = {
+73:               <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>,
+74:               <span class="ruby-identifier">:updated</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">updated</span>,
+75:             }
+76:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">about</span>
+77:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">dc_date</span>
+78:             <span class="ruby-keyword kw">super</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+79:           <span class="ruby-keyword kw">ensure</span>
+80:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">keep</span>[<span class="ruby-identifier">:id</span>]
+81:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated</span> = <span class="ruby-identifier">keep</span>[<span class="ruby-identifier">:updated</span>]
+82:           <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

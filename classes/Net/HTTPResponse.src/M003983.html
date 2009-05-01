@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_body_0 (Net::HTTPResponse)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 2326</span>
+2326:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_body_0</span>(<span class="ruby-identifier">dest</span>)
+2327:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">chunked?</span>
+2328:         <span class="ruby-identifier">read_chunked</span> <span class="ruby-identifier">dest</span>
+2329:         <span class="ruby-keyword kw">return</span>
+2330:       <span class="ruby-keyword kw">end</span>
+2331:       <span class="ruby-identifier">clen</span> = <span class="ruby-identifier">content_length</span>()
+2332:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">clen</span>
+2333:         <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">clen</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-keyword kw">true</span>   <span class="ruby-comment cmt"># ignore EOF</span>
+2334:         <span class="ruby-keyword kw">return</span>
+2335:       <span class="ruby-keyword kw">end</span>
+2336:       <span class="ruby-identifier">clen</span> = <span class="ruby-identifier">range_length</span>()
+2337:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">clen</span>
+2338:         <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">clen</span>, <span class="ruby-identifier">dest</span>
+2339:         <span class="ruby-keyword kw">return</span>
+2340:       <span class="ruby-keyword kw">end</span>
+2341:       <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">read_all</span> <span class="ruby-identifier">dest</span>
+2342:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

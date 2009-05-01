@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse229 (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 930</span>
+930:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse229</span>(<span class="ruby-identifier">resp</span>)
+931:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;229&quot;</span>
+932:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPReplyError</span>, <span class="ruby-identifier">resp</span>
+933:       <span class="ruby-keyword kw">end</span>
+934:       <span class="ruby-identifier">left</span> = <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;(&quot;</span>)
+935:       <span class="ruby-identifier">right</span> = <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;)&quot;</span>)
+936:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">left</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+937:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+938:       <span class="ruby-keyword kw">end</span>
+939:       <span class="ruby-identifier">numbers</span> = <span class="ruby-identifier">resp</span>[<span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>].<span class="ruby-identifier">split</span>(<span class="ruby-identifier">resp</span>[<span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-value">1</span>])
+940:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">numbers</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-value">4</span>
+941:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+942:       <span class="ruby-keyword kw">end</span>
+943:       <span class="ruby-identifier">port</span> = <span class="ruby-identifier">numbers</span>[<span class="ruby-value">3</span>].<span class="ruby-identifier">to_i</span>
+944:       <span class="ruby-identifier">host</span> = (<span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">peeraddr</span>())[<span class="ruby-value">3</span>]
+945:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>
+946:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

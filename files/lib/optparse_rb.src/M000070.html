@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse! (lib/optparse.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/optparse.rb, line 1360</span>
+1360:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">argv</span> = <span class="ruby-identifier">default_argv</span>)
+1361:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'POSIXLY_CORRECT'</span>)
+1362:       <span class="ruby-identifier">order!</span>(<span class="ruby-identifier">argv</span>)
+1363:     <span class="ruby-keyword kw">else</span>
+1364:       <span class="ruby-identifier">permute!</span>(<span class="ruby-identifier">argv</span>)
+1365:     <span class="ruby-keyword kw">end</span>
+1366:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_escape (RDoc::RubyLex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1279</span>
+1279:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_escape</span>
+1280:     <span class="ruby-identifier">res</span> = <span class="ruby-value str">&quot;&quot;</span>
+1281:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+1282:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[0-7]/</span>
+1283:       <span class="ruby-identifier">ungetc</span> <span class="ruby-identifier">ch</span>
+1284:       <span class="ruby-value">3</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span>
+1285:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+1286:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[0-7]/</span>
+1287:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+1288:           <span class="ruby-keyword kw">break</span>
+1289:         <span class="ruby-keyword kw">else</span>
+1290:           <span class="ruby-identifier">ungetc</span>
+1291:           <span class="ruby-keyword kw">break</span>
+1292:         <span class="ruby-keyword kw">end</span>
+1293:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1294:       <span class="ruby-keyword kw">end</span>
+1295: 
+1296:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;x&quot;</span>
+1297:       <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1298:       <span class="ruby-value">2</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span>
+1299:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+1300:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[0-9a-fA-F]/</span>
+1301:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+1302:           <span class="ruby-keyword kw">break</span>
+1303:         <span class="ruby-keyword kw">else</span>
+1304:           <span class="ruby-identifier">ungetc</span>
+1305:           <span class="ruby-keyword kw">break</span>
+1306:         <span class="ruby-keyword kw">end</span>
+1307:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1308:       <span class="ruby-keyword kw">end</span>
+1309: 
+1310:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;M&quot;</span>
+1311:       <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1312:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">!=</span> <span class="ruby-value str">'-'</span>
+1313:         <span class="ruby-identifier">ungetc</span>
+1314:       <span class="ruby-keyword kw">else</span>
+1315:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1316:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\\&quot;</span> <span class="ruby-comment cmt">#&quot;</span>
+1317:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1318:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">read_escape</span>
+1319:         <span class="ruby-keyword kw">else</span>
+1320:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1321:         <span class="ruby-keyword kw">end</span>
+1322:       <span class="ruby-keyword kw">end</span>
+1323: 
+1324:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;C&quot;</span>, <span class="ruby-value str">&quot;c&quot;</span> <span class="ruby-comment cmt">#, &quot;^&quot;</span>
+1325:       <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1326:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;C&quot;</span> <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;-&quot;</span>
+1327:         <span class="ruby-identifier">ungetc</span>
+1328:       <span class="ruby-keyword kw">else</span>
+1329:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1330:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\\&quot;</span> <span class="ruby-comment cmt">#&quot;</span>
+1331:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1332:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">read_escape</span>
+1333:         <span class="ruby-keyword kw">else</span>
+1334:           <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1335:         <span class="ruby-keyword kw">end</span>
+1336:       <span class="ruby-keyword kw">end</span>
+1337:     <span class="ruby-keyword kw">else</span>
+1338:       <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ch</span>
+1339:     <span class="ruby-keyword kw">end</span>
+1340:     <span class="ruby-identifier">res</span>
+1341:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

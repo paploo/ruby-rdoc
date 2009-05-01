@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>select! (YAML::BaseNode)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/basenode.rb, line 36</span>
+36:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select!</span>( <span class="ruby-identifier">ypath_str</span> )
+37:             <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">match_path</span>( <span class="ruby-identifier">ypath_str</span> )
+38: 
+39:             <span class="ruby-comment cmt">#</span>
+40:             <span class="ruby-comment cmt"># Create a new generic view of the elements selected</span>
+41:             <span class="ruby-comment cmt">#</span>
+42:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches</span>
+43:                 <span class="ruby-identifier">result</span> = []
+44:                 <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+45:                     <span class="ruby-identifier">result</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">transform</span>
+46:                 }
+47:                 <span class="ruby-identifier">result</span>
+48:             <span class="ruby-keyword kw">end</span>
+49:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

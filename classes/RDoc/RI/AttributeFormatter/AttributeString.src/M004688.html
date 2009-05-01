@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>next_word (RDoc::RI::AttributeFormatter::AttributeString)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 268</span>
+268:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_word</span>
+269:       <span class="ruby-identifier">start</span> = <span class="ruby-ivar">@optr</span>
+270:       <span class="ruby-identifier">len</span> = <span class="ruby-ivar">@txt</span>.<span class="ruby-identifier">length</span>
+271: 
+272:       <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@optr</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@txt</span>[<span class="ruby-ivar">@optr</span>].<span class="ruby-identifier">char</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot; &quot;</span>
+273:         <span class="ruby-ivar">@optr</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+274:       <span class="ruby-keyword kw">end</span>
+275: 
+276:       <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@optr</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@txt</span>[<span class="ruby-ivar">@optr</span>].<span class="ruby-identifier">char</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot; &quot;</span>
+277:         <span class="ruby-ivar">@optr</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+278:       <span class="ruby-keyword kw">end</span>
+279: 
+280:       <span class="ruby-ivar">@txt</span>[<span class="ruby-identifier">start</span><span class="ruby-operator">...</span><span class="ruby-ivar">@optr</span>]
+281:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

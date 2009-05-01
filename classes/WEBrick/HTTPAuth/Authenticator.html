@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: WEBrick::HTTPAuth::Authenticator [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">WEBrick::HTTPAuth::Authenticator</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/webrick/httpauth/authenticator_rb.html">
+
+                lib/webrick/httpauth/authenticator.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M006777">check_init</a>&nbsp;&nbsp;
+
+        <a href="#M006778">check_scheme</a>&nbsp;&nbsp;
+
+        <a href="#M006780">error</a>&nbsp;&nbsp;
+
+        <a href="#M006781">info</a>&nbsp;&nbsp;
+
+        <a href="#M006779">log</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">RequestField</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;Authorization&quot;</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ResponseField</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;WWW-Authenticate&quot;</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ResponseInfoField</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;Authentication-Info&quot;</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AuthException</td>
+          <td>=</td>
+          <td class="context-item-value">HTTPStatus::Unauthorized</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AuthScheme</td>
+          <td>=</td>
+          <td class="context-item-value">nil</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">logger</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">realm</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">userdb</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M006777" class="method-detail">
+        <a name="M006777"></a>
+
+        <div class="method-heading">
+
+          <a href="Authenticator.src/M006777.html" target="Code" class="method-signature"
+            onclick="popupCode('Authenticator.src/M006777.html');return false;">
+
+          <span class="method-name">check_init</span><span class="method-args">(config)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006778" class="method-detail">
+        <a name="M006778"></a>
+
+        <div class="method-heading">
+
+          <a href="Authenticator.src/M006778.html" target="Code" class="method-signature"
+            onclick="popupCode('Authenticator.src/M006778.html');return false;">
+
+          <span class="method-name">check_scheme</span><span class="method-args">(req)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006780" class="method-detail">
+        <a name="M006780"></a>
+
+        <div class="method-heading">
+
+          <a href="Authenticator.src/M006780.html" target="Code" class="method-signature"
+            onclick="popupCode('Authenticator.src/M006780.html');return false;">
+
+          <span class="method-name">error</span><span class="method-args">(fmt, *args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006781" class="method-detail">
+        <a name="M006781"></a>
+
+        <div class="method-heading">
+
+          <a href="Authenticator.src/M006781.html" target="Code" class="method-signature"
+            onclick="popupCode('Authenticator.src/M006781.html');return false;">
+
+          <span class="method-name">info</span><span class="method-args">(fmt, *args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006779" class="method-detail">
+        <a name="M006779"></a>
+
+        <div class="method-heading">
+
+          <a href="Authenticator.src/M006779.html" target="Code" class="method-signature"
+            onclick="popupCode('Authenticator.src/M006779.html');return false;">
+
+          <span class="method-name">log</span><span class="method-args">(meth, fmt, *args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

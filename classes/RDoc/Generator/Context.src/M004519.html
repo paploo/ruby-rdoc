@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>collect_methods (RDoc::Generator::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 193</span>
+193:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">collect_methods</span>
+194:       <span class="ruby-identifier">list</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">method_list</span>
+195: 
+196:       <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">show_all</span> <span class="ruby-keyword kw">then</span>
+197:         <span class="ruby-identifier">list</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+198:           <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:public</span> <span class="ruby-keyword kw">or</span>
+199:             <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:protected</span> <span class="ruby-keyword kw">or</span>
+200:             <span class="ruby-identifier">m</span>.<span class="ruby-identifier">force_documentation</span>
+201:         <span class="ruby-keyword kw">end</span>
+202:       <span class="ruby-keyword kw">end</span>
+203: 
+204:       <span class="ruby-ivar">@methods</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+205:         <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">Method</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">m</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@options</span>
+206:       <span class="ruby-keyword kw">end</span>
+207:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

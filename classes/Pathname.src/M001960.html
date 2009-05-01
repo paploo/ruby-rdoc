@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>relative_path_from (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 705</span>
+705:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">base_directory</span>)
+706:     <span class="ruby-identifier">dest_directory</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cleanpath</span>.<span class="ruby-identifier">to_s</span>
+707:     <span class="ruby-identifier">base_directory</span> = <span class="ruby-identifier">base_directory</span>.<span class="ruby-identifier">cleanpath</span>.<span class="ruby-identifier">to_s</span>
+708:     <span class="ruby-identifier">dest_prefix</span> = <span class="ruby-identifier">dest_directory</span>
+709:     <span class="ruby-identifier">dest_names</span> = []
+710:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">dest_prefix</span>)
+711:       <span class="ruby-identifier">dest_prefix</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+712:       <span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">basename</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'.'</span>
+713:     <span class="ruby-keyword kw">end</span>
+714:     <span class="ruby-identifier">base_prefix</span> = <span class="ruby-identifier">base_directory</span>
+715:     <span class="ruby-identifier">base_names</span> = []
+716:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">base_prefix</span>)
+717:       <span class="ruby-identifier">base_prefix</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+718:       <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">basename</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'.'</span>
+719:     <span class="ruby-keyword kw">end</span>
+720:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest_prefix</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">base_prefix</span>
+721:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;different prefix: #{dest_prefix.inspect} and #{base_directory.inspect}&quot;</span>
+722:     <span class="ruby-keyword kw">end</span>
+723:     <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span>
+724:           <span class="ruby-operator">!</span><span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span>
+725:           <span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">first</span>
+726:       <span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">shift</span>
+727:       <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">shift</span>
+728:     <span class="ruby-keyword kw">end</span>
+729:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value str">'..'</span>
+730:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;base_directory has ..: #{base_directory.inspect}&quot;</span>
+731:     <span class="ruby-keyword kw">end</span>
+732:     <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">fill</span>(<span class="ruby-value str">'..'</span>)
+733:     <span class="ruby-identifier">relpath_names</span> = <span class="ruby-identifier">base_names</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">dest_names</span>
+734:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">relpath_names</span>.<span class="ruby-identifier">empty?</span>
+735:       <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'.'</span>)
+736:     <span class="ruby-keyword kw">else</span>
+737:       <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">relpath_names</span>))
+738:     <span class="ruby-keyword kw">end</span>
+739:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_int (Numeric)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     num.to_int    =&gt; integer
+ *
+ *  Invokes the child class's &lt;code&gt;to_i&lt;/code&gt; method to convert
+ *  &lt;i&gt;num&lt;/i&gt; to an integer.
+ */
+
+static VALUE
+num_to_int(VALUE num)
+{
+    return rb_funcall(num, id_to_i, 0, 0);
+}</pre>
+</body>
+</html>

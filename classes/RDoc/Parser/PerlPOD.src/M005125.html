@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>filter (RDoc::Parser::PerlPOD)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/perl.rb, line 151</span>
+151:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">comment</span>)
+152:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^=pod\s*$/</span>
+153:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^=pod/</span>, <span class="ruby-value str">'=='</span>)
+154:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^=head(\d+)/</span>) <span class="ruby-keyword kw">do</span> 
+155:       <span class="ruby-value str">&quot;=&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+156:     <span class="ruby-keyword kw">end</span>
+157:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/=item/</span>, <span class="ruby-value str">''</span>);
+158:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/C&lt;(.*?)&gt;/</span>, <span class="ruby-value str">'&lt;tt&gt;\1&lt;/tt&gt;'</span>);
+159:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/I&lt;(.*?)&gt;/</span>, <span class="ruby-value str">'&lt;i&gt;\1&lt;/i&gt;'</span>);
+160:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/B&lt;(.*?)&gt;/</span>, <span class="ruby-value str">'&lt;b&gt;\1&lt;/b&gt;'</span>);
+161:     <span class="ruby-identifier">comment</span>
+162:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>format (Benchmark::Tms)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/benchmark.rb, line 497</span>
+497:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">arg0</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+498:       <span class="ruby-identifier">fmtstr</span> = (<span class="ruby-identifier">arg0</span> <span class="ruby-operator">||</span> <span class="ruby-constant">FMTSTR</span>).<span class="ruby-identifier">dup</span>
+499:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)n/</span>){<span class="ruby-node">&quot;#{$1}s&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">label</span>}
+500:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)u/</span>){<span class="ruby-node">&quot;#{$1}f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">utime</span>}
+501:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)y/</span>){<span class="ruby-node">&quot;#{$1}f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">stime</span>}
+502:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)U/</span>){<span class="ruby-node">&quot;#{$1}f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">cutime</span>}
+503:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)Y/</span>){<span class="ruby-node">&quot;#{$1}f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">cstime</span>}
+504:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)t/</span>){<span class="ruby-node">&quot;#{$1}f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">total</span>}
+505:       <span class="ruby-identifier">fmtstr</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(%[-+\.\d]*)r/</span>){<span class="ruby-node">&quot;(#{$1}f)&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">real</span>}
+506:       <span class="ruby-identifier">arg0</span> <span class="ruby-value">? </span><span class="ruby-constant">Kernel</span><span class="ruby-operator">::</span><span class="ruby-identifier">format</span>(<span class="ruby-identifier">fmtstr</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">fmtstr</span>
+507:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

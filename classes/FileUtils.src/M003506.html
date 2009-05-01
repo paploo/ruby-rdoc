@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>chown_R (FileUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/fileutils.rb, line 950</span>
+950:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chown_R</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">list</span>, <span class="ruby-identifier">options</span> = {})
+951:     <span class="ruby-identifier">fu_check_options</span> <span class="ruby-identifier">options</span>, <span class="ruby-constant">OPT_TABLE</span>[<span class="ruby-value str">'chown_R'</span>]
+952:     <span class="ruby-identifier">list</span> = <span class="ruby-identifier">fu_list</span>(<span class="ruby-identifier">list</span>)
+953:     <span class="ruby-identifier">fu_output_message</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'chown -R%s %s%s'</span>,
+954:                               (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:force</span>] <span class="ruby-operator">?</span> <span class="ruby-value str">'f'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">''</span>),
+955:                               [<span class="ruby-identifier">user</span>,<span class="ruby-identifier">group</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">' '</span>,
+956:                               <span class="ruby-identifier">list</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:verbose</span>]
+957:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:noop</span>]
+958:     <span class="ruby-identifier">uid</span> = <span class="ruby-identifier">fu_get_uid</span>(<span class="ruby-identifier">user</span>)
+959:     <span class="ruby-identifier">gid</span> = <span class="ruby-identifier">fu_get_gid</span>(<span class="ruby-identifier">group</span>)
+960:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">uid</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">gid</span>
+961:     <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">root</span><span class="ruby-operator">|</span>
+962:       <span class="ruby-constant">Entry_</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">root</span>).<span class="ruby-identifier">traverse</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ent</span><span class="ruby-operator">|</span>
+963:         <span class="ruby-keyword kw">begin</span>
+964:           <span class="ruby-identifier">ent</span>.<span class="ruby-identifier">chown</span> <span class="ruby-identifier">uid</span>, <span class="ruby-identifier">gid</span>
+965:         <span class="ruby-keyword kw">rescue</span>
+966:           <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:force</span>]
+967:         <span class="ruby-keyword kw">end</span>
+968:       <span class="ruby-keyword kw">end</span>
+969:     <span class="ruby-keyword kw">end</span>
+970:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

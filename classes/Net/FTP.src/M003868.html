@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>chdir (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 722</span>
+722:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">dirname</span>)
+723:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dirname</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;..&quot;</span>
+724:         <span class="ruby-keyword kw">begin</span>
+725:           <span class="ruby-identifier">voidcmd</span>(<span class="ruby-value str">&quot;CDUP&quot;</span>)
+726:           <span class="ruby-keyword kw">return</span>
+727:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">FTPPermError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+728:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;500&quot;</span>
+729:             <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>
+730:           <span class="ruby-keyword kw">end</span>
+731:         <span class="ruby-keyword kw">end</span>
+732:       <span class="ruby-keyword kw">end</span>
+733:       <span class="ruby-identifier">cmd</span> = <span class="ruby-value str">&quot;CWD &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">dirname</span>
+734:       <span class="ruby-identifier">voidcmd</span>(<span class="ruby-identifier">cmd</span>)
+735:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

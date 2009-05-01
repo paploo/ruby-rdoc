@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>translate (REXML::Functions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/functions.rb, line 228</span>
+228:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">translate</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">tr1</span>, <span class="ruby-identifier">tr2</span> )
+229:       <span class="ruby-identifier">from</span> = <span class="ruby-identifier">string</span>(<span class="ruby-identifier">tr1</span>)
+230:       <span class="ruby-identifier">to</span> = <span class="ruby-identifier">string</span>(<span class="ruby-identifier">tr2</span>)
+231: 
+232:       <span class="ruby-comment cmt"># the map is our translation table.</span>
+233:       <span class="ruby-comment cmt">#</span>
+234:       <span class="ruby-comment cmt"># if a character occurs more than once in the</span>
+235:       <span class="ruby-comment cmt"># from string then we ignore the second &amp;</span>
+236:       <span class="ruby-comment cmt"># subsequent mappings</span>
+237:       <span class="ruby-comment cmt">#</span>
+238:       <span class="ruby-comment cmt"># if a character maps to nil then we delete it</span>
+239:       <span class="ruby-comment cmt"># in the output.  This happens if the from</span>
+240:       <span class="ruby-comment cmt"># string is longer than the to string</span>
+241:       <span class="ruby-comment cmt">#</span>
+242:       <span class="ruby-comment cmt"># there's nothing about - or ^ being special in</span>
+243:       <span class="ruby-comment cmt"># http://www.w3.org/TR/xpath#function-translate</span>
+244:       <span class="ruby-comment cmt"># so we don't build ranges or negated classes</span>
+245: 
+246:       <span class="ruby-identifier">map</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+247:       <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">from</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">pos</span><span class="ruby-operator">|</span>
+248:         <span class="ruby-identifier">from_char</span> = <span class="ruby-identifier">from</span>[<span class="ruby-identifier">pos</span>]
+249:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">from_char</span>
+250:           <span class="ruby-identifier">map</span>[<span class="ruby-identifier">from_char</span>] = 
+251:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">to</span>.<span class="ruby-identifier">length</span>
+252:             <span class="ruby-identifier">to</span>[<span class="ruby-identifier">pos</span>]
+253:           <span class="ruby-keyword kw">else</span>
+254:             <span class="ruby-keyword kw">nil</span>
+255:           <span class="ruby-keyword kw">end</span>
+256:         <span class="ruby-keyword kw">end</span>
+257:       }
+258: 
+259:       <span class="ruby-keyword kw">if</span> <span class="ruby-value str">''</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:chars</span>
+260:         <span class="ruby-identifier">string</span>(<span class="ruby-identifier">string</span>).<span class="ruby-identifier">chars</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+261:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">map</span>[<span class="ruby-identifier">c</span>] <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">end</span>
+262:         }.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>
+263:       <span class="ruby-keyword kw">else</span>
+264:         <span class="ruby-identifier">string</span>(<span class="ruby-identifier">string</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'U*'</span>).<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+265:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">map</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">map</span>[<span class="ruby-identifier">c</span>] <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">end</span>
+266:         }.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'U*'</span>)
+267:       <span class="ruby-keyword kw">end</span>
+268:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

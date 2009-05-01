@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>realpath_rec (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 414</span>
+414:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">realpath_rec</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">unresolved</span>, <span class="ruby-identifier">h</span>)
+415:     <span class="ruby-identifier">resolved</span> = []
+416:     <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">unresolved</span>.<span class="ruby-identifier">empty?</span>
+417:       <span class="ruby-identifier">n</span> = <span class="ruby-identifier">unresolved</span>.<span class="ruby-identifier">shift</span>
+418:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">n</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span>
+419:         <span class="ruby-keyword kw">next</span>
+420:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">n</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+421:         <span class="ruby-identifier">resolved</span>.<span class="ruby-identifier">pop</span>
+422:       <span class="ruby-keyword kw">else</span>
+423:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span>(<span class="ruby-identifier">resolved</span> <span class="ruby-operator">+</span> [<span class="ruby-identifier">n</span>])))
+424:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">path</span>
+425:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:resolving</span>
+426:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ELOOP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>)
+427:           <span class="ruby-keyword kw">else</span>
+428:             <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">resolved</span> = <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>]
+429:           <span class="ruby-keyword kw">end</span>
+430:         <span class="ruby-keyword kw">else</span>
+431:           <span class="ruby-identifier">s</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">lstat</span>(<span class="ruby-identifier">path</span>)
+432:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">symlink?</span>
+433:             <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">:resolving</span>
+434:             <span class="ruby-identifier">link_prefix</span>, <span class="ruby-identifier">link_names</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">readlink</span>(<span class="ruby-identifier">path</span>))
+435:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">link_prefix</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+436:               <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">resolved</span> = <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">realpath_rec</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">resolved</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">link_names</span>, <span class="ruby-identifier">h</span>)
+437:             <span class="ruby-keyword kw">else</span>
+438:               <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">resolved</span> = <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">realpath_rec</span>(<span class="ruby-identifier">link_prefix</span>, <span class="ruby-identifier">link_names</span>, <span class="ruby-identifier">h</span>)
+439:             <span class="ruby-keyword kw">end</span>
+440:           <span class="ruby-keyword kw">else</span>
+441:             <span class="ruby-identifier">resolved</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">n</span>
+442:             <span class="ruby-identifier">h</span>[<span class="ruby-identifier">path</span>] = [<span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">resolved</span>]
+443:           <span class="ruby-keyword kw">end</span>
+444:         <span class="ruby-keyword kw">end</span>
+445:       <span class="ruby-keyword kw">end</span>
+446:     <span class="ruby-keyword kw">end</span>
+447:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">resolved</span>
+448:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

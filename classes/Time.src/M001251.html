@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>marshal_load (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * undocumented
+ */
+
+static VALUE
+time_mload(VALUE time, VALUE str)
+{
+    struct time_object *tobj;
+    unsigned long p, s;
+    time_t sec;
+    long usec;
+    unsigned char *buf;
+    struct tm tm;
+    int i, gmt;
+    long nsec;
+    VALUE submicro;
+
+    time_modify(time);
+
+    submicro = rb_attr_get(str, id_submicro);
+    if (submicro != Qnil) {
+        st_delete(rb_generic_ivar_table(str), (st_data_t*)&amp;id_submicro, 0);
+    }
+    rb_copy_generic_ivar(time, str);
+
+    StringValue(str);
+    buf = (unsigned char *)RSTRING_PTR(str);
+    if (RSTRING_LEN(str) != 8) {
+        rb_raise(rb_eTypeError, &quot;marshaled time format differ&quot;);
+    }
+
+    p = s = 0;
+    for (i=0; i&lt;4; i++) {
+        p |= buf[i]&lt;&lt;(8*i);
+    }
+    for (i=4; i&lt;8; i++) {
+        s |= buf[i]&lt;&lt;(8*(i-4));
+    }
+
+    if ((p &amp; (1UL&lt;&lt;31)) == 0) {
+        gmt = 0;
+        sec = p;
+        usec = s;
+        nsec = usec * 1000;
+    }
+    else {
+        p &amp;= ~(1UL&lt;&lt;31);
+        gmt        = (p &gt;&gt; 30) &amp; 0x1;
+        tm.tm_year = (p &gt;&gt; 14) &amp; 0xffff;
+        tm.tm_mon  = (p &gt;&gt; 10) &amp; 0xf;
+        tm.tm_mday = (p &gt;&gt;  5) &amp; 0x1f;
+        tm.tm_hour =  p        &amp; 0x1f;
+        tm.tm_min  = (s &gt;&gt; 26) &amp; 0x3f;
+        tm.tm_sec  = (s &gt;&gt; 20) &amp; 0x3f;
+        tm.tm_isdst = 0;
+
+        sec = make_time_t(&amp;tm, Qtrue);
+        usec = (long)(s &amp; 0xfffff);
+        nsec = usec * 1000;
+
+        if (submicro != Qnil) {
+            unsigned char *ptr;
+            long len;
+            int digit;
+            ptr = (unsigned char*)StringValuePtr(submicro);
+            len = RSTRING_LEN(submicro);
+            if (0 &lt; len) {
+                if (10 &lt;= (digit = ptr[0] &gt;&gt; 4)) goto end_submicro;
+                nsec += digit * 100;
+                if (10 &lt;= (digit = ptr[0] &amp; 0xf)) goto end_submicro;
+                nsec += digit * 10;
+            }
+            if (1 &lt; len) {
+                if (10 &lt;= (digit = ptr[1] &gt;&gt; 4)) goto end_submicro;
+                nsec += digit;
+            }
+end_submicro: ;
+        }
+    }
+    time_overflow_p(&amp;sec, &amp;nsec);
+
+    GetTimeval(time, tobj);
+    tobj-&gt;tm_got = 0;
+    tobj-&gt;gmt = gmt;
+    tobj-&gt;ts.tv_sec = sec;
+    tobj-&gt;ts.tv_nsec = nsec;
+
+    return time;
+}</pre>
+</body>
+</html>

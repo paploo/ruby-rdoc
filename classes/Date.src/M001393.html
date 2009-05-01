@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>strftime (Date)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/date/format.rb, line 215</span>
+215:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">fmt</span>=<span class="ruby-value str">'%F'</span>)
+216:     <span class="ruby-identifier">fmt</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/%([-_0^#]+)?(\d+)?([EO]?(?::{1,3}z|.))/</span><span class="ruby-identifier">m</span>) <span class="ruby-keyword kw">do</span>
+217:       <span class="ruby-identifier">f</span> = {}
+218:       <span class="ruby-identifier">m</span> = <span class="ruby-identifier">$&amp;</span>
+219:       <span class="ruby-identifier">s</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">c</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>, <span class="ruby-identifier">$3</span>
+220:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span>
+221:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/./</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+222:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">k</span>
+223:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'-'</span>; <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:p</span>] = <span class="ruby-value str">'-'</span>
+224:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'_'</span>; <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:p</span>] = <span class="ruby-value str">&quot;\s&quot;</span>
+225:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'0'</span>; <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:p</span>] = <span class="ruby-value str">'0'</span>
+226:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'^'</span>; <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:u</span>] = <span class="ruby-keyword kw">true</span>
+227:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'#'</span>; <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:x</span>] = <span class="ruby-keyword kw">true</span>
+228:           <span class="ruby-keyword kw">end</span>
+229:         <span class="ruby-keyword kw">end</span>
+230:       <span class="ruby-keyword kw">end</span>
+231:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">w</span>
+232:         <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] = <span class="ruby-identifier">w</span>.<span class="ruby-identifier">to_i</span>
+233:       <span class="ruby-keyword kw">end</span>
+234:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">c</span>
+235:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'A'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-constant">DAYNAMES</span>[<span class="ruby-identifier">wday</span>], <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+236:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'a'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-constant">ABBR_DAYNAMES</span>[<span class="ruby-identifier">wday</span>], <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+237:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'B'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-constant">MONTHNAMES</span>[<span class="ruby-identifier">mon</span>], <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+238:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'b'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-constant">ABBR_MONTHNAMES</span>[<span class="ruby-identifier">mon</span>], <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+239:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'C'</span>, <span class="ruby-value str">'EC'</span>; <span class="ruby-identifier">emit_sn</span>((<span class="ruby-identifier">year</span> <span class="ruby-operator">/</span> <span class="ruby-value">100</span>).<span class="ruby-identifier">floor</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+240:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'c'</span>, <span class="ruby-value str">'Ec'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%a %b %e %H:%M:%S %Y'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+241:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'D'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%m/%d/%y'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+242:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'d'</span>, <span class="ruby-value str">'Od'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">mday</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+243:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'e'</span>, <span class="ruby-value str">'Oe'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">mday</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+244:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'F'</span>
+245:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'%F'</span>
+246:           <span class="ruby-identifier">format</span>(<span class="ruby-value str">'%.4d-%02d-%02d'</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">mday</span>) <span class="ruby-comment cmt"># 4p</span>
+247:         <span class="ruby-keyword kw">else</span>
+248:           <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%Y-%m-%d'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+249:         <span class="ruby-keyword kw">end</span>
+250:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'G'</span>; <span class="ruby-identifier">emit_sn</span>(<span class="ruby-identifier">cwyear</span>, <span class="ruby-value">4</span>, <span class="ruby-identifier">f</span>)
+251:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'g'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">cwyear</span> <span class="ruby-operator">%</span> <span class="ruby-value">100</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+252:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'H'</span>, <span class="ruby-value str">'OH'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">hour</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+253:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'h'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%b'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+254:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'I'</span>, <span class="ruby-value str">'OI'</span>; <span class="ruby-identifier">emit_n</span>((<span class="ruby-identifier">hour</span> <span class="ruby-operator">%</span> <span class="ruby-value">12</span>).<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">||</span> <span class="ruby-value">12</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+255:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'j'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">yday</span>, <span class="ruby-value">3</span>, <span class="ruby-identifier">f</span>)
+256:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'k'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">hour</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+257:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'L'</span>
+258:         <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:p</span>] = <span class="ruby-keyword kw">nil</span>
+259:         <span class="ruby-identifier">w</span> = <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] <span class="ruby-operator">||</span> <span class="ruby-value">3</span>
+260:         <span class="ruby-identifier">u</span> = <span class="ruby-value">10</span><span class="ruby-operator">**</span><span class="ruby-identifier">w</span>
+261:         <span class="ruby-identifier">emit_n</span>((<span class="ruby-identifier">sec_fraction</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">u</span>).<span class="ruby-identifier">floor</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">f</span>)
+262:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'l'</span>; <span class="ruby-identifier">emit_a</span>((<span class="ruby-identifier">hour</span> <span class="ruby-operator">%</span> <span class="ruby-value">12</span>).<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">||</span> <span class="ruby-value">12</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+263:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'M'</span>, <span class="ruby-value str">'OM'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">min</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+264:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'m'</span>, <span class="ruby-value str">'Om'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">mon</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+265:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'N'</span>
+266:         <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:p</span>] = <span class="ruby-keyword kw">nil</span>
+267:         <span class="ruby-identifier">w</span> = <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] <span class="ruby-operator">||</span> <span class="ruby-value">9</span>
+268:         <span class="ruby-identifier">u</span> = <span class="ruby-value">10</span><span class="ruby-operator">**</span><span class="ruby-identifier">w</span>
+269:         <span class="ruby-identifier">emit_n</span>((<span class="ruby-identifier">sec_fraction</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">u</span>).<span class="ruby-identifier">floor</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">f</span>)
+270:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'n'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+271:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'P'</span>; <span class="ruby-identifier">emit_ad</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%p'</span>).<span class="ruby-identifier">downcase</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+272:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'p'</span>; <span class="ruby-identifier">emit_au</span>(<span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hour</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">12</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value str">'AM'</span> <span class="ruby-keyword kw">else</span> <span class="ruby-value str">'PM'</span> <span class="ruby-keyword kw">end</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+273:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Q'</span>
+274:         <span class="ruby-identifier">s</span> = ((<span class="ruby-identifier">ajd</span> <span class="ruby-operator">-</span> <span class="ruby-constant">UNIX_EPOCH_IN_AJD</span>) <span class="ruby-operator">/</span> <span class="ruby-constant">MILLISECONDS_IN_DAY</span>).<span class="ruby-identifier">round</span>
+275:         <span class="ruby-identifier">emit_sn</span>(<span class="ruby-identifier">s</span>, <span class="ruby-value">1</span>, <span class="ruby-identifier">f</span>)
+276:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'R'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%H:%M'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+277:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'r'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%I:%M:%S %p'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+278:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'S'</span>, <span class="ruby-value str">'OS'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+279:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'s'</span>
+280:         <span class="ruby-identifier">s</span> = ((<span class="ruby-identifier">ajd</span> <span class="ruby-operator">-</span> <span class="ruby-constant">UNIX_EPOCH_IN_AJD</span>) <span class="ruby-operator">/</span> <span class="ruby-constant">SECONDS_IN_DAY</span>).<span class="ruby-identifier">round</span>
+281:         <span class="ruby-identifier">emit_sn</span>(<span class="ruby-identifier">s</span>, <span class="ruby-value">1</span>, <span class="ruby-identifier">f</span>)
+282:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'T'</span>
+283:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'%T'</span>
+284:           <span class="ruby-identifier">format</span>(<span class="ruby-value str">'%02d:%02d:%02d'</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>) <span class="ruby-comment cmt"># 4p</span>
+285:         <span class="ruby-keyword kw">else</span>
+286:           <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%H:%M:%S'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+287:         <span class="ruby-keyword kw">end</span>
+288:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'t'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-value str">&quot;\t&quot;</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+289:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'U'</span>, <span class="ruby-value str">'W'</span>, <span class="ruby-value str">'OU'</span>, <span class="ruby-value str">'OW'</span>
+290:         <span class="ruby-identifier">emit_n</span>(<span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span>[<span class="ruby-value">-1</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'U'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">wnum0</span> <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">wnum1</span> <span class="ruby-keyword kw">end</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+291:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'u'</span>, <span class="ruby-value str">'Ou'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">cwday</span>, <span class="ruby-value">1</span>, <span class="ruby-identifier">f</span>)
+292:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'V'</span>, <span class="ruby-value str">'OV'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">cweek</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+293:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'v'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%e-%b-%Y'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+294:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'w'</span>, <span class="ruby-value str">'Ow'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">wday</span>, <span class="ruby-value">1</span>, <span class="ruby-identifier">f</span>)
+295:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'X'</span>, <span class="ruby-value str">'EX'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%H:%M:%S'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+296:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'x'</span>, <span class="ruby-value str">'Ex'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%m/%d/%y'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+297:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Y'</span>, <span class="ruby-value str">'EY'</span>; <span class="ruby-identifier">emit_sn</span>(<span class="ruby-identifier">year</span>, <span class="ruby-value">4</span>, <span class="ruby-identifier">f</span>)
+298:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'y'</span>, <span class="ruby-value str">'Ey'</span>, <span class="ruby-value str">'Oy'</span>; <span class="ruby-identifier">emit_n</span>(<span class="ruby-identifier">year</span> <span class="ruby-operator">%</span> <span class="ruby-value">100</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)
+299:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Z'</span>; <span class="ruby-identifier">emit_au</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%:z'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+300:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/\A(:{0,3})z/</span>
+301:         <span class="ruby-identifier">t</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">size</span>
+302:         <span class="ruby-identifier">sign</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">offset</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">-1</span> <span class="ruby-keyword kw">else</span> <span class="ruby-value">+1</span> <span class="ruby-keyword kw">end</span>
+303:         <span class="ruby-identifier">fr</span> = <span class="ruby-identifier">offset</span>.<span class="ruby-identifier">abs</span>
+304:         <span class="ruby-identifier">ss</span> = <span class="ruby-identifier">fr</span>.<span class="ruby-identifier">div</span>(<span class="ruby-constant">SECONDS_IN_DAY</span>) <span class="ruby-comment cmt"># 4p</span>
+305:         <span class="ruby-identifier">hh</span>, <span class="ruby-identifier">ss</span> = <span class="ruby-identifier">ss</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">3600</span>)
+306:         <span class="ruby-identifier">mm</span>, <span class="ruby-identifier">ss</span> = <span class="ruby-identifier">ss</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)
+307:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">t</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+308:           <span class="ruby-keyword kw">if</span>    <span class="ruby-identifier">ss</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">t</span> =  <span class="ruby-value">2</span>
+309:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">mm</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">t</span> =  <span class="ruby-value">1</span>
+310:           <span class="ruby-keyword kw">else</span>                   <span class="ruby-identifier">t</span> = <span class="ruby-value">-1</span>
+311:           <span class="ruby-keyword kw">end</span>
+312:         <span class="ruby-keyword kw">end</span>
+313:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">t</span>
+314:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">-1</span>
+315:           <span class="ruby-identifier">tail</span> = []
+316:           <span class="ruby-identifier">sep</span> = <span class="ruby-value str">''</span>
+317:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
+318:           <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] <span class="ruby-operator">-=</span> <span class="ruby-value">2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>]
+319:           <span class="ruby-identifier">tail</span> = [<span class="ruby-value str">'%02d'</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">mm</span>]
+320:           <span class="ruby-identifier">sep</span> = <span class="ruby-value str">''</span>
+321:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+322:           <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] <span class="ruby-operator">-=</span> <span class="ruby-value">3</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>]
+323:           <span class="ruby-identifier">tail</span> = [<span class="ruby-value str">'%02d'</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">mm</span>]
+324:           <span class="ruby-identifier">sep</span> = <span class="ruby-value str">':'</span>
+325:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+326:           <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>] <span class="ruby-operator">-=</span> <span class="ruby-value">6</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span>[<span class="ruby-identifier">:w</span>]
+327:           <span class="ruby-identifier">tail</span> = [<span class="ruby-value str">'%02d'</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">mm</span>, <span class="ruby-value str">'%02d'</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">ss</span>]
+328:           <span class="ruby-identifier">sep</span> = <span class="ruby-value str">':'</span>
+329:         <span class="ruby-keyword kw">end</span>
+330:         ([<span class="ruby-identifier">emit_z</span>(<span class="ruby-identifier">sign</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">hh</span>, <span class="ruby-value">2</span>, <span class="ruby-identifier">f</span>)] <span class="ruby-operator">+</span> <span class="ruby-identifier">tail</span>).<span class="ruby-identifier">join</span>(<span class="ruby-identifier">sep</span>)
+331:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'%'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-value str">'%'</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+332:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'+'</span>; <span class="ruby-identifier">emit_a</span>(<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'%a %b %e %H:%M:%S %Z %Y'</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">f</span>)
+333:       <span class="ruby-keyword kw">else</span>
+334:         <span class="ruby-identifier">m</span>
+335:       <span class="ruby-keyword kw">end</span>
+336:     <span class="ruby-keyword kw">end</span>
+337:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

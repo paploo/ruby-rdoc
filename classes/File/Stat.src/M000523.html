@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>world_writable? (File::Stat)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    stat.world_writable? =&gt; fixnum or nil
+ *
+ * If &lt;i&gt;stat&lt;/i&gt; is writable by others, returns an integer
+ * representing the file permission bits of &lt;i&gt;stat&lt;/i&gt;. Returns
+ * &lt;code&gt;nil&lt;/code&gt; otherwise. The meaning of the bits is platform
+ * dependent; on Unix systems, see &lt;code&gt;stat(2)&lt;/code&gt;.
+ *     
+ *    m = File.stat(&quot;/tmp&quot;).world_writable?         # =&gt; 511
+ *    sprintf(&quot;%o&quot;, m)                              # =&gt; &quot;777&quot;
+ */
+
+static VALUE
+rb_stat_ww(VALUE obj)
+{
+#ifdef S_IROTH
+    if ((get_stat(obj)-&gt;st_mode &amp; (S_IWOTH)) == S_IWOTH) {
+        return UINT2NUM(get_stat(obj)-&gt;st_mode &amp; (S_IRUGO|S_IWUGO|S_IXUGO));
+    }
+    else {
+        return Qnil;
+    }
+#endif
+}</pre>
+</body>
+</html>

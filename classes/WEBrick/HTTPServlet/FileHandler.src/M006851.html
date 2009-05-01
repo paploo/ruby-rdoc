@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_filename (WEBrick::HTTPServlet::FileHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpservlet/filehandler.rb, line 256</span>
+256:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_filename</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+257:         <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span> = <span class="ruby-ivar">@root</span>.<span class="ruby-identifier">dup</span>
+258:         <span class="ruby-identifier">path_info</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path_info</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">%r|/[^/]*|</span>)
+259: 
+260:         <span class="ruby-identifier">path_info</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-value str">&quot;&quot;</span>)  <span class="ruby-comment cmt"># dummy for checking @root dir</span>
+261:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">base</span> = <span class="ruby-identifier">path_info</span>.<span class="ruby-identifier">first</span>
+262:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;/&quot;</span>
+263:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">base</span>))
+264:           <span class="ruby-identifier">shift_path_info</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">path_info</span>)
+265:           <span class="ruby-identifier">call_callback</span>(<span class="ruby-identifier">:DirectoryCallback</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+266:         <span class="ruby-keyword kw">end</span>
+267: 
+268:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base</span> = <span class="ruby-identifier">path_info</span>.<span class="ruby-identifier">first</span>
+269:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;/&quot;</span>
+270:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-identifier">search_index_file</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+271:               <span class="ruby-identifier">shift_path_info</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">path_info</span>, <span class="ruby-identifier">file</span>)
+272:               <span class="ruby-identifier">call_callback</span>(<span class="ruby-identifier">:FileCallback</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+273:               <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+274:             <span class="ruby-keyword kw">end</span>
+275:             <span class="ruby-identifier">shift_path_info</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">path_info</span>)
+276:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">file</span> = <span class="ruby-identifier">search_file</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">base</span>)
+277:             <span class="ruby-identifier">shift_path_info</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>, <span class="ruby-identifier">path_info</span>, <span class="ruby-identifier">file</span>)
+278:             <span class="ruby-identifier">call_callback</span>(<span class="ruby-identifier">:FileCallback</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+279:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+280:           <span class="ruby-keyword kw">else</span>
+281:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">NotFound</span>, <span class="ruby-node">&quot;`#{req.path}' not found.&quot;</span>
+282:           <span class="ruby-keyword kw">end</span>
+283:         <span class="ruby-keyword kw">end</span>
+284: 
+285:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+286:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

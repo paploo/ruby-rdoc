@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_method (ERB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 764</span>
+764:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_method</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">methodname</span>, <span class="ruby-identifier">fname</span>=<span class="ruby-value str">'(ERB)'</span>)
+765:     <span class="ruby-identifier">src</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">src</span>
+766:     <span class="ruby-identifier">magic_comment</span> = <span class="ruby-node">&quot;#coding:#{@enc}\n&quot;</span>
+767:     <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">module_eval</span> <span class="ruby-keyword kw">do</span>
+768:       <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">magic_comment</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;def #{methodname}\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">src</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\nend\n&quot;</span>, <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-value">-2</span>)
+769:     <span class="ruby-keyword kw">end</span>
+770:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

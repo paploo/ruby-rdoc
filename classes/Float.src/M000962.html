@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ceil (Float)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     flt.ceil    =&gt; integer
+ *
+ *  Returns the smallest &lt;code&gt;Integer&lt;/code&gt; greater than or equal to
+ *  &lt;i&gt;flt&lt;/i&gt;.
+ *
+ *     1.2.ceil      #=&gt; 2
+ *     2.0.ceil      #=&gt; 2
+ *     (-1.2).ceil   #=&gt; -1
+ *     (-2.0).ceil   #=&gt; -2
+ */
+
+static VALUE
+flo_ceil(VALUE num)
+{
+    double f = ceil(RFLOAT_VALUE(num));
+    long val;
+
+    if (!FIXABLE(f)) {
+        return rb_dbl2big(f);
+    }
+    val = f;
+    return LONG2FIX(val);
+}</pre>
+</body>
+</html>

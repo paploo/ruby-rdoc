@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>match (Regexp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rxp.match(str)       =&gt; matchdata or nil
+ *     rxp.match(str,pos)   =&gt; matchdata or nil
+ *
+ *  Returns a &lt;code&gt;MatchData&lt;/code&gt; object describing the match, or
+ *  &lt;code&gt;nil&lt;/code&gt; if there was no match. This is equivalent to retrieving the
+ *  value of the special variable &lt;code&gt;$~&lt;/code&gt; following a normal match.
+ *  If the second parameter is present, it specifies the position in the string
+ *  to begin the search.
+ *
+ *     /(.)(.)(.)/.match(&quot;abc&quot;)[2]   #=&gt; &quot;b&quot;
+ *     /(.)(.)/.match(&quot;abc&quot;, 1)[2]   #=&gt; &quot;c&quot;
+ *     
+ *  If a block is given, invoke the block with MatchData if match succeed, so
+ *  that you can write
+ *     
+ *     pat.match(str) {|m| ...}
+ *     
+ *  instead of
+ *      
+ *     if m = pat.match(str)
+ *       ...
+ *     end
+ *      
+ *  The return value is a value from block execution in this case.
+ */
+
+static VALUE
+rb_reg_match_m(int argc, VALUE *argv, VALUE re)
+{
+    VALUE result, str, initpos;
+    long pos;
+
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;str, &amp;initpos) == 2) {
+        pos = NUM2LONG(initpos);
+    }
+    else {
+        pos = 0;
+    }
+
+    pos = reg_match_pos(re, &amp;str, pos);
+    if (pos &lt; 0) {
+        rb_backref_set(Qnil);
+        return Qnil;
+    }
+    result = rb_backref_get();
+    rb_match_busy(result);
+    if (!NIL_P(result) &amp;&amp; rb_block_given_p()) {
+        return rb_yield(result);
+    }
+    return result;
+}</pre>
+</body>
+</html>

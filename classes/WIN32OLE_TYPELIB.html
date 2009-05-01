@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: WIN32OLE_TYPELIB [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">WIN32OLE_TYPELIB</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/ext/win32ole/win32ole_c.html">
+
+                ext/win32ole/win32ole.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<tt><a href="WIN32OLE_TYPELIB.html">WIN32OLE_TYPELIB</a></tt> objects
+represent OLE tyblib information.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M002859">guid</a>&nbsp;&nbsp;
+
+        <a href="#M002868">inspect</a>&nbsp;&nbsp;
+
+        <a href="#M002867">library_name</a>&nbsp;&nbsp;
+
+        <a href="#M002862">major_version</a>&nbsp;&nbsp;
+
+        <a href="#M002863">minor_version</a>&nbsp;&nbsp;
+
+        <a href="#M002860">name</a>&nbsp;&nbsp;
+
+        <a href="#M002858">new</a>&nbsp;&nbsp;
+
+        <a href="#M002869">ole_classes</a>&nbsp;&nbsp;
+
+        <a href="#M002865">ole_types</a>&nbsp;&nbsp;
+
+        <a href="#M002864">path</a>&nbsp;&nbsp;
+
+        <a href="#M002870">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M002857">typelibs</a>&nbsp;&nbsp;
+
+        <a href="#M002861">version</a>&nbsp;&nbsp;
+
+        <a href="#M002866">visible?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M002858" class="method-detail">
+        <a name="M002858"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002858.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002858.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB.new(typelib [, version1, version2]) &rarr; WIN32OLE_TYPELIB object<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new <a href="WIN32OLE_TYPELIB.html">WIN32OLE_TYPELIB</a> object.
+</p>
+<p>
+The first argument <em>typelib</em> specifies OLE type library name or GUID
+or OLE library file. The second argument is major version or version of the
+type library. The third argument is minor version. The second argument and
+third argument are optional. If the first argument is type library name,
+then the second and third argument are ignored.
+</p>
+<pre>
+    tlib1 = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+    tlib2 = WIN32OLE_TYPELIB.new('{00020813-0000-0000-C000-000000000046}')
+    tlib3 = WIN32OLE_TYPELIB.new('{00020813-0000-0000-C000-000000000046}', 1.3)
+    tlib4 = WIN32OLE_TYPELIB.new('{00020813-0000-0000-C000-000000000046}', 1, 3)
+    tlib5 = WIN32OLE_TYPELIB.new(&quot;C:\\WINNT\\SYSTEM32\\SHELL32.DLL&quot;)
+    puts tlib1.name  # -&gt; 'Microsoft Excel 9.0 Object Library'
+    puts tlib2.name  # -&gt; 'Microsoft Excel 9.0 Object Library'
+    puts tlib3.name  # -&gt; 'Microsoft Excel 9.0 Object Library'
+    puts tlib4.name  # -&gt; 'Microsoft Excel 9.0 Object Library'
+    puts tlib5.name  # -&gt; 'Microsoft Shell Controls And Automation'
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002857" class="method-detail">
+        <a name="M002857"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002857.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002857.html');return false;">
+
+          <span class="method-name"><br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <pre>
+   WIN32OLE_TYPELIB.typelibs
+</pre>
+<p>
+Returns the array of <a href="WIN32OLE_TYPELIB.html">WIN32OLE_TYPELIB</a>
+object.
+</p>
+<pre>
+   tlibs = WIN32OLE_TYPELIB.typelibs
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M002859" class="method-detail">
+        <a name="M002859"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002859.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002859.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#guid &rarr; The guid string.<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns guid string which specifies type library.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   guid = tlib.guid # -&gt; '{00020813-0000-0000-C000-000000000046}'
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002868" class="method-detail">
+        <a name="M002868"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002868.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002868.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#inspect &rarr; String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library name with class name.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   tlib.inspect # =&gt; &quot;&lt;#WIN32OLE_TYPELIB:Microsoft Excel 9.0 Object Library&gt;&quot;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002867" class="method-detail">
+        <a name="M002867"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002867.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002867.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#library_name <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns library name. If the method fails to access library name, <a
+href="WIN32OLERuntimeError.html">WIN32OLERuntimeError</a> is raised.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   tlib.library_name # =&gt; Excel
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002862" class="method-detail">
+        <a name="M002862"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002862.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002862.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#major_version &rarr; The type library major version. <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library major version.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   puts tlib.major_version # -&gt; 1
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002863" class="method-detail">
+        <a name="M002863"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002863.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002863.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#minor_version &rarr; The type library minor version. <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library minor version.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   puts tlib.minor_version # -&gt; 3
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002860" class="method-detail">
+        <a name="M002860"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002860.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002860.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#name &rarr; The type library name<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library name.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   name = tlib.name # -&gt; 'Microsoft Excel 9.0 Object Library'
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002869" class="method-detail">
+        <a name="M002869"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">ole_classes</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="WIN32OLE_TYPELIB.html#M002865">ole_types</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002865" class="method-detail">
+        <a name="M002865"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002865.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002865.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#ole_types &rarr; The array of WIN32OLE_TYPE object included the type library.<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library file path.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   classes = tlib.ole_types.collect{|k| k.name} # -&gt; ['AddIn', 'AddIns' ...]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002864" class="method-detail">
+        <a name="M002864"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002864.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002864.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#path &rarr; The type library file path. <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library file path.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   puts tlib.path #-&gt; 'C:\...\EXCEL9.OLB'
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002870" class="method-detail">
+        <a name="M002870"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="WIN32OLE_TYPELIB.html#M002860">name</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002861" class="method-detail">
+        <a name="M002861"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002861.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002861.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#version &rarr; The type library version. <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the type library version.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   puts tlib.version #-&gt; 1.3
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002866" class="method-detail">
+        <a name="M002866"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_TYPELIB.src/M002866.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_TYPELIB.src/M002866.html');return false;">
+
+          <span class="method-name">WIN32OLE_TYPELIB#visible? <br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true if the type library information is not hidden. If wLibFlags of
+TLIBATTR is 0 or LIBFLAG_FRESTRICTED or LIBFLAG_FHIDDEN, the method returns
+false, otherwise, returns true. If the method fails to access the TLIBATTR
+information, then <a
+href="WIN32OLERuntimeError.html">WIN32OLERuntimeError</a> is raised.
+</p>
+<pre>
+   tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+   tlib.visible? # =&gt; true
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

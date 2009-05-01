@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_encoding (REXML::Encoding)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rexml/encoding.rb, line 57</span>
+57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_encoding</span> <span class="ruby-identifier">str</span>
+58:       <span class="ruby-comment cmt"># We have to recognize UTF-16, LSB UTF-16, and UTF-8</span>
+59:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>[<span class="ruby-value">0</span>,<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\xfe\xff&quot;</span>
+60:         <span class="ruby-identifier">str</span>[<span class="ruby-value">0</span>,<span class="ruby-value">2</span>] = <span class="ruby-value str">&quot;&quot;</span>
+61:         <span class="ruby-keyword kw">return</span> <span class="ruby-constant">UTF_16</span>
+62:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">str</span>[<span class="ruby-value">0</span>,<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\xff\xfe&quot;</span>
+63:         <span class="ruby-identifier">str</span>[<span class="ruby-value">0</span>,<span class="ruby-value">2</span>] = <span class="ruby-value str">&quot;&quot;</span>
+64:         <span class="ruby-keyword kw">return</span> <span class="ruby-constant">UNILE</span>
+65:       <span class="ruby-keyword kw">end</span>
+66:       <span class="ruby-identifier">str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*&lt;\?xml\s+version\s*=\s*(['&quot;]).*?\1\s+encoding\s*=\s*([&quot;'])(.*?)\2/</span><span class="ruby-identifier">m</span>
+67:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$3</span>
+68:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">UTF_8</span>
+69:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

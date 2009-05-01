@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_feed (RSS::Maker::RSS09::Channel::Links::Link)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/0.9.rb, line 150</span>
+150:             <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">rss</span>, <span class="ruby-identifier">channel</span>)
+151:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">have_required_values?</span>
+152:                 <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">link</span> = <span class="ruby-identifier">href</span>
+153:               <span class="ruby-keyword kw">else</span>
+154:                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotSetError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;maker.channel.link&quot;</span>,
+155:                                       <span class="ruby-identifier">not_set_required_variables</span>)
+156:               <span class="ruby-keyword kw">end</span>
+157:             <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

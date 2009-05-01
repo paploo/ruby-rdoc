@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_classes_in (RDoc::RI::Reader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/ri/reader.rb, line 86</span>
+86:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_classes_in</span>(<span class="ruby-identifier">res</span>, <span class="ruby-identifier">klass</span>)
+87:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">classes_and_modules</span>
+88:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">classes</span>
+89:       <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">full_name</span>
+90:       <span class="ruby-identifier">find_classes_in</span>(<span class="ruby-identifier">res</span>, <span class="ruby-identifier">c</span>)
+91:     <span class="ruby-keyword kw">end</span>
+92:     <span class="ruby-identifier">res</span>
+93:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

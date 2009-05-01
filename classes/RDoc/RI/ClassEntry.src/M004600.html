@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>local_methods_matching (RDoc::RI::ClassEntry)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/cache.rb, line 114</span>
+114:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">local_methods_matching</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">is_class_method</span>)
+115: 
+116:     <span class="ruby-identifier">list</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">is_class_method</span>
+117:            <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">then</span>  <span class="ruby-ivar">@class_methods</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@instance_methods</span>
+118:            <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@class_methods</span>
+119:            <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@instance_methods</span>
+120:            <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">fail</span> <span class="ruby-node">&quot;Unknown is_class_method: #{is_class_method.inspect}&quot;</span>
+121:            <span class="ruby-keyword kw">end</span>
+122: 
+123:     <span class="ruby-identifier">list</span>.<span class="ruby-identifier">find_all</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">name</span>;  <span class="ruby-identifier">m</span>.<span class="ruby-identifier">name</span>[<span class="ruby-identifier">name</span>]}
+124:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

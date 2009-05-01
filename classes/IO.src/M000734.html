@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>try_convert (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     IO.try_convert(obj) -&gt; io or nil
+ *
+ *  Try to convert &lt;i&gt;obj&lt;/i&gt; into an IO, using to_io method.
+ *  Returns converted IO or nil if &lt;i&gt;obj&lt;/i&gt; cannot be converted
+ *  for any reason.
+ *
+ *     IO.try_convert(STDOUT)     # =&gt; STDOUT
+ *     IO.try_convert(&quot;STDOUT&quot;)   # =&gt; nil
+ *
+ *     require 'zlib'
+ *     f = open(&quot;/tmp/zz.gz&quot;)       # =&gt; #&lt;File:/tmp/zz.gz&gt;
+ *     z = Zlib::GzipReader.open(f) # =&gt; #&lt;Zlib::GzipReader:0x81d8744&gt;
+ *     IO.try_convert(z)            # =&gt; #&lt;File:/tmp/zz.gz&gt;
+ *
+ */
+static VALUE
+rb_io_s_try_convert(VALUE dummy, VALUE io)
+{
+    return rb_io_check_io(io);
+}</pre>
+</body>
+</html>

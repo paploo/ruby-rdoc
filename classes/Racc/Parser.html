@@ -1,0 +1,798 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Racc::Parser [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Racc::Parser</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/racc/parser_rb.html">
+
+                lib/racc/parser.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M004391">_racc_do_parse_rb</a>&nbsp;&nbsp;
+
+        <a href="#M004395">_racc_do_reduce</a>&nbsp;&nbsp;
+
+        <a href="#M004394">_racc_evalact</a>&nbsp;&nbsp;
+
+        <a href="#M004388">_racc_init_sysvars</a>&nbsp;&nbsp;
+
+        <a href="#M004387">_racc_setup</a>&nbsp;&nbsp;
+
+        <a href="#M004393">_racc_yyparse_rb</a>&nbsp;&nbsp;
+
+        <a href="#M004389">do_parse</a>&nbsp;&nbsp;
+
+        <a href="#M004390">next_token</a>&nbsp;&nbsp;
+
+        <a href="#M004396">on_error</a>&nbsp;&nbsp;
+
+        <a href="#M004403">racc_accept</a>&nbsp;&nbsp;
+
+        <a href="#M004404">racc_e_pop</a>&nbsp;&nbsp;
+
+        <a href="#M004405">racc_next_state</a>&nbsp;&nbsp;
+
+        <a href="#M004406">racc_print_stacks</a>&nbsp;&nbsp;
+
+        <a href="#M004407">racc_print_states</a>&nbsp;&nbsp;
+
+        <a href="#M004400">racc_read_token</a>&nbsp;&nbsp;
+
+        <a href="#M004402">racc_reduce</a>&nbsp;&nbsp;
+
+        <a href="#M004386">racc_runtime_type</a>&nbsp;&nbsp;
+
+        <a href="#M004401">racc_shift</a>&nbsp;&nbsp;
+
+        <a href="#M004408">racc_token2str</a>&nbsp;&nbsp;
+
+        <a href="#M004409">token_to_str</a>&nbsp;&nbsp;
+
+        <a href="#M004398">yyaccept</a>&nbsp;&nbsp;
+
+        <a href="#M004399">yyerrok</a>&nbsp;&nbsp;
+
+        <a href="#M004397">yyerror</a>&nbsp;&nbsp;
+
+        <a href="#M004392">yyparse</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Version</td>
+          <td>=</td>
+          <td class="context-item-value">'1.4.5'</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Revision</td>
+          <td>=</td>
+          <td class="context-item-value">'$originalRevision: 1.8 $'.split[1]</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Version_R</td>
+          <td>=</td>
+          <td class="context-item-value">'1.4.5'</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Revision_R</td>
+          <td>=</td>
+          <td class="context-item-value">'$originalRevision: 1.8 $'.split[1]</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Revision_C</td>
+          <td>=</td>
+          <td class="context-item-value">Racc_Runtime_Core_Id_C.split[2]</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+Racc_Runtime_Core_Version_C = (defined in extention)
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Main_Parsing_Routine</td>
+          <td>=</td>
+          <td class="context-item-value">:_racc_do_parse_c</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_YY_Parse_Method</td>
+          <td>=</td>
+          <td class="context-item-value">:_racc_yyparse_c</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Version</td>
+          <td>=</td>
+          <td class="context-item-value">Racc_Runtime_Core_Version_C</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Revision</td>
+          <td>=</td>
+          <td class="context-item-value">Racc_Runtime_Core_Revision_C</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Type</td>
+          <td>=</td>
+          <td class="context-item-value">'c'</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Main_Parsing_Routine</td>
+          <td>=</td>
+          <td class="context-item-value">:_racc_do_parse_rb</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_YY_Parse_Method</td>
+          <td>=</td>
+          <td class="context-item-value">:_racc_yyparse_rb</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Version</td>
+          <td>=</td>
+          <td class="context-item-value">Racc_Runtime_Core_Version_R</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Core_Revision</td>
+          <td>=</td>
+          <td class="context-item-value">Racc_Runtime_Core_Revision_R</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Racc_Runtime_Type</td>
+          <td>=</td>
+          <td class="context-item-value">'ruby'</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M004386" class="method-detail">
+        <a name="M004386"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004386.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004386.html');return false;">
+
+          <span class="method-name">racc_runtime_type</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M004391" class="method-detail">
+        <a name="M004391"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004391.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004391.html');return false;">
+
+          <span class="method-name">_racc_do_parse_rb</span><span class="method-args">(arg, in_debug)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004395" class="method-detail">
+        <a name="M004395"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004395.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004395.html');return false;">
+
+          <span class="method-name">_racc_do_reduce</span><span class="method-args">(arg, act)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004394" class="method-detail">
+        <a name="M004394"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004394.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004394.html');return false;">
+
+          <span class="method-name">_racc_evalact</span><span class="method-args">(act, arg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+common
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004388" class="method-detail">
+        <a name="M004388"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004388.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004388.html');return false;">
+
+          <span class="method-name">_racc_init_sysvars</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004387" class="method-detail">
+        <a name="M004387"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004387.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004387.html');return false;">
+
+          <span class="method-name">_racc_setup</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004393" class="method-detail">
+        <a name="M004393"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004393.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004393.html');return false;">
+
+          <span class="method-name">_racc_yyparse_rb</span><span class="method-args">(recv, mid, arg, c_debug)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004389" class="method-detail">
+        <a name="M004389"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004389.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004389.html');return false;">
+
+          <span class="method-name">do_parse</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Parser.html#M004389">do_parse</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004390" class="method-detail">
+        <a name="M004390"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004390.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004390.html');return false;">
+
+          <span class="method-name">next_token</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004396" class="method-detail">
+        <a name="M004396"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004396.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004396.html');return false;">
+
+          <span class="method-name">on_error</span><span class="method-args">(t, val, vstack)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004403" class="method-detail">
+        <a name="M004403"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004403.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004403.html');return false;">
+
+          <span class="method-name">racc_accept</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004404" class="method-detail">
+        <a name="M004404"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004404.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004404.html');return false;">
+
+          <span class="method-name">racc_e_pop</span><span class="method-args">(state, tstack, vstack)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004405" class="method-detail">
+        <a name="M004405"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004405.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004405.html');return false;">
+
+          <span class="method-name">racc_next_state</span><span class="method-args">(curstate, state)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004406" class="method-detail">
+        <a name="M004406"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004406.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004406.html');return false;">
+
+          <span class="method-name">racc_print_stacks</span><span class="method-args">(t, v)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004407" class="method-detail">
+        <a name="M004407"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004407.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004407.html');return false;">
+
+          <span class="method-name">racc_print_states</span><span class="method-args">(s)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004400" class="method-detail">
+        <a name="M004400"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004400.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004400.html');return false;">
+
+          <span class="method-name">racc_read_token</span><span class="method-args">(t, tok, val)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+for debugging output
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004402" class="method-detail">
+        <a name="M004402"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004402.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004402.html');return false;">
+
+          <span class="method-name">racc_reduce</span><span class="method-args">(toks, sim, tstack, vstack)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004401" class="method-detail">
+        <a name="M004401"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004401.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004401.html');return false;">
+
+          <span class="method-name">racc_shift</span><span class="method-args">(tok, tstack, vstack)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004408" class="method-detail">
+        <a name="M004408"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004408.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004408.html');return false;">
+
+          <span class="method-name">racc_token2str</span><span class="method-args">(tok)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004409" class="method-detail">
+        <a name="M004409"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004409.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004409.html');return false;">
+
+          <span class="method-name">token_to_str</span><span class="method-args">(t)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004398" class="method-detail">
+        <a name="M004398"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004398.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004398.html');return false;">
+
+          <span class="method-name">yyaccept</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004399" class="method-detail">
+        <a name="M004399"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004399.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004399.html');return false;">
+
+          <span class="method-name">yyerrok</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004397" class="method-detail">
+        <a name="M004397"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004397.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004397.html');return false;">
+
+          <span class="method-name">yyerror</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004392" class="method-detail">
+        <a name="M004392"></a>
+
+        <div class="method-heading">
+
+          <a href="Parser.src/M004392.html" target="Code" class="method-signature"
+            onclick="popupCode('Parser.src/M004392.html');return false;">
+
+          <span class="method-name">yyparse</span><span class="method-args">(recv, mid)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+yyparse
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

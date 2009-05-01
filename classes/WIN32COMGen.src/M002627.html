@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate_method (WIN32COMGen)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/win32ole/sample/olegen.rb, line 141</span>
+141:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_method</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">disptype</span>, <span class="ruby-identifier">io</span> = <span class="ruby-constant">STDOUT</span>, <span class="ruby-identifier">types</span> = <span class="ruby-keyword kw">nil</span>)
+142:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\n&quot;</span>
+143:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span>  <span class="ruby-identifier">generate_method_help</span>(<span class="ruby-identifier">method</span>)
+144:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">invoke_kind</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'PROPERTYPUT'</span>
+145:       <span class="ruby-identifier">io</span>.<span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  def #{method.name}=(&quot;</span>
+146:     <span class="ruby-keyword kw">else</span>
+147:       <span class="ruby-identifier">io</span>.<span class="ruby-identifier">print</span> <span class="ruby-node">&quot;  def #{method.name}(&quot;</span>
+148:     <span class="ruby-keyword kw">end</span>
+149:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">generate_args</span>(<span class="ruby-identifier">method</span>)
+150:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;)&quot;</span>
+151:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">generate_method_body</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">disptype</span>, <span class="ruby-identifier">types</span>)
+152:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;  end&quot;</span>
+153:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

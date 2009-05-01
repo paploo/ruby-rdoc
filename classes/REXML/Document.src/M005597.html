@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write (REXML::Document)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/document.rb, line 183</span>
+183:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>( <span class="ruby-identifier">output</span>=<span class="ruby-identifier">$stdout</span>, <span class="ruby-identifier">indent</span>=<span class="ruby-value">-1</span>, <span class="ruby-identifier">transitive</span>=<span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">ie_hack</span>=<span class="ruby-keyword kw">false</span> )
+184:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">xml_decl</span>.<span class="ruby-identifier">encoding</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;UTF-8&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">output</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Output</span>)
+185:         <span class="ruby-identifier">output</span> = <span class="ruby-constant">Output</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">output</span>, <span class="ruby-identifier">xml_decl</span>.<span class="ruby-identifier">encoding</span> )
+186:       <span class="ruby-keyword kw">end</span>
+187:       <span class="ruby-identifier">formatter</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">-1</span>
+188:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">transitive</span>
+189:             <span class="ruby-identifier">require</span> <span class="ruby-value str">&quot;rexml/formatters/transitive&quot;</span>
+190:             <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">Transitive</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">ie_hack</span> )
+191:           <span class="ruby-keyword kw">else</span>
+192:             <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">Pretty</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">ie_hack</span> )
+193:           <span class="ruby-keyword kw">end</span>
+194:         <span class="ruby-keyword kw">else</span>
+195:           <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">Default</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">ie_hack</span> )
+196:         <span class="ruby-keyword kw">end</span>
+197:       <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">write</span>( <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">output</span> )
+198:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

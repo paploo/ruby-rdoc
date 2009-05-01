@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>seq (YAML::BaseEmitter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/baseemitter.rb, line 197</span>
+197:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seq</span>( <span class="ruby-identifier">type</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">e</span> )
+198:       <span class="ruby-ivar">@seq_map</span> = <span class="ruby-keyword kw">false</span>
+199:       <span class="ruby-identifier">val</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">new</span>
+200:       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">call</span>( <span class="ruby-identifier">val</span> )
+201:       <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{type} &quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">type</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">nonzero?</span>
+202: 
+203:       <span class="ruby-comment cmt">#</span>
+204:       <span class="ruby-comment cmt"># Empty arrays</span>
+205:       <span class="ruby-comment cmt">#</span>
+206:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">zero?</span>
+207:         <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;[]&quot;</span>
+208:       <span class="ruby-keyword kw">else</span>
+209:         <span class="ruby-comment cmt"># FIXME</span>
+210:         <span class="ruby-comment cmt"># if @buffer.length == 1 and options(:UseHeader) == false and type.length.zero? </span>
+211:         <span class="ruby-comment cmt">#     @headless = 1 </span>
+212:         <span class="ruby-comment cmt"># end</span>
+213: 
+214:         <span class="ruby-comment cmt">#</span>
+215:         <span class="ruby-comment cmt"># Emit the key and value</span>
+216:         <span class="ruby-comment cmt">#</span>
+217:         <span class="ruby-identifier">val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+218:           <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+219:           <span class="ruby-identifier">indent!</span>
+220:           <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;- &quot;</span>
+221:           <span class="ruby-ivar">@seq_map</span> = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Hash</span>
+222:           <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">:Emitter</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span> )
+223:         }
+224:       <span class="ruby-keyword kw">end</span>
+225:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

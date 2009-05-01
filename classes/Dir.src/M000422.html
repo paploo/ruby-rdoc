@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>unlink (Dir)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Dir.delete( string ) =&gt; 0
+ *     Dir.rmdir( string ) =&gt; 0
+ *     Dir.unlink( string ) =&gt; 0
+ *
+ *  Deletes the named directory. Raises a subclass of
+ *  &lt;code&gt;SystemCallError&lt;/code&gt; if the directory isn't empty.
+ */
+static VALUE
+dir_s_rmdir(VALUE obj, VALUE dir)
+{
+    check_dirname(&amp;dir);
+    if (rmdir(RSTRING_PTR(dir)) &lt; 0)
+        rb_sys_fail(RSTRING_PTR(dir));
+
+    return INT2FIX(0);
+}</pre>
+</body>
+</html>

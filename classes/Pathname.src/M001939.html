@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>prepend_prefix (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 296</span>
+296:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">relpath</span>)
+297:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">relpath</span>.<span class="ruby-identifier">empty?</span>
+298:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">prefix</span>)
+299:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-node">/#{SEPARATOR_PAT}/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">prefix</span>
+300:       <span class="ruby-identifier">prefix</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">prefix</span>)
+301:       <span class="ruby-identifier">prefix</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'a'</span>) <span class="ruby-operator">!=</span> <span class="ruby-value str">'a'</span>
+302:       <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">relpath</span>
+303:     <span class="ruby-keyword kw">else</span>
+304:       <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">relpath</span>
+305:     <span class="ruby-keyword kw">end</span>
+306:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

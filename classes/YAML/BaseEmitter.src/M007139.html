@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>fold (YAML::BaseEmitter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/baseemitter.rb, line 131</span>
+131:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fold</span>( <span class="ruby-identifier">value</span> )
+132:       <span class="ruby-identifier">value</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-node">/(^[ \t]+.*$)|(\S.{0,#{options(:BestWidth) - 1}})(?:[ \t]+|(\n+(?=[ \t]|\Z))|$)/</span> ) <span class="ruby-keyword kw">do</span>
+133:         <span class="ruby-identifier">$1</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$2</span> <span class="ruby-operator">+</span> ( <span class="ruby-identifier">$3</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;\n&quot;</span> )
+134:       <span class="ruby-keyword kw">end</span>
+135:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

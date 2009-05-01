@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>flatten (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.flatten -&gt; an_array
+ *     array.flatten(level) -&gt; an_array
+ *  
+ *  Returns a new array that is a one-dimensional flattening of this
+ *  array (recursively). That is, for every element that is an array,
+ *  extract its elements into the new array.  If the optional
+ *  &lt;i&gt;level&lt;/i&gt; argument determines the level of recursion to flatten.
+ *     
+ *     s = [ 1, 2, 3 ]           #=&gt; [1, 2, 3]
+ *     t = [ 4, 5, 6, [7, 8] ]   #=&gt; [4, 5, 6, [7, 8]]
+ *     a = [ s, t, 9, 10 ]       #=&gt; [[1, 2, 3], [4, 5, 6, [7, 8]], 9, 10]
+ *     a.flatten                 #=&gt; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ *     a = [ 1, 2, [3, [4, 5] ] ]
+ *     a.flatten(1)              #=&gt; [1, 2, 3, [4, 5]]
+ */
+
+static VALUE
+rb_ary_flatten(int argc, VALUE *argv, VALUE ary)
+{
+    int mod = 0, level = -1;
+    VALUE result, lv;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;lv);
+    if (!NIL_P(lv)) level = NUM2INT(lv);
+    if (level == 0) return ary;
+
+    result = flatten(ary, level, &amp;mod);
+    OBJ_INFECT(result, ary);
+
+    return result;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_forwarded_info (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 392</span>
+392:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_forwarded_info</span>
+393:       <span class="ruby-ivar">@forwarded_server</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;x-forwarded-server&quot;</span>]
+394:       <span class="ruby-ivar">@forwarded_proto</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;x-forwarded-proto&quot;</span>]
+395:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">host_port</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;x-forwarded-host&quot;</span>]
+396:         <span class="ruby-ivar">@forwarded_host</span>, <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">host_port</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>, <span class="ruby-value">2</span>)
+397:         <span class="ruby-ivar">@forwarded_port</span> = (<span class="ruby-identifier">tmp</span> <span class="ruby-operator">||</span> (<span class="ruby-ivar">@forwarded_proto</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;https&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-value">443</span> <span class="ruby-operator">:</span> <span class="ruby-value">80</span>)).<span class="ruby-identifier">to_i</span>
+398:       <span class="ruby-keyword kw">end</span>
+399:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">addrs</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;x-forwarded-for&quot;</span>]
+400:         <span class="ruby-identifier">addrs</span> = <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:strip</span>)
+401:         <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">reject!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ip</span><span class="ruby-operator">|</span> <span class="ruby-constant">PrivateNetworkRegexp</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">ip</span> }
+402:         <span class="ruby-ivar">@forwarded_for</span> = <span class="ruby-identifier">addrs</span>.<span class="ruby-identifier">first</span>
+403:       <span class="ruby-keyword kw">end</span>
+404:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

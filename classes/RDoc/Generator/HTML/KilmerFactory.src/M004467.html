@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_SRC_PAGE (RDoc::Generator::HTML::KilmerFactory)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html/kilmerfactory.rb, line 331</span>
+331: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_SRC_PAGE</span>
+332:   <span class="ruby-keyword kw">return</span> <span class="ruby-constant">XHTML_STRICT_PREAMBLE</span> <span class="ruby-operator">+</span> <span class="ruby-constant">HTML_ELEMENT</span> <span class="ruby-operator">+</span> <span class="ruby-value str">%{
+333: &lt;head&gt;&lt;title&gt;&lt;%= values[&quot;title&quot;] %&gt;&lt;/title&gt;
+334: &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=&lt;%= values[&quot;charset&quot;] %&gt;&quot; /&gt;
+335: &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;%= values[&quot;style_url&quot;] %&gt;&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+336: &lt;/head&gt;
+337: &lt;body&gt;
+338: &lt;pre&gt;&lt;%= values[&quot;code&quot;] %&gt;&lt;/pre&gt;
+339: &lt;/body&gt;
+340: &lt;/html&gt;
+341: }</span>
+342: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

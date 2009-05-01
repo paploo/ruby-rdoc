@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>trace_func (IRB::Frame)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/frame.rb, line 27</span>
+27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace_func</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">binding</span>)
+28:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">event</span>
+29:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'call'</span>, <span class="ruby-value str">'class'</span>
+30:         <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">binding</span>
+31:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'return'</span>, <span class="ruby-value str">'end'</span>
+32:         <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">pop</span>
+33:       <span class="ruby-keyword kw">end</span>
+34:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

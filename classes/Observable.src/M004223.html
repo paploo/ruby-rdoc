@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add_observer (Observable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/observer.rb, line 124</span>
+124:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_observer</span>(<span class="ruby-identifier">observer</span>, <span class="ruby-identifier">func</span>=<span class="ruby-identifier">:update</span>)
+125:     <span class="ruby-ivar">@observer_peers</span> = {} <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span> <span class="ruby-ivar">@observer_peers</span>
+126:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">observer</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">func</span>
+127:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoMethodError</span>, <span class="ruby-node">&quot;observer does not respond to `#{func.to_s}'&quot;</span>
+128:     <span class="ruby-keyword kw">end</span>
+129:     <span class="ruby-ivar">@observer_peers</span>[<span class="ruby-identifier">observer</span>] = <span class="ruby-identifier">func</span>
+130:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

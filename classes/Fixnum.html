@@ -1,0 +1,1298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Fixnum [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Fixnum</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/numeric_c.html">
+
+                numeric.c
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/lib/mathn_rb.html">
+
+                lib/mathn.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/lib/rational_rb.html">
+
+                lib/rational.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/lib/rexml/xpath_parser_rb.html">
+
+                lib/rexml/xpath_parser.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Kernel.html#M002985">
+
+                Integer
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A <tt>Fixnum</tt> holds <tt>Integer</tt> values that can be represented in
+a native machine word (minus 1 bit). If any operation on a <tt>Fixnum</tt>
+exceeds this range, the value is automatically converted to a
+<tt>Bignum</tt>.
+</p>
+<p>
+<tt>Fixnum</tt> objects have immediate value. This means that when they are
+assigned or passed as parameters, the actual object is passed, rather than
+a reference to that object. Assignment does not alias <tt>Fixnum</tt>
+objects. There is effectively only one <tt>Fixnum</tt> object instance for
+any given integer value, so, for example, you cannot add a singleton method
+to a <tt>Fixnum</tt>.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000893">%</a>&nbsp;&nbsp;
+
+        <a href="#M000907">&amp;</a>&nbsp;&nbsp;
+
+        <a href="#M000890">*</a>&nbsp;&nbsp;
+
+        <a href="#M000920">**</a>&nbsp;&nbsp;
+
+        <a href="#M000897">**</a>&nbsp;&nbsp;
+
+        <a href="#M000888">+</a>&nbsp;&nbsp;
+
+        <a href="#M000889">-</a>&nbsp;&nbsp;
+
+        <a href="#M000887">-@</a>&nbsp;&nbsp;
+
+        <a href="#M000891">/</a>&nbsp;&nbsp;
+
+        <a href="#M000904">&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M000911">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M000905">&lt;=</a>&nbsp;&nbsp;
+
+        <a href="#M000901">&lt;=&gt;</a>&nbsp;&nbsp;
+
+        <a href="#M000900">==</a>&nbsp;&nbsp;
+
+        <a href="#M000902">&gt;</a>&nbsp;&nbsp;
+
+        <a href="#M000903">&gt;=</a>&nbsp;&nbsp;
+
+        <a href="#M000912">&gt;&gt;</a>&nbsp;&nbsp;
+
+        <a href="#M000910">[]</a>&nbsp;&nbsp;
+
+        <a href="#M000909">^</a>&nbsp;&nbsp;
+
+        <a href="#M000898">abs</a>&nbsp;&nbsp;
+
+        <a href="#M000924">dclone</a>&nbsp;&nbsp;
+
+        <a href="#M000892">div</a>&nbsp;&nbsp;
+
+        <a href="#M000895">divmod</a>&nbsp;&nbsp;
+
+        <a href="#M000917">even?</a>&nbsp;&nbsp;
+
+        <a href="#M000896">fdiv</a>&nbsp;&nbsp;
+
+        <a href="#M000899">magnitude</a>&nbsp;&nbsp;
+
+        <a href="#M000894">modulo</a>&nbsp;&nbsp;
+
+        <a href="#M000916">odd?</a>&nbsp;&nbsp;
+
+        <a href="#M000919">power!</a>&nbsp;&nbsp;
+
+        <a href="#M000922">power!</a>&nbsp;&nbsp;
+
+        <a href="#M000921">quof</a>&nbsp;&nbsp;
+
+        <a href="#M000923">rpower</a>&nbsp;&nbsp;
+
+        <a href="#M000914">size</a>&nbsp;&nbsp;
+
+        <a href="#M000918">succ</a>&nbsp;&nbsp;
+
+        <a href="#M000913">to_f</a>&nbsp;&nbsp;
+
+        <a href="#M000886">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000915">zero?</a>&nbsp;&nbsp;
+
+        <a href="#M000908">|</a>&nbsp;&nbsp;
+
+        <a href="#M000906">~</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Fixnum/Bignum.html" class="link">Fixnum::Bignum</a><br />
+
+    </div>
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+      <table summary="aliases">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">quo</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">/</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">quo</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">rdiv</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000893" class="method-detail">
+        <a name="M000893"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000893.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000893.html');return false;">
+
+          <span class="method-name">fix % other         => Numeric<br />
+fix.modulo(other)   => Numeric<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>fix</tt> modulo <tt>other</tt>. See <tt><a
+href="Numeric.html#M000249">Numeric.divmod</a></tt> for more information.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000907" class="method-detail">
+        <a name="M000907"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000907.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000907.html');return false;">
+
+          <span class="method-name">fix & other     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Bitwise AND.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000890" class="method-detail">
+        <a name="M000890"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000890.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000890.html');return false;">
+
+          <span class="method-name">fix * numeric   =>  numeric_result<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Performs multiplication: the class of the resulting object depends on the
+class of <tt>numeric</tt> and on the magnitude of the result.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000920" class="method-detail">
+        <a name="M000920"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000920.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000920.html');return false;">
+
+          <span class="method-name">**</span><span class="method-args">(other)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000897" class="method-detail">
+        <a name="M000897"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000897.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000897.html');return false;">
+
+          <span class="method-name">fix ** other         => Numeric<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Raises <tt>fix</tt> to the <tt>other</tt> power, which may be negative or
+fractional.
+</p>
+<pre>
+  2 ** 3      #=&gt; 8
+  2 ** -1     #=&gt; 0.5
+  2 ** 0.5    #=&gt; 1.4142135623731
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000888" class="method-detail">
+        <a name="M000888"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000888.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000888.html');return false;">
+
+          <span class="method-name">fix + numeric   =>  numeric_result<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Performs addition: the class of the resulting object depends on the class
+of <tt>numeric</tt> and on the magnitude of the result.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000889" class="method-detail">
+        <a name="M000889"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000889.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000889.html');return false;">
+
+          <span class="method-name">fix - numeric   =>  numeric_result<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Performs subtraction: the class of the resulting object depends on the
+class of <tt>numeric</tt> and on the magnitude of the result.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000887" class="method-detail">
+        <a name="M000887"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000887.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000887.html');return false;">
+
+          <span class="method-name">-fix   =>  integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Negates <tt>fix</tt> (which might return a <a
+href="Fixnum/Bignum.html">Bignum</a>).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000891" class="method-detail">
+        <a name="M000891"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000891.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000891.html');return false;">
+
+          <span class="method-name">fix / numeric      =>  numeric_result<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Performs division: the class of the resulting object depends on the class
+of <tt>numeric</tt> and on the magnitude of the result.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000904" class="method-detail">
+        <a name="M000904"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000904.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000904.html');return false;">
+
+          <span class="method-name">fix < other     => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the value of <tt>fix</tt> is less than that of
+<tt>other</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000911" class="method-detail">
+        <a name="M000911"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000911.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000911.html');return false;">
+
+          <span class="method-name">fix << count     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Shifts <em>fix</em> left <em>count</em> positions (right if <em>count</em>
+is negative).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000905" class="method-detail">
+        <a name="M000905"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000905.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000905.html');return false;">
+
+          <span class="method-name">fix <= other     => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the value of <tt>fix</tt> is less than or equal to
+that of <tt>other</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000901" class="method-detail">
+        <a name="M000901"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000901.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000901.html');return false;">
+
+          <span class="method-name">fix <=> numeric    => -1, 0, +1<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Comparison&#8212;Returns -1, 0, or +1 depending on whether <em>fix</em> is
+less than, equal to, or greater than <em>numeric</em>. This is the basis
+for the tests in <tt>Comparable</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000900" class="method-detail">
+        <a name="M000900"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000900.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000900.html');return false;">
+
+          <span class="method-name">fix == other<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return <tt>true</tt> if <tt>fix</tt> equals <tt>other</tt> numerically.
+</p>
+<pre>
+  1 == 2      #=&gt; false
+  1 == 1.0    #=&gt; true
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000902" class="method-detail">
+        <a name="M000902"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000902.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000902.html');return false;">
+
+          <span class="method-name">fix > other     => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the value of <tt>fix</tt> is greater than that of
+<tt>other</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000903" class="method-detail">
+        <a name="M000903"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000903.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000903.html');return false;">
+
+          <span class="method-name">fix >= other     => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the value of <tt>fix</tt> is greater than or equal
+to that of <tt>other</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000912" class="method-detail">
+        <a name="M000912"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000912.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000912.html');return false;">
+
+          <span class="method-name">fix >> count     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Shifts <em>fix</em> right <em>count</em> positions (left if <em>count</em>
+is negative).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000910" class="method-detail">
+        <a name="M000910"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000910.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000910.html');return false;">
+
+          <span class="method-name">fix[n]     => 0, 1<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Bit Reference&#8212;Returns the <em>n</em>th bit in the binary
+representation of <em>fix</em>, where <em>fix</em>[0] is the least
+significant bit.
+</p>
+<pre>
+   a = 0b11001100101010
+   30.downto(0) do |n| print a[n] end
+</pre>
+<p>
+<em>produces:</em>
+</p>
+<pre>
+   0000000000000000011001100101010
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000909" class="method-detail">
+        <a name="M000909"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000909.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000909.html');return false;">
+
+          <span class="method-name">fix ^ other     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Bitwise EXCLUSIVE OR.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000898" class="method-detail">
+        <a name="M000898"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000898.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000898.html');return false;">
+
+          <span class="method-name">fix.abs &rarr; aFixnum<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the absolute value of <em>fix</em>.
+</p>
+<pre>
+   -12345.abs   #=&gt; 12345
+   12345.abs    #=&gt; 12345
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000924" class="method-detail">
+        <a name="M000924"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000924.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000924.html');return false;">
+
+          <span class="method-name">dclone</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000892" class="method-detail">
+        <a name="M000892"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000892.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000892.html');return false;">
+
+          <span class="method-name">fix.div(numeric)   =>  numeric_result<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Performs integer division: returns integer value.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000895" class="method-detail">
+        <a name="M000895"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000895.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000895.html');return false;">
+
+          <span class="method-name">fix.divmod(numeric)    => array<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See <tt><a href="Numeric.html#M000249">Numeric#divmod</a></tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000917" class="method-detail">
+        <a name="M000917"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000917.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000917.html');return false;">
+
+          <span class="method-name">fix.even? &rarr; true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if <em>fix</em> is an even number.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000896" class="method-detail">
+        <a name="M000896"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000896.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000896.html');return false;">
+
+          <span class="method-name">fix.fdiv(numeric)   => float<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the floating point result of dividing <em>fix</em> by
+<em>numeric</em>.
+</p>
+<pre>
+   654321.fdiv(13731)      #=&gt; 47.6528293642124
+   654321.fdiv(13731.24)   #=&gt; 47.6519964693647
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000899" class="method-detail">
+        <a name="M000899"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000899.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000899.html');return false;">
+
+          <span class="method-name">fix.abs &rarr; aFixnum<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the absolute value of <em>fix</em>.
+</p>
+<pre>
+   -12345.abs   #=&gt; 12345
+   12345.abs    #=&gt; 12345
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000894" class="method-detail">
+        <a name="M000894"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000894.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000894.html');return false;">
+
+          <span class="method-name">fix % other         => Numeric<br />
+fix.modulo(other)   => Numeric<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>fix</tt> modulo <tt>other</tt>. See <tt><a
+href="Numeric.html#M000249">Numeric.divmod</a></tt> for more information.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000916" class="method-detail">
+        <a name="M000916"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000916.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000916.html');return false;">
+
+          <span class="method-name">fix.odd? &rarr; true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if <em>fix</em> is an odd number.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000919" class="method-detail">
+        <a name="M000919"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">power!</span><span class="method-args">(p1)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #**
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000922" class="method-detail">
+        <a name="M000922"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">power!</span><span class="method-args">(p1)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #**
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000921" class="method-detail">
+        <a name="M000921"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">quof</span><span class="method-args">(p1)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Fixnum.html#M000896">fdiv</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000923" class="method-detail">
+        <a name="M000923"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">rpower</span><span class="method-args">(p1)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for #**
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000914" class="method-detail">
+        <a name="M000914"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000914.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000914.html');return false;">
+
+          <span class="method-name">fix.size &rarr; fixnum<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the number of <em>bytes</em> in the machine representation of a
+<tt>Fixnum</tt>.
+</p>
+<pre>
+   1.size            #=&gt; 4
+   -1.size           #=&gt; 4
+   2147483647.size   #=&gt; 4
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000918" class="method-detail">
+        <a name="M000918"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000918.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000918.html');return false;">
+
+          <span class="method-name">fixnum.next    => integer<br />
+fixnum.succ    => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the <tt>Integer</tt> equal to <em>int</em> + 1.
+</p>
+<pre>
+   1.next      #=&gt; 2
+   (-1).next   #=&gt; 0
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000913" class="method-detail">
+        <a name="M000913"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000913.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000913.html');return false;">
+
+          <span class="method-name">fix.to_f &rarr; float<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Converts <em>fix</em> to a <tt>Float</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000886" class="method-detail">
+        <a name="M000886"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000886.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000886.html');return false;">
+
+          <span class="method-name">fix.to_s( base=10 ) &rarr; aString<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a string containing the representation of <em>fix</em> radix
+<em>base</em> (between 2 and 36).
+</p>
+<pre>
+   12345.to_s       #=&gt; &quot;12345&quot;
+   12345.to_s(2)    #=&gt; &quot;11000000111001&quot;
+   12345.to_s(8)    #=&gt; &quot;30071&quot;
+   12345.to_s(10)   #=&gt; &quot;12345&quot;
+   12345.to_s(16)   #=&gt; &quot;3039&quot;
+   12345.to_s(36)   #=&gt; &quot;9ix&quot;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000915" class="method-detail">
+        <a name="M000915"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000915.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000915.html');return false;">
+
+          <span class="method-name">fix.zero?    => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if <em>fix</em> is zero.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000908" class="method-detail">
+        <a name="M000908"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000908.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000908.html');return false;">
+
+          <span class="method-name">fix | other     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Bitwise OR.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000906" class="method-detail">
+        <a name="M000906"></a>
+
+        <div class="method-heading">
+
+          <a href="Fixnum.src/M000906.html" target="Code" class="method-signature"
+            onclick="popupCode('Fixnum.src/M000906.html');return false;">
+
+          <span class="method-name">~fix     => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+One&#8217;s complement: returns a number where each bit is flipped.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_handler (WEBrick::HTTPServlet::FileHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpservlet/filehandler.rb, line 243</span>
+243:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_handler</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+244:         <span class="ruby-identifier">suffix1</span> = (<span class="ruby-regexp re">/\.(\w+)\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">downcase</span>
+245:         <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\.(\w+)\.([\w\-]+)\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span>
+246:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:AcceptableLanguages</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">$2</span>.<span class="ruby-identifier">downcase</span>)
+247:             <span class="ruby-identifier">suffix2</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">downcase</span>
+248:           <span class="ruby-keyword kw">end</span>
+249:         <span class="ruby-keyword kw">end</span>
+250:         <span class="ruby-identifier">handler_table</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:HandlerTable</span>]
+251:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">handler_table</span>[<span class="ruby-identifier">suffix1</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">handler_table</span>[<span class="ruby-identifier">suffix2</span>] <span class="ruby-operator">||</span>
+252:                <span class="ruby-constant">HandlerTable</span>[<span class="ruby-identifier">suffix1</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">HandlerTable</span>[<span class="ruby-identifier">suffix2</span>] <span class="ruby-operator">||</span>
+253:                <span class="ruby-constant">DefaultFileHandler</span>
+254:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

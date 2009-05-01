@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add (REXML::Elements)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 876</span>
+876:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span> <span class="ruby-identifier">element</span>=<span class="ruby-keyword kw">nil</span>
+877:       <span class="ruby-identifier">rv</span> = <span class="ruby-keyword kw">nil</span>
+878:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">nil?</span>
+879:         <span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@element</span>.<span class="ruby-identifier">context</span>)
+880:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Element</span>)
+881:         <span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">element</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@element</span>.<span class="ruby-identifier">context</span>)
+882:       <span class="ruby-keyword kw">else</span>
+883:         <span class="ruby-ivar">@element</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">element</span>
+884:         <span class="ruby-identifier">element</span>.<span class="ruby-identifier">context</span> = <span class="ruby-ivar">@element</span>.<span class="ruby-identifier">context</span>
+885:         <span class="ruby-identifier">element</span>
+886:       <span class="ruby-keyword kw">end</span>
+887:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

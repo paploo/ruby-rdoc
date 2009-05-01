@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_types (WIN32OLE_TYPELIB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_TYPELIB#ole_types -&gt; The array of WIN32OLE_TYPE object included the type library.
+ *
+ *  Returns the type library file path.
+ *
+ *     tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+ *     classes = tlib.ole_types.collect{|k| k.name} # -&gt; ['AddIn', 'AddIns' ...] 
+ */
+static VALUE
+foletypelib_ole_types(VALUE self)
+{
+    ITypeLib *pTypeLib = NULL;
+    VALUE classes = rb_ary_new();
+    oletypelib2itypelib(self, &amp;pTypeLib);
+    ole_types_from_typelib(pTypeLib, classes);
+    OLE_RELEASE(pTypeLib);
+    return classes;
+}</pre>
+</body>
+</html>

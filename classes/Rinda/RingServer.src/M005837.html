@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (Rinda::RingServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rinda/ring.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">ts</span>, <span class="ruby-identifier">port</span>=<span class="ruby-constant">Ring_PORT</span>)
+33:       <span class="ruby-ivar">@ts</span> = <span class="ruby-identifier">ts</span>
+34:       <span class="ruby-ivar">@soc</span> = <span class="ruby-constant">UDPSocket</span>.<span class="ruby-identifier">open</span>
+35:       <span class="ruby-ivar">@soc</span>.<span class="ruby-identifier">bind</span>(<span class="ruby-value str">''</span>, <span class="ruby-identifier">port</span>)
+36:       <span class="ruby-ivar">@w_service</span> = <span class="ruby-identifier">write_service</span>
+37:       <span class="ruby-ivar">@r_service</span> = <span class="ruby-identifier">reply_service</span>
+38:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (CSV::Row)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/csv.rb, line 491</span>
+491:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+492:       <span class="ruby-identifier">str</span> = [<span class="ruby-value str">&quot;#&lt;&quot;</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>]
+493:       <span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">header</span>, <span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+494:         <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">header</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Symbol</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">header</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">header</span>.<span class="ruby-identifier">inspect</span>) <span class="ruby-operator">&lt;&lt;</span>
+495:                <span class="ruby-value str">&quot;:&quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">inspect</span>
+496:       <span class="ruby-keyword kw">end</span>
+497:       <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+498:       <span class="ruby-keyword kw">begin</span>
+499:         <span class="ruby-identifier">str</span>.<span class="ruby-identifier">join</span>
+500:       <span class="ruby-keyword kw">rescue</span>  <span class="ruby-comment cmt"># any encoding error</span>
+501:         <span class="ruby-identifier">str</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+502:           <span class="ruby-identifier">e</span> = <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">Converter</span>.<span class="ruby-identifier">asciicompat_encoding</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">encoding</span>)
+503:           <span class="ruby-identifier">e</span> <span class="ruby-value">? </span><span class="ruby-identifier">s</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">&quot;ASCII-8BIT&quot;</span>)
+504:         <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">join</span>
+505:       <span class="ruby-keyword kw">end</span>
+506:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

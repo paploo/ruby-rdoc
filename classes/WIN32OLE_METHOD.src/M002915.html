@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>helpstring (WIN32OLE_METHOD)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_METHOD#helpstring
+ *
+ *  Returns help string of OLE method. If the help string is not found, 
+ *  then the method returns nil.
+ *     tobj = WIN32OLE_TYPE.new('Microsoft Internet Controls', 'IWebBrowser')
+ *     method = WIN32OLE_METHOD.new(tobj, 'Navigate')
+ *     puts method.helpstring # =&gt; Navigates to a URL or file.
+ *
+ */
+static VALUE
+folemethod_helpstring(VALUE self)
+{
+    struct olemethoddata *pmethod;
+    Data_Get_Struct(self, struct olemethoddata, pmethod);
+    return ole_method_helpstring(pmethod-&gt;pTypeInfo, pmethod-&gt;index);
+}</pre>
+</body>
+</html>

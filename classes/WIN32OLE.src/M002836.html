@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[] (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE[a1,a2,...] 
+ * 
+ *  Returns the value of Collection specified by a1, a2,....
+ *
+ *     dict = WIN32OLE.new('Scripting.Dictionary')
+ *     dict.add('ruby', 'Ruby')
+ *     puts dict['ruby'] # =&gt; 'Ruby' (same as `puts dict.item('ruby')')
+ *    
+ *  Remark: You can not use this method to get the property.
+ *     excel = WIN32OLE.new('Excel.Application')
+ *     # puts excel['Visible']  This is error !!!
+ *     puts excel.Visible # You should to use this style to get the property.
+ *
+ */
+static VALUE
+fole_getproperty_with_bracket(int argc, VALUE *argv, VALUE self)
+{
+    return ole_invoke(argc, argv, self, DISPATCH_PROPERTYGET, TRUE);
+}</pre>
+</body>
+</html>

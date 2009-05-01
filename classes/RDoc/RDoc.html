@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RDoc::RDoc [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RDoc::RDoc</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/rdoc/rdoc_rb.html">
+
+                lib/rdoc/rdoc.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Encapsulate the production of rdoc documentation. Basically you can use
+this as you would invoke rdoc from the command line:
+</p>
+<pre>
+  rdoc = RDoc::RDoc.new
+  rdoc.document(args)
+</pre>
+<p>
+Where <tt>args</tt> is an array of strings, each corresponding to an
+argument you&#8217;d give rdoc on the command line. See rdoc/rdoc.rb for
+details.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M005189">document</a>&nbsp;&nbsp;
+
+        <a href="#M005181">error</a>&nbsp;&nbsp;
+
+        <a href="#M005187">list_files_in_directory</a>&nbsp;&nbsp;
+
+        <a href="#M005180">new</a>&nbsp;&nbsp;
+
+        <a href="#M005186">normalized_file_list</a>&nbsp;&nbsp;
+
+        <a href="#M005184">output_flag_file</a>&nbsp;&nbsp;
+
+        <a href="#M005185">parse_dot_doc_file</a>&nbsp;&nbsp;
+
+        <a href="#M005188">parse_files</a>&nbsp;&nbsp;
+
+        <a href="#M005182">setup_output_dir</a>&nbsp;&nbsp;
+
+        <a href="#M005183">update_output_dir</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Generator</td>
+          <td>=</td>
+          <td class="context-item-value">Struct.new(:file_name, :class_name, :key)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GENERATORS</td>
+          <td>=</td>
+          <td class="context-item-value">{}</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This is the list of output generator that we support
+
+</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">stats</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+Accessor for statistics. Available after each call to <a
+href="RDoc.html#M005188">parse_files</a>
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M005180" class="method-detail">
+        <a name="M005180"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005180.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005180.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M005189" class="method-detail">
+        <a name="M005189"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005189.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005189.html');return false;">
+
+          <span class="method-name">document</span><span class="method-args">(argv)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Format up one or more files according to the given arguments.
+</p>
+<p>
+For simplicity, <em>argv</em> is an array of strings, equivalent to the
+strings that would be passed on the command line. (This isn&#8217;t a
+coincidence, as we <em>do</em> pass in ARGV when running interactively).
+For a list of options, see rdoc/rdoc.rb. By default, output will be stored
+in a directory called <tt>doc</tt> below the current directory, so make
+sure you&#8217;re somewhere writable before invoking.
+</p>
+<p>
+Throws: <a href="Error.html">RDoc::Error</a> on error
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005181" class="method-detail">
+        <a name="M005181"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005181.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005181.html');return false;">
+
+          <span class="method-name">error</span><span class="method-args">(msg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Report an error message and exit
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005187" class="method-detail">
+        <a name="M005187"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005187.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005187.html');return false;">
+
+          <span class="method-name">list_files_in_directory</span><span class="method-args">(dir, options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return a list of the files to be processed in a directory. We know that
+this directory doesn&#8217;t have a .document file, so we&#8217;re looking
+for real files. However we may well contain subdirectories which must be
+tested for .document files.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005186" class="method-detail">
+        <a name="M005186"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005186.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005186.html');return false;">
+
+          <span class="method-name">normalized_file_list</span><span class="method-args">(options, relative_files, force_doc = false, exclude_pattern = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Given a list of files and directories, create a list of all the Ruby files
+they contain.
+</p>
+<p>
+If <tt>force_doc</tt> is true we always add the given files, if false, only
+add files that we guarantee we can parse. It is true when looking at files
+given on the command line, false when recursing through subdirectories.
+</p>
+<p>
+The effect of this is that if you want a file with a non-standard extension
+parsed, you must name it explicitly.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005184" class="method-detail">
+        <a name="M005184"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005184.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005184.html');return false;">
+
+          <span class="method-name">output_flag_file</span><span class="method-args">(op_dir)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return the path name of the flag file in an output directory.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005185" class="method-detail">
+        <a name="M005185"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005185.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005185.html');return false;">
+
+          <span class="method-name">parse_dot_doc_file</span><span class="method-args">(in_dir, filename, options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The .document file contains a list of file and directory name patterns,
+representing candidates for documentation. It may also contain comments
+(starting with &#8217;#&#8217;)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005188" class="method-detail">
+        <a name="M005188"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005188.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005188.html');return false;">
+
+          <span class="method-name">parse_files</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Parse each file on the command line, recursively entering directories.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005182" class="method-detail">
+        <a name="M005182"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005182.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005182.html');return false;">
+
+          <span class="method-name">setup_output_dir</span><span class="method-args">(op_dir, force)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Create an output dir if it doesn&#8217;t exist. If it does exist, but
+doesn&#8217;t contain the flag file <tt>created.rid</tt> then we refuse to
+use it, as we may clobber some manually generated documentation
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005183" class="method-detail">
+        <a name="M005183"></a>
+
+        <div class="method-heading">
+
+          <a href="RDoc.src/M005183.html" target="Code" class="method-signature"
+            onclick="popupCode('RDoc.src/M005183.html');return false;">
+
+          <span class="method-name">update_output_dir</span><span class="method-args">(op_dir, time)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Update the flag file in an output directory.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

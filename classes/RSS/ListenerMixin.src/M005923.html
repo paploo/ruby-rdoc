@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_next_element (RSS::ListenerMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/parser.rb, line 498</span>
+498:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_next_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">attributes</span>)
+499:       <span class="ruby-identifier">previous</span> = <span class="ruby-ivar">@last_element</span>
+500:       <span class="ruby-identifier">next_element</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@do_validate</span>, <span class="ruby-identifier">attributes</span>)
+501:       <span class="ruby-identifier">previous</span>.<span class="ruby-identifier">set_next_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">next_element</span>)
+502:       <span class="ruby-ivar">@last_element</span> = <span class="ruby-identifier">next_element</span>
+503:       <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-identifier">previous</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">need_parent?</span>
+504:       <span class="ruby-ivar">@xml_child_mode</span> = <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">have_xml_content?</span>
+505: 
+506:       <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">text</span>, <span class="ruby-identifier">tags</span><span class="ruby-operator">|</span>
+507:         <span class="ruby-identifier">p</span>(<span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">class</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">DEBUG</span>
+508:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xml_child_mode</span>
+509:           <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">content</span> = <span class="ruby-ivar">@xml_element</span>.<span class="ruby-identifier">to_s</span>
+510:           <span class="ruby-identifier">xml_setter</span> = <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">xml_setter</span>
+511:           <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">xml_setter</span>, <span class="ruby-ivar">@xml_element</span>)
+512:           <span class="ruby-ivar">@xml_element</span> = <span class="ruby-keyword kw">nil</span>
+513:           <span class="ruby-ivar">@xml_child_mode</span> = <span class="ruby-keyword kw">false</span>
+514:         <span class="ruby-keyword kw">else</span>
+515:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">have_content?</span>
+516:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">need_base64_encode?</span>
+517:               <span class="ruby-identifier">text</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">lstrip</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;m&quot;</span>).<span class="ruby-identifier">first</span>
+518:             <span class="ruby-keyword kw">end</span>
+519:             <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">content</span> = <span class="ruby-identifier">text</span>
+520:           <span class="ruby-keyword kw">end</span>
+521:         <span class="ruby-keyword kw">end</span>
+522:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@do_validate</span>
+523:           <span class="ruby-ivar">@last_element</span>.<span class="ruby-identifier">validate_for_stream</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-ivar">@ignore_unknown_element</span>)
+524:         <span class="ruby-keyword kw">end</span>
+525:         <span class="ruby-ivar">@last_element</span> = <span class="ruby-identifier">previous</span>
+526:       <span class="ruby-keyword kw">end</span>
+527:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

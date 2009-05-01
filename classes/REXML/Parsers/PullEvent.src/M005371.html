@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[] (REXML::Parsers::PullEvent)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/pullparser.rb, line 98</span>
+ 98:       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>( <span class="ruby-identifier">start</span>, <span class="ruby-identifier">endd</span>=<span class="ruby-keyword kw">nil</span>)
+ 99:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">start</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Range</span>
+100:           <span class="ruby-ivar">@contents</span>.<span class="ruby-identifier">slice</span>( <span class="ruby-identifier">start</span>.<span class="ruby-identifier">begin</span><span class="ruby-operator">+</span><span class="ruby-value">1</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">start</span>.<span class="ruby-identifier">end</span> )
+101:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">start</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Numeric</span>
+102:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">endd</span>.<span class="ruby-identifier">nil?</span>
+103:             <span class="ruby-ivar">@contents</span>.<span class="ruby-identifier">slice</span>( <span class="ruby-identifier">start</span><span class="ruby-operator">+</span><span class="ruby-value">1</span> )
+104:           <span class="ruby-keyword kw">else</span>
+105:             <span class="ruby-ivar">@contents</span>.<span class="ruby-identifier">slice</span>( <span class="ruby-identifier">start</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">endd</span> )
+106:           <span class="ruby-keyword kw">end</span>
+107:         <span class="ruby-keyword kw">else</span>
+108:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Illegal argument #{start.inspect} (#{start.class})&quot;</span>
+109:         <span class="ruby-keyword kw">end</span>
+110:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

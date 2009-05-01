@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gen_an_index (RDoc::Generator::HTML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html.rb, line 251</span>
+251:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_an_index</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">title</span>, <span class="ruby-identifier">template</span>, <span class="ruby-identifier">filename</span>)
+252:     <span class="ruby-identifier">template</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatePage</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@template</span><span class="ruby-operator">::</span><span class="ruby-constant">FR_INDEX_BODY</span>, <span class="ruby-identifier">template</span>
+253:     <span class="ruby-identifier">res</span> = []
+254:     <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+255:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">document_self</span>
+256:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-value str">&quot;href&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">index_name</span> }
+257:       <span class="ruby-keyword kw">end</span>
+258:     <span class="ruby-keyword kw">end</span>
+259: 
+260:     <span class="ruby-identifier">values</span> = {
+261:       <span class="ruby-value str">&quot;entries&quot;</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">res</span>,
+262:       <span class="ruby-value str">'title'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-node">&quot;#{title} [#{@options.title}]&quot;</span>),
+263:       <span class="ruby-value str">'list_title'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">title</span>),
+264:       <span class="ruby-value str">'index_url'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@main_url</span>,
+265:       <span class="ruby-value str">'charset'</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">charset</span>,
+266:       <span class="ruby-value str">'style_url'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">style_url</span>(<span class="ruby-value str">''</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">css</span>),
+267:     }
+268: 
+269:     <span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>, <span class="ruby-value str">'w'</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+270:       <span class="ruby-identifier">template</span>.<span class="ruby-identifier">write_html_on</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">values</span>)
+271:     <span class="ruby-keyword kw">end</span>
+272:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sort_internal (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1230</span>
+1230:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sort_internal</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">sort_keys</span>, <span class="ruby-identifier">search_keys</span>, <span class="ruby-identifier">charset</span>)
+1231:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">search_keys</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">String</span>)
+1232:         <span class="ruby-identifier">search_keys</span> = [<span class="ruby-constant">RawData</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">search_keys</span>)]
+1233:       <span class="ruby-keyword kw">else</span>
+1234:         <span class="ruby-identifier">normalize_searching_criteria</span>(<span class="ruby-identifier">search_keys</span>)
+1235:       <span class="ruby-keyword kw">end</span>
+1236:       <span class="ruby-identifier">normalize_searching_criteria</span>(<span class="ruby-identifier">search_keys</span>)
+1237:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+1238:         <span class="ruby-identifier">send_command</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">sort_keys</span>, <span class="ruby-identifier">charset</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">search_keys</span>)
+1239:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@responses</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;SORT&quot;</span>)[<span class="ruby-value">-1</span>]
+1240:       <span class="ruby-keyword kw">end</span>
+1241:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

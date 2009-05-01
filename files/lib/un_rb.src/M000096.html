@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wait_writable (lib/un.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/un.rb, line 232</span>
+232: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait_writable</span>
+233:   <span class="ruby-identifier">setup</span>(<span class="ruby-value str">&quot;n:w:v&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">argv</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+234:     <span class="ruby-identifier">verbose</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:verbose</span>]
+235:     <span class="ruby-identifier">n</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:n</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">n</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">n</span>)
+236:     <span class="ruby-identifier">wait</span> = (<span class="ruby-identifier">wait</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:w</span>]) <span class="ruby-operator">?</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">wait</span>) <span class="ruby-operator">:</span> <span class="ruby-value">0</span><span class="ruby-value">.2</span>
+237:     <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+238:       <span class="ruby-keyword kw">begin</span>
+239:         <span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;r+b&quot;</span>)
+240:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+241:         <span class="ruby-keyword kw">break</span>
+242:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+243:         <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">n</span> <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">n</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+244:         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>
+245:         <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">flush</span>
+246:         <span class="ruby-identifier">sleep</span> <span class="ruby-identifier">wait</span>
+247:         <span class="ruby-keyword kw">retry</span>
+248:       <span class="ruby-keyword kw">end</span>
+249:     <span class="ruby-keyword kw">end</span>
+250:   <span class="ruby-keyword kw">end</span>
+251: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

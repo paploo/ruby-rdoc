@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>match (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.match(pattern)   =&gt; matchdata or nil
+ *  
+ *  Converts &lt;i&gt;pattern&lt;/i&gt; to a &lt;code&gt;Regexp&lt;/code&gt; (if it isn't already one),
+ *  then invokes its &lt;code&gt;match&lt;/code&gt; method on &lt;i&gt;str&lt;/i&gt;.  If the second
+ *  parameter is present, it specifies the position in the string to begin the
+ *  search.
+ *     
+ *     'hello'.match('(.)\1')      #=&gt; #&lt;MatchData &quot;ll&quot; 1:&quot;l&quot;&gt;
+ *     'hello'.match('(.)\1')[0]   #=&gt; &quot;ll&quot;
+ *     'hello'.match(/(.)\1/)[0]   #=&gt; &quot;ll&quot;
+ *     'hello'.match('xx')         #=&gt; nil
+ *     
+ *  If a block is given, invoke the block with MatchData if match succeed, so
+ *  that you can write
+ *     
+ *     str.match(pat) {|m| ...}
+ *     
+ *  instead of
+ *      
+ *     if m = str.match(pat)
+ *       ...
+ *     end
+ *      
+ *  The return value is a value from block execution in this case.
+ */
+
+static VALUE
+rb_str_match_m(int argc, VALUE *argv, VALUE str)
+{
+    VALUE re, result;
+    if (argc &lt; 1)
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
+    re = argv[0];
+    argv[0] = str;
+    result = rb_funcall2(get_pat(re, 0), rb_intern(&quot;match&quot;), argc, argv);
+    if (!NIL_P(result) &amp;&amp; rb_block_given_p()) {
+        return rb_yield(result);
+    }
+    return result;
+}</pre>
+</body>
+</html>

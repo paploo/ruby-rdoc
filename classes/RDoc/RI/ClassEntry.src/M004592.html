@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>load_from (RDoc::RI::ClassEntry)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/ri/cache.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_from</span>(<span class="ruby-identifier">dir</span>)
+31:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+32:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\./</span>
+33: 
+34:       <span class="ruby-comment cmt"># convert from external to internal form, and</span>
+35:       <span class="ruby-comment cmt"># extract the instance/class flag</span>
+36: 
+37:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(.*?)-(c|i).yaml$/</span>
+38:         <span class="ruby-identifier">external_name</span> = <span class="ruby-identifier">$1</span>
+39:         <span class="ruby-identifier">is_class_method</span> = <span class="ruby-identifier">$2</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;c&quot;</span>
+40:         <span class="ruby-identifier">internal_name</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RI</span><span class="ruby-operator">::</span><span class="ruby-constant">Writer</span>.<span class="ruby-identifier">external_to_internal</span>(<span class="ruby-identifier">external_name</span>)
+41:         <span class="ruby-identifier">list</span> = <span class="ruby-identifier">is_class_method</span> <span class="ruby-value">? </span><span class="ruby-ivar">@class_methods</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@instance_methods</span>
+42:         <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">name</span>)
+43:         <span class="ruby-identifier">list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RI</span><span class="ruby-operator">::</span><span class="ruby-constant">MethodEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">internal_name</span>, <span class="ruby-identifier">is_class_method</span>, <span class="ruby-keyword kw">self</span>)
+44:       <span class="ruby-keyword kw">else</span>
+45:         <span class="ruby-identifier">full_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">name</span>)
+46:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">full_name</span>)
+47:           <span class="ruby-identifier">inf_class</span> = <span class="ruby-ivar">@inferior_classes</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span> }
+48:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">inf_class</span>
+49:             <span class="ruby-identifier">inf_class</span>.<span class="ruby-identifier">add_path</span>(<span class="ruby-identifier">full_name</span>)
+50:           <span class="ruby-keyword kw">else</span>
+51:             <span class="ruby-identifier">inf_class</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RI</span><span class="ruby-operator">::</span><span class="ruby-constant">ClassEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">self</span>)
+52:             <span class="ruby-ivar">@inferior_classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">inf_class</span>
+53:           <span class="ruby-keyword kw">end</span>
+54:           <span class="ruby-identifier">inf_class</span>.<span class="ruby-identifier">load_from</span>(<span class="ruby-identifier">full_name</span>)
+55:         <span class="ruby-keyword kw">end</span>
+56:       <span class="ruby-keyword kw">end</span>
+57:     <span class="ruby-keyword kw">end</span>
+58:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

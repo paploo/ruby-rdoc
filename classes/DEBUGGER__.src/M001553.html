@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>debug_command (DEBUGGER__)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 220</span>
+220:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug_command</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">binding</span>)
+221:     <span class="ruby-constant">MUTEX</span>.<span class="ruby-identifier">lock</span>
+222:     <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-identifier">$debugger_restart</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">$debugger_restart</span>
+223:       <span class="ruby-identifier">callcc</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">$debugger_restart</span> = <span class="ruby-identifier">c</span>} 
+224:     <span class="ruby-keyword kw">end</span>
+225:     <span class="ruby-identifier">set_last_thread</span>(<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+226:     <span class="ruby-identifier">frame_pos</span> = <span class="ruby-value">0</span>
+227:     <span class="ruby-identifier">binding_file</span> = <span class="ruby-identifier">file</span>
+228:     <span class="ruby-identifier">binding_line</span> = <span class="ruby-identifier">line</span>
+229:     <span class="ruby-identifier">previous_line</span> = <span class="ruby-keyword kw">nil</span>
+230:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'EMACS'</span>]
+231:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;\032\032%s:%d:\n&quot;</span>, <span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span>
+232:     <span class="ruby-keyword kw">else</span>
+233:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%s:%d:%s&quot;</span>, <span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span>,
+234:         <span class="ruby-identifier">line_at</span>(<span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span>)
+235:     <span class="ruby-keyword kw">end</span>
+236:     <span class="ruby-ivar">@frames</span>[<span class="ruby-value">0</span>] = [<span class="ruby-identifier">binding</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>, <span class="ruby-identifier">id</span>]
+237:     <span class="ruby-identifier">display_expressions</span>(<span class="ruby-identifier">binding</span>)
+238:     <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">true</span>
+239:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">prompt</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">input</span> = <span class="ruby-identifier">readline</span>(<span class="ruby-value str">&quot;(rdb:%d) &quot;</span><span class="ruby-operator">%</span><span class="ruby-identifier">thnum</span>(), <span class="ruby-keyword kw">true</span>)
+240:       <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:debug_error</span>) <span class="ruby-keyword kw">do</span>
+241:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>
+242:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">DEBUG_LAST_CMD</span>[<span class="ruby-value">0</span>]
+243:           <span class="ruby-identifier">input</span> = <span class="ruby-constant">DEBUG_LAST_CMD</span>[<span class="ruby-value">0</span>]
+244:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">input</span>, <span class="ruby-value str">&quot;\n&quot;</span>
+245:         <span class="ruby-keyword kw">else</span>
+246:           <span class="ruby-constant">DEBUG_LAST_CMD</span>[<span class="ruby-value">0</span>] = <span class="ruby-identifier">input</span>
+247:         <span class="ruby-keyword kw">end</span>
+248: 
+249:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">input</span>
+250:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*tr(?:ace)?(?:\s+(on|off))?(?:\s+(all))?$/</span>
+251:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>( <span class="ruby-identifier">$2</span> )
+252:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'on'</span>
+253:               <span class="ruby-identifier">set_trace_all</span> <span class="ruby-keyword kw">true</span>
+254:             <span class="ruby-keyword kw">else</span>
+255:               <span class="ruby-identifier">set_trace_all</span> <span class="ruby-keyword kw">false</span>
+256:             <span class="ruby-keyword kw">end</span>
+257:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">defined?</span>( <span class="ruby-identifier">$1</span> )
+258:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'on'</span>
+259:               <span class="ruby-identifier">set_trace</span> <span class="ruby-keyword kw">true</span>
+260:             <span class="ruby-keyword kw">else</span>
+261:               <span class="ruby-identifier">set_trace</span> <span class="ruby-keyword kw">false</span>
+262:             <span class="ruby-keyword kw">end</span>
+263:           <span class="ruby-keyword kw">end</span>
+264:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trace?</span>
+265:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Trace on.\n&quot;</span>
+266:           <span class="ruby-keyword kw">else</span>
+267:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Trace off.\n&quot;</span>
+268:           <span class="ruby-keyword kw">end</span>
+269: 
+270:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*b(?:reak)?\s+(?:(.+):)?([^.:]+)$/</span>
+271:           <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">$2</span>
+272:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+273:             <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">debug_silent_eval</span>(<span class="ruby-identifier">$1</span>, <span class="ruby-identifier">binding</span>)
+274:             <span class="ruby-identifier">file</span> = <span class="ruby-identifier">$1</span>
+275:           <span class="ruby-keyword kw">end</span>
+276:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\d+$/</span>
+277:             <span class="ruby-identifier">pname</span> = <span class="ruby-identifier">pos</span>
+278:             <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">pos</span>.<span class="ruby-identifier">to_i</span>
+279:           <span class="ruby-keyword kw">else</span>
+280:             <span class="ruby-identifier">pname</span> = <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">pos</span>.<span class="ruby-identifier">intern</span>.<span class="ruby-identifier">id2name</span>
+281:           <span class="ruby-keyword kw">end</span>
+282:           <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">push</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">klass</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">file</span>, <span class="ruby-identifier">pos</span>]
+283:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Set breakpoint %d at %s:%s\n&quot;</span>, <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">size</span>, <span class="ruby-identifier">klass</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">file</span>, <span class="ruby-identifier">pname</span>
+284: 
+285:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*b(?:reak)?\s+(.+)[#.]([^.:]+)$/</span>
+286:           <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">intern</span>.<span class="ruby-identifier">id2name</span>
+287:           <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">$1</span>, <span class="ruby-identifier">binding</span>)
+288:           <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">push</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">pos</span>]
+289:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Set breakpoint %d at %s.%s\n&quot;</span>, <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">size</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">pos</span>
+290: 
+291:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*wat(?:ch)?\s+(.+)$/</span>
+292:           <span class="ruby-identifier">exp</span> = <span class="ruby-identifier">$1</span>
+293:           <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">push</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-value">1</span>, <span class="ruby-identifier">exp</span>]
+294:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Set watchpoint %d:%s\n&quot;</span>, <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">size</span>, <span class="ruby-identifier">exp</span>
+295: 
+296:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*b(?:reak)?$/</span>
+297:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>}
+298:             <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
+299:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Breakpoints:\n&quot;</span>
+300:             <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span>
+301:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+302:                 <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;  %d %s:%s\n&quot;</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>], <span class="ruby-identifier">b</span>[<span class="ruby-value">3</span>] 
+303:               <span class="ruby-keyword kw">end</span>
+304:               <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+305:             <span class="ruby-keyword kw">end</span>
+306:           <span class="ruby-keyword kw">end</span>
+307:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">find</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>}
+308:             <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
+309:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
+310:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Watchpoints:\n&quot;</span>
+311:             <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">b</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">break_points</span>
+312:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+313:                 <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;  %d %s\n&quot;</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]
+314:               <span class="ruby-keyword kw">end</span>
+315:               <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+316:             <span class="ruby-keyword kw">end</span>
+317:           <span class="ruby-keyword kw">end</span>
+318:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+319:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;No breakpoints\n&quot;</span>
+320:           <span class="ruby-keyword kw">else</span>
+321:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
+322:           <span class="ruby-keyword kw">end</span>
+323: 
+324:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*del(?:ete)?(?:\s+(\d+))?$/</span>
+325:           <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">$1</span>
+326:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">pos</span>
+327:             <span class="ruby-identifier">input</span> = <span class="ruby-identifier">readline</span>(<span class="ruby-value str">&quot;Clear all breakpoints? (y/n) &quot;</span>, <span class="ruby-keyword kw">false</span>)
+328:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;y&quot;</span>
+329:               <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">b</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">break_points</span>
+330:                 <span class="ruby-identifier">b</span>[<span class="ruby-value">0</span>] = <span class="ruby-keyword kw">false</span>
+331:               <span class="ruby-keyword kw">end</span>
+332:             <span class="ruby-keyword kw">end</span>
+333:           <span class="ruby-keyword kw">else</span>
+334:             <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">pos</span>.<span class="ruby-identifier">to_i</span>
+335:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">break_points</span>[<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+336:               <span class="ruby-identifier">break_points</span>[<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>][<span class="ruby-value">0</span>] = <span class="ruby-keyword kw">false</span>
+337:             <span class="ruby-keyword kw">else</span>
+338:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Breakpoint %d is not defined\n&quot;</span>, <span class="ruby-identifier">pos</span>
+339:             <span class="ruby-keyword kw">end</span>
+340:           <span class="ruby-keyword kw">end</span>
+341: 
+342:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*disp(?:lay)?\s+(.+)$/</span>
+343:           <span class="ruby-identifier">exp</span> = <span class="ruby-identifier">$1</span>
+344:           <span class="ruby-identifier">display</span>.<span class="ruby-identifier">push</span> [<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">exp</span>]
+345:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%d: &quot;</span>, <span class="ruby-identifier">display</span>.<span class="ruby-identifier">size</span>
+346:           <span class="ruby-identifier">display_expression</span>(<span class="ruby-identifier">exp</span>, <span class="ruby-identifier">binding</span>)
+347: 
+348:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*disp(?:lay)?$/</span>
+349:           <span class="ruby-identifier">display_expressions</span>(<span class="ruby-identifier">binding</span>)
+350: 
+351:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*undisp(?:lay)?(?:\s+(\d+))?$/</span>
+352:           <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">$1</span>
+353:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">pos</span>
+354:             <span class="ruby-identifier">input</span> = <span class="ruby-identifier">readline</span>(<span class="ruby-value str">&quot;Clear all expressions? (y/n) &quot;</span>, <span class="ruby-keyword kw">false</span>)
+355:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;y&quot;</span>
+356:               <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">d</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">display</span>
+357:                 <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>] = <span class="ruby-keyword kw">false</span>
+358:               <span class="ruby-keyword kw">end</span>
+359:             <span class="ruby-keyword kw">end</span>
+360:           <span class="ruby-keyword kw">else</span>
+361:             <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">pos</span>.<span class="ruby-identifier">to_i</span>
+362:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">display</span>[<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+363:               <span class="ruby-identifier">display</span>[<span class="ruby-identifier">pos</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>][<span class="ruby-value">0</span>] = <span class="ruby-keyword kw">false</span>
+364:             <span class="ruby-keyword kw">else</span>
+365:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Display expression %d is not defined\n&quot;</span>, <span class="ruby-identifier">pos</span>
+366:             <span class="ruby-keyword kw">end</span>
+367:           <span class="ruby-keyword kw">end</span>
+368: 
+369:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*c(?:ont)?$/</span>
+370:           <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">false</span>
+371: 
+372:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*s(?:tep)?(?:\s+(\d+))?$/</span>
+373:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+374:             <span class="ruby-identifier">lev</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+375:           <span class="ruby-keyword kw">else</span>
+376:             <span class="ruby-identifier">lev</span> = <span class="ruby-value">1</span>
+377:           <span class="ruby-keyword kw">end</span>
+378:           <span class="ruby-ivar">@stop_next</span> = <span class="ruby-identifier">lev</span>
+379:           <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">false</span>
+380: 
+381:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*n(?:ext)?(?:\s+(\d+))?$/</span>
+382:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+383:             <span class="ruby-identifier">lev</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+384:           <span class="ruby-keyword kw">else</span>
+385:             <span class="ruby-identifier">lev</span> = <span class="ruby-value">1</span>
+386:           <span class="ruby-keyword kw">end</span>
+387:           <span class="ruby-ivar">@stop_next</span> = <span class="ruby-identifier">lev</span>
+388:           <span class="ruby-ivar">@no_step</span> = <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">frame_pos</span>
+389:           <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">false</span>
+390: 
+391:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*w(?:here)?$/</span>, <span class="ruby-regexp re">/^\s*f(?:rame)?$/</span>
+392:           <span class="ruby-identifier">display_frames</span>(<span class="ruby-identifier">frame_pos</span>)
+393: 
+394:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*l(?:ist)?(?:\s+(.+))?$/</span>
+395:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">$1</span>
+396:             <span class="ruby-identifier">b</span> = <span class="ruby-identifier">previous_line</span> <span class="ruby-value">? </span><span class="ruby-identifier">previous_line</span> <span class="ruby-operator">+</span> <span class="ruby-value">10</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">binding_line</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>
+397:             <span class="ruby-identifier">e</span> = <span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
+398:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'-'</span>
+399:             <span class="ruby-identifier">b</span> = <span class="ruby-identifier">previous_line</span> <span class="ruby-value">? </span><span class="ruby-identifier">previous_line</span> <span class="ruby-operator">-</span> <span class="ruby-value">10</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">binding_line</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>
+400:             <span class="ruby-identifier">e</span> = <span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
+401:           <span class="ruby-keyword kw">else</span>
+402:             <span class="ruby-identifier">b</span>, <span class="ruby-identifier">e</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/[-,]/</span>)
+403:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>
+404:               <span class="ruby-identifier">b</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">to_i</span>
+405:               <span class="ruby-identifier">e</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_i</span>
+406:             <span class="ruby-keyword kw">else</span>
+407:               <span class="ruby-identifier">b</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>
+408:               <span class="ruby-identifier">e</span> = <span class="ruby-identifier">b</span> <span class="ruby-operator">+</span> <span class="ruby-value">9</span>
+409:             <span class="ruby-keyword kw">end</span>
+410:           <span class="ruby-keyword kw">end</span>
+411:           <span class="ruby-identifier">previous_line</span> = <span class="ruby-identifier">b</span>
+412:           <span class="ruby-identifier">display_list</span>(<span class="ruby-identifier">b</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span>)
+413: 
+414:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*up(?:\s+(\d+))?$/</span>
+415:           <span class="ruby-identifier">previous_line</span> = <span class="ruby-keyword kw">nil</span>
+416:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+417:             <span class="ruby-identifier">lev</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+418:           <span class="ruby-keyword kw">else</span>
+419:             <span class="ruby-identifier">lev</span> = <span class="ruby-value">1</span>
+420:           <span class="ruby-keyword kw">end</span>
+421:           <span class="ruby-identifier">frame_pos</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">lev</span>
+422:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">frame_pos</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">size</span>
+423:             <span class="ruby-identifier">frame_pos</span> = <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+424:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;At toplevel\n&quot;</span>
+425:           <span class="ruby-keyword kw">end</span>
+426:           <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span> = <span class="ruby-ivar">@frames</span>[<span class="ruby-identifier">frame_pos</span>]
+427:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">format_frame</span>(<span class="ruby-identifier">frame_pos</span>)
+428: 
+429:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*down(?:\s+(\d+))?$/</span>
+430:           <span class="ruby-identifier">previous_line</span> = <span class="ruby-keyword kw">nil</span>
+431:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+432:             <span class="ruby-identifier">lev</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
+433:           <span class="ruby-keyword kw">else</span>
+434:             <span class="ruby-identifier">lev</span> = <span class="ruby-value">1</span>
+435:           <span class="ruby-keyword kw">end</span>
+436:           <span class="ruby-identifier">frame_pos</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">lev</span>
+437:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">frame_pos</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+438:             <span class="ruby-identifier">frame_pos</span> = <span class="ruby-value">0</span>
+439:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;At stack bottom\n&quot;</span>
+440:           <span class="ruby-keyword kw">end</span>
+441:           <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">binding_file</span>, <span class="ruby-identifier">binding_line</span> = <span class="ruby-ivar">@frames</span>[<span class="ruby-identifier">frame_pos</span>]
+442:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">format_frame</span>(<span class="ruby-identifier">frame_pos</span>)
+443: 
+444:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*fin(?:ish)?$/</span>
+445:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">frame_pos</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">size</span>
+446:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\&quot;finish\&quot; not meaningful in the outermost frame.\n&quot;</span>
+447:           <span class="ruby-keyword kw">else</span>
+448:             <span class="ruby-ivar">@finish_pos</span> = <span class="ruby-ivar">@frames</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">frame_pos</span>
+449:             <span class="ruby-identifier">frame_pos</span> = <span class="ruby-value">0</span>
+450:             <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">false</span>
+451:           <span class="ruby-keyword kw">end</span>
+452: 
+453:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*cat(?:ch)?(?:\s+(.+))?$/</span>
+454:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>
+455:             <span class="ruby-identifier">excn</span> = <span class="ruby-identifier">$1</span>
+456:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">excn</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'off'</span>
+457:               <span class="ruby-ivar">@catch</span> = <span class="ruby-keyword kw">nil</span>
+458:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Clear catchpoint.\n&quot;</span>
+459:             <span class="ruby-keyword kw">else</span>
+460:               <span class="ruby-ivar">@catch</span> = <span class="ruby-identifier">excn</span>
+461:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Set catchpoint %s.\n&quot;</span>, <span class="ruby-ivar">@catch</span>
+462:             <span class="ruby-keyword kw">end</span>
+463:           <span class="ruby-keyword kw">else</span>
+464:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@catch</span>
+465:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Catchpoint %s.\n&quot;</span>, <span class="ruby-ivar">@catch</span>
+466:             <span class="ruby-keyword kw">else</span>
+467:               <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;No catchpoint.\n&quot;</span>
+468:             <span class="ruby-keyword kw">end</span>
+469:           <span class="ruby-keyword kw">end</span>
+470: 
+471:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*q(?:uit)?$/</span>
+472:           <span class="ruby-identifier">input</span> = <span class="ruby-identifier">readline</span>(<span class="ruby-value str">&quot;Really quit? (y/n) &quot;</span>, <span class="ruby-keyword kw">false</span>)
+473:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">input</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;y&quot;</span>
+474:             <span class="ruby-identifier">exit!</span>      <span class="ruby-comment cmt"># exit -&gt; exit!: No graceful way to stop threads...</span>
+475:           <span class="ruby-keyword kw">end</span>
+476: 
+477:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*v(?:ar)?\s+/</span>
+478:           <span class="ruby-identifier">debug_variable_info</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>)
+479: 
+480:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*m(?:ethod)?\s+/</span>
+481:           <span class="ruby-identifier">debug_method_info</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>)
+482: 
+483:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*th(?:read)?\s+/</span>
+484:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">DEBUGGER__</span>.<span class="ruby-identifier">debug_thread_info</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">:cont</span>
+485:             <span class="ruby-identifier">prompt</span> = <span class="ruby-keyword kw">false</span>
+486:           <span class="ruby-keyword kw">end</span>
+487: 
+488:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*pp\s+/</span>
+489:           <span class="ruby-constant">PP</span>.<span class="ruby-identifier">pp</span>(<span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>), <span class="ruby-identifier">stdout</span>)
+490: 
+491:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*p\s+/</span>
+492:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%s\n&quot;</span>, <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>).<span class="ruby-identifier">inspect</span>
+493: 
+494:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*r(?:estart)?$/</span>
+495:           <span class="ruby-identifier">$debugger_restart</span>.<span class="ruby-identifier">call</span>
+496: 
+497:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s*h(?:elp)?$/</span>
+498:           <span class="ruby-identifier">debug_print_help</span>()
+499: 
+500:         <span class="ruby-keyword kw">else</span>
+501:           <span class="ruby-identifier">v</span> = <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">input</span>, <span class="ruby-identifier">binding</span>)
+502:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%s\n&quot;</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">inspect</span>
+503:         <span class="ruby-keyword kw">end</span>
+504:       <span class="ruby-keyword kw">end</span>
+505:     <span class="ruby-keyword kw">end</span>
+506:     <span class="ruby-constant">MUTEX</span>.<span class="ruby-identifier">unlock</span>
+507:     <span class="ruby-identifier">resume_all</span>
+508:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

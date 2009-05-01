@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write_style_sheet (RDoc::Generator::HTML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html.rb, line 136</span>
+136:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_style_sheet</span>
+137:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">:STYLE</span> <span class="ruby-keyword kw">or</span>
+138:                   <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value str">'STYLE'</span>
+139: 
+140:     <span class="ruby-identifier">template</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatePage</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@template</span><span class="ruby-operator">::</span><span class="ruby-constant">STYLE</span>
+141: 
+142:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">css</span> <span class="ruby-keyword kw">then</span>
+143:       <span class="ruby-identifier">open</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span><span class="ruby-operator">::</span><span class="ruby-constant">CSS_NAME</span>, <span class="ruby-value str">'w'</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+144:         <span class="ruby-identifier">values</span> = {}
+145: 
+146:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">:FONTS</span> <span class="ruby-keyword kw">or</span>
+147:            <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">include?</span> <span class="ruby-value str">'FONTS'</span> <span class="ruby-keyword kw">then</span>
+148:           <span class="ruby-identifier">values</span>[<span class="ruby-value str">&quot;fonts&quot;</span>] = <span class="ruby-ivar">@template</span><span class="ruby-operator">::</span><span class="ruby-constant">FONTS</span>
+149:         <span class="ruby-keyword kw">end</span>
+150: 
+151:         <span class="ruby-identifier">template</span>.<span class="ruby-identifier">write_html_on</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">values</span>)
+152:       <span class="ruby-keyword kw">end</span>
+153:     <span class="ruby-keyword kw">end</span>
+154:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Predicate (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 326</span>
+326:       <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Predicate</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>
+327:         <span class="ruby-comment cmt">#puts &quot;PREDICATE with #{path}&quot;</span>
+328:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?[</span>
+329:         <span class="ruby-identifier">predicates</span> = []
+330:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?[</span>
+331:           <span class="ruby-identifier">path</span>, <span class="ruby-identifier">expr</span> = <span class="ruby-identifier">get_group</span>(<span class="ruby-identifier">path</span>)
+332:           <span class="ruby-identifier">predicates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">expr</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">expr</span>
+333:         <span class="ruby-keyword kw">end</span>
+334:         <span class="ruby-comment cmt">#puts &quot;PREDICATES = #{predicates.inspect}&quot;</span>
+335:         <span class="ruby-identifier">predicates</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">pred</span><span class="ruby-operator">|</span> 
+336:           <span class="ruby-comment cmt">#puts &quot;ORING #{pred}&quot;</span>
+337:           <span class="ruby-identifier">preds</span> = []
+338:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:predicate</span>
+339:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">preds</span>
+340:           <span class="ruby-constant">OrExpr</span>(<span class="ruby-identifier">pred</span>, <span class="ruby-identifier">preds</span>) 
+341:         }
+342:         <span class="ruby-comment cmt">#puts &quot;PREDICATES = #{predicates.inspect}&quot;</span>
+343:         <span class="ruby-identifier">path</span>
+344:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

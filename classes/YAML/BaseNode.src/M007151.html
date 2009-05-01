@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>children_with_index (YAML::BaseNode)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/basenode.rb, line 202</span>
+202:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children_with_index</span>
+203:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@value</span>
+204:                 <span class="ruby-ivar">@value</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> [<span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">i</span>] }
+205:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@value</span>
+206:                 <span class="ruby-identifier">i</span> = <span class="ruby-value">-1</span>; <span class="ruby-ivar">@value</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>; [<span class="ruby-identifier">v</span>, <span class="ruby-identifier">i</span>] }
+207:             <span class="ruby-keyword kw">end</span>
+208:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

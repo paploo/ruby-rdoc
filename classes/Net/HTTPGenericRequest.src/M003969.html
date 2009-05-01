@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>supply_default_content_type (Net::HTTPGenericRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 1677</span>
+1677:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">supply_default_content_type</span>
+1678:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_type</span>()
+1679:       <span class="ruby-identifier">warn</span> <span class="ruby-value str">'net/http: warning: Content-Type did not set; using application/x-www-form-urlencoded'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$VERBOSE</span>
+1680:       <span class="ruby-identifier">set_content_type</span> <span class="ruby-value str">'application/x-www-form-urlencoded'</span>
+1681:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

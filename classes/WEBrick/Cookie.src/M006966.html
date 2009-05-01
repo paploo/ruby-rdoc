@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_set_cookie (WEBrick::Cookie)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/cookie.rb, line 79</span>
+ 79:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse_set_cookie</span>(<span class="ruby-identifier">str</span>)
+ 80:       <span class="ruby-identifier">cookie_elem</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/;/</span>)
+ 81:       <span class="ruby-identifier">first_elem</span> = <span class="ruby-identifier">cookie_elem</span>.<span class="ruby-identifier">shift</span>
+ 82:       <span class="ruby-identifier">first_elem</span>.<span class="ruby-identifier">strip!</span>
+ 83:       <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">first_elem</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/=/</span>, <span class="ruby-value">2</span>)
+ 84:       <span class="ruby-identifier">cookie</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">key</span>, <span class="ruby-constant">HTTPUtils</span>.<span class="ruby-identifier">dequote</span>(<span class="ruby-identifier">value</span>))
+ 85:       <span class="ruby-identifier">cookie_elem</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">pair</span><span class="ruby-operator">|</span>
+ 86:         <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">strip!</span>
+ 87:         <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/=/</span>, <span class="ruby-value">2</span>)
+ 88:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>
+ 89:           <span class="ruby-identifier">value</span> = <span class="ruby-constant">HTTPUtils</span>.<span class="ruby-identifier">dequote</span>(<span class="ruby-identifier">value</span>.<span class="ruby-identifier">strip</span>)
+ 90:         <span class="ruby-keyword kw">end</span>
+ 91:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">downcase</span>
+ 92:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;domain&quot;</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">domain</span>  = <span class="ruby-identifier">value</span>
+ 93:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;path&quot;</span>    <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">path</span>    = <span class="ruby-identifier">value</span>
+ 94:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;expires&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">expires</span> = <span class="ruby-identifier">value</span>
+ 95:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;max-age&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">max_age</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">value</span>)
+ 96:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;comment&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">value</span>
+ 97:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;version&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">version</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">value</span>)
+ 98:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;secure&quot;</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">cookie</span>.<span class="ruby-identifier">secure</span> = <span class="ruby-keyword kw">true</span>
+ 99:         <span class="ruby-keyword kw">end</span>
+100:       }
+101:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">cookie</span>
+102:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

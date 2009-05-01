@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   str.inspect   =&gt; string
+ *
+ * Returns a printable version of _str_, surrounded by quote marks,
+ * with special characters escaped.
+ *
+ *    str = &quot;hello&quot;
+ *    str[3] = &quot;\b&quot;
+ *    str.inspect       #=&gt; &quot;\&quot;hel\\bo\&quot;&quot;
+ */
+
+VALUE
+rb_str_inspect(VALUE str)
+{
+    rb_encoding *enc = STR_ENC_GET(str);
+    char *p, *pend;
+    VALUE result = rb_str_buf_new(0);
+
+    if (!rb_enc_asciicompat(enc)) enc = rb_usascii_encoding();
+    rb_enc_associate(result, enc);
+    str_cat_char(result, '&quot;', enc);
+    p = RSTRING_PTR(str); pend = RSTRING_END(str);
+    while (p &lt; pend) {
+        unsigned int c, cc;
+        int n;
+
+        n = rb_enc_precise_mbclen(p, pend, enc);
+        if (!MBCLEN_CHARFOUND_P(n)) {
+            p++;
+            n = 1;
+            goto escape_codepoint;
+        }
+        n = MBCLEN_CHARFOUND_LEN(n);
+
+        c = rb_enc_codepoint(p, pend, enc);
+        n = rb_enc_codelen(c, enc);
+
+        p += n;
+        if (c == '&quot;'|| c == '\\' ||
+            (c == '#' &amp;&amp;
+             p &lt; pend &amp;&amp;
+             MBCLEN_CHARFOUND_P(rb_enc_precise_mbclen(p,pend,enc)) &amp;&amp;
+             (cc = rb_enc_codepoint(p,pend,enc),
+              (cc == '$' || cc == '@' || cc == '{')))) {
+            prefix_escape(result, c, enc);
+        }
+        else if (c == '\n') {
+            prefix_escape(result, 'n', enc);
+        }
+        else if (c == '\r') {
+            prefix_escape(result, 'r', enc);
+        }
+        else if (c == '\t') {
+            prefix_escape(result, 't', enc);
+        }
+        else if (c == '\f') {
+            prefix_escape(result, 'f', enc);
+        }
+        else if (c == '\013') {
+            prefix_escape(result, 'v', enc);
+        }
+        else if (c == '\010') {
+            prefix_escape(result, 'b', enc);
+        }
+        else if (c == '\007') {
+            prefix_escape(result, 'a', enc);
+        }
+        else if (c == 033) {
+            prefix_escape(result, 'e', enc);
+        }
+        else if (rb_enc_isprint(c, enc)) {
+            rb_enc_str_buf_cat(result, p-n, n, enc);
+        }
+        else {
+            char buf[5];
+            char *s;
+            char *q;
+
+          escape_codepoint:
+            for (q = p-n; q &lt; p; q++) {
+                s = buf;
+                sprintf(buf, &quot;\\x%02X&quot;, *q &amp; 0377);
+                while (*s) {
+                    str_cat_char(result, *s++, enc);
+                }
+            }
+        }
+    }
+    str_cat_char(result, '&quot;', enc);
+
+    OBJ_INFECT(result, str);
+    return result;
+}</pre>
+</body>
+</html>

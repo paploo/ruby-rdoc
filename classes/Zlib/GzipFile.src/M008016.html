@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>comment (Zlib::GzipFile)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Returns comments recorded in the gzip file header, or nil if the comments
+ * is not present.
+ */
+static VALUE
+rb_gzfile_comment(VALUE obj)
+{
+    VALUE str = get_gzfile(obj)-&gt;comment;
+    if (!NIL_P(str)) {
+        str = rb_str_dup(str);
+    }
+    OBJ_TAINT(str);  /* for safe */
+    return str;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (MatchData)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    mtch.inspect   =&gt; str
+ *
+ * Returns a printable version of &lt;i&gt;mtch&lt;/i&gt;.
+ *
+ *     puts /.$/.match(&quot;foo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;o&quot;&gt;
+ *
+ *     puts /(.)(.)(.)/.match(&quot;foo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;foo&quot; 1:&quot;f&quot; 2:&quot;o&quot; 3:&quot;o&quot;&gt;
+ *
+ *     puts /(.)(.)?(.)/.match(&quot;fo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;fo&quot; 1:&quot;f&quot; 2:nil 3:&quot;o&quot;&gt;
+ *
+ *     puts /(?&lt;foo&gt;.)(?&lt;bar&gt;.)(?&lt;baz&gt;.)/.match(&quot;hoge&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;hog&quot; foo:&quot;h&quot; bar:&quot;o&quot; baz:&quot;g&quot;&gt;
+ *
+ */
+
+static VALUE
+match_inspect(VALUE match)
+{
+    const char *cname = rb_obj_classname(match);
+    VALUE str;
+    int i;
+    struct re_registers *regs = RMATCH_REGS(match);
+    int num_regs = regs-&gt;num_regs;
+    struct backref_name_tag *names;
+    VALUE regexp = RMATCH(match)-&gt;regexp;
+
+    if (regexp == 0) {
+        return rb_sprintf(&quot;#&lt;%s:%p&gt;&quot;, cname, (void*)match);
+    }
+
+    names = ALLOCA_N(struct backref_name_tag, num_regs);
+    MEMZERO(names, struct backref_name_tag, num_regs);
+
+    onig_foreach_name(RREGEXP(regexp)-&gt;ptr,
+            match_inspect_name_iter, names);
+
+    str = rb_str_buf_new2(&quot;#&lt;&quot;);
+    rb_str_buf_cat2(str, cname);
+
+    for (i = 0; i &lt; num_regs; i++) {
+        VALUE v;
+        rb_str_buf_cat2(str, &quot; &quot;);
+        if (0 &lt; i) {
+            if (names[i].name)
+                rb_str_buf_cat(str, (const char *)names[i].name, names[i].len);
+            else {
+                rb_str_catf(str, &quot;%d&quot;, i);
+            }
+            rb_str_buf_cat2(str, &quot;:&quot;);
+        }
+        v = rb_reg_nth_match(i, match);
+        if (v == Qnil)
+            rb_str_buf_cat2(str, &quot;nil&quot;);
+        else
+            rb_str_buf_append(str, rb_str_inspect(v));
+    }
+    rb_str_buf_cat2(str, &quot;&gt;&quot;);
+
+    return str;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>united_to_one_line (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1383</span>
+1383:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">united_to_one_line</span>(<span class="ruby-identifier">f90src</span>)
+1384:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">f90src</span>
+1385:     <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">f90src</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+1386:     <span class="ruby-identifier">previous_continuing</span> = <span class="ruby-keyword kw">false</span>
+1387:     <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">false</span>
+1388:     <span class="ruby-identifier">body</span> = <span class="ruby-value str">&quot;&quot;</span>
+1389:     <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+1390:       <span class="ruby-identifier">words</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;&quot;</span>)
+1391:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">words</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">previous_continuing</span>
+1392:       <span class="ruby-identifier">commentout</span> = <span class="ruby-keyword kw">false</span>
+1393:       <span class="ruby-identifier">brank_flag</span> = <span class="ruby-keyword kw">true</span> ; <span class="ruby-identifier">brank_char</span> = <span class="ruby-value str">&quot;&quot;</span>
+1394:       <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span>    ; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span>
+1395:       <span class="ruby-identifier">ignore</span> = <span class="ruby-keyword kw">false</span>
+1396:       <span class="ruby-identifier">words</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">char</span><span class="ruby-operator">|</span>
+1397:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">previous_continuing</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">brank_flag</span>
+1398:           <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">true</span>
+1399:           <span class="ruby-identifier">ignore</span>         = <span class="ruby-keyword kw">true</span>
+1400:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1401:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;!&quot;</span>                       ; <span class="ruby-keyword kw">break</span>
+1402:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot; &quot;</span> ; <span class="ruby-identifier">brank_char</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>  ; <span class="ruby-keyword kw">next</span> <span class="ruby-value str">&quot;&quot;</span>
+1403:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;&amp;&quot;</span>
+1404:             <span class="ruby-identifier">brank_flag</span> = <span class="ruby-keyword kw">false</span>
+1405:             <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">false</span>
+1406:             <span class="ruby-keyword kw">next</span> <span class="ruby-value str">&quot;&quot;</span>
+1407:           <span class="ruby-keyword kw">else</span> 
+1408:             <span class="ruby-identifier">brank_flag</span>     = <span class="ruby-keyword kw">false</span>
+1409:             <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">false</span>
+1410:             <span class="ruby-identifier">ignore</span>         = <span class="ruby-keyword kw">false</span>
+1411:             <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">brank_char</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">char</span>
+1412:           <span class="ruby-keyword kw">end</span>
+1413:         <span class="ruby-keyword kw">end</span>
+1414:         <span class="ruby-identifier">ignore</span> = <span class="ruby-keyword kw">false</span>
+1415: 
+1416:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">now_continuing</span>
+1417:           <span class="ruby-keyword kw">next</span> <span class="ruby-value str">&quot;&quot;</span>
+1418:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">squote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">dquote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">commentout</span>)
+1419:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1420:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;!&quot;</span> ; <span class="ruby-identifier">commentout</span> = <span class="ruby-keyword kw">true</span>     ; <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1421:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">true</span>         ; <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1422:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">true</span>         ; <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1423:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;&amp;&quot;</span> ; <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">true</span> ; <span class="ruby-keyword kw">next</span> <span class="ruby-value str">&quot;&quot;</span>
+1424:           <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1425:           <span class="ruby-keyword kw">end</span>
+1426:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">commentout</span>
+1427:           <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1428:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">squote</span>
+1429:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1430:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1431:           <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1432:           <span class="ruby-keyword kw">end</span>
+1433:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">dquote</span>
+1434:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1435:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1436:           <span class="ruby-keyword kw">else</span> <span class="ruby-keyword kw">next</span> <span class="ruby-identifier">char</span>
+1437:           <span class="ruby-keyword kw">end</span>
+1438:         <span class="ruby-keyword kw">end</span>
+1439:       }
+1440:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ignore</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">previous_continuing</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">brank_flag</span>
+1441:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">previous_continuing</span>
+1442:           <span class="ruby-identifier">body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">words</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&quot;</span>)
+1443:         <span class="ruby-keyword kw">else</span>
+1444:           <span class="ruby-identifier">body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">words</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&quot;</span>)
+1445:         <span class="ruby-keyword kw">end</span>
+1446:       <span class="ruby-keyword kw">end</span>
+1447:       <span class="ruby-identifier">previous_continuing</span> = <span class="ruby-identifier">now_continuing</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+1448:       <span class="ruby-identifier">now_continuing</span> = <span class="ruby-keyword kw">nil</span>
+1449:     }
+1450:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">body</span>
+1451:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

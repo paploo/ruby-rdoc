@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>request_line (WEBrick::CGI::Socket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/cgi.rb, line 151</span>
+151:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_line</span>
+152:         <span class="ruby-identifier">meth</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;GET&quot;</span>
+153:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;REQUEST_URI&quot;</span>]
+154:           <span class="ruby-identifier">url</span> = (<span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">$0</span>)).<span class="ruby-identifier">dup</span>
+155:           <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>].<span class="ruby-identifier">to_s</span>
+156:           <span class="ruby-identifier">url</span> = <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPUtils</span>.<span class="ruby-identifier">escape_path</span>(<span class="ruby-identifier">url</span>)
+157:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">query_string</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;QUERY_STRING&quot;</span>]
+158:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">query_string</span>.<span class="ruby-identifier">empty?</span>
+159:               <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;?&quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">query_string</span>
+160:             <span class="ruby-keyword kw">end</span>
+161:           <span class="ruby-keyword kw">end</span>
+162:         <span class="ruby-keyword kw">end</span>
+163:         <span class="ruby-comment cmt"># we cannot get real HTTP version of client ;)</span>
+164:         <span class="ruby-identifier">httpv</span> = <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:HTTPVersion</span>]
+165:         <span class="ruby-keyword kw">return</span> <span class="ruby-node">&quot;#{meth} #{url} HTTP/#{httpv}&quot;</span>
+166:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

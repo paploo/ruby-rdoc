@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup (lib/un.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/un.rb, line 34</span>
+34: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>(<span class="ruby-identifier">options</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">long_options</span>)
+35:   <span class="ruby-identifier">opt_hash</span> = {}
+36:   <span class="ruby-identifier">argv</span> = []
+37:   <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+38:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/.:?/</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+39:       <span class="ruby-identifier">opt_name</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;:&quot;</span>).<span class="ruby-identifier">intern</span>
+40:       <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;:&quot;</span>, <span class="ruby-value str">&quot; &quot;</span>)) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+41:         <span class="ruby-identifier">opt_hash</span>[<span class="ruby-identifier">opt_name</span>] = <span class="ruby-identifier">val</span>
+42:       <span class="ruby-keyword kw">end</span>
+43:     <span class="ruby-keyword kw">end</span>
+44:     <span class="ruby-identifier">long_options</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+45:       <span class="ruby-identifier">opt_name</span> = <span class="ruby-identifier">s</span>[<span class="ruby-regexp re">/\A(?:--)?([^\s=]+)/</span>, <span class="ruby-value">1</span>].<span class="ruby-identifier">intern</span>
+46:       <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/\A(?!--)/</span>, <span class="ruby-value str">'--'</span>)) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+47:         <span class="ruby-identifier">opt_hash</span>[<span class="ruby-identifier">opt_name</span>] = <span class="ruby-identifier">val</span>
+48:       <span class="ruby-keyword kw">end</span>
+49:     <span class="ruby-keyword kw">end</span>
+50:     <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-v&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-identifier">opt_hash</span>[<span class="ruby-identifier">:verbose</span>] = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span>
+51:     <span class="ruby-identifier">o</span>.<span class="ruby-identifier">order!</span>(<span class="ruby-constant">ARGV</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+52:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/[*?\[{]/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">x</span>
+53:         <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-constant">Dir</span>[<span class="ruby-identifier">x</span>])
+54:       <span class="ruby-keyword kw">else</span>
+55:         <span class="ruby-identifier">argv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">x</span>
+56:       <span class="ruby-keyword kw">end</span>
+57:     <span class="ruby-keyword kw">end</span>
+58:   <span class="ruby-keyword kw">end</span>
+59:   <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">argv</span>, <span class="ruby-identifier">opt_hash</span>
+60: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

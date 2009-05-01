@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>autoload? (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * MISSING: documentation
+ */
+
+static VALUE
+rb_f_autoload_p(VALUE obj, VALUE sym)
+{
+    /* use rb_vm_cbase() as same as rb_f_autoload. */
+    VALUE klass = rb_vm_cbase();
+    if (NIL_P(klass)) {
+        return Qnil;
+    }
+    return rb_mod_autoload_p(klass, sym);
+}</pre>
+</body>
+</html>

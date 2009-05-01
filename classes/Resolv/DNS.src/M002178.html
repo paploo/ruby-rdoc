@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getname (Resolv::DNS)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 391</span>
+391:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getname</span>(<span class="ruby-identifier">address</span>)
+392:       <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">name</span>}
+393:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;DNS result has no information for #{address}&quot;</span>)
+394:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

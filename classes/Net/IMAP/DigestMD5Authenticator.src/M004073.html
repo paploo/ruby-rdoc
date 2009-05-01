@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>process (Net::IMAP::DigestMD5Authenticator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 3168</span>
+3168:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process</span>(<span class="ruby-identifier">challenge</span>)
+3169:         <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@stage</span>
+3170:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">STAGE_ONE</span>
+3171:           <span class="ruby-ivar">@stage</span> = <span class="ruby-constant">STAGE_TWO</span>
+3172:           <span class="ruby-identifier">sparams</span> = {}
+3173:           <span class="ruby-identifier">c</span> = <span class="ruby-constant">StringScanner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">challenge</span>)
+3174:           <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/(?:\s*,)?\s*(\w+)=(&quot;(?:[^\\&quot;]+|\\.)*&quot;|[^,]+)\s*/</span>)
+3175:             <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">c</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">c</span>[<span class="ruby-value">2</span>]
+3176:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^&quot;(.*)&quot;$/</span>
+3177:               <span class="ruby-identifier">v</span> = <span class="ruby-identifier">$1</span>
+3178:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/,/</span>
+3179:                 <span class="ruby-identifier">v</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">','</span>)
+3180:               <span class="ruby-keyword kw">end</span>
+3181:             <span class="ruby-keyword kw">end</span>
+3182:             <span class="ruby-identifier">sparams</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>
+3183:           <span class="ruby-keyword kw">end</span>
+3184: 
+3185:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">DataFormatError</span>, <span class="ruby-node">&quot;Bad Challenge: '#{challenge}'&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">rest</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+3186:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">Error</span>, <span class="ruby-node">&quot;Server does not support auth (qop = #{sparams['qop'].join(',')})&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'qop'</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;auth&quot;</span>)
+3187: 
+3188:           <span class="ruby-identifier">response</span> = {
+3189:             <span class="ruby-identifier">:nonce</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'nonce'</span>],
+3190:             <span class="ruby-identifier">:username</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user</span>,
+3191:             <span class="ruby-identifier">:realm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'realm'</span>],
+3192:             <span class="ruby-identifier">:cnonce</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-value str">&quot;%.15f:%.15f:%d&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_f</span>, <span class="ruby-identifier">rand</span>, <span class="ruby-constant">Process</span>.<span class="ruby-identifier">pid</span>.<span class="ruby-identifier">to_s</span>]),
+3193:             <span class="ruby-identifier">:'digest-uri'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'imap/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'realm'</span>],
+3194:             <span class="ruby-identifier">:qop</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'auth'</span>,
+3195:             <span class="ruby-identifier">:maxbuf</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">65535</span>,
+3196:             <span class="ruby-identifier">:nc</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;%08d&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">nc</span>(<span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'nonce'</span>]),
+3197:             <span class="ruby-identifier">:charset</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sparams</span>[<span class="ruby-value str">'charset'</span>],
+3198:           }
+3199: 
+3200:           <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:authzid</span>] = <span class="ruby-ivar">@authname</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@authname</span>.<span class="ruby-identifier">nil?</span>
+3201: 
+3202:           <span class="ruby-comment cmt"># now, the real thing</span>
+3203:           <span class="ruby-identifier">a0</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">digest</span>( [ <span class="ruby-identifier">response</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-identifier">:username</span>, <span class="ruby-identifier">:realm</span>), <span class="ruby-ivar">@password</span> ].<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>) )
+3204: 
+3205:           <span class="ruby-identifier">a1</span> = [ <span class="ruby-identifier">a0</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-identifier">:nonce</span>,<span class="ruby-identifier">:cnonce</span>) ].<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>)
+3206:           <span class="ruby-identifier">a1</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">':'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:authzid</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:authzid</span>].<span class="ruby-identifier">nil?</span>
+3207: 
+3208:           <span class="ruby-identifier">a2</span> = <span class="ruby-value str">&quot;AUTHENTICATE:&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:'digest-uri'</span>]
+3209:           <span class="ruby-identifier">a2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;:00000000000000000000000000000000&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:qop</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:qop</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^auth-(?:conf|int)$/</span>
+3210: 
+3211:           <span class="ruby-identifier">response</span>[<span class="ruby-identifier">:response</span>] = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(
+3212:             [
+3213:              <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">a1</span>),
+3214:              <span class="ruby-identifier">response</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-identifier">:nonce</span>, <span class="ruby-identifier">:nc</span>, <span class="ruby-identifier">:cnonce</span>, <span class="ruby-identifier">:qop</span>),
+3215:              <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">a2</span>)
+3216:             ].<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>)
+3217:           )
+3218: 
+3219:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">qdval</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">response</span>[<span class="ruby-identifier">key</span>]) }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">','</span>)
+3220:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">STAGE_TWO</span>
+3221:           <span class="ruby-ivar">@stage</span> = <span class="ruby-keyword kw">nil</span>
+3222:           <span class="ruby-comment cmt"># if at the second stage, return an empty string</span>
+3223:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">challenge</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/rspauth=/</span>
+3224:             <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span>
+3225:           <span class="ruby-keyword kw">else</span>
+3226:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResponseParseError</span>, <span class="ruby-identifier">challenge</span>
+3227:           <span class="ruby-keyword kw">end</span>
+3228:         <span class="ruby-keyword kw">else</span>
+3229:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResponseParseError</span>, <span class="ruby-identifier">challenge</span>
+3230:         <span class="ruby-keyword kw">end</span>
+3231:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

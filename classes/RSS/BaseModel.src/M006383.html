@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install_date_element (RSS::BaseModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 244</span>
+244:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_date_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">occurs</span>, <span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">disp_name</span>=<span class="ruby-keyword kw">nil</span>)
+245:       <span class="ruby-identifier">name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">tag_name</span>
+246:       <span class="ruby-identifier">type</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">:w3cdtf</span>
+247:       <span class="ruby-identifier">disp_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
+248:       <span class="ruby-keyword kw">self</span><span class="ruby-operator">::</span><span class="ruby-constant">ELEMENTS</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+249:       <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">name</span>)
+250:       <span class="ruby-identifier">install_model</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">occurs</span>, <span class="ruby-identifier">name</span>)
+251: 
+252:       <span class="ruby-comment cmt"># accessor</span>
+253:       <span class="ruby-identifier">convert_attr_reader</span> <span class="ruby-identifier">name</span>
+254:       <span class="ruby-identifier">date_writer</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">disp_name</span>)
+255:       
+256:       <span class="ruby-identifier">install_element</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">elem_name</span><span class="ruby-operator">|</span>
+257:         <span class="ruby-value str">&quot;if @\#{n}\nrv = \&quot;\\\#{indent}&lt;\#{elem_name}&gt;\&quot;\nvalue = html_escape(@\#{n}.\#{type})\nif need_convert\nrv &lt;&lt; convert(value)\nelse\nrv &lt;&lt; value\nend\nrv &lt;&lt; \&quot;&lt;/\#{elem_name}&gt;\&quot;\nrv\nelse\n''\nend\n&quot;</span>
+258:       <span class="ruby-keyword kw">end</span>
+259: 
+260:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

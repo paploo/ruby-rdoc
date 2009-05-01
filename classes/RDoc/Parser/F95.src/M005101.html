@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>initialize_external_method (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1192</span>
+1192:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_external_method</span>(<span class="ruby-identifier">new</span>, <span class="ruby-identifier">old</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">comment</span>, <span class="ruby-identifier">token</span>=<span class="ruby-keyword kw">nil</span>,
+1193:                                  <span class="ruby-identifier">internal</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">nolink</span>=<span class="ruby-keyword kw">nil</span>)
+1194:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">new</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">old</span>
+1195: 
+1196:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">internal</span>
+1197:       <span class="ruby-identifier">external_alias_header</span> = <span class="ruby-node">&quot;#{INTERNAL_ALIAS_MES} &quot;</span>
+1198:       <span class="ruby-identifier">external_alias_text</span>   = <span class="ruby-identifier">external_alias_header</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">old</span> 
+1199:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">file</span>
+1200:       <span class="ruby-identifier">external_alias_header</span> = <span class="ruby-node">&quot;#{EXTERNAL_ALIAS_MES} &quot;</span>
+1201:       <span class="ruby-identifier">external_alias_text</span>   = <span class="ruby-identifier">external_alias_header</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;#&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">old</span>
+1202:     <span class="ruby-keyword kw">else</span>
+1203:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+1204:     <span class="ruby-keyword kw">end</span>
+1205:     <span class="ruby-identifier">external_meth</span> = <span class="ruby-constant">AnyMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">external_alias_text</span>, <span class="ruby-identifier">new</span>)
+1206:     <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">singleton</span>    = <span class="ruby-keyword kw">false</span>
+1207:     <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">params</span>       = <span class="ruby-identifier">params</span>
+1208:     <span class="ruby-identifier">external_comment</span> = <span class="ruby-identifier">remove_trailing_alias</span>(<span class="ruby-identifier">comment</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>
+1209:     <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">external_comment</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+1210:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nolink</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">token</span>
+1211:       <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">start_collecting_tokens</span>
+1212:       <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">add_token</span> <span class="ruby-constant">Token</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>,<span class="ruby-value">1</span>).<span class="ruby-identifier">set_text</span>(<span class="ruby-identifier">token</span>)
+1213:     <span class="ruby-keyword kw">else</span>
+1214:       <span class="ruby-identifier">external_meth</span>.<span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">external_alias_text</span>
+1215:     <span class="ruby-keyword kw">end</span>
+1216: 
+1217:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">external_meth</span>
+1218:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

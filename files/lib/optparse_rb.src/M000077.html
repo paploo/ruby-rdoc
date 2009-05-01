@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>environment (lib/optparse.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/optparse.rb, line 1485</span>
+1485:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">environment</span>(<span class="ruby-identifier">env</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">$0</span>, <span class="ruby-value str">'.*'</span>))
+1486:     <span class="ruby-identifier">env</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">env</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">env</span>.<span class="ruby-identifier">upcase</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span>
+1487:     <span class="ruby-identifier">require</span> <span class="ruby-value str">'shellwords'</span>
+1488:     <span class="ruby-identifier">parse</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">shellwords</span>(<span class="ruby-identifier">env</span>))
+1489:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

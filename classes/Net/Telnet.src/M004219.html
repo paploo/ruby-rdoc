@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>print (Net::Telnet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/telnet.rb, line 628</span>
+628:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">print</span>(<span class="ruby-identifier">string</span>)
+629:       <span class="ruby-identifier">string</span> = <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-node">/#{IAC}/n</span><span class="ruby-identifier">o</span>, <span class="ruby-constant">IAC</span> <span class="ruby-operator">+</span> <span class="ruby-constant">IAC</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Telnetmode&quot;</span>]
+630: 
+631:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Binmode&quot;</span>]
+632:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>)
+633:       <span class="ruby-keyword kw">else</span>
+634:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@telnet_option</span>[<span class="ruby-value str">&quot;BINARY&quot;</span>] <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@telnet_option</span>[<span class="ruby-value str">&quot;SGA&quot;</span>]
+635:           <span class="ruby-comment cmt"># IAC WILL SGA IAC DO BIN send EOL --&gt; CR</span>
+636:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/n</span>, <span class="ruby-constant">CR</span>))
+637:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@telnet_option</span>[<span class="ruby-value str">&quot;SGA&quot;</span>]
+638:           <span class="ruby-comment cmt"># IAC WILL SGA send EOL --&gt; CR+NULL</span>
+639:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/n</span>, <span class="ruby-constant">CR</span> <span class="ruby-operator">+</span> <span class="ruby-constant">NULL</span>))
+640:         <span class="ruby-keyword kw">else</span>
+641:           <span class="ruby-comment cmt"># NONE send EOL --&gt; CR+LF</span>
+642:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/n</span>, <span class="ruby-constant">EOL</span>))
+643:         <span class="ruby-keyword kw">end</span>
+644:       <span class="ruby-keyword kw">end</span>
+645:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

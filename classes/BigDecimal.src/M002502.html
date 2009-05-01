@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>split (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Splits a BigDecimal number into four parts, returned as an array of values.
+ *
+ * The first value represents the sign of the BigDecimal, and is -1 or 1, or 0
+ * if the BigDecimal is Not a Number.
+ *
+ * The second value is a string representing the significant digits of the
+ * BigDecimal, with no leading zeros.
+ *
+ * The third value is the base used for arithmetic (currently always 10) as an
+ * Integer.
+ *
+ * The fourth value is an Integer exponent.
+ *
+ * If the BigDecimal can be represented as 0.xxxxxx*10**n, then xxxxxx is the 
+ * string of significant digits with no leading zeros, and n is the exponent.
+ *
+ * From these values, you can translate a BigDecimal to a float as follows:
+ *
+ *   sign, significant_digits, base, exponent = a.split
+ *   f = sign * &quot;0.#{significant_digits}&quot;.to_f * (base ** exponent)
+ *
+ * (Note that the to_f method is provided as a more convenient way to translate 
+ * a BigDecimal to a Float.)
+ */
+static VALUE
+BigDecimal_split(VALUE self)
+{
+    ENTER(5);
+    Real *vp;
+    VALUE obj,str;
+    S_LONG e;
+    S_LONG s;
+    char *psz1;
+
+    GUARD_OBJ(vp,GetVpValue(self,1));
+    str = rb_str_new(0, VpNumOfChars(vp,&quot;E&quot;));
+    psz1 = RSTRING_PTR(str);
+    VpSzMantissa(vp,psz1);
+    s = 1;
+    if(psz1[0]=='-') {
+        int len = strlen(psz1+1);
+
+        memmove(psz1, psz1+1, len);
+        psz1[len] = '\0';
+        s = -1;
+    }
+    if(psz1[0]=='N') s=0; /* NaN */
+    e = VpExponent10(vp);
+    obj  = rb_ary_new2(4);
+    rb_ary_push(obj, INT2FIX(s));
+    rb_ary_push(obj, str);
+    rb_str_resize(str, strlen(psz1));
+    rb_ary_push(obj, INT2FIX(10));
+    rb_ary_push(obj, INT2NUM(e));
+    return obj;
+}</pre>
+</body>
+</html>

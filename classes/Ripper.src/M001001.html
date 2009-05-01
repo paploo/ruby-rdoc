@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>yydebug= (Ripper)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    ripper.yydebug = flag
+ *
+ *  Set yydebug.
+ */
+VALUE
+rb_parser_set_yydebug(VALUE self, VALUE flag)
+{
+    struct parser_params *parser;
+
+    Data_Get_Struct(self, struct parser_params, parser);
+    yydebug = RTEST(flag);
+    return flag;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>replacement (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   ec.replacement -&gt; string
+ *
+ * Returns the replacement string.
+ *
+ *  ec = Encoding::Converter.new(&quot;euc-jp&quot;, &quot;us-ascii&quot;)
+ *  p ec.replacement    #=&gt; &quot;?&quot;
+ *
+ *  ec = Encoding::Converter.new(&quot;euc-jp&quot;, &quot;utf-8&quot;)
+ *  p ec.replacement    #=&gt; &quot;\uFFFD&quot;
+ */
+static VALUE
+econv_get_replacement(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    int ret;
+    rb_encoding *enc;
+
+    ret = make_replacement(ec);
+    if (ret == -1) {
+        rb_raise(rb_eUndefinedConversionError, &quot;replacement character setup failed&quot;);
+    }
+
+    enc = rb_enc_find(ec-&gt;replacement_enc);
+    return rb_enc_str_new((const char *)ec-&gt;replacement_str, (long)ec-&gt;replacement_len, enc);
+}</pre>
+</body>
+</html>

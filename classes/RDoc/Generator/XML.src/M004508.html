@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gen_an_index (RDoc::Generator::XML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/xml.rb, line 101</span>
+101:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_an_index</span>(<span class="ruby-identifier">collection</span>, <span class="ruby-identifier">title</span>)
+102:     <span class="ruby-identifier">res</span> = []
+103:     <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+104:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">document_self</span>
+105:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> { <span class="ruby-value str">&quot;href&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">index_name</span> }
+106:       <span class="ruby-keyword kw">end</span>
+107:     <span class="ruby-keyword kw">end</span>
+108: 
+109:     <span class="ruby-keyword kw">return</span> {
+110:       <span class="ruby-value str">&quot;entries&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">res</span>,
+111:       <span class="ruby-value str">'list_title'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">title</span>,
+112:       <span class="ruby-value str">'index_url'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">main_url</span>,
+113:     }
+114:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

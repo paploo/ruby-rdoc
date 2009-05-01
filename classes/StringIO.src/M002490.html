@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_encoding (StringIO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     strio.set_encoding(ext_enc)                =&gt; strio
+ *
+ *  Tagged with the encoding specified.
+ */
+
+static VALUE
+strio_set_encoding(VALUE self, VALUE ext_enc)
+{
+    rb_encoding* enc;
+    VALUE str = StringIO(self)-&gt;string;
+    enc = rb_to_encoding(ext_enc);
+    rb_enc_associate(str, enc);
+    return self;
+}</pre>
+</body>
+</html>

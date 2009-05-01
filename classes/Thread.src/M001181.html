@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>priority (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     thr.priority   =&gt; integer
+ *
+ *  Returns the priority of &lt;i&gt;thr&lt;/i&gt;. Default is inherited from the
+ *  current thread which creating the new thread, or zero for the
+ *  initial main thread; higher-priority threads will run before
+ *  lower-priority threads.
+ *
+ *     Thread.current.priority   #=&gt; 0
+ */
+
+static VALUE
+rb_thread_priority(VALUE thread)
+{
+    rb_thread_t *th;
+    GetThreadPtr(thread, th);
+    return INT2NUM(th-&gt;priority);
+}</pre>
+</body>
+</html>

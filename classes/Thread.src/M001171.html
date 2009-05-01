@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>value (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     thr.value   =&gt; obj
+ *
+ *  Waits for &lt;i&gt;thr&lt;/i&gt; to complete (via &lt;code&gt;Thread#join&lt;/code&gt;) and returns
+ *  its value.
+ *
+ *     a = Thread.new { 2 + 2 }
+ *     a.value   #=&gt; 4
+ */
+
+static VALUE
+thread_value(VALUE self)
+{
+    rb_thread_t *th;
+    GetThreadPtr(self, th);
+    thread_join(th, DELAY_INFTY);
+    return th-&gt;value;
+}</pre>
+</body>
+</html>

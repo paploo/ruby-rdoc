@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_ssl_params (Net::POP3)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/pop.rb, line 336</span>
+336:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">POP3</span>.<span class="ruby-identifier">create_ssl_params</span>(<span class="ruby-identifier">verify_or_params</span> = {}, <span class="ruby-identifier">certs</span> = <span class="ruby-keyword kw">nil</span>)
+337:       <span class="ruby-keyword kw">begin</span>
+338:         <span class="ruby-identifier">params</span> = <span class="ruby-identifier">verify_or_params</span>.<span class="ruby-identifier">to_hash</span>
+339:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+340:         <span class="ruby-identifier">params</span> = {}
+341:         <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:verify_mode</span>] = <span class="ruby-identifier">verify_or_params</span>
+342:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">certs</span>
+343:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">certs</span>)
+344:             <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:ca_file</span>] = <span class="ruby-identifier">certs</span>
+345:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">certs</span>)
+346:             <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:ca_path</span>] = <span class="ruby-identifier">certs</span>
+347:           <span class="ruby-keyword kw">end</span>
+348:         <span class="ruby-keyword kw">end</span>
+349:       <span class="ruby-keyword kw">end</span>
+350:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">params</span>
+351:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

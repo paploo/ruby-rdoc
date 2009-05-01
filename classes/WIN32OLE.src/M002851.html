@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_type (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *   call-seq:
+ *      WIN32OLE#ole_type
+ * 
+ *   Returns WIN32OLE_TYPE object.
+ *
+ *      excel = WIN32OLE.new('Excel.Application')
+ *      tobj = excel.ole_type
+ */
+static VALUE
+fole_type(VALUE self)
+{
+    ITypeInfo *pTypeInfo;
+    HRESULT hr;
+    struct oledata *pole;
+    LCID  lcid = cWIN32OLE_lcid;
+    VALUE type = Qnil;
+
+    OLEData_Get_Struct(self, pole);
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetTypeInfo( pole-&gt;pDispatch, 0, lcid, &amp;pTypeInfo );
+    if(FAILED(hr)) {
+        ole_raise(hr, rb_eRuntimeError, &quot;failed to GetTypeInfo&quot;);
+    }
+    type = ole_type_from_itypeinfo(pTypeInfo);
+    OLE_RELEASE(pTypeInfo);
+    if (type == Qnil) {
+        rb_raise(rb_eRuntimeError, &quot;failed to create WIN32OLE_TYPE obj from ITypeInfo&quot;);
+    }
+    return type;
+}</pre>
+</body>
+</html>

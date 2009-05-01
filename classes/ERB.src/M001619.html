@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_eoutvar (ERB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 718</span>
+718:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_eoutvar</span>(<span class="ruby-identifier">compiler</span>, <span class="ruby-identifier">eoutvar</span> = <span class="ruby-value str">'_erbout'</span>)
+719:     <span class="ruby-identifier">compiler</span>.<span class="ruby-identifier">put_cmd</span> = <span class="ruby-node">&quot;#{eoutvar}.concat&quot;</span>
+720:     <span class="ruby-identifier">compiler</span>.<span class="ruby-identifier">insert_cmd</span> = <span class="ruby-node">&quot;#{eoutvar}.concat&quot;</span>
+721: 
+722:     <span class="ruby-identifier">cmd</span> = []
+723:     <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">push</span> <span class="ruby-node">&quot;#{eoutvar} = ''&quot;</span>
+724:     
+725:     <span class="ruby-identifier">compiler</span>.<span class="ruby-identifier">pre_cmd</span> = <span class="ruby-identifier">cmd</span>
+726: 
+727:     <span class="ruby-identifier">cmd</span> = []
+728:     <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">push</span>(<span class="ruby-node">&quot;#{eoutvar}.force_encoding(__ENCODING__)&quot;</span>)
+729: 
+730:     <span class="ruby-identifier">compiler</span>.<span class="ruby-identifier">post_cmd</span> = <span class="ruby-identifier">cmd</span>
+731:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find (Encoding)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Encoding.find(string) =&gt; enc
+ *   Encoding.find(symbol) =&gt; enc
+ *
+ * Search the encoding with specified &lt;i&gt;name&lt;/i&gt;.
+ * &lt;i&gt;name&lt;/i&gt; should be a string or symbol.
+ *
+ *   Encoding.find(&quot;US-ASCII&quot;)  =&gt; #&lt;Encoding:US-ASCII&gt;
+ *   Encoding.find(:Shift_JIS)  =&gt; #&lt;Encoding:Shift_JIS&gt;
+ *
+ * An ArgumentError is raised when no encoding with &lt;i&gt;name&lt;/i&gt;.
+ * Only +Encoding.find(&quot;internal&quot;)+ however returns nil when no encoding named &quot;internal&quot;,
+ * in other words, when Ruby has no default internal encoding.
+ */
+static VALUE
+enc_find(VALUE klass, VALUE enc)
+{
+    return rb_enc_from_encoding(to_encoding(enc));
+}</pre>
+</body>
+</html>

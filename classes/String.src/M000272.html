@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>eql? (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   str.eql?(other)   =&gt; true or false
+ *
+ * Two strings are equal if the have the same length and content.
+ */
+
+static VALUE
+rb_str_eql(VALUE str1, VALUE str2)
+{
+    if (TYPE(str2) != T_STRING || RSTRING_LEN(str1) != RSTRING_LEN(str2))
+        return Qfalse;
+
+    if (!rb_str_comparable(str1, str2)) return Qfalse;
+    if (memcmp(RSTRING_PTR(str1), RSTRING_PTR(str2),
+               lesser(RSTRING_LEN(str1), RSTRING_LEN(str2))) == 0)
+        return Qtrue;
+
+    return Qfalse;
+}</pre>
+</body>
+</html>

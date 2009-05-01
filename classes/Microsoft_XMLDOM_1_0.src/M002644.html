@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (Microsoft_XMLDOM_1_0)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File ext/win32ole/sample/xml.rb, line 5650</span>
+5650:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">obj</span> = <span class="ruby-keyword kw">nil</span>)
+5651:     <span class="ruby-ivar">@clsid</span> = <span class="ruby-value str">&quot;{2933BF90-7B36-11D2-B20E-00C04F983E60}&quot;</span>
+5652:     <span class="ruby-ivar">@progid</span> = <span class="ruby-value str">&quot;Microsoft.XMLDOM.1.0&quot;</span>
+5653:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">nil?</span>
+5654:       <span class="ruby-ivar">@dispatch</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@progid</span>)
+5655:     <span class="ruby-keyword kw">else</span>
+5656:       <span class="ruby-ivar">@dispatch</span> = <span class="ruby-identifier">obj</span>
+5657:     <span class="ruby-keyword kw">end</span>
+5658:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>escape_form (WEBrick::HTTPUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httputils.rb, line 370</span>
+370:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">escape_form</span>(<span class="ruby-identifier">str</span>)
+371:       <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">_escape</span>(<span class="ruby-identifier">str</span>, <span class="ruby-constant">UNESCAPED_FORM</span>)
+372:       <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/ /</span>, <span class="ruby-value str">&quot;+&quot;</span>)
+373:       <span class="ruby-identifier">ret</span>
+374:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

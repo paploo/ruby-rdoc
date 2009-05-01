@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Exception [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Exception</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/error_c.html">
+
+                error.c
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/lib/yaml/rubytypes_rb.html">
+
+                lib/yaml/rubytypes.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Descendants of class <tt>Exception</tt> are used to communicate between
+<tt>raise</tt> methods and <tt>rescue</tt> statements in <tt>begin/end</tt>
+blocks. <tt>Exception</tt> objects carry information about the
+exception&#8212;its type (the exception&#8217;s class name), an optional
+descriptive string, and optional traceback information. Programs may
+subclass <tt>Exception</tt> to add additional information.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000641">==</a>&nbsp;&nbsp;
+
+        <a href="#M000645">backtrace</a>&nbsp;&nbsp;
+
+        <a href="#M000638">exception</a>&nbsp;&nbsp;
+
+        <a href="#M000639">exception</a>&nbsp;&nbsp;
+
+        <a href="#M000644">inspect</a>&nbsp;&nbsp;
+
+        <a href="#M000643">message</a>&nbsp;&nbsp;
+
+        <a href="#M000640">new</a>&nbsp;&nbsp;
+
+        <a href="#M000646">set_backtrace</a>&nbsp;&nbsp;
+
+        <a href="#M000642">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000648">to_yaml</a>&nbsp;&nbsp;
+
+        <a href="#M000647">yaml_new</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000638" class="method-detail">
+        <a name="M000638"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">exc.exception(string) &rarr; an_exception or exc<br />
+</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+With no argument, or if the argument is the same as the receiver, return
+the receiver. Otherwise, create a new exception object of the same class as
+the receiver, but with a message equal to <tt>string.to_str</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000640" class="method-detail">
+        <a name="M000640"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000640.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000640.html');return false;">
+
+          <span class="method-name">Exception.new(msg = nil)   =>  exception<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Construct a new <a href="Exception.html">Exception</a> object, optionally
+passing in a message.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000647" class="method-detail">
+        <a name="M000647"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000647.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000647.html');return false;">
+
+          <span class="method-name">yaml_new</span><span class="method-args">( klass, tag, val )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000641" class="method-detail">
+        <a name="M000641"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000641.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000641.html');return false;">
+
+          <span class="method-name">exc == obj   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Equality&#8212;If <em>obj</em> is not an <tt>Exception</tt>, returns
+<tt>false</tt>. Otherwise, returns <tt>true</tt> if <em>exc</em> and
+<em>obj</em> share same class, messages, and backtrace.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000645" class="method-detail">
+        <a name="M000645"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000645.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000645.html');return false;">
+
+          <span class="method-name">exception.backtrace    => array<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns any backtrace associated with the exception. The backtrace is an
+array of strings, each containing either ``filename:lineNo: in
+`method&#8217;&#8217;&#8217; or ``filename:lineNo.&#8217;&#8216;
+</p>
+<pre>
+   def a
+     raise &quot;boom&quot;
+   end
+
+   def b
+     a()
+   end
+
+   begin
+     b()
+   rescue =&gt; detail
+     print detail.backtrace.join(&quot;\n&quot;)
+   end
+</pre>
+<p>
+<em>produces:</em>
+</p>
+<pre>
+   prog.rb:2:in `a'
+   prog.rb:6:in `b'
+   prog.rb:10
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000639" class="method-detail">
+        <a name="M000639"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000639.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000639.html');return false;">
+
+          <span class="method-name">exc.exception(string) &rarr; an_exception or exc<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+With no argument, or if the argument is the same as the receiver, return
+the receiver. Otherwise, create a new exception object of the same class as
+the receiver, but with a message equal to <tt>string.to_str</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000644" class="method-detail">
+        <a name="M000644"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000644.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000644.html');return false;">
+
+          <span class="method-name">exception.inspect   => string<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return this exception&#8217;s class name an message
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000643" class="method-detail">
+        <a name="M000643"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000643.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000643.html');return false;">
+
+          <span class="method-name">exception.message   =>  string<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the result of invoking <tt>exception.to_s</tt>. Normally this
+returns the exception&#8217;s message or name. By supplying a to_str
+method, exceptions are agreeing to be used where Strings are expected.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000646" class="method-detail">
+        <a name="M000646"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000646.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000646.html');return false;">
+
+          <span class="method-name">exc.set_backtrace(array)   =>  array<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sets the backtrace information associated with <em>exc</em>. The argument
+must be an array of <tt>String</tt> objects in the format described in
+<tt><a href="Exception.html#M000645">Exception#backtrace</a></tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000642" class="method-detail">
+        <a name="M000642"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000642.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000642.html');return false;">
+
+          <span class="method-name">exception.to_s   =>  string<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns exception&#8217;s message (or the name of the exception if no
+message is set).
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000648" class="method-detail">
+        <a name="M000648"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000648.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000648.html');return false;">
+
+          <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

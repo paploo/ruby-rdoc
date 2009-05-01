@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_registry (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/generic.rb, line 440</span>
+440:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_registry</span>(<span class="ruby-identifier">v</span>)
+441:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">v</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
+442: 
+443:       <span class="ruby-comment cmt"># raise if both server and registry are not nil, because:</span>
+444:       <span class="ruby-comment cmt"># authority     = server | reg_name</span>
+445:       <span class="ruby-comment cmt"># server        = [ [ userinfo &quot;@&quot; ] hostport ]</span>
+446:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@host</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@port</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@user</span> <span class="ruby-comment cmt"># userinfo = @user + ':' + @password</span>
+447:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidURIError</span>, 
+448:           <span class="ruby-value str">&quot;can not set registry with host, port, or userinfo&quot;</span>
+449:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:REGISTRY</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span>
+450:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidComponentError</span>,
+451:           <span class="ruby-node">&quot;bad component(expected registry component): #{v}&quot;</span>
+452:       <span class="ruby-keyword kw">end</span>
+453: 
+454:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+455:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

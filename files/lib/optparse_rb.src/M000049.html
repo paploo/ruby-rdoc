@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>summarize (lib/optparse.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/optparse.rb, line 970</span>
+970:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">summarize</span>(<span class="ruby-identifier">to</span> = [], <span class="ruby-identifier">width</span> = <span class="ruby-ivar">@summary_width</span>, <span class="ruby-identifier">max</span> = <span class="ruby-identifier">width</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">indent</span> = <span class="ruby-ivar">@summary_indent</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+971:     <span class="ruby-identifier">blk</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">proc</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">to</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">l</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">$/</span>, <span class="ruby-value">-1</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>)}
+972:     <span class="ruby-identifier">visit</span>(<span class="ruby-identifier">:summarize</span>, {}, {}, <span class="ruby-identifier">width</span>, <span class="ruby-identifier">max</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>)
+973:     <span class="ruby-identifier">to</span>
+974:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rank (Matrix)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 762</span>
+762:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rank</span>
+763:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">column_size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">row_size</span>
+764:       <span class="ruby-identifier">a</span> = <span class="ruby-identifier">transpose</span>.<span class="ruby-identifier">to_a</span>
+765:       <span class="ruby-identifier">a_column_size</span> = <span class="ruby-identifier">row_size</span>
+766:       <span class="ruby-identifier">a_row_size</span> = <span class="ruby-identifier">column_size</span>
+767:     <span class="ruby-keyword kw">else</span>
+768:       <span class="ruby-identifier">a</span> = <span class="ruby-identifier">to_a</span>
+769:       <span class="ruby-identifier">a_column_size</span> = <span class="ruby-identifier">column_size</span>
+770:       <span class="ruby-identifier">a_row_size</span> = <span class="ruby-identifier">row_size</span>
+771:     <span class="ruby-keyword kw">end</span>
+772:     <span class="ruby-identifier">rank</span> = <span class="ruby-value">0</span>
+773:     <span class="ruby-identifier">k</span> = <span class="ruby-value">0</span>
+774:     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+775:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">akk</span> = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+776:         <span class="ruby-identifier">i</span> = <span class="ruby-identifier">k</span>
+777:         <span class="ruby-identifier">exists</span> = <span class="ruby-keyword kw">true</span>
+778:         <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+779:           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">a_column_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+780:             <span class="ruby-identifier">exists</span> = <span class="ruby-keyword kw">false</span>
+781:             <span class="ruby-keyword kw">break</span>
+782:           <span class="ruby-keyword kw">end</span>
+783:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+784:         <span class="ruby-keyword kw">end</span>
+785:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exists</span>
+786:           <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>]
+787:           <span class="ruby-identifier">akk</span> = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>]
+788:         <span class="ruby-keyword kw">else</span>
+789:           <span class="ruby-identifier">i</span> = <span class="ruby-identifier">k</span>
+790:           <span class="ruby-identifier">exists</span> = <span class="ruby-keyword kw">true</span>
+791:           <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+792:             <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">a_row_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+793:               <span class="ruby-identifier">exists</span> = <span class="ruby-keyword kw">false</span>
+794:               <span class="ruby-keyword kw">break</span>
+795:             <span class="ruby-keyword kw">end</span>
+796:             <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+797:           <span class="ruby-keyword kw">end</span>
+798:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exists</span>
+799:             <span class="ruby-identifier">k</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">a_column_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+800:               <span class="ruby-identifier">a</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">k</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">i</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">k</span>]
+801:             <span class="ruby-keyword kw">end</span>
+802:             <span class="ruby-identifier">akk</span> = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>]
+803:           <span class="ruby-keyword kw">else</span>
+804:             <span class="ruby-keyword kw">next</span>
+805:           <span class="ruby-keyword kw">end</span>
+806:         <span class="ruby-keyword kw">end</span>
+807:       <span class="ruby-keyword kw">end</span>
+808: 
+809:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> (<span class="ruby-identifier">k</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">..</span>(<span class="ruby-identifier">a_row_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+810:         <span class="ruby-identifier">q</span> = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>].<span class="ruby-identifier">quo</span>(<span class="ruby-identifier">akk</span>)
+811:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">j</span> <span class="ruby-keyword kw">in</span> (<span class="ruby-identifier">k</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">..</span>(<span class="ruby-identifier">a_column_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+812:           <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">q</span>
+813:         <span class="ruby-keyword kw">end</span>
+814:       <span class="ruby-keyword kw">end</span>
+815:       <span class="ruby-identifier">rank</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+816:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">k</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">a_column_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+817:     <span class="ruby-keyword kw">end</span>
+818:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rank</span>
+819:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

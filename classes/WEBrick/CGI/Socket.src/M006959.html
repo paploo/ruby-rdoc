@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>peer_cert_chain (WEBrick::CGI::Socket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/cgi.rb, line 233</span>
+233:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">peer_cert_chain</span>
+234:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+235:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;SSL_CLIENT_CERT_CHAIN_0&quot;</span>]
+236:           <span class="ruby-identifier">keys</span> = <span class="ruby-ivar">@env</span>.<span class="ruby-identifier">keys</span>
+237:           <span class="ruby-identifier">certs</span> = <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+238:             <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^SSL_CLIENT_CERT_CHAIN_\d+$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">k</span>
+239:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pem</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-identifier">k</span>]
+240:                 <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pem</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">pem</span>.<span class="ruby-identifier">empty?</span>
+241:               <span class="ruby-keyword kw">end</span>
+242:             <span class="ruby-keyword kw">end</span>
+243:           }
+244:           <span class="ruby-identifier">certs</span>.<span class="ruby-identifier">compact</span>
+245:         <span class="ruby-keyword kw">end</span>
+246:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,879 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: DRb::DRbServer [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">DRb::DRbServer</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/drb/drb_rb.html">
+
+                lib/drb/drb.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/drb/invokemethod_rb.html">
+
+                lib/drb/invokemethod.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="../Class.html">Class</a> representing a drb server instance.
+</p>
+<p>
+A <a href="DRbServer.html">DRbServer</a> must be running in the local
+process before any incoming dRuby calls can be accepted, or any local
+objects can be passed as dRuby references to remote processes, even if
+those local objects are never actually called remotely. You do not need to
+start a <a href="DRbServer.html">DRbServer</a> in the local process if you
+are only making outgoing dRuby calls passing marshalled parameters.
+</p>
+<p>
+Unless multiple servers are being used, the local <a
+href="DRbServer.html">DRbServer</a> is normally started by calling <a
+href="../DRb.html#M003264">DRb.start_service</a>.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M003358">alive?</a>&nbsp;&nbsp;
+
+        <a href="#M003365">any_to_s</a>&nbsp;&nbsp;
+
+        <a href="#M003366">check_insecure_method</a>&nbsp;&nbsp;
+
+        <a href="#M003350">default_acl</a>&nbsp;&nbsp;
+
+        <a href="#M003348">default_argc_limit</a>&nbsp;&nbsp;
+
+        <a href="#M003351">default_id_conv</a>&nbsp;&nbsp;
+
+        <a href="#M003349">default_load_limit</a>&nbsp;&nbsp;
+
+        <a href="#M003352">default_safe_level</a>&nbsp;&nbsp;
+
+        <a href="#M003364">insecure_method?</a>&nbsp;&nbsp;
+
+        <a href="#M003362">kill_sub_thread</a>&nbsp;&nbsp;
+
+        <a href="#M003367">main_loop</a>&nbsp;&nbsp;
+
+        <a href="#M003355">new</a>&nbsp;&nbsp;
+
+        <a href="#M003363">run</a>&nbsp;&nbsp;
+
+        <a href="#M003359">stop_service</a>&nbsp;&nbsp;
+
+        <a href="#M003361">to_id</a>&nbsp;&nbsp;
+
+        <a href="#M003360">to_obj</a>&nbsp;&nbsp;
+
+        <a href="#M003357">verbose</a>&nbsp;&nbsp;
+
+        <a href="#M003354">verbose</a>&nbsp;&nbsp;
+
+        <a href="#M003356">verbose=</a>&nbsp;&nbsp;
+
+        <a href="#M003353">verbose=</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="DRbServer/InvokeMethod18Mixin.html" class="link">DRb::DRbServer::InvokeMethod18Mixin</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">INSECURE_METHOD</td>
+          <td>=</td>
+          <td class="context-item-value">[       :__send__     ]</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+<a href="../List.html">List</a> of insecure methods.
+
+<p>
+These methods are not callable via dRuby.
+</p>
+</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">config</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The configuration of this <a href="DRbServer.html">DRbServer</a>
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">front</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The front object of the <a href="DRbServer.html">DRbServer</a>.
+
+<p>
+This object receives remote method calls made on the server&#8217;s <a
+href="../URI.html">URI</a> alone, with an object id.
+</p>
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">safe_level</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">thread</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The main thread of this <a href="DRbServer.html">DRbServer</a>.
+
+<p>
+This is the thread that listens for and accepts connections from clients,
+not that handles each client&#8217;s request-response session.
+</p>
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">uri</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+The <a href="../URI.html">URI</a> of this <a
+href="DRbServer.html">DRbServer</a>.
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M003350" class="method-detail">
+        <a name="M003350"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003350.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003350.html');return false;">
+
+          <span class="method-name">default_acl</span><span class="method-args">(acl)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the default value for the :acl option.
+</p>
+<p>
+See new(). The initial default value is nil.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003348" class="method-detail">
+        <a name="M003348"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003348.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003348.html');return false;">
+
+          <span class="method-name">default_argc_limit</span><span class="method-args">(argc)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the default value for the :argc_limit option.
+</p>
+<p>
+See new(). The initial default value is 256.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003351" class="method-detail">
+        <a name="M003351"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003351.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003351.html');return false;">
+
+          <span class="method-name">default_id_conv</span><span class="method-args">(idconv)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the default value for the :id_conv option.
+</p>
+<p>
+See new(). The initial default value is a <a
+href="DRbIdConv.html">DRbIdConv</a> instance.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003349" class="method-detail">
+        <a name="M003349"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003349.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003349.html');return false;">
+
+          <span class="method-name">default_load_limit</span><span class="method-args">(sz)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the default value for the :load_limit option.
+</p>
+<p>
+See new(). The initial default value is 25 MB.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003352" class="method-detail">
+        <a name="M003352"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003352.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003352.html');return false;">
+
+          <span class="method-name">default_safe_level</span><span class="method-args">(level)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003355" class="method-detail">
+        <a name="M003355"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003355.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003355.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(uri=nil, front=nil, config_or_acl=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Create a new <a href="DRbServer.html">DRbServer</a> instance.
+</p>
+<p>
+<tt>uri</tt> is the <a href="../URI.html">URI</a> to bind to. This is
+normally of the form &#8216;druby://<hostname>:<port>&#8217; where
+<hostname> is a hostname of the local machine. If nil, then the
+system&#8217;s default hostname will be bound to, on a port selected by the
+system; these value can be retrieved from the <tt>uri</tt> attribute.
+&#8216;druby:&#8217; specifies the default dRuby transport protocol:
+another protocol, such as &#8216;drbunix:&#8217;, can be specified instead.
+</p>
+<p>
+<tt>front</tt> is the front object for the server, that is, the object to
+which remote method calls on the server will be passed. If nil, then the
+server will not accept remote method calls.
+</p>
+<p>
+If <tt>config_or_acl</tt> is a hash, it is the configuration to use for
+this server. The following options are recognised:
+</p>
+<table>
+<tr><td valign="top">:idconv :</td><td>an id-to-object conversion object. This defaults to an instance of the
+class <a href="DRbIdConv.html">DRb::DRbIdConv</a>.
+
+</td></tr>
+<tr><td valign="top">:verbose :</td><td>if true, all unsuccessful remote calls on objects in the server will be
+logged to $stdout. false by default.
+
+</td></tr>
+<tr><td valign="top">:tcp_acl :</td><td>the access control list for this server. See the <a
+href="../ACL.html">ACL</a> class from the main dRuby distribution.
+
+</td></tr>
+<tr><td valign="top">:load_limit :</td><td>the maximum message size in bytes accepted by the server. Defaults to 25 MB
+(26214400).
+
+</td></tr>
+<tr><td valign="top">:argc_limit :</td><td>the maximum number of arguments to a remote method accepted by the server.
+Defaults to 256.
+
+</td></tr>
+</table>
+<p>
+The default values of these options can be modified on a class-wide basis
+by the class methods <a
+href="DRbServer.html#M003348">default_argc_limit</a>, <a
+href="DRbServer.html#M003349">default_load_limit</a>, <a
+href="DRbServer.html#M003350">default_acl</a>, <a
+href="DRbServer.html#M003351">default_id_conv</a>, and <a
+href="DRbServer.html#M003353">verbose=</a>
+</p>
+<p>
+If <tt>config_or_acl</tt> is not a hash, but is not nil, it is assumed to
+be the access control list for this server. See the :tcp_acl option for
+more details.
+</p>
+<p>
+If no other server is currently set as the primary server, this will become
+the primary server.
+</p>
+<p>
+The server will immediately start running in its own thread.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003354" class="method-detail">
+        <a name="M003354"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003354.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003354.html');return false;">
+
+          <span class="method-name">verbose</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Get the default value of the :verbose option.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003353" class="method-detail">
+        <a name="M003353"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003353.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003353.html');return false;">
+
+          <span class="method-name">verbose=</span><span class="method-args">(on)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the default value of the :verbose option.
+</p>
+<p>
+See new(). The initial default value is false.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M003358" class="method-detail">
+        <a name="M003358"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003358.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003358.html');return false;">
+
+          <span class="method-name">alive?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Is this server alive?
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003366" class="method-detail">
+        <a name="M003366"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003366.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003366.html');return false;">
+
+          <span class="method-name">check_insecure_method</span><span class="method-args">(obj, msg_id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Check that a method is callable via dRuby.
+</p>
+<p>
+<tt>obj</tt> is the object we want to invoke the method on. <tt>msg_id</tt>
+is the method name, as a <a href="../Symbol.html">Symbol</a>.
+</p>
+<p>
+If the method is an insecure method (see <a
+href="DRbServer.html#M003364">insecure_method?</a>) a <a
+href="../SecurityError.html">SecurityError</a> is thrown. If the method is
+private or undefined, a <a href="../NameError.html">NameError</a> is
+thrown.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003359" class="method-detail">
+        <a name="M003359"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003359.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003359.html');return false;">
+
+          <span class="method-name">stop_service</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Stop this server.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003361" class="method-detail">
+        <a name="M003361"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003361.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003361.html');return false;">
+
+          <span class="method-name">to_id</span><span class="method-args">(obj)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Convert a local object to a dRuby reference.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003360" class="method-detail">
+        <a name="M003360"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003360.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003360.html');return false;">
+
+          <span class="method-name">to_obj</span><span class="method-args">(ref)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Convert a dRuby reference to the local object it refers to.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003357" class="method-detail">
+        <a name="M003357"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003357.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003357.html');return false;">
+
+          <span class="method-name">verbose</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Get whether the server is in verbose mode.
+</p>
+<p>
+In verbose mode, failed calls are logged to stdout.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003356" class="method-detail">
+        <a name="M003356"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003356.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003356.html');return false;">
+
+          <span class="method-name">verbose=</span><span class="method-args">(v)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> whether to operate in verbose mode.
+</p>
+<p>
+In verbose mode, failed calls are logged to stdout.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M003365" class="method-detail">
+        <a name="M003365"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003365.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003365.html');return false;">
+
+          <span class="method-name">any_to_s</span><span class="method-args">(obj)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Coerce an object to a string, providing our own representation if to_s is
+not defined for the object.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003364" class="method-detail">
+        <a name="M003364"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003364.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003364.html');return false;">
+
+          <span class="method-name">insecure_method?</span><span class="method-args">(msg_id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Has a method been included in the list of insecure methods?
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003362" class="method-detail">
+        <a name="M003362"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003362.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003362.html');return false;">
+
+          <span class="method-name">kill_sub_thread</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003367" class="method-detail">
+        <a name="M003367"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003367.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003367.html');return false;">
+
+          <span class="method-name">main_loop</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The main loop performed by a DRbServer&#8217;s internal thread.
+</p>
+<p>
+Accepts a connection from a client, and starts up its own thread to handle
+it. This thread loops, receiving requests from the client, invoking them on
+a local object, and returning responses, until the client closes the
+connection or a local method call fails.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003363" class="method-detail">
+        <a name="M003363"></a>
+
+        <div class="method-heading">
+
+          <a href="DRbServer.src/M003363.html" target="Code" class="method-signature"
+            onclick="popupCode('DRbServer.src/M003363.html');return false;">
+
+          <span class="method-name">run</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

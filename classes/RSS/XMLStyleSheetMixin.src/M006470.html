@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>xml_stylesheet_pi (RSS::XMLStyleSheetMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/xml-stylesheet.rb, line 13</span>
+13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xml_stylesheet_pi</span>
+14:       <span class="ruby-identifier">xsss</span> = <span class="ruby-ivar">@xml_stylesheets</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">xss</span><span class="ruby-operator">|</span>
+15:         <span class="ruby-identifier">pi</span> = <span class="ruby-identifier">xss</span>.<span class="ruby-identifier">to_s</span>
+16:         <span class="ruby-identifier">pi</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\s*\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">pi</span>
+17:         <span class="ruby-identifier">pi</span>
+18:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">compact</span>
+19:       <span class="ruby-identifier">xsss</span>.<span class="ruby-identifier">push</span>(<span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">xsss</span>.<span class="ruby-identifier">empty?</span>
+20:       <span class="ruby-identifier">xsss</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+21:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

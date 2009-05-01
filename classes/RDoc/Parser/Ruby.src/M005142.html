@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_attr_accessor (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1790</span>
+1790:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_attr_accessor</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">single</span>, <span class="ruby-identifier">tk</span>, <span class="ruby-identifier">comment</span>)
+1791:     <span class="ruby-identifier">args</span> = <span class="ruby-identifier">parse_symbol_arg</span>
+1792:     <span class="ruby-identifier">read</span> = <span class="ruby-identifier">get_tkread</span>
+1793:     <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;?&quot;</span>
+1794: 
+1795:     <span class="ruby-comment cmt"># If nodoc is given, don't document any of them</span>
+1796: 
+1797:     <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">CodeObject</span>.<span class="ruby-identifier">new</span>
+1798:     <span class="ruby-identifier">read_documentation_modifiers</span> <span class="ruby-identifier">tmp</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">ATTR_MODIFIERS</span>
+1799:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">document_self</span>
+1800: 
+1801:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">name</span>
+1802:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;attr_reader&quot;</span>   <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;R&quot;</span>
+1803:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;attr_writer&quot;</span>   <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;W&quot;</span>
+1804:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;attr_accessor&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;RW&quot;</span>
+1805:     <span class="ruby-keyword kw">else</span>
+1806:       <span class="ruby-identifier">rw</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">extra_accessor_flags</span>[<span class="ruby-identifier">tk</span>.<span class="ruby-identifier">name</span>]
+1807:       <span class="ruby-identifier">rw</span> = <span class="ruby-value str">'?'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rw</span>.<span class="ruby-identifier">nil?</span>
+1808:     <span class="ruby-keyword kw">end</span>
+1809: 
+1810:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">name</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">args</span>
+1811:       <span class="ruby-identifier">att</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Attr</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">get_tkread</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">rw</span>, <span class="ruby-identifier">comment</span>
+1812:       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_attribute</span> <span class="ruby-identifier">att</span>
+1813:     <span class="ruby-keyword kw">end</span>
+1814:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

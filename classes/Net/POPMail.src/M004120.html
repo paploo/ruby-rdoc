@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pop (Net::POPMail)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/pop.rb, line 780</span>
+780:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pop</span>( <span class="ruby-identifier">dest</span> = <span class="ruby-value str">''</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> ) <span class="ruby-comment cmt"># :yield: message_chunk</span>
+781:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+782:         <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">retr</span>(<span class="ruby-ivar">@number</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+783:         <span class="ruby-keyword kw">nil</span>
+784:       <span class="ruby-keyword kw">else</span>
+785:         <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">retr</span>(<span class="ruby-ivar">@number</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">chunk</span><span class="ruby-operator">|</span>
+786:           <span class="ruby-identifier">dest</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chunk</span>
+787:         <span class="ruby-keyword kw">end</span>
+788:         <span class="ruby-identifier">dest</span>
+789:       <span class="ruby-keyword kw">end</span>
+790:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

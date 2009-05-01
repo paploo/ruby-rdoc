@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_response (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1036</span>
+1036:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_response</span>
+1037:       <span class="ruby-identifier">buff</span> = <span class="ruby-value str">&quot;&quot;</span>
+1038:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+1039:         <span class="ruby-identifier">s</span> = <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">gets</span>(<span class="ruby-constant">CRLF</span>)
+1040:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">s</span>
+1041:         <span class="ruby-identifier">buff</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">s</span>)
+1042:         <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\{(\d+)\}\r\n/n</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">s</span>
+1043:           <span class="ruby-identifier">s</span> = <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>)
+1044:           <span class="ruby-identifier">buff</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">s</span>)
+1045:         <span class="ruby-keyword kw">else</span>
+1046:           <span class="ruby-keyword kw">break</span>
+1047:         <span class="ruby-keyword kw">end</span>
+1048:       <span class="ruby-keyword kw">end</span>
+1049:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buff</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+1050:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@debug</span>
+1051:         <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">buff</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^/n</span>, <span class="ruby-value str">&quot;S: &quot;</span>))
+1052:       <span class="ruby-keyword kw">end</span>
+1053:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">buff</span>)
+1054:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>lock (Mutex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    mutex.lock  =&gt; true or false
+ *
+ * Attempts to grab the lock and waits if it isn't available.
+ * Raises +ThreadError+ if +mutex+ was locked by the current thread.
+ */
+VALUE
+rb_mutex_lock(VALUE self)
+{
+
+    if (rb_mutex_trylock(self) == Qfalse) {
+        mutex_t *mutex;
+        rb_thread_t *th = GET_THREAD();
+        GetMutexPtr(self, mutex);
+
+        if (mutex-&gt;th == GET_THREAD()) {
+            rb_raise(rb_eThreadError, &quot;deadlock; recursive locking&quot;);
+        }
+
+        while (mutex-&gt;th != th) {
+            int interrupted;
+            enum rb_thread_status prev_status = th-&gt;status;
+            int last_thread = 0;
+            struct rb_unblock_callback oldubf;
+
+            set_unblock_function(th, lock_interrupt, mutex, &amp;oldubf);
+            th-&gt;status = THREAD_STOPPED_FOREVER;
+            th-&gt;vm-&gt;sleeper++;
+            th-&gt;locking_mutex = self;
+            if (vm_living_thread_num(th-&gt;vm) == th-&gt;vm-&gt;sleeper) {
+                last_thread = 1;
+            }
+
+            th-&gt;transition_for_lock = 1;
+            BLOCKING_REGION_CORE({
+                interrupted = lock_func(th, mutex, last_thread);
+            });
+            th-&gt;transition_for_lock = 0;
+            remove_signal_thread_list(th);
+            reset_unblock_function(th, &amp;oldubf);
+
+            th-&gt;locking_mutex = Qfalse;
+            if (mutex-&gt;th &amp;&amp; interrupted == 2) {
+                rb_check_deadlock(th-&gt;vm);
+            }
+            if (th-&gt;status == THREAD_STOPPED_FOREVER) {
+                th-&gt;status = prev_status;
+            }
+            th-&gt;vm-&gt;sleeper--;
+
+            if (mutex-&gt;th == th) mutex_locked(th, self);
+
+            if (interrupted) {
+                RUBY_VM_CHECK_INTS();
+            }
+        }
+    }
+    return self;
+}</pre>
+</body>
+</html>

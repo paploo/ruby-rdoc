@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: RSS::Maker [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">RSS::Maker</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/rss/maker/0_9_rb.html">
+
+                lib/rss/maker/0.9.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/1_0_rb.html">
+
+                lib/rss/maker/1.0.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/2_0_rb.html">
+
+                lib/rss/maker/2.0.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/atom_rb.html">
+
+                lib/rss/maker/atom.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/base_rb.html">
+
+                lib/rss/maker/base.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/content_rb.html">
+
+                lib/rss/maker/content.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/dublincore_rb.html">
+
+                lib/rss/maker/dublincore.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/entry_rb.html">
+
+                lib/rss/maker/entry.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/feed_rb.html">
+
+                lib/rss/maker/feed.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/image_rb.html">
+
+                lib/rss/maker/image.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/itunes_rb.html">
+
+                lib/rss/maker/itunes.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/slash_rb.html">
+
+                lib/rss/maker/slash.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/syndication_rb.html">
+
+                lib/rss/maker/syndication.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/taxonomy_rb.html">
+
+                lib/rss/maker/taxonomy.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker/trackback_rb.html">
+
+                lib/rss/maker/trackback.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/rss/maker_rb.html">
+
+                lib/rss/maker.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M006048">add_maker</a>&nbsp;&nbsp;
+
+        <a href="#M006046">make</a>&nbsp;&nbsp;
+
+        <a href="#M006047">maker</a>&nbsp;&nbsp;
+
+        <a href="#M006050">makers</a>&nbsp;&nbsp;
+
+        <a href="#M006049">versions</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Maker/Atom.html" class="link">RSS::Maker::Atom</a><br />
+Module <a href="Maker/AtomCategory.html" class="link">RSS::Maker::AtomCategory</a><br />
+Module <a href="Maker/AtomGenerator.html" class="link">RSS::Maker::AtomGenerator</a><br />
+Module <a href="Maker/AtomLink.html" class="link">RSS::Maker::AtomLink</a><br />
+Module <a href="Maker/AtomLogo.html" class="link">RSS::Maker::AtomLogo</a><br />
+Module <a href="Maker/AtomPersonConstructBase.html" class="link">RSS::Maker::AtomPersonConstructBase</a><br />
+Module <a href="Maker/AtomPersons.html" class="link">RSS::Maker::AtomPersons</a><br />
+Module <a href="Maker/AtomTextConstruct.html" class="link">RSS::Maker::AtomTextConstruct</a><br />
+Module <a href="Maker/AtomTextConstructBase.html" class="link">RSS::Maker::AtomTextConstructBase</a><br />
+Module <a href="Maker/ContentModel.html" class="link">RSS::Maker::ContentModel</a><br />
+Module <a href="Maker/DublinCoreModel.html" class="link">RSS::Maker::DublinCoreModel</a><br />
+Module <a href="Maker/ITunesBaseModel.html" class="link">RSS::Maker::ITunesBaseModel</a><br />
+Module <a href="Maker/ITunesChannelModel.html" class="link">RSS::Maker::ITunesChannelModel</a><br />
+Module <a href="Maker/ITunesItemModel.html" class="link">RSS::Maker::ITunesItemModel</a><br />
+Module <a href="Maker/ImageFaviconModel.html" class="link">RSS::Maker::ImageFaviconModel</a><br />
+Module <a href="Maker/ImageItemModel.html" class="link">RSS::Maker::ImageItemModel</a><br />
+Module <a href="Maker/SetupDefaultDate.html" class="link">RSS::Maker::SetupDefaultDate</a><br />
+Module <a href="Maker/SlashModel.html" class="link">RSS::Maker::SlashModel</a><br />
+Module <a href="Maker/SyndicationModel.html" class="link">RSS::Maker::SyndicationModel</a><br />
+Module <a href="Maker/TaxonomyTopicModel.html" class="link">RSS::Maker::TaxonomyTopicModel</a><br />
+Module <a href="Maker/TaxonomyTopicsModel.html" class="link">RSS::Maker::TaxonomyTopicsModel</a><br />
+Module <a href="Maker/TrackBackModel.html" class="link">RSS::Maker::TrackBackModel</a><br />
+Class <a href="Maker/Base.html" class="link">RSS::Maker::Base</a><br />
+Class <a href="Maker/ChannelBase.html" class="link">RSS::Maker::ChannelBase</a><br />
+Class <a href="Maker/ImageBase.html" class="link">RSS::Maker::ImageBase</a><br />
+Class <a href="Maker/ItemsBase.html" class="link">RSS::Maker::ItemsBase</a><br />
+Class <a href="Maker/RSS09.html" class="link">RSS::Maker::RSS09</a><br />
+Class <a href="Maker/RSS10.html" class="link">RSS::Maker::RSS10</a><br />
+Class <a href="Maker/RSS20.html" class="link">RSS::Maker::RSS20</a><br />
+Class <a href="Maker/RSSBase.html" class="link">RSS::Maker::RSSBase</a><br />
+Class <a href="Maker/TextinputBase.html" class="link">RSS::Maker::TextinputBase</a><br />
+Class <a href="Maker/XMLStyleSheets.html" class="link">RSS::Maker::XMLStyleSheets</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MAKERS</td>
+          <td>=</td>
+          <td class="context-item-value">{}</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M006048" class="method-detail">
+        <a name="M006048"></a>
+
+        <div class="method-heading">
+
+          <a href="Maker.src/M006048.html" target="Code" class="method-signature"
+            onclick="popupCode('Maker.src/M006048.html');return false;">
+
+          <span class="method-name">add_maker</span><span class="method-args">(version, normalized_version, maker)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006046" class="method-detail">
+        <a name="M006046"></a>
+
+        <div class="method-heading">
+
+          <a href="Maker.src/M006046.html" target="Code" class="method-signature"
+            onclick="popupCode('Maker.src/M006046.html');return false;">
+
+          <span class="method-name">make</span><span class="method-args">(version, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006047" class="method-detail">
+        <a name="M006047"></a>
+
+        <div class="method-heading">
+
+          <a href="Maker.src/M006047.html" target="Code" class="method-signature"
+            onclick="popupCode('Maker.src/M006047.html');return false;">
+
+          <span class="method-name">maker</span><span class="method-args">(version)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006050" class="method-detail">
+        <a name="M006050"></a>
+
+        <div class="method-heading">
+
+          <a href="Maker.src/M006050.html" target="Code" class="method-signature"
+            onclick="popupCode('Maker.src/M006050.html');return false;">
+
+          <span class="method-name">makers</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M006049" class="method-detail">
+        <a name="M006049"></a>
+
+        <div class="method-heading">
+
+          <a href="Maker.src/M006049.html" target="Code" class="method-signature"
+            onclick="popupCode('Maker.src/M006049.html');return false;">
+
+          <span class="method-name">versions</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

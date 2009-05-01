@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>chmod (File)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     file.chmod(mode_int)   =&gt; 0
+ *  
+ *  Changes permission bits on &lt;i&gt;file&lt;/i&gt; to the bit pattern
+ *  represented by &lt;i&gt;mode_int&lt;/i&gt;. Actual effects are platform
+ *  dependent; on Unix systems, see &lt;code&gt;chmod(2)&lt;/code&gt; for details.
+ *  Follows symbolic links. Also see &lt;code&gt;File#lchmod&lt;/code&gt;.
+ *     
+ *     f = File.new(&quot;out&quot;, &quot;w&quot;);
+ *     f.chmod(0644)   #=&gt; 0
+ */
+
+static VALUE
+rb_file_chmod(VALUE obj, VALUE vmode)
+{
+    rb_io_t *fptr;
+    int mode;
+
+    rb_secure(2);
+    mode = NUM2INT(vmode);
+
+    GetOpenFile(obj, fptr);
+#ifdef HAVE_FCHMOD
+    if (fchmod(fptr-&gt;fd, mode) == -1)
+        rb_sys_fail_path(fptr-&gt;pathv);
+#else
+    if (NIL_P(fptr-&gt;pathv)) return Qnil;
+    if (chmod(RSTRING_PTR(fptr-&gt;pathv), mode) == -1)
+        rb_sys_fail_path(fptr-&gt;pathv);
+#endif
+
+    return INT2FIX(0);
+}</pre>
+</body>
+</html>

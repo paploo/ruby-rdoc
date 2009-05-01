@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copy_stream (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     IO.copy_stream(src, dst)
+ *     IO.copy_stream(src, dst, copy_length)
+ *     IO.copy_stream(src, dst, copy_length, src_offset)
+ *
+ *  IO.copy_stream copies &lt;i&gt;src&lt;/i&gt; to &lt;i&gt;dst&lt;/i&gt;.
+ *  &lt;i&gt;src&lt;/i&gt; and &lt;i&gt;dst&lt;/i&gt; is either a filename or an IO.
+ *
+ *  This method returns the number of bytes copied.
+ *
+ *  If optional arguments are not given,
+ *  the start position of the copy is
+ *  the beginning of the filename or
+ *  the current file offset of the IO.
+ *  The end position of the copy is the end of file.
+ *
+ *  If &lt;i&gt;copy_length&lt;/i&gt; is given,
+ *  No more than &lt;i&gt;copy_length&lt;/i&gt; bytes are copied.
+ *
+ *  If &lt;i&gt;src_offset&lt;/i&gt; is given,
+ *  it specifies the start position of the copy.
+ *
+ *  When &lt;i&gt;src_offset&lt;/i&gt; is specified and
+ *  &lt;i&gt;src&lt;/i&gt; is an IO,
+ *  IO.copy_stream doesn't move the current file offset.
+ *
+ */
+static VALUE
+rb_io_s_copy_stream(int argc, VALUE *argv, VALUE io)
+{
+    VALUE src, dst, length, src_offset;
+    struct copy_stream_struct st;
+
+    MEMZERO(&amp;st, struct copy_stream_struct, 1);
+
+    rb_scan_args(argc, argv, &quot;22&quot;, &amp;src, &amp;dst, &amp;length, &amp;src_offset);
+
+    st.src = src;
+    st.dst = dst;
+
+    if (NIL_P(length))
+        st.copy_length = (off_t)-1;
+    else
+        st.copy_length = NUM2OFFT(length);
+
+    if (NIL_P(src_offset))
+        st.src_offset = (off_t)-1;
+    else
+        st.src_offset = NUM2OFFT(src_offset);
+
+    rb_ensure(copy_stream_body, (VALUE)&amp;st, copy_stream_finalize, (VALUE)&amp;st);
+
+    return OFFT2NUM(st.total);
+}</pre>
+</body>
+</html>

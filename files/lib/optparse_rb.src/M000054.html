@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>make_switch (lib/optparse.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/optparse.rb, line 1063</span>
+1063:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_switch</span>(<span class="ruby-identifier">opts</span>, <span class="ruby-identifier">block</span> = <span class="ruby-keyword kw">nil</span>)
+1064:     <span class="ruby-identifier">short</span>, <span class="ruby-identifier">long</span>, <span class="ruby-identifier">nolong</span>, <span class="ruby-identifier">style</span>, <span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">conv</span>, <span class="ruby-identifier">not_pattern</span>, <span class="ruby-identifier">not_conv</span>, <span class="ruby-identifier">not_style</span> = [], [], []
+1065:     <span class="ruby-identifier">ldesc</span>, <span class="ruby-identifier">sdesc</span>, <span class="ruby-identifier">desc</span>, <span class="ruby-identifier">arg</span> = [], [], []
+1066:     <span class="ruby-identifier">default_style</span> = <span class="ruby-constant">Switch</span><span class="ruby-operator">::</span><span class="ruby-constant">NoArgument</span>
+1067:     <span class="ruby-identifier">default_pattern</span> = <span class="ruby-keyword kw">nil</span>
+1068:     <span class="ruby-identifier">klass</span> = <span class="ruby-keyword kw">nil</span>
+1069:     <span class="ruby-identifier">n</span>, <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-keyword kw">nil</span>
+1070: 
+1071:     <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+1072:       <span class="ruby-comment cmt"># argument class</span>
+1073:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pat</span>, <span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+1074:         <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">o</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1075:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">not_style</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">not_style</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">Switch</span><span class="ruby-operator">::</span><span class="ruby-constant">NoArgument</span>
+1076:           <span class="ruby-identifier">not_pattern</span>, <span class="ruby-identifier">not_conv</span> = <span class="ruby-identifier">pat</span>, <span class="ruby-identifier">c</span>
+1077:         <span class="ruby-keyword kw">else</span>
+1078:           <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">pat</span>, <span class="ruby-identifier">c</span>
+1079:         <span class="ruby-keyword kw">end</span>
+1080:       <span class="ruby-keyword kw">end</span>
+1081: 
+1082:       <span class="ruby-comment cmt"># directly specified pattern(any object possible to match)</span>
+1083:       <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span>(<span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Symbol</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">o</span>)) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:match</span>)
+1084:         <span class="ruby-identifier">pattern</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">o</span>, <span class="ruby-identifier">pattern</span>, <span class="ruby-value str">'pattern'</span>)
+1085:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:convert</span>)
+1086:           <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">:convert</span>).<span class="ruby-identifier">to_proc</span>
+1087:         <span class="ruby-keyword kw">else</span>
+1088:           <span class="ruby-identifier">conv</span> = <span class="ruby-constant">SPLAT_PROC</span>
+1089:         <span class="ruby-keyword kw">end</span>
+1090:         <span class="ruby-keyword kw">next</span>
+1091:       <span class="ruby-keyword kw">end</span>
+1092: 
+1093:       <span class="ruby-comment cmt"># anything others</span>
+1094:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">o</span>
+1095:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Proc</span>, <span class="ruby-constant">Method</span>
+1096:         <span class="ruby-identifier">block</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">o</span>, <span class="ruby-identifier">block</span>, <span class="ruby-value str">'block'</span>)
+1097:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>, <span class="ruby-constant">Hash</span>
+1098:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">pattern</span>
+1099:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">CompletingHash</span>
+1100:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+1101:           <span class="ruby-identifier">pattern</span> = <span class="ruby-constant">CompletingHash</span>.<span class="ruby-identifier">new</span>
+1102:           <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">:convert</span>).<span class="ruby-identifier">to_proc</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:convert</span>)
+1103:         <span class="ruby-keyword kw">else</span>
+1104:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;argument pattern given twice&quot;</span>
+1105:         <span class="ruby-keyword kw">end</span>
+1106:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pat</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pattern</span>[<span class="ruby-identifier">pat</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">0</span>) {<span class="ruby-identifier">pat</span>}}
+1107:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Module</span>
+1108:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;unsupported argument type: #{o}&quot;</span>, <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">filter_backtrace</span>(<span class="ruby-identifier">caller</span>(<span class="ruby-value">4</span>))
+1109:       <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">ArgumentStyle</span>.<span class="ruby-identifier">keys</span>
+1110:         <span class="ruby-identifier">style</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-constant">ArgumentStyle</span>[<span class="ruby-identifier">o</span>], <span class="ruby-identifier">style</span>, <span class="ruby-value str">'style'</span>)
+1111:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^--no-([^\[\]=\s]*)(.+)?/</span>
+1112:         <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1113:         <span class="ruby-identifier">o</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">a</span> <span class="ruby-value">? </span><span class="ruby-constant">Object</span> <span class="ruby-operator">:</span> <span class="ruby-constant">TrueClass</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1114:         <span class="ruby-identifier">not_pattern</span>, <span class="ruby-identifier">not_conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">not_style</span>
+1115:         <span class="ruby-identifier">not_style</span> = (<span class="ruby-identifier">not_style</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_style</span>).<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">a</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>
+1116:         <span class="ruby-identifier">default_style</span> = <span class="ruby-constant">Switch</span><span class="ruby-operator">::</span><span class="ruby-constant">NoArgument</span>
+1117:         <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-constant">FalseClass</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1118:         <span class="ruby-identifier">ldesc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;--no-#{q}&quot;</span>
+1119:         <span class="ruby-identifier">long</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'no-'</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">q</span> = <span class="ruby-identifier">q</span>.<span class="ruby-identifier">downcase</span>)
+1120:         <span class="ruby-identifier">nolong</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span>
+1121:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^--\[no-\]([^\[\]=\s]*)(.+)?/</span>
+1122:         <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1123:         <span class="ruby-identifier">o</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">a</span> <span class="ruby-value">? </span><span class="ruby-constant">Object</span> <span class="ruby-operator">:</span> <span class="ruby-constant">TrueClass</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1124:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>
+1125:           <span class="ruby-identifier">default_style</span> = <span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">a</span>)
+1126:           <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1127:         <span class="ruby-keyword kw">end</span>
+1128:         <span class="ruby-identifier">ldesc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;--[no-]#{q}&quot;</span>
+1129:         <span class="ruby-identifier">long</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">o</span> = <span class="ruby-identifier">q</span>.<span class="ruby-identifier">downcase</span>)
+1130:         <span class="ruby-identifier">not_pattern</span>, <span class="ruby-identifier">not_conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-constant">FalseClass</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">not_style</span>
+1131:         <span class="ruby-identifier">not_style</span> = <span class="ruby-constant">Switch</span><span class="ruby-operator">::</span><span class="ruby-constant">NoArgument</span>
+1132:         <span class="ruby-identifier">nolong</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'no-'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">o</span>
+1133:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^--([^\[\]=\s]*)(.+)?/</span>
+1134:         <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1135:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>
+1136:           <span class="ruby-identifier">o</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-constant">NilClass</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1137:           <span class="ruby-identifier">default_style</span> = <span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">a</span>)
+1138:           <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1139:         <span class="ruby-keyword kw">end</span>
+1140:         <span class="ruby-identifier">ldesc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;--#{q}&quot;</span>
+1141:         <span class="ruby-identifier">long</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">o</span> = <span class="ruby-identifier">q</span>.<span class="ruby-identifier">downcase</span>)
+1142:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^-(\[\^?\]?(?:[^\\\]]|\\.)*\])(.+)?/</span>
+1143:         <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1144:         <span class="ruby-identifier">o</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-constant">Object</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1145:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>
+1146:           <span class="ruby-identifier">default_style</span> = <span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">a</span>)
+1147:           <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1148:         <span class="ruby-keyword kw">end</span>
+1149:         <span class="ruby-identifier">sdesc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;-#{q}&quot;</span>
+1150:         <span class="ruby-identifier">short</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">q</span>)
+1151:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^-(.)(.+)?/</span>
+1152:         <span class="ruby-identifier">q</span>, <span class="ruby-identifier">a</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1153:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>
+1154:           <span class="ruby-identifier">o</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-constant">NilClass</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-value str">'type'</span>)
+1155:           <span class="ruby-identifier">default_style</span> = <span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">a</span>)
+1156:           <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1157:         <span class="ruby-keyword kw">end</span>
+1158:         <span class="ruby-identifier">sdesc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;-#{q}&quot;</span>
+1159:         <span class="ruby-identifier">short</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span>
+1160:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^=/</span>
+1161:         <span class="ruby-identifier">style</span> = <span class="ruby-identifier">notwice</span>(<span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">guess</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-identifier">o</span>), <span class="ruby-identifier">style</span>, <span class="ruby-value str">'style'</span>)
+1162:         <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-constant">Object</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1163:       <span class="ruby-keyword kw">else</span>
+1164:         <span class="ruby-identifier">desc</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">o</span>)
+1165:       <span class="ruby-keyword kw">end</span>
+1166:     <span class="ruby-keyword kw">end</span>
+1167: 
+1168:     <span class="ruby-identifier">default_pattern</span>, <span class="ruby-identifier">conv</span> = <span class="ruby-identifier">search</span>(<span class="ruby-identifier">:atype</span>, <span class="ruby-identifier">default_style</span>.<span class="ruby-identifier">pattern</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default_pattern</span>
+1169:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">short</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">long</span>.<span class="ruby-identifier">empty?</span>)
+1170:       <span class="ruby-identifier">s</span> = (<span class="ruby-identifier">style</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_style</span>).<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pattern</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_pattern</span>,
+1171:                                        <span class="ruby-identifier">conv</span>, <span class="ruby-identifier">sdesc</span>, <span class="ruby-identifier">ldesc</span>, <span class="ruby-identifier">arg</span>, <span class="ruby-identifier">desc</span>, <span class="ruby-identifier">block</span>)
+1172:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">block</span>
+1173:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">style</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">pattern</span>
+1174:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;no switch given&quot;</span>, <span class="ruby-constant">ParseError</span>.<span class="ruby-identifier">filter_backtrace</span>(<span class="ruby-identifier">caller</span>)
+1175:       <span class="ruby-keyword kw">end</span>
+1176:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">desc</span>
+1177:     <span class="ruby-keyword kw">else</span>
+1178:       <span class="ruby-identifier">short</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">pattern</span>
+1179:       <span class="ruby-identifier">s</span> = (<span class="ruby-identifier">style</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_style</span>).<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pattern</span>,
+1180:                                        <span class="ruby-identifier">conv</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">arg</span>, <span class="ruby-identifier">desc</span>, <span class="ruby-identifier">block</span>)
+1181:     <span class="ruby-keyword kw">end</span>
+1182:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">s</span>, <span class="ruby-identifier">short</span>, <span class="ruby-identifier">long</span>,
+1183:       (<span class="ruby-identifier">not_style</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">not_pattern</span>, <span class="ruby-identifier">not_conv</span>, <span class="ruby-identifier">sdesc</span>, <span class="ruby-identifier">ldesc</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">desc</span>, <span class="ruby-identifier">block</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">not_style</span>),
+1184:       <span class="ruby-identifier">nolong</span>
+1185:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

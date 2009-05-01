@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>delete_all (REXML::Attributes)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 1218</span>
+1218:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_all</span>( <span class="ruby-identifier">name</span> )
+1219:       <span class="ruby-identifier">rv</span> = []
+1220:       <span class="ruby-identifier">each_attribute</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">attribute</span><span class="ruby-operator">|</span> 
+1221:         <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">attribute</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">expanded_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>
+1222:       }
+1223:       <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">attr</span>.<span class="ruby-identifier">remove</span> }
+1224:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rv</span>
+1225:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

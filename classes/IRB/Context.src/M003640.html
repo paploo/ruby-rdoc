@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>use_tracer= (IRB::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/ext/tracer.rb, line 29</span>
+29:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">use_tracer=</span>(<span class="ruby-identifier">opt</span>)
+30:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opt</span>
+31:         <span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">set_get_line_procs</span>(<span class="ruby-ivar">@irb_path</span>) {
+32:           <span class="ruby-operator">|</span><span class="ruby-identifier">line_no</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">rests</span><span class="ruby-operator">|</span>
+33:           <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">line</span>(<span class="ruby-identifier">line_no</span>)
+34:         }
+35:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">opt</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@use_tracer</span>
+36:         <span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">off</span>
+37:       <span class="ruby-keyword kw">end</span>
+38:       <span class="ruby-ivar">@use_tracer</span>=<span class="ruby-identifier">opt</span>
+39:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (IPAddr)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 194</span>
+194:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+195:     <span class="ruby-identifier">str</span> = <span class="ruby-identifier">to_string</span>
+196:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">str</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ipv4?</span>
+197: 
+198:     <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\b0{1,3}([\da-f]+)\b/i</span>, <span class="ruby-value str">'\1'</span>)
+199:     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+200:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\A0:0:0:0:0:0:0:0\Z/</span>, <span class="ruby-value str">'::'</span>)
+201:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0:0:0:0:0:0\b/</span>, <span class="ruby-value str">':'</span>)
+202:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0:0:0:0:0\b/</span>, <span class="ruby-value str">':'</span>)
+203:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0:0:0:0\b/</span>, <span class="ruby-value str">':'</span>)
+204:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0:0:0\b/</span>, <span class="ruby-value str">':'</span>)
+205:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0:0\b/</span>, <span class="ruby-value str">':'</span>)
+206:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\b0:0\b/</span>, <span class="ruby-value str">':'</span>)
+207:       <span class="ruby-keyword kw">break</span>
+208:     <span class="ruby-keyword kw">end</span>
+209:     <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/:{3,}/</span>, <span class="ruby-value str">'::'</span>)
+210: 
+211:     <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A::(ffff:)?([\da-f]{1,4}):([\da-f]{1,4})\Z/i</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">str</span>
+212:       <span class="ruby-identifier">str</span> = <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'::%s%d.%d.%d.%d'</span>, <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">hex</span> <span class="ruby-operator">/</span> <span class="ruby-value">256</span>, <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">hex</span> <span class="ruby-operator">%</span> <span class="ruby-value">256</span>, <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">hex</span> <span class="ruby-operator">/</span> <span class="ruby-value">256</span>, <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">hex</span> <span class="ruby-operator">%</span> <span class="ruby-value">256</span>)
+213:     <span class="ruby-keyword kw">end</span>
+214: 
+215:     <span class="ruby-identifier">str</span>
+216:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

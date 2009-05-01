@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>chars (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  Document-method: each_char
+ *  call-seq:
+ *     str.each_char {|cstr| block }    =&gt; str
+ *  
+ *  Passes each character in &lt;i&gt;str&lt;/i&gt; to the given block.
+ *     
+ *     &quot;hello&quot;.each_char {|c| print c, ' ' }
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     h e l l o 
+ */
+
+static VALUE
+rb_str_each_char(VALUE str)
+{
+    int i, len, n;
+    const char *ptr;
+    rb_encoding *enc;
+
+    RETURN_ENUMERATOR(str, 0, 0);
+    str = rb_str_new4(str);
+    ptr = RSTRING_PTR(str);
+    len = RSTRING_LEN(str);
+    enc = rb_enc_get(str);
+    for (i = 0; i &lt; len; i += n) {
+        n = rb_enc_mbclen(ptr + i, ptr + len, enc);
+        rb_yield(rb_str_subseq(str, i, n));
+    }
+    return str;
+}</pre>
+</body>
+</html>

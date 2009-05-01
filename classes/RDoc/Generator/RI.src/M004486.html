@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>method_list (RDoc::Generator::RI)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/ri.rb, line 125</span>
+125:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_list</span>(<span class="ruby-identifier">cls</span>)
+126:     <span class="ruby-identifier">list</span> = <span class="ruby-identifier">cls</span>.<span class="ruby-identifier">method_list</span>
+127:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">show_all</span>
+128:       <span class="ruby-identifier">list</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">find_all</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+129:         <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:public</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">visibility</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:protected</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">force_documentation</span>
+130:       <span class="ruby-keyword kw">end</span>
+131:     <span class="ruby-keyword kw">end</span>
+132: 
+133:     <span class="ruby-identifier">c</span> = []
+134:     <span class="ruby-identifier">i</span> = []
+135:     <span class="ruby-identifier">list</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+136:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">singleton</span>
+137:         <span class="ruby-identifier">c</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>
+138:       <span class="ruby-keyword kw">else</span>
+139:         <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>
+140:       <span class="ruby-keyword kw">end</span>
+141:     <span class="ruby-keyword kw">end</span>
+142:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">c</span>,<span class="ruby-identifier">i</span>
+143:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

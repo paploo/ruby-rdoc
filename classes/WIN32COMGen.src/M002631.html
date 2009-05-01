@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate_propget_methods (WIN32COMGen)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/win32ole/sample/olegen.rb, line 203</span>
+203:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_propget_methods</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span> = <span class="ruby-constant">STDOUT</span>)
+204:     <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ole_methods</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">method</span><span class="ruby-operator">|</span>
+205:       <span class="ruby-identifier">method</span>.<span class="ruby-identifier">invoke_kind</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'PROPERTYGET'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">visible?</span> <span class="ruby-operator">&amp;&amp;</span>
+206:       <span class="ruby-identifier">method</span>.<span class="ruby-identifier">size_params</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+207:     }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">method</span><span class="ruby-operator">|</span>
+208:       <span class="ruby-identifier">generate_method</span>(<span class="ruby-identifier">method</span>, <span class="ruby-value str">'_getproperty'</span>, <span class="ruby-identifier">io</span>)
+209:     <span class="ruby-keyword kw">end</span>
+210:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

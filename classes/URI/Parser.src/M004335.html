@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse (URI::Parser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/common.rb, line 172</span>
+172:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">uri</span>)
+173:       <span class="ruby-identifier">scheme</span>, <span class="ruby-identifier">userinfo</span>, <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, 
+174:         <span class="ruby-identifier">registry</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">opaque</span>, <span class="ruby-identifier">query</span>, <span class="ruby-identifier">fragment</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">uri</span>)
+175: 
+176:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">scheme</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">URI</span>.<span class="ruby-identifier">scheme_list</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">scheme</span>.<span class="ruby-identifier">upcase</span>)
+177:         <span class="ruby-constant">URI</span>.<span class="ruby-identifier">scheme_list</span>[<span class="ruby-identifier">scheme</span>.<span class="ruby-identifier">upcase</span>].<span class="ruby-identifier">new</span>(<span class="ruby-identifier">scheme</span>, <span class="ruby-identifier">userinfo</span>, <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, 
+178:                                            <span class="ruby-identifier">registry</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">opaque</span>, <span class="ruby-identifier">query</span>, 
+179:                                            <span class="ruby-identifier">fragment</span>, <span class="ruby-keyword kw">self</span>)
+180:       <span class="ruby-keyword kw">else</span>
+181:         <span class="ruby-constant">Generic</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">scheme</span>, <span class="ruby-identifier">userinfo</span>, <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, 
+182:                    <span class="ruby-identifier">registry</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">opaque</span>, <span class="ruby-identifier">query</span>, 
+183:                    <span class="ruby-identifier">fragment</span>, <span class="ruby-keyword kw">self</span>)
+184:       <span class="ruby-keyword kw">end</span>
+185:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

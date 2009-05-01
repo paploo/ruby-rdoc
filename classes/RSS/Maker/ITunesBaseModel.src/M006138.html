@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_yes_clean_other_accessor (RSS::Maker::ITunesBaseModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/itunes.rb, line 46</span>
+46:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_yes_clean_other_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">full_name</span>)
+47:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">def_other_element</span>(<span class="ruby-identifier">full_name</span>)
+48:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;def \#{full_name}?\nUtils::YesCleanOther.parse(\#{full_name})\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+49:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

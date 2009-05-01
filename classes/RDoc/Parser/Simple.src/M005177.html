@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (RDoc::Parser::Simple)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/parser/simple.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">top_level</span>, <span class="ruby-identifier">file_name</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">stats</span>)
+16:     <span class="ruby-keyword kw">super</span>
+17: 
+18:     <span class="ruby-identifier">preprocess</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">PreProcess</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@file_name</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">rdoc_include</span>
+19: 
+20:     <span class="ruby-identifier">preprocess</span>.<span class="ruby-identifier">handle</span> <span class="ruby-ivar">@content</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">directive</span>, <span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+21:       <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Unrecognized directive '#{directive}' in #{@file_name}&quot;</span>
+22:     <span class="ruby-keyword kw">end</span>
+23:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (Shell::Filter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/filter.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+102:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">debug</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">debug</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>
+103:         <span class="ruby-keyword kw">super</span>
+104:       <span class="ruby-keyword kw">else</span>
+105:         <span class="ruby-identifier">to_s</span>
+106:       <span class="ruby-keyword kw">end</span>
+107:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

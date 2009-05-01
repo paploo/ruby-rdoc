@@ -1,0 +1,873 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: FileTest [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">FileTest</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/file_c.html">
+
+                file.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<tt>FileTest</tt> implements file test operations similar to those used in
+<tt>File::Stat</tt>. It exists as a standalone module, and its methods are
+also insinuated into the <tt>File</tt> class. (Note that this is not done
+by inclusion: the interpreter cheats).
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M003092">blockdev?</a>&nbsp;&nbsp;
+
+        <a href="#M003093">chardev?</a>&nbsp;&nbsp;
+
+        <a href="#M003072">directory?</a>&nbsp;&nbsp;
+
+        <a href="#M003081">executable?</a>&nbsp;&nbsp;
+
+        <a href="#M003082">executable_real?</a>&nbsp;&nbsp;
+
+        <a href="#M003073">exist?</a>&nbsp;&nbsp;
+
+        <a href="#M003074">exists?</a>&nbsp;&nbsp;
+
+        <a href="#M003083">file?</a>&nbsp;&nbsp;
+
+        <a href="#M003088">grpowned?</a>&nbsp;&nbsp;
+
+        <a href="#M003097">identical?</a>&nbsp;&nbsp;
+
+        <a href="#M003087">owned?</a>&nbsp;&nbsp;
+
+        <a href="#M003089">pipe?</a>&nbsp;&nbsp;
+
+        <a href="#M003075">readable?</a>&nbsp;&nbsp;
+
+        <a href="#M003076">readable_real?</a>&nbsp;&nbsp;
+
+        <a href="#M003095">setgid?</a>&nbsp;&nbsp;
+
+        <a href="#M003094">setuid?</a>&nbsp;&nbsp;
+
+        <a href="#M003086">size</a>&nbsp;&nbsp;
+
+        <a href="#M003085">size?</a>&nbsp;&nbsp;
+
+        <a href="#M003091">socket?</a>&nbsp;&nbsp;
+
+        <a href="#M003096">sticky?</a>&nbsp;&nbsp;
+
+        <a href="#M003090">symlink?</a>&nbsp;&nbsp;
+
+        <a href="#M003077">world_readable?</a>&nbsp;&nbsp;
+
+        <a href="#M003080">world_writable?</a>&nbsp;&nbsp;
+
+        <a href="#M003078">writable?</a>&nbsp;&nbsp;
+
+        <a href="#M003079">writable_real?</a>&nbsp;&nbsp;
+
+        <a href="#M003084">zero?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M003092" class="method-detail">
+        <a name="M003092"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003092.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003092.html');return false;">
+
+          <span class="method-name">File.blockdev?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a block device.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003093" class="method-detail">
+        <a name="M003093"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003093.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003093.html');return false;">
+
+          <span class="method-name">File.chardev?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a character device.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003072" class="method-detail">
+        <a name="M003072"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003072.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003072.html');return false;">
+
+          <span class="method-name">File.directory?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a directory, <tt>false</tt>
+otherwise.
+</p>
+<pre>
+   File.directory?(&quot;.&quot;)
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003081" class="method-detail">
+        <a name="M003081"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003081.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003081.html');return false;">
+
+          <span class="method-name">File.executable?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is executable by the effective user
+id of this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003082" class="method-detail">
+        <a name="M003082"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003082.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003082.html');return false;">
+
+          <span class="method-name">File.executable_real?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is executable by the real user id
+of this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003073" class="method-detail">
+        <a name="M003073"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003073.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003073.html');return false;">
+
+          <span class="method-name">Dir.exist?(file_name)   =>  true or false<br />
+Dir.exists?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a directory, <tt>false</tt>
+otherwise.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003074" class="method-detail">
+        <a name="M003074"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003074.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003074.html');return false;">
+
+          <span class="method-name">File.exist?(file_name)    =>  true or false<br />
+File.exists?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return <tt>true</tt> if the named file exists.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003083" class="method-detail">
+        <a name="M003083"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003083.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003083.html');return false;">
+
+          <span class="method-name">File.file?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file exists and is a regular file.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003088" class="method-detail">
+        <a name="M003088"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003088.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003088.html');return false;">
+
+          <span class="method-name">File.grpowned?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file exists and the effective group id
+of the calling process is the owner of the file. Returns <tt>false</tt> on
+Windows.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003097" class="method-detail">
+        <a name="M003097"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003097.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003097.html');return false;">
+
+          <span class="method-name">File.identical?(file_1, file_2)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named files are identical.
+</p>
+<pre>
+    open(&quot;a&quot;, &quot;w&quot;) {}
+    p File.identical?(&quot;a&quot;, &quot;a&quot;)      #=&gt; true
+    p File.identical?(&quot;a&quot;, &quot;./a&quot;)    #=&gt; true
+    File.link(&quot;a&quot;, &quot;b&quot;)
+    p File.identical?(&quot;a&quot;, &quot;b&quot;)      #=&gt; true
+    File.symlink(&quot;a&quot;, &quot;c&quot;)
+    p File.identical?(&quot;a&quot;, &quot;c&quot;)      #=&gt; true
+    open(&quot;d&quot;, &quot;w&quot;) {}
+    p File.identical?(&quot;a&quot;, &quot;d&quot;)      #=&gt; false
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003087" class="method-detail">
+        <a name="M003087"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003087.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003087.html');return false;">
+
+          <span class="method-name">File.owned?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file exists and the effective used id of
+the calling process is the owner of the file.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003089" class="method-detail">
+        <a name="M003089"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003089.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003089.html');return false;">
+
+          <span class="method-name">File.pipe?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a pipe.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003075" class="method-detail">
+        <a name="M003075"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003075.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003075.html');return false;">
+
+          <span class="method-name">File.readable?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is readable by the effective user
+id of this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003076" class="method-detail">
+        <a name="M003076"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003076.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003076.html');return false;">
+
+          <span class="method-name">File.readable_real?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is readable by the real user id of
+this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003095" class="method-detail">
+        <a name="M003095"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003095.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003095.html');return false;">
+
+          <span class="method-name">File.setgid?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file has the setgid bit set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003094" class="method-detail">
+        <a name="M003094"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003094.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003094.html');return false;">
+
+          <span class="method-name">File.setuid?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file has the setuid bit set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003086" class="method-detail">
+        <a name="M003086"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003086.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003086.html');return false;">
+
+          <span class="method-name">File.size(file_name)   => integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the size of <tt>file_name</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003085" class="method-detail">
+        <a name="M003085"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003085.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003085.html');return false;">
+
+          <span class="method-name">File.size?(file_name)   => Integer or nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>nil</tt> if <tt>file_name</tt> doesn&#8217;t exist or has zero
+size, the size of the file otherwise.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003091" class="method-detail">
+        <a name="M003091"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003091.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003091.html');return false;">
+
+          <span class="method-name">File.socket?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a socket.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003096" class="method-detail">
+        <a name="M003096"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003096.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003096.html');return false;">
+
+          <span class="method-name">File.sticky?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file has the sticky bit set.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003090" class="method-detail">
+        <a name="M003090"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003090.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003090.html');return false;">
+
+          <span class="method-name">File.symlink?(file_name)   =>  true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is a symbolic link.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003077" class="method-detail">
+        <a name="M003077"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003077.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003077.html');return false;">
+
+          <span class="method-name">File.world_readable?(file_name)   => fixnum or nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+If <em>file_name</em> is readable by others, returns an integer
+representing the file permission bits of <em>file_name</em>. Returns
+<tt>nil</tt> otherwise. The meaning of the bits is platform dependent; on
+Unix systems, see <tt>stat(2)</tt>.
+</p>
+<pre>
+   File.world_readable?(&quot;/etc/passwd&quot;)           # =&gt; 420
+   m = File.world_readable?(&quot;/etc/passwd&quot;)
+   sprintf(&quot;%o&quot;, m)                              # =&gt; &quot;644&quot;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003080" class="method-detail">
+        <a name="M003080"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003080.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003080.html');return false;">
+
+          <span class="method-name">File.world_writable?(file_name)   => fixnum or nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+If <em>file_name</em> is writable by others, returns an integer
+representing the file permission bits of <em>file_name</em>. Returns
+<tt>nil</tt> otherwise. The meaning of the bits is platform dependent; on
+Unix systems, see <tt>stat(2)</tt>.
+</p>
+<pre>
+   File.world_writable?(&quot;/tmp&quot;)                  #=&gt; 511
+   m = File.world_writable?(&quot;/tmp&quot;)
+   sprintf(&quot;%o&quot;, m)                              #=&gt; &quot;777&quot;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003078" class="method-detail">
+        <a name="M003078"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003078.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003078.html');return false;">
+
+          <span class="method-name">File.writable?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is writable by the effective user
+id of this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003079" class="method-detail">
+        <a name="M003079"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003079.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003079.html');return false;">
+
+          <span class="method-name">File.writable_real?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file is writable by the real user id of
+this process.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003084" class="method-detail">
+        <a name="M003084"></a>
+
+        <div class="method-heading">
+
+          <a href="FileTest.src/M003084.html" target="Code" class="method-signature"
+            onclick="popupCode('FileTest.src/M003084.html');return false;">
+
+          <span class="method-name">File.zero?(file_name)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> if the named file exists and has a zero size.
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

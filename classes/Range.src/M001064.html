@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>cover? (Range)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rng.cover?(val)  =&gt;  true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is between beg and end,
+ *  i.e &lt;code&gt;beg &lt;= obj &lt;= end&lt;/code&gt; (or &lt;i&gt;end&lt;/i&gt; exclusive when
+ *  &lt;code&gt;exclude_end?&lt;/code&gt; is true).
+ *     
+ *     (&quot;a&quot;..&quot;z&quot;).cover?(&quot;c&quot;)    #=&gt; true
+ *     (&quot;a&quot;..&quot;z&quot;).cover?(&quot;5&quot;)    #=&gt; false
+ */
+
+static VALUE
+range_cover(VALUE range, VALUE val)
+{
+    VALUE beg, end;
+
+    beg = RANGE_BEG(range);
+    end = RANGE_END(range);
+    if (r_le(beg, val)) {
+        if (EXCL(range)) {
+            if (r_lt(val, end))
+                return Qtrue;
+        }
+        else {
+            if (r_le(val, end))
+                return Qtrue;
+        }
+    }
+    return Qfalse;
+}</pre>
+</body>
+</html>

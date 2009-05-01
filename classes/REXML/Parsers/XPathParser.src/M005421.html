@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>EqualityExpr (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 396</span>
+396:       <span class="ruby-keyword kw">def</span> <span class="ruby-constant">EqualityExpr</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>
+397:         <span class="ruby-comment cmt">#puts &quot;EQUALITY &gt;&gt;&gt; #{path}&quot;</span>
+398:         <span class="ruby-identifier">n</span> = []
+399:         <span class="ruby-identifier">rest</span> = <span class="ruby-constant">RelationalExpr</span>( <span class="ruby-identifier">path</span>, <span class="ruby-identifier">n</span> )
+400:         <span class="ruby-comment cmt">#puts &quot;EQUALITY &lt;&lt;&lt; #{rest}&quot;</span>
+401:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rest</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">path</span>
+402:           <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">rest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*(!?=)\s*/</span>
+403:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?!</span>
+404:               <span class="ruby-identifier">n</span> = [ <span class="ruby-identifier">:neq</span>, <span class="ruby-identifier">n</span>, [] ]
+405:             <span class="ruby-keyword kw">else</span>
+406:               <span class="ruby-identifier">n</span> = [ <span class="ruby-identifier">:eq</span>, <span class="ruby-identifier">n</span>, [] ]
+407:             <span class="ruby-keyword kw">end</span>
+408:             <span class="ruby-identifier">rest</span> = <span class="ruby-constant">RelationalExpr</span>( <span class="ruby-identifier">$'</span>, <span class="ruby-identifier">n</span>[<span class="ruby-value">-1</span>] )
+409:           <span class="ruby-keyword kw">end</span>
+410:         <span class="ruby-keyword kw">end</span>
+411:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+412:           <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">n</span>)
+413:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+414:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">n</span>
+415:         <span class="ruby-keyword kw">end</span>
+416:         <span class="ruby-identifier">rest</span>
+417:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

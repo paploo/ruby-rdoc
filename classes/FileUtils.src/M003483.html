@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>remove_entry (FileUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/fileutils.rb, line 756</span>
+756:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_entry</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">force</span> = <span class="ruby-keyword kw">false</span>)
+757:     <span class="ruby-constant">Entry_</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">postorder_traverse</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ent</span><span class="ruby-operator">|</span>
+758:       <span class="ruby-keyword kw">begin</span>
+759:         <span class="ruby-identifier">ent</span>.<span class="ruby-identifier">remove</span>
+760:       <span class="ruby-keyword kw">rescue</span>
+761:         <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">force</span>
+762:       <span class="ruby-keyword kw">end</span>
+763:     <span class="ruby-keyword kw">end</span>
+764:   <span class="ruby-keyword kw">rescue</span>
+765:     <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">force</span>
+766:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (RDoc::Attr)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 993</span>
+ 993:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+ 994:       <span class="ruby-identifier">attr</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">rw</span>
+ 995:              <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'RW'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:attr_accessor</span>
+ 996:              <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'R'</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:attr_reader</span>
+ 997:              <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'W'</span>  <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:attr_writer</span>
+ 998:              <span class="ruby-keyword kw">else</span>
+ 999:                <span class="ruby-node">&quot; (#{rw})&quot;</span>
+1000:              <span class="ruby-keyword kw">end</span>
+1001: 
+1002:       <span class="ruby-value str">&quot;#&lt;%s:0x%x %s.%s :%s&gt;&quot;</span> <span class="ruby-operator">%</span> [
+1003:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>,
+1004:         <span class="ruby-identifier">parent_name</span>, <span class="ruby-identifier">attr</span>, <span class="ruby-ivar">@name</span>,
+1005:       ]
+1006:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_guid (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* 
+ *  call-seq:
+ *     WIN32OLE.create_guid
+ * 
+ *  Creates GUID.
+ *     WIN32OLE.create_guid # =&gt; {1CB530F1-F6B1-404D-BCE6-1959BF91F4A8} 
+ */
+static VALUE
+fole_s_create_guid(VALUE self)
+{
+    GUID guid;
+    HRESULT hr;
+    OLECHAR bstr[80];
+    int len = 0;
+    hr = CoCreateGuid(&amp;guid);
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;failed to create GUID&quot;);
+    }
+    len = StringFromGUID2(&amp;guid, bstr, sizeof(bstr)/sizeof(OLECHAR));
+    if (len == 0) {
+        rb_raise(rb_eRuntimeError, &quot;failed to create GUID(buffer over)&quot;);
+    }
+    return ole_wc2vstr(bstr, FALSE);
+}</pre>
+</body>
+</html>

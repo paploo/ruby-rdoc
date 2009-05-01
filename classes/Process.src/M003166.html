@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setpgid (Process)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Process.setpgid(pid, integer)   =&gt; 0
+ *
+ *  Sets the process group ID of _pid_ (0 indicates this
+ *  process) to &lt;em&gt;integer&lt;/em&gt;. Not available on all platforms.
+ */
+
+static VALUE
+proc_setpgid(VALUE obj, VALUE pid, VALUE pgrp)
+{
+#ifdef HAVE_SETPGID
+    rb_pid_t ipid, ipgrp;
+
+    rb_secure(2);
+    ipid = NUM2PIDT(pid);
+    ipgrp = NUM2PIDT(pgrp);
+
+    if (setpgid(ipid, ipgrp) &lt; 0) rb_sys_fail(0);
+    return INT2FIX(0);
+#else
+    rb_notimplement();
+#endif
+}</pre>
+</body>
+</html>

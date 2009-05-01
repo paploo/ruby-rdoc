@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>look_for_directives_in (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1724</span>
+1724:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">look_for_directives_in</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">comment</span>)
+1725:     <span class="ruby-identifier">preprocess</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">PreProcess</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@file_name</span>,
+1726:                                               <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">rdoc_include</span>)
+1727: 
+1728:     <span class="ruby-identifier">preprocess</span>.<span class="ruby-identifier">handle</span>(<span class="ruby-identifier">comment</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">directive</span>, <span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+1729:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">directive</span>
+1730:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'enddoc'</span> <span class="ruby-keyword kw">then</span>
+1731:         <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:enddoc</span>
+1732:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'main'</span> <span class="ruby-keyword kw">then</span>
+1733:         <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span> = <span class="ruby-identifier">param</span>
+1734:         <span class="ruby-value str">''</span>
+1735:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'method'</span>, <span class="ruby-value str">'singleton-method'</span> <span class="ruby-keyword kw">then</span>
+1736:         <span class="ruby-keyword kw">false</span> <span class="ruby-comment cmt"># ignore</span>
+1737:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'section'</span> <span class="ruby-keyword kw">then</span>
+1738:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">set_current_section</span>(<span class="ruby-identifier">param</span>, <span class="ruby-identifier">comment</span>)
+1739:         <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">replace</span> <span class="ruby-value str">''</span>
+1740:         <span class="ruby-keyword kw">break</span>
+1741:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'startdoc'</span> <span class="ruby-keyword kw">then</span>
+1742:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">start_doc</span>
+1743:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">force_documentation</span> = <span class="ruby-keyword kw">true</span>
+1744:         <span class="ruby-value str">''</span>
+1745:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'stopdoc'</span> <span class="ruby-keyword kw">then</span>
+1746:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">stop_doc</span>
+1747:         <span class="ruby-value str">''</span>
+1748:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'title'</span> <span class="ruby-keyword kw">then</span>
+1749:         <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">title</span> = <span class="ruby-identifier">param</span>
+1750:         <span class="ruby-value str">''</span>
+1751:       <span class="ruby-keyword kw">else</span>
+1752:         <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Unrecognized directive '#{directive}'&quot;</span>
+1753:         <span class="ruby-keyword kw">false</span>
+1754:       <span class="ruby-keyword kw">end</span>
+1755:     <span class="ruby-keyword kw">end</span>
+1756: 
+1757:     <span class="ruby-identifier">remove_private_comments</span>(<span class="ruby-identifier">comment</span>)
+1758:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

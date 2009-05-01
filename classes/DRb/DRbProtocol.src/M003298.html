@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>open (DRb::DRbProtocol)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 728</span>
+728:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">config</span>, <span class="ruby-identifier">first</span>=<span class="ruby-keyword kw">true</span>) 
+729:       <span class="ruby-ivar">@protocol</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">prot</span><span class="ruby-operator">|</span>
+730:         <span class="ruby-keyword kw">begin</span>
+731:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">prot</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">config</span>)
+732:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">DRbBadScheme</span>
+733:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">DRbConnError</span>
+734:           <span class="ruby-identifier">raise</span>(<span class="ruby-identifier">$!</span>)
+735:         <span class="ruby-keyword kw">rescue</span>
+736:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DRbConnError</span>, <span class="ruby-node">&quot;#{uri} - #{$!.inspect}&quot;</span>)
+737:         <span class="ruby-keyword kw">end</span>
+738:       <span class="ruby-keyword kw">end</span>
+739:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">config</span>[<span class="ruby-identifier">:auto_load</span>] <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">false</span>)
+740:         <span class="ruby-identifier">auto_load</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">config</span>)
+741:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">open</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">config</span>, <span class="ruby-keyword kw">false</span>)
+742:       <span class="ruby-keyword kw">end</span>
+743:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">DRbBadURI</span>, <span class="ruby-value str">'can\'t parse uri:'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">uri</span>
+744:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

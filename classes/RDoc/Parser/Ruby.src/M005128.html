@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>collect_first_comment (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1488</span>
+1488:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">collect_first_comment</span>
+1489:     <span class="ruby-identifier">skip_tkspace</span>
+1490:     <span class="ruby-identifier">res</span> = <span class="ruby-value str">''</span>
+1491:     <span class="ruby-identifier">first_line</span> = <span class="ruby-keyword kw">true</span>
+1492: 
+1493:     <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1494: 
+1495:     <span class="ruby-keyword kw">while</span> <span class="ruby-constant">TkCOMMENT</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span>
+1496:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first_line</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">text</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\A#!/</span> <span class="ruby-keyword kw">then</span>
+1497:         <span class="ruby-identifier">skip_tkspace</span>
+1498:         <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1499:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">first_line</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">text</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\A#\s*-\*-/</span> <span class="ruby-keyword kw">then</span>
+1500:         <span class="ruby-identifier">first_line</span> = <span class="ruby-keyword kw">false</span>
+1501:         <span class="ruby-identifier">skip_tkspace</span>
+1502:         <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1503:       <span class="ruby-keyword kw">else</span>
+1504:         <span class="ruby-identifier">first_line</span> = <span class="ruby-keyword kw">false</span>
+1505:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">text</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+1506:         <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1507: 
+1508:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkNL</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span> <span class="ruby-keyword kw">then</span>
+1509:           <span class="ruby-identifier">skip_tkspace</span> <span class="ruby-keyword kw">false</span>
+1510:           <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1511:         <span class="ruby-keyword kw">end</span>
+1512:       <span class="ruby-keyword kw">end</span>
+1513:     <span class="ruby-keyword kw">end</span>
+1514: 
+1515:     <span class="ruby-identifier">unget_tk</span> <span class="ruby-identifier">tk</span>
+1516: 
+1517:     <span class="ruby-identifier">res</span>
+1518:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

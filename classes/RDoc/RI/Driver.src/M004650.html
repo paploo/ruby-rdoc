@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_cache_for (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 476</span>
+476:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_cache_for</span>(<span class="ruby-identifier">klassname</span>, <span class="ruby-identifier">path</span>)
+477:     <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">class_cache</span>[<span class="ruby-identifier">klassname</span>]
+478:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">klass</span>
+479: 
+480:     <span class="ruby-identifier">method_files</span> = <span class="ruby-identifier">klass</span>[<span class="ruby-value str">&quot;sources&quot;</span>]
+481:     <span class="ruby-identifier">cache</span> = <span class="ruby-constant">OpenStructHash</span>.<span class="ruby-identifier">new</span>
+482: 
+483:     <span class="ruby-identifier">method_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+484:       <span class="ruby-identifier">system_file</span> = <span class="ruby-identifier">f</span>.<span class="ruby-identifier">index</span>(<span class="ruby-ivar">@sys_dir</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+485:       <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">f</span>), <span class="ruby-value str">&quot;*&quot;</span>)].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">yaml</span><span class="ruby-operator">|</span>
+486:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">yaml</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/yaml$/</span>
+487:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">yaml</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/cdesc-[^\/]+yaml$/</span>
+488: 
+489:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">read_yaml</span> <span class="ruby-identifier">yaml</span>
+490: 
+491:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">system_file</span> <span class="ruby-keyword kw">then</span>
+492:           <span class="ruby-identifier">method</span>[<span class="ruby-value str">&quot;source_path&quot;</span>] = <span class="ruby-node">&quot;Ruby #{RDoc::RI::Paths::VERSION}&quot;</span>
+493:         <span class="ruby-keyword kw">else</span>
+494:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">f</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">%r%gems/[\d.]+/doc/([^/]+)%</span>) <span class="ruby-keyword kw">then</span>
+495:             <span class="ruby-identifier">ext_path</span> = <span class="ruby-node">&quot;gem #{$1}&quot;</span>
+496:           <span class="ruby-keyword kw">else</span>
+497:             <span class="ruby-identifier">ext_path</span> = <span class="ruby-identifier">f</span>
+498:           <span class="ruby-keyword kw">end</span>
+499: 
+500:           <span class="ruby-identifier">method</span>[<span class="ruby-value str">&quot;source_path&quot;</span>] = <span class="ruby-identifier">ext_path</span>
+501:         <span class="ruby-keyword kw">end</span>
+502: 
+503:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">method</span>[<span class="ruby-value str">&quot;full_name&quot;</span>]
+504:         <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">method</span>
+505:       <span class="ruby-keyword kw">end</span>
+506:     <span class="ruby-keyword kw">end</span>
+507: 
+508:     <span class="ruby-identifier">write_cache</span> <span class="ruby-identifier">cache</span>, <span class="ruby-identifier">path</span>
+509:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

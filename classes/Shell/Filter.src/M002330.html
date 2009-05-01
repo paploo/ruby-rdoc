@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&gt;&gt; (Shell::Filter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shell/filter.rb, line 69</span>
+69:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;&gt;</span> (<span class="ruby-identifier">to</span>)
+70:       <span class="ruby-keyword kw">begin</span>
+71:         <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">cd</span>(<span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">pwd</span>).<span class="ruby-identifier">append</span>(<span class="ruby-identifier">to</span>, <span class="ruby-keyword kw">self</span>)
+72:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">CantApplyMethod</span>
+73:         <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CantApplyMethod</span>, <span class="ruby-value str">&quot;&gt;&gt;&quot;</span>, <span class="ruby-identifier">to</span>.<span class="ruby-identifier">class</span>
+74:       <span class="ruby-keyword kw">end</span>
+75:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

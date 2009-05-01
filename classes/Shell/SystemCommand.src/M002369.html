@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>notify (Shell::SystemCommand)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/system-command.rb, line 148</span>
+148:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">notify</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">opts</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+149:       <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">opts</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mes</span><span class="ruby-operator">|</span>
+150:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">mes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">iterator?</span>
+151: 
+152:         <span class="ruby-identifier">mes</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;%id&quot;</span>, <span class="ruby-node">&quot;#{@command}:##{@pid}&quot;</span>)
+153:         <span class="ruby-identifier">mes</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;%name&quot;</span>, <span class="ruby-node">&quot;#{@command}&quot;</span>)
+154:         <span class="ruby-identifier">mes</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;%pid&quot;</span>, <span class="ruby-node">&quot;#{@pid}&quot;</span>)
+155:         <span class="ruby-identifier">mes</span>
+156:       <span class="ruby-keyword kw">end</span>
+157:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

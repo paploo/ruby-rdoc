@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>yes_clean_other_writer (RSS::BaseModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 529</span>
+529:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">yes_clean_other_writer</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>=<span class="ruby-identifier">name</span>)
+530:       <span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;def \#{name}=(value)\nvalue = (value ? \&quot;yes\&quot; : \&quot;no\&quot;) if [true, false].include?(value)\n@\#{name} = value\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+531:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

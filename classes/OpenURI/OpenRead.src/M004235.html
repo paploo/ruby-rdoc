@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read (OpenURI::OpenRead)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/open-uri.rb, line 676</span>
+676:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">options</span>={})
+677:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">options</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+678:         <span class="ruby-identifier">str</span> = <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>
+679:         <span class="ruby-constant">Meta</span>.<span class="ruby-identifier">init</span> <span class="ruby-identifier">str</span>, <span class="ruby-identifier">f</span>
+680:         <span class="ruby-identifier">str</span>
+681:       }
+682:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

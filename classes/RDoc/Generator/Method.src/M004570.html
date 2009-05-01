@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_source_code_file (RDoc::Generator::Method)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 976</span>
+976:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_source_code_file</span>(<span class="ruby-identifier">code_body</span>)
+977:       <span class="ruby-identifier">meth_path</span> = <span class="ruby-ivar">@html_class</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/\.html$/</span>, <span class="ruby-value str">'.src'</span>)
+978:       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">meth_path</span>)
+979:       <span class="ruby-identifier">file_path</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">meth_path</span>, <span class="ruby-node">&quot;#{@seq}.html&quot;</span>
+980: 
+981:       <span class="ruby-identifier">template</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatePage</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@template</span><span class="ruby-operator">::</span><span class="ruby-constant">SRC_PAGE</span>)
+982: 
+983:       <span class="ruby-identifier">open</span> <span class="ruby-identifier">file_path</span>, <span class="ruby-value str">'w'</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+984:         <span class="ruby-identifier">values</span> = {
+985:           <span class="ruby-value str">'title'</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">index_name</span>),
+986:           <span class="ruby-value str">'code'</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">code_body</span>,
+987:           <span class="ruby-value str">'style_url'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">style_url</span>(<span class="ruby-identifier">file_path</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">css</span>),
+988:           <span class="ruby-value str">'charset'</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">charset</span>
+989:         }
+990:         <span class="ruby-identifier">template</span>.<span class="ruby-identifier">write_html_on</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">values</span>)
+991:       <span class="ruby-keyword kw">end</span>
+992: 
+993:       <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">ToHtml</span>.<span class="ruby-identifier">gen_relative_url</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">file_path</span>
+994:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>alternate (DRb::TimerIdConv::TimerHolder2)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/drb/timeridconv.rb, line 56</span>
+56:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alternate</span>
+57:         <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+58:           <span class="ruby-ivar">@gc</span> = <span class="ruby-ivar">@curr</span>       <span class="ruby-comment cmt"># GCed</span>
+59:           <span class="ruby-ivar">@curr</span> = <span class="ruby-ivar">@renew</span>
+60:           <span class="ruby-ivar">@renew</span> = {}
+61:         <span class="ruby-keyword kw">end</span>
+62:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

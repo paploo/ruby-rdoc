@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_header (WEBrick::HTTPUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httputils.rb, line 119</span>
+119:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_header</span>(<span class="ruby-identifier">raw</span>)
+120:       <span class="ruby-identifier">header</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>([].<span class="ruby-identifier">freeze</span>)
+121:       <span class="ruby-identifier">field</span> = <span class="ruby-keyword kw">nil</span>
+122:       <span class="ruby-identifier">raw</span>.<span class="ruby-identifier">each_line</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+123:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">line</span>
+124:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^([A-Za-z0-9!\#$%&amp;'*+\-.^_`|~]+):\s*(.*?)\s*\z/o</span><span class="ruby-identifier">m</span>
+125:           <span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+126:           <span class="ruby-identifier">field</span>.<span class="ruby-identifier">downcase!</span>
+127:           <span class="ruby-identifier">header</span>[<span class="ruby-identifier">field</span>] = [] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">header</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">field</span>)
+128:           <span class="ruby-identifier">header</span>[<span class="ruby-identifier">field</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span>
+129:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\s+(.*?)\s*\z/o</span><span class="ruby-identifier">m</span>
+130:           <span class="ruby-identifier">value</span> = <span class="ruby-identifier">$1</span>
+131:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">field</span>
+132:             <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;bad header '#{line.inspect}'.&quot;</span>
+133:           <span class="ruby-keyword kw">end</span>
+134:           <span class="ruby-identifier">header</span>[<span class="ruby-identifier">field</span>][<span class="ruby-value">-1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span>
+135:         <span class="ruby-keyword kw">else</span>
+136:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;bad header '#{line.inspect}'.&quot;</span>
+137:         <span class="ruby-keyword kw">end</span>
+138:       }
+139:       <span class="ruby-identifier">header</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">|</span>
+140:         <span class="ruby-identifier">values</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+141:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">strip!</span>
+142:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\s+/</span>, <span class="ruby-value str">&quot; &quot;</span>)
+143:         }
+144:       }
+145:       <span class="ruby-identifier">header</span>
+146:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

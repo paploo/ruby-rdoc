@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>identify_comment (RubyLex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 1091</span>
+1091:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">identify_comment</span>
+1092:     <span class="ruby-ivar">@ltype</span> = <span class="ruby-value str">&quot;#&quot;</span>
+1093: 
+1094:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+1095: <span class="ruby-comment cmt">#      if ch == &quot;\\&quot; #&quot;</span>
+1096: <span class="ruby-comment cmt">#       read_escape</span>
+1097: <span class="ruby-comment cmt">#      end</span>
+1098:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
+1099:         <span class="ruby-ivar">@ltype</span> = <span class="ruby-keyword kw">nil</span>
+1100:         <span class="ruby-identifier">ungetc</span>
+1101:         <span class="ruby-keyword kw">break</span>
+1102:       <span class="ruby-keyword kw">end</span>
+1103:     <span class="ruby-keyword kw">end</span>
+1104:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkCOMMENT</span>)
+1105:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>xmled_content (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 1221</span>
+1221:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xmled_content</span>
+1222:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">have_xml_content?</span>
+1223:         <span class="ruby-identifier">__send__</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">xml_getter</span>).<span class="ruby-identifier">to_s</span>
+1224:       <span class="ruby-keyword kw">else</span>
+1225:         <span class="ruby-identifier">_content</span> = <span class="ruby-identifier">content</span>
+1226:         <span class="ruby-identifier">_content</span> = [<span class="ruby-identifier">_content</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m&quot;</span>).<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">need_base64_encode?</span>
+1227:         <span class="ruby-identifier">h</span>(<span class="ruby-identifier">_content</span>)
+1228:       <span class="ruby-keyword kw">end</span>
+1229:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

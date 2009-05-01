@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>match_io (IRB::SLex::Node)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/slex.rb, line 203</span>
+203:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match_io</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">op</span> = <span class="ruby-value str">&quot;&quot;</span>)
+204:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">op</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>
+205:           <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">getc</span>
+206:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+207:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+208:           <span class="ruby-keyword kw">end</span>
+209:         <span class="ruby-keyword kw">else</span>
+210:           <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">getc_of_rests</span>
+211:         <span class="ruby-keyword kw">end</span>
+212:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span>.<span class="ruby-identifier">nil?</span>
+213:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+214:             <span class="ruby-constant">D_DETAIL</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;op1: %s\n&quot;</span>, <span class="ruby-identifier">op</span>)
+215:             <span class="ruby-ivar">@postproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+216:           <span class="ruby-keyword kw">else</span>
+217:             <span class="ruby-keyword kw">nil</span>
+218:           <span class="ruby-keyword kw">end</span>
+219:         <span class="ruby-keyword kw">else</span>
+220:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span> = <span class="ruby-ivar">@Tree</span>[<span class="ruby-identifier">ch</span>]
+221:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">match_io</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">op</span><span class="ruby-operator">+</span><span class="ruby-identifier">ch</span>)
+222:               <span class="ruby-identifier">ret</span>
+223:             <span class="ruby-keyword kw">else</span>
+224:               <span class="ruby-identifier">io</span>.<span class="ruby-identifier">ungetc</span> <span class="ruby-identifier">ch</span>
+225:               <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@postproc</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+226:                 <span class="ruby-constant">DOUT</span>.<span class="ruby-identifier">exec_if</span>{<span class="ruby-constant">D_DETAIL</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;op2: %s\n&quot;</span>, <span class="ruby-identifier">op</span>.<span class="ruby-identifier">inspect</span>}
+227:                 <span class="ruby-ivar">@postproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+228:               <span class="ruby-keyword kw">else</span>
+229:                 <span class="ruby-keyword kw">nil</span>
+230:               <span class="ruby-keyword kw">end</span>
+231:             <span class="ruby-keyword kw">end</span>
+232:           <span class="ruby-keyword kw">else</span>
+233:             <span class="ruby-identifier">io</span>.<span class="ruby-identifier">ungetc</span> <span class="ruby-identifier">ch</span>
+234:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@postproc</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@preproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+235:               <span class="ruby-constant">D_DETAIL</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;op3: %s\n&quot;</span>, <span class="ruby-identifier">op</span>)
+236:               <span class="ruby-ivar">@postproc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">io</span>)
+237:             <span class="ruby-keyword kw">else</span>
+238:               <span class="ruby-keyword kw">nil</span>
+239:             <span class="ruby-keyword kw">end</span>
+240:           <span class="ruby-keyword kw">end</span>
+241:         <span class="ruby-keyword kw">end</span>
+242:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>makepasv (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 318</span>
+318:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">makepasv</span>
+319:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">peeraddr</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;AF_INET&quot;</span>
+320:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-identifier">parse227</span>(<span class="ruby-identifier">sendcmd</span>(<span class="ruby-value str">&quot;PASV&quot;</span>))
+321:       <span class="ruby-keyword kw">else</span>
+322:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-identifier">parse229</span>(<span class="ruby-identifier">sendcmd</span>(<span class="ruby-value str">&quot;EPSV&quot;</span>))
+323:         <span class="ruby-comment cmt">#     host, port = parse228(sendcmd(&quot;LPSV&quot;))</span>
+324:       <span class="ruby-keyword kw">end</span>
+325:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>
+326:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>can_parse (RDoc::Parser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/parser.rb, line 83</span>
+83:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">can_parse</span>(<span class="ruby-identifier">file_name</span>)
+84:     <span class="ruby-identifier">parser</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parsers</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">regexp</span>,<span class="ruby-operator">|</span> <span class="ruby-identifier">regexp</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">file_name</span> }.<span class="ruby-identifier">last</span>
+85: 
+86:     <span class="ruby-comment cmt">#</span>
+87:     <span class="ruby-comment cmt"># The default parser should *NOT* parse binary files.</span>
+88:     <span class="ruby-comment cmt">#</span>
+89:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parser</span> <span class="ruby-operator">==</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span><span class="ruby-operator">::</span><span class="ruby-constant">Simple</span> <span class="ruby-keyword kw">then</span>
+90:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">binary?</span> <span class="ruby-identifier">file_name</span> <span class="ruby-keyword kw">then</span>
+91:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+92:       <span class="ruby-keyword kw">end</span>
+93:     <span class="ruby-keyword kw">end</span>
+94: 
+95:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">parser</span>
+96:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

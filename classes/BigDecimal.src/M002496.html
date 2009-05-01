@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ver (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Returns the BigDecimal version number.
+ *
+ * Ruby 1.8.0 returns 1.0.0.
+ * Ruby 1.8.1 thru 1.8.3 return 1.0.1.
+ */
+static VALUE
+BigDecimal_version(VALUE self)
+{
+    /*
+     * 1.0.0: Ruby 1.8.0
+     * 1.0.1: Ruby 1.8.1
+    */
+    return rb_str_new2(&quot;1.0.1&quot;);
+}</pre>
+</body>
+</html>

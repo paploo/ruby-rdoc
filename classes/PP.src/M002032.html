@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pp (PP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/pp.rb, line 75</span>
+75:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">PP</span>.<span class="ruby-identifier">pp</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">out</span>=<span class="ruby-identifier">$&gt;</span>, <span class="ruby-identifier">width</span>=<span class="ruby-value">79</span>)
+76:     <span class="ruby-identifier">q</span> = <span class="ruby-constant">PP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">out</span>, <span class="ruby-identifier">width</span>)
+77:     <span class="ruby-identifier">q</span>.<span class="ruby-identifier">guard_inspect_key</span> {<span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-identifier">obj</span>}
+78:     <span class="ruby-identifier">q</span>.<span class="ruby-identifier">flush</span>
+79:     <span class="ruby-comment cmt">#$pp = q</span>
+80:     <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+81:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

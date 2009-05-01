@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RDoc::Generator::HTML [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RDoc::Generator::HTML</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/rdoc/generator/html_rb.html">
+
+                lib/rdoc/generator/html.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+We&#8217;re responsible for generating all the <a
+href="HTML/HTML.html">HTML</a> files from the object tree defined in
+code_objects.rb. We generate:
+</p>
+<dl>
+<dt>files</dt><dd>an html file for each input file given. These input files appear as objects
+of class <a href="../TopLevel.html">TopLevel</a>
+
+</dd>
+<dt>classes</dt><dd>an html file for each class or module encountered. These classes are not
+grouped by file: if a file contains four classes, we&#8217;ll generate an
+html file for the file itself, and four html files for the individual
+classes.
+
+</dd>
+<dt>indices</dt><dd>we generate three indices for files, classes, and methods. These are
+displayed in a browser like window with three index panes across the top
+and the selected description below
+
+</dd>
+</dl>
+<p>
+<a href="Method.html">Method</a> descriptions appear in whatever entity
+(file, class, or module) that contains them.
+</p>
+<p>
+We generate files in a structure below a specified subdirectory, normally
+<tt>doc</tt>.
+</p>
+<pre>
+ opdir
+    |
+    |___ files
+    |       |__  per file summaries
+    |
+    |___ classes
+            |__ per class/module descriptions
+</pre>
+<p>
+<a href="HTML/HTML.html">HTML</a> is generated using the Template class.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M004449">build_indices</a>&nbsp;&nbsp;
+
+        <a href="#M004443">for</a>&nbsp;&nbsp;
+
+        <a href="#M004455">gen_an_index</a>&nbsp;&nbsp;
+
+        <a href="#M004453">gen_class_index</a>&nbsp;&nbsp;
+
+        <a href="#M004452">gen_file_index</a>&nbsp;&nbsp;
+
+        <a href="#M004451">gen_into</a>&nbsp;&nbsp;
+
+        <a href="#M004456">gen_main_index</a>&nbsp;&nbsp;
+
+        <a href="#M004454">gen_method_index</a>&nbsp;&nbsp;
+
+        <a href="#M004448">gen_sub_directories</a>&nbsp;&nbsp;
+
+        <a href="#M004445">generate</a>&nbsp;&nbsp;
+
+        <a href="#M004450">generate_html</a>&nbsp;&nbsp;
+
+        <a href="#M004457">index_to_links</a>&nbsp;&nbsp;
+
+        <a href="#M004446">load_html_template</a>&nbsp;&nbsp;
+
+        <a href="#M004458">main_url</a>&nbsp;&nbsp;
+
+        <a href="#M004444">new</a>&nbsp;&nbsp;
+
+        <a href="#M004447">write_style_sheet</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="MarkUp.html">RDoc::Generator::MarkUp</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M004443" class="method-detail">
+        <a name="M004443"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004443.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004443.html');return false;">
+
+          <span class="method-name">for</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Generator.html">Generator</a> may need to return specific
+subclasses depending on the options they are passed. Because of this we
+create them using a factory
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004444" class="method-detail">
+        <a name="M004444"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004444.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004444.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(options)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../../Set.html">Set</a> up a new <a href="HTML/HTML.html">HTML</a>
+generator. Basically all we do here is load up the correct output temlate
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M004445" class="method-detail">
+        <a name="M004445"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004445.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004445.html');return false;">
+
+          <span class="method-name">generate</span><span class="method-args">(toplevels)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Build the initial indices and output objects based on an array of <a
+href="../TopLevel.html">TopLevel</a> objects containing the extracted
+information.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M004449" class="method-detail">
+        <a name="M004449"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004449.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004449.html');return false;">
+
+          <span class="method-name">build_indices</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004455" class="method-detail">
+        <a name="M004455"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004455.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004455.html');return false;">
+
+          <span class="method-name">gen_an_index</span><span class="method-args">(collection, title, template, filename)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004453" class="method-detail">
+        <a name="M004453"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004453.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004453.html');return false;">
+
+          <span class="method-name">gen_class_index</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004452" class="method-detail">
+        <a name="M004452"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004452.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004452.html');return false;">
+
+          <span class="method-name">gen_file_index</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004451" class="method-detail">
+        <a name="M004451"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004451.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004451.html');return false;">
+
+          <span class="method-name">gen_into</span><span class="method-args">(list)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004456" class="method-detail">
+        <a name="M004456"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004456.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004456.html');return false;">
+
+          <span class="method-name">gen_main_index</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+The main index page is mostly a template frameset, but includes the initial
+page. If the <tt>--main</tt> option was given, we use this as our main
+page, otherwise we use the first file specified on the command line.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004454" class="method-detail">
+        <a name="M004454"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004454.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004454.html');return false;">
+
+          <span class="method-name">gen_method_index</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004448" class="method-detail">
+        <a name="M004448"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004448.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004448.html');return false;">
+
+          <span class="method-name">gen_sub_directories</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the comments at the top for a description of the directory structure
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004450" class="method-detail">
+        <a name="M004450"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004450.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004450.html');return false;">
+
+          <span class="method-name">generate_html</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Generate all the <a href="HTML/HTML.html">HTML</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004457" class="method-detail">
+        <a name="M004457"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004457.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004457.html');return false;">
+
+          <span class="method-name">index_to_links</span><span class="method-args">(output_path, collection)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004446" class="method-detail">
+        <a name="M004446"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004446.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004446.html');return false;">
+
+          <span class="method-name">load_html_template</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Load up the <a href="HTML/HTML.html">HTML</a> template specified in the
+options. If the template name contains a slash, use it literally
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004458" class="method-detail">
+        <a name="M004458"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004458.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004458.html');return false;">
+
+          <span class="method-name">main_url</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the url of the main page
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004447" class="method-detail">
+        <a name="M004447"></a>
+
+        <div class="method-heading">
+
+          <a href="HTML.src/M004447.html" target="Code" class="method-signature"
+            onclick="popupCode('HTML.src/M004447.html');return false;">
+
+          <span class="method-name">write_style_sheet</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Write out the style sheet used by the main frames
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

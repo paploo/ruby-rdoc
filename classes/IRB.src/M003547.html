@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>irb_abort (IRB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb.rb, line 78</span>
+78:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">irb_abort</span>(<span class="ruby-identifier">irb</span>, <span class="ruby-identifier">exception</span> = <span class="ruby-constant">Abort</span>)
+79:     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span> <span class="ruby-constant">Thread</span>
+80:       <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">context</span>.<span class="ruby-identifier">thread</span>.<span class="ruby-identifier">raise</span> <span class="ruby-identifier">exception</span>, <span class="ruby-value str">&quot;abort then interrupt!!&quot;</span>
+81:     <span class="ruby-keyword kw">else</span>
+82:       <span class="ruby-identifier">raise</span> <span class="ruby-identifier">exception</span>, <span class="ruby-value str">&quot;abort then interrupt!!&quot;</span>
+83:     <span class="ruby-keyword kw">end</span>
+84:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

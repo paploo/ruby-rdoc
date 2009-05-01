@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_shift_log (Logger::LogDevice)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 556</span>
+556:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_shift_log</span>
+557:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shift_age</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>)
+558:         <span class="ruby-comment cmt"># Note: always returns false if '0'.</span>
+559:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@filename</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@shift_age</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@dev</span>.<span class="ruby-identifier">stat</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@shift_size</span>)
+560:           <span class="ruby-identifier">shift_log_age</span>
+561:         <span class="ruby-keyword kw">end</span>
+562:       <span class="ruby-keyword kw">else</span>
+563:         <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+564:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@dev</span>.<span class="ruby-identifier">stat</span>.<span class="ruby-identifier">mtime</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">previous_period_end</span>(<span class="ruby-identifier">now</span>)
+565:           <span class="ruby-identifier">shift_log_period</span>(<span class="ruby-identifier">now</span>)
+566:         <span class="ruby-keyword kw">end</span>
+567:       <span class="ruby-keyword kw">end</span>
+568:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>errno (SystemCallError)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   system_call_error.errno   =&gt; fixnum
+ *
+ * Return this SystemCallError's error number.
+ */
+
+static VALUE
+syserr_errno(VALUE self)
+{
+    return rb_attr_get(self, rb_intern(&quot;errno&quot;));
+}</pre>
+</body>
+</html>

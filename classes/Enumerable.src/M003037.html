@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_index (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.find_index(value)            =&gt; int or nil
+ *     enum.find_index {| obj | block }  =&gt; int or nil
+ *
+ *  Compares each entry in &lt;i&gt;enum&lt;/i&gt; with &lt;em&gt;value&lt;/em&gt; or passes
+ *  to &lt;em&gt;block&lt;/em&gt;.  Returns the index for the first for which the
+ *  evaluated value is non-false.  If no object matches, returns
+ *  &lt;code&gt;nil&lt;/code&gt;
+ *
+ *     (1..10).find_index  {|i| i % 5 == 0 and i % 7 == 0 }   #=&gt; nil
+ *     (1..100).find_index {|i| i % 5 == 0 and i % 7 == 0 }   #=&gt; 34
+ *     (1..100).find_index(50)                                #=&gt; 49
+ *
+ */
+
+static VALUE
+enum_find_index(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE memo[3];      /* [return value, current index, condition value] */
+    rb_block_call_func *func;
+
+    if (argc == 0) {
+        RETURN_ENUMERATOR(obj, 0, 0);
+        func = find_index_iter_i;
+    }
+    else {
+        rb_scan_args(argc, argv, &quot;1&quot;, &amp;memo[2]);
+        if (rb_block_given_p()) {
+            rb_warn(&quot;given block not used&quot;);
+        }
+        func = find_index_i;
+    }
+
+    memo[0] = Qnil;
+    memo[1] = 0;
+    rb_block_call(obj, id_each, 0, 0, func, (VALUE)memo);
+    return memo[0];
+}</pre>
+</body>
+</html>

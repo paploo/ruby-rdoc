@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (RubyToken::TkOPASGN)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/ruby-token.rb, line 62</span>
+62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">seek</span>, <span class="ruby-identifier">line_no</span>, <span class="ruby-identifier">char_no</span>, <span class="ruby-identifier">op</span>)
+63:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">seek</span>, <span class="ruby-identifier">line_no</span>, <span class="ruby-identifier">char_no</span>)
+64:       <span class="ruby-identifier">op</span> = <span class="ruby-constant">TkReading2Token</span>[<span class="ruby-identifier">op</span>][<span class="ruby-value">0</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">op</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+65:       <span class="ruby-ivar">@op</span> = <span class="ruby-identifier">op</span>
+66:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

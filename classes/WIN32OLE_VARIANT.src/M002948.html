@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[] (WIN32OLE_VARIANT)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_VARIANT[i,j,...] #=&gt; element of OLE array.
+ *
+ *  Returns the element of WIN32OLE_VARIANT object(OLE array).
+ *  This method is available only when the variant type of 
+ *  WIN32OLE_VARIANT object is VT_ARRAY.
+ *
+ *  REMARK: 
+ *     The all indicies should be 0 or natural number and 
+ *     lower than or equal to max indicies.
+ *     (This point is different with Ruby Array indicies.)
+ *
+ *     obj = WIN32OLE_VARIANT.new([[1,2,3],[4,5,6]])
+ *     p obj[0,0] # =&gt; 1
+ *     p obj[1,0] # =&gt; 4
+ *     p obj[2,0] # =&gt; WIN32OLERuntimeError
+ *     p obj[0, -1] # =&gt; WIN32OLERuntimeError
+ *
+ */     
+static VALUE
+folevariant_ary_aref(int argc, VALUE *argv, VALUE self)
+{
+    struct olevariantdata *pvar;
+    SAFEARRAY *psa;
+    VALUE val = Qnil;
+    VARIANT variant;
+    long *pid;
+    HRESULT hr;
+
+    Data_Get_Struct(self, struct olevariantdata, pvar);
+    if (!V_ISARRAY(&amp;(pvar-&gt;var))) {
+        rb_raise(eWIN32OLERuntimeError, 
+                 &quot;`[]' is not available for this variant type object&quot;);
+    }
+    psa = get_locked_safe_array(self);
+    if (psa == NULL) {
+        return val;
+    }
+
+    pid = ary2safe_array_index(argc, argv, psa);
+
+    VariantInit(&amp;variant);
+    V_VT(&amp;variant) = (V_VT(&amp;(pvar-&gt;var)) &amp; ~VT_ARRAY) | VT_BYREF;
+    hr = SafeArrayPtrOfIndex(psa, pid, &amp;V_BYREF(&amp;variant));
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;failed to SafeArrayPtrOfIndex&quot;);
+    }
+    val = ole_variant2val(&amp;variant);
+
+    unlock_safe_array(psa);
+    if (pid) free(pid);
+    return val;
+}</pre>
+</body>
+</html>

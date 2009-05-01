@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>compare_stream (FileUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/fileutils.rb, line 813</span>
+813:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compare_stream</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+814:     <span class="ruby-identifier">bsize</span> = <span class="ruby-identifier">fu_stream_blksize</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+815:     <span class="ruby-identifier">sa</span> = <span class="ruby-identifier">sb</span> = <span class="ruby-keyword kw">nil</span>
+816:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">sa</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sb</span>
+817:       <span class="ruby-identifier">sa</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">bsize</span>)
+818:       <span class="ruby-identifier">sb</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">bsize</span>)
+819:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sa</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">sb</span>
+820:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">sb</span>.<span class="ruby-identifier">nil?</span>
+821:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+822:         <span class="ruby-keyword kw">end</span>
+823:       <span class="ruby-keyword kw">end</span>
+824:     <span class="ruby-keyword kw">end</span>
+825:     <span class="ruby-keyword kw">false</span>
+826:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

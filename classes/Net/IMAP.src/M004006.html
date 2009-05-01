@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getquotaroot (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/imap.rb, line 518</span>
+518:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getquotaroot</span>(<span class="ruby-identifier">mailbox</span>)
+519:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+520:         <span class="ruby-identifier">send_command</span>(<span class="ruby-value str">&quot;GETQUOTAROOT&quot;</span>, <span class="ruby-identifier">mailbox</span>)
+521:         <span class="ruby-identifier">result</span> = []
+522:         <span class="ruby-identifier">result</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@responses</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;QUOTAROOT&quot;</span>))
+523:         <span class="ruby-identifier">result</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-ivar">@responses</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;QUOTA&quot;</span>))
+524:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>
+525:       <span class="ruby-keyword kw">end</span>
+526:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

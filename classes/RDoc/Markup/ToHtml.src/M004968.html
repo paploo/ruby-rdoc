@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>convert_string_fancy (RDoc::Markup::ToHtml)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_html.rb, line 306</span>
+306:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_string_fancy</span>(<span class="ruby-identifier">item</span>)
+307:     <span class="ruby-comment cmt"># convert ampersand before doing anything else</span>
+308:     <span class="ruby-identifier">item</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&amp;/</span>, <span class="ruby-value str">'&amp;amp;'</span>).
+309: 
+310:     <span class="ruby-comment cmt"># convert -- to em-dash, (-- to en-dash)</span>
+311:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/---?/</span>, <span class="ruby-value str">'&amp;#8212;'</span>). <span class="ruby-comment cmt">#gsub(/--/, '&amp;#8211;').</span>
+312:       
+313:     <span class="ruby-comment cmt"># convert ... to elipsis (and make sure .... becomes .&lt;elipsis&gt;)</span>
+314:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\.\.\.\./</span>, <span class="ruby-value str">'.&amp;#8230;'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\.\.\./</span>, <span class="ruby-value str">'&amp;#8230;'</span>).
+315: 
+316:     <span class="ruby-comment cmt"># convert single closing quote</span>
+317:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">%r{([^ \t\r\n\[\{\(])\'}</span>, <span class="ruby-value str">'\1&amp;#8217;'</span>). <span class="ruby-comment cmt"># }</span>
+318:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">%r{\'(?=\W|s\b)}</span>, <span class="ruby-value str">'&amp;#8217;'</span>).
+319: 
+320:     <span class="ruby-comment cmt"># convert single opening quote</span>
+321:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/'/</span>, <span class="ruby-value str">'&amp;#8216;'</span>).
+322: 
+323:     <span class="ruby-comment cmt"># convert double closing quote</span>
+324:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">%r{([^ \t\r\n\[\{\(])\&quot;(?=\W)}</span>, <span class="ruby-value str">'\1&amp;#8221;'</span>). <span class="ruby-comment cmt"># }</span>
+325: 
+326:     <span class="ruby-comment cmt"># convert double opening quote</span>
+327:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&quot;/</span>, <span class="ruby-value str">'&amp;#8220;'</span>).
+328: 
+329:     <span class="ruby-comment cmt"># convert copyright</span>
+330:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\(c\)/</span>, <span class="ruby-value str">'&amp;#169;'</span>).
+331: 
+332:     <span class="ruby-comment cmt"># convert registered trademark</span>
+333:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\(r\)/</span>, <span class="ruby-value str">'&amp;#174;'</span>)
+334:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

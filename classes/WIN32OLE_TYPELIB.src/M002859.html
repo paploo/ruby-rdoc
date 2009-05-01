@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>guid (WIN32OLE_TYPELIB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_TYPELIB#guid -&gt; The guid string.
+ *
+ *  Returns guid string which specifies type library.
+ *
+ *     tlib = WIN32OLE_TYPELIB.new('Microsoft Excel 9.0 Object Library')
+ *     guid = tlib.guid # -&gt; '{00020813-0000-0000-C000-000000000046}'
+ */
+static VALUE
+foletypelib_guid(VALUE self)
+{
+    return rb_ivar_get(self, rb_intern(&quot;guid&quot;));
+}</pre>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>divide (Set)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 390</span>
+390:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">divide</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">func</span>)
+391:     <span class="ruby-identifier">func</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">__method__</span>)
+392: 
+393:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">func</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+394:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'tsort'</span>
+395: 
+396:       <span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dig</span> = {}         <span class="ruby-comment cmt"># :nodoc:</span>
+397:         <span class="ruby-identifier">include</span> <span class="ruby-constant">TSort</span>
+398: 
+399:         <span class="ruby-keyword kw">alias</span> <span class="ruby-identifier">tsort_each_node</span> <span class="ruby-identifier">each_key</span>
+400:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tsort_each_child</span>(<span class="ruby-identifier">node</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+401:           <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">node</span>).<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+402:         <span class="ruby-keyword kw">end</span>
+403:       <span class="ruby-keyword kw">end</span>
+404: 
+405:       <span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">u</span><span class="ruby-operator">|</span>
+406:         <span class="ruby-identifier">dig</span>[<span class="ruby-identifier">u</span>] = <span class="ruby-identifier">a</span> = []
+407:         <span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">func</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">u</span>, <span class="ruby-identifier">v</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">v</span> }
+408:       }
+409: 
+410:       <span class="ruby-identifier">set</span> = <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>()
+411:       <span class="ruby-identifier">dig</span>.<span class="ruby-identifier">each_strongly_connected_component</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">css</span><span class="ruby-operator">|</span>
+412:         <span class="ruby-identifier">set</span>.<span class="ruby-identifier">add</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">css</span>))
+413:       }
+414:       <span class="ruby-identifier">set</span>
+415:     <span class="ruby-keyword kw">else</span>
+416:       <span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">classify</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">func</span>).<span class="ruby-identifier">values</span>)
+417:     <span class="ruby-keyword kw">end</span>
+418:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

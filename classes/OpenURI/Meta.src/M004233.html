@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>content_encoding (OpenURI::Meta)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/open-uri.rb, line 512</span>
+512:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_encoding</span>
+513:       <span class="ruby-identifier">v</span> = <span class="ruby-ivar">@meta</span>[<span class="ruby-value str">'content-encoding'</span>]
+514:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">%r{\A#{RE_LWS}?#{RE_TOKEN}#{RE_LWS}?(?:,#{RE_LWS}?#{RE_TOKEN}#{RE_LWS}?)*}o</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">v</span>
+515:         <span class="ruby-identifier">v</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">RE_TOKEN</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">content_coding</span><span class="ruby-operator">|</span> <span class="ruby-identifier">content_coding</span>.<span class="ruby-identifier">downcase</span>}
+516:       <span class="ruby-keyword kw">else</span>
+517:         []
+518:       <span class="ruby-keyword kw">end</span>
+519:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

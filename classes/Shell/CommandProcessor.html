@@ -1,0 +1,1118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Shell::CommandProcessor [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Shell::CommandProcessor</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/shell/command-processor_rb.html">
+
+                lib/shell/command-processor.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M002299">[]</a>&nbsp;&nbsp;
+
+        <a href="#M002323">add_delegate_command_to_shell</a>&nbsp;&nbsp;
+
+        <a href="#M002319">alias_command</a>&nbsp;&nbsp;
+
+        <a href="#M002318">alias_map</a>&nbsp;&nbsp;
+
+        <a href="#M002311">append</a>&nbsp;&nbsp;
+
+        <a href="#M002309">cat</a>&nbsp;&nbsp;
+
+        <a href="#M002304">check_point</a>&nbsp;&nbsp;
+
+        <a href="#M002313">concat</a>&nbsp;&nbsp;
+
+        <a href="#M002321">def_builtin_commands</a>&nbsp;&nbsp;
+
+        <a href="#M002316">def_system_command</a>&nbsp;&nbsp;
+
+        <a href="#M002308">echo</a>&nbsp;&nbsp;
+
+        <a href="#M002293">expand_path</a>&nbsp;&nbsp;
+
+        <a href="#M002315">find_system_command</a>&nbsp;&nbsp;
+
+        <a href="#M002305">finish_all_jobs</a>&nbsp;&nbsp;
+
+        <a href="#M002294">foreach</a>&nbsp;&nbsp;
+
+        <a href="#M002310">glob</a>&nbsp;&nbsp;
+
+        <a href="#M002289">initialize</a>&nbsp;&nbsp;
+
+        <a href="#M002324">install_builtin_commands</a>&nbsp;&nbsp;
+
+        <a href="#M002322">install_system_commands</a>&nbsp;&nbsp;
+
+        <a href="#M002290">method_added</a>&nbsp;&nbsp;
+
+        <a href="#M002300">mkdir</a>&nbsp;&nbsp;
+
+        <a href="#M002292">new</a>&nbsp;&nbsp;
+
+        <a href="#M002314">notify</a>&nbsp;&nbsp;
+
+        <a href="#M002295">open</a>&nbsp;&nbsp;
+
+        <a href="#M002307">out</a>&nbsp;&nbsp;
+
+        <a href="#M002303">rehash</a>&nbsp;&nbsp;
+
+        <a href="#M002301">rmdir</a>&nbsp;&nbsp;
+
+        <a href="#M002291">run_config</a>&nbsp;&nbsp;
+
+        <a href="#M002302">system</a>&nbsp;&nbsp;
+
+        <a href="#M002312">tee</a>&nbsp;&nbsp;
+
+        <a href="#M002297">test</a>&nbsp;&nbsp;
+
+        <a href="#M002298">top_level_test</a>&nbsp;&nbsp;
+
+        <a href="#M002306">transact</a>&nbsp;&nbsp;
+
+        <a href="#M002320">unalias_command</a>&nbsp;&nbsp;
+
+        <a href="#M002317">undef_system_command</a>&nbsp;&nbsp;
+
+        <a href="#M002296">unlink</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NoDelegateMethods</td>
+          <td>=</td>
+          <td class="context-item-value">m.collect{|x| x.id2name}</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NoDelegateMethods</td>
+          <td>=</td>
+          <td class="context-item-value">m</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M002323" class="method-detail">
+        <a name="M002323"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002323.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002323.html');return false;">
+
+          <span class="method-name">add_delegate_command_to_shell</span><span class="method-args">(id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <hr size="10"></hr><pre>
+  class initializing methods  -
+</pre>
+<hr size="10"></hr>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002319" class="method-detail">
+        <a name="M002319"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002319.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002319.html');return false;">
+
+          <span class="method-name">alias_command</span><span class="method-args">(ali, command, *opts, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002318" class="method-detail">
+        <a name="M002318"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002318.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002318.html');return false;">
+
+          <span class="method-name">alias_map</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002321" class="method-detail">
+        <a name="M002321"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002321.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002321.html');return false;">
+
+          <span class="method-name">def_builtin_commands</span><span class="method-args">(delegation_class, command_specs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a
+href="CommandProcessor.html#M002321">CommandProcessor.def_builtin_commands</a>(delegation_class,
+command_specs)
+</p>
+<pre>
+    delegation_class: Class or Module
+    command_specs: [[command_name, [argument,...]],...]
+       command_name: String
+       arguments:      String
+          FILENAME?? -&gt; expand_path(filename??)
+          *FILENAME?? -&gt; filename??.collect{|f|expand_path(f)}.join(&quot;, &quot;)
+  define command_name(argument,...) as
+      delegation_class.command_name(argument,...)
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002316" class="method-detail">
+        <a name="M002316"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002316.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002316.html');return false;">
+
+          <span class="method-name">def_system_command</span><span class="method-args">(command, path = command)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a
+href="CommandProcessor.html#M002316">CommandProcessor.def_system_command</a>(command,
+path)
+</p>
+<pre>
+    command:  String
+    path:       String
+  define 'command()' method as method.
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002289" class="method-detail">
+        <a name="M002289"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002289.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002289.html');return false;">
+
+          <span class="method-name">initialize</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002324" class="method-detail">
+        <a name="M002324"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002324.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002324.html');return false;">
+
+          <span class="method-name">install_builtin_commands</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+define default builtin commands
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002322" class="method-detail">
+        <a name="M002322"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002322.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002322.html');return false;">
+
+          <span class="method-name">install_system_commands</span><span class="method-args">(pre = &quot;sys_&quot;)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a
+href="CommandProcessor.html#M002322">CommandProcessor.install_system_commands(pre)</a>
+</p>
+<pre>
+      pre: String - command name prefix
+</pre>
+<p>
+defines every command which belongs in default_system_path via
+CommandProcessor.command(). It doesn&#8217;t define already defined methods
+twice. By default, &#8220;pre_&#8221; is prefixes to each method name.
+Characters that may not be used in a method name are all converted to
+&#8216;_&#8217;. Definition errors are just ignored.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002290" class="method-detail">
+        <a name="M002290"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002290.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002290.html');return false;">
+
+          <span class="method-name">method_added</span><span class="method-args">(id)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002292" class="method-detail">
+        <a name="M002292"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002292.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002292.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(shell)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002291" class="method-detail">
+        <a name="M002291"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002291.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002291.html');return false;">
+
+          <span class="method-name">run_config</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+include run file.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002320" class="method-detail">
+        <a name="M002320"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002320.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002320.html');return false;">
+
+          <span class="method-name">unalias_command</span><span class="method-args">(ali)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002317" class="method-detail">
+        <a name="M002317"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002317.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002317.html');return false;">
+
+          <span class="method-name">undef_system_command</span><span class="method-args">(command)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M002299" class="method-detail">
+        <a name="M002299"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">[]</span><span class="method-args">(command, file1, file2=nil)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CommandProcessor.html#M002297">test</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002311" class="method-detail">
+        <a name="M002311"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002311.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002311.html');return false;">
+
+          <span class="method-name">append</span><span class="method-args">(to, filter)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002309" class="method-detail">
+        <a name="M002309"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002309.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002309.html');return false;">
+
+          <span class="method-name">cat</span><span class="method-args">(*filenames)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002304" class="method-detail">
+        <a name="M002304"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002304.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002304.html');return false;">
+
+          <span class="method-name">check_point</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+ProcessCommand#transact
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002313" class="method-detail">
+        <a name="M002313"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002313.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002313.html');return false;">
+
+          <span class="method-name">concat</span><span class="method-args">(*jobs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002308" class="method-detail">
+        <a name="M002308"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002308.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002308.html');return false;">
+
+          <span class="method-name">echo</span><span class="method-args">(*strings)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002293" class="method-detail">
+        <a name="M002293"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002293.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002293.html');return false;">
+
+          <span class="method-name">expand_path</span><span class="method-args">(path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a
+href="CommandProcessor.html#M002293">CommandProcessor#expand_path(path)</a>
+</p>
+<pre>
+    path:     String
+    return: String
+  returns the absolute path for &lt;path&gt;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002315" class="method-detail">
+        <a name="M002315"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002315.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002315.html');return false;">
+
+          <span class="method-name">find_system_command</span><span class="method-args">(command)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+private functions
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002305" class="method-detail">
+        <a name="M002305"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">finish_all_jobs</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CommandProcessor.html#M002304">check_point</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002294" class="method-detail">
+        <a name="M002294"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002294.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002294.html');return false;">
+
+          <span class="method-name">foreach</span><span class="method-args">(path = nil, *rs) {|fn| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../File.html">File</a> related commands Shell#foreach Shell#open
+Shell#unlink Shell#test
+</p>
+<p>
+-
+</p>
+<p>
+<a href="CommandProcessor.html#M002294">CommandProcessor#foreach</a>(path,
+rs)
+</p>
+<pre>
+    path: String
+    rs:     String - record separator
+    iterator
+  Same as:
+    File#foreach (when path is file)
+    Dir#foreach (when path is directory)
+  path is relative to pwd
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002310" class="method-detail">
+        <a name="M002310"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002310.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002310.html');return false;">
+
+          <span class="method-name">glob</span><span class="method-args">(pattern)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+def sort(*filenames)
+</p>
+<pre>
+  Sort.new(self, *filenames)
+</pre>
+<p>
+end
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002300" class="method-detail">
+        <a name="M002300"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002300.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002300.html');return false;">
+
+          <span class="method-name">mkdir</span><span class="method-args">(*path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Dir.html">Dir</a> related methods
+</p>
+<p>
+Shell#mkdir Shell#rmdir
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002314" class="method-detail">
+        <a name="M002314"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002314.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002314.html');return false;">
+
+          <span class="method-name">notify</span><span class="method-args">(*opts) {|mes if iterator?| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+%pwd, %cwd -> @pwd
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002295" class="method-detail">
+        <a name="M002295"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002295.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002295.html');return false;">
+
+          <span class="method-name">open</span><span class="method-args">(path, mode = nil, perm = 0666, &amp;b)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="CommandProcessor.html#M002295">CommandProcessor#open</a>(path,
+mode)
+</p>
+<pre>
+    path:     String
+    mode:     String
+    return: File or Dir
+  Same as:
+    File#open (when path is file)
+    Dir#open  (when path is directory)
+  mode has an effect only when path is a file
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002307" class="method-detail">
+        <a name="M002307"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002307.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002307.html');return false;">
+
+          <span class="method-name">out</span><span class="method-args">(dev = STDOUT, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+internal commands
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002303" class="method-detail">
+        <a name="M002303"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002303.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002303.html');return false;">
+
+          <span class="method-name">rehash</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+ProcessCommand#rehash
+</p>
+<pre>
+  clear command hash table.
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002301" class="method-detail">
+        <a name="M002301"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002301.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002301.html');return false;">
+
+          <span class="method-name">rmdir</span><span class="method-args">(*path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="CommandProcessor.html#M002301">CommandProcessor#rmdir(*path)</a>
+</p>
+<pre>
+    path: String
+  same as Dir.rmdir()
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002302" class="method-detail">
+        <a name="M002302"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002302.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002302.html');return false;">
+
+          <span class="method-name">system</span><span class="method-args">(command, *opts)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a
+href="CommandProcessor.html#M002302">CommandProcessor#system</a>(command,
+*opts)
+</p>
+<pre>
+    command: String
+    opts:      String
+    return:  SystemCommand
+  Same as system() function
+  example:
+    print sh.system(&quot;ls&quot;, &quot;-l&quot;)
+    sh.system(&quot;ls&quot;, &quot;-l&quot;) | sh.head &gt; STDOUT
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002312" class="method-detail">
+        <a name="M002312"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002312.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002312.html');return false;">
+
+          <span class="method-name">tee</span><span class="method-args">(file)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002297" class="method-detail">
+        <a name="M002297"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002297.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002297.html');return false;">
+
+          <span class="method-name">test</span><span class="method-args">(command, file1, file2=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002298" class="method-detail">
+        <a name="M002298"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">top_level_test</span><span class="method-args">(command, file1, file2=nil)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="CommandProcessor.html#M002297">test</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002306" class="method-detail">
+        <a name="M002306"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002306.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002306.html');return false;">
+
+          <span class="method-name">transact</span><span class="method-args">(&amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M002296" class="method-detail">
+        <a name="M002296"></a>
+
+        <div class="method-heading">
+
+          <a href="CommandProcessor.src/M002296.html" target="Code" class="method-signature"
+            onclick="popupCode('CommandProcessor.src/M002296.html');return false;">
+
+          <span class="method-name">unlink</span><span class="method-args">(path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="CommandProcessor.html#M002296">CommandProcessor#unlink(path)</a>
+</p>
+<pre>
+  same as:
+    Dir#unlink  (when path is directory)
+    File#unlink (when path is file)
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

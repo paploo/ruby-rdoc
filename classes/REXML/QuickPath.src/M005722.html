@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>match (REXML::QuickPath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rexml/quickpath.rb, line 20</span>
+20:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">QuickPath</span><span class="ruby-operator">::</span><span class="ruby-identifier">match</span> <span class="ruby-identifier">element</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">namespaces</span>=<span class="ruby-constant">EMPTY_HASH</span>
+21:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;nil is not a valid xpath&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>
+22:       <span class="ruby-identifier">results</span> = <span class="ruby-keyword kw">nil</span>
+23:       <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">namespace_context</span> = <span class="ruby-identifier">namespaces</span>
+24:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">path</span>
+25:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\/([^\/]|$)/</span><span class="ruby-identifier">u</span>
+26:         <span class="ruby-comment cmt"># match on root</span>
+27:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+28:         <span class="ruby-keyword kw">return</span> [<span class="ruby-identifier">element</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">parent</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+29:         <span class="ruby-identifier">results</span> = <span class="ruby-identifier">filter</span>([<span class="ruby-identifier">element</span>.<span class="ruby-identifier">root</span>], <span class="ruby-identifier">path</span>)
+30:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^[-\w]*::/</span><span class="ruby-identifier">u</span>
+31:         <span class="ruby-identifier">results</span> = <span class="ruby-identifier">filter</span>([<span class="ruby-identifier">element</span>], <span class="ruby-identifier">path</span>)
+32:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\*/</span><span class="ruby-identifier">u</span>
+33:         <span class="ruby-identifier">results</span> = <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">element</span>.<span class="ruby-identifier">to_a</span>, <span class="ruby-identifier">path</span>)
+34:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^[\[!\w:]/</span><span class="ruby-identifier">u</span>
+35:         <span class="ruby-comment cmt"># match on child</span>
+36:         <span class="ruby-identifier">matches</span> = []
+37:         <span class="ruby-identifier">children</span> = <span class="ruby-identifier">element</span>.<span class="ruby-identifier">to_a</span>
+38:         <span class="ruby-identifier">results</span> = <span class="ruby-identifier">filter</span>(<span class="ruby-identifier">children</span>, <span class="ruby-identifier">path</span>)
+39:       <span class="ruby-keyword kw">else</span>
+40:         <span class="ruby-identifier">results</span> = <span class="ruby-identifier">filter</span>([<span class="ruby-identifier">element</span>], <span class="ruby-identifier">path</span>)
+41:       <span class="ruby-keyword kw">end</span>
+42:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">results</span>
+43:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install_have_child_element (RSS::BaseModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 167</span>
+167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_have_child_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">occurs</span>, <span class="ruby-identifier">name</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+168:       <span class="ruby-identifier">name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">tag_name</span>
+169:       <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">name</span>)
+170:       <span class="ruby-identifier">install_model</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">occurs</span>, <span class="ruby-identifier">name</span>)
+171: 
+172:       <span class="ruby-identifier">writer_type</span>, <span class="ruby-identifier">reader_type</span> = <span class="ruby-identifier">type</span>
+173:       <span class="ruby-identifier">def_corresponded_attr_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">writer_type</span>
+174:       <span class="ruby-identifier">def_corresponded_attr_reader</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">reader_type</span>
+175:       <span class="ruby-identifier">install_element</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">elem_name</span><span class="ruby-operator">|</span>
+176:         <span class="ruby-value str">&quot;if @\#{n}\n\&quot;\\\#{@\#{n}.to_s(need_convert, indent)}\&quot;\nelse\n''\nend\n&quot;</span>
+177:       <span class="ruby-keyword kw">end</span>
+178:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

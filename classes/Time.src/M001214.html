@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>+ (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     time + numeric =&gt; time
+ *  
+ *  Addition---Adds some number of seconds (possibly fractional) to
+ *  &lt;i&gt;time&lt;/i&gt; and returns that value as a new time.
+ *     
+ *     t = Time.now         #=&gt; 2007-11-19 08:22:21 -0600
+ *     t + (60 * 60 * 24)   #=&gt; 2007-11-20 08:22:21 -0600
+ */
+
+static VALUE
+time_plus(VALUE time1, VALUE time2)
+{
+    struct time_object *tobj;
+    GetTimeval(time1, tobj);
+
+    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
+        rb_raise(rb_eTypeError, &quot;time + time?&quot;);
+    }
+    return time_add(tobj, time2, 1);
+}</pre>
+</body>
+</html>

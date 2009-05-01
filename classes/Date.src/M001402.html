@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>jisx0301 (Date)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/date/format.rb, line 357</span>
+357:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">jisx0301</span>
+358:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">jd</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">2405160</span>
+359:       <span class="ruby-identifier">iso8601</span>
+360:     <span class="ruby-keyword kw">else</span>
+361:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">jd</span>
+362:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">2405160</span><span class="ruby-operator">...</span><span class="ruby-value">2419614</span>
+363:         <span class="ruby-identifier">g</span> = <span class="ruby-value str">'M%02d'</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">year</span> <span class="ruby-operator">-</span> <span class="ruby-value">1867</span>)
+364:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">2419614</span><span class="ruby-operator">...</span><span class="ruby-value">2424875</span>
+365:         <span class="ruby-identifier">g</span> = <span class="ruby-value str">'T%02d'</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">year</span> <span class="ruby-operator">-</span> <span class="ruby-value">1911</span>)
+366:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">2424875</span><span class="ruby-operator">...</span><span class="ruby-value">2447535</span>
+367:         <span class="ruby-identifier">g</span> = <span class="ruby-value str">'S%02d'</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">year</span> <span class="ruby-operator">-</span> <span class="ruby-value">1925</span>)
+368:       <span class="ruby-keyword kw">else</span>
+369:         <span class="ruby-identifier">g</span> = <span class="ruby-value str">'H%02d'</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">year</span> <span class="ruby-operator">-</span> <span class="ruby-value">1988</span>)
+370:       <span class="ruby-keyword kw">end</span>
+371:       <span class="ruby-identifier">g</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">strftime</span>(<span class="ruby-value str">'.%m.%d'</span>)
+372:     <span class="ruby-keyword kw">end</span>
+373:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

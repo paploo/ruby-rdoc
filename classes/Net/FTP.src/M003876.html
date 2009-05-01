@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>abort (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 800</span>
+800:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">abort</span>
+801:       <span class="ruby-identifier">line</span> = <span class="ruby-value str">&quot;ABOR&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">CRLF</span>
+802:       <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;put: ABOR\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@debug_mode</span>
+803:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">line</span>, <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">MSG_OOB</span>)
+804:       <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">getmultiline</span>
+805:       <span class="ruby-keyword kw">unless</span> [<span class="ruby-value str">&quot;426&quot;</span>, <span class="ruby-value str">&quot;226&quot;</span>, <span class="ruby-value str">&quot;225&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>])
+806:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+807:       <span class="ruby-keyword kw">end</span>
+808:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">resp</span>
+809:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&amp; (FalseClass)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     false &amp; obj   =&gt; false
+ *     nil &amp; obj     =&gt; false
+ *  
+ *  And---Returns &lt;code&gt;false&lt;/code&gt;. &lt;i&gt;obj&lt;/i&gt; is always
+ *  evaluated as it is the argument to a method call---there is no
+ *  short-circuit evaluation in this case.
+ */
+
+static VALUE
+false_and(VALUE obj, VALUE obj2)
+{
+    return Qfalse;
+}</pre>
+</body>
+</html>

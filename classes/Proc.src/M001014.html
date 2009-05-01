@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>binding (Proc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     prc.binding    =&gt; binding
+ *  
+ *  Returns the binding associated with &lt;i&gt;prc&lt;/i&gt;. Note that
+ *  &lt;code&gt;Kernel#eval&lt;/code&gt; accepts either a &lt;code&gt;Proc&lt;/code&gt; or a
+ *  &lt;code&gt;Binding&lt;/code&gt; object as its second parameter.
+ *     
+ *     def fred(param)
+ *       proc {}
+ *     end
+ *     
+ *     b = fred(99)
+ *     eval(&quot;param&quot;, b.binding)   #=&gt; 99
+ */
+static VALUE
+proc_binding(VALUE self)
+{
+    rb_proc_t *proc;
+    VALUE bindval = binding_alloc(rb_cBinding);
+    rb_binding_t *bind;
+
+    GetProcPtr(self, proc);
+    GetBindingPtr(bindval, bind);
+
+    if (TYPE(proc-&gt;block.iseq) == T_NODE) {
+        rb_raise(rb_eArgError, &quot;Can't create Binding from C level Proc&quot;);
+    }
+
+    bind-&gt;env = proc-&gt;envval;
+    return bindval;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>member? (Range)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rng.member?(val)  =&gt;  true or false
+ *     rng.include?(val) =&gt;  true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is an element of
+ *  &lt;i&gt;rng&lt;/i&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.  If beg and end are
+ *  numeric, comparison is done according magnitude of values.
+ *     
+ *     (&quot;a&quot;..&quot;z&quot;).include?(&quot;g&quot;)  # =&gt; true
+ *     (&quot;a&quot;..&quot;z&quot;).include?(&quot;A&quot;)  # =&gt; false
+ */
+
+static VALUE
+range_include(VALUE range, VALUE val)
+{
+    VALUE beg = RANGE_BEG(range);
+    VALUE end = RANGE_END(range);
+    int nv = FIXNUM_P(beg) || FIXNUM_P(end) ||
+             rb_obj_is_kind_of(beg, rb_cNumeric) ||
+             rb_obj_is_kind_of(end, rb_cNumeric);
+
+    if (nv ||
+        !NIL_P(rb_check_to_integer(beg, &quot;to_int&quot;)) ||
+        !NIL_P(rb_check_to_integer(end, &quot;to_int&quot;))) {
+        if (r_le(beg, val)) {
+            if (EXCL(range)) {
+                if (r_lt(val, end))
+                    return Qtrue;
+            }
+            else {
+                if (r_le(val, end))
+                    return Qtrue;
+            }
+        }
+        return Qfalse;
+    }
+    else if (TYPE(beg) == T_STRING &amp;&amp; TYPE(end) == T_STRING &amp;&amp;
+             RSTRING_LEN(beg) == 1 &amp;&amp; RSTRING_LEN(end) == 1) {
+        if (NIL_P(val)) return Qfalse;
+        if (TYPE(val) == T_STRING) {
+            if (RSTRING_LEN(val) == 0 || RSTRING_LEN(val) &gt; 1)
+                return Qfalse;
+            else {
+                char b = RSTRING_PTR(beg)[0];
+                char e = RSTRING_PTR(end)[0];
+                char v = RSTRING_PTR(val)[0];
+
+                if (ISASCII(b) &amp;&amp; ISASCII(e) &amp;&amp; ISASCII(v)) {
+                    if (b &lt;= v &amp;&amp; v &lt; e) return Qtrue;
+                    if (!EXCL(range) &amp;&amp; v == e) return Qtrue;
+                    return Qfalse;
+                }
+            }
+        }
+    }
+    /* TODO: ruby_frame-&gt;this_func = rb_intern(&quot;include?&quot;); */
+    return rb_call_super(1, &amp;val);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: csv.rb [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+  <div id="fileHeader">
+    <h1>csv.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>lib/csv.rb
+
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>2008-12-26 18:16:12 -0800</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+encoding: UTF-8
+</p>
+<h1>csv.rb &#8212; <a href="../../classes/CSV.html">CSV</a> Reading and Writing</h1>
+<pre>
+ Created by James Edward Gray II on 2005-10-31.
+ Copyright 2005 James Edward Gray II. You can redistribute or modify this code
+ under the terms of Ruby's license.
+</pre>
+<p>
+See <a href="../../classes/CSV.html">CSV</a> for documentation.
+</p>
+<h2>Description</h2>
+<p>
+Welcome to the new and improved <a href="../../classes/CSV.html">CSV</a>.
+</p>
+<p>
+This version of the <a href="../../classes/CSV.html">CSV</a> library began
+its life as FasterCSV. FasterCSV was intended as a replacement to
+Ruby&#8217;s then standard <a href="../../classes/CSV.html">CSV</a>
+library. It was designed to address concerns users of that library had and
+it had three primary goals:
+</p>
+<ol>
+<li>Be significantly faster than <a href="../../classes/CSV.html">CSV</a> while
+remaining a pure Ruby library.
+
+</li>
+<li>Use a smaller and easier to maintain code base. (FasterCSV eventually grew
+larger, was also but considerably richer in features. The parsing core
+remains quite small.)
+
+</li>
+<li>Improve on the <a href="../../classes/CSV.html">CSV</a> interface.
+
+</li>
+</ol>
+<p>
+Obviously, the last one is subjective. I did try to defer to the original
+interface whenever I didn&#8217;t have a compelling reason to change it
+though, so hopefully this won&#8217;t be too radically different.
+</p>
+<p>
+We must have met our goals because FasterCSV was renamed to <a
+href="../../classes/CSV.html">CSV</a> and replaced the original library.
+</p>
+<h2>What&#8217;s Different From the Old <a href="../../classes/CSV.html">CSV</a>?</h2>
+<p>
+I&#8217;m sure I&#8217;ll miss something, but I&#8217;ll try to mention
+most of the major differences I am aware of, to help others quickly get up
+to speed:
+</p>
+<h3><a href="../../classes/CSV.html">CSV</a> Parsing</h3>
+<ul>
+<li>This parser is m17n aware. See <a href="../../classes/CSV.html">CSV</a> for
+full details.
+
+</li>
+<li>This library has a stricter parser and will throw MalformedCSVErrors on
+problematic data.
+
+</li>
+<li>This library has a less liberal idea of a line ending than <a
+href="../../classes/CSV.html">CSV</a>. What you set as the
+<tt>:row_sep</tt> is law. It can auto-detect your line endings though.
+
+</li>
+<li>The old library returned empty lines as <tt>[nil]</tt>. This library calls
+them <tt>[]</tt>.
+
+</li>
+<li>This library has a much faster parser.
+
+</li>
+</ul>
+<h3>Interface</h3>
+<ul>
+<li><a href="../../classes/CSV.html">CSV</a> now uses Hash-style parameters to
+set options.
+
+</li>
+<li><a href="../../classes/CSV.html">CSV</a> no longer has generate_row() or
+parse_row().
+
+</li>
+<li>The old CSV&#8217;s Reader and Writer classes have been dropped.
+
+</li>
+<li>CSV::open() is now more like Ruby&#8217;s open().
+
+</li>
+<li><a href="../../classes/CSV.html">CSV</a> objects now support most standard
+<a href="../../classes/IO.html">IO</a> methods.
+
+</li>
+<li><a href="../../classes/CSV.html">CSV</a> now has a new() method used to
+wrap objects like <a href="../../classes/String.html">String</a> and <a
+href="../../classes/IO.html">IO</a> for reading and writing.
+
+</li>
+<li>CSV::generate() is different from the old method.
+
+</li>
+<li><a href="../../classes/CSV.html">CSV</a> no longer supports partial reads.
+It works line-by-line.
+
+</li>
+<li><a href="../../classes/CSV.html">CSV</a> no longer allows the instance
+methods to override the separators for performance reasons. They must be
+set in the constructor.
+
+</li>
+</ul>
+<p>
+If you use this library and find yourself missing any functionality I have
+trimmed, please <a href="mailto:james@grayproductions.net">let me know</a>.
+</p>
+<h2>Documentation</h2>
+<p>
+See <a href="../../classes/CSV.html">CSV</a> for documentation.
+</p>
+<h2>What is <a href="../../classes/CSV.html">CSV</a>, really?</h2>
+<p>
+<a href="../../classes/CSV.html">CSV</a> maintains a pretty strict
+definition of <a href="../../classes/CSV.html">CSV</a> taken directly from
+<a href="http://www.ietf.org/rfc/rfc4180.txt">the RFC</a>. I relax the
+rules in only one place and that is to make using this library easier. <a
+href="../../classes/CSV.html">CSV</a> will parse all valid <a
+href="../../classes/CSV.html">CSV</a>.
+</p>
+<p>
+What you don&#8217;t want to do is feed <a
+href="../../classes/CSV.html">CSV</a> invalid data. Because of the way the
+<a href="../../classes/CSV.html">CSV</a> format works, it&#8217;s common
+for a parser to need to read until the end of the file to be sure a field
+is invalid. This eats a lot of time and memory.
+</p>
+<p>
+Luckily, when working with invalid <a
+href="../../classes/CSV.html">CSV</a>, Ruby&#8217;s built-in methods will
+almost always be superior in every way. For example, parsing non-quoted
+fields is as easy as:
+</p>
+<pre>
+  data.split(&quot;,&quot;)
+</pre>
+<h2>Questions and/or Comments</h2>
+<p>
+Feel free to email <a href="mailto:james@grayproductions.net">James Edward
+Gray II</a> with any questions.
+</p>
+
+    </div>
+
+    <div id="requires-list">
+      <h3 class="section-bar">Required files</h3>
+
+      <div class="name-list">
+
+        forwardable&nbsp;&nbsp;
+
+        English&nbsp;&nbsp;
+
+        date&nbsp;&nbsp;
+
+        stringio&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000001">CSV</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+
+          <a href="csv_rb.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('csv_rb.src/M000001.html');return false;">
+
+          <span class="method-name">CSV</span><span class="method-args">(*args, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Another name for CSV::instance().
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install (lib/un.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/un.rb, line 183</span>
+183: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install</span>
+184:   <span class="ruby-identifier">setup</span>(<span class="ruby-value str">&quot;pm:&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">argv</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+185:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:mode</span>] = (<span class="ruby-identifier">mode</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:m</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">mode</span>.<span class="ruby-identifier">oct</span> <span class="ruby-operator">:</span> <span class="ruby-value">0755</span>
+186:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:preserve</span>] = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:p</span>
+187:     <span class="ruby-identifier">dest</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">pop</span>
+188:     <span class="ruby-identifier">argv</span> = <span class="ruby-identifier">argv</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+189:     <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">install</span> <span class="ruby-identifier">argv</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">options</span>
+190:   <span class="ruby-keyword kw">end</span>
+191: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

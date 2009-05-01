@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_proxy (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/open-uri.rb, line 701</span>
+701:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_proxy</span>
+702:       <span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">scheme</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'_proxy'</span>
+703:       <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-keyword kw">nil</span>
+704:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'http_proxy'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'REQUEST_METHOD'</span>) <span class="ruby-comment cmt"># CGI?</span>
+705:         <span class="ruby-comment cmt"># HTTP_PROXY conflicts with *_proxy for proxy settings and</span>
+706:         <span class="ruby-comment cmt"># HTTP_* for header information in CGI.</span>
+707:         <span class="ruby-comment cmt"># So it should be careful to use it.</span>
+708:         <span class="ruby-identifier">pairs</span> = <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">reject</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-regexp re">/\Ahttp_proxy\z/i</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">k</span> }
+709:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">pairs</span>.<span class="ruby-identifier">length</span>
+710:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-comment cmt"># no proxy setting anyway.</span>
+711:           <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-keyword kw">nil</span>
+712:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+713:           <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> = <span class="ruby-identifier">pairs</span>.<span class="ruby-identifier">shift</span>
+714:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'http_proxy'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">k</span>.<span class="ruby-identifier">upcase</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+715:             <span class="ruby-comment cmt"># http_proxy is safe to use because ENV is case sensitive.</span>
+716:             <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>]
+717:           <span class="ruby-keyword kw">else</span>
+718:             <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-keyword kw">nil</span>
+719:           <span class="ruby-keyword kw">end</span>
+720:         <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># http_proxy is safe to use because ENV is case sensitive.</span>
+721:           <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">to_hash</span>[<span class="ruby-identifier">name</span>]
+722:         <span class="ruby-keyword kw">end</span>
+723:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">proxy_uri</span>
+724:           <span class="ruby-comment cmt"># Use CGI_HTTP_PROXY.  cf. libwww-perl.</span>
+725:           <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-node">&quot;CGI_#{name.upcase}&quot;</span>]
+726:         <span class="ruby-keyword kw">end</span>
+727:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'http_proxy'</span>
+728:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>]
+729:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase</span>]
+730:             <span class="ruby-identifier">warn</span> <span class="ruby-value str">'The environment variable HTTP_PROXY is discouraged.  Use http_proxy.'</span>
+731:           <span class="ruby-keyword kw">end</span>
+732:         <span class="ruby-keyword kw">end</span>
+733:       <span class="ruby-keyword kw">else</span>
+734:         <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase</span>]
+735:       <span class="ruby-keyword kw">end</span>
+736: 
+737:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">proxy_uri</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">host</span>
+738:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'socket'</span>
+739:         <span class="ruby-keyword kw">begin</span>
+740:           <span class="ruby-identifier">addr</span> = <span class="ruby-constant">IPSocket</span>.<span class="ruby-identifier">getaddress</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">host</span>)
+741:           <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A127\.|\A::1\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">addr</span>
+742:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SocketError</span>
+743:         <span class="ruby-keyword kw">end</span>
+744:       <span class="ruby-keyword kw">end</span>
+745: 
+746:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">proxy_uri</span>
+747:         <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">proxy_uri</span>)
+748:         <span class="ruby-identifier">name</span> = <span class="ruby-value str">'no_proxy'</span>
+749:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">no_proxy</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase</span>]
+750:           <span class="ruby-identifier">no_proxy</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/([^:,]*)(?::(\d+))?/</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span><span class="ruby-operator">|</span>
+751:             <span class="ruby-keyword kw">if</span> <span class="ruby-node">/(\A|\.)#{Regexp.quote host}\z/i</span> <span class="ruby-operator">=~</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">host</span> <span class="ruby-operator">&amp;&amp;</span>
+752:                (<span class="ruby-operator">!</span><span class="ruby-identifier">port</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">port</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_i</span>)
+753:               <span class="ruby-identifier">proxy_uri</span> = <span class="ruby-keyword kw">nil</span>
+754:               <span class="ruby-keyword kw">break</span>
+755:             <span class="ruby-keyword kw">end</span>
+756:           }
+757:         <span class="ruby-keyword kw">end</span>
+758:         <span class="ruby-identifier">proxy_uri</span>
+759:       <span class="ruby-keyword kw">else</span>
+760:         <span class="ruby-keyword kw">nil</span>
+761:       <span class="ruby-keyword kw">end</span>
+762:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

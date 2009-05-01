@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>params_of (RDoc::Generator::RI)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/ri.rb, line 145</span>
+145:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">params_of</span>(<span class="ruby-identifier">method</span>)
+146:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">call_seq</span>
+147:       <span class="ruby-identifier">method</span>.<span class="ruby-identifier">call_seq</span>
+148:     <span class="ruby-keyword kw">else</span>
+149:       <span class="ruby-identifier">params</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+150: 
+151:       <span class="ruby-identifier">p</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\s*\#.*/</span>, <span class="ruby-value str">''</span>)
+152:       <span class="ruby-identifier">p</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot; &quot;</span>).<span class="ruby-identifier">squeeze</span>(<span class="ruby-value str">&quot; &quot;</span>)
+153:       <span class="ruby-identifier">p</span> = <span class="ruby-value str">&quot;(&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">p</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;)&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">p</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?(</span>
+154: 
+155:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">block</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">block_params</span>)
+156:         <span class="ruby-identifier">block</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\s*\#.*/</span>, <span class="ruby-value str">''</span>)
+157:         <span class="ruby-identifier">block</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;\n&quot;</span>, <span class="ruby-value str">&quot; &quot;</span>).<span class="ruby-identifier">squeeze</span>(<span class="ruby-value str">&quot; &quot;</span>)
+158:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?(</span>
+159:           <span class="ruby-identifier">block</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/^\(/</span>, <span class="ruby-value str">''</span>).<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\)/</span>, <span class="ruby-value str">''</span>)
+160:         <span class="ruby-keyword kw">end</span>
+161:         <span class="ruby-identifier">p</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; {|#{block.strip}| ...}&quot;</span>
+162:       <span class="ruby-keyword kw">end</span>
+163:       <span class="ruby-identifier">p</span>
+164:     <span class="ruby-keyword kw">end</span>
+165:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (IRB::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/context.rb, line 233</span>
+233:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+234:       <span class="ruby-identifier">array</span> = []
+235:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">ivar</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e1</span>, <span class="ruby-identifier">e2</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e1</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">e2</span>}
+236:         <span class="ruby-identifier">ivar</span> = <span class="ruby-identifier">ivar</span>.<span class="ruby-identifier">to_s</span>
+237:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">ivar</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^@(.*)$/</span>, <span class="ruby-value str">'\1'</span>)
+238:         <span class="ruby-identifier">val</span> = <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">ivar</span>)
+239:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ivar</span>
+240:         <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">NOPRINTING_IVARS</span>
+241:           <span class="ruby-identifier">array</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;conf.%s=%s&quot;</span>, <span class="ruby-identifier">name</span>, <span class="ruby-value str">&quot;...&quot;</span>)
+242:         <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">NO_INSPECTING_IVARS</span>
+243:           <span class="ruby-identifier">array</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;conf.%s=%s&quot;</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">val</span>.<span class="ruby-identifier">to_s</span>)
+244:         <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">IDNAME_IVARS</span>
+245:           <span class="ruby-identifier">array</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;conf.%s=:%s&quot;</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">val</span>.<span class="ruby-identifier">id2name</span>)
+246:         <span class="ruby-keyword kw">else</span>
+247:           <span class="ruby-identifier">array</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;conf.%s=%s&quot;</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">val</span>.<span class="ruby-identifier">inspect</span>)
+248:         <span class="ruby-keyword kw">end</span>
+249:       <span class="ruby-keyword kw">end</span>
+250:       <span class="ruby-identifier">array</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+251:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

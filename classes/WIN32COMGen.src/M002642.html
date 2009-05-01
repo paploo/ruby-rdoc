@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate_class (WIN32COMGen)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/win32ole/sample/olegen.rb, line 303</span>
+303:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_class</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span> = <span class="ruby-constant">STDOUT</span>)
+304:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n# #{klass.helpstring}&quot;</span>
+305:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ole_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Class&quot;</span> <span class="ruby-operator">&amp;&amp;</span>
+306:        <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">guid</span> <span class="ruby-operator">&amp;&amp;</span>
+307:        <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">progid</span>
+308:       <span class="ruby-ivar">@reciever</span> = <span class="ruby-value str">&quot;@dispatch.&quot;</span>
+309:       <span class="ruby-identifier">define_class</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span>)
+310:     <span class="ruby-keyword kw">else</span>
+311:       <span class="ruby-ivar">@reciever</span> = <span class="ruby-value str">&quot;&quot;</span>
+312:       <span class="ruby-identifier">define_module</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span>)
+313:     <span class="ruby-keyword kw">end</span>
+314:     <span class="ruby-identifier">generate_constants</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span>)
+315:     <span class="ruby-identifier">generate_methods</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">io</span>)
+316:     <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;end&quot;</span>
+317:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

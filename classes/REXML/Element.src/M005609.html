@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>whitespace (REXML::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 145</span>
+145:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">whitespace</span>
+146:       <span class="ruby-ivar">@whitespace</span> = <span class="ruby-keyword kw">nil</span>
+147:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>
+148:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:respect_whitespace</span>]
+149:           <span class="ruby-ivar">@whitespace</span> = (<span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:respect_whitespace</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:all</span> <span class="ruby-keyword kw">or</span>
+150:                          <span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:respect_whitespace</span>].<span class="ruby-identifier">include?</span> <span class="ruby-identifier">expanded_name</span>)
+151:         <span class="ruby-keyword kw">end</span>
+152:         <span class="ruby-ivar">@whitespace</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:compress_whitespace</span>] <span class="ruby-keyword kw">and</span>
+153:                                 (<span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:compress_whitespace</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:all</span> <span class="ruby-keyword kw">or</span>
+154:                                  <span class="ruby-ivar">@context</span>[<span class="ruby-identifier">:compress_whitespace</span>].<span class="ruby-identifier">include?</span> <span class="ruby-identifier">expanded_name</span>)
+155:                                )
+156:       <span class="ruby-keyword kw">end</span>
+157:       <span class="ruby-ivar">@whitespace</span> = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@whitespace</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+158:       <span class="ruby-ivar">@whitespace</span>
+159:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

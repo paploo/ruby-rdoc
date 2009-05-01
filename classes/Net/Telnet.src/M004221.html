@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>cmd (Net::Telnet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/telnet.rb, line 681</span>
+681:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cmd</span>(<span class="ruby-identifier">options</span>) <span class="ruby-comment cmt"># :yield: recvdata</span>
+682:       <span class="ruby-identifier">match</span>    = <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Prompt&quot;</span>]
+683:       <span class="ruby-identifier">time_out</span> = <span class="ruby-ivar">@options</span>[<span class="ruby-value str">&quot;Timeout&quot;</span>]
+684: 
+685:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+686:         <span class="ruby-identifier">string</span>   = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;String&quot;</span>]
+687:         <span class="ruby-identifier">match</span>    = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Match&quot;</span>]   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Match&quot;</span>)
+688:         <span class="ruby-identifier">time_out</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">&quot;Timeout&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">&quot;Timeout&quot;</span>)
+689:       <span class="ruby-keyword kw">else</span>
+690:         <span class="ruby-identifier">string</span> = <span class="ruby-identifier">options</span>
+691:       <span class="ruby-keyword kw">end</span>
+692: 
+693:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">string</span>)
+694:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+695:         <span class="ruby-identifier">waitfor</span>({<span class="ruby-value str">&quot;Prompt&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">match</span>, <span class="ruby-value str">&quot;Timeout&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time_out</span>}){<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">c</span> }
+696:       <span class="ruby-keyword kw">else</span>
+697:         <span class="ruby-identifier">waitfor</span>({<span class="ruby-value str">&quot;Prompt&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">match</span>, <span class="ruby-value str">&quot;Timeout&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time_out</span>})
+698:       <span class="ruby-keyword kw">end</span>
+699:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

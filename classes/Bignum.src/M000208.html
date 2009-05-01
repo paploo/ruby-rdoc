@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>modulo (Bignum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     big % other         =&gt; Numeric
+ *     big.modulo(other)   =&gt; Numeric
+ *
+ *  Returns big modulo other. See Numeric.divmod for more
+ *  information.
+ */
+
+VALUE
+rb_big_modulo(VALUE x, VALUE y)
+{
+    VALUE z;
+
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        y = rb_int2big(FIX2LONG(y));
+        break;
+
+      case T_BIGNUM:
+        break;
+
+      default:
+        return rb_num_coerce_bin(x, y, '%');
+    }
+    bigdivmod(x, y, 0, &amp;z);
+
+    return bignorm(z);
+}</pre>
+</body>
+</html>

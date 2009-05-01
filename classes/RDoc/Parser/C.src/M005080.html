@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_modifiers (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 413</span>
+413:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_modifiers</span>(<span class="ruby-identifier">comment</span>, <span class="ruby-identifier">meth_obj</span>)
+414:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/:nodoc:\s*^\s*\*?\s*$/</span><span class="ruby-identifier">m</span>, <span class="ruby-value str">''</span>) <span class="ruby-keyword kw">or</span>
+415:        <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\A\/\*\s*:nodoc:\s*\*\/\Z/</span>, <span class="ruby-value str">''</span>)
+416:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">document_self</span> = <span class="ruby-keyword kw">false</span>
+417:     <span class="ruby-keyword kw">end</span>
+418:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/call-seq:(.*?)^\s*\*?\s*$/</span><span class="ruby-identifier">m</span>, <span class="ruby-value str">''</span>) <span class="ruby-keyword kw">or</span>
+419:        <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\A\/\*\s*call-seq:(.*?)\*\/\Z/</span>, <span class="ruby-value str">''</span>)
+420:       <span class="ruby-identifier">seq</span> = <span class="ruby-identifier">$1</span>
+421:       <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^\s*\*\s*/</span>, <span class="ruby-value str">''</span>)
+422:       <span class="ruby-identifier">meth_obj</span>.<span class="ruby-identifier">call_seq</span> = <span class="ruby-identifier">seq</span>
+423:     <span class="ruby-keyword kw">end</span>
+424:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

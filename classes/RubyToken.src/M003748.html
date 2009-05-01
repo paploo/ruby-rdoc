@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_token (RubyToken)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-token.rb, line 247</span>
+247:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">RubyToken</span>.<span class="ruby-identifier">def_token</span>(<span class="ruby-identifier">token_n</span>, <span class="ruby-identifier">super_token</span> = <span class="ruby-constant">Token</span>, <span class="ruby-identifier">reading</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">opts</span>)
+248:     <span class="ruby-identifier">token_n</span> = <span class="ruby-identifier">token_n</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token_n</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+249:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RubyToken</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">token_n</span>)
+250:       <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">fail</span> <span class="ruby-constant">AlreadyDefinedToken</span>, <span class="ruby-identifier">token_n</span>
+251:     <span class="ruby-keyword kw">end</span>
+252:     <span class="ruby-identifier">token_c</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-node">&quot;class #{token_n} &lt; #{super_token}; end; #{token_n}&quot;</span>)
+253:     
+254:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reading</span>
+255:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkReading2Token</span>[<span class="ruby-identifier">reading</span>]
+256:         <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">fail</span> <span class="ruby-constant">TkReading2TokenDuplicateError</span>, <span class="ruby-identifier">token_n</span>, <span class="ruby-identifier">reading</span>
+257:       <span class="ruby-keyword kw">end</span>
+258:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">empty?</span>
+259:         <span class="ruby-constant">TkReading2Token</span>[<span class="ruby-identifier">reading</span>] = [<span class="ruby-identifier">token_c</span>]
+260:       <span class="ruby-keyword kw">else</span>
+261:         <span class="ruby-constant">TkReading2Token</span>[<span class="ruby-identifier">reading</span>] = [<span class="ruby-identifier">token_c</span>].<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">opts</span>)
+262:       <span class="ruby-keyword kw">end</span>
+263:     <span class="ruby-keyword kw">end</span>
+264:     <span class="ruby-constant">TkSymbol2Token</span>[<span class="ruby-identifier">token_n</span>.<span class="ruby-identifier">intern</span>] = <span class="ruby-identifier">token_c</span>
+265:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

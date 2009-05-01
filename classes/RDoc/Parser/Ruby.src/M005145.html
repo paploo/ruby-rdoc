@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_class (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1873</span>
+1873:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_class</span>(<span class="ruby-identifier">container</span>, <span class="ruby-identifier">single</span>, <span class="ruby-identifier">tk</span>, <span class="ruby-identifier">comment</span>)
+1874:     <span class="ruby-identifier">container</span>, <span class="ruby-identifier">name_t</span> = <span class="ruby-identifier">get_class_or_module</span>(<span class="ruby-identifier">container</span>)
+1875: 
+1876:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">name_t</span>
+1877:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TkCONSTANT</span>
+1878:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name_t</span>.<span class="ruby-identifier">name</span>
+1879:       <span class="ruby-identifier">superclass</span> = <span class="ruby-value str">&quot;Object&quot;</span>
+1880: 
+1881:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkLT</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">peek_tk</span> <span class="ruby-keyword kw">then</span>
+1882:         <span class="ruby-identifier">get_tk</span>
+1883:         <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">true</span>)
+1884:         <span class="ruby-identifier">superclass</span> = <span class="ruby-identifier">get_class_specification</span>
+1885:         <span class="ruby-identifier">superclass</span> = <span class="ruby-value str">&quot;&lt;unknown&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">superclass</span>.<span class="ruby-identifier">empty?</span>
+1886:       <span class="ruby-keyword kw">end</span>
+1887: 
+1888:       <span class="ruby-identifier">cls_type</span> = <span class="ruby-identifier">single</span> <span class="ruby-operator">==</span> <span class="ruby-constant">SINGLE</span> <span class="ruby-value">? </span><span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">SingleClass</span> <span class="ruby-operator">:</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalClass</span>
+1889:       <span class="ruby-identifier">cls</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-identifier">cls_type</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">superclass</span>
+1890: 
+1891:       <span class="ruby-ivar">@stats</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-identifier">cls</span>
+1892: 
+1893:       <span class="ruby-identifier">read_documentation_modifiers</span> <span class="ruby-identifier">cls</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">CLASS_MODIFIERS</span>
+1894:       <span class="ruby-identifier">cls</span>.<span class="ruby-identifier">record_location</span> <span class="ruby-ivar">@top_level</span>
+1895: 
+1896:       <span class="ruby-identifier">parse_statements</span> <span class="ruby-identifier">cls</span>
+1897:       <span class="ruby-identifier">cls</span>.<span class="ruby-identifier">comment</span> = <span class="ruby-identifier">comment</span>
+1898: 
+1899:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TkLSHFT</span>
+1900:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">name</span> = <span class="ruby-identifier">get_class_specification</span>
+1901:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;self&quot;</span>, <span class="ruby-identifier">container</span>.<span class="ruby-identifier">name</span>
+1902:         <span class="ruby-identifier">parse_statements</span>(<span class="ruby-identifier">container</span>, <span class="ruby-constant">SINGLE</span>)
+1903:       <span class="ruby-keyword kw">else</span>
+1904:         <span class="ruby-identifier">other</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TopLevel</span>.<span class="ruby-identifier">find_class_named</span>(<span class="ruby-identifier">name</span>)
+1905:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">other</span>
+1906:           <span class="ruby-comment cmt">#            other = @top_level.add_class(NormalClass, name, nil)</span>
+1907:           <span class="ruby-comment cmt">#            other.record_location(@top_level)</span>
+1908:           <span class="ruby-comment cmt">#            other.comment = comment</span>
+1909:           <span class="ruby-identifier">other</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalClass</span>.<span class="ruby-identifier">new</span> <span class="ruby-value str">&quot;Dummy&quot;</span>, <span class="ruby-keyword kw">nil</span>
+1910:         <span class="ruby-keyword kw">end</span>
+1911: 
+1912:         <span class="ruby-ivar">@stats</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-identifier">other</span>
+1913: 
+1914:         <span class="ruby-identifier">read_documentation_modifiers</span> <span class="ruby-identifier">other</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">CLASS_MODIFIERS</span>
+1915:         <span class="ruby-identifier">parse_statements</span>(<span class="ruby-identifier">other</span>, <span class="ruby-constant">SINGLE</span>)
+1916:       <span class="ruby-keyword kw">end</span>
+1917: 
+1918:     <span class="ruby-keyword kw">else</span>
+1919:       <span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;Expected class name or '&lt;&lt;'. Got #{name_t.class}: #{name_t.text.inspect}&quot;</span>)
+1920:     <span class="ruby-keyword kw">end</span>
+1921:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

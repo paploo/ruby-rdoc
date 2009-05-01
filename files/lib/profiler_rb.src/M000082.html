@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>print_profile (lib/profiler.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/profiler.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">print_profile</span>(<span class="ruby-identifier">f</span>)
+33:     <span class="ruby-identifier">stop_profile</span>
+34:     <span class="ruby-identifier">total</span> = <span class="ruby-constant">Process</span>.<span class="ruby-identifier">times</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">-</span> <span class="ruby-ivar">@@start</span>
+35:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">total</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">total</span> = <span class="ruby-value">0</span><span class="ruby-value">.01</span> <span class="ruby-keyword kw">end</span>
+36:     <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@@map</span>.<span class="ruby-identifier">values</span>
+37:     <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">sort_by</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-operator">-</span><span class="ruby-identifier">x</span>[<span class="ruby-value">2</span>]}
+38:     <span class="ruby-identifier">sum</span> = <span class="ruby-value">0</span>
+39:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;  %%   cumulative   self              self     total\n&quot;</span>
+40:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot; time   seconds   seconds    calls  ms/call  ms/call  name\n&quot;</span>
+41:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">d</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">data</span>
+42:       <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">2</span>]
+43:       <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%6.2f %8.2f  %8.2f %8d &quot;</span>, <span class="ruby-identifier">d</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">/</span><span class="ruby-identifier">total</span><span class="ruby-operator">*</span><span class="ruby-value">100</span>, <span class="ruby-identifier">sum</span>, <span class="ruby-identifier">d</span>[<span class="ruby-value">2</span>], <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>]
+44:       <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%8.2f %8.2f  %s\n&quot;</span>, <span class="ruby-identifier">d</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">*</span><span class="ruby-value">1000</span><span class="ruby-operator">/</span><span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>]<span class="ruby-operator">*</span><span class="ruby-value">1000</span><span class="ruby-operator">/</span><span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">get_name</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">d</span>[<span class="ruby-value">3</span>])
+45:     <span class="ruby-keyword kw">end</span>
+46:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%6.2f %8.2f  %8.2f %8d &quot;</span>, <span class="ruby-value">0</span><span class="ruby-value">.0</span>, <span class="ruby-identifier">total</span>, <span class="ruby-value">0</span><span class="ruby-value">.0</span>, <span class="ruby-value">1</span>     <span class="ruby-comment cmt"># ???</span>
+47:     <span class="ruby-identifier">f</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%8.2f %8.2f  %s\n&quot;</span>, <span class="ruby-value">0</span><span class="ruby-value">.0</span>, <span class="ruby-identifier">total</span><span class="ruby-operator">*</span><span class="ruby-value">1000</span>, <span class="ruby-value str">&quot;#toplevel&quot;</span> <span class="ruby-comment cmt"># ???</span>
+48:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

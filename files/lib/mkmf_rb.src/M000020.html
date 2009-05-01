@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>with_config (lib/mkmf.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/mkmf.rb, line 1128</span>
+1128: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_config</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">default</span>=<span class="ruby-keyword kw">nil</span>)
+1129:   <span class="ruby-identifier">config</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^--with[-_]/</span>, <span class="ruby-value str">''</span>)
+1130:   <span class="ruby-identifier">val</span> = <span class="ruby-identifier">arg_config</span>(<span class="ruby-value str">&quot;--with-&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">config</span>) <span class="ruby-keyword kw">do</span>
+1131:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">arg_config</span>(<span class="ruby-value str">&quot;--without-&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">config</span>)
+1132:       <span class="ruby-keyword kw">false</span>
+1133:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">block_given?</span>
+1134:       <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">default</span>)
+1135:     <span class="ruby-keyword kw">else</span>
+1136:       <span class="ruby-keyword kw">break</span> <span class="ruby-identifier">default</span>
+1137:     <span class="ruby-keyword kw">end</span>
+1138:   <span class="ruby-keyword kw">end</span>
+1139:   <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">val</span>
+1140:   <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;yes&quot;</span>
+1141:     <span class="ruby-keyword kw">true</span>
+1142:   <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;no&quot;</span>
+1143:     <span class="ruby-keyword kw">false</span>
+1144:   <span class="ruby-keyword kw">else</span>
+1145:     <span class="ruby-identifier">val</span>
+1146:   <span class="ruby-keyword kw">end</span>
+1147: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

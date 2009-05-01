@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>service (WEBrick::HTTPServlet::FileHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpservlet/filehandler.rb, line 149</span>
+149:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">service</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+150:         <span class="ruby-comment cmt"># if this class is mounted on &quot;/&quot; and /~username is requested.</span>
+151:         <span class="ruby-comment cmt"># we're going to override path informations before invoking service.</span>
+152:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">Etc</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:UserDir</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">script_name</span>.<span class="ruby-identifier">empty?</span>
+153:           <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">%r|^(/~([^/]+))|</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path_info</span>
+154:             <span class="ruby-identifier">script_name</span>, <span class="ruby-identifier">user</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+155:             <span class="ruby-identifier">path_info</span> = <span class="ruby-identifier">$'</span>
+156:             <span class="ruby-keyword kw">begin</span>
+157:               <span class="ruby-identifier">passwd</span> = <span class="ruby-constant">Etc</span><span class="ruby-operator">::</span><span class="ruby-identifier">getpwnam</span>(<span class="ruby-identifier">user</span>)
+158:               <span class="ruby-ivar">@root</span> = <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">join</span>(<span class="ruby-identifier">passwd</span>.<span class="ruby-identifier">dir</span>, <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:UserDir</span>])
+159:               <span class="ruby-identifier">req</span>.<span class="ruby-identifier">script_name</span> = <span class="ruby-identifier">script_name</span>
+160:               <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path_info</span> = <span class="ruby-identifier">path_info</span>
+161:             <span class="ruby-keyword kw">rescue</span>
+162:               <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;#{self.class}#do_GET: getpwnam(#{user}) failed&quot;</span>
+163:             <span class="ruby-keyword kw">end</span>
+164:           <span class="ruby-keyword kw">end</span>
+165:         <span class="ruby-keyword kw">end</span>
+166:         <span class="ruby-identifier">prevent_directory_traversal</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+167:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+168:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

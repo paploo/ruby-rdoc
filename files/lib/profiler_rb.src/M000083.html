@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_name (lib/profiler.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/profiler.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_name</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">id</span>)
+50:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+51:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Class</span>
+52:       <span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;#&quot;</span>
+53:     <span class="ruby-keyword kw">else</span>
+54:       <span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;.&quot;</span>
+55:     <span class="ruby-keyword kw">end</span>
+56:     <span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">id2name</span>
+57:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

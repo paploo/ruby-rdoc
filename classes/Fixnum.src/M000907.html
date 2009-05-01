@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&amp; (Fixnum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   fix &amp; other     =&gt; integer
+ *
+ * Bitwise AND.
+ */
+
+static VALUE
+fix_and(VALUE x, VALUE y)
+{
+    long val;
+
+    if (!FIXNUM_P(y = bit_coerce(y))) {
+        return rb_big_and(y, x);
+    }
+    val = FIX2LONG(x) &amp; FIX2LONG(y);
+    return LONG2NUM(val);
+}</pre>
+</body>
+</html>

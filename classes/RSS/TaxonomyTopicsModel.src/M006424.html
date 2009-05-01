@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>append_features (RSS::TaxonomyTopicsModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/taxonomy.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">append_features</span>(<span class="ruby-identifier">klass</span>)
+29:       <span class="ruby-keyword kw">super</span>
+30: 
+31:       <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">install_must_call_validator</span>(<span class="ruby-constant">TAXO_PREFIX</span>, <span class="ruby-constant">TAXO_URI</span>)
+32:       <span class="ruby-node">%w(topics)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+33:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">install_have_child_element</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">TAXO_URI</span>, <span class="ruby-value str">&quot;?&quot;</span>,
+34:                                          <span class="ruby-node">&quot;#{TAXO_PREFIX}_#{name}&quot;</span>)
+35:       <span class="ruby-keyword kw">end</span>
+36:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

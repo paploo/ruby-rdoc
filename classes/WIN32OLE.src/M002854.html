@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_respond_to? (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE#ole_respond_to?(method) -&gt; true or false
+ * 
+ *  Returns true when OLE object has OLE method, otherwise returns false.
+ *
+ *      ie = WIN32OLE.new('InternetExplorer.Application')
+ *      ie.ole_respond_to?(&quot;gohome&quot;) =&gt; true
+ */
+static VALUE
+fole_respond_to(VALUE self, VALUE method)
+{
+    struct oledata *pole;
+    BSTR wcmdname;
+    DISPID DispID;
+    HRESULT hr;
+    rb_secure(4);
+    if(TYPE(method) != T_STRING &amp;&amp; TYPE(method) != T_SYMBOL) {
+        rb_raise(rb_eTypeError, &quot;wrong argument type (expected String or Symbol)&quot;);
+    }
+    if (TYPE(method) == T_SYMBOL) {
+        method = rb_sym_to_s(method);
+    }
+    OLEData_Get_Struct(self, pole);
+    wcmdname = ole_vstr2wc(method);
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetIDsOfNames( pole-&gt;pDispatch, &amp;IID_NULL,
+            &amp;wcmdname, 1, cWIN32OLE_lcid, &amp;DispID);
+    SysFreeString(wcmdname);
+    return SUCCEEDED(hr) ? Qtrue : Qfalse;
+}</pre>
+</body>
+</html>

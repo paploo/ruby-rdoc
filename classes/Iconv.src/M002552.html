@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>discard_ilseq? (Iconv)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Document-method: discard_ilseq?
+ * call-seq: discard_ilseq?
+ *
+ * Returns discard_ilseq flag.
+ */
+static VALUE
+iconv_get_discard_ilseq(VALUE self)
+{
+#ifdef ICONV_GET_DISCARD_ILSEQ
+    int dis = 0;
+    iconv_ctl(self, ICONV_GET_DISCARD_ILSEQ, dis);
+    if (dis) return Qtrue;
+#else
+    rb_notimplement();
+#endif
+    return Qfalse;
+}</pre>
+</body>
+</html>

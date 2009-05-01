@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>handle_class_module (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 462</span>
+462:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">class_mod</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span>, <span class="ruby-identifier">in_module</span>)
+463:     <span class="ruby-identifier">parent_name</span> = <span class="ruby-ivar">@known_classes</span>[<span class="ruby-identifier">parent</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">parent</span>
+464: 
+465:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">in_module</span>
+466:       <span class="ruby-identifier">enclosure</span> = <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">in_module</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@@enclosure_classes</span>[<span class="ruby-identifier">in_module</span>]
+467:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">enclosure</span>
+468:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">enclosure</span> = <span class="ruby-ivar">@known_classes</span>[<span class="ruby-identifier">in_module</span>]
+469:           <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">in_module</span>, (<span class="ruby-regexp re">/^rb_m/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">in_module</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;module&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;class&quot;</span>),
+470:                               <span class="ruby-identifier">enclosure</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>)
+471:           <span class="ruby-identifier">enclosure</span> = <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">in_module</span>]
+472:         <span class="ruby-keyword kw">end</span>
+473:       <span class="ruby-keyword kw">end</span>
+474:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">enclosure</span>
+475:         <span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;Enclosing class/module '#{in_module}' for &quot;</span> <span class="ruby-operator">+</span>
+476:               <span class="ruby-node">&quot;#{class_mod} #{class_name} not known&quot;</span>)
+477:         <span class="ruby-keyword kw">return</span>
+478:       <span class="ruby-keyword kw">end</span>
+479:     <span class="ruby-keyword kw">else</span>
+480:       <span class="ruby-identifier">enclosure</span> = <span class="ruby-ivar">@top_level</span>
+481:     <span class="ruby-keyword kw">end</span>
+482: 
+483:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">class_mod</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;class&quot;</span> <span class="ruby-keyword kw">then</span>
+484:       <span class="ruby-identifier">full_name</span> = <span class="ruby-identifier">enclosure</span>.<span class="ruby-identifier">full_name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;::#{class_name}&quot;</span>
+485:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@content</span> <span class="ruby-operator">=~</span> <span class="ruby-node">%r{Document-class:\s+#{full_name}\s*&lt;\s+([:,\w]+)}</span> <span class="ruby-keyword kw">then</span>
+486:         <span class="ruby-identifier">parent_name</span> = <span class="ruby-identifier">$1</span>
+487:       <span class="ruby-keyword kw">end</span>
+488:       <span class="ruby-identifier">cm</span> = <span class="ruby-identifier">enclosure</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalClass</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent_name</span>
+489:       <span class="ruby-ivar">@stats</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-identifier">cm</span>
+490:     <span class="ruby-keyword kw">else</span>
+491:       <span class="ruby-identifier">cm</span> = <span class="ruby-identifier">enclosure</span>.<span class="ruby-identifier">add_module</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalModule</span>, <span class="ruby-identifier">class_name</span>
+492:       <span class="ruby-ivar">@stats</span>.<span class="ruby-identifier">add_module</span> <span class="ruby-identifier">cm</span>
+493:     <span class="ruby-keyword kw">end</span>
+494: 
+495:     <span class="ruby-identifier">cm</span>.<span class="ruby-identifier">record_location</span>(<span class="ruby-identifier">enclosure</span>.<span class="ruby-identifier">toplevel</span>)
+496: 
+497:     <span class="ruby-identifier">find_class_comment</span>(<span class="ruby-identifier">cm</span>.<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">cm</span>)
+498:     <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">var_name</span>] = <span class="ruby-identifier">cm</span>
+499:     <span class="ruby-ivar">@@enclosure_classes</span>[<span class="ruby-identifier">var_name</span>] = <span class="ruby-identifier">cm</span>
+500:     <span class="ruby-ivar">@known_classes</span>[<span class="ruby-identifier">var_name</span>] = <span class="ruby-identifier">cm</span>.<span class="ruby-identifier">full_name</span>
+501:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

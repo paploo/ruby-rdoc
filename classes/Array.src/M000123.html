@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>last (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.last     -&gt;  obj or nil
+ *     array.last(n)  -&gt;  an_array
+ *  
+ *  Returns the last element(s) of &lt;i&gt;self&lt;/i&gt;. If the array is empty,
+ *  the first form returns &lt;code&gt;nil&lt;/code&gt;.
+ *     
+ *     a = [ &quot;w&quot;, &quot;x&quot;, &quot;y&quot;, &quot;z&quot; ]
+ *     a.last     #=&gt; &quot;z&quot;
+ *     a.last(2)  #=&gt; [&quot;y&quot;, &quot;z&quot;]
+ */
+
+VALUE
+rb_ary_last(int argc, VALUE *argv, VALUE ary)
+{
+    if (argc == 0) {
+        if (RARRAY_LEN(ary) == 0) return Qnil;
+        return RARRAY_PTR(ary)[RARRAY_LEN(ary)-1];
+    }
+    else {
+        return ary_take_first_or_last(argc, argv, ary, ARY_TAKE_LAST);
+    }
+}</pre>
+</body>
+</html>

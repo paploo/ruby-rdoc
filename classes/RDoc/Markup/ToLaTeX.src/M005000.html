@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>list_item_start (RDoc::Markup::ToLaTeX)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_latex.rb, line 301</span>
+301:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_item_start</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+302:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">type</span>
+303:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:BULLET</span>, <span class="ruby-identifier">:NUMBER</span>, <span class="ruby-identifier">:UPPERALPHA</span>, <span class="ruby-identifier">:LOWERALPHA</span> <span class="ruby-keyword kw">then</span>
+304:       <span class="ruby-value str">&quot;\\item &quot;</span>
+305: 
+306:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:LABELED</span> <span class="ruby-keyword kw">then</span>
+307:       <span class="ruby-value str">&quot;\\item[&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">convert_flow</span>(<span class="ruby-identifier">am</span>.<span class="ruby-identifier">flow</span>(<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">param</span>)) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;] &quot;</span>
+308: 
+309:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:NOTE</span> <span class="ruby-keyword kw">then</span>
+310:         <span class="ruby-identifier">convert_flow</span>(<span class="ruby-identifier">am</span>.<span class="ruby-identifier">flow</span>(<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">param</span>)) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &amp; &quot;</span>
+311:     <span class="ruby-keyword kw">else</span>
+312:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Invalid list type&quot;</span>
+313:     <span class="ruby-keyword kw">end</span>
+314:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

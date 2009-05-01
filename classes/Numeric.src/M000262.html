@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>truncate (Numeric)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     num.truncate    =&gt; integer
+ *
+ *  Returns &lt;i&gt;num&lt;/i&gt; truncated to an integer. &lt;code&gt;Numeric&lt;/code&gt;
+ *  implements this by converting its value to a float and invoking
+ *  &lt;code&gt;Float#truncate&lt;/code&gt;.
+ */
+
+static VALUE
+num_truncate(VALUE num)
+{
+    return flo_truncate(rb_Float(num));
+}</pre>
+</body>
+</html>

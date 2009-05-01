@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_BODY (RDoc::Generator::HTML::KilmerFactory)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html/kilmerfactory.rb, line 239</span>
+239:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_BODY</span>
+240:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">XHTML_STRICT_PREAMBLE</span> <span class="ruby-operator">+</span> <span class="ruby-constant">HTML_ELEMENT</span> <span class="ruby-operator">+</span> <span class="ruby-node">%{
+241: &lt;head&gt;
+242:   &lt;title&gt;&lt;%= values[&quot;title&quot;] %&gt;&lt;/title&gt;
+243:   &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=&lt;%= values[&quot;charset&quot;] %&gt;&quot; /&gt;
+244:   &lt;link rel=&quot;stylesheet&quot; href=&quot;&lt;%= values[&quot;style_url&quot;] %&gt;&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+245:   &lt;script type=&quot;text/javascript&quot;&gt;
+246:   &lt;!--
+247:   function popCode(url) {
+248:     parent.frames.source.location = url
+249:   }
+250:   //--&gt;
+251:   &lt;/script&gt;
+252: &lt;/head&gt;
+253: &lt;body&gt;
+254: &lt;div class=&quot;bodyContent&quot;&gt;
+255: &lt;%= template_include %&gt;  &lt;!-- banner header --&gt;
+256: 
+257: #{get_METHOD_LIST()}
+258: &lt;/div&gt;
+259: &lt;/body&gt;
+260: &lt;/html&gt;
+261: }</span>
+262:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

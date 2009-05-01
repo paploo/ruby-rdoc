@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (Proc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   prc.to_s   =&gt; string
+ *
+ * Shows the unique identifier for this proc, along with
+ * an indication of where the proc was defined.
+ */
+
+static VALUE
+proc_to_s(VALUE self)
+{
+    VALUE str = 0;
+    rb_proc_t *proc;
+    const char *cname = rb_obj_classname(self);
+    rb_iseq_t *iseq;
+    const char *is_lambda;
+    
+    GetProcPtr(self, proc);
+    iseq = proc-&gt;block.iseq;
+    is_lambda = proc-&gt;is_lambda ? &quot; (lambda)&quot; : &quot;&quot;;
+
+    if (RUBY_VM_NORMAL_ISEQ_P(iseq)) {
+        int line_no = 0;
+        
+        if (iseq-&gt;insn_info_table) {
+            line_no = rb_iseq_first_lineno(iseq);
+        }
+        str = rb_sprintf(&quot;#&lt;%s:%p@%s:%d%s&gt;&quot;, cname, (void *)self,
+                         RSTRING_PTR(iseq-&gt;filename),
+                         line_no, is_lambda);
+    }
+    else {
+        str = rb_sprintf(&quot;#&lt;%s:%p%s&gt;&quot;, cname, (void *)proc-&gt;block.iseq,
+                         is_lambda);
+    }
+
+    if (OBJ_TAINTED(self)) {
+        OBJ_TAINT(str);
+    }
+    return str;
+}</pre>
+</body>
+</html>

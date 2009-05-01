@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_class_cache (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 378</span>
+378:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_class_cache</span>
+379:     <span class="ruby-identifier">class_cache</span> = <span class="ruby-constant">OpenStructHash</span>.<span class="ruby-identifier">new</span>
+380: 
+381:     <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@use_cache</span>)
+382:       <span class="ruby-comment cmt"># Dump the documentation directories to a file in the cache, so that</span>
+383:       <span class="ruby-comment cmt"># we only will use the cache for future instantiations with identical</span>
+384:       <span class="ruby-comment cmt"># documentation directories.</span>
+385:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span> <span class="ruby-ivar">@cache_doc_dirs_path</span>, <span class="ruby-value str">&quot;wb&quot;</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fp</span><span class="ruby-operator">|</span>
+386:         <span class="ruby-identifier">fp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@doc_dirs</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+387:       <span class="ruby-keyword kw">end</span>
+388:     <span class="ruby-keyword kw">end</span>
+389: 
+390:     <span class="ruby-identifier">classes</span> = <span class="ruby-identifier">map_dirs</span>(<span class="ruby-value str">'**/cdesc*.yaml'</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dir</span>[<span class="ruby-identifier">f</span>] }
+391:     <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Updating class cache with #{classes.size} classes...&quot;</span>
+392:     <span class="ruby-identifier">populate_class_cache</span> <span class="ruby-identifier">class_cache</span>, <span class="ruby-identifier">classes</span>
+393: 
+394:     <span class="ruby-identifier">write_cache</span> <span class="ruby-identifier">class_cache</span>, <span class="ruby-identifier">class_cache_file_path</span>
+395: 
+396:     <span class="ruby-identifier">class_cache</span>
+397:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* call-seq:
+ * to_s(s)
+ *
+ * Converts the value to a string.
+ *
+ * The default format looks like  0.xxxxEnn.
+ *
+ * The optional parameter s consists of either an integer; or an optional '+'
+ * or ' ', followed by an optional number, followed by an optional 'E' or 'F'.
+ *
+ * If there is a '+' at the start of s, positive values are returned with
+ * a leading '+'.
+ *
+ * A space at the start of s returns positive values with a leading space.
+ *
+ * If s contains a number, a space is inserted after each group of that many 
+ * fractional digits.
+ *
+ * If s ends with an 'E', engineering notation (0.xxxxEnn) is used.
+ *
+ * If s ends with an 'F', conventional floating point notation is used.
+ *
+ * Examples:
+ *
+ * BigDecimal.new('-123.45678901234567890').to_s('5F') -&gt; '-123.45678 90123 45678 9'
+ *
+ * BigDecimal.new('123.45678901234567890').to_s('+8F') -&gt; '+123.45678901 23456789'
+ *
+ * BigDecimal.new('123.45678901234567890').to_s(' F') -&gt; ' 123.4567890123456789'
+ */
+static VALUE
+BigDecimal_to_s(int argc, VALUE *argv, VALUE self)
+{
+    ENTER(5);
+    int   fmt=0;   /* 0:E format */
+    int   fPlus=0; /* =0:default,=1: set ' ' before digits ,set '+' before digits. */
+    Real  *vp;
+    volatile VALUE str;
+    char  *psz;
+    char   ch;
+    U_LONG nc;
+    S_INT  mc = 0;
+    VALUE  f;
+
+    GUARD_OBJ(vp,GetVpValue(self,1));
+    
+    if(rb_scan_args(argc,argv,&quot;01&quot;,&amp;f)==1) {
+        if(TYPE(f)==T_STRING) {
+            SafeStringValue(f);
+            psz = RSTRING_PTR(f);
+            if(*psz==' ') {
+                fPlus = 1; psz++;
+            } else if(*psz=='+') {
+                fPlus = 2; psz++;
+            }
+            while((ch=*psz++)!=0) {
+                if(ISSPACE(ch)) continue;
+                if(!ISDIGIT(ch)) {
+                    if(ch=='F' || ch=='f') fmt = 1; /* F format */
+                    break;
+                }
+                mc = mc * 10 + ch - '0';
+            }
+        } else {
+            mc  = GetPositiveInt(f);
+        }
+    }
+    if(fmt) {
+        nc = VpNumOfChars(vp,&quot;F&quot;);
+    } else {
+        nc = VpNumOfChars(vp,&quot;E&quot;);
+    }
+    if(mc&gt;0) nc += (nc + mc - 1) / mc + 1;
+
+    str = rb_str_new(0, nc);
+    psz = RSTRING_PTR(str);
+
+    if(fmt) {
+        VpToFString(vp, psz, mc, fPlus);
+    } else {
+        VpToString (vp, psz, mc, fPlus);
+    }
+    rb_str_resize(str, strlen(psz));
+    return str;
+}</pre>
+</body>
+</html>

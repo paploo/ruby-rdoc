@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Logger::Application [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Logger::Application</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/logger_rb.html">
+
+                lib/logger.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Description</h2>
+<p>
+<a href="Application.html">Application</a> &#8212; Add logging support to
+your application.
+</p>
+<h2>Usage</h2>
+<ol>
+<li>Define your application class as a sub-class of this class.
+
+</li>
+<li>Override &#8216;run&#8217; method in your class to do many things.
+
+</li>
+<li>Instantiate it and invoke &#8216;start&#8217;.
+
+</li>
+</ol>
+<h2>Example</h2>
+<pre>
+  class FooApp &lt; Application
+    def initialize(foo_app, application_specific, arguments)
+      super('FooApp') # Name of the application.
+    end
+
+    def run
+      ...
+      log(WARN, 'warning', 'my_method1')
+      ...
+      @log.error('my_method2') { 'Error!' }
+      ...
+    end
+  end
+
+  status = FooApp.new(....).start
+</pre>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M001784">level=</a>&nbsp;&nbsp;
+
+        <a href="#M001785">log</a>&nbsp;&nbsp;
+
+        <a href="#M001783">log=</a>&nbsp;&nbsp;
+
+        <a href="#M001780">logger</a>&nbsp;&nbsp;
+
+        <a href="#M001781">logger=</a>&nbsp;&nbsp;
+
+        <a href="#M001778">new</a>&nbsp;&nbsp;
+
+        <a href="#M001786">run</a>&nbsp;&nbsp;
+
+        <a href="#M001782">set_log</a>&nbsp;&nbsp;
+
+        <a href="#M001779">start</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Severity.html">Logger::Severity</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">appname</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+Name of the application given at initialize.
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M001778" class="method-detail">
+        <a name="M001778"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001778.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001778.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(appname = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h2>Synopsis</h2>
+<pre>
+  Application.new(appname = '')
+</pre>
+<h2>Args</h2>
+<table>
+<tr><td valign="top"><tt>appname</tt>:</td><td>Name of the application.
+
+</td></tr>
+</table>
+<h2>Description</h2>
+<p>
+Create an instance. Log device is <tt>STDERR</tt> by default. This can be
+changed with <a href="Application.html#M001782">set_log</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M001784" class="method-detail">
+        <a name="M001784"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001784.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001784.html');return false;">
+
+          <span class="method-name">level=</span><span class="method-args">(level)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> the logging threshold, just like
+<tt>Logger#level=</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001785" class="method-detail">
+        <a name="M001785"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001785.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001785.html');return false;">
+
+          <span class="method-name">log</span><span class="method-args">(severity, message = nil, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See <a href="../Logger.html#M001751">Logger#add</a>. This
+application&#8217;s <tt>appname</tt> is used.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001783" class="method-detail">
+        <a name="M001783"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001783.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001783.html');return false;">
+
+          <span class="method-name">log=</span><span class="method-args">(logdev)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001780" class="method-detail">
+        <a name="M001780"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001780.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001780.html');return false;">
+
+          <span class="method-name">logger</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Logger.html">Logger</a> for this application. See the class <a
+href="../Logger.html">Logger</a> for an explanation.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001781" class="method-detail">
+        <a name="M001781"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001781.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001781.html');return false;">
+
+          <span class="method-name">logger=</span><span class="method-args">(logger)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sets the logger for this application. See the class <a
+href="../Logger.html">Logger</a> for an explanation.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001782" class="method-detail">
+        <a name="M001782"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001782.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001782.html');return false;">
+
+          <span class="method-name">set_log</span><span class="method-args">(logdev, shift_age = 0, shift_size = 1024000)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sets the log device for this application. See <tt><a
+href="../Logger.html#M001750">Logger.new</a></tt> for an explanation of the
+arguments.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001779" class="method-detail">
+        <a name="M001779"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001779.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001779.html');return false;">
+
+          <span class="method-name">start</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Start the application. Return the status code.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M001786" class="method-detail">
+        <a name="M001786"></a>
+
+        <div class="method-heading">
+
+          <a href="Application.src/M001786.html" target="Code" class="method-signature"
+            onclick="popupCode('Application.src/M001786.html');return false;">
+
+          <span class="method-name">run</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

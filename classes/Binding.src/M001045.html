@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>eval (Binding)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     binding.eval(string [, filename [,lineno]])  =&gt; obj
+ *
+ *  Evaluates the Ruby expression(s) in &lt;em&gt;string&lt;/em&gt;, in the
+ *  &lt;em&gt;binding&lt;/em&gt;'s context.  If the optional &lt;em&gt;filename&lt;/em&gt; and
+ *  &lt;em&gt;lineno&lt;/em&gt; parameters are present, they will be used when
+ *  reporting syntax errors.
+ *
+ *     def getBinding(param)
+ *       return binding
+ *     end
+ *     b = getBinding(&quot;hello&quot;)
+ *     b.eval(&quot;param&quot;)   #=&gt; &quot;hello&quot;
+ */
+
+static VALUE
+bind_eval(int argc, VALUE *argv, VALUE bindval)
+{
+    VALUE args[4];
+
+    rb_scan_args(argc, argv, &quot;12&quot;, &amp;args[0], &amp;args[2], &amp;args[3]);
+    args[1] = bindval;
+    return rb_f_eval(argc+1, args, Qnil /* self will be searched in eval */);
+}</pre>
+</body>
+</html>

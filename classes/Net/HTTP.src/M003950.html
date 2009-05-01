@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>begin_transport (Net::HTTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 1126</span>
+1126:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">begin_transport</span>(<span class="ruby-identifier">req</span>)
+1127:       <span class="ruby-identifier">connect</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">closed?</span>
+1128:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">response_body_permitted?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@close_on_empty_response</span>
+1129:         <span class="ruby-identifier">req</span>[<span class="ruby-value str">'connection'</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'close'</span>
+1130:       <span class="ruby-keyword kw">end</span>
+1131:       <span class="ruby-identifier">req</span>[<span class="ruby-value str">'host'</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">addr_port</span>()
+1132:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

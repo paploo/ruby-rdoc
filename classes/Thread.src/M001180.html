@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>keys (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     thr.keys   =&gt; array
+ *
+ *  Returns an an array of the names of the thread-local variables (as Symbols).
+ *
+ *     thr = Thread.new do
+ *       Thread.current[:cat] = 'meow'
+ *       Thread.current[&quot;dog&quot;] = 'woof'
+ *     end
+ *     thr.join   #=&gt; #&lt;Thread:0x401b3f10 dead&gt;
+ *     thr.keys   #=&gt; [:dog, :cat]
+ */
+
+static VALUE
+rb_thread_keys(VALUE self)
+{
+    rb_thread_t *th;
+    VALUE ary = rb_ary_new();
+    GetThreadPtr(self, th);
+
+    if (th-&gt;local_storage) {
+        st_foreach(th-&gt;local_storage, thread_keys_i, ary);
+    }
+    return ary;
+}</pre>
+</body>
+</html>

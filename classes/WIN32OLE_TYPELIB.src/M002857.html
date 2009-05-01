@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>typelibs (WIN32OLE_TYPELIB)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *
+ *     WIN32OLE_TYPELIB.typelibs
+ *
+ *  Returns the array of WIN32OLE_TYPELIB object.
+ *
+ *     tlibs = WIN32OLE_TYPELIB.typelibs
+ *
+ */
+static VALUE
+foletypelib_s_typelibs(VALUE self)
+{
+    HKEY htypelib, hguid;
+    DWORD i, j;
+    LONG err;
+    VALUE guid;
+    VALUE version;
+    VALUE name = Qnil;
+    VALUE typelibs = rb_ary_new();
+    VALUE typelib = Qnil;
+
+    err = reg_open_key(HKEY_CLASSES_ROOT, &quot;TypeLib&quot;, &amp;htypelib);
+    if(err != ERROR_SUCCESS) {
+        return typelibs;
+    }
+    for(i = 0; ; i++) {
+        guid = reg_enum_key(htypelib, i);
+        if (guid == Qnil)
+            break;
+        err = reg_open_vkey(htypelib, guid, &amp;hguid);
+        if (err != ERROR_SUCCESS)
+            continue;
+        for(j = 0; ; j++) {
+            version = reg_enum_key(hguid, j);
+            if (version == Qnil)
+                break;
+            if ( (name = reg_get_val2(hguid, StringValuePtr(version))) != Qnil ) {
+                typelib = rb_funcall(cWIN32OLE_TYPELIB, rb_intern(&quot;allocate&quot;), 0);
+                oletypelib_set_member(typelib, name, guid, version);
+                rb_ary_push(typelibs, typelib);
+            }
+        }
+        RegCloseKey(hguid);
+    }
+    RegCloseKey(htypelib);
+    return typelibs;
+}</pre>
+</body>
+</html>

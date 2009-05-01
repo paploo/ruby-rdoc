@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gets (RDoc::RubyLex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 500</span>
+500:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gets</span>
+501:     <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span>
+502:     <span class="ruby-identifier">l</span> = <span class="ruby-value str">&quot;&quot;</span>
+503:     <span class="ruby-keyword kw">begin</span>
+504:       <span class="ruby-identifier">l</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\r&quot;</span>
+505:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
+506:     <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
+507:     <span class="ruby-identifier">l</span>
+508:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

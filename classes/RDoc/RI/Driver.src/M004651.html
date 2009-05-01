@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>lookup_ancestor (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 514</span>
+514:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lookup_ancestor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">orig_klass</span>)
+515:     <span class="ruby-comment cmt"># This is a bit hacky, but ri will go into an infinite</span>
+516:     <span class="ruby-comment cmt"># loop otherwise, since Object has an Object ancestor</span>
+517:     <span class="ruby-comment cmt"># for some reason.  Depending on the documentation state, I've seen</span>
+518:     <span class="ruby-comment cmt"># Kernel as an ancestor of Object and not as an ancestor of Object.</span>
+519:     <span class="ruby-keyword kw">if</span> ((<span class="ruby-identifier">orig_klass</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Object&quot;</span>) <span class="ruby-operator">&amp;&amp;</span>
+520:         ((<span class="ruby-identifier">klass</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Kernel&quot;</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">klass</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Object&quot;</span>)))
+521:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+522:     <span class="ruby-keyword kw">end</span>
+523: 
+524:     <span class="ruby-identifier">cache</span> = <span class="ruby-identifier">class_cache</span>[<span class="ruby-identifier">orig_klass</span>]
+525: 
+526:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">cache</span>
+527: 
+528:     <span class="ruby-identifier">ancestors</span> = [<span class="ruby-identifier">orig_klass</span>]
+529:     <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">push</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">cache</span>.<span class="ruby-identifier">includes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">inc</span><span class="ruby-operator">|</span> <span class="ruby-identifier">inc</span>[<span class="ruby-value str">'name'</span>] })
+530:     <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">superclass</span>
+531:     
+532:     <span class="ruby-identifier">ancestor_index</span> = <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">klass</span>)
+533: 
+534:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ancestor_index</span>
+535:       <span class="ruby-identifier">ancestor</span> = <span class="ruby-identifier">ancestors</span>[<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">klass</span>) <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+536:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ancestor</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ancestor</span>
+537:     <span class="ruby-keyword kw">end</span>
+538: 
+539:     <span class="ruby-identifier">lookup_ancestor</span> <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">superclass</span>
+540:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1356</span>
+1356:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1357:     <span class="ruby-identifier">csv</span> = <span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+1358:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">nil?</span>  <span class="ruby-comment cmt"># slurp contents, if no block is given</span>
+1359:       <span class="ruby-keyword kw">begin</span>
+1360:         <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">read</span>
+1361:       <span class="ruby-keyword kw">ensure</span>
+1362:         <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">close</span>
+1363:       <span class="ruby-keyword kw">end</span>
+1364:     <span class="ruby-keyword kw">else</span>           <span class="ruby-comment cmt"># or pass each row to a provided block</span>
+1365:       <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1366:     <span class="ruby-keyword kw">end</span>
+1367:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

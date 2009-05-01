@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_instance_delegator (Forwardable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/forwardable.rb, line 157</span>
+157:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_instance_delegator</span>(<span class="ruby-identifier">accessor</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">ali</span> = <span class="ruby-identifier">method</span>)
+158:     <span class="ruby-identifier">str</span> = <span class="ruby-node">%Q{
+159:       def #{ali}(*args, &amp;block)
+160:         #{accessor}.send(:#{method}, *args, &amp;block)
+161:       end
+162:     }</span>
+163: 
+164:     <span class="ruby-comment cmt"># If it's not a class or module, it's an instance</span>
+165:     <span class="ruby-keyword kw">begin</span>
+166:       <span class="ruby-identifier">module_eval</span>(<span class="ruby-identifier">str</span>)
+167:     <span class="ruby-keyword kw">rescue</span>
+168:       <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">str</span>)
+169:     <span class="ruby-keyword kw">end</span>
+170:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

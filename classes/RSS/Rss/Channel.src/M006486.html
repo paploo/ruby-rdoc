@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_maker_elements (RSS::Rss::Channel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/0.9.rb, line 107</span>
+107:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_maker_elements</span>(<span class="ruby-identifier">channel</span>)
+108:         <span class="ruby-keyword kw">super</span>
+109:         [
+110:           [<span class="ruby-identifier">skipDays</span>, <span class="ruby-value str">&quot;day&quot;</span>],
+111:           [<span class="ruby-identifier">skipHours</span>, <span class="ruby-value str">&quot;hour&quot;</span>],
+112:         ].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">skip</span>, <span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+113:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">skip</span>
+114:             <span class="ruby-identifier">skip</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;#{key}s&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+115:               <span class="ruby-identifier">target_skips</span> = <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;skip#{key.capitalize}s&quot;</span>)
+116:               <span class="ruby-identifier">new_target</span> = <span class="ruby-identifier">target_skips</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;new_#{key}&quot;</span>)
+117:               <span class="ruby-identifier">new_target</span>.<span class="ruby-identifier">content</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">content</span>
+118:             <span class="ruby-keyword kw">end</span>
+119:           <span class="ruby-keyword kw">end</span>
+120:         <span class="ruby-keyword kw">end</span>
+121:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

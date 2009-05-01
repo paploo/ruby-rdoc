@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>LocationPath (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 185</span>
+185:       <span class="ruby-keyword kw">def</span> <span class="ruby-constant">LocationPath</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>
+186:         <span class="ruby-comment cmt">#puts &quot;LocationPath '#{path}'&quot;</span>
+187:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">strip</span>
+188:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+189:           <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:document</span>
+190:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+191:             <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:descendant_or_self</span>
+192:             <span class="ruby-identifier">parsed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:node</span>
+193:             <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>[<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+194:           <span class="ruby-keyword kw">else</span>
+195:             <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+196:           <span class="ruby-keyword kw">end</span>
+197:         <span class="ruby-keyword kw">end</span>
+198:         <span class="ruby-comment cmt">#puts parsed.inspect</span>
+199:         <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RelativeLocationPath</span>( <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span> ) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+200:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

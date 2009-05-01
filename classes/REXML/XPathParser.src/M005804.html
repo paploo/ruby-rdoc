@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>descendant_or_self (REXML::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/xpath_parser.rb, line 522</span>
+522:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">descendant_or_self</span>( <span class="ruby-identifier">path_stack</span>, <span class="ruby-identifier">nodeset</span> )
+523:       <span class="ruby-identifier">rs</span> = []
+524:       <span class="ruby-comment cmt">#puts &quot;#&quot;*80</span>
+525:       <span class="ruby-comment cmt">#puts &quot;PATH_STACK = #{path_stack.inspect}&quot;</span>
+526:       <span class="ruby-comment cmt">#puts &quot;NODESET = #{nodeset.collect{|n|n.inspect}.inspect}&quot;</span>
+527:       <span class="ruby-identifier">d_o_s</span>( <span class="ruby-identifier">path_stack</span>, <span class="ruby-identifier">nodeset</span>, <span class="ruby-identifier">rs</span> )
+528:       <span class="ruby-comment cmt">#puts &quot;RS = #{rs.collect{|n|n.inspect}.inspect}&quot;</span>
+529:       <span class="ruby-identifier">document_order</span>(<span class="ruby-identifier">rs</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>)
+530:       <span class="ruby-comment cmt">#rs.flatten.compact</span>
+531:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

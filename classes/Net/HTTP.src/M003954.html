@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sspi_auth (Net::HTTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 1173</span>
+1173:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sspi_auth</span>(<span class="ruby-identifier">req</span>)
+1174:       <span class="ruby-identifier">n</span> = <span class="ruby-constant">Win32</span><span class="ruby-operator">::</span><span class="ruby-constant">SSPI</span><span class="ruby-operator">::</span><span class="ruby-constant">NegotiateAuth</span>.<span class="ruby-identifier">new</span>
+1175:       <span class="ruby-identifier">req</span>[<span class="ruby-value str">&quot;Proxy-Authorization&quot;</span>] = <span class="ruby-node">&quot;Negotiate #{n.get_initial_token}&quot;</span>
+1176:       <span class="ruby-comment cmt"># Some versions of ISA will close the connection if this isn't present.</span>
+1177:       <span class="ruby-identifier">req</span>[<span class="ruby-value str">&quot;Connection&quot;</span>] = <span class="ruby-value str">&quot;Keep-Alive&quot;</span>
+1178:       <span class="ruby-identifier">req</span>[<span class="ruby-value str">&quot;Proxy-Connection&quot;</span>] = <span class="ruby-value str">&quot;Keep-Alive&quot;</span>
+1179:       <span class="ruby-identifier">res</span> = <span class="ruby-identifier">transport_request</span>(<span class="ruby-identifier">req</span>)
+1180:       <span class="ruby-identifier">authphrase</span> = <span class="ruby-identifier">res</span>[<span class="ruby-value str">&quot;Proxy-Authenticate&quot;</span>]  <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span>
+1181:       <span class="ruby-identifier">req</span>[<span class="ruby-value str">&quot;Proxy-Authorization&quot;</span>] = <span class="ruby-node">&quot;Negotiate #{n.complete_authentication(authphrase)}&quot;</span>
+1182:     <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
+1183:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPAuthenticationError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'HTTP authentication failed'</span>, <span class="ruby-identifier">err</span>)
+1184:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

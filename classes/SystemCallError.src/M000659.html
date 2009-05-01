@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>=== (SystemCallError)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   system_call_error === other  =&gt; true or false
+ *
+ * Return +true+ if the receiver is a generic +SystemCallError+, or
+ * if the error numbers _self_ and _other_ are the same.
+ */
+
+static VALUE
+syserr_eqq(VALUE self, VALUE exc)
+{
+    VALUE num, e;
+    ID en;
+
+    CONST_ID(en, &quot;errno&quot;);
+
+    if (!rb_obj_is_kind_of(exc, rb_eSystemCallError)) {
+        if (!rb_respond_to(exc, en)) return Qfalse;
+    }
+    else if (self == rb_eSystemCallError) return Qtrue;
+
+    num = rb_attr_get(exc, rb_intern(&quot;errno&quot;));
+    if (NIL_P(num)) {
+        num = rb_funcall(exc, en, 0, 0);
+    }
+    e = rb_const_get(self, rb_intern(&quot;Errno&quot;));
+    if (FIXNUM_P(num) ? num == e : rb_equal(num, e))
+        return Qtrue;
+    return Qfalse;
+}</pre>
+</body>
+</html>

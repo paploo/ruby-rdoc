@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>enclosed? (ThreadGroup)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     thgrp.enclosed?   =&gt; true or false
+ *
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;thgrp&lt;/em&gt; is enclosed. See also
+ *  ThreadGroup#enclose.
+ */
+
+static VALUE
+thgroup_enclosed_p(VALUE group)
+{
+    struct thgroup *data;
+
+    Data_Get_Struct(group, struct thgroup, data);
+    if (data-&gt;enclosed)
+        return Qtrue;
+    return Qfalse;
+}</pre>
+</body>
+</html>

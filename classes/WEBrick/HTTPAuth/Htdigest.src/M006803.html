@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>reload (WEBrick::HTTPAuth::Htdigest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/webrick/httpauth/htdigest.rb, line 29</span>
+29:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reload</span>
+30:         <span class="ruby-identifier">mtime</span> = <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">mtime</span>(<span class="ruby-ivar">@path</span>)
+31:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mtime</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@mtime</span>
+32:           <span class="ruby-ivar">@digest</span>.<span class="ruby-identifier">clear</span>
+33:           <span class="ruby-identifier">open</span>(<span class="ruby-ivar">@path</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+34:             <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">gets</span>
+35:               <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp!</span>
+36:               <span class="ruby-identifier">user</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">pass</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/:/</span>, <span class="ruby-value">3</span>)
+37:               <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+38:                 <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+39:               <span class="ruby-keyword kw">end</span>
+40:               <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>][<span class="ruby-identifier">user</span>] = <span class="ruby-identifier">pass</span>
+41:             <span class="ruby-keyword kw">end</span>
+42:           }
+43:           <span class="ruby-ivar">@mtime</span> = <span class="ruby-identifier">mtime</span>
+44:         <span class="ruby-keyword kw">end</span>
+45:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

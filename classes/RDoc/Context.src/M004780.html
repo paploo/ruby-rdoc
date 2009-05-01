@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_symbol (RDoc::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 482</span>
+482:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_symbol</span>(<span class="ruby-identifier">symbol</span>, <span class="ruby-identifier">method</span> = <span class="ruby-keyword kw">nil</span>)
+483:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+484: 
+485:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">symbol</span>
+486:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^::(.*)/</span> <span class="ruby-keyword kw">then</span>
+487:         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">toplevel</span>.<span class="ruby-identifier">find_symbol</span>(<span class="ruby-identifier">$1</span>)
+488:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/::/</span> <span class="ruby-keyword kw">then</span>
+489:         <span class="ruby-identifier">modules</span> = <span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/::/</span>)
+490: 
+491:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">modules</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span>
+492:           <span class="ruby-identifier">module_name</span> = <span class="ruby-identifier">modules</span>.<span class="ruby-identifier">shift</span>
+493:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">find_module_named</span>(<span class="ruby-identifier">module_name</span>)
+494: 
+495:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword kw">then</span>
+496:             <span class="ruby-identifier">modules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+497:               <span class="ruby-identifier">result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">find_module_named</span>(<span class="ruby-identifier">name</span>)
+498:               <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>
+499:             <span class="ruby-keyword kw">end</span>
+500:           <span class="ruby-keyword kw">end</span>
+501:         <span class="ruby-keyword kw">end</span>
+502: 
+503:       <span class="ruby-keyword kw">else</span>
+504:         <span class="ruby-comment cmt"># if a method is specified, then we're definitely looking for</span>
+505:         <span class="ruby-comment cmt"># a module, otherwise it could be any symbol</span>
+506:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>
+507:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">find_module_named</span>(<span class="ruby-identifier">symbol</span>)
+508:         <span class="ruby-keyword kw">else</span>
+509:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">find_local_symbol</span>(<span class="ruby-identifier">symbol</span>)
+510:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span>
+511:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symbol</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^[A-Z]/</span>
+512:               <span class="ruby-identifier">result</span> = <span class="ruby-identifier">parent</span>
+513:               <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">symbol</span>
+514:                 <span class="ruby-identifier">result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">parent</span>
+515:               <span class="ruby-keyword kw">end</span>
+516:             <span class="ruby-keyword kw">end</span>
+517:           <span class="ruby-keyword kw">end</span>
+518:         <span class="ruby-keyword kw">end</span>
+519:       <span class="ruby-keyword kw">end</span>
+520: 
+521:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">method</span> <span class="ruby-keyword kw">then</span>
+522:         <span class="ruby-identifier">fail</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:find_local_symbol</span>
+523:         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">find_local_symbol</span>(<span class="ruby-identifier">method</span>)
+524:       <span class="ruby-keyword kw">end</span>
+525: 
+526:       <span class="ruby-identifier">result</span>
+527:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>array (WIN32OLE_VARIANT)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_VARIANT.array(ary, vt)
+ *
+ *  Returns Ruby object wrapping OLE variant whose variant type is VT_ARRAY.
+ *  The first argument should be Array object which specifies dimensions 
+ *  and each size of dimensions of OLE array.  
+ *  The second argument specifies variant type of the element of OLE array.
+ *
+ *  The following create 2 dimensions OLE array. The first dimensions size
+ *  is 3, and the second is 4.
+ *
+ *     ole_ary = WIN32OLE_VARIANT.array([3,4], VT_I4)
+ *     ruby_ary = ole_ary.value # =&gt; [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
+ *
+ */     
+static VALUE
+folevariant_s_array(VALUE klass, VALUE elems, VALUE vvt)
+{
+    VALUE obj = Qnil;
+    VARTYPE vt;
+    struct olevariantdata *pvar;
+    SAFEARRAYBOUND *psab = NULL;
+    SAFEARRAY *psa = NULL;
+    UINT dim = 0;
+    UINT i = 0;
+
+    ole_initialize();
+
+    vt = NUM2UINT(vvt);
+    vt = (vt | VT_ARRAY);
+    Check_Type(elems, T_ARRAY);
+    obj = folevariant_s_allocate(klass);
+
+    Data_Get_Struct(obj, struct olevariantdata, pvar);
+    dim = RARRAY_LEN(elems);
+
+    psab = ALLOC_N(SAFEARRAYBOUND, dim);
+
+    if(!psab) {
+        rb_raise(rb_eRuntimeError, &quot;memory allocation error&quot;);
+    }
+
+    for (i = 0; i &lt; dim; i++) {
+        psab[i].cElements = FIX2INT(rb_ary_entry(elems, i));
+        psab[i].lLbound = 0;
+    }
+
+    psa = SafeArrayCreate((VARTYPE)(vt &amp; VT_TYPEMASK), dim, psab);
+    if (psa == NULL) {
+        if (psab) free(psab);
+        rb_raise(rb_eRuntimeError, &quot;memory allocation error(SafeArrayCreate)&quot;);
+    }
+
+    V_VT(&amp;(pvar-&gt;var)) = vt;
+    if (vt &amp; VT_BYREF) {
+        V_VT(&amp;(pvar-&gt;realvar)) = (vt &amp; ~VT_BYREF);
+        V_ARRAY(&amp;(pvar-&gt;realvar)) = psa;
+        V_ARRAYREF(&amp;(pvar-&gt;var)) = &amp;(V_ARRAY(&amp;(pvar-&gt;realvar)));
+    } else {
+        V_ARRAY(&amp;(pvar-&gt;var)) = psa;
+    }
+    if (psab) free(psab);
+    return obj;
+}</pre>
+</body>
+</html>

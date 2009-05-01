@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>accept (DRb::DRbTCPSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 944</span>
+944:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accept</span>
+945:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+946:         <span class="ruby-identifier">s</span> = <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">accept</span>
+947:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@acl</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@acl</span>.<span class="ruby-identifier">allow_socket?</span>(<span class="ruby-identifier">s</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>) 
+948:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">close</span>
+949:       <span class="ruby-keyword kw">end</span>
+950:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:tcp_original_host</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+951:         <span class="ruby-identifier">uri</span> = <span class="ruby-node">&quot;druby://#{s.addr[3]}:#{@config[:tcp_port]}&quot;</span>
+952:       <span class="ruby-keyword kw">else</span>
+953:         <span class="ruby-identifier">uri</span> = <span class="ruby-ivar">@uri</span>
+954:       <span class="ruby-keyword kw">end</span>
+955:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">s</span>, <span class="ruby-ivar">@config</span>)
+956:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

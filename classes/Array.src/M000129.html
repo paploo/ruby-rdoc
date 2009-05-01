@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>unshift (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.unshift(obj, ...)  -&gt; array
+ *  
+ *  Prepends objects to the front of &lt;i&gt;array&lt;/i&gt;.
+ *  other elements up one.
+ *     
+ *     a = [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
+ *     a.unshift(&quot;a&quot;)   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ *     a.unshift(1, 2)  #=&gt; [ 1, 2, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ */
+
+static VALUE
+rb_ary_unshift_m(int argc, VALUE *argv, VALUE ary)
+{
+    long len;
+
+    if (argc == 0) return ary;
+    rb_ary_modify(ary);
+    if (ARY_CAPA(ary) &lt;= (len = RARRAY_LEN(ary)) + argc) {
+        ary_resize_capa(ary, len + argc + ARY_DEFAULT_SIZE);
+    }
+
+    /* sliding items */
+    MEMMOVE(RARRAY_PTR(ary) + argc, RARRAY_PTR(ary), VALUE, len);
+    MEMCPY(RARRAY_PTR(ary), argv, VALUE, argc);
+    ARY_INCREASE_LEN(ary, argc);
+    
+    return ary;
+}</pre>
+</body>
+</html>

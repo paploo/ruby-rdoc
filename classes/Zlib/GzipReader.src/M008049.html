@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getbyte (Zlib::GzipReader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * See Zlib::GzipReader documentation for a description.
+ */
+static VALUE
+rb_gzreader_getbyte(VALUE obj)
+{
+    struct gzfile *gz = get_gzfile(obj);
+    VALUE dst;
+
+    dst = gzfile_read(gz, 1);
+    if (!NIL_P(dst)) {
+        dst = INT2FIX((unsigned int)(RSTRING_PTR(dst)[0]) &amp; 0xff);
+    }
+    return dst;
+}</pre>
+</body>
+</html>

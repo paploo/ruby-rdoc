@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write_element (REXML::Formatters::Pretty)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rexml/formatters/pretty.rb, line 38</span>
+38:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_element</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">output</span>)
+39:         <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">' '</span><span class="ruby-operator">*</span><span class="ruby-ivar">@level</span>
+40:         <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{node.expanded_name}&quot;</span>
+41: 
+42:         <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each_attribute</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span><span class="ruby-operator">|</span>
+43:           <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
+44:           <span class="ruby-identifier">attr</span>.<span class="ruby-identifier">write</span>( <span class="ruby-identifier">output</span> )
+45:         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">empty?</span>
+46: 
+47:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">empty?</span>
+48:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ie_hack</span>
+49:             <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; &quot;</span>
+50:           <span class="ruby-keyword kw">end</span>
+51:           <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;/&quot;</span> 
+52:         <span class="ruby-keyword kw">else</span>
+53:           <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+54:           <span class="ruby-comment cmt"># If compact and all children are text, and if the formatted output</span>
+55:           <span class="ruby-comment cmt"># is less than the specified width, then try to print everything on</span>
+56:           <span class="ruby-comment cmt"># one line</span>
+57:           <span class="ruby-identifier">skip</span> = <span class="ruby-keyword kw">false</span>
+58:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">compact</span>
+59:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-keyword kw">true</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span>,<span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Text</span>)}
+60:               <span class="ruby-identifier">string</span> = <span class="ruby-value str">&quot;&quot;</span>
+61:               <span class="ruby-identifier">old_level</span> = <span class="ruby-ivar">@level</span>
+62:               <span class="ruby-ivar">@level</span> = <span class="ruby-value">0</span>
+63:               <span class="ruby-identifier">node</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> <span class="ruby-identifier">write</span>( <span class="ruby-identifier">child</span>, <span class="ruby-identifier">string</span> ) }
+64:               <span class="ruby-ivar">@level</span> = <span class="ruby-identifier">old_level</span>
+65:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@width</span>
+66:                 <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">string</span>
+67:                 <span class="ruby-identifier">skip</span> = <span class="ruby-keyword kw">true</span>
+68:               <span class="ruby-keyword kw">end</span>
+69:             <span class="ruby-keyword kw">end</span>
+70:           <span class="ruby-keyword kw">end</span>
+71:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">skip</span>
+72:             <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+73:             <span class="ruby-ivar">@level</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@indentation</span>
+74:             <span class="ruby-identifier">node</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+75:               <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Text</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+76:               <span class="ruby-identifier">write</span>( <span class="ruby-identifier">child</span>, <span class="ruby-identifier">output</span> )
+77:               <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+78:             }
+79:             <span class="ruby-ivar">@level</span> <span class="ruby-operator">-=</span> <span class="ruby-ivar">@indentation</span>
+80:             <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">' '</span><span class="ruby-operator">*</span><span class="ruby-ivar">@level</span>
+81:           <span class="ruby-keyword kw">end</span>
+82:           <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;/#{node.expanded_name}&quot;</span>
+83:         <span class="ruby-keyword kw">end</span>
+84:         <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+85:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

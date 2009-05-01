@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_pager (RDoc::RI::DefaultDisplay)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/display.rb, line 364</span>
+364:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_pager</span>
+365:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@use_stdout</span> <span class="ruby-keyword kw">then</span>
+366:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">pager</span> <span class="ruby-keyword kw">in</span> [ <span class="ruby-constant">ENV</span>[<span class="ruby-value str">'PAGER'</span>], <span class="ruby-value str">&quot;less&quot;</span>, <span class="ruby-value str">&quot;more&quot;</span>, <span class="ruby-value str">'pager'</span> ].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">uniq</span>
+367:         <span class="ruby-keyword kw">return</span> <span class="ruby-constant">IO</span>.<span class="ruby-identifier">popen</span>(<span class="ruby-identifier">pager</span>, <span class="ruby-value str">&quot;w&quot;</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+368:       <span class="ruby-keyword kw">end</span>
+369:       <span class="ruby-ivar">@use_stdout</span> = <span class="ruby-keyword kw">true</span>
+370:       <span class="ruby-keyword kw">nil</span>
+371:     <span class="ruby-keyword kw">end</span>
+372:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

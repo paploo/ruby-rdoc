@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>PathExpr (REXML::Parsers::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/xpathparser.rb, line 541</span>
+541:       <span class="ruby-keyword kw">def</span> <span class="ruby-constant">PathExpr</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">parsed</span>
+542:         <span class="ruby-identifier">path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*/</span>
+543:         <span class="ruby-identifier">path</span> = <span class="ruby-identifier">$'</span>
+544:         <span class="ruby-comment cmt">#puts &quot;PATH &gt;&gt;&gt; #{path}&quot;</span>
+545:         <span class="ruby-identifier">n</span> = []
+546:         <span class="ruby-identifier">rest</span> = <span class="ruby-constant">FilterExpr</span>( <span class="ruby-identifier">path</span>, <span class="ruby-identifier">n</span> )
+547:         <span class="ruby-comment cmt">#puts &quot;PATH &lt;&lt;&lt; '#{rest}'&quot;</span>
+548:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rest</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">path</span>
+549:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rest</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">rest</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+550:             <span class="ruby-keyword kw">return</span> <span class="ruby-constant">RelativeLocationPath</span>(<span class="ruby-identifier">rest</span>, <span class="ruby-identifier">n</span>)
+551:           <span class="ruby-keyword kw">end</span>
+552:         <span class="ruby-keyword kw">end</span>
+553:         <span class="ruby-comment cmt">#puts &quot;BEFORE WITH '#{rest}'&quot;</span>
+554:         <span class="ruby-identifier">rest</span> = <span class="ruby-constant">LocationPath</span>(<span class="ruby-identifier">rest</span>, <span class="ruby-identifier">n</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\A[\/\.\@\[\w_*]/</span>
+555:         <span class="ruby-identifier">parsed</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">n</span>)
+556:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rest</span>
+557:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

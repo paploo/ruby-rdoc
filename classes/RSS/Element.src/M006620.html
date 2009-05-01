@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install_get_attribute (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 723</span>
+723:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_get_attribute</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">required</span>=<span class="ruby-keyword kw">true</span>,
+724:                                 <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">disp_name</span>=<span class="ruby-keyword kw">nil</span>,
+725:                                 <span class="ruby-identifier">element_name</span>=<span class="ruby-keyword kw">nil</span>)
+726:         <span class="ruby-identifier">disp_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
+727:         <span class="ruby-identifier">element_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
+728:         <span class="ruby-identifier">writer_type</span>, <span class="ruby-identifier">reader_type</span> = <span class="ruby-identifier">type</span>
+729:         <span class="ruby-identifier">def_corresponded_attr_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">writer_type</span>, <span class="ruby-identifier">disp_name</span>
+730:         <span class="ruby-identifier">def_corresponded_attr_reader</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">reader_type</span>
+731:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:boolean</span> <span class="ruby-keyword kw">and</span> <span class="ruby-regexp re">/^is/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">name</span>
+732:           <span class="ruby-identifier">alias_method</span> <span class="ruby-node">&quot;#{$POSTMATCH}?&quot;</span>, <span class="ruby-identifier">name</span>
+733:         <span class="ruby-keyword kw">end</span>
+734:         <span class="ruby-keyword kw">self</span><span class="ruby-operator">::</span><span class="ruby-constant">GET_ATTRIBUTES</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">required</span>, <span class="ruby-identifier">element_name</span>]
+735:         <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">disp_name</span>)
+736:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

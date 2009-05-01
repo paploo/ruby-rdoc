@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_a (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     array.to_a     -&gt; array
+ *  
+ *  Returns _self_. If called on a subclass of Array, converts
+ *  the receiver to an Array object.
+ */
+
+static VALUE
+rb_ary_to_a(VALUE ary)
+{
+    if (rb_obj_class(ary) != rb_cArray) {
+        VALUE dup = rb_ary_new2(RARRAY_LEN(ary));
+        rb_ary_replace(dup, ary);
+        return dup;
+    }
+    return ary;
+}</pre>
+</body>
+</html>

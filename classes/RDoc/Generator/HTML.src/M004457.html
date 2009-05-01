@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>index_to_links (RDoc::Generator::HTML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html.rb, line 326</span>
+326:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_to_links</span>(<span class="ruby-identifier">output_path</span>, <span class="ruby-identifier">collection</span>)
+327:     <span class="ruby-identifier">collection</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+328:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">document_self</span>
+329:       { <span class="ruby-value str">&quot;href&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">ToHtml</span>.<span class="ruby-identifier">gen_relative_url</span>(<span class="ruby-identifier">output_path</span>, <span class="ruby-identifier">f</span>.<span class="ruby-identifier">path</span>),
+330:         <span class="ruby-value str">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">index_name</span> }
+331:     <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">compact</span>
+332:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

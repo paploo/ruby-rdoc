@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>completer_quote_characters= (Readline)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Readline.completer_quote_characters = string
+ *
+ * Sets a list of characters which can be used to quote a substring of
+ * the line. Completion occurs on the entire substring, and within
+ * the substring Readline.completer_word_break_characters are treated
+ * as any other character, unless they also appear within this list.
+ *
+ * Raises NotImplementedError if the using readline library does not support.
+ *
+ * Raises SecurityError exception if $SAFE is 4.
+ */
+static VALUE
+readline_s_set_completer_quote_characters(VALUE self, VALUE str)
+{
+#ifdef HAVE_RL_COMPLETER_QUOTE_CHARACTERS
+    static char *completer_quote_characters = NULL;
+
+    rb_secure(4);
+    OutputStringValue(str);
+    if (completer_quote_characters == NULL) {
+        completer_quote_characters =
+            ALLOC_N(char, RSTRING_LEN(str) + 1);
+    }
+    else {
+        REALLOC_N(completer_quote_characters, char, RSTRING_LEN(str) + 1);
+    }
+    strncpy(completer_quote_characters, RSTRING_PTR(str), RSTRING_LEN(str));
+    completer_quote_characters[RSTRING_LEN(str)] = '\0';
+    rl_completer_quote_characters = completer_quote_characters;
+
+    return self;
+#else
+    rb_notimplement();
+    return Qnil; /* not reached */
+#endif /* HAVE_RL_COMPLETER_QUOTE_CHARACTERS */
+}</pre>
+</body>
+</html>

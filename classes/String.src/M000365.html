@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>partition (String)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     str.partition(sep)              =&gt; [head, sep, tail]
+ *  
+ *  Searches the string for &lt;i&gt;sep&lt;/i&gt; and returns the part before
+ *  it, the &lt;i&gt;sep&lt;/i&gt;, and the part after it.  If &lt;i&gt;sep&lt;/i&gt; is not found,
+ *  returns &lt;i&gt;str&lt;/i&gt; and two empty strings.
+ *     
+ *     &quot;hello&quot;.partition(&quot;l&quot;)         #=&gt; [&quot;he&quot;, &quot;l&quot;, &quot;lo&quot;]
+ *     &quot;hello&quot;.partition(&quot;x&quot;)         #=&gt; [&quot;hello&quot;, &quot;&quot;, &quot;&quot;]
+ */
+
+static VALUE
+rb_str_partition(VALUE str, VALUE sep)
+{
+    long pos;
+    int regex = Qfalse;
+
+    if (TYPE(sep) == T_REGEXP) {
+        pos = rb_reg_search(sep, str, 0, 0);
+        regex = Qtrue;
+    }
+    else {
+        VALUE tmp;
+
+        tmp = rb_check_string_type(sep);
+        if (NIL_P(tmp)) {
+            rb_raise(rb_eTypeError, &quot;type mismatch: %s given&quot;,
+                     rb_obj_classname(sep));
+        }
+        pos = rb_str_index(str, sep, 0);
+    }
+    if (pos &lt; 0) {
+      failed:
+        return rb_ary_new3(3, str, rb_str_new(0,0),rb_str_new(0,0));
+    }
+    if (regex) {
+        sep = rb_str_subpat(str, sep, 0);
+        if (pos == 0 &amp;&amp; RSTRING_LEN(sep) == 0) goto failed;
+    }
+    return rb_ary_new3(3, rb_str_subseq(str, 0, pos),
+                          sep,
+                          rb_str_subseq(str, pos+RSTRING_LEN(sep),
+                                             RSTRING_LEN(str)-pos-RSTRING_LEN(sep)));
+}</pre>
+</body>
+</html>

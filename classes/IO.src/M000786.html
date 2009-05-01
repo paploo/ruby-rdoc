@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>close_write (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.close_write   =&gt; nil
+ *
+ *  Closes the write end of a duplex I/O stream (i.e., one that contains
+ *  both a read and a write stream, such as a pipe). Will raise an
+ *  &lt;code&gt;IOError&lt;/code&gt; if the stream is not duplexed.
+ *
+ *     f = IO.popen(&quot;/bin/sh&quot;,&quot;r+&quot;)
+ *     f.close_write
+ *     f.print &quot;nowhere&quot;
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     prog.rb:3:in `write': not opened for writing (IOError)
+ *      from prog.rb:3:in `print'
+ *      from prog.rb:3
+ */
+
+static VALUE
+rb_io_close_write(VALUE io)
+{
+    rb_io_t *fptr;
+    VALUE write_io;
+
+    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(io)) {
+        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
+    }
+    write_io = GetWriteIO(io);
+    GetOpenFile(write_io, fptr);
+    if (is_socket(fptr-&gt;fd, fptr-&gt;pathv)) {
+#ifndef SHUT_WR
+# define SHUT_WR 1
+#endif
+        if (shutdown(fptr-&gt;fd, SHUT_WR) &lt; 0)
+            rb_sys_fail_path(fptr-&gt;pathv);
+        fptr-&gt;mode &amp;= ~FMODE_WRITABLE;
+        if (!(fptr-&gt;mode &amp; FMODE_READABLE))
+            return rb_io_close(write_io);
+        return Qnil;
+    }
+
+    if (fptr-&gt;mode &amp; FMODE_READABLE) {
+        rb_raise(rb_eIOError, &quot;closing non-duplex IO for writing&quot;);
+    }
+
+    rb_io_close(write_io);
+    if (io != write_io) {
+        GetOpenFile(io, fptr);
+        fptr-&gt;tied_io_for_writing = 0;
+        fptr-&gt;mode &amp;= ~FMODE_DUPLEX;
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

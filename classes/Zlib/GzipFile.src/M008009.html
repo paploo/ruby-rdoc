@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wrap (Zlib::GzipFile)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * See Zlib::GzipReader#wrap and Zlib::GzipWriter#wrap.
+ */
+static VALUE
+rb_gzfile_s_wrap(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE obj = rb_class_new_instance(argc, argv, klass);
+
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, obj, gzfile_ensure_close, obj);
+    }
+    else {
+        return obj;
+    }
+}</pre>
+</body>
+</html>

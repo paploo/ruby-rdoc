@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Shellwords [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Shellwords</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/lib/shellwords_rb.html">
+
+                lib/shellwords.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This module manipulates strings according to the word parsing rules of the
+UNIX Bourne shell.
+</p>
+<p>
+The shellwords() function was originally a port of shellwords.pl, but
+modified to conform to POSIX / SUSv3 (IEEE Std 1003.1-2001).
+</p>
+<p>
+Authors:
+</p>
+<pre>
+  - Wakou Aoyama
+  - Akinori MUSHA &lt;knu@iDaemons.org&gt;
+</pre>
+<p>
+Contact:
+</p>
+<pre>
+  - Akinori MUSHA &lt;knu@iDaemons.org&gt; (current maintainer)
+</pre>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M006727">escape</a>&nbsp;&nbsp;
+
+        <a href="#M006730">join</a>&nbsp;&nbsp;
+
+        <a href="#M006726">shellescape</a>&nbsp;&nbsp;
+
+        <a href="#M006725">shellescape</a>&nbsp;&nbsp;
+
+        <a href="#M006728">shelljoin</a>&nbsp;&nbsp;
+
+        <a href="#M006729">shelljoin</a>&nbsp;&nbsp;
+
+        <a href="#M006722">shellsplit</a>&nbsp;&nbsp;
+
+        <a href="#M006720">shellsplit</a>&nbsp;&nbsp;
+
+        <a href="#M006723">shellwords</a>&nbsp;&nbsp;
+
+        <a href="#M006721">shellwords</a>&nbsp;&nbsp;
+
+        <a href="#M006724">split</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M006726" class="method-detail">
+        <a name="M006726"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006726.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006726.html');return false;">
+
+          <span class="method-name">shellescape</span><span class="method-args">(str)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Escapes a string so that it can be safely used in a Bourne shell command
+line.
+</p>
+<p>
+Note that a resulted string should be used unquoted and is not intended for
+use in double quotes nor in single quotes.
+</p>
+<pre>
+  open(&quot;| grep #{Shellwords.escape(pattern)} file&quot;) { |pipe|
+    # ...
+  }
+</pre>
+<p>
++<a href="String.html#M000377">String#shellescape</a>+ is a shorthand for
+this function.
+</p>
+<pre>
+  open(&quot;| grep #{pattern.shellescape} file&quot;) { |pipe|
+    # ...
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006729" class="method-detail">
+        <a name="M006729"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006729.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006729.html');return false;">
+
+          <span class="method-name">shelljoin</span><span class="method-args">(array)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Builds a command line string from an argument list <tt>array</tt> joining
+all elements escaped for Bourne shell and separated by a space.
+</p>
+<pre>
+  open('|' + Shellwords.join(['grep', pattern, *files])) { |pipe|
+    # ...
+  }
+</pre>
+<p>
++<a href="Array.html#M000196">Array#shelljoin</a>+ is a shorthand for this
+function.
+</p>
+<pre>
+  open('|' + ['grep', pattern, *files].shelljoin) { |pipe|
+    # ...
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006722" class="method-detail">
+        <a name="M006722"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006722.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006722.html');return false;">
+
+          <span class="method-name">shellsplit</span><span class="method-args">(line)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Splits a string into an array of tokens in the same way the UNIX Bourne
+shell does.
+</p>
+<pre>
+  argv = Shellwords.split('here are &quot;two words&quot;')
+  argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]
+</pre>
+<p>
++<a href="String.html#M000376">String#shellsplit</a>+ is a shorthand for
+this function.
+</p>
+<pre>
+  argv = 'here are &quot;two words&quot;'.shellsplit
+  argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006723" class="method-detail">
+        <a name="M006723"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">shellwords</span><span class="method-args">(line)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Shellwords.html#M006720">shellsplit</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M006727" class="method-detail">
+        <a name="M006727"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">escape</span><span class="method-args">(str)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Shellwords.html#M006725">shellescape</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006730" class="method-detail">
+        <a name="M006730"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">join</span><span class="method-args">(array)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Shellwords.html#M006728">shelljoin</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006724" class="method-detail">
+        <a name="M006724"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">split</span><span class="method-args">(line)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Shellwords.html#M006720">shellsplit</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M006725" class="method-detail">
+        <a name="M006725"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006725.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006725.html');return false;">
+
+          <span class="method-name">shellescape</span><span class="method-args">(str)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Escapes a string so that it can be safely used in a Bourne shell command
+line.
+</p>
+<p>
+Note that a resulted string should be used unquoted and is not intended for
+use in double quotes nor in single quotes.
+</p>
+<pre>
+  open(&quot;| grep #{Shellwords.escape(pattern)} file&quot;) { |pipe|
+    # ...
+  }
+</pre>
+<p>
++<a href="String.html#M000377">String#shellescape</a>+ is a shorthand for
+this function.
+</p>
+<pre>
+  open(&quot;| grep #{pattern.shellescape} file&quot;) { |pipe|
+    # ...
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006728" class="method-detail">
+        <a name="M006728"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006728.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006728.html');return false;">
+
+          <span class="method-name">shelljoin</span><span class="method-args">(array)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Builds a command line string from an argument list <tt>array</tt> joining
+all elements escaped for Bourne shell and separated by a space.
+</p>
+<pre>
+  open('|' + Shellwords.join(['grep', pattern, *files])) { |pipe|
+    # ...
+  }
+</pre>
+<p>
++<a href="Array.html#M000196">Array#shelljoin</a>+ is a shorthand for this
+function.
+</p>
+<pre>
+  open('|' + ['grep', pattern, *files].shelljoin) { |pipe|
+    # ...
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006720" class="method-detail">
+        <a name="M006720"></a>
+
+        <div class="method-heading">
+
+          <a href="Shellwords.src/M006720.html" target="Code" class="method-signature"
+            onclick="popupCode('Shellwords.src/M006720.html');return false;">
+
+          <span class="method-name">shellsplit</span><span class="method-args">(line)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Splits a string into an array of tokens in the same way the UNIX Bourne
+shell does.
+</p>
+<pre>
+  argv = Shellwords.split('here are &quot;two words&quot;')
+  argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]
+</pre>
+<p>
++<a href="String.html#M000376">String#shellsplit</a>+ is a shorthand for
+this function.
+</p>
+<pre>
+  argv = 'here are &quot;two words&quot;'.shellsplit
+  argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M006721" class="method-detail">
+        <a name="M006721"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">shellwords</span><span class="method-args">(line)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Shellwords.html#M006720">shellsplit</a>
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

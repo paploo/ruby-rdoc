@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>suspend_workspace (IRB::Irb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb.rb, line 208</span>
+208:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">suspend_workspace</span>(<span class="ruby-identifier">workspace</span>)
+209:       <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">workspace</span>, <span class="ruby-identifier">back_workspace</span> = <span class="ruby-identifier">workspace</span>, <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">workspace</span>
+210:       <span class="ruby-keyword kw">begin</span>
+211:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">back_workspace</span>
+212:       <span class="ruby-keyword kw">ensure</span>
+213:         <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">workspace</span> = <span class="ruby-identifier">back_workspace</span>
+214:       <span class="ruby-keyword kw">end</span>
+215:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_ssl_params (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1265</span>
+1265:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_ssl_params</span>(<span class="ruby-identifier">certs</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">verify</span> = <span class="ruby-keyword kw">true</span>)
+1266:       <span class="ruby-identifier">params</span> = {}
+1267:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">certs</span>
+1268:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">certs</span>)
+1269:           <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:ca_file</span>] = <span class="ruby-identifier">certs</span>
+1270:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">certs</span>)
+1271:           <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:ca_path</span>] = <span class="ruby-identifier">certs</span>
+1272:         <span class="ruby-keyword kw">end</span>
+1273:       <span class="ruby-keyword kw">end</span>
+1274:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verify</span>
+1275:         <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:verify_mode</span>] = <span class="ruby-constant">VERIFY_PEER</span>
+1276:       <span class="ruby-keyword kw">else</span>
+1277:         <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:verify_mode</span>] = <span class="ruby-constant">VERIFY_NONE</span>
+1278:       <span class="ruby-keyword kw">end</span>
+1279:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">params</span>
+1280:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

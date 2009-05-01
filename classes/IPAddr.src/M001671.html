@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ntop (IPAddr)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 101</span>
+101:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">IPAddr</span><span class="ruby-operator">::</span><span class="ruby-identifier">ntop</span>(<span class="ruby-identifier">addr</span>)
+102:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">size</span>
+103:     <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span>
+104:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'C4'</span>).<span class="ruby-identifier">join</span>(<span class="ruby-value str">'.'</span>)
+105:     <span class="ruby-keyword kw">when</span> <span class="ruby-value">16</span>
+106:       <span class="ruby-identifier">s</span> = <span class="ruby-constant">IN6FORMAT</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">'n8'</span>)
+107:     <span class="ruby-keyword kw">else</span>
+108:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;unsupported address family&quot;</span>
+109:     <span class="ruby-keyword kw">end</span>
+110:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">s</span>
+111:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

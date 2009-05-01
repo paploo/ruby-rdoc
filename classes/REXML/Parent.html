@@ -1,0 +1,712 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: REXML::Parent [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">REXML::Parent</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/rexml/parent_rb.html">
+
+                lib/rexml/parent.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Child.html">
+
+                REXML::Child
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A parent has children, and has methods for accessing them. The <a
+href="Parent.html">Parent</a> class is never encountered except as the
+superclass for some other object.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M005695">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M005702">[]</a>&nbsp;&nbsp;
+
+        <a href="#M005704">[]=</a>&nbsp;&nbsp;
+
+        <a href="#M005693">add</a>&nbsp;&nbsp;
+
+        <a href="#M005713">children</a>&nbsp;&nbsp;
+
+        <a href="#M005712">deep_clone</a>&nbsp;&nbsp;
+
+        <a href="#M005697">delete</a>&nbsp;&nbsp;
+
+        <a href="#M005700">delete_at</a>&nbsp;&nbsp;
+
+        <a href="#M005699">delete_if</a>&nbsp;&nbsp;
+
+        <a href="#M005698">each</a>&nbsp;&nbsp;
+
+        <a href="#M005703">each_child</a>&nbsp;&nbsp;
+
+        <a href="#M005701">each_index</a>&nbsp;&nbsp;
+
+        <a href="#M005708">index</a>&nbsp;&nbsp;
+
+        <a href="#M005706">insert_after</a>&nbsp;&nbsp;
+
+        <a href="#M005705">insert_before</a>&nbsp;&nbsp;
+
+        <a href="#M005710">length</a>&nbsp;&nbsp;
+
+        <a href="#M005692">new</a>&nbsp;&nbsp;
+
+        <a href="#M005714">parent?</a>&nbsp;&nbsp;
+
+        <a href="#M005694">push</a>&nbsp;&nbsp;
+
+        <a href="#M005711">replace_child</a>&nbsp;&nbsp;
+
+        <a href="#M005709">size</a>&nbsp;&nbsp;
+
+        <a href="#M005707">to_a</a>&nbsp;&nbsp;
+
+        <a href="#M005696">unshift</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="../Enumerable.html">Enumerable</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M005692" class="method-detail">
+        <a name="M005692"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005692.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005692.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(parent=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Constructor @param parent if supplied, will be set as the parent of this
+object
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M005695" class="method-detail">
+        <a name="M005695"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">&lt;&lt;</span><span class="method-args">( object )</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Parent.html#M005694">push</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005702" class="method-detail">
+        <a name="M005702"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005702.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005702.html');return false;">
+
+          <span class="method-name">[]</span><span class="method-args">( index )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Fetches a child at a given index @param index the <a
+href="../Integer.html">Integer</a> index of the child to fetch
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005704" class="method-detail">
+        <a name="M005704"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005704.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005704.html');return false;">
+
+          <span class="method-name">[]=</span><span class="method-args">( *args )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../Set.html">Set</a> an index entry. See <a
+href="../Array.html">Array</a>.[]= @param index the index of the element to
+set @param opt either the object to set, or an <a
+href="../Integer.html">Integer</a> length @param child if opt is an <a
+href="../Integer.html">Integer</a>, this is the child to set @return the
+parent (self)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005693" class="method-detail">
+        <a name="M005693"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005693.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005693.html');return false;">
+
+          <span class="method-name">add</span><span class="method-args">( object )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005713" class="method-detail">
+        <a name="M005713"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">children</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Parent.html#M005707">to_a</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005712" class="method-detail">
+        <a name="M005712"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005712.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005712.html');return false;">
+
+          <span class="method-name">deep_clone</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Deeply clones this object. This creates a complete duplicate of this <a
+href="Parent.html">Parent</a>, including all descendants.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005697" class="method-detail">
+        <a name="M005697"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005697.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005697.html');return false;">
+
+          <span class="method-name">delete</span><span class="method-args">( object )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005700" class="method-detail">
+        <a name="M005700"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005700.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005700.html');return false;">
+
+          <span class="method-name">delete_at</span><span class="method-args">( index )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005699" class="method-detail">
+        <a name="M005699"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005699.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005699.html');return false;">
+
+          <span class="method-name">delete_if</span><span class="method-args">( &amp;block )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005698" class="method-detail">
+        <a name="M005698"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005698.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005698.html');return false;">
+
+          <span class="method-name">each</span><span class="method-args">(&amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005703" class="method-detail">
+        <a name="M005703"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">each_child</span><span class="method-args">(&amp;block)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Parent.html#M005698">each</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005701" class="method-detail">
+        <a name="M005701"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005701.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005701.html');return false;">
+
+          <span class="method-name">each_index</span><span class="method-args">( &amp;block )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005708" class="method-detail">
+        <a name="M005708"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005708.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005708.html');return false;">
+
+          <span class="method-name">index</span><span class="method-args">( child )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Fetches the index of a given child @param child the child to get the index
+of @return the index of the child, or nil if the object is not a child of
+this parent.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005706" class="method-detail">
+        <a name="M005706"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005706.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005706.html');return false;">
+
+          <span class="method-name">insert_after</span><span class="method-args">( child1, child2 )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Inserts an child after another child @param child1 this is either an xpath
+or an <a href="Element.html">Element</a>. If an <a
+href="Element.html">Element</a>, child2 will be inserted after child1 in
+the child list of the parent. If an xpath, child2 will be inserted after
+the first child to match the xpath. @param child2 the child to insert
+@return the parent (self)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005705" class="method-detail">
+        <a name="M005705"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005705.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005705.html');return false;">
+
+          <span class="method-name">insert_before</span><span class="method-args">( child1, child2 )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Inserts an child before another child @param child1 this is either an xpath
+or an <a href="Element.html">Element</a>. If an <a
+href="Element.html">Element</a>, child2 will be inserted before child1 in
+the child list of the parent. If an xpath, child2 will be inserted before
+the first child to match the xpath. @param child2 the child to insert
+@return the parent (self)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005710" class="method-detail">
+        <a name="M005710"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">length</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Parent.html#M005709">size</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005714" class="method-detail">
+        <a name="M005714"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005714.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005714.html');return false;">
+
+          <span class="method-name">parent?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005694" class="method-detail">
+        <a name="M005694"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">push</span><span class="method-args">( object )</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Parent.html#M005693">add</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005711" class="method-detail">
+        <a name="M005711"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005711.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005711.html');return false;">
+
+          <span class="method-name">replace_child</span><span class="method-args">( to_replace, replacement )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Replaces one child with another, making sure the nodelist is correct @param
+to_replace the child to replace (must be a <a href="Child.html">Child</a>)
+@param replacement the child to insert into the nodelist (must be a <a
+href="Child.html">Child</a>)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005709" class="method-detail">
+        <a name="M005709"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005709.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005709.html');return false;">
+
+          <span class="method-name">size</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+@return the number of children of this parent
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005707" class="method-detail">
+        <a name="M005707"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005707.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005707.html');return false;">
+
+          <span class="method-name">to_a</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005696" class="method-detail">
+        <a name="M005696"></a>
+
+        <div class="method-heading">
+
+          <a href="Parent.src/M005696.html" target="Code" class="method-signature"
+            onclick="popupCode('Parent.src/M005696.html');return false;">
+
+          <span class="method-name">unshift</span><span class="method-args">( object )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

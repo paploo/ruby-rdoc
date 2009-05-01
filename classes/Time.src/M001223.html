@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>month (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     time.mon   =&gt; fixnum
+ *     time.month =&gt; fixnum
+ *  
+ *  Returns the month of the year (1..12) for &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now   #=&gt; 2007-11-19 08:27:30 -0600
+ *     t.mon          #=&gt; 11
+ *     t.month        #=&gt; 11
+ */
+
+static VALUE
+time_mon(VALUE time)
+{
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    return INT2FIX(tobj-&gt;tm.tm_mon+1);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ole_put_methods (WIN32OLE)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE#ole_put_methods
+ * 
+ *  Returns the array of WIN32OLE_METHOD object .
+ *  The element of the array is property (settable) of WIN32OLE object.
+ *
+ *     excel = WIN32OLE.new('Excel.Application')
+ *     properties = excel.ole_put_methods
+ */
+static VALUE
+fole_put_methods(VALUE self)
+{
+    return ole_methods( self, INVOKE_PROPERTYPUT|INVOKE_PROPERTYPUTREF);
+}</pre>
+</body>
+</html>

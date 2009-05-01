@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>substring (REXML::Functions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/functions.rb, line 180</span>
+180:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">substring</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">start</span>, <span class="ruby-identifier">length</span>=<span class="ruby-keyword kw">nil</span> )
+181:       <span class="ruby-identifier">ruby_string</span> = <span class="ruby-identifier">string</span>(<span class="ruby-identifier">string</span>)
+182:       <span class="ruby-identifier">ruby_length</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">length</span>.<span class="ruby-identifier">nil?</span> 
+183:                       <span class="ruby-identifier">ruby_string</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_f</span>
+184:                     <span class="ruby-keyword kw">else</span>
+185:                       <span class="ruby-identifier">number</span>(<span class="ruby-identifier">length</span>)
+186:                     <span class="ruby-keyword kw">end</span>
+187:       <span class="ruby-identifier">ruby_start</span> = <span class="ruby-identifier">number</span>(<span class="ruby-identifier">start</span>)
+188: 
+189:       <span class="ruby-comment cmt"># Handle the special cases</span>
+190:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> (
+191:         <span class="ruby-identifier">ruby_length</span>.<span class="ruby-identifier">nan?</span> <span class="ruby-keyword kw">or</span> 
+192:         <span class="ruby-identifier">ruby_start</span>.<span class="ruby-identifier">nan?</span> <span class="ruby-keyword kw">or</span>
+193:         <span class="ruby-identifier">ruby_start</span>.<span class="ruby-identifier">infinite?</span>
+194:       )
+195: 
+196:       <span class="ruby-identifier">infinite_length</span> = <span class="ruby-identifier">ruby_length</span>.<span class="ruby-identifier">infinite?</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+197:       <span class="ruby-identifier">ruby_length</span> = <span class="ruby-identifier">ruby_string</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">infinite_length</span>
+198:         
+199:       <span class="ruby-comment cmt"># Now, get the bounds.  The XPath bounds are 1..length; the ruby bounds </span>
+200:       <span class="ruby-comment cmt"># are 0..length.  Therefore, we have to offset the bounds by one.</span>
+201:       <span class="ruby-identifier">ruby_start</span> = <span class="ruby-identifier">ruby_start</span>.<span class="ruby-identifier">round</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+202:       <span class="ruby-identifier">ruby_length</span> = <span class="ruby-identifier">ruby_length</span>.<span class="ruby-identifier">round</span>
+203: 
+204:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ruby_start</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+205:        <span class="ruby-identifier">ruby_length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">ruby_start</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">infinite_length</span>
+206:        <span class="ruby-identifier">ruby_start</span> = <span class="ruby-value">0</span>
+207:       <span class="ruby-keyword kw">end</span>
+208:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ruby_length</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+209:       <span class="ruby-identifier">ruby_string</span>[<span class="ruby-identifier">ruby_start</span>,<span class="ruby-identifier">ruby_length</span>]
+210:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

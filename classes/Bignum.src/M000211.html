@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>** (Bignum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     big ** exponent   =&gt; numeric
+ *
+ *  Raises _big_ to the _exponent_ power (which may be an integer, float,
+ *  or anything that will coerce to a number). The result may be
+ *  a Fixnum, Bignum, or Float
+ *
+ *    123456789 ** 2      #=&gt; 15241578750190521
+ *    123456789 ** 1.2    #=&gt; 5126464716.09932
+ *    123456789 ** -2     #=&gt; 6.5610001194102e-17
+ */
+
+VALUE
+rb_big_pow(VALUE x, VALUE y)
+{
+    double d;
+    SIGNED_VALUE yy;
+
+    if (y == INT2FIX(0)) return INT2FIX(1);
+    switch (TYPE(y)) {
+      case T_FLOAT:
+        d = RFLOAT_VALUE(y);
+        break;
+
+      case T_BIGNUM:
+        rb_warn(&quot;in a**b, b may be too big&quot;);
+        d = rb_big2dbl(y);
+        break;
+
+      case T_FIXNUM:
+        yy = FIX2LONG(y);
+
+        if (yy &lt; 0)
+            return rb_funcall(rb_rational_raw1(x), rb_intern(&quot;**&quot;), 1, y);
+        else {
+            VALUE z = 0;
+            SIGNED_VALUE mask;
+            const long BIGLEN_LIMIT = 1024*1024 / SIZEOF_BDIGITS;
+
+            if ((RBIGNUM_LEN(x) &gt; BIGLEN_LIMIT) ||
+                (RBIGNUM_LEN(x) &gt; BIGLEN_LIMIT / yy)) {
+                rb_warn(&quot;in a**b, b may be too big&quot;);
+                d = (double)yy;
+                break;
+            }
+            for (mask = FIXNUM_MAX + 1; mask; mask &gt;&gt;= 1) {
+                if (z) z = bigtrunc(bigsqr(z));
+                if (yy &amp; mask) {
+                    z = z ? bigtrunc(rb_big_mul0(z, x)) : x;
+                }
+            }
+            return bignorm(z);
+        }
+        /* NOTREACHED */
+        break;
+
+      default:
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;**&quot;));
+    }
+    return DBL2NUM(pow(rb_big2dbl(x), d));
+}</pre>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>handle_ifdefs_in (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 560</span>
+560:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_ifdefs_in</span>(<span class="ruby-identifier">body</span>)
+561:     <span class="ruby-identifier">body</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^#ifdef HAVE_PROTOTYPES.*?#else.*?\n(.*?)#endif.*?\n/</span><span class="ruby-identifier">m</span>, <span class="ruby-value str">'\1'</span>)
+562:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

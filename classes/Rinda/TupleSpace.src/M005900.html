@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>start_keeper (Rinda::TupleSpace)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rinda/tuplespace.rb, line 616</span>
+616:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_keeper</span>
+617:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@keeper</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@keeper</span>.<span class="ruby-identifier">alive?</span>
+618:       <span class="ruby-ivar">@keeper</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span>
+619:         <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+620:           <span class="ruby-identifier">sleep</span>(<span class="ruby-ivar">@period</span>)
+621:           <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+622:             <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">need_keeper?</span>
+623:             <span class="ruby-identifier">keep_clean</span>
+624:           <span class="ruby-keyword kw">end</span>
+625:         <span class="ruby-keyword kw">end</span>
+626:       <span class="ruby-keyword kw">end</span>
+627:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

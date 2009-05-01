@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>interrupt (WEBrick::Utils::TimeoutHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/utils.rb, line 137</span>
+137:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">interrupt</span>(<span class="ruby-identifier">thread</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">exception</span>)
+138:         <span class="ruby-constant">TimeoutMutex</span>.<span class="ruby-identifier">synchronize</span>{
+139:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cancel</span>(<span class="ruby-identifier">thread</span>, <span class="ruby-identifier">id</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">thread</span>.<span class="ruby-identifier">alive?</span>
+140:             <span class="ruby-identifier">thread</span>.<span class="ruby-identifier">raise</span>(<span class="ruby-identifier">exception</span>, <span class="ruby-value str">&quot;execution timeout&quot;</span>)
+141:           <span class="ruby-keyword kw">end</span>
+142:         }
+143:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

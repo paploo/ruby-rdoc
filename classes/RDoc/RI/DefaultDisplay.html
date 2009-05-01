@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: RDoc::RI::DefaultDisplay [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">RDoc::RI::DefaultDisplay</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/rdoc/ri/display_rb.html">
+
+                lib/rdoc/ri/display.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+A paging display module. Uses the <a
+href="Formatter.html">RDoc::RI::Formatter</a> class to do the actual
+presentation.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M004624">display_class_info</a>&nbsp;&nbsp;
+
+        <a href="#M004626">display_class_method_list</a>&nbsp;&nbsp;
+
+        <a href="#M004627">display_flow</a>&nbsp;&nbsp;
+
+        <a href="#M004628">display_method_info</a>&nbsp;&nbsp;
+
+        <a href="#M004629">display_method_list</a>&nbsp;&nbsp;
+
+        <a href="#M004630">display_method_list_choice</a>&nbsp;&nbsp;
+
+        <a href="#M004631">display_params</a>&nbsp;&nbsp;
+
+        <a href="#M004625">get_class_method_choice</a>&nbsp;&nbsp;
+
+        <a href="#M004632">list_known_classes</a>&nbsp;&nbsp;
+
+        <a href="#M004623">new</a>&nbsp;&nbsp;
+
+        <a href="#M004633">page</a>&nbsp;&nbsp;
+
+        <a href="#M004634">setup_pager</a>&nbsp;&nbsp;
+
+        <a href="#M004635">warn_no_database</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Display.html">RDoc::RI::Display</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M004623" class="method-detail">
+        <a name="M004623"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004623.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004623.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(formatter, width, use_stdout, output = $stdout)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M004624" class="method-detail">
+        <a name="M004624"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004624.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004624.html');return false;">
+
+          <span class="method-name">display_class_info</span><span class="method-args">(klass)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> information about <tt>klass</tt>.
+Fetches additional information from <tt>ri_reader</tt> as necessary.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004627" class="method-detail">
+        <a name="M004627"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004627.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004627.html');return false;">
+
+          <span class="method-name">display_flow</span><span class="method-args">(flow)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> an <a href="../../Array.html">Array</a>
+of <a href="../Markup/Flow.html">RDoc::Markup::Flow</a> objects,
+<tt>flow</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004628" class="method-detail">
+        <a name="M004628"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004628.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004628.html');return false;">
+
+          <span class="method-name">display_method_info</span><span class="method-args">(method)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> information about <tt>method</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004629" class="method-detail">
+        <a name="M004629"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004629.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004629.html');return false;">
+
+          <span class="method-name">display_method_list</span><span class="method-args">(methods)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> the list of <tt>methods</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004630" class="method-detail">
+        <a name="M004630"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004630.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004630.html');return false;">
+
+          <span class="method-name">display_method_list_choice</span><span class="method-args">(methods)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> a list of <tt>methods</tt> and allow the
+user to select one of them.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004631" class="method-detail">
+        <a name="M004631"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004631.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004631.html');return false;">
+
+          <span class="method-name">display_params</span><span class="method-args">(method)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> the params for <tt>method</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004625" class="method-detail">
+        <a name="M004625"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004625.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004625.html');return false;">
+
+          <span class="method-name">get_class_method_choice</span><span class="method-args">(method_map)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Given a <a href="../../Hash.html">Hash</a> mapping a class&#8217; methods
+to method types (returned by <a
+href="DefaultDisplay.html#M004626">display_class_method_list</a>), this
+method allows the user to choose one of the methods.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004632" class="method-detail">
+        <a name="M004632"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004632.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004632.html');return false;">
+
+          <span class="method-name">list_known_classes</span><span class="method-args">(classes)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="../../List.html">List</a> the classes in <tt>classes</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004633" class="method-detail">
+        <a name="M004633"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004633.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004633.html');return false;">
+
+          <span class="method-name">page</span><span class="method-args">() {|| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Paginates output through a pager program.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004634" class="method-detail">
+        <a name="M004634"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004634.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004634.html');return false;">
+
+          <span class="method-name">setup_pager</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sets up a pager program to pass output through.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004635" class="method-detail">
+        <a name="M004635"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004635.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004635.html');return false;">
+
+          <span class="method-name">warn_no_database</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Displays a message that describes how to build <a href="../RI.html">RI</a>
+data.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M004626" class="method-detail">
+        <a name="M004626"></a>
+
+        <div class="method-heading">
+
+          <a href="DefaultDisplay.src/M004626.html" target="Code" class="method-signature"
+            onclick="popupCode('DefaultDisplay.src/M004626.html');return false;">
+
+          <span class="method-name">display_class_method_list</span><span class="method-args">(klass)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Display.html">Display</a> methods on <tt>klass</tt> Returns a hash
+mapping method name to method contents (HACK?)
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

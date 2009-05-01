@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>with_object (Enumerator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    e.with_object(obj) {|(*args), memo_obj| ... }
+ *    e.with_object(obj)
+ *
+ *  Iterates the given block for each element with an arbitrary
+ *  object given, and returns the initially given object.
+ *
+ *  If no block is given, returns an enumerator.
+ *
+ */
+static VALUE
+enumerator_with_object(VALUE obj, VALUE memo)
+{
+    struct enumerator *e;
+    int argc = 0;
+    VALUE *argv = 0;
+
+    RETURN_ENUMERATOR(obj, 1, &amp;memo);
+    e = enumerator_ptr(obj);
+    if (e-&gt;args) {
+        argc = RARRAY_LEN(e-&gt;args);
+        argv = RARRAY_PTR(e-&gt;args);
+    }
+    rb_block_call(e-&gt;obj, e-&gt;meth, argc, argv,
+                  enumerator_with_object_i, memo);
+
+    return memo;
+}</pre>
+</body>
+</html>

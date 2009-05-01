@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_header (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 262</span>
+262:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_header</span>(<span class="ruby-identifier">socket</span>)
+263:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">socket</span>
+264:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-identifier">read_line</span>(<span class="ruby-identifier">socket</span>)
+265:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-node">/\A(#{CRLF}|#{LF})\z/o</span><span class="ruby-identifier">m</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+266:           <span class="ruby-ivar">@raw_header</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+267:         <span class="ruby-keyword kw">end</span>
+268:       <span class="ruby-keyword kw">end</span>
+269:       <span class="ruby-keyword kw">begin</span>
+270:         <span class="ruby-ivar">@header</span> = <span class="ruby-constant">HTTPUtils</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse_header</span>(<span class="ruby-ivar">@raw_header</span>.<span class="ruby-identifier">join</span>)
+271:       <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+272:         <span class="ruby-identifier">raise</span>  <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">BadRequest</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>
+273:       <span class="ruby-keyword kw">end</span>
+274:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

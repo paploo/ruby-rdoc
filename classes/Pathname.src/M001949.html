@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mountpoint? (Pathname)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 476</span>
+476:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mountpoint?</span>
+477:     <span class="ruby-keyword kw">begin</span>
+478:       <span class="ruby-identifier">stat1</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">lstat</span>
+479:       <span class="ruby-identifier">stat2</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">lstat</span>
+480:       <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">||</span>
+481:         <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span>
+482:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+483:       <span class="ruby-keyword kw">false</span>
+484:     <span class="ruby-keyword kw">end</span>
+485:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

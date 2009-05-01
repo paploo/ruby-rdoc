@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_nonce (WEBrick::HTTPAuth::DigestAuth)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpauth/digestauth.rb, line 260</span>
+260:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_nonce</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">auth_req</span>)
+261:         <span class="ruby-identifier">username</span> = <span class="ruby-identifier">auth_req</span>[<span class="ruby-value str">'username'</span>]
+262:         <span class="ruby-identifier">nonce</span> = <span class="ruby-identifier">auth_req</span>[<span class="ruby-value str">'nonce'</span>]
+263: 
+264:         <span class="ruby-identifier">pub_time</span>, <span class="ruby-identifier">pk</span> = <span class="ruby-identifier">nonce</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;m*&quot;</span>)[<span class="ruby-value">0</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>, <span class="ruby-value">2</span>)
+265:         <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">pub_time</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">pk</span>)
+266:           <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;%s: empty nonce is given&quot;</span>, <span class="ruby-identifier">username</span>)
+267:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+268:         <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">pub_time</span>, <span class="ruby-ivar">@instance_key</span>)[<span class="ruby-value">0</span>,<span class="ruby-value">32</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">pk</span>)
+269:           <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;%s: invalid private-key: %s for %s&quot;</span>,
+270:                 <span class="ruby-identifier">username</span>, <span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">pub_time</span>, <span class="ruby-ivar">@instance_key</span>)[<span class="ruby-value">0</span>,<span class="ruby-value">32</span>], <span class="ruby-identifier">pk</span>)
+271:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+272:         <span class="ruby-keyword kw">end</span>
+273: 
+274:         <span class="ruby-identifier">diff_time</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_time</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">pub_time</span>.<span class="ruby-identifier">to_i</span>
+275:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">diff_time</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>)
+276:           <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;%s: difference of time-stamp is negative.&quot;</span>, <span class="ruby-identifier">username</span>)
+277:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+278:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">diff_time</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@nonce_expire_period</span>
+279:           <span class="ruby-identifier">error</span>(<span class="ruby-value str">&quot;%s: nonce is expired.&quot;</span>, <span class="ruby-identifier">username</span>)
+280:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+281:         <span class="ruby-keyword kw">end</span>
+282: 
+283:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+284:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

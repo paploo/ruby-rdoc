@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 896</span>
+896:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>(<span class="ruby-identifier">need_convert</span>=<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">indent</span>=<span class="ruby-value str">''</span>)
+897:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">have_content?</span>
+898:         <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">empty_content?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">content_is_set?</span>
+899:         <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">tag</span>(<span class="ruby-identifier">indent</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">next_indent</span><span class="ruby-operator">|</span>
+900:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">empty_content?</span>
+901:             <span class="ruby-value str">&quot;&quot;</span>
+902:           <span class="ruby-keyword kw">else</span>
+903:             <span class="ruby-identifier">xmled_content</span>
+904:           <span class="ruby-keyword kw">end</span>
+905:         <span class="ruby-keyword kw">end</span>
+906:       <span class="ruby-keyword kw">else</span>
+907:         <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">tag</span>(<span class="ruby-identifier">indent</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">next_indent</span><span class="ruby-operator">|</span>
+908:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_element_methods</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">method_name</span><span class="ruby-operator">|</span>
+909:             <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">method_name</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">next_indent</span>)
+910:           <span class="ruby-keyword kw">end</span>
+911:         <span class="ruby-keyword kw">end</span>
+912:       <span class="ruby-keyword kw">end</span>
+913:       <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">convert</span>(<span class="ruby-identifier">rv</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">need_convert</span>
+914:       <span class="ruby-identifier">rv</span>
+915:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

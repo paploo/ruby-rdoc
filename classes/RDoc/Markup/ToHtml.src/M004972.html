@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>list_item_start (RDoc::Markup::ToHtml)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_html.rb, line 361</span>
+361:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_item_start</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+362:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">type</span>
+363:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:BULLET</span>, <span class="ruby-identifier">:NUMBER</span> <span class="ruby-keyword kw">then</span>
+364:       <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;li&gt;&quot;</span>)
+365: 
+366:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:UPPERALPHA</span> <span class="ruby-keyword kw">then</span>
+367:       <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;li type=\&quot;A\&quot;&gt;&quot;</span>)
+368: 
+369:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:LOWERALPHA</span> <span class="ruby-keyword kw">then</span>
+370:       <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;li type=\&quot;a\&quot;&gt;&quot;</span>)
+371: 
+372:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:LABELED</span> <span class="ruby-keyword kw">then</span>
+373:       <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;dt&gt;&quot;</span>) <span class="ruby-operator">+</span>
+374:         <span class="ruby-identifier">convert_flow</span>(<span class="ruby-identifier">am</span>.<span class="ruby-identifier">flow</span>(<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">param</span>)) <span class="ruby-operator">+</span>
+375:         <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;/dt&gt;&quot;</span>) <span class="ruby-operator">+</span>
+376:         <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;dd&gt;&quot;</span>)
+377: 
+378:     <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:NOTE</span> <span class="ruby-keyword kw">then</span>
+379:       <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;tr&gt;&quot;</span>) <span class="ruby-operator">+</span>
+380:         <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;td valign=\&quot;top\&quot;&gt;&quot;</span>) <span class="ruby-operator">+</span>
+381:         <span class="ruby-identifier">convert_flow</span>(<span class="ruby-identifier">am</span>.<span class="ruby-identifier">flow</span>(<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">param</span>)) <span class="ruby-operator">+</span>
+382:         <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;/td&gt;&quot;</span>) <span class="ruby-operator">+</span>
+383:         <span class="ruby-identifier">annotate</span>(<span class="ruby-value str">&quot;&lt;td&gt;&quot;</span>)
+384:     <span class="ruby-keyword kw">else</span>
+385:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Invalid list type&quot;</span>
+386:     <span class="ruby-keyword kw">end</span>
+387:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

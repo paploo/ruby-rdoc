@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each_data (WEBrick::HTTPUtils::FormData)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httputils.rb, line 262</span>
+262:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_data</span>
+263:         <span class="ruby-identifier">tmp</span> = <span class="ruby-keyword kw">self</span>
+264:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">tmp</span>
+265:           <span class="ruby-identifier">next_data</span> = <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">next_data</span>
+266:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">tmp</span>)
+267:           <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">next_data</span>
+268:         <span class="ruby-keyword kw">end</span>
+269:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

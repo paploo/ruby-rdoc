@@ -1,0 +1,1354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: IXMLDOMComment [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">IXMLDOMComment</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/ext/win32ole/sample/xml_rb.html">
+
+                ext/win32ole/sample/xml.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007698">appendChild</a>&nbsp;&nbsp;
+
+        <a href="#M007706">appendData</a>&nbsp;&nbsp;
+
+        <a href="#M007675">attributes</a>&nbsp;&nbsp;
+
+        <a href="#M007687">baseName</a>&nbsp;&nbsp;
+
+        <a href="#M007670">childNodes</a>&nbsp;&nbsp;
+
+        <a href="#M007700">cloneNode</a>&nbsp;&nbsp;
+
+        <a href="#M007688">data</a>&nbsp;&nbsp;
+
+        <a href="#M007694">data=</a>&nbsp;&nbsp;
+
+        <a href="#M007682">dataType</a>&nbsp;&nbsp;
+
+        <a href="#M007693">dataType=</a>&nbsp;&nbsp;
+
+        <a href="#M007680">definition</a>&nbsp;&nbsp;
+
+        <a href="#M007708">deleteData</a>&nbsp;&nbsp;
+
+        <a href="#M007671">firstChild</a>&nbsp;&nbsp;
+
+        <a href="#M007699">hasChildNodes</a>&nbsp;&nbsp;
+
+        <a href="#M007695">insertBefore</a>&nbsp;&nbsp;
+
+        <a href="#M007707">insertData</a>&nbsp;&nbsp;
+
+        <a href="#M007672">lastChild</a>&nbsp;&nbsp;
+
+        <a href="#M007689">length</a>&nbsp;&nbsp;
+
+        <a href="#M007685">namespaceURI</a>&nbsp;&nbsp;
+
+        <a href="#M007674">nextSibling</a>&nbsp;&nbsp;
+
+        <a href="#M007666">nodeName</a>&nbsp;&nbsp;
+
+        <a href="#M007668">nodeType</a>&nbsp;&nbsp;
+
+        <a href="#M007677">nodeTypeString</a>&nbsp;&nbsp;
+
+        <a href="#M007681">nodeTypedValue</a>&nbsp;&nbsp;
+
+        <a href="#M007692">nodeTypedValue=</a>&nbsp;&nbsp;
+
+        <a href="#M007667">nodeValue</a>&nbsp;&nbsp;
+
+        <a href="#M007690">nodeValue=</a>&nbsp;&nbsp;
+
+        <a href="#M007676">ownerDocument</a>&nbsp;&nbsp;
+
+        <a href="#M007669">parentNode</a>&nbsp;&nbsp;
+
+        <a href="#M007684">parsed</a>&nbsp;&nbsp;
+
+        <a href="#M007686">prefix</a>&nbsp;&nbsp;
+
+        <a href="#M007673">previousSibling</a>&nbsp;&nbsp;
+
+        <a href="#M007697">removeChild</a>&nbsp;&nbsp;
+
+        <a href="#M007696">replaceChild</a>&nbsp;&nbsp;
+
+        <a href="#M007709">replaceData</a>&nbsp;&nbsp;
+
+        <a href="#M007702">selectNodes</a>&nbsp;&nbsp;
+
+        <a href="#M007703">selectSingleNode</a>&nbsp;&nbsp;
+
+        <a href="#M007679">specified</a>&nbsp;&nbsp;
+
+        <a href="#M007705">substringData</a>&nbsp;&nbsp;
+
+        <a href="#M007678">text</a>&nbsp;&nbsp;
+
+        <a href="#M007691">text=</a>&nbsp;&nbsp;
+
+        <a href="#M007701">transformNode</a>&nbsp;&nbsp;
+
+        <a href="#M007704">transformNodeToObject</a>&nbsp;&nbsp;
+
+        <a href="#M007683">xml</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="WIN32OLE/VARIANT.html">WIN32OLE::VARIANT</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">lastargs</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007698" class="method-detail">
+        <a name="M007698"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007698.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007698.html');return false;">
+
+          <span class="method-name">appendChild</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> appendChild append a child node
+</p>
+<pre>
+  IXMLDOMNode arg0 --- newChild [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007706" class="method-detail">
+        <a name="M007706"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007706.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007706.html');return false;">
+
+          <span class="method-name">appendData</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID append<a href="Data.html">Data</a> append string to value
+</p>
+<pre>
+  BSTR arg0 --- data [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007675" class="method-detail">
+        <a name="M007675"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007675.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007675.html');return false;">
+
+          <span class="method-name">attributes</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNamedNodeMap.html">IXMLDOMNamedNodeMap</a> attributes the
+collection of the node&#8217;s attributes
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007687" class="method-detail">
+        <a name="M007687"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007687.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007687.html');return false;">
+
+          <span class="method-name">baseName</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR baseName the base name of the node (nodename with the prefix stripped
+off)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007670" class="method-detail">
+        <a name="M007670"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007670.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007670.html');return false;">
+
+          <span class="method-name">childNodes</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNodeList.html">IXMLDOMNodeList</a> childNodes the
+collection of the node&#8217;s children
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007700" class="method-detail">
+        <a name="M007700"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007700.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007700.html');return false;">
+
+          <span class="method-name">cloneNode</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> cloneNode
+</p>
+<pre>
+  BOOL arg0 --- deep [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007688" class="method-detail">
+        <a name="M007688"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007688.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007688.html');return false;">
+
+          <span class="method-name">data</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR data value of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007694" class="method-detail">
+        <a name="M007694"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007694.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007694.html');return false;">
+
+          <span class="method-name">data=</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID data value of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007682" class="method-detail">
+        <a name="M007682"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007682.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007682.html');return false;">
+
+          <span class="method-name">dataType</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VARIANT dataType the data type of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007693" class="method-detail">
+        <a name="M007693"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007693.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007693.html');return false;">
+
+          <span class="method-name">dataType=</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID dataType the data type of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007680" class="method-detail">
+        <a name="M007680"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007680.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007680.html');return false;">
+
+          <span class="method-name">definition</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> definition pointer to the
+definition of the node in the DTD or schema
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007708" class="method-detail">
+        <a name="M007708"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007708.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007708.html');return false;">
+
+          <span class="method-name">deleteData</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID delete<a href="Data.html">Data</a> delete string within the value
+</p>
+<pre>
+  I4 arg0 --- offset [IN]
+  I4 arg1 --- count [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007671" class="method-detail">
+        <a name="M007671"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007671.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007671.html');return false;">
+
+          <span class="method-name">firstChild</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> firstChild first child of the
+node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007699" class="method-detail">
+        <a name="M007699"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007699.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007699.html');return false;">
+
+          <span class="method-name">hasChildNodes</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BOOL hasChildNodes
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007695" class="method-detail">
+        <a name="M007695"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007695.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007695.html');return false;">
+
+          <span class="method-name">insertBefore</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> insertBefore insert a child node
+</p>
+<pre>
+  IXMLDOMNode arg0 --- newChild [IN]
+  VARIANT arg1 --- refChild [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007707" class="method-detail">
+        <a name="M007707"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007707.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007707.html');return false;">
+
+          <span class="method-name">insertData</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID insert<a href="Data.html">Data</a> insert string into value
+</p>
+<pre>
+  I4 arg0 --- offset [IN]
+  BSTR arg1 --- data [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007672" class="method-detail">
+        <a name="M007672"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007672.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007672.html');return false;">
+
+          <span class="method-name">lastChild</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> lastChild first child of the
+node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007689" class="method-detail">
+        <a name="M007689"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007689.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007689.html');return false;">
+
+          <span class="method-name">length</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+I4 length number of characters in value
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007685" class="method-detail">
+        <a name="M007685"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007685.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007685.html');return false;">
+
+          <span class="method-name">namespaceURI</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR namespace<a href="URI.html">URI</a> the <a href="URI.html">URI</a> for
+the namespace applying to the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007674" class="method-detail">
+        <a name="M007674"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007674.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007674.html');return false;">
+
+          <span class="method-name">nextSibling</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> nextSibling right sibling of the
+node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007666" class="method-detail">
+        <a name="M007666"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007666.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007666.html');return false;">
+
+          <span class="method-name">nodeName</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR nodeName name of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007668" class="method-detail">
+        <a name="M007668"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007668.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007668.html');return false;">
+
+          <span class="method-name">nodeType</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+DOMNodeType nodeType the node&#8217;s type
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007677" class="method-detail">
+        <a name="M007677"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007677.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007677.html');return false;">
+
+          <span class="method-name">nodeTypeString</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR nodeTypeString the type of node in string form
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007681" class="method-detail">
+        <a name="M007681"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007681.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007681.html');return false;">
+
+          <span class="method-name">nodeTypedValue</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VARIANT nodeTypedValue get the strongly typed value of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007692" class="method-detail">
+        <a name="M007692"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007692.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007692.html');return false;">
+
+          <span class="method-name">nodeTypedValue=</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID nodeTypedValue get the strongly typed value of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007667" class="method-detail">
+        <a name="M007667"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007667.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007667.html');return false;">
+
+          <span class="method-name">nodeValue</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VARIANT nodeValue value stored in the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007690" class="method-detail">
+        <a name="M007690"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007690.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007690.html');return false;">
+
+          <span class="method-name">nodeValue=</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID nodeValue value stored in the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007676" class="method-detail">
+        <a name="M007676"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007676.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007676.html');return false;">
+
+          <span class="method-name">ownerDocument</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMDocument.html">IXMLDOMDocument</a> ownerDocument document
+that contains the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007669" class="method-detail">
+        <a name="M007669"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007669.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007669.html');return false;">
+
+          <span class="method-name">parentNode</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> parentNode parent of the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007684" class="method-detail">
+        <a name="M007684"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007684.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007684.html');return false;">
+
+          <span class="method-name">parsed</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BOOL parsed has sub-tree been completely parsed
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007686" class="method-detail">
+        <a name="M007686"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007686.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007686.html');return false;">
+
+          <span class="method-name">prefix</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR prefix the prefix for the namespace applying to the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007673" class="method-detail">
+        <a name="M007673"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007673.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007673.html');return false;">
+
+          <span class="method-name">previousSibling</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> previousSibling left sibling of
+the node
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007697" class="method-detail">
+        <a name="M007697"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007697.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007697.html');return false;">
+
+          <span class="method-name">removeChild</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> removeChild remove a child node
+</p>
+<pre>
+  IXMLDOMNode arg0 --- childNode [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007696" class="method-detail">
+        <a name="M007696"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007696.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007696.html');return false;">
+
+          <span class="method-name">replaceChild</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> replaceChild replace a child
+node
+</p>
+<pre>
+  IXMLDOMNode arg0 --- newChild [IN]
+  IXMLDOMNode arg1 --- oldChild [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007709" class="method-detail">
+        <a name="M007709"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007709.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007709.html');return false;">
+
+          <span class="method-name">replaceData</span><span class="method-args">(arg0, arg1, arg2)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID replace<a href="Data.html">Data</a> replace string within the value
+</p>
+<pre>
+  I4 arg0 --- offset [IN]
+  I4 arg1 --- count [IN]
+  BSTR arg2 --- data [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007702" class="method-detail">
+        <a name="M007702"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007702.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007702.html');return false;">
+
+          <span class="method-name">selectNodes</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNodeList.html">IXMLDOMNodeList</a> selectNodes execute
+query on the subtree
+</p>
+<pre>
+  BSTR arg0 --- queryString [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007703" class="method-detail">
+        <a name="M007703"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007703.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007703.html');return false;">
+
+          <span class="method-name">selectSingleNode</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="IXMLDOMNode.html">IXMLDOMNode</a> selectSingleNode execute query
+on the subtree
+</p>
+<pre>
+  BSTR arg0 --- queryString [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007679" class="method-detail">
+        <a name="M007679"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007679.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007679.html');return false;">
+
+          <span class="method-name">specified</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BOOL specified indicates whether node is a default value
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007705" class="method-detail">
+        <a name="M007705"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007705.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007705.html');return false;">
+
+          <span class="method-name">substringData</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR substring<a href="Data.html">Data</a> retrieve substring of value
+</p>
+<pre>
+  I4 arg0 --- offset [IN]
+  I4 arg1 --- count [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007678" class="method-detail">
+        <a name="M007678"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007678.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007678.html');return false;">
+
+          <span class="method-name">text</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR text text content of the node and subtree
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007691" class="method-detail">
+        <a name="M007691"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007691.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007691.html');return false;">
+
+          <span class="method-name">text=</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID text text content of the node and subtree
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007701" class="method-detail">
+        <a name="M007701"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007701.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007701.html');return false;">
+
+          <span class="method-name">transformNode</span><span class="method-args">(arg0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR transformNode apply the stylesheet to the subtree
+</p>
+<pre>
+  IXMLDOMNode arg0 --- stylesheet [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007704" class="method-detail">
+        <a name="M007704"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007704.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007704.html');return false;">
+
+          <span class="method-name">transformNodeToObject</span><span class="method-args">(arg0, arg1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+VOID transformNodeToObject apply the stylesheet to the subtree, returning
+the result through a document or a stream
+</p>
+<pre>
+  IXMLDOMNode arg0 --- stylesheet [IN]
+  VARIANT arg1 --- outputObject [IN]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007683" class="method-detail">
+        <a name="M007683"></a>
+
+        <div class="method-heading">
+
+          <a href="IXMLDOMComment.src/M007683.html" target="Code" class="method-signature"
+            onclick="popupCode('IXMLDOMComment.src/M007683.html');return false;">
+
+          <span class="method-name">xml</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+BSTR xml return the <a href="XML.html">XML</a> source for the node and each
+of its descendants
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>identify_here_document (RubyLex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 879</span>
+879:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">identify_here_document</span>
+880:     <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+881: <span class="ruby-comment cmt">#    if lt = PERCENT_LTYPE[ch]</span>
+882:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;-&quot;</span>
+883:       <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+884:       <span class="ruby-identifier">indent</span> = <span class="ruby-keyword kw">true</span>
+885:     <span class="ruby-keyword kw">end</span>
+886:     <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/['&quot;`]/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">ch</span>
+887:       <span class="ruby-identifier">lt</span> = <span class="ruby-identifier">ch</span>
+888:       <span class="ruby-identifier">quoted</span> = <span class="ruby-value str">&quot;&quot;</span>
+889:       <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">lt</span>
+890:         <span class="ruby-identifier">quoted</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">c</span>
+891:       <span class="ruby-keyword kw">end</span>
+892:     <span class="ruby-keyword kw">else</span>
+893:       <span class="ruby-identifier">lt</span> = <span class="ruby-value str">'&quot;'</span>
+894:       <span class="ruby-identifier">quoted</span> = <span class="ruby-identifier">ch</span>.<span class="ruby-identifier">dup</span>
+895:       <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\w/</span>
+896:         <span class="ruby-identifier">quoted</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">c</span>
+897:       <span class="ruby-keyword kw">end</span>
+898:       <span class="ruby-identifier">ungetc</span>
+899:     <span class="ruby-keyword kw">end</span>
+900: 
+901:     <span class="ruby-identifier">ltback</span>, <span class="ruby-ivar">@ltype</span> = <span class="ruby-ivar">@ltype</span>, <span class="ruby-identifier">lt</span>
+902:     <span class="ruby-identifier">reserve</span> = []
+903:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+904:       <span class="ruby-identifier">reserve</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">ch</span>
+905:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\\&quot;</span>
+906:         <span class="ruby-identifier">reserve</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+907:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
+908:         <span class="ruby-keyword kw">break</span>
+909:       <span class="ruby-keyword kw">end</span>
+910:     <span class="ruby-keyword kw">end</span>
+911: 
+912:     <span class="ruby-ivar">@here_header</span> = <span class="ruby-keyword kw">false</span>
+913:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">l</span> = <span class="ruby-identifier">gets</span>
+914:       <span class="ruby-identifier">l</span> = <span class="ruby-identifier">l</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/(:?\r)?\n\z/</span>, <span class="ruby-value str">''</span>)
+915:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">indent</span> <span class="ruby-value">? </span><span class="ruby-identifier">l</span>.<span class="ruby-identifier">strip</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">l</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">quoted</span>
+916:         <span class="ruby-keyword kw">break</span>
+917:       <span class="ruby-keyword kw">end</span>
+918:     <span class="ruby-keyword kw">end</span>
+919: 
+920:     <span class="ruby-ivar">@here_header</span> = <span class="ruby-keyword kw">true</span>
+921:     <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">reserve</span>
+922:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">reserve</span>.<span class="ruby-identifier">pop</span>
+923:       <span class="ruby-identifier">ungetc</span> <span class="ruby-identifier">ch</span>
+924:     <span class="ruby-keyword kw">end</span>
+925: 
+926:     <span class="ruby-ivar">@ltype</span> = <span class="ruby-identifier">ltback</span>
+927:     <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+928:     <span class="ruby-constant">Token</span>(<span class="ruby-constant">Ltype2Token</span>[<span class="ruby-identifier">lt</span>])
+929:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

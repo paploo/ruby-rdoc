@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>match (CompletingHash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/optparse.rb, line 670</span>
+670:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">match</span>(<span class="ruby-identifier">key</span>)
+671:       <span class="ruby-operator">*</span><span class="ruby-identifier">values</span> = <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>) {
+672:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">AmbiguousArgument</span>, <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:ambiguous</span>) {<span class="ruby-keyword kw">return</span> <span class="ruby-identifier">complete</span>(<span class="ruby-identifier">key</span>)}
+673:       }
+674:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">key</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">values</span>
+675:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

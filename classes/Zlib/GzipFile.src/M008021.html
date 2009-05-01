@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sync= (Zlib::GzipFile)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq: sync = flag
+ *
+ * Same as IO.  If flag is +true+, the associated IO object must respond to the
+ * +flush+ method.  While +sync+ mode is +true+, the compression ratio
+ * decreases sharply.
+ */
+static VALUE
+rb_gzfile_set_sync(VALUE obj, VALUE mode)
+{
+    struct gzfile *gz = get_gzfile(obj);
+
+    if (RTEST(mode)) {
+        gz-&gt;z.flags |= GZFILE_FLAG_SYNC;
+    }
+    else {
+        gz-&gt;z.flags &amp;= ~GZFILE_FLAG_SYNC;
+    }
+    return mode;
+}</pre>
+</body>
+</html>

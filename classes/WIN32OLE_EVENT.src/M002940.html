@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>unadvise (WIN32OLE_EVENT)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     WIN32OLE_EVENT#unadvise -&gt; nil
+ *
+ *  disconnects OLE server. If this method called, then the WIN32OLE_EVENT object
+ *  does not receive the OLE server event any more.
+ *  This method is trial implementation.
+ *
+ *      ie = WIN32OLE.new('InternetExplorer.Application')
+ *      ev = WIN32OLE_EVENT.new(ie)
+ *      ev.on_event() {...}
+ *         ...
+ *      ev.unadvise
+ *
+ */
+static VALUE 
+fev_unadvise(VALUE self)
+{
+    struct oleeventdata *poleev;
+    Data_Get_Struct(self, struct oleeventdata, poleev);
+    if (poleev-&gt;pConnectionPoint) {
+        ole_msg_loop();
+        evs_delete(poleev-&gt;event_id);
+        poleev-&gt;pConnectionPoint-&gt;lpVtbl-&gt;Unadvise(poleev-&gt;pConnectionPoint, poleev-&gt;dwCookie);
+        OLE_RELEASE(poleev-&gt;pConnectionPoint);
+        poleev-&gt;pConnectionPoint = NULL;
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

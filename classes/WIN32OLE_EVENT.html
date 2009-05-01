@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: WIN32OLE_EVENT [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">WIN32OLE_EVENT</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../files/ext/win32ole/win32ole_c.html">
+
+                ext/win32ole/win32ole.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<tt><a href="WIN32OLE_EVENT.html">WIN32OLE_EVENT</a></tt> objects controls
+OLE event.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M002942">handler</a>&nbsp;&nbsp;
+
+        <a href="#M002941">handler=</a>&nbsp;&nbsp;
+
+        <a href="#M002935">message_loop</a>&nbsp;&nbsp;
+
+        <a href="#M002936">new</a>&nbsp;&nbsp;
+
+        <a href="#M002939">off_event</a>&nbsp;&nbsp;
+
+        <a href="#M002937">on_event</a>&nbsp;&nbsp;
+
+        <a href="#M002938">on_event_with_outargs</a>&nbsp;&nbsp;
+
+        <a href="#M002940">unadvise</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M002935" class="method-detail">
+        <a name="M002935"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002935.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002935.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT.message_loop<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Translates and dispatches Windows message.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002936" class="method-detail">
+        <a name="M002936"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002936.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002936.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT.new(ole, event) #=> WIN32OLE_EVENT object.<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns OLE event object. The first argument specifies <a
+href="WIN32OLE.html">WIN32OLE</a> object. The second argument specifies OLE
+event name.
+</p>
+<pre>
+   ie = WIN32OLE.new('InternetExplorer.Application')
+   ev = WIN32OLE_EVENT.new(ie, 'DWebBrowserEvents')
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M002942" class="method-detail">
+        <a name="M002942"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002942.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002942.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#handler<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+returns handler object.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002941" class="method-detail">
+        <a name="M002941"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002941.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002941.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#handler=<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+sets event handler object. If handler object has onXXX method according to
+XXX event, then onXXX method is called when XXX event occurs.
+</p>
+<p>
+If handler object has method_missing and there is no method according to
+the event, then method_missing called and 1-st argument is event name.
+</p>
+<p>
+If handler object has onXXX method and there is block defined by <a
+href="WIN32OLE_EVENT.html#M002937">WIN32OLE_EVENT#on_event</a>(&#8216;XXX&#8217;){},
+then block is executed but handler object method is not called when XXX
+event occurs.
+</p>
+<pre>
+    class Handler
+      def onStatusTextChange(text)
+        puts &quot;StatusTextChanged&quot;
+      end
+      def onPropertyChange(prop)
+        puts &quot;PropertyChanged&quot;
+      end
+      def method_missing(ev, *arg)
+        puts &quot;other event #{ev}&quot;
+      end
+    end
+
+    handler = Handler.new
+    ie = WIN32OLE.new('InternetExplorer.Application')
+    ev = WIN32OLE_EVENT.new(ie)
+    ev.on_event(&quot;StatusTextChange&quot;) {|*args|
+      puts &quot;this block executed.&quot;
+      puts &quot;handler.onStatusTextChange method is not called.&quot;
+    }
+    ev.handler = handler
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002939" class="method-detail">
+        <a name="M002939"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002939.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002939.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#off_event([event])<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+removes the callback of event.
+</p>
+<pre>
+  ie = WIN32OLE.new('InternetExplorer.Application')
+  ev = WIN32OLE_EVENT.new(ie)
+  ev.on_event('BeforeNavigate2') {|*args|
+    args.last[6] = true
+  }
+    ...
+  ev.off_event('BeforeNavigate2')
+    ...
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002937" class="method-detail">
+        <a name="M002937"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002937.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002937.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#on_event([event]){...}<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Defines the callback event. If argument is omitted, this method defines the
+callback of all events. If you want to modify reference argument in
+callback, return hash in callback. If you want to return value to OLE
+server as result of callback use `return&#8217; or :return.
+</p>
+<pre>
+  ie = WIN32OLE.new('InternetExplorer.Application')
+  ev = WIN32OLE_EVENT.new(ie)
+  ev.on_event(&quot;NavigateComplete&quot;) {|url| puts url}
+  ev.on_event() {|ev, *args| puts &quot;#{ev} fired&quot;}
+
+  ev.on_event(&quot;BeforeNavigate2&quot;) {|*args|
+    ...
+    # set true to BeforeNavigate reference argument `Cancel'.
+    # Cancel is 7-th argument of BeforeNavigate,
+    # so you can use 6 as key of hash instead of 'Cancel'.
+    # The argument is counted from 0.
+    # The hash key of 0 means first argument.)
+    {:Cancel =&gt; true}  # or {'Cancel' =&gt; true} or {6 =&gt; true}
+  }
+
+  ev.on_event(...) {|*args|
+    {:return =&gt; 1, :xxx =&gt; yyy}
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002938" class="method-detail">
+        <a name="M002938"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002938.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002938.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#on_event_with_outargs([event]){...}<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Defines the callback of event. If you want modify argument in callback, you
+could use this method instead of <a
+href="WIN32OLE_EVENT.html#M002937">WIN32OLE_EVENT#on_event</a>.
+</p>
+<pre>
+  ie = WIN32OLE.new('InternetExplorer.Application')
+  ev = WIN32OLE_EVENT.new(ie)
+  ev.on_event_with_outargs('BeforeNavigate2') {|*args|
+    args.last[6] = true
+  }
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M002940" class="method-detail">
+        <a name="M002940"></a>
+
+        <div class="method-heading">
+
+          <a href="WIN32OLE_EVENT.src/M002940.html" target="Code" class="method-signature"
+            onclick="popupCode('WIN32OLE_EVENT.src/M002940.html');return false;">
+
+          <span class="method-name">WIN32OLE_EVENT#unadvise &rarr; nil<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+disconnects OLE server. If this method called, then the <a
+href="WIN32OLE_EVENT.html">WIN32OLE_EVENT</a> object does not receive the
+OLE server event any more. This method is trial implementation.
+</p>
+<pre>
+    ie = WIN32OLE.new('InternetExplorer.Application')
+    ev = WIN32OLE_EVENT.new(ie)
+    ev.on_event() {...}
+       ...
+    ev.unadvise
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

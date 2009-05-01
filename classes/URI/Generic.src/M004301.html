@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>merge_path (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/generic.rb, line 623</span>
+623:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge_path</span>(<span class="ruby-identifier">base</span>, <span class="ruby-identifier">rel</span>)
+624: 
+625:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 5)</span>
+626:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 6)</span>
+627:       <span class="ruby-identifier">base_path</span> = <span class="ruby-identifier">split_path</span>(<span class="ruby-identifier">base</span>)
+628:       <span class="ruby-identifier">rel_path</span>  = <span class="ruby-identifier">split_path</span>(<span class="ruby-identifier">rel</span>)
+629: 
+630:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 6), a)</span>
+631:       <span class="ruby-identifier">base_path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+632:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">i</span> = <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'..'</span>)
+633:         <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">slice!</span>(<span class="ruby-identifier">i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-value">2</span>)
+634:       <span class="ruby-keyword kw">end</span>
+635: 
+636:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">first</span> = <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">first</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">empty?</span>
+637:         <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">clear</span>
+638:         <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">shift</span>
+639:       <span class="ruby-keyword kw">end</span>
+640: 
+641:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 6), c)</span>
+642:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 6), d)</span>
+643:       <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">push</span>(<span class="ruby-value str">''</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+644:       <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'.'</span>)
+645: 
+646:       <span class="ruby-comment cmt"># RFC2396, Section 5.2, 6), e)</span>
+647:       <span class="ruby-identifier">tmp</span> = []
+648:       <span class="ruby-identifier">rel_path</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+649:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span> <span class="ruby-operator">&amp;&amp;</span>
+650:             <span class="ruby-operator">!</span>(<span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>)
+651:           <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">pop</span>
+652:         <span class="ruby-keyword kw">else</span>
+653:           <span class="ruby-identifier">tmp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">x</span>
+654:         <span class="ruby-keyword kw">end</span>
+655:       <span class="ruby-keyword kw">end</span>
+656: 
+657:       <span class="ruby-identifier">add_trailer_slash</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">empty?</span>
+658:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">empty?</span>
+659:         <span class="ruby-identifier">base_path</span> = [<span class="ruby-value str">''</span>] <span class="ruby-comment cmt"># keep '/' for root directory</span>
+660:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">add_trailer_slash</span>
+661:         <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">pop</span>
+662:       <span class="ruby-keyword kw">end</span>
+663:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">x</span> = <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">shift</span>
+664:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+665:           <span class="ruby-comment cmt"># RFC2396, Section 4</span>
+666:           <span class="ruby-comment cmt"># a .. or . in an absolute path has no special meaning</span>
+667:           <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">pop</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+668:         <span class="ruby-keyword kw">else</span>
+669:           <span class="ruby-comment cmt"># if x == '..'</span>
+670:           <span class="ruby-comment cmt">#   valid absolute (but abnormal) path &quot;/../...&quot;</span>
+671:           <span class="ruby-comment cmt"># else</span>
+672:           <span class="ruby-comment cmt">#   valid absolute path</span>
+673:           <span class="ruby-comment cmt"># end</span>
+674:           <span class="ruby-identifier">base_path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">x</span>
+675:           <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">base_path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">t</span>}
+676:           <span class="ruby-identifier">add_trailer_slash</span> = <span class="ruby-keyword kw">false</span>
+677:           <span class="ruby-keyword kw">break</span>
+678:         <span class="ruby-keyword kw">end</span>
+679:       <span class="ruby-keyword kw">end</span>
+680:       <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">push</span>(<span class="ruby-value str">''</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_trailer_slash</span>
+681: 
+682:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">base_path</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>)
+683:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_attribute_ns (REXML::Attributes)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 1232</span>
+1232:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_attribute_ns</span>(<span class="ruby-identifier">namespace</span>, <span class="ruby-identifier">name</span>)
+1233:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+1234:       <span class="ruby-identifier">each_attribute</span>() { <span class="ruby-operator">|</span><span class="ruby-identifier">attribute</span><span class="ruby-operator">|</span>
+1235:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">&amp;&amp;</span>
+1236:           <span class="ruby-identifier">namespace</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">namespace</span>() <span class="ruby-operator">&amp;&amp;</span>
+1237:           ( <span class="ruby-operator">!</span><span class="ruby-identifier">namespace</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">fully_expanded_name</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">':'</span>) )
+1238:           <span class="ruby-comment cmt"># foo will match xmlns:foo, but only if foo isn't also an attribute</span>
+1239:           <span class="ruby-identifier">result</span> = <span class="ruby-identifier">attribute</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">result</span> <span class="ruby-keyword kw">or</span> <span class="ruby-operator">!</span><span class="ruby-identifier">namespace</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">or</span> 
+1240:                                 <span class="ruby-operator">!</span><span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">fully_expanded_name</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">':'</span>)
+1241:         <span class="ruby-keyword kw">end</span>
+1242:       }
+1243:       <span class="ruby-identifier">result</span>
+1244:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

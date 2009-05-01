@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: URI::FTP [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">URI::FTP</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/open-uri_rb.html">
+
+                lib/open-uri.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../files/lib/uri/ftp_rb.html">
+
+                lib/uri/ftp.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Generic.html">
+
+                URI::Generic
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="FTP.html">FTP</a> <a href="../URI.html">URI</a> syntax is defined
+by RFC1738 section 3.2.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M004326">build</a>&nbsp;&nbsp;
+
+        <a href="#M004328">check_typecode</a>&nbsp;&nbsp;
+
+        <a href="#M004327">new</a>&nbsp;&nbsp;
+
+        <a href="#M004325">new2</a>&nbsp;&nbsp;
+
+        <a href="#M004331">path</a>&nbsp;&nbsp;
+
+        <a href="#M004329">set_typecode</a>&nbsp;&nbsp;
+
+        <a href="#M004332">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M004330">typecode=</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="../OpenURI/OpenRead.html">OpenURI::OpenRead</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_PORT</td>
+          <td>=</td>
+          <td class="context-item-value">21</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">COMPONENT</td>
+          <td>=</td>
+          <td class="context-item-value">[       :scheme,        :userinfo, :host, :port,       :path, :typecode     ].freeze</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TYPECODE</td>
+          <td>=</td>
+          <td class="context-item-value">['a', 'i', 'd'].freeze</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+Typecode is &#8220;a&#8221;, &#8220;i&#8221; or &#8220;d&#8221;.
+
+<ul>
+<li>&#8220;a&#8221; indicates a text file (the <a href="FTP.html">FTP</a>
+command was ASCII)
+
+</li>
+<li>&#8220;i&#8221; indicates a binary file (<a href="FTP.html">FTP</a> command
+IMAGE)
+
+</li>
+<li>&#8220;d&#8221; indicates the contents of a directory should be displayed
+
+</li>
+</ul>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">TYPECODE_PREFIX</td>
+          <td>=</td>
+          <td class="context-item-value">';type='.freeze</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">typecode</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M004326" class="method-detail">
+        <a name="M004326"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004326.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004326.html');return false;">
+
+          <span class="method-name">build</span><span class="method-args">(args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h2>Description</h2>
+<p>
+Creates a new <a href="FTP.html">URI::FTP</a> object from components, with
+syntax checking.
+</p>
+<p>
+The components accepted are <tt>userinfo</tt>, <tt>host</tt>,
+<tt>port</tt>, <tt>path</tt> and <tt>typecode</tt>.
+</p>
+<p>
+The components should be provided either as an <a
+href="../Array.html">Array</a>, or as a <a href="../Hash.html">Hash</a>
+with keys formed by preceding the component names with a colon.
+</p>
+<p>
+If an <a href="../Array.html">Array</a> is used, the components must be
+passed in the order [userinfo, host, port, path, typecode]
+</p>
+<p>
+If the path supplied is absolute, it will be escaped in order to make it
+absolute in the <a href="../URI.html">URI</a>. Examples:
+</p>
+<pre>
+    require 'uri'
+
+    uri = URI::FTP.build(['user:password', 'ftp.example.com', nil,
+      '/path/file.&gt; zip', 'i'])
+    puts uri.to_s  -&gt;  ftp://user:password@ftp.example.com/%2Fpath/file.zip;type=a
+
+    uri2 = URI::FTP.build({:host =&gt; 'ftp.example.com',
+      :path =&gt; 'ruby/src'})
+    puts uri2.to_s  -&gt;  ftp://ftp.example.com/ruby/src
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004327" class="method-detail">
+        <a name="M004327"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004327.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004327.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(*arg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h2>Description</h2>
+<p>
+Creates a new <a href="FTP.html">URI::FTP</a> object from generic URL
+components with no syntax checking.
+</p>
+<p>
+Unlike build(), this method does not escape the path component as required
+by RFC1738; instead it is treated as per RFC2396.
+</p>
+<p>
+Arguments are <tt>scheme</tt>, <tt>userinfo</tt>, <tt>host</tt>,
+<tt>port</tt>, <tt>registry</tt>, <tt>path</tt>, <tt>opaque</tt>,
+<tt>query</tt> and <tt>fragment</tt>, in that order.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004325" class="method-detail">
+        <a name="M004325"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004325.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004325.html');return false;">
+
+          <span class="method-name">new2</span><span class="method-args">(user, password, host, port, path, typecode = nil, arg_check = true)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M004331" class="method-detail">
+        <a name="M004331"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004331.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004331.html');return false;">
+
+          <span class="method-name">path</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the path from an <a href="FTP.html">FTP</a> <a
+href="../URI.html">URI</a>.
+</p>
+<p>
+RFC 1738 specifically states that the path for an <a
+href="FTP.html">FTP</a> <a href="../URI.html">URI</a> does not include the
+/ which separates the <a href="../URI.html">URI</a> path from the <a
+href="../URI.html">URI</a> host. Example:
+</p>
+<pre>
+    ftp://ftp.example.com/pub/ruby
+</pre>
+<p>
+The above <a href="../URI.html">URI</a> indicates that the client should
+connect to ftp.example.com then cd pub/ruby from the initial login
+directory.
+</p>
+<p>
+If you want to cd to an absolute directory, you must include an escaped /
+(%2F) in the path. Example:
+</p>
+<pre>
+    ftp://ftp.example.com/%2Fpub/ruby
+</pre>
+<p>
+This method will then return &#8220;/pub/ruby&#8220;
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M004332" class="method-detail">
+        <a name="M004332"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004332.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004332.html');return false;">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M004330" class="method-detail">
+        <a name="M004330"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004330.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004330.html');return false;">
+
+          <span class="method-name">typecode=</span><span class="method-args">(typecode)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+
+      <div id="method-M004329" class="method-detail">
+        <a name="M004329"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004329.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004329.html');return false;">
+
+          <span class="method-name">set_typecode</span><span class="method-args">(v)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M004328" class="method-detail">
+        <a name="M004328"></a>
+
+        <div class="method-heading">
+
+          <a href="FTP.src/M004328.html" target="Code" class="method-signature"
+            onclick="popupCode('FTP.src/M004328.html');return false;">
+
+          <span class="method-name">check_typecode</span><span class="method-args">(v)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

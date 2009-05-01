@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rm_rf (FileUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/fileutils.rb, line 638</span>
+638:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rm_rf</span>(<span class="ruby-identifier">list</span>, <span class="ruby-identifier">options</span> = {})
+639:     <span class="ruby-identifier">fu_check_options</span> <span class="ruby-identifier">options</span>, <span class="ruby-constant">OPT_TABLE</span>[<span class="ruby-value str">'rm_rf'</span>]
+640:     <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+641:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:force</span>] = <span class="ruby-keyword kw">true</span>
+642:     <span class="ruby-identifier">rm_r</span> <span class="ruby-identifier">list</span>, <span class="ruby-identifier">options</span>
+643:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>request_uri (URI::HTTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/uri/http.rb, line 89</span>
+89:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_uri</span>
+90:       <span class="ruby-identifier">r</span> = <span class="ruby-identifier">path_query</span>
+91:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">r</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">?/</span>
+92:         <span class="ruby-identifier">r</span> = <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">r</span>
+93:       <span class="ruby-keyword kw">end</span>
+94: 
+95:       <span class="ruby-identifier">r</span>
+96:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

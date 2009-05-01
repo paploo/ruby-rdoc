@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>method_missing (REXML::QuickPath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/quickpath.rb, line 211</span>
+211:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">QuickPath</span><span class="ruby-operator">::</span><span class="ruby-identifier">method_missing</span>( <span class="ruby-identifier">id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> )
+212:       <span class="ruby-keyword kw">begin</span>
+213:         <span class="ruby-constant">Functions</span>.<span class="ruby-identifier">send</span>( <span class="ruby-identifier">id</span>.<span class="ruby-identifier">id2name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> )
+214:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+215:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;METHOD: #{id.id2name}(#{args.join ', '})\n#{$!.message}&quot;</span>
+216:       <span class="ruby-keyword kw">end</span>
+217:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

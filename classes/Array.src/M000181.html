@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>cycle (Array)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ary.cycle {|obj| block }
+ *     ary.cycle(n) {|obj| block }
+ *  
+ *  Calls &lt;i&gt;block&lt;/i&gt; for each element repeatedly _n_ times or
+ *  forever if none or nil is given.  If a non-positive number is
+ *  given or the array is empty, does nothing.  Returns nil if the
+ *  loop has finished without getting interrupted.
+ *     
+ *     a = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+ *     a.cycle {|x| puts x }  # print, a, b, c, a, b, c,.. forever.
+ *     a.cycle(2) {|x| puts x }  # print, a, b, c, a, b, c.
+ *     
+ */
+
+static VALUE
+rb_ary_cycle(int argc, VALUE *argv, VALUE ary)
+{
+    long n, i;
+    VALUE nv = Qnil;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;nv);
+
+    RETURN_ENUMERATOR(ary, argc, argv);
+    if (NIL_P(nv)) {
+        n = -1;
+    }
+    else {
+        n = NUM2LONG(nv);
+        if (n &lt;= 0) return Qnil;
+    }
+
+    while (RARRAY_LEN(ary) &gt; 0 &amp;&amp; (n &lt; 0 || 0 &lt; n--)) {
+        for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+            rb_yield(RARRAY_PTR(ary)[i]);
+        }
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

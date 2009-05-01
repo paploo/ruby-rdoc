@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getpwuid (Etc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Returns the /etc/passwd information for the user with specified integer
+ * user id (uid).
+ *
+ * The information is returned as a Struct::Passwd; see getpwent above for
+ * details.
+ *
+ * e.g.  * Etc.getpwuid(0) -&gt; #&lt;struct Struct::Passwd name=&quot;root&quot;,
+ * passwd=&quot;x&quot;, uid=0, gid=0, gecos=&quot;root&quot;,dir=&quot;/root&quot;, shell=&quot;/bin/bash&quot;&gt;
+ */
+static VALUE
+etc_getpwuid(int argc, VALUE *argv, VALUE obj)
+{
+#if defined(HAVE_GETPWENT)
+    VALUE id;
+    uid_t uid;
+    struct passwd *pwd;
+
+    rb_secure(4);
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;id) == 1) {
+        uid = NUM2UIDT(id);
+    }
+    else {
+        uid = getuid();
+    }
+    pwd = getpwuid(uid);
+    if (pwd == 0) rb_raise(rb_eArgError, &quot;can't find user for %d&quot;, (int)uid);
+    return setup_passwd(pwd);
+#else 
+    return Qnil;
+#endif
+}</pre>
+</body>
+</html>

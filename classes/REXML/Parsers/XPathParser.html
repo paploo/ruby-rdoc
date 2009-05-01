@@ -1,0 +1,879 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: REXML::Parsers::XPathParser [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">REXML::Parsers::XPathParser</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/rexml/parsers/xpathparser_rb.html">
+
+                lib/rexml/parsers/xpathparser.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+You don&#8217;t want to use this class. Really. Use <a
+href="../XPath.html">XPath</a>, which is a wrapper for this class. Believe
+me. You don&#8217;t want to poke around in here. There is strange, dark
+magic at work in this code. Beware. Go back! Go back while you still can!
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M005423">AdditiveExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005420">AndExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005421">EqualityExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005428">FilterExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005430">FunctionCall</a>&nbsp;&nbsp;
+
+        <a href="#M005415">LocationPath</a>&nbsp;&nbsp;
+
+        <a href="#M005424">MultiplicativeExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005417">NodeTest</a>&nbsp;&nbsp;
+
+        <a href="#M005419">OrExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005427">PathExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005418">Predicate</a>&nbsp;&nbsp;
+
+        <a href="#M005429">PrimaryExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005422">RelationalExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005416">RelativeLocationPath</a>&nbsp;&nbsp;
+
+        <a href="#M005425">UnaryExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005426">UnionExpr</a>&nbsp;&nbsp;
+
+        <a href="#M005412">abbreviate</a>&nbsp;&nbsp;
+
+        <a href="#M005413">expand</a>&nbsp;&nbsp;
+
+        <a href="#M005431">get_group</a>&nbsp;&nbsp;
+
+        <a href="#M005409">namespaces=</a>&nbsp;&nbsp;
+
+        <a href="#M005410">parse</a>&nbsp;&nbsp;
+
+        <a href="#M005432">parse_args</a>&nbsp;&nbsp;
+
+        <a href="#M005411">predicate</a>&nbsp;&nbsp;
+
+        <a href="#M005414">predicate_to_string</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="../XMLTokens.html">XMLTokens</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LITERAL</td>
+          <td>=</td>
+          <td class="context-item-value">/^'([^']*)'|^&quot;([^&quot;]*)&quot;/u</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">AXIS</td>
+          <td>=</td>
+          <td class="context-item-value">/^(ancestor|ancestor-or-self|attribute|child|descendant|descendant-or-self|following|following-sibling|namespace|parent|preceding|preceding-sibling|self)::/</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+<a href="XPathParser.html#M005416">RelativeLocationPath</a>
+
+<pre>
+  |                                                    Step
+    | (AXIS_NAME '::' | '@' | '')                     AxisSpecifier
+      NodeTest
+        Predicate
+    | '.' | '..'                                      AbbreviatedStep
+  |  RelativeLocationPath '/' Step
+  | RelativeLocationPath '//' Step
+</pre>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NCNAMETEST</td>
+          <td>=</td>
+          <td class="context-item-value">/^(#{NCNAME_STR}):\*/u</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc"><pre>
+ Returns a 1-1 map of the nodeset
+ The contents of the resulting array are either:
+   true/false, if a positive match
+   String, if a name match
+</pre>
+
+<a href="XPathParser.html#M005417">NodeTest</a>
+
+<pre>
+  | ('*' | NCNAME ':' '*' | QNAME)                NameTest
+  | NODE_TYPE '(' ')'                              NodeType
+  | PI '(' LITERAL ')'                            PI
+    | '[' expr ']'                                Predicate
+</pre>
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">QNAME</td>
+          <td>=</td>
+          <td class="context-item-value">Namespace::NAMESPLIT</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NODE_TYPE</td>
+          <td>=</td>
+          <td class="context-item-value">/^(comment|text|node)\(\s*\)/m</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PI</td>
+          <td>=</td>
+          <td class="context-item-value">/^processing-instruction\(/</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VARIABLE_REFERENCE</td>
+          <td>=</td>
+          <td class="context-item-value">/^\$(#{NAME_STR})/u</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+| VARIABLE_REFERENCE | &#8217;(&#8217; expr &#8217;)&#8217; | LITERAL |
+NUMBER | <a href="XPathParser.html#M005430">FunctionCall</a>
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NUMBER</td>
+          <td>=</td>
+          <td class="context-item-value">/^(\d*\.?\d+)/</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NT</td>
+          <td>=</td>
+          <td class="context-item-value">/^comment|text|processing-instruction|node$/</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M005412" class="method-detail">
+        <a name="M005412"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005412.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005412.html');return false;">
+
+          <span class="method-name">abbreviate</span><span class="method-args">( path )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005413" class="method-detail">
+        <a name="M005413"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005413.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005413.html');return false;">
+
+          <span class="method-name">expand</span><span class="method-args">( path )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005409" class="method-detail">
+        <a name="M005409"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005409.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005409.html');return false;">
+
+          <span class="method-name">namespaces=</span><span class="method-args">( namespaces )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005410" class="method-detail">
+        <a name="M005410"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005410.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005410.html');return false;">
+
+          <span class="method-name">parse</span><span class="method-args">(path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005411" class="method-detail">
+        <a name="M005411"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005411.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005411.html');return false;">
+
+          <span class="method-name">predicate</span><span class="method-args">(path)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005414" class="method-detail">
+        <a name="M005414"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005414.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005414.html');return false;">
+
+          <span class="method-name">predicate_to_string</span><span class="method-args">( path ) {|path| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M005423" class="method-detail">
+        <a name="M005423"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005423.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005423.html');return false;">
+
+          <span class="method-name">AdditiveExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005423">AdditiveExpr</a> (&#8217;+&#8217; | S
+&#8217;-&#8217;) <a href="XPathParser.html#M005424">MultiplicativeExpr</a>
+| <a href="XPathParser.html#M005424">MultiplicativeExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005420" class="method-detail">
+        <a name="M005420"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005420.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005420.html');return false;">
+
+          <span class="method-name">AndExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005420">AndExpr</a> S &#8216;and&#8217; S <a
+href="XPathParser.html#M005421">EqualityExpr</a> | <a
+href="XPathParser.html#M005421">EqualityExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005421" class="method-detail">
+        <a name="M005421"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005421.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005421.html');return false;">
+
+          <span class="method-name">EqualityExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005421">EqualityExpr</a> (&#8217;=&#8217; |
+&#8217;!=&#8217;) <a href="XPathParser.html#M005422">RelationalExpr</a> |
+<a href="XPathParser.html#M005422">RelationalExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005428" class="method-detail">
+        <a name="M005428"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005428.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005428.html');return false;">
+
+          <span class="method-name">FilterExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005428">FilterExpr</a> <a
+href="XPathParser.html#M005418">Predicate</a> | <a
+href="XPathParser.html#M005429">PrimaryExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005430" class="method-detail">
+        <a name="M005430"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005430.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005430.html');return false;">
+
+          <span class="method-name">FunctionCall</span><span class="method-args">(rest, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| FUNCTION_NAME &#8217;(&#8217; ( expr ( &#8217;,&#8217; expr )* )?
+&#8217;)&#8217;
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005415" class="method-detail">
+        <a name="M005415"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005415.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005415.html');return false;">
+
+          <span class="method-name">LocationPath</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="XPathParser.html#M005415">LocationPath</a>
+</p>
+<pre>
+  | RelativeLocationPath
+  | '/' RelativeLocationPath?
+  | '//' RelativeLocationPath
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005424" class="method-detail">
+        <a name="M005424"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005424.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005424.html');return false;">
+
+          <span class="method-name">MultiplicativeExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005424">MultiplicativeExpr</a>
+(&#8217;*&#8217; | S (&#8216;div&#8217; | &#8216;mod&#8217;) S) <a
+href="XPathParser.html#M005425">UnaryExpr</a> | <a
+href="XPathParser.html#M005425">UnaryExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005417" class="method-detail">
+        <a name="M005417"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005417.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005417.html');return false;">
+
+          <span class="method-name">NodeTest</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005419" class="method-detail">
+        <a name="M005419"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005419.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005419.html');return false;">
+
+          <span class="method-name">OrExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005419">OrExpr</a> S &#8216;or&#8217; S <a
+href="XPathParser.html#M005420">AndExpr</a> | <a
+href="XPathParser.html#M005420">AndExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005427" class="method-detail">
+        <a name="M005427"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005427.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005427.html');return false;">
+
+          <span class="method-name">PathExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005415">LocationPath</a> | <a
+href="XPathParser.html#M005428">FilterExpr</a> (&#8217;/&#8217; |
+&#8217;//&#8217;) <a
+href="XPathParser.html#M005416">RelativeLocationPath</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005418" class="method-detail">
+        <a name="M005418"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005418.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005418.html');return false;">
+
+          <span class="method-name">Predicate</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Filters the supplied nodeset on the predicate(s)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005429" class="method-detail">
+        <a name="M005429"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005429.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005429.html');return false;">
+
+          <span class="method-name">PrimaryExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005422" class="method-detail">
+        <a name="M005422"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005422.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005422.html');return false;">
+
+          <span class="method-name">RelationalExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005422">RelationalExpr</a> (&#8217;<&#8217; |
+&#8217;>&#8217; | &#8217;<=&#8217; | &#8217;>=&#8217;) <a
+href="XPathParser.html#M005423">AdditiveExpr</a> | <a
+href="XPathParser.html#M005423">AdditiveExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005416" class="method-detail">
+        <a name="M005416"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005416.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005416.html');return false;">
+
+          <span class="method-name">RelativeLocationPath</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M005425" class="method-detail">
+        <a name="M005425"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005425.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005425.html');return false;">
+
+          <span class="method-name">UnaryExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| &#8217;-&#8217; <a href="XPathParser.html#M005425">UnaryExpr</a> | <a
+href="XPathParser.html#M005426">UnionExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005426" class="method-detail">
+        <a name="M005426"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005426.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005426.html');return false;">
+
+          <span class="method-name">UnionExpr</span><span class="method-args">(path, parsed)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+| <a href="XPathParser.html#M005426">UnionExpr</a> &#8217;|&#8217; <a
+href="XPathParser.html#M005427">PathExpr</a> | <a
+href="XPathParser.html#M005427">PathExpr</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005431" class="method-detail">
+        <a name="M005431"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005431.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005431.html');return false;">
+
+          <span class="method-name">get_group</span><span class="method-args">(string)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="XPathParser.html#M005431">get_group</a>( &#8217;[foo]bar&#8217; )
+-> [&#8216;bar&#8217;, &#8217;[foo]&#8217;]
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M005432" class="method-detail">
+        <a name="M005432"></a>
+
+        <div class="method-heading">
+
+          <a href="XPathParser.src/M005432.html" target="Code" class="method-signature"
+            onclick="popupCode('XPathParser.src/M005432.html');return false;">
+
+          <span class="method-name">parse_args</span><span class="method-args">( string )</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
