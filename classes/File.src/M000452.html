@@ -2,88 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>basename (File)</title>
+  <title>lstat (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.basename(file_name [, suffix] ) -&gt; base_name
+ *     file.lstat   =&gt;  stat
  *  
- *  Returns the last component of the filename given in &lt;i&gt;file_name&lt;/i&gt;,
- *  which must be formed using forward slashes (``&lt;code&gt;/&lt;/code&gt;'')
- *  regardless of the separator used on the local file system. If
- *  &lt;i&gt;suffix&lt;/i&gt; is given and present at the end of &lt;i&gt;file_name&lt;/i&gt;,
- *  it is removed.
+ *  Same as &lt;code&gt;IO#stat&lt;/code&gt;, but does not follow the last symbolic
+ *  link. Instead, reports on the link itself.
  *     
- *     File.basename(&quot;/home/gumby/work/ruby.rb&quot;)          #=&gt; &quot;ruby.rb&quot;
- *     File.basename(&quot;/home/gumby/work/ruby.rb&quot;, &quot;.rb&quot;)   #=&gt; &quot;ruby&quot;
+ *     File.symlink(&quot;testfile&quot;, &quot;link2test&quot;)   #=&gt; 0
+ *     File.stat(&quot;testfile&quot;).size              #=&gt; 66
+ *     f = File.new(&quot;link2test&quot;)
+ *     f.lstat.size                            #=&gt; 8
+ *     f.stat.size                             #=&gt; 66
  */
 
 static VALUE
-rb_file_s_basename(int argc, VALUE *argv)
+rb_file_lstat(VALUE obj)
 {
-    VALUE fname, fext, basename;
-    const char *name, *p;
-#if defined DOSISH_DRIVE_LETTER || defined DOSISH_UNC
-    const char *root;
-#endif
-    int f, n;
+#ifdef HAVE_LSTAT
+    rb_io_t *fptr;
+    struct stat st;
 
-    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;fname, &amp;fext) == 2) {
-        StringValue(fext);
+    rb_secure(2);
+    GetOpenFile(obj, fptr);
+    if (NIL_P(fptr-&gt;pathv)) return Qnil;
+    if (lstat(RSTRING_PTR(fptr-&gt;pathv), &amp;st) == -1) {
+        rb_sys_fail_path(fptr-&gt;pathv);
     }
-    FilePathStringValue(fname);
-    if (RSTRING_LEN(fname) == 0 || !*(name = RSTRING_PTR(fname)))
-        return fname;
-    name = skipprefix(name);
-#if defined DOSISH_DRIVE_LETTER || defined DOSISH_UNC
-    root = name;
-#endif
-    while (isdirsep(*name))
-        name++;
-    if (!*name) {
-        p = name - 1;
-        f = 1;
-#if defined DOSISH_DRIVE_LETTER || defined DOSISH_UNC
-        if (name != root) {
-            /* has slashes */
-        }
-#ifdef DOSISH_DRIVE_LETTER
-        else if (*p == ':') {
-            p++;
-            f = 0;
-        }
-#endif
-#ifdef DOSISH_UNC
-        else {
-            p = &quot;/&quot;;
-        }
-#endif
-#endif
-    }
-    else {
-        if (!(p = strrdirsep(name))) {
-            p = name;
-        }
-        else {
-            while (isdirsep(*p)) p++; /* skip last / */
-        }
-#if USE_NTFS
-        n = ntfs_tail(p) - p;
+    return stat_new(&amp;st);
 #else
-        n = chompdirsep(p) - p;
+    return rb_io_stat(obj);
 #endif
-        if (NIL_P(fext) || !(f = rmext(p, n, StringValueCStr(fext)))) {
-            f = n;
-        }
-        if (f == RSTRING_LEN(fname)) return fname;
-    }
-    basename = rb_str_new(p, f);
-    rb_enc_copy(basename, fname);
-    OBJ_INFECT(basename, fname);
-    return basename;
 }</pre>
 </body>
 </html>

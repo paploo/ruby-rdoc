@@ -2,35 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>include? (Hash)</title>
+  <title>compare_by_identity (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.has_key?(key)    =&gt; true or false
- *     hsh.include?(key)    =&gt; true or false
- *     hsh.key?(key)        =&gt; true or false
- *     hsh.member?(key)     =&gt; true or false
+ *     hsh.compare_by_identity =&gt; hsh
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if the given key is present in &lt;i&gt;hsh&lt;/i&gt;.
+ *  Makes &lt;i&gt;hsh&lt;/i&gt; to compare its keys by their identity, i.e. it
+ *  will consider exact same objects as same keys.
  *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.has_key?(&quot;a&quot;)   #=&gt; true
- *     h.has_key?(&quot;z&quot;)   #=&gt; false
+ *     h1 = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, :c =&gt; &quot;c&quot; }
+ *     h1[&quot;a&quot;]        #=&gt; 100
+ *     h1.compare_by_identity
+ *     h1.compare_by_identity? #=&gt; true
+ *     h1[&quot;a&quot;]        #=&gt; nil  # different objects.
+ *     h1[:c]         #=&gt; &quot;c&quot;  # same symbols are all same.
  *
  */
 
 static VALUE
-rb_hash_has_key(VALUE hash, VALUE key)
+rb_hash_compare_by_id(VALUE hash)
 {
-    if (!RHASH(hash)-&gt;ntbl)
-        return Qfalse;
-    if (st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
-        return Qtrue;
-    }
-    return Qfalse;
+    rb_hash_modify(hash);
+    RHASH(hash)-&gt;ntbl-&gt;type = &amp;identhash;
+    rb_hash_rehash(hash);
+    return hash;
 }</pre>
 </body>
 </html>

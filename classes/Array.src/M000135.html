@@ -2,26 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>empty? (Array)</title>
+  <title>reverse! (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.empty?   -&gt; true or false
+ *     array.reverse!   -&gt; array 
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;self&lt;/i&gt; array contains no elements.
+ *  Reverses _self_ in place.
  *     
- *     [].empty?   #=&gt; true
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.reverse!       #=&gt; [&quot;c&quot;, &quot;b&quot;, &quot;a&quot;]
+ *     a                #=&gt; [&quot;c&quot;, &quot;b&quot;, &quot;a&quot;]
  */
 
 static VALUE
-rb_ary_empty_p(VALUE ary)
+rb_ary_reverse_bang(VALUE ary)
 {
-    if (RARRAY_LEN(ary) == 0)
-        return Qtrue;
-    return Qfalse;
+    return rb_ary_reverse(ary);
 }</pre>
 </body>
 </html>

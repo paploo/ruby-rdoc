@@ -2,34 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>cleanpath_aggressive (Pathname)</title>
+  <title>realpath (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 329</span>
-329:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanpath_aggressive</span>
-330:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
-331:     <span class="ruby-identifier">names</span> = []
-332:     <span class="ruby-identifier">pre</span> = <span class="ruby-identifier">path</span>
-333:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">pre</span>)
-334:       <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">base</span> = <span class="ruby-identifier">r</span>
-335:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">base</span>
-336:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'.'</span>
-337:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'..'</span>
-338:         <span class="ruby-identifier">names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">base</span>
-339:       <span class="ruby-keyword kw">else</span>
-340:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">names</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
-341:           <span class="ruby-identifier">names</span>.<span class="ruby-identifier">shift</span>
-342:         <span class="ruby-keyword kw">else</span>
-343:           <span class="ruby-identifier">names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">base</span>
-344:         <span class="ruby-keyword kw">end</span>
-345:       <span class="ruby-keyword kw">end</span>
-346:     <span class="ruby-keyword kw">end</span>
-347:     <span class="ruby-keyword kw">if</span> <span class="ruby-node">/#{SEPARATOR_PAT}/o</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">pre</span>)
-348:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">names</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
-349:     <span class="ruby-keyword kw">end</span>
-350:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">pre</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)))
-351:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 478</span>
+478:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">realpath</span>
+479:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+480:     <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-identifier">path</span>)
+481:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
+482:       <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names2</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+483:       <span class="ruby-identifier">names</span> = <span class="ruby-identifier">names2</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">names</span>
+484:     <span class="ruby-keyword kw">end</span>
+485:     <span class="ruby-identifier">prefix</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">names</span> = <span class="ruby-identifier">realpath_rec</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">names</span>, {})
+486:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>)))
+487:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

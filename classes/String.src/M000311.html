@@ -2,56 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>capitalize! (String)</title>
+  <title>bytes (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
+ *  Document-method: each_byte
  *  call-seq:
- *     str.capitalize!   =&gt; str or nil
+ *     str.each_byte {|fixnum| block }    =&gt; str
  *  
- *  Modifies &lt;i&gt;str&lt;/i&gt; by converting the first character to uppercase and the
- *  remainder to lowercase. Returns &lt;code&gt;nil&lt;/code&gt; if no changes are made.
- *  Note: case conversion is effective only in ASCII region.
+ *  Passes each byte in &lt;i&gt;str&lt;/i&gt; to the given block.
  *     
- *     a = &quot;hello&quot;
- *     a.capitalize!   #=&gt; &quot;Hello&quot;
- *     a               #=&gt; &quot;Hello&quot;
- *     a.capitalize!   #=&gt; nil
+ *     &quot;hello&quot;.each_byte {|c| print c, ' ' }
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     104 101 108 108 111
  */
 
 static VALUE
-rb_str_capitalize_bang(VALUE str)
+rb_str_each_byte(VALUE str)
 {
-    rb_encoding *enc;
-    char *s, *send;
-    int modify = 0;
-    unsigned int c;
+    long i;
 
-    str_modify_keep_cr(str);
-    enc = STR_ENC_GET(str);
-    rb_str_check_dummy_enc(enc);
-    if (RSTRING_LEN(str) == 0 || !RSTRING_PTR(str)) return Qnil;
-    s = RSTRING_PTR(str); send = RSTRING_END(str);
-
-    c = rb_enc_codepoint(s, send, enc);
-    if (rb_enc_islower(c, enc)) {
-        rb_enc_mbcput(rb_enc_toupper(c, enc), s, enc);
-        modify = 1;
+    RETURN_ENUMERATOR(str, 0, 0);
+    for (i=0; i&lt;RSTRING_LEN(str); i++) {
+        rb_yield(INT2FIX(RSTRING_PTR(str)[i] &amp; 0xff));
     }
-    s += rb_enc_codelen(c, enc);
-    while (s &lt; send) {
-        c = rb_enc_codepoint(s, send, enc);
-        if (rb_enc_isupper(c, enc)) {
-            rb_enc_mbcput(rb_enc_tolower(c, enc), s, enc);
-            modify = 1;
-        }
-        s += rb_enc_codelen(c, enc);
-    }
-
-    if (modify) return str;
-    return Qnil;
+    return str;
 }</pre>
 </body>
 </html>

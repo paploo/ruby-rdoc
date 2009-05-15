@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (Symbol)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     sym.id2name   =&gt; string
+ *     sym.to_s      =&gt; string
+ *  
+ *  Returns the name or string corresponding to &lt;i&gt;sym&lt;/i&gt;.
+ *     
+ *     :fred.id2name   #=&gt; &quot;fred&quot;
+ */
+
+
+VALUE
+rb_sym_to_s(VALUE sym)
+{
+    ID id = SYM2ID(sym);
+
+    return str_new3(rb_cString, rb_id2str(id));
+}</pre>
+</body>
+</html>

@@ -2,14 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>- (Set)</title>
+  <title>classify (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 305</span>
-305:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">-</span>(<span class="ruby-identifier">enum</span>)
-306:     <span class="ruby-identifier">dup</span>.<span class="ruby-identifier">subtract</span>(<span class="ruby-identifier">enum</span>)
-307:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 361</span>
+361:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">classify</span> <span class="ruby-comment cmt"># :yields: o</span>
+362:     <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">__method__</span>)
+363: 
+364:     <span class="ruby-identifier">h</span> = {}
+365: 
+366:     <span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+367:       <span class="ruby-identifier">x</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">i</span>)
+368:       (<span class="ruby-identifier">h</span>[<span class="ruby-identifier">x</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">i</span>)
+369:     }
+370: 
+371:     <span class="ruby-identifier">h</span>
+372:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,14 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getaddress (Resolv)</title>
+  <title>new (Resolv)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/resolv.rb, line 42</span>
-42:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">getaddress</span>(<span class="ruby-identifier">name</span>)
-43:     <span class="ruby-constant">DefaultResolver</span>.<span class="ruby-identifier">getaddress</span>(<span class="ruby-identifier">name</span>)
-44:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/resolv.rb, line 84</span>
+84:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">resolvers</span>=[<span class="ruby-constant">Hosts</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">DNS</span>.<span class="ruby-identifier">new</span>])
+85:     <span class="ruby-ivar">@resolvers</span> = <span class="ruby-identifier">resolvers</span>
+86:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

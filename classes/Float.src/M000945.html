@@ -2,41 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>divmod (Float)</title>
+  <title>&lt; (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     flt.divmod(numeric)    =&gt; array
+ * call-seq:
+ *   flt &lt; other    =&gt;  true or false
  *
- *  See &lt;code&gt;Numeric#divmod&lt;/code&gt;.
+ * &lt;code&gt;true&lt;/code&gt; if &lt;code&gt;flt&lt;/code&gt; is less than &lt;code&gt;other&lt;/code&gt;.
  */
 
 static VALUE
-flo_divmod(VALUE x, VALUE y)
+flo_lt(VALUE x, VALUE y)
 {
-    double fy, div, mod;
-    volatile VALUE a, b;
+    double a, b;
 
+    a = RFLOAT_VALUE(x);
     switch (TYPE(y)) {
       case T_FIXNUM:
-        fy = (double)FIX2LONG(y);
+        b = (double)FIX2LONG(y);
         break;
+
       case T_BIGNUM:
-        fy = rb_big2dbl(y);
+        b = rb_big2dbl(y);
         break;
+
       case T_FLOAT:
-        fy = RFLOAT_VALUE(y);
+        b = RFLOAT_VALUE(y);
+        if (isnan(b)) return Qfalse;
         break;
+
       default:
-        return rb_num_coerce_bin(x, y, rb_intern(&quot;divmod&quot;));
+        return rb_num_coerce_relop(x, y, '&lt;');
     }
-    flodivmod(RFLOAT_VALUE(x), fy, &amp;div, &amp;mod);
-    a = dbl2ival(div);
-    b = DBL2NUM(mod);
-    return rb_assoc_new(a, b);
+    if (isnan(a)) return Qfalse;
+    return (a &lt; b)?Qtrue:Qfalse;
 }</pre>
 </body>
 </html>

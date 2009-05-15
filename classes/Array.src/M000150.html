@@ -2,63 +2,48 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>delete (Array)</title>
+  <title>transpose (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.delete(obj)            -&gt; obj or nil 
- *     array.delete(obj) { block }  -&gt; obj or nil
+ *     array.transpose -&gt; an_array
  *  
- *  Deletes items from &lt;i&gt;self&lt;/i&gt; that are equal to &lt;i&gt;obj&lt;/i&gt;. If
- *  the item is not found, returns &lt;code&gt;nil&lt;/code&gt;. If the optional
- *  code block is given, returns the result of &lt;i&gt;block&lt;/i&gt; if the item
- *  is not found.
+ *  Assumes that &lt;i&gt;self&lt;/i&gt; is an array of arrays and transposes the
+ *  rows and columns.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.delete(&quot;b&quot;)                   #=&gt; &quot;b&quot;
- *     a                               #=&gt; [&quot;a&quot;, &quot;c&quot;]
- *     a.delete(&quot;z&quot;)                   #=&gt; nil
- *     a.delete(&quot;z&quot;) { &quot;not found&quot; }   #=&gt; &quot;not found&quot;
+ *     a = [[1,2], [3,4], [5,6]]
+ *     a.transpose   #=&gt; [[1, 3, 5], [2, 4, 6]]
  */
 
-VALUE
-rb_ary_delete(VALUE ary, VALUE item)
+static VALUE
+rb_ary_transpose(VALUE ary)
 {
-    VALUE v = item;
-    long i1, i2;
+    long elen = -1, alen, i, j;
+    VALUE tmp, result = 0;
 
-    for (i1 = i2 = 0; i1 &lt; RARRAY_LEN(ary); i1++) {
-        VALUE e = RARRAY_PTR(ary)[i1];
-
-        if (rb_equal(e, item)) {
-            v = e;
-            continue;
+    alen = RARRAY_LEN(ary);
+    if (alen == 0) return rb_ary_dup(ary);
+    for (i=0; i&lt;alen; i++) {
+        tmp = to_ary(rb_ary_elt(ary, i));
+        if (elen &lt; 0) {                /* first element */
+            elen = RARRAY_LEN(tmp);
+            result = rb_ary_new2(elen);
+            for (j=0; j&lt;elen; j++) {
+                rb_ary_store(result, j, rb_ary_new2(alen));
+            }
         }
-        if (i1 != i2) {
-            rb_ary_store(ary, i2, e);
+        else if (elen != RARRAY_LEN(tmp)) {
+            rb_raise(rb_eIndexError, &quot;element size differs (%ld should be %ld)&quot;,
+                     RARRAY_LEN(tmp), elen);
         }
-        i2++;
-    }
-    if (RARRAY_LEN(ary) == i2) {
-        if (rb_block_given_p()) {
-            return rb_yield(item);
-        }
-        return Qnil;
-    }
-
-    rb_ary_modify(ary);
-    if (RARRAY_LEN(ary) &gt; i2) {
-        ARY_SET_LEN(ary, i2);
-        if (i2 * 2 &lt; ARY_CAPA(ary) &amp;&amp;
-            ARY_CAPA(ary) &gt; ARY_DEFAULT_SIZE) {
-            ary_resize_capa(ary, i2*2);
+        for (j=0; j&lt;elen; j++) {
+            rb_ary_store(rb_ary_elt(result, j), i, rb_ary_elt(tmp, j));
         }
     }
-
-    return v;
+    return result;
 }</pre>
 </body>
 </html>

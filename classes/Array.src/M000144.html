@@ -2,37 +2,63 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>collect (Array)</title>
+  <title>delete (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.collect {|item| block }  -&gt; an_array
- *     array.map     {|item| block }  -&gt; an_array
+ *     array.delete(obj)            -&gt; obj or nil 
+ *     array.delete(obj) { block }  -&gt; obj or nil
  *  
- *  Invokes &lt;i&gt;block&lt;/i&gt; once for each element of &lt;i&gt;self&lt;/i&gt;. Creates a 
- *  new array containing the values returned by the block.
- *  See also &lt;code&gt;Enumerable#collect&lt;/code&gt;.
+ *  Deletes items from &lt;i&gt;self&lt;/i&gt; that are equal to &lt;i&gt;obj&lt;/i&gt;. If
+ *  the item is not found, returns &lt;code&gt;nil&lt;/code&gt;. If the optional
+ *  code block is given, returns the result of &lt;i&gt;block&lt;/i&gt; if the item
+ *  is not found.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
- *     a.collect {|x| x + &quot;!&quot; }   #=&gt; [&quot;a!&quot;, &quot;b!&quot;, &quot;c!&quot;, &quot;d!&quot;]
- *     a                          #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.delete(&quot;b&quot;)                   #=&gt; &quot;b&quot;
+ *     a                               #=&gt; [&quot;a&quot;, &quot;c&quot;]
+ *     a.delete(&quot;z&quot;)                   #=&gt; nil
+ *     a.delete(&quot;z&quot;) { &quot;not found&quot; }   #=&gt; &quot;not found&quot;
  */
 
-static VALUE
-rb_ary_collect(VALUE ary)
+VALUE
+rb_ary_delete(VALUE ary, VALUE item)
 {
-    long i;
-    VALUE collect;
+    VALUE v = item;
+    long i1, i2;
 
-    RETURN_ENUMERATOR(ary, 0, 0);
-    collect = rb_ary_new2(RARRAY_LEN(ary));
-    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
-        rb_ary_push(collect, rb_yield(RARRAY_PTR(ary)[i]));
+    for (i1 = i2 = 0; i1 &lt; RARRAY_LEN(ary); i1++) {
+        VALUE e = RARRAY_PTR(ary)[i1];
+
+        if (rb_equal(e, item)) {
+            v = e;
+            continue;
+        }
+        if (i1 != i2) {
+            rb_ary_store(ary, i2, e);
+        }
+        i2++;
     }
-    return collect;
+    if (RARRAY_LEN(ary) == i2) {
+        if (rb_block_given_p()) {
+            return rb_yield(item);
+        }
+        return Qnil;
+    }
+
+    rb_ary_modify(ary);
+    if (RARRAY_LEN(ary) &gt; i2) {
+        ARY_SET_LEN(ary, i2);
+        if (i2 * 2 &lt; ARY_CAPA(ary) &amp;&amp;
+            ARY_CAPA(ary) &gt; ARY_DEFAULT_SIZE) {
+            ary_resize_capa(ary, i2*2);
+        }
+    }
+
+    return v;
 }</pre>
 </body>
 </html>

@@ -2,50 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>* (String)</title>
+  <title>size (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str * integer   =&gt; new_str
+ *     str.length   =&gt; integer
+ *     str.size     =&gt; integer
  *  
- *  Copy---Returns a new &lt;code&gt;String&lt;/code&gt; containing &lt;i&gt;integer&lt;/i&gt; copies of
- *  the receiver.
- *     
- *     &quot;Ho! &quot; * 3   #=&gt; &quot;Ho! Ho! Ho! &quot;
+ *  Returns the character length of &lt;i&gt;str&lt;/i&gt;.
  */
 
 VALUE
-rb_str_times(VALUE str, VALUE times)
+rb_str_length(VALUE str)
 {
-    VALUE str2;
-    long n, len;
+    int len;
 
-    len = NUM2LONG(times);
-    if (len &lt; 0) {
-        rb_raise(rb_eArgError, &quot;negative argument&quot;);
-    }
-    if (len &amp;&amp; LONG_MAX/len &lt;  RSTRING_LEN(str)) {
-        rb_raise(rb_eArgError, &quot;argument too big&quot;);
-    }
-
-    str2 = rb_str_new5(str, 0, len *= RSTRING_LEN(str));
-    if (len) {
-        n = RSTRING_LEN(str);
-        memcpy(RSTRING_PTR(str2), RSTRING_PTR(str), n);
-        while (n &lt;= len/2) {
-            memcpy(RSTRING_PTR(str2) + n, RSTRING_PTR(str2), n);
-            n *= 2;
-        }
-        memcpy(RSTRING_PTR(str2) + n, RSTRING_PTR(str2), len-n);
-    }
-    RSTRING_PTR(str2)[RSTRING_LEN(str2)] = '\0';
-    OBJ_INFECT(str2, str);
-    rb_enc_cr_str_copy_for_substr(str2, str);
-
-    return str2;
+    len = str_strlen(str, STR_ENC_GET(str));
+    return INT2NUM(len);
 }</pre>
 </body>
 </html>

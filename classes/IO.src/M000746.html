@@ -2,31 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lines (IO)</title>
+  <title>to_io (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.lines(sep=$/)     =&gt; anEnumerator
- *     ios.lines(limit)      =&gt; anEnumerator
- *     ios.lines(sep, limit) =&gt; anEnumerator
+ *     ios.to_io -&gt; ios
  *
- *  Returns an enumerator that gives each line in &lt;em&gt;ios&lt;/em&gt;.
- *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
- *  will be raised.
- *
- *     f = File.new(&quot;testfile&quot;)
- *     f.lines.to_a  #=&gt; [&quot;foo\n&quot;, &quot;bar\n&quot;]
- *     f.rewind
- *     f.lines.sort  #=&gt; [&quot;bar\n&quot;, &quot;foo\n&quot;]
+ *  Returns &lt;em&gt;ios&lt;/em&gt;.
  */
 
 static VALUE
-rb_io_lines(int argc, VALUE *argv, VALUE io)
+rb_io_to_io(VALUE io)
 {
-    return rb_enumeratorize(io, ID2SYM(rb_intern(&quot;each_line&quot;)), argc, argv);
+    return io;
 }</pre>
 </body>
 </html>

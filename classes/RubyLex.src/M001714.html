@@ -2,14 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eof? (RubyLex)</title>
+  <title>buf_input (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 132</span>
-132:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eof?</span>
-133:     <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">eof?</span>
-134:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 187</span>
+187:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">buf_input</span>
+188:     <span class="ruby-identifier">prompt</span>
+189:     <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@input</span>.<span class="ruby-identifier">call</span>
+190:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>
+191:     <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chars</span>.<span class="ruby-identifier">to_a</span>
+192:     <span class="ruby-keyword kw">true</span>
+193:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

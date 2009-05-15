@@ -2,40 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mktime (Time)</title>
+  <title>new (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *   Time.local(year) =&gt; time
- *   Time.local(year, month) =&gt; time
- *   Time.local(year, month, day) =&gt; time
- *   Time.local(year, month, day, hour) =&gt; time
- *   Time.local(year, month, day, hour, min) =&gt; time
- *   Time.local(year, month, day, hour, min, sec_with_frac) =&gt; time
- *   Time.local(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *   Time.local(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *   Time.mktime(year) =&gt; time
- *   Time.mktime(year, month) =&gt; time
- *   Time.mktime(year, month, day) =&gt; time
- *   Time.mktime(year, month, day, hour) =&gt; time
- *   Time.mktime(year, month, day, hour, min) =&gt; time
- *   Time.mktime(year, month, day, hour, min, sec_with_frac) =&gt; time
- *   Time.mktime(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *   Time.mktime(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
+ *     Time.new -&gt; time
  *  
- *  Same as &lt;code&gt;Time::gm&lt;/code&gt;, but interprets the values in the
- *  local time zone.
+ *  Returns a &lt;code&gt;Time&lt;/code&gt; object initialized to the current system
+ *  time. &lt;b&gt;Note:&lt;/b&gt; The object created will be created using the
+ *  resolution available on your system clock, and so may include
+ *  fractional seconds.
  *     
- *     Time.local(2000,&quot;jan&quot;,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 -0600
+ *     a = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
+ *     b = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
+ *     a == b            #=&gt; false
+ *     &quot;%.6f&quot; % a.to_f   #=&gt; &quot;1195480202.282373&quot;
+ *     &quot;%.6f&quot; % b.to_f   #=&gt; &quot;1195480202.283415&quot;
+ *     
  */
 
 static VALUE
-time_s_mktime(int argc, VALUE *argv, VALUE klass)
+time_init(VALUE time)
 {
-    return time_utc_or_local(argc, argv, Qfalse, klass);
+    struct time_object *tobj;
+
+    time_modify(time);
+    GetTimeval(time, tobj);
+    tobj-&gt;tm_got=0;
+    tobj-&gt;ts.tv_sec = 0;
+    tobj-&gt;ts.tv_nsec = 0;
+#ifdef HAVE_CLOCK_GETTIME
+    if (clock_gettime(CLOCK_REALTIME, &amp;tobj-&gt;ts) == -1) {
+        rb_sys_fail(&quot;clock_gettime&quot;);
+    }
+#else
+    {
+        struct timeval tv; 
+        if (gettimeofday(&amp;tv, 0) &lt; 0) {
+            rb_sys_fail(&quot;gettimeofday&quot;);
+        }
+        tobj-&gt;ts.tv_sec = tv.tv_sec;
+        tobj-&gt;ts.tv_nsec = tv.tv_usec * 1000;
+    }
+#endif
+
+    return time;
 }</pre>
 </body>
 </html>

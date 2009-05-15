@@ -2,41 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>+ (Fixnum)</title>
+  <title>modulo (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   fix + numeric   =&gt;  numeric_result
+ *  call-seq:
+ *    fix % other         =&gt; Numeric
+ *    fix.modulo(other)   =&gt; Numeric
  *
- * Performs addition: the class of the resulting object depends on
- * the class of &lt;code&gt;numeric&lt;/code&gt; and on the magnitude of the
- * result.
+ *  Returns &lt;code&gt;fix&lt;/code&gt; modulo &lt;code&gt;other&lt;/code&gt;.
+ *  See &lt;code&gt;Numeric.divmod&lt;/code&gt; for more information.
  */
 
 static VALUE
-fix_plus(VALUE x, VALUE y)
+fix_mod(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
-        long a, b, c;
-        VALUE r;
+        long mod;
 
-        a = FIX2LONG(x);
-        b = FIX2LONG(y);
-        c = a + b;
-        r = LONG2NUM(c);
-
-        return r;
+        fixdivmod(FIX2LONG(x), FIX2LONG(y), 0, &amp;mod);
+        return LONG2NUM(mod);
     }
     switch (TYPE(y)) {
       case T_BIGNUM:
-        return rb_big_plus(y, x);
+        x = rb_int2big(FIX2LONG(x));
+        return rb_big_modulo(x, y);
       case T_FLOAT:
-        return DBL2NUM((double)FIX2LONG(x) + RFLOAT_VALUE(y));
+        {
+            double mod;
+
+            flodivmod((double)FIX2LONG(x), RFLOAT_VALUE(y), 0, &amp;mod);
+            return DBL2NUM(mod);
+        }
       default:
-        return rb_num_coerce_bin(x, y, '+');
+        return rb_num_coerce_bin(x, y, '%');
     }
 }</pre>
 </body>

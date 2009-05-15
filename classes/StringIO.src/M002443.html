@@ -2,25 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eof? (StringIO)</title>
+  <title>rewind (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.eof     -&gt; true or false
- *   strio.eof?    -&gt; true or false
+ *   strio.rewind    -&gt; 0
  *
- * Returns true if *strio* is at end of file. The stringio must be  
- * opened for reading or an +IOError+ will be raised.
+ * Positions *strio* to the beginning of input, resetting
+ * +lineno+ to zero.
  */
 static VALUE
-strio_eof(VALUE self)
+strio_rewind(VALUE self)
 {
-    struct StringIO *ptr = readable(StringIO(self));
-    if (ptr-&gt;pos &lt; RSTRING_LEN(ptr-&gt;string)) return Qfalse;
-    return Qtrue;
+    struct StringIO *ptr = StringIO(self);
+    ptr-&gt;pos = 0;
+    ptr-&gt;lineno = 0;
+    return INT2FIX(0);
 }</pre>
 </body>
 </html>

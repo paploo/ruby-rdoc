@@ -2,31 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hash (Struct)</title>
+  <title>length (Struct)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   struct.hash   =&gt; fixnum
- *
- * Return a hash value based on this struct's contents.
+ *  call-seq:
+ *     struct.length    =&gt; fixnum
+ *     struct.size      =&gt; fixnum
+ *  
+ *  Returns the number of instance variables.
+ *     
+ *     Customer = Struct.new(:name, :address, :zip)
+ *     joe = Customer.new(&quot;Joe Smith&quot;, &quot;123 Maple, Anytown NC&quot;, 12345)
+ *     joe.length   #=&gt; 3
  */
 
 static VALUE
-rb_struct_hash(VALUE s)
+rb_struct_size(VALUE s)
 {
-    long i, h;
-    VALUE n;
-
-    h = rb_hash(rb_obj_class(s));
-    for (i = 0; i &lt; RSTRUCT_LEN(s); i++) {
-        h = (h &lt;&lt; 1) | (h&lt;0 ? 1 : 0);
-        n = rb_hash(RSTRUCT_PTR(s)[i]);
-        h ^= NUM2LONG(n);
-    }
-    return LONG2FIX(h);
+    return LONG2FIX(RSTRUCT_LEN(s));
 }</pre>
 </body>
 </html>

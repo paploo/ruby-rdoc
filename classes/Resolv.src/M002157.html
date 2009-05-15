@@ -2,14 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_name (Resolv)</title>
+  <title>getnames (Resolv)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/resolv.rb, line 77</span>
-77:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
-78:     <span class="ruby-constant">DefaultResolver</span>.<span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
-79:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 134</span>
+134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getnames</span>(<span class="ruby-identifier">address</span>)
+135:     <span class="ruby-identifier">ret</span> = []
+136:     <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>}
+137:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
+138:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

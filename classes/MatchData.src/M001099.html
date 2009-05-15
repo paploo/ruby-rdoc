@@ -2,43 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>end (MatchData)</title>
+  <title>post_match (MatchData)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mtch.end(n)   =&gt; integer
+ *     mtch.post_match   =&gt; str
  *
- *  Returns the offset of the character immediately following the end of the
- *  &lt;em&gt;n&lt;/em&gt;th element of the match array in the string.
- *  &lt;em&gt;n&lt;/em&gt; can be a string or symbol to reference a named capture.
+ *  Returns the portion of the original string after the current match.
+ *  Equivalent to the special variable &lt;code&gt;$'&lt;/code&gt;.
  *
- *     m = /(.)(.)(\d+)(\d)/.match(&quot;THX1138.&quot;)
- *     m.end(0)         #=&gt; 7
- *     m.end(2)         #=&gt; 3
- *
- *     m = /(?&lt;foo&gt;.)(.)(?&lt;bar&gt;.)/.match(&quot;hoge&quot;)
- *     p m.end(:foo)    #=&gt; 1
- *     p m.end(:bar)    #=&gt; 3
+ *     m = /(.)(.)(\d+)(\d)/.match(&quot;THX1138: The Movie&quot;)
+ *     m.post_match   #=&gt; &quot;: The Movie&quot;
  */
 
-static VALUE
-match_end(VALUE match, VALUE n)
+VALUE
+rb_reg_match_post(VALUE match)
 {
-    int i = match_backref_number(match, n);
-    struct re_registers *regs = RMATCH_REGS(match);
+    VALUE str;
+    long pos;
+    struct re_registers *regs;
 
+    if (NIL_P(match)) return Qnil;
     match_check(match);
-    if (i &lt; 0 || regs-&gt;num_regs &lt;= i)
-        rb_raise(rb_eIndexError, &quot;index %d out of matches&quot;, i);
-
-    if (BEG(i) &lt; 0)
-        return Qnil;
-
-    update_char_offset(match);
-    return INT2FIX(RMATCH(match)-&gt;rmatch-&gt;char_offset[i].end);
+    regs = RMATCH_REGS(match);
+    if (BEG(0) == -1) return Qnil;
+    str = RMATCH(match)-&gt;str;
+    pos = END(0);
+    str = rb_str_subseq(str, pos, RSTRING_LEN(str) - pos);
+    if (OBJ_TAINTED(match)) OBJ_TAINT(str);
+    return str;
 }</pre>
 </body>
 </html>

@@ -2,40 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>local (Time)</title>
+  <title>hash (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *   Time.local(year) =&gt; time
- *   Time.local(year, month) =&gt; time
- *   Time.local(year, month, day) =&gt; time
- *   Time.local(year, month, day, hour) =&gt; time
- *   Time.local(year, month, day, hour, min) =&gt; time
- *   Time.local(year, month, day, hour, min, sec_with_frac) =&gt; time
- *   Time.local(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *   Time.local(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *   Time.mktime(year) =&gt; time
- *   Time.mktime(year, month) =&gt; time
- *   Time.mktime(year, month, day) =&gt; time
- *   Time.mktime(year, month, day, hour) =&gt; time
- *   Time.mktime(year, month, day, hour, min) =&gt; time
- *   Time.mktime(year, month, day, hour, min, sec_with_frac) =&gt; time
- *   Time.mktime(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *   Time.mktime(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *  
- *  Same as &lt;code&gt;Time::gm&lt;/code&gt;, but interprets the values in the
- *  local time zone.
- *     
- *     Time.local(2000,&quot;jan&quot;,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 -0600
+ * call-seq:
+ *   time.hash   =&gt; fixnum
+ *
+ * Return a hash code for this time object.
  */
 
 static VALUE
-time_s_mktime(int argc, VALUE *argv, VALUE klass)
+time_hash(VALUE time)
 {
-    return time_utc_or_local(argc, argv, Qfalse, klass);
+    struct time_object *tobj;
+    long hash;
+
+    GetTimeval(time, tobj);
+    hash = tobj-&gt;ts.tv_sec ^ tobj-&gt;ts.tv_nsec;
+    return LONG2FIX(hash);
 }</pre>
 </body>
 </html>

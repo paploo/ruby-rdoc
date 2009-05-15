@@ -2,16 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>check_inspect_key (PP::PPMethods)</title>
+  <title>comma_breakable (PP::PPMethods)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 127</span>
-127:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_inspect_key</span>(<span class="ruby-identifier">id</span>)
-128:       <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>] <span class="ruby-operator">&amp;&amp;</span>
-129:       <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>] <span class="ruby-operator">&amp;&amp;</span>
-130:       <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">id</span>)
-131:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 191</span>
+191:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">comma_breakable</span>
+192:       <span class="ruby-identifier">text</span> <span class="ruby-value str">','</span>
+193:       <span class="ruby-identifier">breakable</span>
+194:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

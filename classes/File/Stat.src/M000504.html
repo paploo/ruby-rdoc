@@ -2,25 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>uid (File::Stat)</title>
+  <title>blksize (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.uid    =&gt; fixnum
+ *     stat.blksize   =&gt; integer or nil
  *  
- *  Returns the numeric user id of the owner of &lt;i&gt;stat&lt;/i&gt;.
+ *  Returns the native file system's block size. Will return &lt;code&gt;nil&lt;/code&gt;
+ *  on platforms that don't support this information.
  *     
- *     File.stat(&quot;testfile&quot;).uid   #=&gt; 501
+ *     File.stat(&quot;testfile&quot;).blksize   #=&gt; 4096
  *     
  */
 
 static VALUE
-rb_stat_uid(VALUE self)
+rb_stat_blksize(VALUE self)
 {
-    return UIDT2NUM(get_stat(self)-&gt;st_uid);
+#ifdef HAVE_ST_BLKSIZE
+    return ULONG2NUM(get_stat(self)-&gt;st_blksize);
+#else
+    return Qnil;
+#endif
 }</pre>
 </body>
 </html>

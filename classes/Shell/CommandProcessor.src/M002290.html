@@ -2,14 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>method_added (Shell::CommandProcessor)</title>
+  <title>unlink (Shell::CommandProcessor)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 43</span>
-43:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method_added</span>(<span class="ruby-identifier">id</span>)
-44:         <span class="ruby-identifier">add_delegate_command_to_shell</span>(<span class="ruby-identifier">id</span>)
-45:       <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 143</span>
+143:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">path</span>)
+144:       <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">check_point</span>
+145: 
+146:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
+147:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">path</span>)
+148:         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">path</span>)
+149:       <span class="ruby-keyword kw">else</span>
+150:         <span class="ruby-constant">IO</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">path</span>)
+151:       <span class="ruby-keyword kw">end</span>
+152:       <span class="ruby-constant">Void</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@shell</span>)
+153:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

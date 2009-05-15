@@ -2,50 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>find_index (Array)</title>
+  <title>sort (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.index(obj)           -&gt;  int or nil
- *     array.index {|item| block} -&gt;  int or nil
+ *     array.sort                   -&gt; an_array 
+ *     array.sort {| a,b | block }  -&gt; an_array 
  *  
- *  Returns the index of the first object in &lt;i&gt;self&lt;/i&gt; such that is
- *  &lt;code&gt;==&lt;/code&gt; to &lt;i&gt;obj&lt;/i&gt;. If a block is given instead of an
- *  argument, returns first object for which &lt;em&gt;block&lt;/em&gt; is true.
- *  Returns &lt;code&gt;nil&lt;/code&gt; if no match is found.
+ *  Returns a new array created by sorting &lt;i&gt;self&lt;/i&gt;. Comparisons for
+ *  the sort will be done using the &lt;code&gt;&lt;=&gt;&lt;/code&gt; operator or using
+ *  an optional code block. The block implements a comparison between
+ *  &lt;i&gt;a&lt;/i&gt; and &lt;i&gt;b&lt;/i&gt;, returning -1, 0, or +1. See also
+ *  &lt;code&gt;Enumerable#sort_by&lt;/code&gt;.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.index(&quot;b&quot;)        #=&gt; 1
- *     a.index(&quot;z&quot;)        #=&gt; nil
- *     a.index{|x|x==&quot;b&quot;}  #=&gt; 1
- *
- *  This is an alias of &lt;code&gt;#find_index&lt;/code&gt;.
+ *     a = [ &quot;d&quot;, &quot;a&quot;, &quot;e&quot;, &quot;c&quot;, &quot;b&quot; ]
+ *     a.sort                    #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+ *     a.sort {|x,y| y &lt;=&gt; x }   #=&gt; [&quot;e&quot;, &quot;d&quot;, &quot;c&quot;, &quot;b&quot;, &quot;a&quot;]
  */
 
-static VALUE
-rb_ary_index(int argc, VALUE *argv, VALUE ary)
+VALUE
+rb_ary_sort(VALUE ary)
 {
-    VALUE val;
-    long i;
-
-    if (argc  == 0) {
-        RETURN_ENUMERATOR(ary, 0, 0);
-        for (i=0; i&lt;RARRAY_LEN(ary); i++) {
-            if (RTEST(rb_yield(RARRAY_PTR(ary)[i]))) {
-                return LONG2NUM(i);
-            }
-        }
-        return Qnil;
-    }
-    rb_scan_args(argc, argv, &quot;01&quot;, &amp;val);
-    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
-        if (rb_equal(RARRAY_PTR(ary)[i], val))
-            return LONG2NUM(i);
-    }
-    return Qnil;
+    ary = rb_ary_dup(ary);
+    rb_ary_sort_bang(ary);
+    return ary;
 }</pre>
 </body>
 </html>

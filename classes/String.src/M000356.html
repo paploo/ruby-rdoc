@@ -2,78 +2,70 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>delete! (String)</title>
+  <title>sum (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.delete!([other_str]+)   =&gt; str or nil
+ *     str.sum(n=16)   =&gt; integer
  *  
- *  Performs a &lt;code&gt;delete&lt;/code&gt; operation in place, returning &lt;i&gt;str&lt;/i&gt;, or
- *  &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; was not modified.
+ *  Returns a basic &lt;em&gt;n&lt;/em&gt;-bit checksum of the characters in &lt;i&gt;str&lt;/i&gt;,
+ *  where &lt;em&gt;n&lt;/em&gt; is the optional &lt;code&gt;Fixnum&lt;/code&gt; parameter, defaulting
+ *  to 16. The result is simply the sum of the binary value of each character in
+ *  &lt;i&gt;str&lt;/i&gt; modulo &lt;code&gt;2n - 1&lt;/code&gt;. This is not a particularly good
+ *  checksum.
  */
 
 static VALUE
-rb_str_delete_bang(int argc, VALUE *argv, VALUE str)
+rb_str_sum(int argc, VALUE *argv, VALUE str)
 {
-    char squeez[256];
-    rb_encoding *enc = 0;
-    char *s, *send, *t;
-    VALUE del = 0, nodel = 0;
-    int modify = 0;
-    int i, ascompat;
+    VALUE vbits;
+    int bits;
+    char *ptr, *p, *pend;
+    long len;
 
-    if (RSTRING_LEN(str) == 0 || !RSTRING_PTR(str)) return Qnil;
-    if (argc &lt; 1) {
-        rb_raise(rb_eArgError, &quot;wrong number of arguments&quot;);
+    if (argc == 0) {
+        bits = 16;
     }
-    for (i=0; i&lt;argc; i++) {
-        VALUE s = argv[i];
-
-        StringValue(s);
-        enc = rb_enc_check(str, s);
-        tr_setup_table(s, squeez, i==0, &amp;del, &amp;nodel, enc);
+    else {
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;vbits);
+        bits = NUM2INT(vbits);
     }
+    ptr = p = RSTRING_PTR(str);
+    len = RSTRING_LEN(str);
+    pend = p + len;
+    if (bits &gt;= sizeof(long)*CHAR_BIT) {
+        VALUE sum = INT2FIX(0);
 
-    str_modify_keep_cr(str);
-    ascompat = rb_enc_asciicompat(enc);
-    s = t = RSTRING_PTR(str);
-    send = RSTRING_END(str);
-    while (s &lt; send) {
-        unsigned int c;
-        int clen;
-
-        if (ascompat &amp;&amp; (c = *(unsigned char*)s) &lt; 0x80) {
-            if (squeez[c]) {
-                modify = 1;
-            }
-            else {
-                if (t != s) *t = c;
-                t++;
-            }
-            s++;
+        while (p &lt; pend) {
+            str_mod_check(str, ptr, len);
+            sum = rb_funcall(sum, '+', 1, INT2FIX((unsigned char)*p));
+            p++;
         }
-        else {
-            c = rb_enc_codepoint(s, send, enc);
-            clen = rb_enc_codelen(c, enc);
+        if (bits != 0) {
+            VALUE mod;
 
-            if (tr_find(c, squeez, del, nodel)) {
-                modify = 1;
-            }
-            else {
-                if (t != s) rb_enc_mbcput(c, t, enc);
-                t += clen;
-            }
-            s += clen;
+            mod = rb_funcall(INT2FIX(1), rb_intern(&quot;&lt;&lt;&quot;), 1, INT2FIX(bits));
+            mod = rb_funcall(mod, '-', 1, INT2FIX(1));
+            sum = rb_funcall(sum, '&amp;', 1, mod);
         }
+        return sum;
     }
-    *t = '\0';
-    STR_SET_LEN(str, t - RSTRING_PTR(str));
+    else {
+       unsigned long sum = 0;
 
-    if (modify) return str;
-    return Qnil;
+        while (p &lt; pend) {
+            str_mod_check(str, ptr, len);
+            sum += (unsigned char)*p;
+            p++;
+        }
+        if (bits != 0) {
+           sum &amp;= (((unsigned long)1)&lt;&lt;bits)-1;
+        }
+        return rb_int2inum(sum);
+    }
 }</pre>
 </body>
 </html>

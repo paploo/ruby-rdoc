@@ -2,32 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>member? (Hash)</title>
+  <title>compare_by_identity? (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.has_key?(key)    =&gt; true or false
- *     hsh.include?(key)    =&gt; true or false
- *     hsh.key?(key)        =&gt; true or false
- *     hsh.member?(key)     =&gt; true or false
+ *     hsh.compare_by_identity? =&gt; true or false
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if the given key is present in &lt;i&gt;hsh&lt;/i&gt;.
- *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.has_key?(&quot;a&quot;)   #=&gt; true
- *     h.has_key?(&quot;z&quot;)   #=&gt; false
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;hsh&lt;/i&gt; will compare its keys by
+ *  their identity.  Also see &lt;code&gt;Hash#compare_by_identity&lt;/code&gt;.
  *
  */
 
 static VALUE
-rb_hash_has_key(VALUE hash, VALUE key)
+rb_hash_compare_by_id_p(VALUE hash)
 {
     if (!RHASH(hash)-&gt;ntbl)
         return Qfalse;
-    if (st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
+    if (RHASH(hash)-&gt;ntbl-&gt;type == &amp;identhash) {
         return Qtrue;
     }
     return Qfalse;

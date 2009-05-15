@@ -2,28 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>dev_minor (File::Stat)</title>
+  <title>rdev (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.dev_minor   =&gt; fixnum
+ *     stat.rdev   =&gt;  fixnum or nil
  *  
- *  Returns the minor part of &lt;code&gt;File_Stat#dev&lt;/code&gt; or
- *  &lt;code&gt;nil&lt;/code&gt;.
+ *  Returns an integer representing the device type on which
+ *  &lt;i&gt;stat&lt;/i&gt; resides. Returns &lt;code&gt;nil&lt;/code&gt; if the operating
+ *  system doesn't support this feature.
  *     
- *     File.stat(&quot;/dev/fd1&quot;).dev_minor   #=&gt; 1
- *     File.stat(&quot;/dev/tty&quot;).dev_minor   #=&gt; 0
+ *     File.stat(&quot;/dev/fd1&quot;).rdev   #=&gt; 513
+ *     File.stat(&quot;/dev/tty&quot;).rdev   #=&gt; 1280
  */
 
 static VALUE
-rb_stat_dev_minor(VALUE self)
+rb_stat_rdev(VALUE self)
 {
-#if defined(minor)
-    long dev = get_stat(self)-&gt;st_dev;
-    return ULONG2NUM(minor(dev));
+#ifdef HAVE_ST_RDEV
+    return ULONG2NUM(get_stat(self)-&gt;st_rdev);
 #else
     return Qnil;
 #endif

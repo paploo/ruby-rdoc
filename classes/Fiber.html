@@ -103,11 +103,11 @@ deeply nested function calls within the fiber block.
 <p>
 When a fiber is created it will not run automatically. Rather it must be be
 explicitly asked to run using the <tt><a
-href="Fiber.html#M000395">Fiber#resume</a></tt> method. The code running
+href="Fiber.html#M000389">Fiber#resume</a></tt> method. The code running
 inside the fiber can give up control by calling <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt> in which case it yields
+href="Fiber.html#M000388">Fiber.yield</a></tt> in which case it yields
 control back to caller (the caller of the <tt><a
-href="Fiber.html#M000395">Fiber#resume</a></tt>).
+href="Fiber.html#M000389">Fiber#resume</a></tt>).
 </p>
 <p>
 Upon yielding or termination the <a href="Fiber.html">Fiber</a> returns the
@@ -135,11 +135,11 @@ For instance:
   FiberError: dead fiber called
 </pre>
 <p>
-The <tt><a href="Fiber.html#M000395">Fiber#resume</a></tt> method accepts
+The <tt><a href="Fiber.html#M000389">Fiber#resume</a></tt> method accepts
 an arbitary number of parameters, if it is the first call to
 <tt>resume</tt> then they will be passed as block arguments. Otherwise they
 will be the return value of the call to <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt>
+href="Fiber.html#M000388">Fiber.yield</a></tt>
 </p>
 <p>
 Example:
@@ -172,15 +172,15 @@ Example:
 
       <div class="name-list">
 
-        <a href="#M000397">alive?</a>&nbsp;&nbsp;
+        <a href="#M000391">alive?</a>&nbsp;&nbsp;
 
-        <a href="#M000398">current</a>&nbsp;&nbsp;
+        <a href="#M000392">current</a>&nbsp;&nbsp;
 
-        <a href="#M000395">resume</a>&nbsp;&nbsp;
+        <a href="#M000389">resume</a>&nbsp;&nbsp;
 
-        <a href="#M000396">transfer</a>&nbsp;&nbsp;
+        <a href="#M000390">transfer</a>&nbsp;&nbsp;
 
-        <a href="#M000394">yield</a>&nbsp;&nbsp;
+        <a href="#M000388">yield</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -201,13 +201,13 @@ Example:
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M000398" class="method-detail">
-        <a name="M000398"></a>
+      <div id="method-M000392" class="method-detail">
+        <a name="M000392"></a>
 
         <div class="method-heading">
 
-          <a href="Fiber.src/M000398.html" target="Code" class="method-signature"
-            onclick="popupCode('Fiber.src/M000398.html');return false;">
+          <a href="Fiber.src/M000392.html" target="Code" class="method-signature"
+            onclick="popupCode('Fiber.src/M000392.html');return false;">
 
           <span class="method-name">Fiber.current() &rarr; fiber<br />
 </span>
@@ -228,13 +228,13 @@ method will return the root fiber.
       </div>
 
 
-      <div id="method-M000394" class="method-detail">
-        <a name="M000394"></a>
+      <div id="method-M000388" class="method-detail">
+        <a name="M000388"></a>
 
         <div class="method-heading">
 
-          <a href="Fiber.src/M000394.html" target="Code" class="method-signature"
-            onclick="popupCode('Fiber.src/M000394.html');return false;">
+          <a href="Fiber.src/M000388.html" target="Code" class="method-signature"
+            onclick="popupCode('Fiber.src/M000388.html');return false;">
 
           <span class="method-name">Fiber.yield(args, ...) &rarr; obj<br />
 </span>
@@ -250,7 +250,7 @@ Yields control back to the context that resumed the fiber, passing along
 any arguments that were passed to it. The fiber will resume processing at
 this point when <tt>resume</tt> is called next. Any arguments passed to the
 next <tt>resume</tt> will be the value that this <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt> expression evaluates to.
+href="Fiber.html#M000388">Fiber.yield</a></tt> expression evaluates to.
 </p>
 
         </div>
@@ -260,13 +260,13 @@ href="Fiber.html#M000394">Fiber.yield</a></tt> expression evaluates to.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000397" class="method-detail">
-        <a name="M000397"></a>
+      <div id="method-M000391" class="method-detail">
+        <a name="M000391"></a>
 
         <div class="method-heading">
 
-          <a href="Fiber.src/M000397.html" target="Code" class="method-signature"
-            onclick="popupCode('Fiber.src/M000397.html');return false;">
+          <a href="Fiber.src/M000391.html" target="Code" class="method-signature"
+            onclick="popupCode('Fiber.src/M000391.html');return false;">
 
           <span class="method-name">fiber.alive? &rarr; true or false<br />
 </span>
@@ -287,13 +287,13 @@ false.
       </div>
 
 
-      <div id="method-M000395" class="method-detail">
-        <a name="M000395"></a>
+      <div id="method-M000389" class="method-detail">
+        <a name="M000389"></a>
 
         <div class="method-heading">
 
-          <a href="Fiber.src/M000395.html" target="Code" class="method-signature"
-            onclick="popupCode('Fiber.src/M000395.html');return false;">
+          <a href="Fiber.src/M000389.html" target="Code" class="method-signature"
+            onclick="popupCode('Fiber.src/M000389.html');return false;">
 
           <span class="method-name">fiber.resume(args, ...) &rarr; obj<br />
 </span>
@@ -306,32 +306,32 @@ false.
 
           <p>
 Resumes the fiber from the point at which the last <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt> was called, or starts
+href="Fiber.html#M000388">Fiber.yield</a></tt> was called, or starts
 running it if it is the first call to <tt>resume</tt>. Arguments passed to
 resume will be the value of the <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt> expression or will be passed
+href="Fiber.html#M000388">Fiber.yield</a></tt> expression or will be passed
 as block parameters to the fiber&#8217;s block if this is the first
 <tt>resume</tt>.
 </p>
 <p>
 Alternatively, when resume is called it evaluates to the arguments passed
-to the next <tt><a href="Fiber.html#M000394">Fiber.yield</a></tt> statement
+to the next <tt><a href="Fiber.html#M000388">Fiber.yield</a></tt> statement
 inside the fiber&#8217;s block or to the block value if it runs to
 completion without any <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt>
+href="Fiber.html#M000388">Fiber.yield</a></tt>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000396" class="method-detail">
-        <a name="M000396"></a>
+      <div id="method-M000390" class="method-detail">
+        <a name="M000390"></a>
 
         <div class="method-heading">
 
-          <a href="Fiber.src/M000396.html" target="Code" class="method-signature"
-            onclick="popupCode('Fiber.src/M000396.html');return false;">
+          <a href="Fiber.src/M000390.html" target="Code" class="method-signature"
+            onclick="popupCode('Fiber.src/M000390.html');return false;">
 
           <span class="method-name">fiber.transfer(args, ...) &rarr; obj<br />
 </span>
@@ -346,7 +346,7 @@ href="Fiber.html#M000394">Fiber.yield</a></tt>
 Transfer control to another fiber, resuming it from where it last stopped
 or starting it if it was not resumed before. The calling fiber will be
 suspended much like in a call to <tt><a
-href="Fiber.html#M000394">Fiber.yield</a></tt>.
+href="Fiber.html#M000388">Fiber.yield</a></tt>.
 </p>
 <p>
 The fiber which recieves the transfer call is treats it much like a resume

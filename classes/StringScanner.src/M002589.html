@@ -2,24 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>search_full (StringScanner)</title>
+  <title>unscan (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: search_full(pattern, advance_pointer_p, return_string_p)
+ * Set the scan pointer to the previous position.  Only one previous position is
+ * remembered, and it changes with each scanning operation.
  *
- * Scans the string _until_ the +pattern+ is matched.
- * Advances the scan pointer if +advance_pointer_p+, otherwise not.
- * Returns the matched string if +return_string_p+ is true, otherwise
- * returns the number of bytes advanced.
- * This method does affect the match register.
+ *   s = StringScanner.new('test string')
+ *   s.scan(/\w+/)        # =&gt; &quot;test&quot;
+ *   s.unscan
+ *   s.scan(/../)         # =&gt; &quot;te&quot;
+ *   s.scan(/\d/)         # =&gt; nil
+ *   s.unscan             # ScanError: unscan failed: previous match record not exist
  */
 static VALUE
-strscan_search_full(VALUE self, VALUE re, VALUE s, VALUE f)
+strscan_unscan(VALUE self)
 {
-    return strscan_do_scan(self, re, RTEST(s), RTEST(f), 0);
+    struct strscanner *p;
+
+    GET_SCANNER(self, p);
+    if (! MATCHED_P(p))
+        rb_raise(ScanError, &quot;unscan failed: previous match record not exist&quot;);
+    p-&gt;curr = p-&gt;prev;
+    CLEAR_MATCH_STATUS(p);
+    return self;
 }</pre>
 </body>
 </html>

@@ -2,18 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (ERB)</title>
+  <title>def_class (ERB)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 698</span>
-698:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">safe_level</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">trim_mode</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">eoutvar</span>=<span class="ruby-value str">'_erbout'</span>)
-699:     <span class="ruby-ivar">@safe_level</span> = <span class="ruby-identifier">safe_level</span>
-700:     <span class="ruby-identifier">compiler</span> = <span class="ruby-constant">ERB</span><span class="ruby-operator">::</span><span class="ruby-constant">Compiler</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">trim_mode</span>)
-701:     <span class="ruby-identifier">set_eoutvar</span>(<span class="ruby-identifier">compiler</span>, <span class="ruby-identifier">eoutvar</span>)
-702:     <span class="ruby-ivar">@src</span>, <span class="ruby-ivar">@enc</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">compiler</span>.<span class="ruby-identifier">compile</span>(<span class="ruby-identifier">str</span>)
-703:     <span class="ruby-ivar">@filename</span> = <span class="ruby-keyword kw">nil</span>
-704:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 801</span>
+801:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_class</span>(<span class="ruby-identifier">superklass</span>=<span class="ruby-constant">Object</span>, <span class="ruby-identifier">methodname</span>=<span class="ruby-value str">'result'</span>)
+802:     <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">superklass</span>)
+803:     <span class="ruby-identifier">def_method</span>(<span class="ruby-identifier">cls</span>, <span class="ruby-identifier">methodname</span>, <span class="ruby-ivar">@filename</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'(ERB)'</span>)
+804:     <span class="ruby-identifier">cls</span>
+805:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

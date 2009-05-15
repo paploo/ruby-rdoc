@@ -2,53 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>utc (Time)</title>
+  <title>to_s (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.gmtime    =&gt; time
- *     time.utc       =&gt; time
+ *     time.inspect =&gt; string
+ *     time.to_s    =&gt; string
  *  
- *  Converts &lt;i&gt;time&lt;/i&gt; to UTC (GMT), modifying the receiver.
+ *  Returns a string representing &lt;i&gt;time&lt;/i&gt;. Equivalent to calling
+ *  &lt;code&gt;Time#strftime&lt;/code&gt; with a format string of
+ *  ``&lt;code&gt;%Y-%m-%d&lt;/code&gt; &lt;code&gt;%H:%M:%S&lt;/code&gt; &lt;code&gt;%z&lt;/code&gt;''
+ *  for a local time and
+ *  ``&lt;code&gt;%Y-%m-%d&lt;/code&gt; &lt;code&gt;%H:%M:%S&lt;/code&gt; &lt;code&gt;UTC&lt;/code&gt;''
+ *  for a UTC time.
  *     
- *     t = Time.now   #=&gt; 2007-11-19 08:18:31 -0600
- *     t.gmt?         #=&gt; false
- *     t.gmtime       #=&gt; 2007-11-19 14:18:31 UTC
- *     t.gmt?         #=&gt; true
- *
- *     t = Time.now   #=&gt; 2007-11-19 08:18:51 -0600
- *     t.utc?         #=&gt; false
- *     t.utc          #=&gt; 2007-11-19 14:18:51 UTC
- *     t.utc?         #=&gt; true
+ *     Time.now.to_s       #=&gt; &quot;2007-10-05 16:09:51 +0900&quot;
+ *     Time.now.utc.to_s   #=&gt; &quot;2007-10-05 07:09:51 UTC&quot;
  */
 
 static VALUE
-time_gmtime(VALUE time)
+time_to_s(VALUE time)
 {
     struct time_object *tobj;
-    struct tm *tm_tmp;
-    time_t t;
-    IF_HAVE_GMTIME_R(struct tm result);
+    char buf[128];
+    int len;
 
     GetTimeval(time, tobj);
-    if (tobj-&gt;gmt) {
-        if (tobj-&gt;tm_got)
-            return time;
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    if (tobj-&gt;gmt == 1) {
+        len = rb_strftime(buf, sizeof(buf), &quot;%Y-%m-%d %H:%M:%S UTC&quot;,
+                          &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
     }
     else {
-        time_modify(time);
+        len = rb_strftime(buf, sizeof(buf), &quot;%Y-%m-%d %H:%M:%S %z&quot;,
+                          &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
     }
-    t = tobj-&gt;ts.tv_sec;
-    tm_tmp = GMTIME(&amp;t, result);
-    if (!tm_tmp)
-        rb_raise(rb_eArgError, &quot;gmtime error&quot;);
-    tobj-&gt;tm = *tm_tmp;
-    tobj-&gt;tm_got = 1;
-    tobj-&gt;gmt = 1;
-    return time;
+    return rb_str_new(buf, len);
 }</pre>
 </body>
 </html>

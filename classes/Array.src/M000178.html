@@ -2,32 +2,86 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>shuffle! (Array)</title>
+  <title>product (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.shuffle!        -&gt; array
+ *     ary.product(other_ary, ...)
  *  
- *  Shuffles elements in _self_ in place.
+ *  Returns an array of all combinations of elements from all arrays.
+ *  The length of the returned array is the product of the length
+ *  of ary and the argument arrays
+ *     
+ *     [1,2,3].product([4,5])     # =&gt; [[1,4],[1,5],[2,4],[2,5],[3,4],[3,5]]
+ *     [1,2].product([1,2])       # =&gt; [[1,1],[1,2],[2,1],[2,2]]
+ *     [1,2].product([3,4],[5,6]) # =&gt; [[1,3,5],[1,3,6],[1,4,5],[1,4,6],
+ *                                #     [2,3,5],[2,3,6],[2,4,5],[2,4,6]]
+ *     [1,2].product()            # =&gt; [[1],[2]]
+ *     [1,2].product([])          # =&gt; []
  */
 
-
 static VALUE
-rb_ary_shuffle_bang(VALUE ary)
+rb_ary_product(int argc, VALUE *argv, VALUE ary)
 {
-    long i = RARRAY_LEN(ary);
+    int n = argc+1;    /* How many arrays we're operating on */
+    volatile VALUE t0 = tmpbuf(n, sizeof(VALUE));
+    volatile VALUE t1 = tmpbuf(n, sizeof(int));
+    VALUE *arrays = (VALUE*)RSTRING_PTR(t0); /* The arrays we're computing the product of */
+    int *counters = (int*)RSTRING_PTR(t1); /* The current position in each one */
+    VALUE result;      /* The array we'll be returning */
+    long i,j;
+    long resultlen = 1;
 
-    rb_ary_modify(ary);
-    while (i) {
-        long j = rb_genrand_real()*i;
-        VALUE tmp = RARRAY_PTR(ary)[--i];
-        RARRAY_PTR(ary)[i] = RARRAY_PTR(ary)[j];
-        RARRAY_PTR(ary)[j] = tmp;
+    RBASIC(t0)-&gt;klass = 0;
+    RBASIC(t1)-&gt;klass = 0;
+
+    /* initialize the arrays of arrays */
+    arrays[0] = ary;
+    for (i = 1; i &lt; n; i++) arrays[i] = to_ary(argv[i-1]);
+    
+    /* initialize the counters for the arrays */
+    for (i = 0; i &lt; n; i++) counters[i] = 0;
+
+    /* Compute the length of the result array; return [] if any is empty */
+    for (i = 0; i &lt; n; i++) {
+        long k = RARRAY_LEN(arrays[i]), l = resultlen;
+        if (k == 0) return rb_ary_new2(0);
+        resultlen *= k;
+        if (resultlen &lt; k || resultlen &lt; l || resultlen / k != l) {
+            rb_raise(rb_eRangeError, &quot;too big to product&quot;);
+        }
     }
-    return ary;
+
+    /* Otherwise, allocate and fill in an array of results */
+    result = rb_ary_new2(resultlen);
+    for (i = 0; i &lt; resultlen; i++) {
+        int m;
+        /* fill in one subarray */
+        VALUE subarray = rb_ary_new2(n);
+        for (j = 0; j &lt; n; j++) {
+            rb_ary_push(subarray, rb_ary_entry(arrays[j], counters[j]));
+        }
+
+        /* put it on the result array */
+        rb_ary_push(result, subarray);
+
+        /*
+         * Increment the last counter.  If it overflows, reset to 0
+         * and increment the one before it.
+         */
+        m = n-1;
+        counters[m]++;
+        while (m &gt; 0 &amp;&amp; counters[m] == RARRAY_LEN(arrays[m])) {
+            counters[m] = 0;
+            m--;
+            counters[m]++;
+        }
+    }
+
+    return result;
 }</pre>
 </body>
 </html>

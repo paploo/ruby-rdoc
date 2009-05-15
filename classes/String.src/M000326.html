@@ -2,54 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_sym (String)</title>
+  <title>ljust (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.intern   =&gt; symbol
- *     str.to_sym   =&gt; symbol
+ *     str.ljust(integer, padstr=' ')   =&gt; new_str
  *  
- *  Returns the &lt;code&gt;Symbol&lt;/code&gt; corresponding to &lt;i&gt;str&lt;/i&gt;, creating the
- *  symbol if it did not previously exist. See &lt;code&gt;Symbol#id2name&lt;/code&gt;.
+ *  If &lt;i&gt;integer&lt;/i&gt; is greater than the length of &lt;i&gt;str&lt;/i&gt;, returns a new
+ *  &lt;code&gt;String&lt;/code&gt; of length &lt;i&gt;integer&lt;/i&gt; with &lt;i&gt;str&lt;/i&gt; left justified
+ *  and padded with &lt;i&gt;padstr&lt;/i&gt;; otherwise, returns &lt;i&gt;str&lt;/i&gt;.
  *     
- *     &quot;Koala&quot;.intern         #=&gt; :Koala
- *     s = 'cat'.to_sym       #=&gt; :cat
- *     s == :cat              #=&gt; true
- *     s = '@cat'.to_sym      #=&gt; :@cat
- *     s == :@cat             #=&gt; true
- *
- *  This can also be used to create symbols that cannot be represented using the
- *  &lt;code&gt;:xxx&lt;/code&gt; notation.
- *     
- *     'cat and dog'.to_sym   #=&gt; :&quot;cat and dog&quot;
+ *     &quot;hello&quot;.ljust(4)            #=&gt; &quot;hello&quot;
+ *     &quot;hello&quot;.ljust(20)           #=&gt; &quot;hello               &quot;
+ *     &quot;hello&quot;.ljust(20, '1234')   #=&gt; &quot;hello123412341234123&quot;
  */
 
-VALUE
-rb_str_intern(VALUE s)
+static VALUE
+rb_str_ljust(int argc, VALUE *argv, VALUE str)
 {
-    VALUE str = RB_GC_GUARD(s);
-    VALUE sym;
-    ID id, id2;
-
-    id = rb_intern_str(str);
-    sym = ID2SYM(id);
-    id2 = SYM2ID(sym);
-    if (id != id2) {
-        const char *name = rb_id2name(id2);
-
-        if (name) {
-            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (%s given for %s)&quot;,
-                     name, RSTRING_PTR(str));
-        }
-        else {
-            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (symbol %s)&quot;,
-                     RSTRING_PTR(str));
-        }
-    }
-    return sym;
+    return rb_str_justify(argc, argv, str, 'l');
 }</pre>
 </body>
 </html>

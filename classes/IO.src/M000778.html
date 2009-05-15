@@ -2,34 +2,48 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pos= (IO)</title>
+  <title>closed? (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.pos = integer    =&gt; integer
+ *     ios.closed?    =&gt; true or false
  *
- *  Seeks to the given position (in bytes) in &lt;em&gt;ios&lt;/em&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is completely closed (for
+ *  duplex streams, both reader and writer), &lt;code&gt;false&lt;/code&gt;
+ *  otherwise.
  *
  *     f = File.new(&quot;testfile&quot;)
- *     f.pos = 17
- *     f.gets   #=&gt; &quot;This is line two\n&quot;
+ *     f.close         #=&gt; nil
+ *     f.closed?       #=&gt; true
+ *     f = IO.popen(&quot;/bin/sh&quot;,&quot;r+&quot;)
+ *     f.close_write   #=&gt; nil
+ *     f.closed?       #=&gt; false
+ *     f.close_read    #=&gt; nil
+ *     f.closed?       #=&gt; true
  */
 
+
 static VALUE
-rb_io_set_pos(VALUE io, VALUE offset)
+rb_io_closed(VALUE io)
 {
     rb_io_t *fptr;
-    off_t pos;
+    VALUE write_io;
+    rb_io_t *write_fptr;
 
-    pos = NUM2OFFT(offset);
-    GetOpenFile(io, fptr);
-    pos = io_seek(fptr, pos, SEEK_SET);
-    if (pos &lt; 0) rb_sys_fail_path(fptr-&gt;pathv);
+    write_io = GetWriteIO(io);
+    if (io != write_io) {
+        write_fptr = RFILE(write_io)-&gt;fptr;
+        if (write_fptr &amp;&amp; 0 &lt;= write_fptr-&gt;fd) {
+            return Qfalse;
+        }
+    }
 
-    return OFFT2NUM(pos);
+    fptr = RFILE(io)-&gt;fptr;
+    rb_io_check_initialized(fptr);
+    return 0 &lt;= fptr-&gt;fd ? Qfalse : Qtrue;
 }</pre>
 </body>
 </html>

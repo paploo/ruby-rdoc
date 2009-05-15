@@ -2,22 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tell (StringIO)</title>
+  <title>bytes (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.pos     -&gt; integer
- *   strio.tell    -&gt; integer
+ *   strio.each_byte {|byte| block }  -&gt; strio
  *
- * Returns the current offset (in bytes) of *strio*.
+ * See IO#each_byte.
  */
 static VALUE
-strio_get_pos(VALUE self)
+strio_each_byte(VALUE self)
 {
-    return LONG2NUM(StringIO(self)-&gt;pos);
+    struct StringIO *ptr = readable(StringIO(self));
+
+    RETURN_ENUMERATOR(self, 0, 0);
+
+    while (ptr-&gt;pos &lt; RSTRING_LEN(ptr-&gt;string)) {
+        char c = RSTRING_PTR(ptr-&gt;string)[ptr-&gt;pos++];
+        rb_yield(CHR2FIX(c));
+    }
+    return self;
 }</pre>
 </body>
 </html>

@@ -2,14 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mask (IPAddr)</title>
+  <title>hton (IPAddr)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 146</span>
-146:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mask</span>(<span class="ruby-identifier">prefixlen</span>)
-147:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">clone</span>.<span class="ruby-identifier">mask!</span>(<span class="ruby-identifier">prefixlen</span>)
-148:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 225</span>
+225:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hton</span>
+226:     <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@family</span>
+227:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET</span>
+228:       <span class="ruby-keyword kw">return</span> [<span class="ruby-ivar">@addr</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'N'</span>)
+229:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET6</span>
+230:       <span class="ruby-keyword kw">return</span> (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+231:         (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">&gt;&gt;</span> (<span class="ruby-value">112</span> <span class="ruby-operator">-</span> <span class="ruby-value">16</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">i</span>)) <span class="ruby-operator">&amp;</span> <span class="ruby-value">0xffff</span>
+232:       }.<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'n8'</span>)
+233:     <span class="ruby-keyword kw">else</span>
+234:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;unsupported address family&quot;</span>
+235:     <span class="ruby-keyword kw">end</span>
+236:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

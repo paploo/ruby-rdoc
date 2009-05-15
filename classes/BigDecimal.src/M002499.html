@@ -2,60 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_i (BigDecimal)</title>
+  <title>* (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns the value as an integer (Fixnum or Bignum).
- *
- * If the BigNumber is infinity or NaN, returns nil.
- */
+  <pre>/* call-seq:
+  * mult(value, digits)
+  *
+  * Multiply by the specified value. 
+  *
+  * e.g.
+  *   c = a.mult(b,n)
+  *   c = a * b
+  *
+  * digits:: If specified and less than the number of significant digits of the result, the result is rounded to that number of digits, according to BigDecimal.mode.
+  */
 static VALUE
-BigDecimal_to_i(VALUE self)
+BigDecimal_mult(VALUE self, VALUE r)
 {
     ENTER(5);
-    int e,n,i,nf;
-    U_LONG v,b,j;
-    volatile VALUE str;
-    char *psz,*pch;
-    Real *p;
+    Real *c, *a, *b;
+    U_LONG mx;
 
-    GUARD_OBJ(p,GetVpValue(self,1));
-    BigDecimal_check_num(p);
+    GUARD_OBJ(a,GetVpValue(self,1));
+    b = GetVpValue(r,0);
+    if(!b) return DoSomeOne(self,r,'*');
+    SAVE(b);
 
-    e = VpExponent10(p);
-    if(e&lt;=0) return INT2FIX(0);
-    nf = VpBaseFig();
-    if(e&lt;=nf) {
-        e = VpGetSign(p)*p-&gt;frac[0];
-        return INT2FIX(e);
-    }
-    str = rb_str_new(0, e+nf+2);
-    psz = RSTRING_PTR(str);
-
-    n = (e+nf-1)/nf;
-    pch = psz;
-    if(VpGetSign(p)&lt;0) *pch++ = '-';
-    for(i=0;i&lt;n;++i) {
-        b = VpBaseVal()/10;
-        if(i&gt;=(int)p-&gt;Prec) {
-            while(b) {
-                *pch++ = '0';
-                b /= 10;
-            }
-            continue;
-        }
-        v = p-&gt;frac[i];
-        while(b) {
-            j = v/b;
-            *pch++ = (char)(j + '0');
-            v -= j*b;
-            b /= 10;
-        }
-    }
-    *pch++ = 0;
-    return rb_cstr2inum(psz,10);
+    mx = a-&gt;Prec + b-&gt;Prec;
+    GUARD_OBJ(c,VpCreateRbObject(mx *(VpBaseFig() + 1), &quot;0&quot;));
+    VpMult(c, a, b);
+    return ToValue(c);
 }</pre>
 </body>
 </html>

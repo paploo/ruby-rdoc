@@ -2,14 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>active_jobs (Shell::ProcessController)</title>
+  <title>start_job (Shell::ProcessController)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 114</span>
-114:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">active_jobs</span>
-115:       <span class="ruby-ivar">@active_jobs</span>
-116:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 153</span>
+153:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_job</span>(<span class="ruby-identifier">command</span> = <span class="ruby-keyword kw">nil</span>)
+154:       <span class="ruby-ivar">@jobs_sync</span>.<span class="ruby-identifier">synchronize</span>(<span class="ruby-identifier">:EX</span>) <span class="ruby-keyword kw">do</span>
+155:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>
+156:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">active?</span>
+157:           <span class="ruby-ivar">@waiting_jobs</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">command</span>
+158:         <span class="ruby-keyword kw">else</span>
+159:           <span class="ruby-identifier">command</span> = <span class="ruby-ivar">@waiting_jobs</span>.<span class="ruby-identifier">shift</span>
+160: <span class="ruby-comment cmt">#         command.notify &quot;job(%id) pre-start.&quot;, @shell.debug?</span>
+161:           
+162:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">command</span>
+163:         <span class="ruby-keyword kw">end</span>
+164:         <span class="ruby-ivar">@active_jobs</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">command</span>
+165:         <span class="ruby-identifier">command</span>.<span class="ruby-identifier">start</span>
+166: <span class="ruby-comment cmt">#       command.notify &quot;job(%id) post-start.&quot;, @shell.debug?</span>
+167: 
+168:         <span class="ruby-comment cmt"># start all jobs that input from the job</span>
+169:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">job</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@waiting_jobs</span>.<span class="ruby-identifier">dup</span>
+170:           <span class="ruby-identifier">start_job</span>(<span class="ruby-identifier">job</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">job</span>.<span class="ruby-identifier">input</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">command</span>
+171:         <span class="ruby-keyword kw">end</span>
+172: <span class="ruby-comment cmt">#       command.notify &quot;job(%id) post2-start.&quot;, @shell.debug?</span>
+173:       <span class="ruby-keyword kw">end</span>
+174:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

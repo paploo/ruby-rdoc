@@ -8,24 +8,33 @@
 </head>
 <body class="standalone-code">
   <pre>/*
- * Document-method: Iconv::conv
- * call-seq: Iconv.conv(to, from, str)
+ * Document-method: conv
+ * call-seq: conv(str...)
  *
- * Shorthand for
- *   Iconv.iconv(to, from, str).join
- * See Iconv.iconv.
+ * Equivalent to
+ *
+ *   iconv(nil, str..., nil).join
  */
 static VALUE
-iconv_s_conv(VALUE self, VALUE to, VALUE from, VALUE str)
+iconv_conv(int argc, VALUE *argv, VALUE self)
 {
-    struct iconv_env_t arg;
+    iconv_t cd = VALUE2ICONV(check_iconv(self));
+    VALUE str, s;
+    int toidx = ENCODING_GET(self);
 
-    arg.argc = 1;
-    arg.argv = &amp;str;
-    arg.append = rb_str_append;
-    arg.ret = rb_str_new(0, 0);
-    arg.cd = iconv_create(to, from, NULL, &amp;arg.toidx);
-    return rb_ensure(iconv_s_convert, (VALUE)&amp;arg, iconv_free, ICONV2VALUE(arg.cd));
+    str = iconv_convert(cd, Qnil, 0, 0, toidx, NULL);
+    if (argc &gt; 0) {
+        do {
+            s = iconv_convert(cd, *argv++, 0, -1, toidx, NULL);
+            if (RSTRING_LEN(s))
+                rb_str_buf_append(str, s);
+        } while (--argc);
+        s = iconv_convert(cd, Qnil, 0, 0, toidx, NULL);
+        if (RSTRING_LEN(s))
+            rb_str_buf_append(str, s);
+    }
+
+    return str;
 }</pre>
 </body>
 </html>

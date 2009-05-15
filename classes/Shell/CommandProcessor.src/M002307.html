@@ -2,14 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>out (Shell::CommandProcessor)</title>
+  <title>concat (Shell::CommandProcessor)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 298</span>
-298:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">out</span>(<span class="ruby-identifier">dev</span> = <span class="ruby-constant">STDOUT</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-299:       <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">transact</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-300:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 333</span>
+333:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">concat</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">jobs</span>)
+334:       <span class="ruby-constant">Concat</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@shell</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">jobs</span>)
+335:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

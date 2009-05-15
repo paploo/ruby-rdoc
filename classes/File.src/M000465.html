@@ -2,79 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>flock (File)</title>
+  <title>readable? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     file.flock (locking_constant ) =&gt;  0 or false
- *  
- *  Locks or unlocks a file according to &lt;i&gt;locking_constant&lt;/i&gt; (a
- *  logical &lt;em&gt;or&lt;/em&gt; of the values in the table below).
- *  Returns &lt;code&gt;false&lt;/code&gt; if &lt;code&gt;File::LOCK_NB&lt;/code&gt; is
- *  specified and the operation would otherwise have blocked. Not
- *  available on all platforms.
- *     
- *  Locking constants (in class File):
+ * call-seq:
+ *    File.readable?(file_name)   =&gt; true or false
  *
- *     LOCK_EX   | Exclusive lock. Only one process may hold an
- *               | exclusive lock for a given file at a time.
- *     ----------+------------------------------------------------
- *     LOCK_NB   | Don't block when locking. May be combined
- *               | with other lock options using logical or.
- *     ----------+------------------------------------------------
- *     LOCK_SH   | Shared lock. Multiple processes may each hold a
- *               | shared lock for a given file at the same time.
- *     ----------+------------------------------------------------
- *     LOCK_UN   | Unlock.
- *
- *  Example:
- *
- *     File.new(&quot;testfile&quot;).flock(File::LOCK_UN)   #=&gt; 0
- *     
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named file is readable by the effective
+ * user id of this process.
  */
 
 static VALUE
-rb_file_flock(VALUE obj, VALUE operation)
+rb_file_readable_p(VALUE obj, VALUE fname)
 {
-#ifndef __CHECKER__
-    rb_io_t *fptr;
-    int op[2], op1;
-
     rb_secure(2);
-    op[1] = op1 = NUM2INT(operation);
-    GetOpenFile(obj, fptr);
-    op[0] = fptr-&gt;fd;
-
-    if (fptr-&gt;mode &amp; FMODE_WRITABLE) {
-        rb_io_flush(obj);
-    }
-    while ((int)rb_thread_blocking_region(rb_thread_flock, op, RUBY_UBF_IO, 0) &lt; 0) {
-        switch (errno) {
-          case EAGAIN:
-          case EACCES:
-#if defined(EWOULDBLOCK) &amp;&amp; EWOULDBLOCK != EAGAIN
-          case EWOULDBLOCK:
-#endif
-            if (op1 &amp; LOCK_NB) return Qfalse;
-            rb_thread_polling();
-            rb_io_check_closed(fptr);
-            continue;
-
-          case EINTR:
-#if defined(ERESTART)
-          case ERESTART:
-#endif
-            break;
-
-          default:
-            rb_sys_fail_path(fptr-&gt;pathv);
-        }
-    }
-#endif
-    return INT2FIX(0);
+    FilePathValue(fname);
+    if (eaccess(StringValueCStr(fname), R_OK) &lt; 0) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

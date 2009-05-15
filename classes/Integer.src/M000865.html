@@ -2,25 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>odd? (Integer)</title>
+  <title>next (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     int.odd? -&gt; true or false
+ *     int.next    =&gt; integer
+ *     int.succ    =&gt; integer
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;int&lt;/i&gt; is an odd number.
+ *  Returns the &lt;code&gt;Integer&lt;/code&gt; equal to &lt;i&gt;int&lt;/i&gt; + 1.
+ *
+ *     1.next      #=&gt; 2
+ *     (-1).next   #=&gt; 0
  */
 
 static VALUE
-int_odd_p(VALUE num)
+int_succ(VALUE num)
 {
-    if (rb_funcall(num, '%', 1, INT2FIX(2)) != INT2FIX(0)) {
-        return Qtrue;
+    if (FIXNUM_P(num)) {
+        long i = FIX2LONG(num) + 1;
+        return LONG2NUM(i);
     }
-    return Qfalse;
+    return rb_funcall(num, '+', 1, INT2FIX(1));
 }</pre>
 </body>
 </html>

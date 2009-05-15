@@ -2,48 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_codepoint (String)</title>
+  <title>encoding (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: each_codepoint
  *  call-seq:
- *     str.each_codepoint {|integer| block }    =&gt; str
- *  
- *  Passes the &lt;code&gt;Integer&lt;/code&gt; ordinal of each character in &lt;i&gt;str&lt;/i&gt;,
- *  also known as a &lt;i&gt;codepoint&lt;/i&gt; when applied to Unicode strings to the
- *  given block.
- *     
- *     &quot;hello\u0639&quot;.each_codepoint {|c| print c, ' ' }
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     104 101 108 108 111 1593
+ *     obj.encoding   =&gt; encoding
+ *
+ *  Returns the Encoding object that represents the encoding of obj.
  */
 
-static VALUE
-rb_str_each_codepoint(VALUE str)
+VALUE
+rb_obj_encoding(VALUE obj)
 {
-    int len, n;
-    unsigned int c;
-    const char *ptr, *end;
-    rb_encoding *enc;
-
-    if (single_byte_optimizable(str)) return rb_str_each_byte(str);
-    RETURN_ENUMERATOR(str, 0, 0);
-    ptr = RSTRING_PTR(str);
-    len = RSTRING_LEN(str);
-    end = RSTRING_END(str);
-    enc = STR_ENC_GET(str);
-    while (ptr &lt; end) {
-        c = rb_enc_codepoint(ptr, end, enc);
-        n = rb_enc_codelen(c, enc);
-        rb_yield(UINT2NUM(c));
-        ptr += n;
+    rb_encoding *enc = rb_enc_get(obj);
+    if (!enc) {
+	rb_raise(rb_eTypeError, &quot;unknown encoding&quot;);
     }
-    return str;
+    return rb_enc_from_encoding(enc);
 }</pre>
 </body>
 </html>

@@ -2,38 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>stop (Thread)</title>
+  <title>abort_on_exception= (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.stop   =&gt; nil
+ *     Thread.abort_on_exception= boolean   =&gt; true or false
  *
- *  Stops execution of the current thread, putting it into a ``sleep'' state,
- *  and schedules execution of another thread.
+ *  When set to &lt;code&gt;true&lt;/code&gt;, all threads will abort if an exception is
+ *  raised. Returns the new state.
  *
- *     a = Thread.new { print &quot;a&quot;; Thread.stop; print &quot;c&quot; }
- *     Thread.pass
- *     print &quot;b&quot;
- *     a.run
- *     a.join
+ *     Thread.abort_on_exception = true
+ *     t1 = Thread.new do
+ *       puts  &quot;In new thread&quot;
+ *       raise &quot;Exception from thread&quot;
+ *     end
+ *     sleep(1)
+ *     puts &quot;not reached&quot;
  *
  *  &lt;em&gt;produces:&lt;/em&gt;
  *
- *     abc
+ *     In new thread
+ *     prog.rb:4: Exception from thread (RuntimeError)
+ *      from prog.rb:2:in `initialize'
+ *      from prog.rb:2:in `new'
+ *      from prog.rb:2
  */
 
-VALUE
-rb_thread_stop(void)
+static VALUE
+rb_thread_s_abort_exc_set(VALUE self, VALUE val)
 {
-    if (rb_thread_alone()) {
-        rb_raise(rb_eThreadError,
-                 &quot;stopping only thread\n\tnote: use sleep to stop forever&quot;);
-    }
-    rb_thread_sleep_deadly();
-    return Qnil;
+    rb_secure(4);
+    GET_THREAD()-&gt;vm-&gt;thread_abort_on_exception = RTEST(val);
+    return val;
 }</pre>
 </body>
 </html>

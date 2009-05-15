@@ -2,34 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>floor (Float)</title>
+  <title>finite? (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     flt.floor   =&gt; integer
+ *     flt.finite? -&gt; true or false
  *
- *  Returns the largest integer less than or equal to &lt;i&gt;flt&lt;/i&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;flt&lt;/i&gt; is a valid IEEE floating
+ *  point number (it is not infinite, and &lt;code&gt;nan?&lt;/code&gt; is
+ *  &lt;code&gt;false&lt;/code&gt;).
  *
- *     1.2.floor      #=&gt; 1
- *     2.0.floor      #=&gt; 2
- *     (-1.2).floor   #=&gt; -2
- *     (-2.0).floor   #=&gt; -2
  */
 
 static VALUE
-flo_floor(VALUE num)
+flo_is_finite_p(VALUE num)
 {
-    double f = floor(RFLOAT_VALUE(num));
-    long val;
+    double value = RFLOAT_VALUE(num);
 
-    if (!FIXABLE(f)) {
-        return rb_dbl2big(f);
-    }
-    val = f;
-    return LONG2FIX(val);
+#if HAVE_FINITE
+    if (!finite(value))
+        return Qfalse;
+#else
+    if (isinf(value) || isnan(value))
+        return Qfalse;
+#endif
+
+    return Qtrue;
 }</pre>
 </body>
 </html>

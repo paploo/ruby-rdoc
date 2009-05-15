@@ -2,34 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>assoc (Hash)</title>
+  <title>has_value? (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hash.assoc(obj)   -&gt;  an_array  or  nil
+ *     hsh.has_value?(value)    =&gt; true or false
+ *     hsh.value?(value)        =&gt; true or false
  *
- *  Searches through the hash comparing _obj_ with the key using &lt;code&gt;==&lt;/code&gt;.
- *  Returns the key-value pair (two elements array) or +nil+
- *  if no match is found.  See &lt;code&gt;Array#assoc&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the given value is present for some key
+ *  in &lt;i&gt;hsh&lt;/i&gt;.
  *
- *     h = {&quot;colors&quot;  =&gt; [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;],
- *          &quot;letters&quot; =&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]}
- *     h.assoc(&quot;letters&quot;)  #=&gt; [&quot;letters&quot;, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]
- *     h.assoc(&quot;foo&quot;)      #=&gt; nil
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.has_value?(100)   #=&gt; true
+ *     h.has_value?(999)   #=&gt; false
  */
 
-VALUE
-rb_hash_assoc(VALUE hash, VALUE obj)
+static VALUE
+rb_hash_has_value(VALUE hash, VALUE val)
 {
-    VALUE args[2];
+    VALUE data[2];
 
-    args[0] = obj;
-    args[1] = Qnil;
-    rb_hash_foreach(hash, assoc_i, (st_data_t)args);
-    return args[1];
+    data[0] = Qfalse;
+    data[1] = val;
+    rb_hash_foreach(hash, rb_hash_search_value, (st_data_t)data);
+    return data[0];
 }</pre>
 </body>
 </html>

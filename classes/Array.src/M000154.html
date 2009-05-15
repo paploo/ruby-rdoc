@@ -2,41 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reject! (Array)</title>
+  <title>include? (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.reject! {|item| block }  -&gt; array or nil
+ *     array.include?(obj)   -&gt; true or false
  *  
- *  Equivalent to &lt;code&gt;Array#delete_if&lt;/code&gt;, deleting elements from
- *  _self_ for which the block evaluates to true, but returns
- *  &lt;code&gt;nil&lt;/code&gt; if no changes were made. Also see
- *  &lt;code&gt;Enumerable#reject&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the given object is present in
+ *  &lt;i&gt;self&lt;/i&gt; (that is, if any object &lt;code&gt;==&lt;/code&gt; &lt;i&gt;anObject&lt;/i&gt;),
+ *  &lt;code&gt;false&lt;/code&gt; otherwise.
+ *     
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.include?(&quot;b&quot;)   #=&gt; true
+ *     a.include?(&quot;z&quot;)   #=&gt; false
  */
 
-static VALUE
-rb_ary_reject_bang(VALUE ary)
+VALUE
+rb_ary_includes(VALUE ary, VALUE item)
 {
-    long i1, i2;
-
-    RETURN_ENUMERATOR(ary, 0, 0);
-    rb_ary_modify(ary);
-    for (i1 = i2 = 0; i1 &lt; RARRAY_LEN(ary); i1++) {
-        VALUE v = RARRAY_PTR(ary)[i1];
-        if (RTEST(rb_yield(v))) continue;
-        if (i1 != i2) {
-            rb_ary_store(ary, i2, v);
+    long i;
+    
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        if (rb_equal(RARRAY_PTR(ary)[i], item)) {
+            return Qtrue;
         }
-        i2++;
     }
-
-    if (RARRAY_LEN(ary) == i2) return Qnil;
-    if (i2 &lt; RARRAY_LEN(ary))
-        ARY_SET_LEN(ary, i2);
-    return ary;
+    return Qfalse;
 }</pre>
 </body>
 </html>

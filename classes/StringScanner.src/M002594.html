@@ -2,20 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>peep (StringScanner)</title>
+  <title>matched? (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Equivalent to #peek.
- * This method is obsolete; use #peek instead.
+ * Returns +true+ iff the last match was successful.
+ *
+ *   s = StringScanner.new('test string')
+ *   s.match?(/\w+/)     # =&gt; 4
+ *   s.matched?          # =&gt; true
+ *   s.match?(/\d+/)     # =&gt; nil
+ *   s.matched?          # =&gt; false
  */
 static VALUE
-strscan_peep(VALUE self, VALUE vlen)
+strscan_matched_p(VALUE self)
 {
-    rb_warning(&quot;StringScanner#peep is obsolete; use #peek instead&quot;);
-    return strscan_peek(self, vlen);
+    struct strscanner *p;
+
+    GET_SCANNER(self, p);
+    return MATCHED_P(p) ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

@@ -2,26 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>initialize_input (RubyLex)</title>
+  <title>identify_gvar (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 211</span>
-211:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_input</span>
-212:     <span class="ruby-ivar">@ltype</span> = <span class="ruby-keyword kw">nil</span>
-213:     <span class="ruby-ivar">@quoted</span> = <span class="ruby-keyword kw">nil</span>
-214:     <span class="ruby-ivar">@indent</span> = <span class="ruby-value">0</span>
-215:     <span class="ruby-ivar">@indent_stack</span> = []
-216:     <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_BEG</span>
-217:     <span class="ruby-ivar">@space_seen</span> = <span class="ruby-keyword kw">false</span>
-218:     <span class="ruby-ivar">@here_header</span> = <span class="ruby-keyword kw">false</span>
-219:     
-220:     <span class="ruby-ivar">@continue</span> = <span class="ruby-keyword kw">false</span>
-221:     <span class="ruby-identifier">prompt</span>
-222: 
-223:     <span class="ruby-ivar">@line</span> = <span class="ruby-value str">&quot;&quot;</span>
-224:     <span class="ruby-ivar">@exp_line_no</span> = <span class="ruby-ivar">@line_no</span>
-225:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 741</span>
+741:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">identify_gvar</span>
+742:     <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+743:     
+744:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>
+745:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[~_*$?!@\/\\;,=:&lt;&gt;&quot;.]/</span>   <span class="ruby-comment cmt">#&quot;</span>
+746:       <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkGVAR</span>, <span class="ruby-value str">&quot;$&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ch</span>)
+747:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;-&quot;</span>
+748:       <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkGVAR</span>, <span class="ruby-value str">&quot;$-&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">getc</span>)
+749:     <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;&amp;&quot;</span>, <span class="ruby-value str">&quot;`&quot;</span>, <span class="ruby-value str">&quot;'&quot;</span>, <span class="ruby-value str">&quot;+&quot;</span>
+750:       <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkBACK_REF</span>, <span class="ruby-value str">&quot;$&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">ch</span>)
+751:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[1-9]/</span>
+752:       <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">getc</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/[0-9]/</span>; <span class="ruby-keyword kw">end</span>
+753:       <span class="ruby-identifier">ungetc</span>
+754:       <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkNTH_REF</span>)
+755:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/\w/</span>
+756:       <span class="ruby-identifier">ungetc</span>
+757:       <span class="ruby-identifier">ungetc</span>
+758:       <span class="ruby-identifier">identify_identifier</span>
+759:     <span class="ruby-keyword kw">else</span> 
+760:       <span class="ruby-identifier">ungetc</span>
+761:       <span class="ruby-constant">Token</span>(<span class="ruby-value str">&quot;$&quot;</span>)
+762:     <span class="ruby-keyword kw">end</span>
+763:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,29 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_f (String)</title>
+  <title>downcase (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.to_f   =&gt; float
+ *     str.downcase   =&gt; new_str
  *  
- *  Returns the result of interpreting leading characters in &lt;i&gt;str&lt;/i&gt; as a
- *  floating point number. Extraneous characters past the end of a valid number
- *  are ignored. If there is not a valid number at the start of &lt;i&gt;str&lt;/i&gt;,
- *  &lt;code&gt;0.0&lt;/code&gt; is returned. This method never raises an exception.
+ *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with all uppercase letters replaced with their
+ *  lowercase counterparts. The operation is locale insensitive---only
+ *  characters ``A'' to ``Z'' are affected.
+ *  Note: case replacement is effective only in ASCII region.
  *     
- *     &quot;123.45e1&quot;.to_f        #=&gt; 1234.5
- *     &quot;45.67 degrees&quot;.to_f   #=&gt; 45.67
- *     &quot;thx1138&quot;.to_f         #=&gt; 0.0
+ *     &quot;hEllO&quot;.downcase   #=&gt; &quot;hello&quot;
  */
 
 static VALUE
-rb_str_to_f(VALUE str)
+rb_str_downcase(VALUE str)
 {
-    return DBL2NUM(rb_str_to_dbl(str, Qfalse));
+    str = rb_str_dup(str);
+    rb_str_downcase_bang(str);
+    return str;
 }</pre>
 </body>
 </html>

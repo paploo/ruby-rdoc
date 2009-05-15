@@ -2,139 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lines (String)</title>
+  <title>concat (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: each_line
  *  call-seq:
- *     str.each_line(separator=$/) {|substr| block }   =&gt; str
+ *     str &lt;&lt; integer       =&gt; str
+ *     str.concat(integer)  =&gt; str
+ *     str &lt;&lt; obj           =&gt; str
+ *     str.concat(obj)      =&gt; str
  *  
- *  Splits &lt;i&gt;str&lt;/i&gt; using the supplied parameter as the record separator
- *  (&lt;code&gt;$/&lt;/code&gt; by default), passing each substring in turn to the supplied
- *  block. If a zero-length record separator is supplied, the string is split
- *  into paragraphs delimited by multiple successive newlines.
+ *  Append---Concatenates the given object to &lt;i&gt;str&lt;/i&gt;. If the object is a
+ *  &lt;code&gt;Integer&lt;/code&gt;, it is considered as a codepoint, and is converted
+ *  to a character before concatenation.
  *     
- *     print &quot;Example one\n&quot;
- *     &quot;hello\nworld&quot;.each {|s| p s}
- *     print &quot;Example two\n&quot;
- *     &quot;hello\nworld&quot;.each('l') {|s| p s}
- *     print &quot;Example three\n&quot;
- *     &quot;hello\n\n\nworld&quot;.each('') {|s| p s}
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     Example one
- *     &quot;hello\n&quot;
- *     &quot;world&quot;
- *     Example two
- *     &quot;hel&quot;
- *     &quot;l&quot;
- *     &quot;o\nworl&quot;
- *     &quot;d&quot;
- *     Example three
- *     &quot;hello\n\n\n&quot;
- *     &quot;world&quot;
+ *     a = &quot;hello &quot;
+ *     a &lt;&lt; &quot;world&quot;   #=&gt; &quot;hello world&quot;
+ *     a.concat(33)   #=&gt; &quot;hello world!&quot;
  */
 
-static VALUE
-rb_str_each_line(int argc, VALUE *argv, VALUE str)
+VALUE
+rb_str_concat(VALUE str1, VALUE str2)
 {
-    rb_encoding *enc;
-    VALUE rs;
-    unsigned int newline;
-    char *p, *pend, *s, *ptr;
-    long len, rslen; 
-    VALUE line;
-    int n;
-    VALUE orig = str;
+    if (FIXNUM_P(str2) || TYPE(str2) == T_BIGNUM) {
+        rb_encoding *enc = STR_ENC_GET(str1);
+        unsigned int c = NUM2UINT(str2);
+        int pos = RSTRING_LEN(str1);
+        int len = rb_enc_codelen(c, enc);
+        int cr = ENC_CODERANGE(str1);
 
-    if (argc == 0) {
-        rs = rb_rs;
+        rb_str_resize(str1, pos+len);
+        rb_enc_mbcput(c, RSTRING_PTR(str1)+pos, enc);
+        ENC_CODERANGE_SET(str1, cr);
+        return str1;
     }
-    else {
-        rb_scan_args(argc, argv, &quot;01&quot;, &amp;rs);
-    }
-    RETURN_ENUMERATOR(str, argc, argv);
-    if (NIL_P(rs)) {
-        rb_yield(str);
-        return orig;
-    }
-    str = rb_str_new4(str);
-    ptr = p = s = RSTRING_PTR(str);
-    pend = p + RSTRING_LEN(str);
-    len = RSTRING_LEN(str);
-    StringValue(rs);
-    if (rs == rb_default_rs) {
-        enc = rb_enc_get(str);
-        while (p &lt; pend) {
-            char *p0;
-
-            p = memchr(p, '\n', pend - p);
-            if (!p) break;
-            p0 = rb_enc_left_char_head(s, p, pend, enc);
-            if (!rb_enc_is_newline(p0, pend, enc)) {
-                p++;
-                continue;
-            }
-            p = p0 + rb_enc_mbclen(p0, pend, enc);
-            line = rb_str_new5(str, s, p - s);
-            OBJ_INFECT(line, str);
-            rb_enc_cr_str_copy_for_substr(line, str);
-            rb_yield(line);
-            str_mod_check(str, ptr, len);
-            s = p;
-        }
-        goto finish;
-    }
-
-    enc = rb_enc_check(str, rs);
-    rslen = RSTRING_LEN(rs);
-    if (rslen == 0) {
-        newline = '\n';
-    }
-    else {
-        newline = rb_enc_codepoint(RSTRING_PTR(rs), RSTRING_END(rs), enc);
-    }
-
-    while (p &lt; pend) {
-        unsigned int c = rb_enc_codepoint(p, pend, enc);
-
-      again:
-        n = rb_enc_codelen(c, enc);
-        if (rslen == 0 &amp;&amp; c == newline) {
-            p += n;
-            if (p &lt; pend &amp;&amp; (c = rb_enc_codepoint(p, pend, enc)) != newline) {
-                goto again;
-            }
-            while (p &lt; pend &amp;&amp; rb_enc_codepoint(p, pend, enc) == newline) {
-                p += n;
-            }
-            p -= n;
-        }
-        if (c == newline &amp;&amp;
-            (rslen &lt;= 1 || memcmp(RSTRING_PTR(rs), p, rslen) == 0)) {
-            line = rb_str_new5(str, s, p - s + (rslen ? rslen : n));
-            OBJ_INFECT(line, str);
-            rb_enc_cr_str_copy_for_substr(line, str);
-            rb_yield(line);
-            str_mod_check(str, ptr, len);
-            s = p + (rslen ? rslen : n);
-        }
-        p += n;
-    }
-
-  finish:
-    if (s != pend) {
-        line = rb_str_new5(str, s, pend - s);
-        OBJ_INFECT(line, str);
-        rb_enc_cr_str_copy_for_substr(line, str);
-        rb_yield(line);
-    }
-
-    return orig;
+    return rb_str_append(str1, str2);
 }</pre>
 </body>
 </html>

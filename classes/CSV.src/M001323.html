@@ -2,17 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rewind (CSV)</title>
+  <title>each (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1673</span>
-1673:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewind</span>
-1674:     <span class="ruby-ivar">@headers</span> = <span class="ruby-keyword kw">nil</span>
-1675:     <span class="ruby-ivar">@lineno</span>  = <span class="ruby-value">0</span>
-1676:     
-1677:     <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">rewind</span>
-1678:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1759</span>
+1759:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>
+1760:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">row</span> = <span class="ruby-identifier">shift</span>
+1761:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">row</span>
+1762:     <span class="ruby-keyword kw">end</span>
+1763:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

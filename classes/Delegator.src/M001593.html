@@ -2,15 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>respond_to? (Delegator)</title>
+  <title>clone (Delegator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/delegate.rb, line 149</span>
-149:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-identifier">include_private</span> = <span class="ruby-keyword kw">false</span>)
-150:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">super</span>
-151:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-identifier">include_private</span>)
-152:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/delegate.rb, line 188</span>
+188:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clone</span>
+189:     <span class="ruby-identifier">new</span> = <span class="ruby-keyword kw">super</span>
+190:     <span class="ruby-identifier">new</span>.<span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">clone</span>)
+191:     <span class="ruby-identifier">new</span>
+192:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,25 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>start (Thread)</title>
+  <title>pass (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.start([args]*) {|args| block }   =&gt; thread
- *     Thread.fork([args]*) {|args| block }    =&gt; thread
+ *     Thread.pass   =&gt; nil
  *
- *  Basically the same as &lt;code&gt;Thread::new&lt;/code&gt;. However, if class
- *  &lt;code&gt;Thread&lt;/code&gt; is subclassed, then calling &lt;code&gt;start&lt;/code&gt; in that
- *  subclass will not invoke the subclass's &lt;code&gt;initialize&lt;/code&gt; method.
+ *  Invokes the thread scheduler to pass execution to another thread.
+ *
+ *     a = Thread.new { print &quot;a&quot;; Thread.pass;
+ *                      print &quot;b&quot;; Thread.pass;
+ *                      print &quot;c&quot; }
+ *     b = Thread.new { print &quot;x&quot;; Thread.pass;
+ *                      print &quot;y&quot;; Thread.pass;
+ *                      print &quot;z&quot; }
+ *     a.join
+ *     b.join
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     axbycz
  */
 
 static VALUE
-thread_start(VALUE klass, VALUE args)
+thread_s_pass(VALUE klass)
 {
-    return thread_create_core(rb_thread_alloc(klass), args, 0);
+    rb_thread_schedule();
+    return Qnil;
 }</pre>
 </body>
 </html>

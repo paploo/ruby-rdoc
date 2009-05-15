@@ -2,28 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>check_until (StringScanner)</title>
+  <title>peep (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: check_until(pattern)
- *
- * This returns the value that #scan_until would return, without advancing the
- * scan pointer.  The match register is affected, though.
- *
- *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
- *   s.check_until /12/          # -&gt; &quot;Fri Dec 12&quot;
- *   s.pos                       # -&gt; 0
- *   s.matched                   # -&gt; 12
- *
- * Mnemonic: it &quot;checks&quot; to see whether a #scan_until will return a value.
+ * Equivalent to #peek.
+ * This method is obsolete; use #peek instead.
  */
 static VALUE
-strscan_check_until(VALUE self, VALUE re)
+strscan_peep(VALUE self, VALUE vlen)
 {
-    return strscan_do_scan(self, re, 0, 1, 0);
+    rb_warning(&quot;StringScanner#peep is obsolete; use #peek instead&quot;);
+    return strscan_peek(self, vlen);
 }</pre>
 </body>
 </html>

@@ -2,47 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each (IO)</title>
+  <title>chars (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.each(sep=$/) {|line| block }         =&gt; ios
- *     ios.each(limit) {|line| block }          =&gt; ios
- *     ios.each(sep,limit) {|line| block }      =&gt; ios
- *     ios.each_line(sep=$/) {|line| block }    =&gt; ios
- *     ios.each_line(limit) {|line| block }     =&gt; ios
- *     ios.each_line(sep,limit) {|line| block } =&gt; ios
- *
- *  Executes the block for every line in &lt;em&gt;ios&lt;/em&gt;, where lines are
- *  separated by &lt;i&gt;sep&lt;/i&gt;. &lt;em&gt;ios&lt;/em&gt; must be opened for
- *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
- *
+ *     ios.chars   =&gt; anEnumerator
+ *  
+ *  Returns an enumerator that gives each character in &lt;em&gt;ios&lt;/em&gt;.
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
+ *  will be raised.
+ *     
  *     f = File.new(&quot;testfile&quot;)
- *     f.each {|line| puts &quot;#{f.lineno}: #{line}&quot; }
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     1: This is line one
- *     2: This is line two
- *     3: This is line three
- *     4: And so on...
+ *     f.chars.to_a  #=&gt; [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]
+ *     f.rewind
+ *     f.chars.sort  #=&gt; [&quot;e&quot;, &quot;h&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]
  */
 
 static VALUE
-rb_io_each_line(int argc, VALUE *argv, VALUE io)
+rb_io_chars(VALUE io)
 {
-    VALUE str, rs;
-    long limit;
-
-    RETURN_ENUMERATOR(io, argc, argv);
-    prepare_getline_args(argc, argv, &amp;rs, &amp;limit, io);
-    while (!NIL_P(str = rb_io_getline_1(rs, limit, io))) {
-        rb_yield(str);
-    }
-    return io;
+    return rb_enumeratorize(io, ID2SYM(rb_intern(&quot;each_char&quot;)), 0, 0);
 }</pre>
 </body>
 </html>

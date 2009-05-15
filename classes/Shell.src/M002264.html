@@ -2,14 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>def_system_command (Shell)</title>
+  <title>notify (Shell)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell.rb, line 236</span>
-236:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">def_system_command</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">path</span> = <span class="ruby-identifier">command</span>)
-237:     <span class="ruby-constant">CommandProcessor</span>.<span class="ruby-identifier">def_system_command</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">path</span>)
-238:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell.rb, line 265</span>
+265:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">opts</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+266:     <span class="ruby-constant">Shell</span><span class="ruby-operator">::</span><span class="ruby-identifier">debug_output_synchronize</span> <span class="ruby-keyword kw">do</span>
+267:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value">-1</span>].<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">String</span>)
+268:         <span class="ruby-identifier">yorn</span> = <span class="ruby-identifier">verbose?</span>
+269:       <span class="ruby-keyword kw">else</span>
+270:         <span class="ruby-identifier">yorn</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">pop</span>
+271:       <span class="ruby-keyword kw">end</span>
+272:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">yorn</span>
+273: 
+274:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@debug_display_thread_id</span>
+275:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@debug_display_process_id</span>
+276:           <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;shell(##{Process.pid}:#{Thread.current.to_s.sub(&quot;Thread&quot;, &quot;Th&quot;)}): &quot;</span>
+277:         <span class="ruby-keyword kw">else</span>
+278:           <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;shell(#{Thread.current.to_s.sub(&quot;Thread&quot;, &quot;Th&quot;)}): &quot;</span>
+279:         <span class="ruby-keyword kw">end</span>
+280:       <span class="ruby-keyword kw">else</span>
+281:         <span class="ruby-identifier">prefix</span> = <span class="ruby-value str">&quot;shell: &quot;</span>
+282:       <span class="ruby-keyword kw">end</span>
+283:       <span class="ruby-identifier">_head</span> = <span class="ruby-keyword kw">true</span>
+284:       <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">mes</span><span class="ruby-operator">|</span>
+285:         <span class="ruby-identifier">mes</span> = <span class="ruby-identifier">mes</span>.<span class="ruby-identifier">dup</span>
+286:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">mes</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">iterator?</span>
+287:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">_head</span>
+288:           <span class="ruby-identifier">_head</span> = <span class="ruby-keyword kw">false</span>
+289: <span class="ruby-comment cmt">#         &quot;shell&quot; &quot; + mes</span>
+290:           <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">mes</span>
+291:         <span class="ruby-keyword kw">else</span>
+292:           <span class="ruby-value str">&quot; &quot;</span><span class="ruby-operator">*</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">mes</span>
+293:         <span class="ruby-keyword kw">end</span>
+294:       }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;\n&quot;</span>
+295:     <span class="ruby-keyword kw">end</span>
+296:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

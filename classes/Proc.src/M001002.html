@@ -2,35 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Proc)</title>
+  <title>arity (Proc)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Proc.new {|...| block } =&gt; a_proc
- *     Proc.new                =&gt; a_proc
+ *     prc.arity -&gt; fixnum
  *  
- *  Creates a new &lt;code&gt;Proc&lt;/code&gt; object, bound to the current
- *  context. &lt;code&gt;Proc::new&lt;/code&gt; may be called without a block only
- *  within a method with an attached block, in which case that block is
- *  converted to the &lt;code&gt;Proc&lt;/code&gt; object.
+ *  Returns the number of arguments that would not be ignored. If the block
+ *  is declared to take no arguments, returns 0. If the block is known
+ *  to take exactly n arguments, returns n. If the block has optional
+ *  arguments, return -n-1, where n is the number of mandatory
+ *  arguments. A &lt;code&gt;proc&lt;/code&gt; with no argument declarations
+ *  is the same a block declaring &lt;code&gt;||&lt;/code&gt; as its arguments.
  *     
- *     def proc_from
- *       Proc.new
- *     end
- *     proc = proc_from { &quot;hello&quot; }
- *     proc.call   #=&gt; &quot;hello&quot;
+ *     Proc.new {}.arity          #=&gt;  0
+ *     Proc.new {||}.arity        #=&gt;  0
+ *     Proc.new {|a|}.arity       #=&gt;  1
+ *     Proc.new {|a,b|}.arity     #=&gt;  2
+ *     Proc.new {|a,b,c|}.arity   #=&gt;  3
+ *     Proc.new {|*a|}.arity      #=&gt; -1
+ *     Proc.new {|a,*b|}.arity    #=&gt; -2
+ *     Proc.new {|a,*b, c|}.arity    #=&gt; -3
  */
 
 static VALUE
-rb_proc_s_new(int argc, VALUE *argv, VALUE klass)
+proc_arity(VALUE self)
 {
-    VALUE block = proc_new(klass, Qfalse);
-
-    rb_obj_call_init(block, argc, argv);
-    return block;
+    rb_proc_t *proc;
+    rb_iseq_t *iseq;
+    GetProcPtr(self, proc);
+    iseq = proc-&gt;block.iseq;
+    if (iseq) {
+        if (BUILTIN_TYPE(iseq) != T_NODE) {
+            if (iseq-&gt;arg_rest &lt; 0) {
+                return INT2FIX(iseq-&gt;argc);
+            }
+            else {
+                return INT2FIX(-(iseq-&gt;argc + 1 + iseq-&gt;arg_post_len));
+            }
+        }
+        else {
+            NODE *node = (NODE *)iseq;
+            if (nd_type(node) == NODE_IFUNC &amp;&amp; node-&gt;nd_cfnc == bmcall) {
+                /* method(:foo).to_proc.arity */
+                return INT2FIX(method_arity(node-&gt;nd_tval));
+            }
+        }
+    }
+    return INT2FIX(-1);
 }</pre>
 </body>
 </html>

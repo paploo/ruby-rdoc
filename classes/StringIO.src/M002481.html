@@ -2,19 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>isatty (StringIO)</title>
+  <title>truncate (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns +false+.  Just for compatibility to IO.
+ * call-seq:
+ *   strio.truncate(integer)    -&gt; 0
+ *
+ * Truncates the buffer string to at most _integer_ bytes. The *strio*
+ * must be opened for writing.
  */
 static VALUE
-strio_false(VALUE self)
+strio_truncate(VALUE self, VALUE len)
 {
-    StringIO(self);
-    return Qfalse;
+    VALUE string = writable(StringIO(self))-&gt;string;
+    long l = NUM2LONG(len);
+    long plen = RSTRING_LEN(string);
+    if (l &lt; 0) {
+        error_inval(&quot;negative legnth&quot;);
+    }
+    rb_str_resize(string, l);
+    if (plen &lt; l) {
+        MEMZERO(RSTRING_PTR(string) + plen, char, l - plen);
+    }
+    return len;
 }</pre>
 </body>
 </html>

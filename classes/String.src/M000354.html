@@ -2,24 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tr! (String)</title>
+  <title>each_char (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
+ *  Document-method: each_char
  *  call-seq:
- *     str.tr!(from_str, to_str)   =&gt; str or nil
+ *     str.each_char {|cstr| block }    =&gt; str
  *  
- *  Translates &lt;i&gt;str&lt;/i&gt; in place, using the same rules as
- *  &lt;code&gt;String#tr&lt;/code&gt;. Returns &lt;i&gt;str&lt;/i&gt;, or &lt;code&gt;nil&lt;/code&gt; if no
- *  changes were made.
+ *  Passes each character in &lt;i&gt;str&lt;/i&gt; to the given block.
+ *     
+ *     &quot;hello&quot;.each_char {|c| print c, ' ' }
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     h e l l o 
  */
 
 static VALUE
-rb_str_tr_bang(VALUE str, VALUE src, VALUE repl)
+rb_str_each_char(VALUE str)
 {
-    return tr_trans(str, src, repl, 0);
+    int i, len, n;
+    const char *ptr;
+    rb_encoding *enc;
+
+    RETURN_ENUMERATOR(str, 0, 0);
+    str = rb_str_new4(str);
+    ptr = RSTRING_PTR(str);
+    len = RSTRING_LEN(str);
+    enc = rb_enc_get(str);
+    for (i = 0; i &lt; len; i += n) {
+        n = rb_enc_mbclen(ptr + i, ptr + len, enc);
+        rb_yield(rb_str_subseq(str, i, n));
+    }
+    return str;
 }</pre>
 </body>
 </html>

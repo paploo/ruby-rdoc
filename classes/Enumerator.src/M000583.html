@@ -2,62 +2,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Enumerator)</title>
+  <title>next (Enumerator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *    Enumerator.new(obj, method = :each, *args)
- *    Enumerator.new { |y| ... }
+ * call-seq:
+ *   e.next   =&gt; object
  *
- *  Creates a new Enumerator object, which is to be used as an
- *  Enumerable object iterating in a given way.
+ * Returns the next object in the enumerator, and move the internal
+ * position forward.  When the position reached at the end, internal
+ * position is rewound then StopIteration is raised.
  *
- *  In the first form, a generated Enumerator iterates over the given
- *  object using the given method with the given arguments passed.
- *  Use of this form is discouraged.  Use Kernel#enum_for(), alias
- *  to_enum, instead.
+ * Note that enumeration sequence by next method does not affect other
+ * non-external enumeration methods, unless underlying iteration
+ * methods itself has side-effect, e.g. IO#each_line.
  *
- *    e = Enumerator.new(ObjectSpace, :each_object)
- *        #-&gt; ObjectSpace.enum_for(:each_object)
- *
- *    e.select { |obj| obj.is_a?(Class) }  #=&gt; array of all classes
- *
- *  In the second form, iteration is defined by the given block, in
- *  which a &quot;yielder&quot; object given as block parameter can be used to
- *  yield a value by calling the +yield+ method, alias +&lt;&lt;+.
- *
- *    fib = Enumerator.new { |y|
- *      a = b = 1
- *      loop {
- *        y &lt;&lt; a
- *        a, b = b, a + b
- *      }
- *    }
- *
- *    p fib.take(10) #=&gt; [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
  */
+
 static VALUE
-enumerator_initialize(int argc, VALUE *argv, VALUE obj)
+enumerator_next(VALUE obj)
 {
-    VALUE recv, meth = sym_each;
+    struct enumerator *e = enumerator_ptr(obj);
+    VALUE curr, v;
+    curr = rb_fiber_current();
 
-    if (argc == 0) {
-        if (!rb_block_given_p())
-            rb_raise(rb_eArgError, &quot;wrong number of argument (0 for 1+)&quot;);
-
-        recv = generator_init(generator_allocate(rb_cGenerator), rb_block_proc());
-    } else {
-        recv = *argv++;
-        if (--argc) {
-            meth = *argv++;
-            --argc;
-        }
+    if (!e-&gt;fib || !rb_fiber_alive_p(e-&gt;fib)) {
+        next_init(obj, e);
     }
 
-    return enumerator_init(obj, recv, meth, argc, argv);
+    v = rb_fiber_resume(e-&gt;fib, 1, &amp;curr);
+    if (e-&gt;no_next) {
+        e-&gt;fib = 0;
+        e-&gt;dst = Qnil;
+        e-&gt;no_next = Qfalse;
+        rb_raise(rb_eStopIteration, &quot;iteration reached at end&quot;);
+    }
+    return v;
 }</pre>
 </body>
 </html>

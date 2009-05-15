@@ -2,36 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pass (Thread)</title>
+  <title>value (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.pass   =&gt; nil
+ *     thr.value   =&gt; obj
  *
- *  Invokes the thread scheduler to pass execution to another thread.
+ *  Waits for &lt;i&gt;thr&lt;/i&gt; to complete (via &lt;code&gt;Thread#join&lt;/code&gt;) and returns
+ *  its value.
  *
- *     a = Thread.new { print &quot;a&quot;; Thread.pass;
- *                      print &quot;b&quot;; Thread.pass;
- *                      print &quot;c&quot; }
- *     b = Thread.new { print &quot;x&quot;; Thread.pass;
- *                      print &quot;y&quot;; Thread.pass;
- *                      print &quot;z&quot; }
- *     a.join
- *     b.join
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     axbycz
+ *     a = Thread.new { 2 + 2 }
+ *     a.value   #=&gt; 4
  */
 
 static VALUE
-thread_s_pass(VALUE klass)
+thread_value(VALUE self)
 {
-    rb_thread_schedule();
-    return Qnil;
+    rb_thread_t *th;
+    GetThreadPtr(self, th);
+    thread_join(th, DELAY_INFTY);
+    return th-&gt;value;
 }</pre>
 </body>
 </html>

@@ -2,21 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt; (BigDecimal)</title>
+  <title>exponent (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* call-seq:
- * a &gt; b
+  <pre>/* Returns the exponent of the BigDecimal number, as an Integer.
  *
- * Returns true if a is greater than b.  Values may be coerced to 
- * perform the comparison (see ==, coerce).
+ * If the number can be represented as 0.xxxxxx*10**n where xxxxxx is a string
+ * of digits with no leading zeros, then n is the exponent.
  */
 static VALUE
-BigDecimal_gt(VALUE self, VALUE r)
+BigDecimal_exponent(VALUE self)
 {
-    return BigDecimalCmp(self, r, '&gt;');
+    S_LONG e = VpExponent10(GetVpValue(self,1));
+    return INT2NUM(e);
 }</pre>
 </body>
 </html>

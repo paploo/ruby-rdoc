@@ -2,33 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>has_value? (Hash)</title>
+  <title>pretty_print_cycle (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     hsh.has_value?(value)    =&gt; true or false
- *     hsh.value?(value)        =&gt; true or false
- *
- *  Returns &lt;code&gt;true&lt;/code&gt; if the given value is present for some key
- *  in &lt;i&gt;hsh&lt;/i&gt;.
- *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.has_value?(100)   #=&gt; true
- *     h.has_value?(999)   #=&gt; false
- */
-
-static VALUE
-rb_hash_has_value(VALUE hash, VALUE val)
-{
-    VALUE data[2];
-
-    data[0] = Qfalse;
-    data[1] = val;
-    rb_hash_foreach(hash, rb_hash_search_value, (st_data_t)data);
-    return data[0];
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 347</span>
+347:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty_print_cycle</span>(<span class="ruby-identifier">q</span>)
+348:     <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span>(<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-value str">'{}'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'{...}'</span>)
+349:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

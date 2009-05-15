@@ -2,16 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>waiting_jobs_exist? (Shell::ProcessController)</title>
+  <title>kill_job (Shell::ProcessController)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 134</span>
-134:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">waiting_jobs_exist?</span>
-135:       <span class="ruby-ivar">@jobs_sync</span>.<span class="ruby-identifier">synchronize</span>(<span class="ruby-identifier">:SH</span>) <span class="ruby-keyword kw">do</span>
-136:         <span class="ruby-ivar">@waiting_jobs</span>.<span class="ruby-identifier">empty?</span>
-137:       <span class="ruby-keyword kw">end</span>
-138:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 201</span>
+201:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">kill_job</span>(<span class="ruby-identifier">sig</span>, <span class="ruby-identifier">command</span>)
+202:       <span class="ruby-ivar">@jobs_sync</span>.<span class="ruby-identifier">synchronize</span>(<span class="ruby-identifier">:EX</span>) <span class="ruby-keyword kw">do</span>
+203:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@waiting_jobs</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">command</span>
+204:           <span class="ruby-constant">ProcessController</span>.<span class="ruby-identifier">inactivate</span>(<span class="ruby-keyword kw">self</span>)
+205:           <span class="ruby-keyword kw">return</span>
+206:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@active_jobs</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">command</span>)
+207:           <span class="ruby-keyword kw">begin</span>
+208:             <span class="ruby-identifier">r</span> = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-identifier">sig</span>)
+209:             <span class="ruby-constant">ProcessController</span>.<span class="ruby-identifier">inactivate</span>(<span class="ruby-keyword kw">self</span>)
+210:           <span class="ruby-keyword kw">rescue</span>
+211:             <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Shell: Warn: $!\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">verbose?</span>
+212:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+213:           <span class="ruby-keyword kw">end</span>
+214:           <span class="ruby-ivar">@active_jobs</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">command</span>
+215:           <span class="ruby-identifier">r</span>
+216:         <span class="ruby-keyword kw">end</span>
+217:       <span class="ruby-keyword kw">end</span>
+218:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

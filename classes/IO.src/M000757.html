@@ -2,37 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lineno= (IO)</title>
+  <title>write (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.lineno = integer    =&gt; integer
+ *     ios.write(string)    =&gt; integer
  *
- *  Manually sets the current line number to the given value.
- *  &lt;code&gt;$.&lt;/code&gt; is updated only on the next read.
+ *  Writes the given string to &lt;em&gt;ios&lt;/em&gt;. The stream must be opened
+ *  for writing. If the argument is not a string, it will be converted
+ *  to a string using &lt;code&gt;to_s&lt;/code&gt;. Returns the number of bytes
+ *  written.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     f.gets                     #=&gt; &quot;This is line one\n&quot;
- *     $.                         #=&gt; 1
- *     f.lineno = 1000
- *     f.lineno                   #=&gt; 1000
- *     $.                         #=&gt; 1         # lineno of last read
- *     f.gets                     #=&gt; &quot;This is line two\n&quot;
- *     $.                         #=&gt; 1001      # lineno of last read
+ *     count = $stdout.write( &quot;This is a test\n&quot; )
+ *     puts &quot;That was #{count} bytes of data&quot;
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     This is a test
+ *     That was 15 bytes of data
  */
 
 static VALUE
-rb_io_set_lineno(VALUE io, VALUE lineno)
+io_write_m(VALUE io, VALUE str)
 {
-    rb_io_t *fptr;
-
-    GetOpenFile(io, fptr);
-    rb_io_check_readable(fptr);
-    fptr-&gt;lineno = NUM2INT(lineno);
-    return lineno;
+    return io_write(io, str, 0);
 }</pre>
 </body>
 </html>

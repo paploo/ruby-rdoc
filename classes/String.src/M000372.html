@@ -2,34 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>encode! (String)</title>
+  <title>is_complex_yaml? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     str.encode!(encoding [, options] )   =&gt; str
- *     str.encode!(dst_encoding, src_encoding [, options] )   =&gt; str
- *
- *  The first form transcodes the contents of &lt;i&gt;str&lt;/i&gt; from
- *  str.encoding to +encoding+.
- *  The second form transcodes the contents of &lt;i&gt;str&lt;/i&gt; from
- *  src_encoding to dst_encoding.
- *  The options Hash gives details for conversion. See String#encode
- *  for details.
- *  Returns the string even if no changes were made.
- */
-
-static VALUE
-str_encode_bang(int argc, VALUE *argv, VALUE str)
-{
-    VALUE newstr = str;
-    int encidx = str_transcode(argc, argv, &amp;newstr);
-
-    if (encidx &lt; 0) return str;
-    rb_str_shared_replace(str, newstr);
-    return str_encode_associate(str, encidx);
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 142</span>
+142:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_complex_yaml?</span>
+143:         <span class="ruby-identifier">to_yaml_style</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\n.+/</span>
+144:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

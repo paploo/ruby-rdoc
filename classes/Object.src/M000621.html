@@ -2,36 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>instance_variables (Object)</title>
+  <title>kind_of? (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.instance_variables    =&gt; array
+ *     obj.is_a?(class)       =&gt; true or false
+ *     obj.kind_of?(class)    =&gt; true or false
  *  
- *  Returns an array of instance variable names for the receiver. Note
- *  that simply defining an accessor does not create the corresponding
- *  instance variable.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;class&lt;/i&gt; is the class of
+ *  &lt;i&gt;obj&lt;/i&gt;, or if &lt;i&gt;class&lt;/i&gt; is one of the superclasses of
+ *  &lt;i&gt;obj&lt;/i&gt; or modules included in &lt;i&gt;obj&lt;/i&gt;.
  *     
- *     class Fred
- *       attr_accessor :a1
- *       def initialize
- *         @iv = 3
- *       end
+ *     module M;    end
+ *     class A
+ *       include M
  *     end
- *     Fred.new.instance_variables   #=&gt; [:@iv]
+ *     class B &lt; A; end
+ *     class C &lt; B; end
+ *     b = B.new
+ *     b.instance_of? A   #=&gt; false
+ *     b.instance_of? B   #=&gt; true
+ *     b.instance_of? C   #=&gt; false
+ *     b.instance_of? M   #=&gt; false
+ *     b.kind_of? A       #=&gt; true
+ *     b.kind_of? B       #=&gt; true
+ *     b.kind_of? C       #=&gt; false
+ *     b.kind_of? M       #=&gt; true
  */
 
 VALUE
-rb_obj_instance_variables(VALUE obj)
+rb_obj_is_kind_of(VALUE obj, VALUE c)
 {
-    VALUE ary;
+    VALUE cl = CLASS_OF(obj);
 
-    ary = rb_ary_new();
-    rb_ivar_foreach(obj, ivar_i, ary);
-    return ary;
+    switch (TYPE(c)) {
+      case T_MODULE:
+      case T_CLASS:
+      case T_ICLASS:
+        break;
+
+      default:
+        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
+    }
+
+    while (cl) {
+        if (cl == c || RCLASS_M_TBL(cl) == RCLASS_M_TBL(c))
+            return Qtrue;
+        cl = RCLASS_SUPER(cl);
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

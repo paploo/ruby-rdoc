@@ -2,26 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>strip! (String)</title>
+  <title>squeeze (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
+  <pre>/* 
  *  call-seq:
- *     str.strip!   =&gt; str or nil
+ *     str.squeeze([other_str]*)    =&gt; new_str
  *  
- *  Removes leading and trailing whitespace from &lt;i&gt;str&lt;/i&gt;. Returns
- *  &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; was not altered.
+ *  Builds a set of characters from the &lt;i&gt;other_str&lt;/i&gt; parameter(s) using the
+ *  procedure described for &lt;code&gt;String#count&lt;/code&gt;. Returns a new string
+ *  where runs of the same character that occur in this set are replaced by a
+ *  single character. If no arguments are given, all runs of identical
+ *  characters are replaced by a single character.
+ *     
+ *     &quot;yellow moon&quot;.squeeze                  #=&gt; &quot;yelow mon&quot;
+ *     &quot;  now   is  the&quot;.squeeze(&quot; &quot;)         #=&gt; &quot; now is the&quot;
+ *     &quot;putters shoot balls&quot;.squeeze(&quot;m-z&quot;)   #=&gt; &quot;puters shot balls&quot;
  */
 
 static VALUE
-rb_str_strip_bang(VALUE str)
+rb_str_squeeze(int argc, VALUE *argv, VALUE str)
 {
-    VALUE l = rb_str_lstrip_bang(str);
-    VALUE r = rb_str_rstrip_bang(str);
-
-    if (NIL_P(l) &amp;&amp; NIL_P(r)) return Qnil;
+    str = rb_str_dup(str);
+    rb_str_squeeze_bang(argc, argv, str);
     return str;
 }</pre>
 </body>

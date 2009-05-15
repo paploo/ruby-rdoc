@@ -2,15 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_address (Resolv::DNS)</title>
+  <title>each_resource (Resolv::DNS)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 380</span>
-380:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>)
-381:       <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">Resource</span><span class="ruby-operator">::</span><span class="ruby-constant">IN</span><span class="ruby-operator">::</span><span class="ruby-constant">A</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">address</span>}
-382:       <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">Resource</span><span class="ruby-operator">::</span><span class="ruby-constant">IN</span><span class="ruby-operator">::</span><span class="ruby-constant">AAAA</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">address</span>}
-383:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 471</span>
+471:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">typeclass</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+472:       <span class="ruby-identifier">lazy_initialize</span>
+473:       <span class="ruby-identifier">requester</span> = <span class="ruby-identifier">make_requester</span>
+474:       <span class="ruby-identifier">senders</span> = {}
+475:       <span class="ruby-keyword kw">begin</span>
+476:         <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">resolv</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">candidate</span>, <span class="ruby-identifier">tout</span>, <span class="ruby-identifier">nameserver</span><span class="ruby-operator">|</span>
+477:           <span class="ruby-identifier">msg</span> = <span class="ruby-constant">Message</span>.<span class="ruby-identifier">new</span>
+478:           <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">rd</span> = <span class="ruby-value">1</span>
+479:           <span class="ruby-identifier">msg</span>.<span class="ruby-identifier">add_question</span>(<span class="ruby-identifier">candidate</span>, <span class="ruby-identifier">typeclass</span>)
+480:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sender</span> = <span class="ruby-identifier">senders</span>[[<span class="ruby-identifier">candidate</span>, <span class="ruby-identifier">nameserver</span>]]
+481:             <span class="ruby-identifier">sender</span> = <span class="ruby-identifier">senders</span>[[<span class="ruby-identifier">candidate</span>, <span class="ruby-identifier">nameserver</span>]] =
+482:               <span class="ruby-identifier">requester</span>.<span class="ruby-identifier">sender</span>(<span class="ruby-identifier">msg</span>, <span class="ruby-identifier">candidate</span>, <span class="ruby-identifier">nameserver</span>)
+483:           <span class="ruby-keyword kw">end</span>
+484:           <span class="ruby-identifier">reply</span>, <span class="ruby-identifier">reply_name</span> = <span class="ruby-identifier">requester</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">sender</span>, <span class="ruby-identifier">tout</span>)
+485:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">reply</span>.<span class="ruby-identifier">rcode</span>
+486:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RCode</span><span class="ruby-operator">::</span><span class="ruby-constant">NoError</span>
+487:             <span class="ruby-identifier">extract_resources</span>(<span class="ruby-identifier">reply</span>, <span class="ruby-identifier">reply_name</span>, <span class="ruby-identifier">typeclass</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+488:             <span class="ruby-keyword kw">return</span>
+489:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RCode</span><span class="ruby-operator">::</span><span class="ruby-constant">NXDomain</span>
+490:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">NXDomain</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">reply_name</span>.<span class="ruby-identifier">to_s</span>)
+491:           <span class="ruby-keyword kw">else</span>
+492:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">OtherResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">reply_name</span>.<span class="ruby-identifier">to_s</span>)
+493:           <span class="ruby-keyword kw">end</span>
+494:         }
+495:       <span class="ruby-keyword kw">ensure</span>
+496:         <span class="ruby-identifier">requester</span>.<span class="ruby-identifier">close</span>
+497:       <span class="ruby-keyword kw">end</span>
+498:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

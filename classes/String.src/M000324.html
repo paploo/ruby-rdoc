@@ -2,50 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>crypt (String)</title>
+  <title>end_with? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.crypt(other_str)   =&gt; new_str
+ *     str.end_with?([suffix]+)   =&gt; true or false
  *  
- *  Applies a one-way cryptographic hash to &lt;i&gt;str&lt;/i&gt; by invoking the standard
- *  library function &lt;code&gt;crypt&lt;/code&gt;. The argument is the salt string, which
- *  should be two characters long, each character drawn from
- *  &lt;code&gt;[a-zA-Z0-9./]&lt;/code&gt;.
+ *  Returns true if &lt;i&gt;str&lt;/i&gt; ends with the suffix given.
  */
 
 static VALUE
-rb_str_crypt(VALUE str, VALUE salt)
+rb_str_end_with(int argc, VALUE *argv, VALUE str)
 {
-    extern char *crypt(const char *, const char *);
-    VALUE result;
-    const char *s, *saltp;
-#ifdef BROKEN_CRYPT
-    char salt_8bit_clean[3];
-#endif
+    int i;
+    char *p, *s, *e;
+    rb_encoding *enc;
 
-    StringValue(salt);
-    if (RSTRING_LEN(salt) &lt; 2)
-        rb_raise(rb_eArgError, &quot;salt too short (need &gt;=2 bytes)&quot;);
-
-    s = RSTRING_PTR(str);
-    if (!s) s = &quot;&quot;;
-    saltp = RSTRING_PTR(salt);
-#ifdef BROKEN_CRYPT
-    if (!ISASCII((unsigned char)saltp[0]) || !ISASCII((unsigned char)saltp[1])) {
-        salt_8bit_clean[0] = saltp[0] &amp; 0x7f;
-        salt_8bit_clean[1] = saltp[1] &amp; 0x7f;
-        salt_8bit_clean[2] = '\0';
-        saltp = salt_8bit_clean;
+    for (i=0; i&lt;argc; i++) {
+        VALUE tmp = rb_check_string_type(argv[i]);
+        if (NIL_P(tmp)) continue;
+        enc = rb_enc_check(str, tmp);
+        if (RSTRING_LEN(str) &lt; RSTRING_LEN(tmp)) continue;
+        p = RSTRING_PTR(str);
+        e = p + RSTRING_LEN(str);
+        s = e - RSTRING_LEN(tmp);
+        if (rb_enc_left_char_head(p, s, e, enc) != s)
+            continue;
+        if (memcmp(s, RSTRING_PTR(tmp), RSTRING_LEN(tmp)) == 0)
+            return Qtrue;
     }
-#endif
-    result = rb_str_new2(crypt(s, saltp));
-    OBJ_INFECT(result, str);
-    OBJ_INFECT(result, salt);
-    return result;
+    return Qfalse;
 }</pre>
 </body>
 </html>

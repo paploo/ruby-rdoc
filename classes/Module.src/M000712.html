@@ -2,38 +2,49 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>alias_method (Module)</title>
+  <title>public_method_defined? (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     alias_method(new_name, old_name)   =&gt; self
+ *     mod.public_method_defined?(symbol)   =&gt; true or false
  *
- *  Makes &lt;i&gt;new_name&lt;/i&gt; a new copy of the method &lt;i&gt;old_name&lt;/i&gt;. This can
- *  be used to retain access to methods that are overridden.
+ *  Returns +true+ if the named public method is defined by
+ *  _mod_ (or its included modules and, if _mod_ is a class,
+ *  its ancestors).
  *
- *     module Mod
- *       alias_method :orig_exit, :exit
- *       def exit(code=0)
- *         puts &quot;Exiting with code #{code}&quot;
- *         orig_exit(code)
- *       end
+ *     module A
+ *       def method1()  end
  *     end
- *     include Mod
- *     exit(99)
+ *     class B
+ *       protected
+ *       def method2()  end
+ *     end
+ *     class C &lt; B
+ *       include A
+ *       def method3()  end
+ *     end
  *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     Exiting with code 99
+ *     A.method_defined? :method1           #=&gt; true
+ *     C.public_method_defined? &quot;method1&quot;   #=&gt; true
+ *     C.public_method_defined? &quot;method2&quot;   #=&gt; false
+ *     C.method_defined? &quot;method2&quot;          #=&gt; true
  */
 
 static VALUE
-rb_mod_alias_method(VALUE mod, VALUE newname, VALUE oldname)
+rb_mod_public_method_defined(VALUE mod, VALUE mid)
 {
-    rb_alias(mod, rb_to_id(newname), rb_to_id(oldname));
-    return mod;
+    ID id = rb_to_id(mid);
+    NODE *method;
+
+    method = rb_method_node(mod, id);
+    if (method) {
+        if (VISI_CHECK(method-&gt;nd_noex, NOEX_PUBLIC))
+            return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

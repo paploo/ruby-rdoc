@@ -2,14 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>stdout (DEBUGGER__)</title>
+  <title>debug_eval (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 102</span>
-102:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stdout</span>
-103:     <span class="ruby-constant">DEBUGGER__</span>.<span class="ruby-identifier">stdout</span>
-104:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 126</span>
+126:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">binding</span>)
+127:     <span class="ruby-keyword kw">begin</span>
+128:       <span class="ruby-identifier">val</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">binding</span>)
+129:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">StandardError</span>, <span class="ruby-constant">ScriptError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+130:       <span class="ruby-identifier">at</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-value str">&quot;caller(1)&quot;</span>, <span class="ruby-identifier">binding</span>)
+131:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%s:%s\n&quot;</span>, <span class="ruby-identifier">at</span>.<span class="ruby-identifier">shift</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/\(eval\):1:(in `.*?':)?/</span>, <span class="ruby-value str">''</span>)
+132:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">at</span>
+133:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;\tfrom %s\n&quot;</span>, <span class="ruby-identifier">i</span>
+134:       <span class="ruby-keyword kw">end</span>
+135:       <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:debug_error</span>
+136:     <span class="ruby-keyword kw">end</span>
+137:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

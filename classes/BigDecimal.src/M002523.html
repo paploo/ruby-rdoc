@@ -2,25 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (BigDecimal)</title>
+  <title>&gt;= (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * Tests for value equality; returns true if the values are equal.
+  <pre>/* call-seq:
+ * a &gt;= b
  *
- * The == and === operators and the eql? method have the same implementation 
- * for BigDecimal.
- *
- * Values may be coerced to perform the comparison:
- *
- * BigDecimal.new('1.0') == 1.0  -&gt; true
+ * Returns true if a is greater than or equal to b. Values may be coerced to 
+ * perform the comparison (see ==, coerce)
  */
 static VALUE
-BigDecimal_eq(VALUE self, VALUE r)
+BigDecimal_ge(VALUE self, VALUE r)
 {
-    return BigDecimalCmp(self, r, '=');
+    return BigDecimalCmp(self, r, 'G');
 }</pre>
 </body>
 </html>

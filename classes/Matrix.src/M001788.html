@@ -2,14 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rows (Matrix)</title>
+  <title>row_vector (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 131</span>
-131:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-identifier">copy</span> = <span class="ruby-keyword kw">true</span>)
-132:     <span class="ruby-identifier">new</span>(<span class="ruby-identifier">:init_rows</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-identifier">copy</span>)
-133:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 209</span>
+209:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">row_vector</span>(<span class="ruby-identifier">row</span>)
+210:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">row</span>
+211:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Vector</span>
+212:       <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>([<span class="ruby-identifier">row</span>.<span class="ruby-identifier">to_a</span>], <span class="ruby-keyword kw">false</span>)
+213:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+214:       <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>([<span class="ruby-identifier">row</span>.<span class="ruby-identifier">dup</span>], <span class="ruby-keyword kw">false</span>)
+215:     <span class="ruby-keyword kw">else</span>
+216:       <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>([[<span class="ruby-identifier">row</span>]], <span class="ruby-keyword kw">false</span>)
+217:     <span class="ruby-keyword kw">end</span>
+218:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

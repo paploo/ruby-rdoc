@@ -2,54 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>at (Time)</title>
+  <title>to_f (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Time.at(time) =&gt; time
- *     Time.at(seconds_with_frac) =&gt; time
- *     Time.at(seconds, microseconds_with_frac) =&gt; time
+ *     time.to_f =&gt; float
  *  
- *  Creates a new time object with the value given by &lt;i&gt;time&lt;/i&gt;,
- *  the given number of &lt;i&gt;seconds_with_frac&lt;/i&gt;, or
- *  &lt;i&gt;seconds&lt;/i&gt; and &lt;i&gt;microseconds_with_frac&lt;/i&gt; from the Epoch.
- *  &lt;i&gt;seconds_with_frac&lt;/i&gt; and &lt;i&gt;microseconds_with_frac&lt;/i&gt;
- *  can be Integer, Float, Rational, or other Numeric.
- *  non-portable feature allows the offset to be negative on some systems.
+ *  Returns the value of &lt;i&gt;time&lt;/i&gt; as a floating point number of
+ *  seconds since the Epoch.
  *     
- *     Time.at(0)            #=&gt; 1969-12-31 18:00:00 -0600
- *     Time.at(Time.at(0))   #=&gt; 1969-12-31 18:00:00 -0600
- *     Time.at(946702800)    #=&gt; 1999-12-31 23:00:00 -0600
- *     Time.at(-284061600)   #=&gt; 1960-12-31 00:00:00 -0600
- *     Time.at(946684800.2).usec #=&gt; 200000
- *     Time.at(946684800, 123456.789).nsec #=&gt; 123456789
+ *     t = Time.now
+ *     &quot;%10.5f&quot; % t.to_f   #=&gt; &quot;1049896564.13654&quot;
+ *     t.to_i              #=&gt; 1049896564
+ *
+ *  Note that IEEE 754 double is not accurate enough to represent
+ *  nanoseconds from the Epoch.
  */
 
 static VALUE
-time_s_at(int argc, VALUE *argv, VALUE klass)
+time_to_f(VALUE time)
 {
-    struct timespec ts;
-    VALUE time, t;
+    struct time_object *tobj;
 
-    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;time, &amp;t) == 2) {
-        ts.tv_sec = NUM2LONG(time);
-        ts.tv_nsec = NUM2LONG(rb_funcall(t, id_mul, 1, INT2FIX(1000)));
-    }
-    else {
-        ts = rb_time_timespec(time);
-    }
-    t = time_new_internal(klass, ts.tv_sec, ts.tv_nsec);
-    if (TYPE(time) == T_DATA &amp;&amp; RDATA(time)-&gt;dfree == time_free) {
-        struct time_object *tobj, *tobj2;
-
-        GetTimeval(time, tobj);
-        GetTimeval(t, tobj2);
-        tobj2-&gt;gmt = tobj-&gt;gmt;
-    }
-    return t;
+    GetTimeval(time, tobj);
+    return DBL2NUM((double)tobj-&gt;ts.tv_sec+(double)tobj-&gt;ts.tv_nsec/1e9);
 }</pre>
 </body>
 </html>

@@ -2,32 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_path (File)</title>
+  <title>world_readable? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     file.path -&gt; filename
- *  
- *  Returns the pathname used to create &lt;i&gt;file&lt;/i&gt; as a string. Does
- *  not normalize the name.
+ * call-seq:
+ *    File.world_readable?(file_name)   =&gt; fixnum or nil
+ *
+ * If &lt;i&gt;file_name&lt;/i&gt; is readable by others, returns an integer
+ * representing the file permission bits of &lt;i&gt;file_name&lt;/i&gt;. Returns
+ * &lt;code&gt;nil&lt;/code&gt; otherwise. The meaning of the bits is platform
+ * dependent; on Unix systems, see &lt;code&gt;stat(2)&lt;/code&gt;.
  *     
- *     File.new(&quot;testfile&quot;).path               #=&gt; &quot;testfile&quot;
- *     File.new(&quot;/tmp/../tmp/xxx&quot;, &quot;w&quot;).path   #=&gt; &quot;/tmp/../tmp/xxx&quot;
- *     
+ *    File.world_readable?(&quot;/etc/passwd&quot;)           # =&gt; 420
+ *    m = File.world_readable?(&quot;/etc/passwd&quot;)
+ *    sprintf(&quot;%o&quot;, m)                              # =&gt; &quot;644&quot;
  */
 
 static VALUE
-rb_file_path(VALUE obj)
+rb_file_world_readable_p(VALUE obj, VALUE fname)
 {
-    rb_io_t *fptr;
+#ifdef S_IROTH
+    struct stat st;
 
-    fptr = RFILE(rb_io_taint_check(obj))-&gt;fptr;
-    rb_io_check_initialized(fptr);
-    if (NIL_P(fptr-&gt;pathv)) return Qnil;
-    return rb_obj_taint(rb_str_dup(fptr-&gt;pathv));
+    if (rb_stat(fname, &amp;st) &lt; 0) return Qnil;
+    if ((st.st_mode &amp; (S_IROTH)) == S_IROTH) {
+        return UINT2NUM(st.st_mode &amp; (S_IRUGO|S_IWUGO|S_IXUGO));
+    }
+#endif
+    return Qnil;
 }</pre>
 </body>
 </html>

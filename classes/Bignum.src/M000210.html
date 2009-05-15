@@ -2,75 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>fdiv (Bignum)</title>
+  <title>&lt;&lt; (Bignum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
-  *     big.fdiv(numeric) -&gt; float
+ * call-seq:
+ *     big &lt;&lt; numeric   =&gt;  integer
  *
- *  Returns the floating point result of dividing &lt;i&gt;big&lt;/i&gt; by
- *  &lt;i&gt;numeric&lt;/i&gt;.
- *
- *     -1234567890987654321.fdiv(13731)      #=&gt; -89910996357705.5
- *     -1234567890987654321.fdiv(13731.24)   #=&gt; -89909424858035.7
- *
+ * Shifts big left _numeric_ positions (right if _numeric_ is negative).
  */
 
-static VALUE
-rb_big_fdiv(VALUE x, VALUE y)
+VALUE
+rb_big_lshift(VALUE x, VALUE y)
 {
-    double dx = big2dbl(x);
-    double dy;
+    long shift;
+    int neg = 0;
 
-    if (isinf(dx)) {
-#define DBL_BIGDIG ((DBL_MANT_DIG + BITSPERDIG) / BITSPERDIG)
-        VALUE z;
-        int ex, ey;
-
-        ex = (RBIGNUM_LEN(bigtrunc(x)) - 1) * BITSPERDIG;
-        ex += bdigbitsize(BDIGITS(x)[RBIGNUM_LEN(x) - 1]);
-        ex -= 2 * DBL_BIGDIG * BITSPERDIG;
-        if (ex) x = big_shift(x, ex);
-
-        switch (TYPE(y)) {
-          case T_FIXNUM:
-            y = rb_int2big(FIX2LONG(y));
-          case T_BIGNUM: {
-            ey = (RBIGNUM_LEN(bigtrunc(y)) - 1) * BITSPERDIG;
-            ey += bdigbitsize(BDIGITS(y)[RBIGNUM_LEN(y) - 1]);
-            ey -= DBL_BIGDIG * BITSPERDIG;
-            if (ey) y = big_shift(y, ey);
-          bignum:
-            bigdivrem(x, y, &amp;z, 0);
-            return DBL2NUM(ldexp(big2dbl(z), ex - ey));
-          }
-          case T_FLOAT:
-            if (isnan(RFLOAT_VALUE(y))) return y;
-            y = dbl2big(ldexp(frexp(RFLOAT_VALUE(y), &amp;ey), DBL_MANT_DIG));
-            ey -= DBL_MANT_DIG;
-            goto bignum;
+    for (;;) {
+        if (FIXNUM_P(y)) {
+            shift = FIX2LONG(y);
+            if (shift &lt; 0) {
+                neg = 1;
+                shift = -shift;
+            }
+            break;
         }
+        else if (TYPE(y) == T_BIGNUM) {
+            if (!RBIGNUM_SIGN(y)) {
+                VALUE t = check_shiftdown(y, x);
+                if (!NIL_P(t)) return t;
+                neg = 1;
+            }
+            shift = big2ulong(y, &quot;long&quot;, Qtrue);
+            break;
+        }
+        y = rb_to_int(y);
     }
-    switch (TYPE(y)) {
-      case T_FIXNUM:
-        dy = (double)FIX2LONG(y);
-        break;
 
-      case T_BIGNUM:
-        dy = rb_big2dbl(y);
-        break;
-
-      case T_FLOAT:
-        dy = RFLOAT_VALUE(y);
-        break;
-
-      default:
-        return rb_num_coerce_bin(x, y, rb_intern(&quot;fdiv&quot;));
-    }
-    return DBL2NUM(dx / dy);
+    if (neg) return big_rshift(x, shift);
+    return big_lshift(x, shift);
 }</pre>
 </body>
 </html>

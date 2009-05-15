@@ -2,50 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>- (BigDecimal)</title>
+  <title>remainder (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* call-seq:
-  * sub(value, digits)
-  *
-  * Subtract the specified value. 
-  *
-  * e.g.
-  *   c = a.sub(b,n)
-  *   c = a - b
-  *
-  * digits:: If specified and less than the number of significant digits of the result, the result is rounded to that number of digits, according to BigDecimal.mode.
-  */
+  <pre>/* Returns the remainder from dividing by the value.
+ *
+ * If the values divided are of the same sign, the remainder is the same as
+ * the modulus (see divmod).
+ *
+ * Otherwise, the remainder is the modulus minus the value divided by.
+ */
 static VALUE
-BigDecimal_sub(VALUE self, VALUE r)
+BigDecimal_remainder(VALUE self, VALUE r) /* remainder */
 {
-    ENTER(5);
-    Real *c, *a, *b;
-    U_LONG mx;
-
-    GUARD_OBJ(a,GetVpValue(self,1));
-    b = GetVpValue(r,0);
-    if(!b) return DoSomeOne(self,r,'-');
-    SAVE(b);
-
-    if(VpIsNaN(b)) return b-&gt;obj;
-    if(VpIsNaN(a)) return a-&gt;obj;
-
-    mx = GetAddSubPrec(a,b);
-    if(mx==(-1L)) {
-        GUARD_OBJ(c,VpCreateRbObject(VpBaseFig() + 1, &quot;0&quot;));
-        VpAddSub(c, a, b, -1);
-    } else {
-        GUARD_OBJ(c,VpCreateRbObject(mx *(VpBaseFig() + 1), &quot;0&quot;));
-        if(!mx) {
-            VpSetInf(c,VpGetSign(a));
-        } else {
-            VpAddSub(c, a, b, -1);
-        }
-    }
-    return ToValue(c);
+    VALUE  f;
+    Real  *d,*rv=0;
+    f = BigDecimal_divremain(self,r,&amp;d,&amp;rv);
+    if(f!=(VALUE)0) return f;
+    return ToValue(rv);
 }</pre>
 </body>
 </html>

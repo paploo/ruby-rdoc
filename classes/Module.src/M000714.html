@@ -2,32 +2,49 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>protected (Module)</title>
+  <title>protected_method_defined? (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     protected                =&gt; self
- *     protected(symbol, ...)   =&gt; self
+ *     mod.protected_method_defined?(symbol)   =&gt; true or false
  *
- *  With no arguments, sets the default visibility for subsequently
- *  defined methods to protected. With arguments, sets the named methods
- *  to have protected visibility.
+ *  Returns +true+ if the named protected method is defined
+ *  by _mod_ (or its included modules and, if _mod_ is a
+ *  class, its ancestors).
+ *
+ *     module A
+ *       def method1()  end
+ *     end
+ *     class B
+ *       protected
+ *       def method2()  end
+ *     end
+ *     class C &lt; B
+ *       include A
+ *       def method3()  end
+ *     end
+ *
+ *     A.method_defined? :method1              #=&gt; true
+ *     C.protected_method_defined? &quot;method1&quot;   #=&gt; false
+ *     C.protected_method_defined? &quot;method2&quot;   #=&gt; true
+ *     C.method_defined? &quot;method2&quot;             #=&gt; true
  */
 
 static VALUE
-rb_mod_protected(int argc, VALUE *argv, VALUE module)
+rb_mod_protected_method_defined(VALUE mod, VALUE mid)
 {
-    secure_visibility(module);
-    if (argc == 0) {
-        SCOPE_SET(NOEX_PROTECTED);
+    ID id = rb_to_id(mid);
+    NODE *method;
+
+    method = rb_method_node(mod, id);
+    if (method) {
+        if (VISI_CHECK(method-&gt;nd_noex, NOEX_PROTECTED))
+            return Qtrue;
     }
-    else {
-        set_method_visibility(module, argc, argv, NOEX_PROTECTED);
-    }
-    return module;
+    return Qfalse;
 }</pre>
 </body>
 </html>

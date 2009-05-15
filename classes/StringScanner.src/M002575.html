@@ -2,34 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;&lt; (StringScanner)</title>
+  <title>skip (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   concat(str)
- *   &lt;&lt;(str)
+ * call-seq: skip(pattern)
  *
- * Appends +str+ to the string being scanned.
- * This method does not affect scan pointer.
+ * Attempts to skip over the given +pattern+ beginning with the scan pointer.
+ * If it matches, the scan pointer is advanced to the end of the match, and the
+ * length of the match is returned.  Otherwise, +nil+ is returned.
  *
- *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
- *   s.scan(/Fri /)
- *   s &lt;&lt; &quot; +1000 GMT&quot;
- *   s.string            # -&gt; &quot;Fri Dec 12 1975 14:39 +1000 GMT&quot;
- *   s.scan(/Dec/)       # -&gt; &quot;Dec&quot;
+ * It's similar to #scan, but without returning the matched string.
+ *
+ *   s = StringScanner.new('test string')
+ *   p s.skip(/\w+/)   # -&gt; 4
+ *   p s.skip(/\w+/)   # -&gt; nil
+ *   p s.skip(/\s+/)   # -&gt; 1
+ *   p s.skip(/\w+/)   # -&gt; 6
+ *   p s.skip(/./)     # -&gt; nil
+ *
  */
 static VALUE
-strscan_concat(VALUE self, VALUE str)
+strscan_skip(VALUE self, VALUE re)
 {
-    struct strscanner *p;
-
-    GET_SCANNER(self, p);
-    StringValue(str);
-    rb_str_append(p-&gt;str, str);
-    return self;
+    return strscan_do_scan(self, re, 1, 0, 1);
 }</pre>
 </body>
 </html>

@@ -2,36 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>cleanpath_conservative (Pathname)</title>
+  <title>absolute? (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 387</span>
-387:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanpath_conservative</span>
-388:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
-389:     <span class="ruby-identifier">names</span> = []
-390:     <span class="ruby-identifier">pre</span> = <span class="ruby-identifier">path</span>
-391:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">pre</span>)
-392:       <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">base</span> = <span class="ruby-identifier">r</span>
-393:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">base</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">base</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'.'</span>
-394:     <span class="ruby-keyword kw">end</span>
-395:     <span class="ruby-keyword kw">if</span> <span class="ruby-node">/#{SEPARATOR_PAT}/o</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">pre</span>)
-396:       <span class="ruby-identifier">names</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">names</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
-397:     <span class="ruby-keyword kw">end</span>
-398:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">empty?</span>
-399:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">pre</span>))
-400:     <span class="ruby-keyword kw">else</span>
-401:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'..'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span>
-402:         <span class="ruby-identifier">names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'.'</span>
-403:       <span class="ruby-keyword kw">end</span>
-404:       <span class="ruby-identifier">result</span> = <span class="ruby-identifier">prepend_prefix</span>(<span class="ruby-identifier">pre</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">names</span>))
-405:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A(?:\.|\.\.)\z/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">has_trailing_separator?</span>(<span class="ruby-identifier">path</span>)
-406:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">add_trailing_separator</span>(<span class="ruby-identifier">result</span>))
-407:       <span class="ruby-keyword kw">else</span>
-408:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">result</span>)
-409:       <span class="ruby-keyword kw">end</span>
-410:     <span class="ruby-keyword kw">end</span>
-411:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 521</span>
+521:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">absolute?</span>
+522:     <span class="ruby-operator">!</span><span class="ruby-identifier">relative?</span>
+523:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

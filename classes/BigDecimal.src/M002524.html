@@ -2,25 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>=== (BigDecimal)</title>
+  <title>zero? (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * Tests for value equality; returns true if the values are equal.
- *
- * The == and === operators and the eql? method have the same implementation 
- * for BigDecimal.
- *
- * Values may be coerced to perform the comparison:
- *
- * BigDecimal.new('1.0') == 1.0  -&gt; true
- */
+  <pre>/* Returns True if the value is zero. */
 static VALUE
-BigDecimal_eq(VALUE self, VALUE r)
+BigDecimal_zero(VALUE self)
 {
-    return BigDecimalCmp(self, r, '=');
+    Real *a = GetVpValue(self,1);
+    return VpIsZero(a) ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

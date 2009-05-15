@@ -2,27 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>nlink (File::Stat)</title>
+  <title>size (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.nlink   =&gt; fixnum
+ *     stat.size    =&gt; fixnum
  *  
- *  Returns the number of hard links to &lt;i&gt;stat&lt;/i&gt;.
+ *  Returns the size of &lt;i&gt;stat&lt;/i&gt; in bytes.
  *     
- *     File.stat(&quot;testfile&quot;).nlink             #=&gt; 1
- *     File.link(&quot;testfile&quot;, &quot;testfile.bak&quot;)   #=&gt; 0
- *     File.stat(&quot;testfile&quot;).nlink             #=&gt; 2
- *     
+ *     File.stat(&quot;testfile&quot;).size   #=&gt; 66
  */
 
 static VALUE
-rb_stat_nlink(VALUE self)
+rb_stat_size(VALUE self)
 {
-    return UINT2NUM(get_stat(self)-&gt;st_nlink);
+    return OFFT2NUM(get_stat(self)-&gt;st_size);
 }</pre>
 </body>
 </html>

@@ -2,38 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>class_variable_set (Module)</title>
+  <title>module_eval (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.class_variable_set(symbol, obj)    =&gt; obj
- *  
- *  Sets the class variable names by &lt;i&gt;symbol&lt;/i&gt; to
- *  &lt;i&gt;object&lt;/i&gt;.
- *     
- *     class Fred
- *       @@foo = 99
- *       def foo
- *         @@foo
- *       end
+ *     mod.class_eval(string [, filename [, lineno]])  =&gt; obj
+ *     mod.module_eval {|| block }                     =&gt; obj
+ *
+ *  Evaluates the string or block in the context of _mod_. This can
+ *  be used to add methods to a class. &lt;code&gt;module_eval&lt;/code&gt; returns
+ *  the result of evaluating its argument. The optional _filename_
+ *  and _lineno_ parameters set the text for error messages.
+ *
+ *     class Thing
  *     end
- *     Fred.class_variable_set(:@@foo, 101)     #=&gt; 101
- *     Fred.new.foo                             #=&gt; 101
+ *     a = %q{def hello() &quot;Hello there!&quot; end}
+ *     Thing.module_eval(a)
+ *     puts Thing.new.hello()
+ *     Thing.module_eval(&quot;invalid code&quot;, &quot;dummy&quot;, 123)
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     Hello there!
+ *     dummy:123:in `module_eval': undefined local variable
+ *         or method `code' for Thing:Class
  */
 
-static VALUE
-rb_mod_cvar_set(VALUE obj, VALUE iv, VALUE val)
+VALUE
+rb_mod_module_eval(int argc, VALUE *argv, VALUE mod)
 {
-    ID id = rb_to_id(iv);
-
-    if (!rb_is_class_id(id)) {
-        rb_name_error(id, &quot;`%s' is not allowed as a class variable name&quot;, rb_id2name(id));
-    }
-    rb_cvar_set(obj, id, val);
-    return val;
+    return specific_eval(argc, argv, mod, mod);
 }</pre>
 </body>
 </html>

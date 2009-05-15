@@ -2,22 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ungetbyte (StringIO)</title>
+  <title>readlines (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.ungetbyte(fixnum)   -&gt; nil
+ *   strio.readlines(sep=$/)    -&gt;   array
+ *   strio.readlines(limit)     -&gt;   array
+ *   strio.readlines(sep,limit) -&gt;   array
  *
- * See IO#ungetbyte
+ * See IO#readlines.
  */
 static VALUE
-strio_ungetbyte(VALUE self, VALUE c)
+strio_readlines(int argc, VALUE *argv, VALUE self)
 {
-    NUM2INT(c);
-    return strio_ungetc(self, c);
+    struct StringIO *ptr = StringIO(self);
+    VALUE ary = rb_ary_new(), line;
+    while (!NIL_P(line = strio_getline(argc, argv, readable(ptr)))) {
+        rb_ary_push(ary, line);
+    }
+    return ary;
 }</pre>
 </body>
 </html>

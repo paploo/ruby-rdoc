@@ -2,29 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chars (IO)</title>
+  <title>sync (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.chars   =&gt; anEnumerator
- *  
- *  Returns an enumerator that gives each character in &lt;em&gt;ios&lt;/em&gt;.
- *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
- *  will be raised.
- *     
+ *     ios.sync    =&gt; true or false
+ *
+ *  Returns the current ``sync mode'' of &lt;em&gt;ios&lt;/em&gt;. When sync mode is
+ *  true, all output is immediately flushed to the underlying operating
+ *  system and is not buffered by Ruby internally. See also
+ *  &lt;code&gt;IO#fsync&lt;/code&gt;.
+ *
  *     f = File.new(&quot;testfile&quot;)
- *     f.chars.to_a  #=&gt; [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]
- *     f.rewind
- *     f.chars.sort  #=&gt; [&quot;e&quot;, &quot;h&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]
+ *     f.sync   #=&gt; false
  */
 
 static VALUE
-rb_io_chars(VALUE io)
+rb_io_sync(VALUE io)
 {
-    return rb_enumeratorize(io, ID2SYM(rb_intern(&quot;each_char&quot;)), 0, 0);
+    rb_io_t *fptr;
+
+    io = GetWriteIO(io);
+    GetOpenFile(io, fptr);
+    return (fptr-&gt;mode &amp; FMODE_SYNC) ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

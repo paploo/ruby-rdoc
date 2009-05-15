@@ -2,16 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>commit (PStore)</title>
+  <title>marshal_dump_supports_canonical_option? (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 269</span>
-269:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">commit</span>
-270:     <span class="ruby-identifier">in_transaction</span>
-271:     <span class="ruby-ivar">@abort</span> = <span class="ruby-keyword kw">false</span>
-272:     <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:pstore_abort_transaction</span>
-273:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 445</span>
+445:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">marshal_dump_supports_canonical_option?</span>
+446:     <span class="ruby-keyword kw">begin</span>
+447:       <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-value">-1</span>, <span class="ruby-keyword kw">true</span>)
+448:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">true</span>
+449:     <span class="ruby-keyword kw">rescue</span>
+450:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">false</span>
+451:     <span class="ruby-keyword kw">end</span>
+452:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:define_method</span>, <span class="ruby-identifier">:marshal_dump_supports_canonical_option?</span>) <span class="ruby-keyword kw">do</span>
+453:       <span class="ruby-identifier">result</span>
+454:     <span class="ruby-keyword kw">end</span>
+455:     <span class="ruby-identifier">result</span>
+456:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

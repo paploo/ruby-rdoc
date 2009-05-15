@@ -2,33 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sort (Array)</title>
+  <title>select (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.sort                   -&gt; an_array 
- *     array.sort {| a,b | block }  -&gt; an_array 
+ *     array.select {|item| block } -&gt; an_array
  *  
- *  Returns a new array created by sorting &lt;i&gt;self&lt;/i&gt;. Comparisons for
- *  the sort will be done using the &lt;code&gt;&lt;=&gt;&lt;/code&gt; operator or using
- *  an optional code block. The block implements a comparison between
- *  &lt;i&gt;a&lt;/i&gt; and &lt;i&gt;b&lt;/i&gt;, returning -1, 0, or +1. See also
- *  &lt;code&gt;Enumerable#sort_by&lt;/code&gt;.
+ *  Invokes the block passing in successive elements from &lt;i&gt;array&lt;/i&gt;,
+ *  returning an array containing those elements for which the block
+ *  returns a true value (equivalent to &lt;code&gt;Enumerable#select&lt;/code&gt;).
  *     
- *     a = [ &quot;d&quot;, &quot;a&quot;, &quot;e&quot;, &quot;c&quot;, &quot;b&quot; ]
- *     a.sort                    #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
- *     a.sort {|x,y| y &lt;=&gt; x }   #=&gt; [&quot;e&quot;, &quot;d&quot;, &quot;c&quot;, &quot;b&quot;, &quot;a&quot;]
+ *     a = %w{ a b c d e f }
+ *     a.select {|v| v =~ /[aeiou]/}   #=&gt; [&quot;a&quot;, &quot;e&quot;]
  */
 
-VALUE
-rb_ary_sort(VALUE ary)
+static VALUE
+rb_ary_select(VALUE ary)
 {
-    ary = rb_ary_dup(ary);
-    rb_ary_sort_bang(ary);
-    return ary;
+    VALUE result;
+    long i;
+
+    RETURN_ENUMERATOR(ary, 0, 0);
+    result = rb_ary_new2(RARRAY_LEN(ary));
+    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
+        if (RTEST(rb_yield(RARRAY_PTR(ary)[i]))) {
+            rb_ary_push(result, rb_ary_elt(ary, i));
+        }
+    }
+    return result;
 }</pre>
 </body>
 </html>

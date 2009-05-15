@@ -2,28 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Hash)</title>
+  <title>[]= (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   hsh.to_s   =&gt; string
- *   hsh.inspect  =&gt; string
+ *  call-seq:
+ *     hsh[key] = value        =&gt; value
+ *     hsh.store(key, value)   =&gt; value
  *
- * Return the contents of this hash as a string.
+ *  Element Assignment---Associates the value given by
+ *  &lt;i&gt;value&lt;/i&gt; with the key given by &lt;i&gt;key&lt;/i&gt;.
+ *  &lt;i&gt;key&lt;/i&gt; should not have its value changed while it is in
+ *  use as a key (a &lt;code&gt;String&lt;/code&gt; passed as a key will be
+ *  duplicated and frozen).
  *
- *     h = { &quot;c&quot; =&gt; 300, &quot;a&quot; =&gt; 100, &quot;d&quot; =&gt; 400, &quot;c&quot; =&gt; 300  }
- *     h.to_s   #=&gt; &quot;{\&quot;c\&quot;=&gt;300, \&quot;a\&quot;=&gt;100, \&quot;d\&quot;=&gt;400}&quot;
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h[&quot;a&quot;] = 9
+ *     h[&quot;c&quot;] = 4
+ *     h   #=&gt; {&quot;a&quot;=&gt;9, &quot;b&quot;=&gt;200, &quot;c&quot;=&gt;4}
+ *
  */
 
-static VALUE
-rb_hash_inspect(VALUE hash)
+VALUE
+rb_hash_aset(VALUE hash, VALUE key, VALUE val)
 {
-    if (RHASH_EMPTY_P(hash))
-        return rb_usascii_str_new2(&quot;{}&quot;);
-    return rb_exec_recursive(inspect_hash, hash, 0);
+    rb_hash_modify(hash);
+    if (RHASH(hash)-&gt;ntbl-&gt;type == &amp;identhash ||
+        TYPE(key) != T_STRING || st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
+        st_insert(RHASH(hash)-&gt;ntbl, key, val);
+    }
+    else {
+        st_add_direct(RHASH(hash)-&gt;ntbl, rb_str_new4(key), val);
+    }
+    return val;
 }</pre>
 </body>
 </html>

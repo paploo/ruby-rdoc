@@ -2,40 +2,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>yield (Proc)</title>
+  <title>to_s (Proc)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     prc === obj   =&gt; obj
- *  
- *  Invokes the block, with &lt;i&gt;obj&lt;/i&gt; as the block's parameter.  It is
- *  to allow a proc object to be a target of when clause in the case statement.
+ * call-seq:
+ *   prc.to_s   =&gt; string
+ *
+ * Shows the unique identifier for this proc, along with
+ * an indication of where the proc was defined.
  */
 
 static VALUE
-proc_call(int argc, VALUE *argv, VALUE procval)
+proc_to_s(VALUE self)
 {
+    VALUE str = 0;
     rb_proc_t *proc;
-    rb_block_t *blockptr = 0;
+    const char *cname = rb_obj_classname(self);
     rb_iseq_t *iseq;
-    GetProcPtr(procval, proc);
-
+    const char *is_lambda;
+    
+    GetProcPtr(self, proc);
     iseq = proc-&gt;block.iseq;
-    if (BUILTIN_TYPE(iseq) == T_NODE || iseq-&gt;arg_block != -1) {
-        if (rb_block_given_p()) {
-            rb_proc_t *proc;
-            VALUE procval;
-            procval = rb_block_proc();
-            GetProcPtr(procval, proc);
-            blockptr = &amp;proc-&gt;block;
+    is_lambda = proc-&gt;is_lambda ? &quot; (lambda)&quot; : &quot;&quot;;
+
+    if (RUBY_VM_NORMAL_ISEQ_P(iseq)) {
+        int line_no = 0;
+        
+        if (iseq-&gt;insn_info_table) {
+            line_no = rb_iseq_first_lineno(iseq);
         }
+        str = rb_sprintf(&quot;#&lt;%s:%p@%s:%d%s&gt;&quot;, cname, (void *)self,
+                         RSTRING_PTR(iseq-&gt;filename),
+                         line_no, is_lambda);
+    }
+    else {
+        str = rb_sprintf(&quot;#&lt;%s:%p%s&gt;&quot;, cname, (void *)proc-&gt;block.iseq,
+                         is_lambda);
     }
 
-    return rb_vm_invoke_proc(GET_THREAD(), proc, proc-&gt;block.self,
-                             argc, argv, blockptr);
+    if (OBJ_TAINTED(self)) {
+        OBJ_TAINT(str);
+    }
+    return str;
 }</pre>
 </body>
 </html>

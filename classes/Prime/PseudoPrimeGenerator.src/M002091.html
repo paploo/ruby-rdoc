@@ -2,14 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Prime::PseudoPrimeGenerator)</title>
+  <title>each (Prime::PseudoPrimeGenerator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 220</span>
-220:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">ubound</span> = <span class="ruby-keyword kw">nil</span>)
-221:       <span class="ruby-ivar">@ubound</span> = <span class="ruby-identifier">ubound</span>
-222:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 254</span>
+254:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+255:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dup</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
+256:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ubound</span>
+257:         <span class="ruby-identifier">last_value</span> = <span class="ruby-keyword kw">nil</span>
+258:         <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+259:           <span class="ruby-identifier">prime</span> = <span class="ruby-identifier">succ</span>
+260:           <span class="ruby-keyword kw">break</span> <span class="ruby-identifier">last_value</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prime</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@ubound</span>
+261:           <span class="ruby-identifier">last_value</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">prime</span>)
+262:         <span class="ruby-keyword kw">end</span>
+263:       <span class="ruby-keyword kw">else</span>
+264:         <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+265:           <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">succ</span>)
+266:         <span class="ruby-keyword kw">end</span>
+267:       <span class="ruby-keyword kw">end</span>
+268:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

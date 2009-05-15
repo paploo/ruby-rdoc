@@ -2,49 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>times (Integer)</title>
+  <title>to_i (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     int.times {|i| block }     =&gt; int
+ *     int.to_i      =&gt; int
+ *     int.to_int    =&gt; int
+ *     int.floor     =&gt; int
+ *     int.ceil      =&gt; int
+ *     int.round     =&gt; int
+ *     int.truncate  =&gt; int
  *
- *  Iterates block &lt;i&gt;int&lt;/i&gt; times, passing in values from zero to
- *  &lt;i&gt;int&lt;/i&gt; - 1.
- *
- *     5.times do |i|
- *       print i, &quot; &quot;
- *     end
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     0 1 2 3 4
+ *  As &lt;i&gt;int&lt;/i&gt; is already an &lt;code&gt;Integer&lt;/code&gt;, all these
+ *  methods simply return the receiver.
  */
 
 static VALUE
-int_dotimes(VALUE num)
+int_to_i(VALUE num)
 {
-    RETURN_ENUMERATOR(num, 0, 0);
-
-    if (FIXNUM_P(num)) {
-        long i, end;
-
-        end = FIX2LONG(num);
-        for (i=0; i&lt;end; i++) {
-            rb_yield(LONG2FIX(i));
-        }
-    }
-    else {
-        VALUE i = INT2FIX(0);
-
-        for (;;) {
-            if (!RTEST(rb_funcall(i, '&lt;', 1, num))) break;
-            rb_yield(i);
-            i = rb_funcall(i, '+', 1, INT2FIX(1));
-        }
-    }
     return num;
 }</pre>
 </body>

@@ -2,24 +2,62 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>destination_encoding (Encoding::Converter)</title>
+  <title>putback (Encoding::Converter)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   ec.destination_encoding -&gt; encoding
+ * call-seq
+ *   ec.putback                    =&gt; string
+ *   ec.putback(max_numbytes)      =&gt; string
  *
- * Returns the destination encoding as an Encoding object.
+ * Put back the bytes which will be converted.
+ *
+ * The bytes are caused by invalid_byte_sequence error.
+ * When invalid_byte_sequence error, some bytes are discarded and
+ * some bytes are buffered to be converted later.
+ * The latter bytes can be put back.
+ * It can be observed by
+ * Encoding::InvalidByteSequenceError#readagain_bytes and
+ * Encoding::Converter#primitive_errinfo.
+ *
+ *   ec = Encoding::Converter.new(&quot;utf-16le&quot;, &quot;iso-8859-1&quot;)
+ *   src = &quot;\x00\xd8\x61\x00&quot;
+ *   dst = &quot;&quot;
+ *   p ec.primitive_convert(src, dst)   #=&gt; :invalid_byte_sequence
+ *   p ec.primitive_errinfo     #=&gt; [:invalid_byte_sequence, &quot;UTF-16LE&quot;, &quot;UTF-8&quot;, &quot;\x00\xD8&quot;, &quot;a\x00&quot;]
+ *   p ec.putback               #=&gt; &quot;a\x00&quot;
+ *   p ec.putback               #=&gt; &quot;&quot;          # no more bytes to put back
+ *
  */
 static VALUE
-econv_destination_encoding(VALUE self)
+econv_putback(int argc, VALUE *argv, VALUE self)
 {
     rb_econv_t *ec = check_econv(self);
-    if (!ec-&gt;destination_encoding) 
-        return Qnil;
-    return rb_enc_from_encoding(ec-&gt;destination_encoding);
+    int n;
+    int putbackable;
+    VALUE str, max;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;max);
+
+    if (NIL_P(max))
+        n = rb_econv_putbackable(ec);
+    else {
+        n = NUM2INT(max);
+        putbackable = rb_econv_putbackable(ec);
+        if (putbackable &lt; n)
+            n = putbackable;
+    }
+
+    str = rb_str_new(NULL, n);
+    rb_econv_putback(ec, (unsigned char *)RSTRING_PTR(str), n);
+
+    if (ec-&gt;source_encoding) {
+        rb_enc_associate(str, ec-&gt;source_encoding);
+    }
+
+    return str;
 }</pre>
 </body>
 </html>

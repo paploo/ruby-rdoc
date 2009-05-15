@@ -2,23 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lineno= (StringIO)</title>
+  <title>closed_read? (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.lineno = integer    -&gt; integer
+ *   strio.closed_read?    -&gt; true or false
  *
- * Manually sets the current line number to the given value.
- * &lt;code&gt;$.&lt;/code&gt; is updated only on the next read.
+ * Returns +true+ if *strio* is not readable, +false+ otherwise.
  */
 static VALUE
-strio_set_lineno(VALUE self, VALUE lineno)
+strio_closed_read(VALUE self)
 {
-    StringIO(self)-&gt;lineno = NUM2LONG(lineno);
-    return lineno;
+    struct StringIO *ptr = StringIO(self);
+    if (READABLE(ptr)) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

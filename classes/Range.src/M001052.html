@@ -2,117 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>step (Range)</title>
+  <title>max (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     rng.step(n=1) {| obj | block }    =&gt; rng
+ *     rng.max                    =&gt; obj
+ *     rng.max {| a,b | block }   =&gt; obj
  *  
- *  Iterates over &lt;i&gt;rng&lt;/i&gt;, passing each &lt;i&gt;n&lt;/i&gt;th element to the block. If
- *  the range contains numbers, &lt;i&gt;n&lt;/i&gt; is added for each iteration.  Otherwise
- *  &lt;code&gt;step&lt;/code&gt; invokes &lt;code&gt;succ&lt;/code&gt; to iterate through range
- *  elements. The following code uses class &lt;code&gt;Xs&lt;/code&gt;, which is defined
- *  in the class-level documentation.
+ *  Returns the maximum value in &lt;i&gt;rng&lt;/i&gt;. The second uses
+ *  the block to compare values.  Returns nil if the first
+ *  value in range is larger than the last value.
  *     
- *     range = Xs.new(1)..Xs.new(10)
- *     range.step(2) {|x| puts x}
- *     range.step(3) {|x| puts x}
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *      1 x
- *      3 xxx
- *      5 xxxxx
- *      7 xxxxxxx
- *      9 xxxxxxxxx
- *      1 x
- *      4 xxxx
- *      7 xxxxxxx
- *     10 xxxxxxxxxx
  */
 
 
 static VALUE
-range_step(int argc, VALUE *argv, VALUE range)
+range_max(VALUE range)
 {
-    VALUE b, e, step, tmp;
+    VALUE e = RANGE_END(range);
+    int ip = FIXNUM_P(e) || rb_obj_is_kind_of(e, rb_cInteger);
 
-    RETURN_ENUMERATOR(range, argc, argv);
-
-    b = RANGE_BEG(range);
-    e = RANGE_END(range);
-    if (argc == 0) {
-        step = INT2FIX(1);
+    if (rb_block_given_p() || (EXCL(range) &amp;&amp; !ip)) {
+        return rb_call_super(0, 0);
     }
     else {
-        rb_scan_args(argc, argv, &quot;01&quot;, &amp;step);
-        if (!rb_obj_is_kind_of(step, rb_cNumeric)) {
-            step = rb_to_int(step);
-        }
-        if (rb_funcall(step, '&lt;', 1, INT2FIX(0))) {
-            rb_raise(rb_eArgError, &quot;step can't be negative&quot;);
-        }
-        else if (!rb_funcall(step, '&gt;', 1, INT2FIX(0))) {
-            rb_raise(rb_eArgError, &quot;step can't be 0&quot;);
-        }
-    }
+        VALUE b = RANGE_BEG(range);
+        int c = rb_cmpint(rb_funcall(b, id_cmp, 1, e), b, e);
 
-    if (FIXNUM_P(b) &amp;&amp; FIXNUM_P(e) &amp;&amp; FIXNUM_P(step)) { /* fixnums are special */
-        long end = FIX2LONG(e);
-        long i, unit = FIX2LONG(step);
-
-        if (!EXCL(range))
-            end += 1;
-        i = FIX2LONG(b);       
-        while (i &lt; end) {
-            rb_yield(LONG2NUM(i));
-            if (i + unit &lt; i) break;
-            i += unit;
-        }
-
-    }
-    else if (ruby_float_step(b, e, step, EXCL(range))) {
-        /* done */
-    }
-    else if (rb_obj_is_kind_of(b, rb_cNumeric) ||
-             !NIL_P(rb_check_to_integer(b, &quot;to_int&quot;)) ||
-             !NIL_P(rb_check_to_integer(e, &quot;to_int&quot;))) {
-        ID op = EXCL(range) ? '&lt;' : rb_intern(&quot;&lt;=&quot;);
-
-        while (RTEST(rb_funcall(b, op, 1, e))) {
-            rb_yield(b);
-            b = rb_funcall(b, '+', 1, step);
-        }
-    }
-    else {
-        tmp = rb_check_string_type(b);
-
-        if (!NIL_P(tmp)) {
-            VALUE args[2], iter[2];
-
-            b = tmp;
-            args[0] = e;
-            args[1] = EXCL(range) ? Qtrue : Qfalse;
-            iter[0] = INT2FIX(1);
-            iter[1] = step;
-            rb_block_call(b, rb_intern(&quot;upto&quot;), 2, args, step_i, (VALUE)iter);
-        }
-        else {
-            VALUE args[2];
-
-            if (!rb_respond_to(b, id_succ)) {
-                rb_raise(rb_eTypeError, &quot;can't iterate from %s&quot;,
-                         rb_obj_classname(b));
+        if (c &gt; 0)
+            return Qnil;
+        if (EXCL(range)) {
+            if (c == 0) return Qnil;
+            if (FIXNUM_P(e)) {
+                return LONG2NUM(FIX2LONG(e) - 1);
             }
-            args[0] = INT2FIX(1);
-            args[1] = step;
-            range_each_func(range, step_i, args);
+            return rb_funcall(e, '-', 1, INT2FIX(1));
         }
+        return e;
     }
-    return range;
 }</pre>
 </body>
 </html>

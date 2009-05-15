@@ -2,32 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each (StringIO)</title>
+  <title>chars (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.each(sep=$/) {|line| block }         -&gt; strio
- *   strio.each(limit) {|line| block }          -&gt; strio
- *   strio.each(sep, limit) {|line| block }     -&gt; strio
- *   strio.each_line(sep=$/) {|line| block }    -&gt; strio
- *   strio.each_line(limit) {|line| block }     -&gt; strio
- *   strio.each_line(sep,limit) {|line| block } -&gt; strio
+ *   strio.each_char {|char| block }  -&gt; strio
  *
- * See IO#each.
+ * See IO#each_char.
  */
 static VALUE
-strio_each(int argc, VALUE *argv, VALUE self)
+strio_each_char(VALUE self)
 {
-    struct StringIO *ptr = StringIO(self);
-    VALUE line;
+    VALUE c;
 
-    RETURN_ENUMERATOR(self, argc, argv);
+    RETURN_ENUMERATOR(self, 0, 0);
 
-    while (!NIL_P(line = strio_getline(argc, argv, readable(ptr)))) {
-        rb_yield(line);
+    while (!NIL_P(c = strio_getc(self))) {
+        rb_yield(c);
     }
     return self;
 }</pre>

@@ -2,23 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_int (Numeric)</title>
+  <title>ceil (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.to_int    =&gt; integer
+ *     num.ceil    =&gt; integer
  *
- *  Invokes the child class's &lt;code&gt;to_i&lt;/code&gt; method to convert
- *  &lt;i&gt;num&lt;/i&gt; to an integer.
+ *  Returns the smallest &lt;code&gt;Integer&lt;/code&gt; greater than or equal to
+ *  &lt;i&gt;num&lt;/i&gt;. Class &lt;code&gt;Numeric&lt;/code&gt; achieves this by converting
+ *  itself to a &lt;code&gt;Float&lt;/code&gt; then invoking
+ *  &lt;code&gt;Float#ceil&lt;/code&gt;.
+ *
+ *     1.ceil        #=&gt; 1
+ *     1.2.ceil      #=&gt; 2
+ *     (-1.2).ceil   #=&gt; -1
+ *     (-1.0).ceil   #=&gt; -1
  */
 
 static VALUE
-num_to_int(VALUE num)
+num_ceil(VALUE num)
 {
-    return rb_funcall(num, id_to_i, 0, 0);
+    return flo_ceil(rb_Float(num));
 }</pre>
 </body>
 </html>

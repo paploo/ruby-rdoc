@@ -2,35 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt;= (Module)</title>
+  <title>attr_reader (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   mod &gt;= other   =&gt;  true, false, or nil
- *
- * Returns true if &lt;i&gt;mod&lt;/i&gt; is an ancestor of &lt;i&gt;other&lt;/i&gt;, or the
- * two modules are the same. Returns 
- * &lt;code&gt;nil&lt;/code&gt; if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
- * &quot;class A&lt;B&quot; implies &quot;B&gt;A&quot;).
- *
+ *  call-seq:
+ *     attr_reader(symbol, ...)    =&gt; nil
+ *     attr(symbol, ...)             =&gt; nil
+ *  
+ *  Creates instance variables and corresponding methods that return the
+ *  value of each instance variable. Equivalent to calling
+ *  ``&lt;code&gt;attr&lt;/code&gt;&lt;i&gt;:name&lt;/i&gt;'' on each name in turn.
  */
 
 static VALUE
-rb_mod_ge(VALUE mod, VALUE arg)
+rb_mod_attr_reader(int argc, VALUE *argv, VALUE klass)
 {
-    switch (TYPE(arg)) {
-      case T_MODULE:
-      case T_CLASS:
-        break;
-      default:
-        rb_raise(rb_eTypeError, &quot;compared with non class/module&quot;);
-    }
+    int i;
 
-    return rb_class_inherited_p(arg, mod);
+    for (i=0; i&lt;argc; i++) {
+        rb_attr(klass, rb_to_id(argv[i]), Qtrue, Qfalse, Qtrue);
+    }
+    return Qnil;
 }</pre>
 </body>
 </html>

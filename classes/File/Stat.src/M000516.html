@@ -2,29 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ftype (File::Stat)</title>
+  <title>writable_real? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.ftype   =&gt; string
+ *     stat.writable_real? -&gt; true or false
  *  
- *  Identifies the type of &lt;i&gt;stat&lt;/i&gt;. The return string is one of:
- *  ``&lt;code&gt;file&lt;/code&gt;'', ``&lt;code&gt;directory&lt;/code&gt;'',
- *  ``&lt;code&gt;characterSpecial&lt;/code&gt;'', ``&lt;code&gt;blockSpecial&lt;/code&gt;'',
- *  ``&lt;code&gt;fifo&lt;/code&gt;'', ``&lt;code&gt;link&lt;/code&gt;'',
- *  ``&lt;code&gt;socket&lt;/code&gt;'', or ``&lt;code&gt;unknown&lt;/code&gt;''.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;stat&lt;/i&gt; is writable by the real
+ *  user id of this process.
  *     
- *     File.stat(&quot;/dev/tty&quot;).ftype   #=&gt; &quot;characterSpecial&quot;
+ *     File.stat(&quot;testfile&quot;).writable_real?   #=&gt; true
  *     
  */
 
 static VALUE
-rb_stat_ftype(VALUE obj)
+rb_stat_W(VALUE obj)
 {
-    return rb_file_ftype(get_stat(obj));
+    struct stat *st = get_stat(obj);
+
+#ifdef USE_GETEUID
+    if (getuid() == 0) return Qtrue;
+#endif
+#ifdef S_IWUSR
+    if (rb_stat_rowned(obj))
+        return st-&gt;st_mode &amp; S_IWUSR ? Qtrue : Qfalse;
+#endif
+#ifdef S_IWGRP
+    if (group_member(get_stat(obj)-&gt;st_gid))
+        return st-&gt;st_mode &amp; S_IWGRP ? Qtrue : Qfalse;
+#endif
+#ifdef S_IWOTH
+    if (!(st-&gt;st_mode &amp; S_IWOTH)) return Qfalse;
+#endif
+    return Qtrue;
 }</pre>
 </body>
 </html>

@@ -2,12 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gregorian (Date)</title>
+  <title>=== (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1315</span>
-1315:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gregorian</span>() <span class="ruby-identifier">new_start</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">GREGORIAN</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1385</span>
+1385:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">===</span> (<span class="ruby-identifier">other</span>)
+1386:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other</span>
+1387:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>; <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">jd</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>
+1388:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Date</span>;    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">jd</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">jd</span>
+1389:     <span class="ruby-keyword kw">end</span>
+1390:     <span class="ruby-keyword kw">false</span>
+1391:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

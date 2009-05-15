@@ -2,16 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Resolv::Hosts)</title>
+  <title>each_name (Resolv::Hosts)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 178</span>
-178:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">filename</span> = <span class="ruby-constant">DefaultFileName</span>)
-179:       <span class="ruby-ivar">@filename</span> = <span class="ruby-identifier">filename</span>
-180:       <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
-181:       <span class="ruby-ivar">@initialized</span> = <span class="ruby-keyword kw">nil</span>
-182:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 262</span>
+262:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+263:       <span class="ruby-identifier">lazy_initialize</span>
+264:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@addr2name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">address</span>)
+265:         <span class="ruby-ivar">@addr2name</span>[<span class="ruby-identifier">address</span>].<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+266:       <span class="ruby-keyword kw">end</span>
+267:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

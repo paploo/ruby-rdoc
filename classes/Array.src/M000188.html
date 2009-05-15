@@ -2,34 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>drop_while (Array)</title>
+  <title>pretty_print_cycle (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     ary.drop_while {|arr| block }   =&gt; array
- *  
- *  Drops elements up to, but not including, the first element for
- *  which the block returns nil or false and returns an array
- *  containing the remaining elements.
- *     
- *     a = [1, 2, 3, 4, 5, 0]
- *     a.drop_while {|i| i &lt; 3 }   # =&gt; [3, 4, 5, 0]
- *     
- */
-
-static VALUE
-rb_ary_drop_while(VALUE ary)
-{
-    long i;
-
-    RETURN_ENUMERATOR(ary, 0, 0);
-    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
-        if (!RTEST(rb_yield(RARRAY_PTR(ary)[i]))) break;
-    }
-    return rb_ary_drop(ary, LONG2FIX(i));
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 337</span>
+337:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty_print_cycle</span>(<span class="ruby-identifier">q</span>)
+338:     <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span>(<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-value str">'[]'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'[...]'</span>)
+339:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

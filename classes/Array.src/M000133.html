@@ -2,40 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reverse_each (Array)</title>
+  <title>join (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.reverse_each {|item| block } 
+ *     array.join(sep=$,)    -&gt; str
  *  
- *  Same as &lt;code&gt;Array#each&lt;/code&gt;, but traverses &lt;i&gt;self&lt;/i&gt; in reverse
- *  order.
+ *  Returns a string created by converting each element of the array to
+ *  a string, separated by &lt;i&gt;sep&lt;/i&gt;.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.reverse_each {|x| print x, &quot; &quot; }
- *     
- *  produces:
- *     
- *     c b a
+ *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ].join        #=&gt; &quot;abc&quot;
+ *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ].join(&quot;-&quot;)   #=&gt; &quot;a-b-c&quot;
  */
 
 static VALUE
-rb_ary_reverse_each(VALUE ary)
+rb_ary_join_m(int argc, VALUE *argv, VALUE ary)
 {
-    long len;
+    VALUE sep;
 
-    RETURN_ENUMERATOR(ary, 0, 0);
-    len = RARRAY_LEN(ary);
-    while (len--) {
-        rb_yield(RARRAY_PTR(ary)[len]);
-        if (RARRAY_LEN(ary) &lt; len) {
-            len = RARRAY_LEN(ary);
-        }
-    }
-    return ary;
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;sep);
+    if (NIL_P(sep)) sep = rb_output_fs;
+    
+    return rb_ary_join(ary, sep);
 }</pre>
 </body>
 </html>

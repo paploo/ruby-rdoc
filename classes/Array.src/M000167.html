@@ -2,60 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>* (Array)</title>
+  <title>compact (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array * int     -&gt;    an_array
- *     array * str     -&gt;    a_string
+ *     array.compact     -&gt;  an_array
  *
- *  Repetition---With a String argument, equivalent to
- *  self.join(str). Otherwise, returns a new array
- *  built by concatenating the _int_ copies of _self_.
+ *  Returns a copy of _self_ with all +nil+ elements removed.
  *
- *
- *     [ 1, 2, 3 ] * 3    #=&gt; [ 1, 2, 3, 1, 2, 3, 1, 2, 3 ]
- *     [ 1, 2, 3 ] * &quot;,&quot;  #=&gt; &quot;1,2,3&quot;
- *
+ *     [ &quot;a&quot;, nil, &quot;b&quot;, nil, &quot;c&quot;, nil ].compact
+ *                       #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
  */
 
 static VALUE
-rb_ary_times(VALUE ary, VALUE times)
+rb_ary_compact(VALUE ary)
 {
-    VALUE ary2, tmp;
-    long i, len;
-
-    tmp = rb_check_string_type(times);
-    if (!NIL_P(tmp)) {
-        return rb_ary_join(ary, tmp);
-    }
-
-    len = NUM2LONG(times);
-    if (len == 0) {
-        ary2 = ary_new(rb_obj_class(ary), 0);
-        goto out;
-    }
-    if (len &lt; 0) {
-        rb_raise(rb_eArgError, &quot;negative argument&quot;);
-    }
-    if (ARY_MAX_SIZE/len &lt; RARRAY_LEN(ary)) {
-        rb_raise(rb_eArgError, &quot;argument too big&quot;);
-    }
-    len *= RARRAY_LEN(ary);
-
-    ary2 = ary_new(rb_obj_class(ary), len);
-    ARY_SET_LEN(ary2, len);
-
-    for (i=0; i&lt;len; i+=RARRAY_LEN(ary)) {
-        MEMCPY(RARRAY_PTR(ary2)+i, RARRAY_PTR(ary), VALUE, RARRAY_LEN(ary));
-    }
-  out:
-    OBJ_INFECT(ary2, ary);
-
-    return ary2;
+    ary = rb_ary_dup(ary);
+    rb_ary_compact_bang(ary);
+    return ary;
 }</pre>
 </body>
 </html>

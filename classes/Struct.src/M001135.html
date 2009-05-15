@@ -2,27 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>length (Struct)</title>
+  <title>values_at (Struct)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     struct.length    =&gt; fixnum
- *     struct.size      =&gt; fixnum
- *  
- *  Returns the number of instance variables.
- *     
- *     Customer = Struct.new(:name, :address, :zip)
- *     joe = Customer.new(&quot;Joe Smith&quot;, &quot;123 Maple, Anytown NC&quot;, 12345)
- *     joe.length   #=&gt; 3
+  <pre>/* 
+ * call-seq:
+ *   struct.values_at(selector,... )  =&gt; an_array
+ *
+ *   Returns an array containing the elements in
+ *   _self_ corresponding to the given selector(s). The selectors
+ *   may be either integer indices or ranges. 
+ *   See also &lt;/code&gt;.select&lt;code&gt;.
+ * 
+ *      a = %w{ a b c d e f }
+ *      a.values_at(1, 3, 5)
+ *      a.values_at(1, 3, 5, 7)
+ *      a.values_at(-1, -3, -5, -7)
+ *      a.values_at(1..3, 2...5)
  */
 
 static VALUE
-rb_struct_size(VALUE s)
+rb_struct_values_at(int argc, VALUE *argv, VALUE s)
 {
-    return LONG2FIX(RSTRUCT_LEN(s));
+    return rb_get_values_at(s, RSTRUCT_LEN(s), argc, argv, struct_entry);
 }</pre>
 </body>
 </html>

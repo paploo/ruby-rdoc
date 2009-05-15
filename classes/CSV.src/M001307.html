@@ -2,22 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>generate_line (CSV)</title>
+  <title>table (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1249</span>
-1249:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generate_line</span>(<span class="ruby-identifier">row</span>, <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
-1250:     <span class="ruby-identifier">options</span>  = {<span class="ruby-identifier">row_sep</span><span class="ruby-operator">:</span> <span class="ruby-identifier">$INPUT_RECORD_SEPARATOR</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
-1251:     <span class="ruby-identifier">encoding</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:encoding</span>)
-1252:     <span class="ruby-identifier">str</span>      = <span class="ruby-value str">&quot;&quot;</span>
-1253:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">encoding</span>
-1254:       <span class="ruby-identifier">str</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-identifier">encoding</span>)
-1255:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">field</span> = <span class="ruby-identifier">row</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">nil?</span> }
-1256:       <span class="ruby-identifier">str</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">String</span>(<span class="ruby-identifier">field</span>).<span class="ruby-identifier">encoding</span>)
-1257:     <span class="ruby-keyword kw">end</span>
-1258:     (<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">options</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">row</span>).<span class="ruby-identifier">string</span>
-1259:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1410</span>
+1410:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">table</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
+1411:     <span class="ruby-identifier">read</span>( <span class="ruby-identifier">path</span>, { <span class="ruby-identifier">headers</span><span class="ruby-operator">:</span>           <span class="ruby-keyword kw">true</span>,
+1412:                   <span class="ruby-identifier">converters</span><span class="ruby-operator">:</span>        <span class="ruby-identifier">:numeric</span>,
+1413:                   <span class="ruby-identifier">header_converters</span><span class="ruby-operator">:</span> <span class="ruby-identifier">:symbol</span> }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>) )
+1414:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

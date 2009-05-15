@@ -2,48 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>display (Object)</title>
+  <title>class (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.display(port=$&gt;)    =&gt; nil
- *
- *  Prints &lt;i&gt;obj&lt;/i&gt; on the given port (default &lt;code&gt;$&gt;&lt;/code&gt;).
- *  Equivalent to:
- *
- *     def display(port=$&gt;)
- *       port.write self
- *     end
- *
- *  For example:
- *
- *     1.display
- *     &quot;cat&quot;.display
- *     [ 4, 5, 6 ].display
- *     puts
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     1cat456
+ *     obj.class    =&gt; class
+ *  
+ *  Returns the class of &lt;i&gt;obj&lt;/i&gt;, now preferred over
+ *  &lt;code&gt;Object#type&lt;/code&gt;, as an object's type in Ruby is only
+ *  loosely tied to that object's class. This method must always be
+ *  called with an explicit receiver, as &lt;code&gt;class&lt;/code&gt; is also a
+ *  reserved word in Ruby.
+ *     
+ *     1.class      #=&gt; Fixnum
+ *     self.class   #=&gt; Object
  */
 
-static VALUE
-rb_obj_display(int argc, VALUE *argv, VALUE self)
+VALUE
+rb_obj_class(VALUE obj)
 {
-    VALUE out;
-
-    if (argc == 0) {
-        out = rb_stdout;
-    }
-    else {
-        rb_scan_args(argc, argv, &quot;01&quot;, &amp;out);
-    }
-    rb_io_write(out, self);
-
-    return Qnil;
+    return rb_class_real(CLASS_OF(obj));
 }</pre>
 </body>
 </html>

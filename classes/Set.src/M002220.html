@@ -2,16 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>subset? (Set)</title>
+  <title>delete (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 193</span>
-193:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">subset?</span>(<span class="ruby-identifier">set</span>)
-194:     <span class="ruby-identifier">set</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Set</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;value must be a set&quot;</span>
-195:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">size</span>
-196:     <span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">o</span>) }
-197:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 235</span>
+235:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">o</span>)
+236:     <span class="ruby-ivar">@hash</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">o</span>)
+237:     <span class="ruby-keyword kw">self</span>
+238:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

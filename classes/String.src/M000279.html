@@ -2,51 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>[]= (String)</title>
+  <title>=~ (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str[fixnum] = new_str
- *     str[fixnum, fixnum] = new_str
- *     str[range] = aString
- *     str[regexp] = new_str
- *     str[regexp, fixnum] = new_str
- *     str[other_str] = new_str
+ *     str =~ obj   =&gt; fixnum or nil
  *  
- *  Element Assignment---Replaces some or all of the content of &lt;i&gt;str&lt;/i&gt;. The
- *  portion of the string affected is determined using the same criteria as
- *  &lt;code&gt;String#[]&lt;/code&gt;. If the replacement string is not the same length as
- *  the text it is replacing, the string will be adjusted accordingly. If the
- *  regular expression or string is used as the index doesn't match a position
- *  in the string, &lt;code&gt;IndexError&lt;/code&gt; is raised. If the regular expression
- *  form is used, the optional second &lt;code&gt;Fixnum&lt;/code&gt; allows you to specify
- *  which portion of the match to replace (effectively using the
- *  &lt;code&gt;MatchData&lt;/code&gt; indexing rules. The forms that take a
- *  &lt;code&gt;Fixnum&lt;/code&gt; will raise an &lt;code&gt;IndexError&lt;/code&gt; if the value is
- *  out of range; the &lt;code&gt;Range&lt;/code&gt; form will raise a
- *  &lt;code&gt;RangeError&lt;/code&gt;, and the &lt;code&gt;Regexp&lt;/code&gt; and &lt;code&gt;String&lt;/code&gt;
- *  forms will silently ignore the assignment.
+ *  Match---If &lt;i&gt;obj&lt;/i&gt; is a &lt;code&gt;Regexp&lt;/code&gt;, use it as a pattern to match
+ *  against &lt;i&gt;str&lt;/i&gt;,and returns the position the match starts, or 
+ *  &lt;code&gt;nil&lt;/code&gt; if there is no match. Otherwise, invokes
+ *  &lt;i&gt;obj.=~&lt;/i&gt;, passing &lt;i&gt;str&lt;/i&gt; as an argument. The default
+ *  &lt;code&gt;=~&lt;/code&gt; in &lt;code&gt;Object&lt;/code&gt; returns &lt;code&gt;false&lt;/code&gt;.
+ *     
+ *     &quot;cat o' 9 tails&quot; =~ /\d/   #=&gt; 7
+ *     &quot;cat o' 9 tails&quot; =~ 9      #=&gt; nil
  */
 
 static VALUE
-rb_str_aset_m(int argc, VALUE *argv, VALUE str)
+rb_str_match(VALUE x, VALUE y)
 {
-    if (argc == 3) {
-        if (TYPE(argv[0]) == T_REGEXP) {
-            rb_str_subpat_set(str, argv[0], NUM2INT(argv[1]), argv[2]);
-        }
-        else {
-            rb_str_splice(str, NUM2LONG(argv[0]), NUM2LONG(argv[1]), argv[2]);
-        }
-        return argv[2];
+    switch (TYPE(y)) {
+      case T_STRING:
+        rb_raise(rb_eTypeError, &quot;type mismatch: String given&quot;);
+
+      case T_REGEXP:
+        return rb_reg_match(y, x);
+
+      default:
+        return rb_funcall(y, rb_intern(&quot;=~&quot;), 1, x);
     }
-    if (argc != 2) {
-        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 2)&quot;, argc);
-    }
-    return rb_str_aset(str, argv[0], argv[1]);
 }</pre>
 </body>
 </html>

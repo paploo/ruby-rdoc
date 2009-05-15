@@ -2,28 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>convert_fields (CSV)</title>
+  <title>read_to_char (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2170</span>
-2170:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_fields</span>(<span class="ruby-identifier">fields</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">false</span>)
-2171:     <span class="ruby-comment cmt"># see if we are converting headers or fields</span>
-2172:     <span class="ruby-identifier">converters</span> = <span class="ruby-identifier">headers</span> <span class="ruby-value">? </span><span class="ruby-ivar">@header_converters</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@converters</span>
-2173:     
-2174:     <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">map</span>.<span class="ruby-identifier">with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
-2175:       <span class="ruby-identifier">converters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter</span><span class="ruby-operator">|</span>
-2176:         <span class="ruby-identifier">field</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">converter</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>  <span class="ruby-comment cmt"># straight field converter</span>
-2177:           <span class="ruby-identifier">converter</span>[<span class="ruby-identifier">field</span>]
-2178:         <span class="ruby-keyword kw">else</span>                             <span class="ruby-comment cmt"># FieldInfo converter</span>
-2179:           <span class="ruby-identifier">header</span> = <span class="ruby-ivar">@use_headers</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span> <span class="ruby-value">? </span><span class="ruby-ivar">@headers</span>[<span class="ruby-identifier">index</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-2180:           <span class="ruby-identifier">converter</span>[<span class="ruby-identifier">field</span>, <span class="ruby-constant">FieldInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">lineno</span>, <span class="ruby-identifier">header</span>)]
-2181:         <span class="ruby-keyword kw">end</span>
-2182:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>  <span class="ruby-comment cmt"># short-curcuit pipeline for speed</span>
-2183:       <span class="ruby-keyword kw">end</span>
-2184:       <span class="ruby-identifier">field</span>  <span class="ruby-comment cmt"># final state of each field, converted or original</span>
-2185:     <span class="ruby-keyword kw">end</span>
-2186:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2274</span>
+2274:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_to_char</span>(<span class="ruby-identifier">bytes</span>)
+2275:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">eof?</span>
+2276:     <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">bytes</span>)
+2277:     <span class="ruby-keyword kw">begin</span>
+2278:       <span class="ruby-identifier">encoded</span> = <span class="ruby-identifier">encode_str</span>(<span class="ruby-identifier">data</span>)
+2279:       <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">encoded</span>.<span class="ruby-identifier">valid_encoding?</span>
+2280:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">encoded</span>
+2281:     <span class="ruby-keyword kw">rescue</span>  <span class="ruby-comment cmt"># encoding error or my invalid data raise</span>
+2282:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">eof?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">bytes</span> <span class="ruby-operator">+</span> <span class="ruby-value">10</span>
+2283:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">data</span>
+2284:       <span class="ruby-keyword kw">else</span>
+2285:         <span class="ruby-identifier">data</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">1</span>)
+2286:         <span class="ruby-keyword kw">retry</span>
+2287:       <span class="ruby-keyword kw">end</span>
+2288:     <span class="ruby-keyword kw">end</span>
+2289:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

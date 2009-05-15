@@ -2,27 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>terminate (GetoptLong)</title>
+  <title>each (GetoptLong)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/getoptlong.rb, line 355</span>
-355:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">terminate</span>
-356:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">==</span> <span class="ruby-constant">STATUS_TERMINATED</span>
-357:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-value str">&quot;an error has occured&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@error</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>
-358: 
-359:     <span class="ruby-ivar">@status</span> = <span class="ruby-constant">STATUS_TERMINATED</span>
-360:     <span class="ruby-ivar">@non_option_arguments</span>.<span class="ruby-identifier">reverse_each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">argument</span><span class="ruby-operator">|</span>
-361:       <span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">argument</span>)
-362:     <span class="ruby-keyword kw">end</span>
-363: 
-364:     <span class="ruby-ivar">@canonical_names</span> = <span class="ruby-keyword kw">nil</span>
-365:     <span class="ruby-ivar">@argument_flags</span> = <span class="ruby-keyword kw">nil</span>
-366:     <span class="ruby-ivar">@rest_singles</span> = <span class="ruby-keyword kw">nil</span>
-367:     <span class="ruby-ivar">@non_option_arguments</span> = <span class="ruby-keyword kw">nil</span>
-368: 
-369:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>
-370:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/getoptlong.rb, line 598</span>
+598:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>
+599:     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+600:       <span class="ruby-identifier">option_name</span>, <span class="ruby-identifier">option_argument</span> = <span class="ruby-identifier">get_option</span>
+601:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">option_name</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+602:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">option_name</span>, <span class="ruby-identifier">option_argument</span>
+603:     <span class="ruby-keyword kw">end</span>
+604:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

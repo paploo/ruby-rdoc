@@ -2,27 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_str (String)</title>
+  <title>swapcase (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.to_s     =&gt; str
- *     str.to_str   =&gt; str
+ *     str.swapcase   =&gt; new_str
  *  
- *  Returns the receiver.
+ *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with uppercase alphabetic characters converted
+ *  to lowercase and lowercase characters converted to uppercase.
+ *  Note: case conversion is effective only in ASCII region.
+ *     
+ *     &quot;Hello&quot;.swapcase          #=&gt; &quot;hELLO&quot;
+ *     &quot;cYbEr_PuNk11&quot;.swapcase   #=&gt; &quot;CyBeR_pUnK11&quot;
  */
 
 static VALUE
-rb_str_to_s(VALUE str)
+rb_str_swapcase(VALUE str)
 {
-    if (rb_obj_class(str) != rb_cString) {
-        VALUE dup = str_alloc(rb_cString);
-        rb_str_replace(dup, str);
-        return dup;
-    }
+    str = rb_str_dup(str);
+    rb_str_swapcase_bang(str);
     return str;
 }</pre>
 </body>

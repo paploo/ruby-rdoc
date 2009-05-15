@@ -2,42 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (Range)</title>
+  <title>begin (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     rng == obj    =&gt; true or false
+ *     rng.begin    =&gt; obj
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; only if &lt;i&gt;obj&lt;/i&gt; is a Range, has equivalent
- *  beginning and end items (by comparing them with &lt;code&gt;==&lt;/code&gt;), and has
- *  the same #exclude_end? setting as &lt;i&gt;rng&lt;/t&gt;.
- *     
- *    (0..2) == (0..2)            #=&gt; true
- *    (0..2) == Range.new(0,2)    #=&gt; true
- *    (0..2) == (0...2)           #=&gt; false
- *     
+ *  Returns the first object in &lt;i&gt;rng&lt;/i&gt;.
  */
 
 static VALUE
-range_eq(VALUE range, VALUE obj)
+range_begin(VALUE range)
 {
-    if (range == obj)
-        return Qtrue;
-    if (!rb_obj_is_instance_of(obj, rb_obj_class(range)))
-        return Qfalse;
-
-    if (!rb_equal(RANGE_BEG(range), RANGE_BEG(obj)))
-        return Qfalse;
-    if (!rb_equal(RANGE_END(range), RANGE_END(obj)))
-        return Qfalse;
-
-    if (EXCL(range) != EXCL(obj))
-        return Qfalse;
-
-    return Qtrue;
+    return RANGE_BEG(range);
 }</pre>
 </body>
 </html>

@@ -2,25 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sunday? (Time)</title>
+  <title>saturday? (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.sunday? =&gt; true or false
+ *     time.saturday? =&gt; true or false
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Sunday.
- *     
- *     t = Time.local(1990, 4, 1)       #=&gt; 1990-04-01 00:00:00 -0600
- *     t.sunday?                        #=&gt; true
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Saturday.
+ *
+ *     t = Time.local(2006, 6, 10)      #=&gt; 2006-06-10 00:00:00 -0500
+ *     t.saturday?                      #=&gt; true
  */
 
 static VALUE
-time_sunday(VALUE time)
+time_saturday(VALUE time)
 {
-    wday_p(0);
+    wday_p(6);
 }</pre>
 </body>
 </html>

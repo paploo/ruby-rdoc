@@ -2,69 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>^ (Bignum)</title>
+  <title>== (Bignum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *     big ^ numeric   =&gt;  integer
+ *  call-seq:
+ *     big == obj  =&gt; true or false
  *
- * Performs bitwise +exclusive or+ between _big_ and _numeric_.
+ *  Returns &lt;code&gt;true&lt;/code&gt; only if &lt;i&gt;obj&lt;/i&gt; has the same value
+ *  as &lt;i&gt;big&lt;/i&gt;. Contrast this with &lt;code&gt;Bignum#eql?&lt;/code&gt;, which
+ *  requires &lt;i&gt;obj&lt;/i&gt; to be a &lt;code&gt;Bignum&lt;/code&gt;.
+ *
+ *     68719476736 == 68719476736.0   #=&gt; true
  */
 
 VALUE
-rb_big_xor(VALUE xx, VALUE yy)
+rb_big_eq(VALUE x, VALUE y)
 {
-    volatile VALUE x, y;
-    VALUE z;
-    BDIGIT *ds1, *ds2, *zds;
-    long i, l1, l2;
-    char sign;
-
-    x = xx;
-    y = bit_coerce(yy);
-    if (FIXNUM_P(y)) {
+    switch (TYPE(y)) {
+      case T_FIXNUM:
         y = rb_int2big(FIX2LONG(y));
-    }
+        break;
+      case T_BIGNUM:
+        break;
+      case T_FLOAT:
+        {
+            volatile double a, b;
 
-    if (!RBIGNUM_SIGN(y)) {
-        y = rb_big_clone(y);
-        get2comp(y);
+            a = RFLOAT_VALUE(y);
+            if (isnan(a)) return Qfalse;
+            b = rb_big2dbl(x);
+            return (a == b)?Qtrue:Qfalse;
+        }
+      default:
+        return rb_equal(y, x);
     }
-    if (!RBIGNUM_SIGN(x)) {
-        x = rb_big_clone(x);
-        get2comp(x);
-    }
-    if (RBIGNUM_LEN(x) &gt; RBIGNUM_LEN(y)) {
-        l1 = RBIGNUM_LEN(y);
-        l2 = RBIGNUM_LEN(x);
-        ds1 = BDIGITS(y);
-        ds2 = BDIGITS(x);
-        sign = RBIGNUM_SIGN(y);
-    }
-    else {
-        l1 = RBIGNUM_LEN(x);
-        l2 = RBIGNUM_LEN(y);
-        ds1 = BDIGITS(x);
-        ds2 = BDIGITS(y);
-        sign = RBIGNUM_SIGN(x);
-    }
-    RBIGNUM_SET_SIGN(x, RBIGNUM_SIGN(x)?1:0);
-    RBIGNUM_SET_SIGN(y, RBIGNUM_SIGN(y)?1:0);
-    z = bignew(l2, !(RBIGNUM_SIGN(x) ^ RBIGNUM_SIGN(y)));
-    zds = BDIGITS(z);
-
-    for (i=0; i&lt;l1; i++) {
-        zds[i] = ds1[i] ^ ds2[i];
-    }
-    for (; i&lt;l2; i++) {
-        zds[i] = sign?ds2[i]:~ds2[i];
-    }
-    if (!RBIGNUM_SIGN(z)) get2comp(z);
-
-    return bignorm(z);
+    if (RBIGNUM_SIGN(x) != RBIGNUM_SIGN(y)) return Qfalse;
+    if (RBIGNUM_LEN(x) != RBIGNUM_LEN(y)) return Qfalse;
+    if (MEMCMP(BDIGITS(x),BDIGITS(y),BDIGIT,RBIGNUM_LEN(y)) != 0) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

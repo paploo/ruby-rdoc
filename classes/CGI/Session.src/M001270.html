@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_new_id (CGI::Session)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/cgi/session.rb, line 176</span>
+176:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_new_id</span>
+177:       <span class="ruby-identifier">require</span> <span class="ruby-value str">'securerandom'</span>
+178:       <span class="ruby-keyword kw">begin</span>
+179:         <span class="ruby-identifier">session_id</span> = <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">hex</span>(<span class="ruby-value">16</span>)
+180:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NotImplementedError</span>
+181:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'digest/md5'</span>
+182:         <span class="ruby-identifier">md5</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>
+183:         <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span><span class="ruby-operator">::</span><span class="ruby-identifier">now</span>
+184:         <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_s</span>)
+185:         <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">update</span>(<span class="ruby-constant">String</span>(<span class="ruby-identifier">now</span>.<span class="ruby-identifier">usec</span>))
+186:         <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">update</span>(<span class="ruby-constant">String</span>(<span class="ruby-identifier">rand</span>(<span class="ruby-value">0</span>)))
+187:         <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">update</span>(<span class="ruby-constant">String</span>(<span class="ruby-identifier">$$</span>))
+188:         <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">update</span>(<span class="ruby-value str">'foobar'</span>)
+189:         <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">md5</span>.<span class="ruby-identifier">hexdigest</span>
+190:       <span class="ruby-keyword kw">end</span>
+191:       <span class="ruby-identifier">session_id</span>
+192:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

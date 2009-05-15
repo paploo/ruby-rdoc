@@ -2,16 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getaddresses (Resolv::DNS)</title>
+  <title>getresources (Resolv::DNS)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 367</span>
-367:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getaddresses</span>(<span class="ruby-identifier">name</span>)
-368:       <span class="ruby-identifier">ret</span> = []
-369:       <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">address</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">address</span>}
-370:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-371:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 461</span>
+461:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getresources</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">typeclass</span>)
+462:       <span class="ruby-identifier">ret</span> = []
+463:       <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">typeclass</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resource</span>}
+464:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
+465:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

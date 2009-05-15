@@ -2,46 +2,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>| (Array)</title>
+  <title>flatten! (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array | other_array     -&gt;  an_array
- *
- *  Set Union---Returns a new array by joining this array with
- *  other_array, removing duplicates.
- *
- *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ] | [ &quot;c&quot;, &quot;d&quot;, &quot;a&quot; ]
- *            #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
+ *     array.flatten! -&gt; array or nil
+ *     array.flatten!(level) -&gt; array or nil
+ *  
+ *  Flattens _self_ in place.
+ *  Returns &lt;code&gt;nil&lt;/code&gt; if no modifications were made (i.e.,
+ *  &lt;i&gt;array&lt;/i&gt; contains no subarrays.)  If the optional &lt;i&gt;level&lt;/i&gt;
+ *  argument determines the level of recursion to flatten.
+ *     
+ *     a = [ 1, 2, [3, [4, 5] ] ]
+ *     a.flatten!   #=&gt; [1, 2, 3, 4, 5]
+ *     a.flatten!   #=&gt; nil
+ *     a            #=&gt; [1, 2, 3, 4, 5]
+ *     a = [ 1, 2, [3, [4, 5] ] ]
+ *     a.flatten!(1) #=&gt; [1, 2, 3, [4, 5]]
  */
 
 static VALUE
-rb_ary_or(VALUE ary1, VALUE ary2)
+rb_ary_flatten_bang(int argc, VALUE *argv, VALUE ary)
 {
-    VALUE hash, ary3;
-    VALUE v, vv;
-    long i;
+    int mod = 0, level = -1;
+    VALUE result, lv;
 
-    ary2 = to_ary(ary2);
-    ary3 = rb_ary_new2(RARRAY_LEN(ary1)+RARRAY_LEN(ary2));
-    hash = ary_make_hash(ary1, ary2);
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;lv);
+    if (!NIL_P(lv)) level = NUM2INT(lv);
+    if (level == 0) return ary;
 
-    for (i=0; i&lt;RARRAY_LEN(ary1); i++) {
-        v = vv = rb_ary_elt(ary1, i);
-        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
-            rb_ary_push(ary3, v);
-        }
-    }
-    for (i=0; i&lt;RARRAY_LEN(ary2); i++) {
-        v = vv = rb_ary_elt(ary2, i);
-        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
-            rb_ary_push(ary3, v);
-        }
-    }
-    return ary3;
+    result = flatten(ary, level, &amp;mod);
+    if (mod == 0) return Qnil;
+    rb_ary_replace(ary, result);
+
+    return ary;
 }</pre>
 </body>
 </html>

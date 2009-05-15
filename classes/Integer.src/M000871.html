@@ -2,30 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>next (Integer)</title>
+  <title>floor (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     int.next    =&gt; integer
- *     int.succ    =&gt; integer
+ *     int.to_i      =&gt; int
+ *     int.to_int    =&gt; int
+ *     int.floor     =&gt; int
+ *     int.ceil      =&gt; int
+ *     int.round     =&gt; int
+ *     int.truncate  =&gt; int
  *
- *  Returns the &lt;code&gt;Integer&lt;/code&gt; equal to &lt;i&gt;int&lt;/i&gt; + 1.
- *
- *     1.next      #=&gt; 2
- *     (-1).next   #=&gt; 0
+ *  As &lt;i&gt;int&lt;/i&gt; is already an &lt;code&gt;Integer&lt;/code&gt;, all these
+ *  methods simply return the receiver.
  */
 
 static VALUE
-int_succ(VALUE num)
+int_to_i(VALUE num)
 {
-    if (FIXNUM_P(num)) {
-        long i = FIX2LONG(num) + 1;
-        return LONG2NUM(i);
-    }
-    return rb_funcall(num, '+', 1, INT2FIX(1));
+    return num;
 }</pre>
 </body>
 </html>

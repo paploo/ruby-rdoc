@@ -2,27 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt; (Module)</title>
+  <title>ancestors (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   mod &gt; other   =&gt;  true, false, or nil
- *
- * Returns true if &lt;i&gt;mod&lt;/i&gt; is an ancestor of &lt;i&gt;other&lt;/i&gt;. Returns 
- * &lt;code&gt;nil&lt;/code&gt; if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
- * &quot;class A&lt;B&quot; implies &quot;B&gt;A&quot;).
- *
+ *  call-seq:
+ *     mod.ancestors -&gt; array
+ *  
+ *  Returns a list of modules included in &lt;i&gt;mod&lt;/i&gt; (including
+ *  &lt;i&gt;mod&lt;/i&gt; itself).
+ *     
+ *     module Mod
+ *       include Math
+ *       include Comparable
+ *     end
+ *     
+ *     Mod.ancestors    #=&gt; [Mod, Comparable, Math]
+ *     Math.ancestors   #=&gt; [Math]
  */
 
-static VALUE
-rb_mod_gt(VALUE mod, VALUE arg)
+VALUE
+rb_mod_ancestors(VALUE mod)
 {
-    if (mod == arg) return Qfalse;
-    return rb_mod_ge(mod, arg);
+    VALUE p, ary = rb_ary_new();
+
+    for (p = mod; p; p = RCLASS_SUPER(p)) {
+	if (FL_TEST(p, FL_SINGLETON))
+	    continue;
+	if (BUILTIN_TYPE(p) == T_ICLASS) {
+	    rb_ary_push(ary, RBASIC(p)-&gt;klass);
+	}
+	else {
+	    rb_ary_push(ary, p);
+	}
+    }
+    return ary;
 }</pre>
 </body>
 </html>

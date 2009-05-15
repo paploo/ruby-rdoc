@@ -2,139 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_line (String)</title>
+  <title>slice! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: each_line
  *  call-seq:
- *     str.each_line(separator=$/) {|substr| block }   =&gt; str
+ *     str.slice!(fixnum)           =&gt; fixnum or nil
+ *     str.slice!(fixnum, fixnum)   =&gt; new_str or nil
+ *     str.slice!(range)            =&gt; new_str or nil
+ *     str.slice!(regexp)           =&gt; new_str or nil
+ *     str.slice!(other_str)        =&gt; new_str or nil
  *  
- *  Splits &lt;i&gt;str&lt;/i&gt; using the supplied parameter as the record separator
- *  (&lt;code&gt;$/&lt;/code&gt; by default), passing each substring in turn to the supplied
- *  block. If a zero-length record separator is supplied, the string is split
- *  into paragraphs delimited by multiple successive newlines.
+ *  Deletes the specified portion from &lt;i&gt;str&lt;/i&gt;, and returns the portion
+ *  deleted.
  *     
- *     print &quot;Example one\n&quot;
- *     &quot;hello\nworld&quot;.each {|s| p s}
- *     print &quot;Example two\n&quot;
- *     &quot;hello\nworld&quot;.each('l') {|s| p s}
- *     print &quot;Example three\n&quot;
- *     &quot;hello\n\n\nworld&quot;.each('') {|s| p s}
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     Example one
- *     &quot;hello\n&quot;
- *     &quot;world&quot;
- *     Example two
- *     &quot;hel&quot;
- *     &quot;l&quot;
- *     &quot;o\nworl&quot;
- *     &quot;d&quot;
- *     Example three
- *     &quot;hello\n\n\n&quot;
- *     &quot;world&quot;
+ *     string = &quot;this is a string&quot;
+ *     string.slice!(2)        #=&gt; &quot;i&quot;
+ *     string.slice!(3..6)     #=&gt; &quot; is &quot;
+ *     string.slice!(/s.*t/)   #=&gt; &quot;sa st&quot;
+ *     string.slice!(&quot;r&quot;)      #=&gt; &quot;r&quot;
+ *     string                  #=&gt; &quot;thing&quot;
  */
 
 static VALUE
-rb_str_each_line(int argc, VALUE *argv, VALUE str)
+rb_str_slice_bang(int argc, VALUE *argv, VALUE str)
 {
-    rb_encoding *enc;
-    VALUE rs;
-    unsigned int newline;
-    char *p, *pend, *s, *ptr;
-    long len, rslen; 
-    VALUE line;
-    int n;
-    VALUE orig = str;
+    VALUE result;
+    VALUE buf[3];
+    int i;
 
-    if (argc == 0) {
-        rs = rb_rs;
+    if (argc &lt; 1 || 2 &lt; argc) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
     }
-    else {
-        rb_scan_args(argc, argv, &quot;01&quot;, &amp;rs);
+    for (i=0; i&lt;argc; i++) {
+        buf[i] = argv[i];
     }
-    RETURN_ENUMERATOR(str, argc, argv);
-    if (NIL_P(rs)) {
-        rb_yield(str);
-        return orig;
+    str_modify_keep_cr(str);
+    buf[i] = rb_str_new(0,0);
+    result = rb_str_aref_m(argc, buf, str);
+    if (!NIL_P(result)) {
+        rb_str_aset_m(argc+1, buf, str);
     }
-    str = rb_str_new4(str);
-    ptr = p = s = RSTRING_PTR(str);
-    pend = p + RSTRING_LEN(str);
-    len = RSTRING_LEN(str);
-    StringValue(rs);
-    if (rs == rb_default_rs) {
-        enc = rb_enc_get(str);
-        while (p &lt; pend) {
-            char *p0;
-
-            p = memchr(p, '\n', pend - p);
-            if (!p) break;
-            p0 = rb_enc_left_char_head(s, p, pend, enc);
-            if (!rb_enc_is_newline(p0, pend, enc)) {
-                p++;
-                continue;
-            }
-            p = p0 + rb_enc_mbclen(p0, pend, enc);
-            line = rb_str_new5(str, s, p - s);
-            OBJ_INFECT(line, str);
-            rb_enc_cr_str_copy_for_substr(line, str);
-            rb_yield(line);
-            str_mod_check(str, ptr, len);
-            s = p;
-        }
-        goto finish;
-    }
-
-    enc = rb_enc_check(str, rs);
-    rslen = RSTRING_LEN(rs);
-    if (rslen == 0) {
-        newline = '\n';
-    }
-    else {
-        newline = rb_enc_codepoint(RSTRING_PTR(rs), RSTRING_END(rs), enc);
-    }
-
-    while (p &lt; pend) {
-        unsigned int c = rb_enc_codepoint(p, pend, enc);
-
-      again:
-        n = rb_enc_codelen(c, enc);
-        if (rslen == 0 &amp;&amp; c == newline) {
-            p += n;
-            if (p &lt; pend &amp;&amp; (c = rb_enc_codepoint(p, pend, enc)) != newline) {
-                goto again;
-            }
-            while (p &lt; pend &amp;&amp; rb_enc_codepoint(p, pend, enc) == newline) {
-                p += n;
-            }
-            p -= n;
-        }
-        if (c == newline &amp;&amp;
-            (rslen &lt;= 1 || memcmp(RSTRING_PTR(rs), p, rslen) == 0)) {
-            line = rb_str_new5(str, s, p - s + (rslen ? rslen : n));
-            OBJ_INFECT(line, str);
-            rb_enc_cr_str_copy_for_substr(line, str);
-            rb_yield(line);
-            str_mod_check(str, ptr, len);
-            s = p + (rslen ? rslen : n);
-        }
-        p += n;
-    }
-
-  finish:
-    if (s != pend) {
-        line = rb_str_new5(str, s, pend - s);
-        OBJ_INFECT(line, str);
-        rb_enc_cr_str_copy_for_substr(line, str);
-        rb_yield(line);
-    }
-
-    return orig;
+    return result;
 }</pre>
 </body>
 </html>

@@ -2,30 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getgm (Time)</title>
+  <title>to_a (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.getgm  =&gt; new_time
- *     time.getutc =&gt; new_time
+ *     time.to_a =&gt; array
  *  
- *  Returns a new &lt;code&gt;new_time&lt;/code&gt; object representing &lt;i&gt;time&lt;/i&gt; in
- *  UTC.
+ *  Returns a ten-element &lt;i&gt;array&lt;/i&gt; of values for &lt;i&gt;time&lt;/i&gt;:
+ *  {&lt;code&gt;[ sec, min, hour, day, month, year, wday, yday, isdst, zone
+ *  ]&lt;/code&gt;}. See the individual methods for an explanation of the
+ *  valid ranges of each value. The ten elements can be passed directly
+ *  to &lt;code&gt;Time::utc&lt;/code&gt; or &lt;code&gt;Time::local&lt;/code&gt; to create a
+ *  new &lt;code&gt;Time&lt;/code&gt;.
  *     
- *     t = Time.local(2000,1,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 -0600
- *     t.gmt?                             #=&gt; false
- *     y = t.getgm                        #=&gt; 2000-01-02 02:15:01 UTC
- *     y.gmt?                             #=&gt; true
- *     t == y                             #=&gt; true
+ *     t = Time.now     #=&gt; 2007-11-19 08:36:01 -0600
+ *     now = t.to_a     #=&gt; [1, 36, 8, 19, 11, 2007, 1, 323, false, &quot;CST&quot;]
  */
 
 static VALUE
-time_getgmtime(VALUE time)
+time_to_a(VALUE time)
 {
-    return time_gmtime(time_dup(time));
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    return rb_ary_new3(10,
+                    INT2FIX(tobj-&gt;tm.tm_sec),
+                    INT2FIX(tobj-&gt;tm.tm_min),
+                    INT2FIX(tobj-&gt;tm.tm_hour),
+                    INT2FIX(tobj-&gt;tm.tm_mday),
+                    INT2FIX(tobj-&gt;tm.tm_mon+1),
+                    LONG2NUM((long)tobj-&gt;tm.tm_year+1900),
+                    INT2FIX(tobj-&gt;tm.tm_wday),
+                    INT2FIX(tobj-&gt;tm.tm_yday+1),
+                    tobj-&gt;tm.tm_isdst?Qtrue:Qfalse,
+                    time_zone(time));
 }</pre>
 </body>
 </html>

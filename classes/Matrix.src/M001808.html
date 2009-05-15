@@ -2,15 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>collect (Matrix)</title>
+  <title>== (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 329</span>
-329:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">collect</span> <span class="ruby-comment cmt"># :yield: e</span>
-330:     <span class="ruby-identifier">rows</span> = <span class="ruby-ivar">@rows</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">e</span>}}
-331:     <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-keyword kw">false</span>)
-332:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 401</span>
+401:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
+402:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Matrix</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">other</span>
+403:     
+404:     <span class="ruby-identifier">other</span>.<span class="ruby-identifier">compare_by_row_vectors</span>(<span class="ruby-ivar">@rows</span>)
+405:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,25 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_i (NilClass)</title>
+  <title>| (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     nil.to_i =&gt; 0
+ *     false | obj   =&gt;   true or false
+ *     nil   | obj   =&gt;   true or false
  *  
- *  Always returns zero.
- *     
- *     nil.to_i   #=&gt; 0
+ *  Or---Returns &lt;code&gt;false&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is
+ *  &lt;code&gt;nil&lt;/code&gt; or &lt;code&gt;false&lt;/code&gt;; &lt;code&gt;true&lt;/code&gt; otherwise.
  */
 
-
 static VALUE
-nil_to_i(VALUE obj)
+false_or(VALUE obj, VALUE obj2)
 {
-    return INT2FIX(0);
+    return RTEST(obj2)?Qtrue:Qfalse;
 }</pre>
 </body>
 </html>

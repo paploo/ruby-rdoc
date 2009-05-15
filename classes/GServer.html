@@ -100,7 +100,7 @@ It accepts multiple simultaneous connections from clients, up to an
 optional maximum number. Several <em>services</em> (i.e. one service per
 TCP port) can be run simultaneously, and stopped at any time through the
 class method <tt><a
-href="GServer.html#M001647">GServer.stop(port)</a></tt>. All the threading
+href="GServer.html#M001641">GServer.stop(port)</a></tt>. All the threading
 issues are handled, saving you the effort. All events are optionally
 logged, but you can provide your own event handlers if you wish.
 </p>
@@ -180,37 +180,37 @@ wish to use a more sophisticated logging system.
 
       <div class="name-list">
 
-        <a href="#M001654">connecting</a>&nbsp;&nbsp;
+        <a href="#M001648">connecting</a>&nbsp;&nbsp;
 
-        <a href="#M001652">connections</a>&nbsp;&nbsp;
+        <a href="#M001646">connections</a>&nbsp;&nbsp;
 
-        <a href="#M001655">disconnecting</a>&nbsp;&nbsp;
+        <a href="#M001649">disconnecting</a>&nbsp;&nbsp;
 
-        <a href="#M001658">error</a>&nbsp;&nbsp;
+        <a href="#M001652">error</a>&nbsp;&nbsp;
 
-        <a href="#M001648">in_service?</a>&nbsp;&nbsp;
+        <a href="#M001642">in_service?</a>&nbsp;&nbsp;
 
-        <a href="#M001653">join</a>&nbsp;&nbsp;
+        <a href="#M001647">join</a>&nbsp;&nbsp;
 
-        <a href="#M001659">log</a>&nbsp;&nbsp;
+        <a href="#M001653">log</a>&nbsp;&nbsp;
 
-        <a href="#M001660">new</a>&nbsp;&nbsp;
+        <a href="#M001654">new</a>&nbsp;&nbsp;
 
-        <a href="#M001646">serve</a>&nbsp;&nbsp;
+        <a href="#M001640">serve</a>&nbsp;&nbsp;
 
-        <a href="#M001651">shutdown</a>&nbsp;&nbsp;
+        <a href="#M001645">shutdown</a>&nbsp;&nbsp;
 
-        <a href="#M001661">start</a>&nbsp;&nbsp;
+        <a href="#M001655">start</a>&nbsp;&nbsp;
 
-        <a href="#M001656">starting</a>&nbsp;&nbsp;
+        <a href="#M001650">starting</a>&nbsp;&nbsp;
 
-        <a href="#M001649">stop</a>&nbsp;&nbsp;
+        <a href="#M001643">stop</a>&nbsp;&nbsp;
 
-        <a href="#M001647">stop</a>&nbsp;&nbsp;
+        <a href="#M001641">stop</a>&nbsp;&nbsp;
 
-        <a href="#M001650">stopped?</a>&nbsp;&nbsp;
+        <a href="#M001644">stopped?</a>&nbsp;&nbsp;
 
-        <a href="#M001657">stopping</a>&nbsp;&nbsp;
+        <a href="#M001651">stopping</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -306,13 +306,13 @@ wish to use a more sophisticated logging system.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M001648" class="method-detail">
-        <a name="M001648"></a>
+      <div id="method-M001642" class="method-detail">
+        <a name="M001642"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001648.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001648.html');return false;">
+          <a href="GServer.src/M001642.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001642.html');return false;">
 
           <span class="method-name">in_service?</span><span class="method-args">(port, host = DEFAULT_HOST)</span>
 
@@ -326,15 +326,58 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001660" class="method-detail">
-        <a name="M001660"></a>
+      <div id="method-M001654" class="method-detail">
+        <a name="M001654"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001660.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001660.html');return false;">
+          <a href="GServer.src/M001654.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001654.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(port, host = DEFAULT_HOST, maxConnections = 4, stdlog = $stderr, audit = false, debug = false)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001641" class="method-detail">
+        <a name="M001641"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001641.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001641.html');return false;">
+
+          <span class="method-name">stop</span><span class="method-args">(port, host = DEFAULT_HOST)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M001646" class="method-detail">
+        <a name="M001646"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001646.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001646.html');return false;">
+
+          <span class="method-name">connections</span><span class="method-args">()</span>
 
           </a>
 
@@ -354,49 +397,6 @@ wish to use a more sophisticated logging system.
           <a href="GServer.src/M001647.html" target="Code" class="method-signature"
             onclick="popupCode('GServer.src/M001647.html');return false;">
 
-          <span class="method-name">stop</span><span class="method-args">(port, host = DEFAULT_HOST)</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-
-      <div id="method-M001652" class="method-detail">
-        <a name="M001652"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001652.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001652.html');return false;">
-
-          <span class="method-name">connections</span><span class="method-args">()</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <div id="method-M001653" class="method-detail">
-        <a name="M001653"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001653.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001653.html');return false;">
-
           <span class="method-name">join</span><span class="method-args">()</span>
 
           </a>
@@ -409,13 +409,13 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001646" class="method-detail">
-        <a name="M001646"></a>
+      <div id="method-M001640" class="method-detail">
+        <a name="M001640"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001646.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001646.html');return false;">
+          <a href="GServer.src/M001640.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001640.html');return false;">
 
           <span class="method-name">serve</span><span class="method-args">(io)</span>
 
@@ -429,98 +429,15 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001651" class="method-detail">
-        <a name="M001651"></a>
+      <div id="method-M001645" class="method-detail">
+        <a name="M001645"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001651.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001651.html');return false;">
+          <a href="GServer.src/M001645.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001645.html');return false;">
 
           <span class="method-name">shutdown</span><span class="method-args">()</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <div id="method-M001661" class="method-detail">
-        <a name="M001661"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001661.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001661.html');return false;">
-
-          <span class="method-name">start</span><span class="method-args">(maxConnections = -1)</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <div id="method-M001649" class="method-detail">
-        <a name="M001649"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001649.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001649.html');return false;">
-
-          <span class="method-name">stop</span><span class="method-args">()</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <div id="method-M001650" class="method-detail">
-        <a name="M001650"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001650.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001650.html');return false;">
-
-          <span class="method-name">stopped?</span><span class="method-args">()</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <h3 class="section-bar">Protected Instance methods</h3>
-
-
-      <div id="method-M001654" class="method-detail">
-        <a name="M001654"></a>
-
-        <div class="method-heading">
-
-          <a href="GServer.src/M001654.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001654.html');return false;">
-
-          <span class="method-name">connecting</span><span class="method-args">(client)</span>
 
           </a>
 
@@ -540,6 +457,89 @@ wish to use a more sophisticated logging system.
           <a href="GServer.src/M001655.html" target="Code" class="method-signature"
             onclick="popupCode('GServer.src/M001655.html');return false;">
 
+          <span class="method-name">start</span><span class="method-args">(maxConnections = -1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001643" class="method-detail">
+        <a name="M001643"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001643.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001643.html');return false;">
+
+          <span class="method-name">stop</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001644" class="method-detail">
+        <a name="M001644"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001644.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001644.html');return false;">
+
+          <span class="method-name">stopped?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+
+      <div id="method-M001648" class="method-detail">
+        <a name="M001648"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001648.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001648.html');return false;">
+
+          <span class="method-name">connecting</span><span class="method-args">(client)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001649" class="method-detail">
+        <a name="M001649"></a>
+
+        <div class="method-heading">
+
+          <a href="GServer.src/M001649.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001649.html');return false;">
+
           <span class="method-name">disconnecting</span><span class="method-args">(clientPort)</span>
 
           </a>
@@ -552,13 +552,13 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001658" class="method-detail">
-        <a name="M001658"></a>
+      <div id="method-M001652" class="method-detail">
+        <a name="M001652"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001658.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001658.html');return false;">
+          <a href="GServer.src/M001652.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001652.html');return false;">
 
           <span class="method-name">error</span><span class="method-args">(detail)</span>
 
@@ -572,13 +572,13 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001659" class="method-detail">
-        <a name="M001659"></a>
+      <div id="method-M001653" class="method-detail">
+        <a name="M001653"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001659.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001659.html');return false;">
+          <a href="GServer.src/M001653.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001653.html');return false;">
 
           <span class="method-name">log</span><span class="method-args">(msg)</span>
 
@@ -592,13 +592,13 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001656" class="method-detail">
-        <a name="M001656"></a>
+      <div id="method-M001650" class="method-detail">
+        <a name="M001650"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001656.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001656.html');return false;">
+          <a href="GServer.src/M001650.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001650.html');return false;">
 
           <span class="method-name">starting</span><span class="method-args">()</span>
 
@@ -612,13 +612,13 @@ wish to use a more sophisticated logging system.
       </div>
 
 
-      <div id="method-M001657" class="method-detail">
-        <a name="M001657"></a>
+      <div id="method-M001651" class="method-detail">
+        <a name="M001651"></a>
 
         <div class="method-heading">
 
-          <a href="GServer.src/M001657.html" target="Code" class="method-signature"
-            onclick="popupCode('GServer.src/M001657.html');return false;">
+          <a href="GServer.src/M001651.html" target="Code" class="method-signature"
+            onclick="popupCode('GServer.src/M001651.html');return false;">
 
           <span class="method-name">stopping</span><span class="method-args">()</span>
 

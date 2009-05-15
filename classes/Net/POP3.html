@@ -126,15 +126,15 @@ appropriate account details.
     pop.finish                                           # (3)
 </pre>
 <ol>
-<li>Call <a href="POP3.html#M004092">Net::POP3#start</a> and start POP session.
+<li>Call <a href="POP3.html#M003748">Net::POP3#start</a> and start POP session.
 
 </li>
-<li>Access messages by using <a href="POP3.html#M004113">POP3#each_mail</a>
-and/or <a href="POP3.html#M004112">POP3#mails</a>.
+<li>Access messages by using <a href="POP3.html#M003769">POP3#each_mail</a>
+and/or <a href="POP3.html#M003768">POP3#mails</a>.
 
 </li>
-<li>Close POP session by calling <a href="POP3.html#M004107">POP3#finish</a> or
-use the block form of <a href="POP3.html#M004092">start</a>.
+<li>Close POP session by calling <a href="POP3.html#M003763">POP3#finish</a> or
+use the block form of <a href="POP3.html#M003748">start</a>.
 
 </li>
 </ol>
@@ -142,10 +142,10 @@ use the block form of <a href="POP3.html#M004092">start</a>.
 <p>
 The example above is very verbose. You can shorten the code by using some
 utility methods. First, the block form of <a
-href="POP3.html#M004092">Net::POP3.start</a> can be used instead of <a
-href="POP3.html#M004093">POP3.new</a>, <a
-href="POP3.html#M004092">POP3#start</a> and <a
-href="POP3.html#M004107">POP3#finish</a>.
+href="POP3.html#M003748">Net::POP3.start</a> can be used instead of <a
+href="POP3.html#M003749">POP3.new</a>, <a
+href="POP3.html#M003748">POP3#start</a> and <a
+href="POP3.html#M003763">POP3#finish</a>.
 </p>
 <pre>
     require 'net/pop'
@@ -168,8 +168,8 @@ href="POP3.html#M004107">POP3#finish</a>.
     end
 </pre>
 <p>
-<a href="POP3.html#M004082">POP3#delete_all</a> is an alternative for <a
-href="POP3.html#M004113">each_mail</a> and delete.
+<a href="POP3.html#M003738">POP3#delete_all</a> is an alternative for <a
+href="POP3.html#M003769">each_mail</a> and delete.
 </p>
 <pre>
     require 'net/pop'
@@ -223,13 +223,13 @@ avoids this.
       end
     end
 </pre>
-<h3>Using <a href="POP3.html#M004080">APOP</a></h3>
+<h3>Using <a href="POP3.html#M003736">APOP</a></h3>
 <p>
-The net/pop library supports <a href="POP3.html#M004080">APOP</a>
-authentication. To use <a href="POP3.html#M004080">APOP</a>, use the <a
+The net/pop library supports <a href="POP3.html#M003736">APOP</a>
+authentication. To use <a href="POP3.html#M003736">APOP</a>, use the <a
 href="APOP.html">Net::APOP</a> class instead of the <a
 href="POP3.html">Net::POP3</a> class. You can use the utility method, <a
-href="POP3.html#M004080">Net::POP3.APOP()</a>. For example:
+href="POP3.html#M003736">Net::POP3.APOP()</a>. For example:
 </p>
 <pre>
     require 'net/pop'
@@ -258,7 +258,7 @@ mails from the POP server. e.g.
     end
 </pre>
 <p>
-The <a href="POPMail.html#M004128">POPMail#unique_id()</a> method returns
+The <a href="POPMail.html#M003784">POPMail#unique_id()</a> method returns
 the unique-id of the message as a <a href="../String.html">String</a>.
 Normally the unique-id is a hash of the message.
 </p>
@@ -273,87 +273,87 @@ Normally the unique-id is a hash of the message.
 
       <div class="name-list">
 
-        <a href="#M004080">APOP</a>&nbsp;&nbsp;
+        <a href="#M003736">APOP</a>&nbsp;&nbsp;
 
-        <a href="#M004103">active?</a>&nbsp;&nbsp;
+        <a href="#M003759">active?</a>&nbsp;&nbsp;
 
-        <a href="#M004094">apop?</a>&nbsp;&nbsp;
+        <a href="#M003750">apop?</a>&nbsp;&nbsp;
 
-        <a href="#M004083">auth_only</a>&nbsp;&nbsp;
+        <a href="#M003739">auth_only</a>&nbsp;&nbsp;
 
-        <a href="#M004084">auth_only</a>&nbsp;&nbsp;
+        <a href="#M003740">auth_only</a>&nbsp;&nbsp;
 
-        <a href="#M004091">certs</a>&nbsp;&nbsp;
+        <a href="#M003747">certs</a>&nbsp;&nbsp;
 
-        <a href="#M004109">command</a>&nbsp;&nbsp;
+        <a href="#M003765">command</a>&nbsp;&nbsp;
 
-        <a href="#M004086">create_ssl_params</a>&nbsp;&nbsp;
+        <a href="#M003742">create_ssl_params</a>&nbsp;&nbsp;
 
-        <a href="#M004078">default_pop3_port</a>&nbsp;&nbsp;
+        <a href="#M003734">default_pop3_port</a>&nbsp;&nbsp;
 
-        <a href="#M004079">default_pop3s_port</a>&nbsp;&nbsp;
+        <a href="#M003735">default_pop3s_port</a>&nbsp;&nbsp;
 
-        <a href="#M004077">default_port</a>&nbsp;&nbsp;
+        <a href="#M003733">default_port</a>&nbsp;&nbsp;
 
-        <a href="#M004082">delete_all</a>&nbsp;&nbsp;
+        <a href="#M003738">delete_all</a>&nbsp;&nbsp;
 
-        <a href="#M004115">delete_all</a>&nbsp;&nbsp;
+        <a href="#M003771">delete_all</a>&nbsp;&nbsp;
 
-        <a href="#M004087">disable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003743">disable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004097">disable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003753">disable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004108">do_finish</a>&nbsp;&nbsp;
+        <a href="#M003764">do_finish</a>&nbsp;&nbsp;
 
-        <a href="#M004105">do_start</a>&nbsp;&nbsp;
+        <a href="#M003761">do_start</a>&nbsp;&nbsp;
 
-        <a href="#M004114">each</a>&nbsp;&nbsp;
+        <a href="#M003770">each</a>&nbsp;&nbsp;
 
-        <a href="#M004113">each_mail</a>&nbsp;&nbsp;
+        <a href="#M003769">each_mail</a>&nbsp;&nbsp;
 
-        <a href="#M004085">enable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003741">enable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004096">enable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003752">enable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004107">finish</a>&nbsp;&nbsp;
+        <a href="#M003763">finish</a>&nbsp;&nbsp;
 
-        <a href="#M004081">foreach</a>&nbsp;&nbsp;
+        <a href="#M003737">foreach</a>&nbsp;&nbsp;
 
-        <a href="#M004098">inspect</a>&nbsp;&nbsp;
+        <a href="#M003754">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M004117">logging</a>&nbsp;&nbsp;
+        <a href="#M003773">logging</a>&nbsp;&nbsp;
 
-        <a href="#M004112">mails</a>&nbsp;&nbsp;
+        <a href="#M003768">mails</a>&nbsp;&nbsp;
 
-        <a href="#M004111">n_bytes</a>&nbsp;&nbsp;
+        <a href="#M003767">n_bytes</a>&nbsp;&nbsp;
 
-        <a href="#M004110">n_mails</a>&nbsp;&nbsp;
+        <a href="#M003766">n_mails</a>&nbsp;&nbsp;
 
-        <a href="#M004093">new</a>&nbsp;&nbsp;
+        <a href="#M003749">new</a>&nbsp;&nbsp;
 
-        <a href="#M004106">on_connect</a>&nbsp;&nbsp;
+        <a href="#M003762">on_connect</a>&nbsp;&nbsp;
 
-        <a href="#M004100">port</a>&nbsp;&nbsp;
+        <a href="#M003756">port</a>&nbsp;&nbsp;
 
-        <a href="#M004101">read_timeout=</a>&nbsp;&nbsp;
+        <a href="#M003757">read_timeout=</a>&nbsp;&nbsp;
 
-        <a href="#M004116">reset</a>&nbsp;&nbsp;
+        <a href="#M003772">reset</a>&nbsp;&nbsp;
 
-        <a href="#M004099">set_debug_output</a>&nbsp;&nbsp;
+        <a href="#M003755">set_debug_output</a>&nbsp;&nbsp;
 
-        <a href="#M004088">ssl_params</a>&nbsp;&nbsp;
+        <a href="#M003744">ssl_params</a>&nbsp;&nbsp;
 
-        <a href="#M004104">start</a>&nbsp;&nbsp;
+        <a href="#M003760">start</a>&nbsp;&nbsp;
 
-        <a href="#M004092">start</a>&nbsp;&nbsp;
+        <a href="#M003748">start</a>&nbsp;&nbsp;
 
-        <a href="#M004102">started?</a>&nbsp;&nbsp;
+        <a href="#M003758">started?</a>&nbsp;&nbsp;
 
-        <a href="#M004095">use_ssl?</a>&nbsp;&nbsp;
+        <a href="#M003751">use_ssl?</a>&nbsp;&nbsp;
 
-        <a href="#M004089">use_ssl?</a>&nbsp;&nbsp;
+        <a href="#M003745">use_ssl?</a>&nbsp;&nbsp;
 
-        <a href="#M004090">verify</a>&nbsp;&nbsp;
+        <a href="#M003746">verify</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -438,13 +438,13 @@ it raises a TimeoutError exception.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M004080" class="method-detail">
-        <a name="M004080"></a>
+      <div id="method-M003736" class="method-detail">
+        <a name="M003736"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004080.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004080.html');return false;">
+          <a href="POP3.src/M003736.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003736.html');return false;">
 
           <span class="method-name">APOP</span><span class="method-args">(isapop)</span>
 
@@ -455,7 +455,7 @@ it raises a TimeoutError exception.
         <div class="method-description">
 
           <p>
-Returns the <a href="POP3.html#M004080">APOP</a> class if <tt>isapop</tt>
+Returns the <a href="POP3.html#M003736">APOP</a> class if <tt>isapop</tt>
 is true; otherwise, returns the POP class. For example:
 </p>
 <pre>
@@ -472,13 +472,13 @@ is true; otherwise, returns the POP class. For example:
       </div>
 
 
-      <div id="method-M004083" class="method-detail">
-        <a name="M004083"></a>
+      <div id="method-M003739" class="method-detail">
+        <a name="M003739"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004083.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004083.html');return false;">
+          <a href="POP3.src/M003739.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003739.html');return false;">
 
           <span class="method-name">auth_only</span><span class="method-args">(address, port = nil, account = nil, password = nil, isapop = false)</span>
 
@@ -502,7 +502,7 @@ authentication fails.
     Net::POP3.auth_only('pop.example.com', 110,
                         'YourAccount', 'YourPassword')
 </pre>
-<h3>Example: <a href="POP3.html#M004080">APOP</a></h3>
+<h3>Example: <a href="POP3.html#M003736">APOP</a></h3>
 <pre>
     Net::POP3.auth_only('pop.example.com', 110,
                         'YourAccount', 'YourPassword', true)
@@ -512,13 +512,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004091" class="method-detail">
-        <a name="M004091"></a>
+      <div id="method-M003747" class="method-detail">
+        <a name="M003747"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004091.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004091.html');return false;">
+          <a href="POP3.src/M003747.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003747.html');return false;">
 
           <span class="method-name">certs</span><span class="method-args">()</span>
 
@@ -532,13 +532,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004086" class="method-detail">
-        <a name="M004086"></a>
+      <div id="method-M003742" class="method-detail">
+        <a name="M003742"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004086.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004086.html');return false;">
+          <a href="POP3.src/M003742.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003742.html');return false;">
 
           <span class="method-name">create_ssl_params</span><span class="method-args">(verify_or_params = {}, certs = nil)</span>
 
@@ -552,13 +552,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004078" class="method-detail">
-        <a name="M004078"></a>
+      <div id="method-M003734" class="method-detail">
+        <a name="M003734"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004078.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004078.html');return false;">
+          <a href="POP3.src/M003734.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003734.html');return false;">
 
           <span class="method-name">default_pop3_port</span><span class="method-args">()</span>
 
@@ -576,13 +576,13 @@ The default port for <a href="POP3.html">POP3</a> connections, port 110
       </div>
 
 
-      <div id="method-M004079" class="method-detail">
-        <a name="M004079"></a>
+      <div id="method-M003735" class="method-detail">
+        <a name="M003735"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004079.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004079.html');return false;">
+          <a href="POP3.src/M003735.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003735.html');return false;">
 
           <span class="method-name">default_pop3s_port</span><span class="method-args">()</span>
 
@@ -600,13 +600,13 @@ The default port for POP3S connections, port 995
       </div>
 
 
-      <div id="method-M004077" class="method-detail">
-        <a name="M004077"></a>
+      <div id="method-M003733" class="method-detail">
+        <a name="M003733"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004077.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004077.html');return false;">
+          <a href="POP3.src/M003733.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003733.html');return false;">
 
           <span class="method-name">default_port</span><span class="method-args">()</span>
 
@@ -624,13 +624,13 @@ The default port for POP3S connections, port 995
       </div>
 
 
-      <div id="method-M004082" class="method-detail">
-        <a name="M004082"></a>
+      <div id="method-M003738" class="method-detail">
+        <a name="M003738"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004082.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004082.html');return false;">
+          <a href="POP3.src/M003738.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003738.html');return false;">
 
           <span class="method-name">delete_all</span><span class="method-args">(address, port = nil, account = nil, password = nil, isapop = false, &amp;block)</span>
 
@@ -662,13 +662,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004087" class="method-detail">
-        <a name="M004087"></a>
+      <div id="method-M003743" class="method-detail">
+        <a name="M003743"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004087.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004087.html');return false;">
+          <a href="POP3.src/M003743.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003743.html');return false;">
 
           <span class="method-name">disable_ssl</span><span class="method-args">()</span>
 
@@ -686,13 +686,13 @@ Disable SSL for all new instances.
       </div>
 
 
-      <div id="method-M004085" class="method-detail">
-        <a name="M004085"></a>
+      <div id="method-M003741" class="method-detail">
+        <a name="M003741"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004085.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004085.html');return false;">
+          <a href="POP3.src/M003741.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003741.html');return false;">
 
           <span class="method-name">Net::POP.enable_ssl(params = {})<br />
 </span>
@@ -712,13 +712,13 @@ OpenSSL::SSLContext#set_params.
       </div>
 
 
-      <div id="method-M004081" class="method-detail">
-        <a name="M004081"></a>
+      <div id="method-M003737" class="method-detail">
+        <a name="M003737"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004081.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004081.html');return false;">
+          <a href="POP3.src/M003737.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003737.html');return false;">
 
           <span class="method-name">foreach</span><span class="method-args">(address, port = nil, account = nil, password = nil, isapop = false) {|message| ...}</span>
 
@@ -758,13 +758,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004093" class="method-detail">
-        <a name="M004093"></a>
+      <div id="method-M003749" class="method-detail">
+        <a name="M003749"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004093.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004093.html');return false;">
+          <a href="POP3.src/M003749.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003749.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(addr, port = nil, isapop = false)</span>
 
@@ -786,7 +786,7 @@ The optional <tt>port</tt> is the port to connect to.
 </p>
 <p>
 The optional <tt>isapop</tt> specifies whether this connection is going to
-use <a href="POP3.html#M004080">APOP</a> authentication; it defaults to
+use <a href="POP3.html#M003736">APOP</a> authentication; it defaults to
 <tt>false</tt>.
 </p>
 <p>
@@ -797,13 +797,13 @@ This method does <b>not</b> open the TCP connection.
       </div>
 
 
-      <div id="method-M004088" class="method-detail">
-        <a name="M004088"></a>
+      <div id="method-M003744" class="method-detail">
+        <a name="M003744"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004088.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004088.html');return false;">
+          <a href="POP3.src/M003744.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003744.html');return false;">
 
           <span class="method-name">ssl_params</span><span class="method-args">()</span>
 
@@ -817,13 +817,13 @@ This method does <b>not</b> open the TCP connection.
       </div>
 
 
-      <div id="method-M004092" class="method-detail">
-        <a name="M004092"></a>
+      <div id="method-M003748" class="method-detail">
+        <a name="M003748"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004092.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004092.html');return false;">
+          <a href="POP3.src/M003748.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003748.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">(address, port = nil, account = nil, password = nil, isapop = false) {|pop| ...}</span>
 
@@ -859,13 +859,13 @@ end of the session.
       </div>
 
 
-      <div id="method-M004089" class="method-detail">
-        <a name="M004089"></a>
+      <div id="method-M003745" class="method-detail">
+        <a name="M003745"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004089.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004089.html');return false;">
+          <a href="POP3.src/M003745.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003745.html');return false;">
 
           <span class="method-name">use_ssl?</span><span class="method-args">()</span>
 
@@ -879,13 +879,13 @@ end of the session.
       </div>
 
 
-      <div id="method-M004090" class="method-detail">
-        <a name="M004090"></a>
+      <div id="method-M003746" class="method-detail">
+        <a name="M003746"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004090.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004090.html');return false;">
+          <a href="POP3.src/M003746.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003746.html');return false;">
 
           <span class="method-name">verify</span><span class="method-args">()</span>
 
@@ -902,8 +902,8 @@ end of the session.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M004103" class="method-detail">
-        <a name="M004103"></a>
+      <div id="method-M003759" class="method-detail">
+        <a name="M003759"></a>
 
         <div class="method-heading">
 
@@ -914,20 +914,20 @@ end of the session.
         <div class="method-description">
 
           <p>
-Alias for <a href="POP3.html#M004102">started?</a>
+Alias for <a href="POP3.html#M003758">started?</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004094" class="method-detail">
-        <a name="M004094"></a>
+      <div id="method-M003750" class="method-detail">
+        <a name="M003750"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004094.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004094.html');return false;">
+          <a href="POP3.src/M003750.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003750.html');return false;">
 
           <span class="method-name">apop?</span><span class="method-args">()</span>
 
@@ -938,20 +938,20 @@ Alias for <a href="POP3.html#M004102">started?</a>
         <div class="method-description">
 
           <p>
-Does this instance use <a href="POP3.html#M004080">APOP</a> authentication?
+Does this instance use <a href="POP3.html#M003736">APOP</a> authentication?
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004084" class="method-detail">
-        <a name="M004084"></a>
+      <div id="method-M003740" class="method-detail">
+        <a name="M003740"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004084.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004084.html');return false;">
+          <a href="POP3.src/M003740.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003740.html');return false;">
 
           <span class="method-name">auth_only</span><span class="method-args">(account, password)</span>
 
@@ -973,13 +973,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004115" class="method-detail">
-        <a name="M004115"></a>
+      <div id="method-M003771" class="method-detail">
+        <a name="M003771"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004115.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004115.html');return false;">
+          <a href="POP3.src/M003771.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003771.html');return false;">
 
           <span class="method-name">delete_all</span><span class="method-args">( {|message| ...}</span>
 
@@ -1014,13 +1014,13 @@ occurs.
       </div>
 
 
-      <div id="method-M004097" class="method-detail">
-        <a name="M004097"></a>
+      <div id="method-M003753" class="method-detail">
+        <a name="M003753"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004097.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004097.html');return false;">
+          <a href="POP3.src/M003753.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003753.html');return false;">
 
           <span class="method-name">disable_ssl</span><span class="method-args">()</span>
 
@@ -1034,8 +1034,8 @@ occurs.
       </div>
 
 
-      <div id="method-M004114" class="method-detail">
-        <a name="M004114"></a>
+      <div id="method-M003770" class="method-detail">
+        <a name="M003770"></a>
 
         <div class="method-heading">
 
@@ -1046,20 +1046,20 @@ occurs.
         <div class="method-description">
 
           <p>
-Alias for <a href="POP3.html#M004113">each_mail</a>
+Alias for <a href="POP3.html#M003769">each_mail</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004113" class="method-detail">
-        <a name="M004113"></a>
+      <div id="method-M003769" class="method-detail">
+        <a name="M003769"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004113.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004113.html');return false;">
+          <a href="POP3.src/M003769.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003769.html');return false;">
 
           <span class="method-name">each_mail</span><span class="method-args">() {|message| ...}</span>
 
@@ -1086,13 +1086,13 @@ occurs.
       </div>
 
 
-      <div id="method-M004096" class="method-detail">
-        <a name="M004096"></a>
+      <div id="method-M003752" class="method-detail">
+        <a name="M003752"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004096.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004096.html');return false;">
+          <a href="POP3.src/M003752.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003752.html');return false;">
 
           <span class="method-name">Net::POP#enable_ssl(params = {})<br />
 </span>
@@ -1114,13 +1114,13 @@ passed to OpenSSL::SSLContext#set_params.
       </div>
 
 
-      <div id="method-M004107" class="method-detail">
-        <a name="M004107"></a>
+      <div id="method-M003763" class="method-detail">
+        <a name="M003763"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004107.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004107.html');return false;">
+          <a href="POP3.src/M003763.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003763.html');return false;">
 
           <span class="method-name">finish</span><span class="method-args">()</span>
 
@@ -1138,13 +1138,13 @@ Finishes a <a href="POP3.html">POP3</a> session and closes TCP connection.
       </div>
 
 
-      <div id="method-M004098" class="method-detail">
-        <a name="M004098"></a>
+      <div id="method-M003754" class="method-detail">
+        <a name="M003754"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004098.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004098.html');return false;">
+          <a href="POP3.src/M003754.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003754.html');return false;">
 
           <span class="method-name">inspect</span><span class="method-args">()</span>
 
@@ -1162,13 +1162,13 @@ Provide human-readable stringification of class state.
       </div>
 
 
-      <div id="method-M004117" class="method-detail">
-        <a name="M004117"></a>
+      <div id="method-M003773" class="method-detail">
+        <a name="M003773"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004117.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004117.html');return false;">
+          <a href="POP3.src/M003773.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003773.html');return false;">
 
           <span class="method-name">logging</span><span class="method-args">(msg)</span>
 
@@ -1182,13 +1182,13 @@ Provide human-readable stringification of class state.
       </div>
 
 
-      <div id="method-M004112" class="method-detail">
-        <a name="M004112"></a>
+      <div id="method-M003768" class="method-detail">
+        <a name="M003768"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004112.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004112.html');return false;">
+          <a href="POP3.src/M003768.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003768.html');return false;">
 
           <span class="method-name">mails</span><span class="method-args">()</span>
 
@@ -1213,13 +1213,13 @@ occurs.
       </div>
 
 
-      <div id="method-M004111" class="method-detail">
-        <a name="M004111"></a>
+      <div id="method-M003767" class="method-detail">
+        <a name="M003767"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004111.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004111.html');return false;">
+          <a href="POP3.src/M003767.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003767.html');return false;">
 
           <span class="method-name">n_bytes</span><span class="method-args">()</span>
 
@@ -1237,13 +1237,13 @@ Returns the total size in bytes of all the messages on the POP server.
       </div>
 
 
-      <div id="method-M004110" class="method-detail">
-        <a name="M004110"></a>
+      <div id="method-M003766" class="method-detail">
+        <a name="M003766"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004110.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004110.html');return false;">
+          <a href="POP3.src/M003766.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003766.html');return false;">
 
           <span class="method-name">n_mails</span><span class="method-args">()</span>
 
@@ -1261,13 +1261,13 @@ Returns the number of messages on the POP server.
       </div>
 
 
-      <div id="method-M004100" class="method-detail">
-        <a name="M004100"></a>
+      <div id="method-M003756" class="method-detail">
+        <a name="M003756"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004100.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004100.html');return false;">
+          <a href="POP3.src/M003756.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003756.html');return false;">
 
           <span class="method-name">port</span><span class="method-args">()</span>
 
@@ -1285,13 +1285,13 @@ The port number to connect to.
       </div>
 
 
-      <div id="method-M004101" class="method-detail">
-        <a name="M004101"></a>
+      <div id="method-M003757" class="method-detail">
+        <a name="M003757"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004101.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004101.html');return false;">
+          <a href="POP3.src/M003757.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003757.html');return false;">
 
           <span class="method-name">read_timeout=</span><span class="method-args">(sec)</span>
 
@@ -1309,13 +1309,13 @@ The port number to connect to.
       </div>
 
 
-      <div id="method-M004116" class="method-detail">
-        <a name="M004116"></a>
+      <div id="method-M003772" class="method-detail">
+        <a name="M003772"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004116.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004116.html');return false;">
+          <a href="POP3.src/M003772.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003772.html');return false;">
 
           <span class="method-name">reset</span><span class="method-args">()</span>
 
@@ -1338,13 +1338,13 @@ occurs.
       </div>
 
 
-      <div id="method-M004099" class="method-detail">
-        <a name="M004099"></a>
+      <div id="method-M003755" class="method-detail">
+        <a name="M003755"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004099.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004099.html');return false;">
+          <a href="POP3.src/M003755.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003755.html');return false;">
 
           <span class="method-name">set_debug_output</span><span class="method-args">(arg)</span>
 
@@ -1374,13 +1374,13 @@ only for debugging.
       </div>
 
 
-      <div id="method-M004104" class="method-detail">
-        <a name="M004104"></a>
+      <div id="method-M003760" class="method-detail">
+        <a name="M003760"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004104.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004104.html');return false;">
+          <a href="POP3.src/M003760.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003760.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">(account, password) {|pop| ...}</span>
 
@@ -1407,13 +1407,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004102" class="method-detail">
-        <a name="M004102"></a>
+      <div id="method-M003758" class="method-detail">
+        <a name="M003758"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004102.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004102.html');return false;">
+          <a href="POP3.src/M003758.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003758.html');return false;">
 
           <span class="method-name">started?</span><span class="method-args">()</span>
 
@@ -1431,13 +1431,13 @@ authentication fails.
       </div>
 
 
-      <div id="method-M004095" class="method-detail">
-        <a name="M004095"></a>
+      <div id="method-M003751" class="method-detail">
+        <a name="M003751"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004095.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004095.html');return false;">
+          <a href="POP3.src/M003751.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003751.html');return false;">
 
           <span class="method-name">use_ssl?</span><span class="method-args">()</span>
 
@@ -1458,13 +1458,13 @@ does this instance use SSL?
       <h3 class="section-bar">Private Instance methods</h3>
 
 
-      <div id="method-M004109" class="method-detail">
-        <a name="M004109"></a>
+      <div id="method-M003765" class="method-detail">
+        <a name="M003765"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004109.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004109.html');return false;">
+          <a href="POP3.src/M003765.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003765.html');return false;">
 
           <span class="method-name">command</span><span class="method-args">()</span>
 
@@ -1478,13 +1478,13 @@ does this instance use SSL?
       </div>
 
 
-      <div id="method-M004108" class="method-detail">
-        <a name="M004108"></a>
+      <div id="method-M003764" class="method-detail">
+        <a name="M003764"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004108.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004108.html');return false;">
+          <a href="POP3.src/M003764.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003764.html');return false;">
 
           <span class="method-name">do_finish</span><span class="method-args">()</span>
 
@@ -1498,13 +1498,13 @@ does this instance use SSL?
       </div>
 
 
-      <div id="method-M004105" class="method-detail">
-        <a name="M004105"></a>
+      <div id="method-M003761" class="method-detail">
+        <a name="M003761"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004105.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004105.html');return false;">
+          <a href="POP3.src/M003761.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003761.html');return false;">
 
           <span class="method-name">do_start</span><span class="method-args">(account, password)</span>
 
@@ -1518,13 +1518,13 @@ does this instance use SSL?
       </div>
 
 
-      <div id="method-M004106" class="method-detail">
-        <a name="M004106"></a>
+      <div id="method-M003762" class="method-detail">
+        <a name="M003762"></a>
 
         <div class="method-heading">
 
-          <a href="POP3.src/M004106.html" target="Code" class="method-signature"
-            onclick="popupCode('POP3.src/M004106.html');return false;">
+          <a href="POP3.src/M003762.html" target="Code" class="method-signature"
+            onclick="popupCode('POP3.src/M003762.html');return false;">
 
           <span class="method-name">on_connect</span><span class="method-args">()</span>
 

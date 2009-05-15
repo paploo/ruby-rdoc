@@ -2,25 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>monday? (Time)</title>
+  <title>tv_sec (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.monday? =&gt; true or false
+ *     time.to_i   =&gt; int
+ *     time.tv_sec =&gt; int
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Monday.
- *
- *     t = Time.local(2003, 8, 4)       #=&gt; 2003-08-04 00:00:00 -0500
- *     p t.monday?                      #=&gt; true
+ *  Returns the value of &lt;i&gt;time&lt;/i&gt; as an integer number of seconds
+ *  since the Epoch.
+ *     
+ *     t = Time.now
+ *     &quot;%10.5f&quot; % t.to_f   #=&gt; &quot;1049896564.17839&quot;
+ *     t.to_i              #=&gt; 1049896564
  */
 
 static VALUE
-time_monday(VALUE time)
+time_to_i(VALUE time)
 {
-    wday_p(1);
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    return LONG2NUM(tobj-&gt;ts.tv_sec);
 }</pre>
 </body>
 </html>

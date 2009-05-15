@@ -2,48 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rehash (Hash)</title>
+  <title>[] (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.rehash -&gt; hsh
+ *     hsh[key]    =&gt;  value
  *
- *  Rebuilds the hash based on the current hash values for each key. If
- *  values of key objects have changed since they were inserted, this
- *  method will reindex &lt;i&gt;hsh&lt;/i&gt;. If &lt;code&gt;Hash#rehash&lt;/code&gt; is
- *  called while an iterator is traversing the hash, an
- *  &lt;code&gt;RuntimeError&lt;/code&gt; will be raised in the iterator.
+ *  Element Reference---Retrieves the &lt;i&gt;value&lt;/i&gt; object corresponding
+ *  to the &lt;i&gt;key&lt;/i&gt; object. If not found, returns the a default value (see
+ *  &lt;code&gt;Hash::new&lt;/code&gt; for details).
  *
- *     a = [ &quot;a&quot;, &quot;b&quot; ]
- *     c = [ &quot;c&quot;, &quot;d&quot; ]
- *     h = { a =&gt; 100, c =&gt; 300 }
- *     h[a]       #=&gt; 100
- *     a[0] = &quot;z&quot;
- *     h[a]       #=&gt; nil
- *     h.rehash   #=&gt; {[&quot;z&quot;, &quot;b&quot;]=&gt;100, [&quot;c&quot;, &quot;d&quot;]=&gt;300}
- *     h[a]       #=&gt; 100
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h[&quot;a&quot;]   #=&gt; 100
+ *     h[&quot;c&quot;]   #=&gt; nil
+ *
  */
 
-static VALUE
-rb_hash_rehash(VALUE hash)
+VALUE
+rb_hash_aref(VALUE hash, VALUE key)
 {
-    st_table *tbl;
+    VALUE val;
 
-    if (RHASH(hash)-&gt;iter_lev &gt; 0) {
-        rb_raise(rb_eRuntimeError, &quot;rehash during iteration&quot;);
+    if (!RHASH(hash)-&gt;ntbl || !st_lookup(RHASH(hash)-&gt;ntbl, key, &amp;val)) {
+        return rb_funcall(hash, id_default, 1, key);
     }
-    rb_hash_modify_check(hash);
-    if (!RHASH(hash)-&gt;ntbl)
-        return hash;
-    tbl = st_init_table_with_size(RHASH(hash)-&gt;ntbl-&gt;type, RHASH(hash)-&gt;ntbl-&gt;num_entries);
-    rb_hash_foreach(hash, rb_hash_rehash_i, (st_data_t)tbl);
-    st_free_table(RHASH(hash)-&gt;ntbl);
-    RHASH(hash)-&gt;ntbl = tbl;
-
-    return hash;
+    return val;
 }</pre>
 </body>
 </html>

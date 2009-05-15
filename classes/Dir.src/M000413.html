@@ -2,30 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pos= (Dir)</title>
+  <title>mkdir (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     dir.pos( integer ) =&gt; integer
+ *     Dir.mkdir( string [, integer] ) =&gt; 0
  *
- *  Synonym for &lt;code&gt;Dir#seek&lt;/code&gt;, but returns the position
- *  parameter.
+ *  Makes a new directory named by &lt;i&gt;string&lt;/i&gt;, with permissions
+ *  specified by the optional parameter &lt;i&gt;anInteger&lt;/i&gt;. The
+ *  permissions may be modified by the value of
+ *  &lt;code&gt;File::umask&lt;/code&gt;, and are ignored on NT. Raises a
+ *  &lt;code&gt;SystemCallError&lt;/code&gt; if the directory cannot be created. See
+ *  also the discussion of permissions in the class documentation for
+ *  &lt;code&gt;File&lt;/code&gt;.
  *
- *     d = Dir.new(&quot;testdir&quot;)   #=&gt; #&lt;Dir:0x401b3c40&gt;
- *     d.read                   #=&gt; &quot;.&quot;
- *     i = d.pos                #=&gt; 12
- *     d.read                   #=&gt; &quot;..&quot;
- *     d.pos = i                #=&gt; 12
- *     d.read                   #=&gt; &quot;..&quot;
  */
 static VALUE
-dir_set_pos(VALUE dir, VALUE pos)
+dir_s_mkdir(int argc, VALUE *argv, VALUE obj)
 {
-    dir_seek(dir, pos);
-    return pos;
+    VALUE path, vmode;
+    int mode;
+
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;path, &amp;vmode) == 2) {
+        mode = NUM2INT(vmode);
+    }
+    else {
+        mode = 0777;
+    }
+
+    check_dirname(&amp;path);
+    if (mkdir(RSTRING_PTR(path), mode) == -1)
+        rb_sys_fail(RSTRING_PTR(path));
+
+    return INT2FIX(0);
 }</pre>
 </body>
 </html>

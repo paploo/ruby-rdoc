@@ -2,39 +2,62 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>symlink (File)</title>
+  <title>truncate (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.symlink(old_name, new_name)   =&gt; 0
+ *     File.truncate(file_name, integer)  =&gt; 0
  *  
- *  Creates a symbolic link called &lt;i&gt;new_name&lt;/i&gt; for the existing file
- *  &lt;i&gt;old_name&lt;/i&gt;. Raises a &lt;code&gt;NotImplemented&lt;/code&gt; exception on
- *  platforms that do not support symbolic links.
+ *  Truncates the file &lt;i&gt;file_name&lt;/i&gt; to be at most &lt;i&gt;integer&lt;/i&gt;
+ *  bytes long. Not available on all platforms.
  *     
- *     File.symlink(&quot;testfile&quot;, &quot;link2test&quot;)   #=&gt; 0
+ *     f = File.new(&quot;out&quot;, &quot;w&quot;)
+ *     f.write(&quot;1234567890&quot;)     #=&gt; 10
+ *     f.close                   #=&gt; nil
+ *     File.truncate(&quot;out&quot;, 5)   #=&gt; 0
+ *     File.size(&quot;out&quot;)          #=&gt; 5
  *     
  */
 
 static VALUE
-rb_file_s_symlink(VALUE klass, VALUE from, VALUE to)
+rb_file_s_truncate(VALUE klass, VALUE path, VALUE len)
 {
-#ifdef HAVE_SYMLINK
-    rb_secure(2);
-    FilePathValue(from);
-    FilePathValue(to);
+    off_t pos;
 
-    if (symlink(StringValueCStr(from), StringValueCStr(to)) &lt; 0) {
-        sys_fail2(from, to);
-    }
-    return INT2FIX(0);
+    rb_secure(2);
+    pos = NUM2OFFT(len);
+    FilePathValue(path);
+#ifdef HAVE_TRUNCATE
+    if (truncate(StringValueCStr(path), pos) &lt; 0)
+        rb_sys_fail(RSTRING_PTR(path));
 #else
+# ifdef HAVE_CHSIZE
+    {
+        int tmpfd;
+
+#  ifdef _WIN32
+        if ((tmpfd = open(StringValueCStr(path), O_RDWR)) &lt; 0) {
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+#  else
+        if ((tmpfd = open(StringValueCStr(path), 0)) &lt; 0) {
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+#  endif
+        if (chsize(tmpfd, pos) &lt; 0) {
+            close(tmpfd);
+            rb_sys_fail(RSTRING_PTR(path));
+        }
+        close(tmpfd);
+    }
+# else
     rb_notimplement();
-    return Qnil;                /* not reached */
+# endif
 #endif
+    return INT2FIX(0);
 }</pre>
 </body>
 </html>

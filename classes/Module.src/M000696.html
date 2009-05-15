@@ -2,41 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>const_defined? (Module)</title>
+  <title>class_variable_set (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.const_defined?(sym, inherit=true)   =&gt; true or false
+ *     obj.class_variable_set(symbol, obj)    =&gt; obj
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if a constant with the given name is
- *  defined by &lt;i&gt;mod&lt;/i&gt;, or its ancestors if +inherit+ is not false.
+ *  Sets the class variable names by &lt;i&gt;symbol&lt;/i&gt; to
+ *  &lt;i&gt;object&lt;/i&gt;.
  *     
- *     Math.const_defined? &quot;PI&quot;   #=&gt; true
- *     IO.const_defined? &quot;SYNC&quot;   #=&gt; true
- *     IO.const_defined? &quot;SYNC&quot;, false   #=&gt; false
+ *     class Fred
+ *       @@foo = 99
+ *       def foo
+ *         @@foo
+ *       end
+ *     end
+ *     Fred.class_variable_set(:@@foo, 101)     #=&gt; 101
+ *     Fred.new.foo                             #=&gt; 101
  */
 
 static VALUE
-rb_mod_const_defined(int argc, VALUE *argv, VALUE mod)
+rb_mod_cvar_set(VALUE obj, VALUE iv, VALUE val)
 {
-    VALUE name, recur;
-    ID id;
+    ID id = rb_to_id(iv);
 
-    if (argc == 1) {
-        name = argv[0];
-        recur = Qtrue;
+    if (!rb_is_class_id(id)) {
+        rb_name_error(id, &quot;`%s' is not allowed as a class variable name&quot;, rb_id2name(id));
     }
-    else {
-        rb_scan_args(argc, argv, &quot;11&quot;, &amp;name, &amp;recur);
-    }
-    id = rb_to_id(name);
-    if (!rb_is_const_id(id)) {
-        rb_name_error(id, &quot;wrong constant name %s&quot;, rb_id2name(id));
-    }
-    return RTEST(recur) ? rb_const_defined(mod, id) : rb_const_defined_at(mod, id);
+    rb_cvar_set(obj, id, val);
+    return val;
 }</pre>
 </body>
 </html>

@@ -2,28 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rmdir (Dir)</title>
+  <title>exists? (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     Dir.delete( string ) =&gt; 0
- *     Dir.rmdir( string ) =&gt; 0
- *     Dir.unlink( string ) =&gt; 0
+ * Document-method: directory?
  *
- *  Deletes the named directory. Raises a subclass of
- *  &lt;code&gt;SystemCallError&lt;/code&gt; if the directory isn't empty.
+ * call-seq:
+ *   File.directory?(file_name)   =&gt;  true or false
+ *
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a directory,
+ * &lt;code&gt;false&lt;/code&gt; otherwise.
+ *
+ *    File.directory?(&quot;.&quot;)
  */
-static VALUE
-dir_s_rmdir(VALUE obj, VALUE dir)
-{
-    check_dirname(&amp;dir);
-    if (rmdir(RSTRING_PTR(dir)) &lt; 0)
-        rb_sys_fail(RSTRING_PTR(dir));
 
-    return INT2FIX(0);
+VALUE
+rb_file_directory_p(VALUE obj, VALUE fname)
+{
+#ifndef S_ISDIR
+#   define S_ISDIR(m) ((m &amp; S_IFMT) == S_IFDIR)
+#endif
+
+    struct stat st;
+
+    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
+    if (S_ISDIR(st.st_mode)) return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

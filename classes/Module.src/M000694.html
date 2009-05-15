@@ -2,41 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>const_get (Module)</title>
+  <title>remove_class_variable (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.const_get(sym, inherit=true)    =&gt; obj
- *  
- *  Returns the value of the named constant in &lt;i&gt;mod&lt;/i&gt;.
- *     
- *     Math.const_get(:PI)   #=&gt; 3.14159265358979
+ *     remove_class_variable(sym)    =&gt; obj
  *
- *  If the constant is not defined or is defined by the ancestors and
- *  +inherit+ is false, +NameError+ will be raised.
+ *  Removes the definition of the &lt;i&gt;sym&lt;/i&gt;, returning that
+ *  constant's value.
+ *
+ *     class Dummy
+ *       @@var = 99
+ *       puts @@var
+ *       remove_class_variable(:@@var)
+ *       p(defined? @@var)
+ *     end
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     99
+ *     nil
  */
 
-static VALUE
-rb_mod_const_get(int argc, VALUE *argv, VALUE mod)
+VALUE
+rb_mod_remove_cvar(VALUE mod, VALUE name)
 {
-    VALUE name, recur;
-    ID id;
+    const ID id = rb_to_id(name);
+    st_data_t val, n = id;
 
-    if (argc == 1) {
-        name = argv[0];
-        recur = Qtrue;
+    if (!rb_is_class_id(id)) {
+	rb_name_error(id, &quot;wrong class variable name %s&quot;, rb_id2name(id));
     }
-    else {
-        rb_scan_args(argc, argv, &quot;11&quot;, &amp;name, &amp;recur);
+    if (!OBJ_UNTRUSTED(mod) &amp;&amp; rb_safe_level() &gt;= 4)
+	rb_raise(rb_eSecurityError, &quot;Insecure: can't remove class variable&quot;);
+    if (OBJ_FROZEN(mod)) rb_error_frozen(&quot;class/module&quot;);
+
+    if (RCLASS_IV_TBL(mod) &amp;&amp; st_delete(RCLASS_IV_TBL(mod), &amp;n, &amp;val)) {
+	return (VALUE)val;
     }
-    id = rb_to_id(name);
-    if (!rb_is_const_id(id)) {
-        rb_name_error(id, &quot;wrong constant name %s&quot;, rb_id2name(id));
+    if (rb_cvar_defined(mod, id)) {
+	rb_name_error(id, &quot;cannot remove %s for %s&quot;,
+		 rb_id2name(id), rb_class2name(mod));
     }
-    return RTEST(recur) ? rb_const_get(mod, id) : rb_const_get_at(mod, id);
+    rb_name_error(id, &quot;class variable %s not defined for %s&quot;,
+		  rb_id2name(id), rb_class2name(mod));
+    return Qnil;		/* not reached */
 }</pre>
 </body>
 </html>

@@ -2,62 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>truncate (File)</title>
+  <title>path (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.truncate(file_name, integer)  =&gt; 0
+ *     File.path(path) -&gt; string
  *  
- *  Truncates the file &lt;i&gt;file_name&lt;/i&gt; to be at most &lt;i&gt;integer&lt;/i&gt;
- *  bytes long. Not available on all platforms.
- *     
- *     f = File.new(&quot;out&quot;, &quot;w&quot;)
- *     f.write(&quot;1234567890&quot;)     #=&gt; 10
- *     f.close                   #=&gt; nil
- *     File.truncate(&quot;out&quot;, 5)   #=&gt; 0
- *     File.size(&quot;out&quot;)          #=&gt; 5
+ *  Returns the string representation of the path
+ * 
+ *     File.path(&quot;/dev/null&quot;)          #=&gt; &quot;/dev/null&quot;
+ *     File.path(Pathname.new(&quot;/tmp&quot;)) #=&gt; &quot;/tmp&quot;
  *     
  */
 
 static VALUE
-rb_file_s_truncate(VALUE klass, VALUE path, VALUE len)
+rb_file_s_path(VALUE klass, VALUE fname)
 {
-    off_t pos;
-
-    rb_secure(2);
-    pos = NUM2OFFT(len);
-    FilePathValue(path);
-#ifdef HAVE_TRUNCATE
-    if (truncate(StringValueCStr(path), pos) &lt; 0)
-        rb_sys_fail(RSTRING_PTR(path));
-#else
-# ifdef HAVE_CHSIZE
-    {
-        int tmpfd;
-
-#  ifdef _WIN32
-        if ((tmpfd = open(StringValueCStr(path), O_RDWR)) &lt; 0) {
-            rb_sys_fail(RSTRING_PTR(path));
-        }
-#  else
-        if ((tmpfd = open(StringValueCStr(path), 0)) &lt; 0) {
-            rb_sys_fail(RSTRING_PTR(path));
-        }
-#  endif
-        if (chsize(tmpfd, pos) &lt; 0) {
-            close(tmpfd);
-            rb_sys_fail(RSTRING_PTR(path));
-        }
-        close(tmpfd);
-    }
-# else
-    rb_notimplement();
-# endif
-#endif
-    return INT2FIX(0);
+    return rb_get_path(fname);
 }</pre>
 </body>
 </html>

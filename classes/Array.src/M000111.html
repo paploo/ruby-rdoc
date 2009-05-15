@@ -2,24 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Array)</title>
+  <title>hash (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.to_s -&gt; string
- *     array.inspect  -&gt; string
+ *     array.hash   -&gt; fixnum
  *
- *  Create a printable version of &lt;i&gt;array&lt;/i&gt;.
+ *  Compute a hash-code for this array. Two arrays with the same content
+ *  will have the same hash code (and will compare using &lt;code&gt;eql?&lt;/code&gt;).
  */
 
 static VALUE
-rb_ary_inspect(VALUE ary)
+rb_ary_hash(VALUE ary)
 {
-    if (RARRAY_LEN(ary) == 0) return rb_usascii_str_new2(&quot;[]&quot;);
-    return rb_exec_recursive(inspect_ary, ary, 0);
+    return rb_exec_recursive(recursive_hash, ary, 0);
 }</pre>
 </body>
 </html>

@@ -2,27 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close (StringIO)</title>
+  <title>eof (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.close  -&gt; nil
+ *   strio.eof     -&gt; true or false
+ *   strio.eof?    -&gt; true or false
  *
- * Closes strio.  The *strio* is unavailable for any further data 
- * operations; an +IOError+ is raised if such an attempt is made.
+ * Returns true if *strio* is at end of file. The stringio must be  
+ * opened for reading or an +IOError+ will be raised.
  */
 static VALUE
-strio_close(VALUE self)
+strio_eof(VALUE self)
 {
-    struct StringIO *ptr = StringIO(self);
-    if (CLOSED(ptr)) {
-        rb_raise(rb_eIOError, &quot;closed stream&quot;);
-    }
-    ptr-&gt;flags &amp;= ~FMODE_READWRITE;
-    return Qnil;
+    struct StringIO *ptr = readable(StringIO(self));
+    if (ptr-&gt;pos &lt; RSTRING_LEN(ptr-&gt;string)) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

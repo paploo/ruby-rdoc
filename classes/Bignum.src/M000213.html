@@ -2,66 +2,53 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>| (Bignum)</title>
+  <title>&lt;=&gt; (Bignum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *     big | numeric   =&gt;  integer
+ *  call-seq:
+ *     big &lt;=&gt; numeric   =&gt; -1, 0, +1
  *
- * Performs bitwise +or+ between _big_ and _numeric_.
+ *  Comparison---Returns -1, 0, or +1 depending on whether &lt;i&gt;big&lt;/i&gt; is
+ *  less than, equal to, or greater than &lt;i&gt;numeric&lt;/i&gt;. This is the
+ *  basis for the tests in &lt;code&gt;Comparable&lt;/code&gt;.
+ *
  */
 
 VALUE
-rb_big_or(VALUE xx, VALUE yy)
+rb_big_cmp(VALUE x, VALUE y)
 {
-    volatile VALUE x, y, z;
-    BDIGIT *ds1, *ds2, *zds;
-    long i, l1, l2;
-    char sign;
+    long xlen = RBIGNUM_LEN(x);
 
-    x = xx;
-    y = bit_coerce(yy);
-    if (FIXNUM_P(y)) {
+    switch (TYPE(y)) {
+      case T_FIXNUM:
         y = rb_int2big(FIX2LONG(y));
+        break;
+
+      case T_BIGNUM:
+        break;
+
+      case T_FLOAT:
+        return rb_dbl_cmp(rb_big2dbl(x), RFLOAT_VALUE(y));
+
+      default:
+        return rb_num_coerce_cmp(x, y, rb_intern(&quot;&lt;=&gt;&quot;));
     }
 
-    if (!RBIGNUM_SIGN(y)) {
-        y = rb_big_clone(y);
-        get2comp(y);
-    }
-    if (!RBIGNUM_SIGN(x)) {
-        x = rb_big_clone(x);
-        get2comp(x);
-    }
-    if (RBIGNUM_LEN(x) &gt; RBIGNUM_LEN(y)) {
-        l1 = RBIGNUM_LEN(y);
-        l2 = RBIGNUM_LEN(x);
-        ds1 = BDIGITS(y);
-        ds2 = BDIGITS(x);
-        sign = RBIGNUM_SIGN(y);
-    }
-    else {
-        l1 = RBIGNUM_LEN(x);
-        l2 = RBIGNUM_LEN(y);
-        ds1 = BDIGITS(x);
-        ds2 = BDIGITS(y);
-        sign = RBIGNUM_SIGN(x);
-    }
-    z = bignew(l2, RBIGNUM_SIGN(x) &amp;&amp; RBIGNUM_SIGN(y));
-    zds = BDIGITS(z);
+    if (RBIGNUM_SIGN(x) &gt; RBIGNUM_SIGN(y)) return INT2FIX(1);
+    if (RBIGNUM_SIGN(x) &lt; RBIGNUM_SIGN(y)) return INT2FIX(-1);
+    if (xlen &lt; RBIGNUM_LEN(y))
+        return (RBIGNUM_SIGN(x)) ? INT2FIX(-1) : INT2FIX(1);
+    if (xlen &gt; RBIGNUM_LEN(y))
+        return (RBIGNUM_SIGN(x)) ? INT2FIX(1) : INT2FIX(-1);
 
-    for (i=0; i&lt;l1; i++) {
-        zds[i] = ds1[i] | ds2[i];
-    }
-    for (; i&lt;l2; i++) {
-        zds[i] = sign?ds2[i]:(BIGRAD-1);
-    }
-    if (!RBIGNUM_SIGN(z)) get2comp(z);
-
-    return bignorm(z);
+    while(xlen-- &amp;&amp; (BDIGITS(x)[xlen]==BDIGITS(y)[xlen]));
+    if (-1 == xlen) return INT2FIX(0);
+    return (BDIGITS(x)[xlen] &gt; BDIGITS(y)[xlen]) ?
+        (RBIGNUM_SIGN(x) ? INT2FIX(1) : INT2FIX(-1)) :
+            (RBIGNUM_SIGN(x) ? INT2FIX(-1) : INT2FIX(1));
 }</pre>
 </body>
 </html>

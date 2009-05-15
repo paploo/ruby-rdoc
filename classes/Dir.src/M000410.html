@@ -2,37 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tell (Dir)</title>
+  <title>getwd (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     dir.pos =&gt; integer
- *     dir.tell =&gt; integer
+ *     Dir.getwd =&gt; string
+ *     Dir.pwd =&gt; string
  *
- *  Returns the current position in &lt;em&gt;dir&lt;/em&gt;. See also
- *  &lt;code&gt;Dir#seek&lt;/code&gt;.
+ *  Returns the path to the current working directory of this process as
+ *  a string.
  *
- *     d = Dir.new(&quot;testdir&quot;)
- *     d.tell   #=&gt; 0
- *     d.read   #=&gt; &quot;.&quot;
- *     d.tell   #=&gt; 12
+ *     Dir.chdir(&quot;/tmp&quot;)   #=&gt; 0
+ *     Dir.getwd           #=&gt; &quot;/tmp&quot;
  */
 static VALUE
-dir_tell(VALUE dir)
+dir_s_getwd(VALUE dir)
 {
-#ifdef HAVE_TELLDIR
-    struct dir_data *dirp;
-    long pos;
+    char *path;
+    VALUE cwd;
 
-    GetDIR(dir, dirp);
-    pos = telldir(dirp-&gt;dir);
-    return rb_int2inum(pos);
-#else
-    rb_notimplement();
-#endif
+    rb_secure(4);
+    path = my_getcwd();
+    cwd = rb_tainted_str_new2(path);
+
+    xfree(path);
+    return cwd;
 }</pre>
 </body>
 </html>

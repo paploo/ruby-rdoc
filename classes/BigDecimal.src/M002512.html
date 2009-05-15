@@ -2,38 +2,53 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_f (BigDecimal)</title>
+  <title>floor (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns a new Float object having approximately the same value as the
- * BigDecimal number. Normal accuracy limits and built-in errors of binary
- * Float arithmetic apply.
+  <pre>/* call-seq:
+ * floor(n)
+ *
+ * Return the largest integer less than or equal to the value, as a BigDecimal.
+ *
+ * BigDecimal('3.14159').floor -&gt; 3
+ *
+ * BigDecimal('-9.1').floor -&gt; -10
+ *
+ * If n is specified and positive, the fractional part of the result has no
+ * more than that many digits.  
+ *
+ * If n is specified and negative, at least that
+ * many digits to the left of the decimal point will be 0 in the result.
+ *
+ * BigDecimal('3.14159').floor(3) -&gt; 3.141
+ *
+ * BigDecimal('13345.234').floor(-2) -&gt; 13300.0
  */
 static VALUE
-BigDecimal_to_f(VALUE self)
+BigDecimal_floor(int argc, VALUE *argv, VALUE self)
 {
-    ENTER(1);
-    Real *p;
-    double d;
-    S_LONG e;
-    char *buf;
-    volatile VALUE str;
+    ENTER(5);
+    Real *c, *a;
+    U_LONG mx;
+    int iLoc;
+    VALUE vLoc;
+    U_LONG pl = VpSetPrecLimit(0);
 
-    GUARD_OBJ(p,GetVpValue(self,1));
-    if(VpVtoD(&amp;d, &amp;e, p)!=1) return rb_float_new(d);
-    str = rb_str_new(0, VpNumOfChars(p,&quot;E&quot;));
-    buf = RSTRING_PTR(str);
-    VpToString(p, buf, 0, 0);
-    errno = 0;
-    d = strtod(buf, 0);
-    if(errno == ERANGE) {
-       VpException(VP_EXCEPTION_OVERFLOW,&quot;BigDecimal to Float conversion&quot;,0);
-       if(d&gt;0.0) return rb_float_new(DBL_MAX);
-       else      return rb_float_new(-DBL_MAX);
+    if(rb_scan_args(argc,argv,&quot;01&quot;,&amp;vLoc)==0) {
+        iLoc = 0;
+    } else {
+        Check_Type(vLoc, T_FIXNUM);
+        iLoc = FIX2INT(vLoc);
     }
-    return rb_float_new(d);
+
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpSetPrecLimit(pl);
+    VpActiveRound(c,a,VP_ROUND_FLOOR,iLoc);
+    return ToValue(c);
 }</pre>
 </body>
 </html>

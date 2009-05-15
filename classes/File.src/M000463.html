@@ -2,46 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chown (File)</title>
+  <title>exist? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     file.chown(owner_int, group_int )   =&gt; 0
- *  
- *  Changes the owner and group of &lt;i&gt;file&lt;/i&gt; to the given numeric
- *  owner and group id's. Only a process with superuser privileges may
- *  change the owner of a file. The current owner of a file may change
- *  the file's group to any group to which the owner belongs. A
- *  &lt;code&gt;nil&lt;/code&gt; or -1 owner or group id is ignored. Follows
- *  symbolic links. See also &lt;code&gt;File#lchown&lt;/code&gt;.
- *     
- *     File.new(&quot;testfile&quot;).chown(502, 1000)
- *     
+ * call-seq:
+ *    File.exist?(file_name)    =&gt;  true or false
+ *    File.exists?(file_name)   =&gt;  true or false
+ *
+ * Return &lt;code&gt;true&lt;/code&gt; if the named file exists.
  */
 
 static VALUE
-rb_file_chown(VALUE obj, VALUE owner, VALUE group)
+rb_file_exist_p(VALUE obj, VALUE fname)
 {
-    rb_io_t *fptr;
-    int o, g;
+    struct stat st;
 
-    rb_secure(2);
-    o = NIL_P(owner) ? -1 : NUM2INT(owner);
-    g = NIL_P(group) ? -1 : NUM2INT(group);
-    GetOpenFile(obj, fptr);
-#if defined(__CYGWIN32__) || defined(_WIN32) || defined(__EMX__)
-    if (NIL_P(fptr-&gt;pathv)) return Qnil;
-    if (chown(RSTRING_PTR(fptr-&gt;pathv), o, g) == -1)
-        rb_sys_fail_path(fptr-&gt;pathv);
-#else
-    if (fchown(fptr-&gt;fd, o, g) == -1)
-        rb_sys_fail_path(fptr-&gt;pathv);
-#endif
-
-    return INT2FIX(0);
+    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

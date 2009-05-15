@@ -2,16 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&amp; (Set)</title>
+  <title>inspect (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 312</span>
-312:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&amp;</span>(<span class="ruby-identifier">enum</span>)
-313:     <span class="ruby-identifier">n</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>
-314:     <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">include?</span>(<span class="ruby-identifier">o</span>) }
-315:     <span class="ruby-identifier">n</span>
-316:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 424</span>
+424:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+425:     <span class="ruby-identifier">ids</span> = (<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-constant">InspectKey</span>] <span class="ruby-operator">||=</span> [])
+426: 
+427:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">object_id</span>)
+428:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'#&lt;%s: {...}&gt;'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>)
+429:     <span class="ruby-keyword kw">end</span>
+430: 
+431:     <span class="ruby-keyword kw">begin</span>
+432:       <span class="ruby-identifier">ids</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">object_id</span>
+433:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'#&lt;%s: {%s}&gt;'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">inspect</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>])
+434:     <span class="ruby-keyword kw">ensure</span>
+435:       <span class="ruby-identifier">ids</span>.<span class="ruby-identifier">pop</span>
+436:     <span class="ruby-keyword kw">end</span>
+437:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

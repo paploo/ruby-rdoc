@@ -132,11 +132,11 @@ Much material in this documentation is taken with permission from
 
       <div class="name-list">
 
-        <a href="#M002560">getsockopt</a>&nbsp;&nbsp;
+        <a href="#M002554">getsockopt</a>&nbsp;&nbsp;
 
-        <a href="#M002561">recv_nonblock</a>&nbsp;&nbsp;
+        <a href="#M002555">recv_nonblock</a>&nbsp;&nbsp;
 
-        <a href="#M002559">setsockopt</a>&nbsp;&nbsp;
+        <a href="#M002553">setsockopt</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -157,13 +157,13 @@ Much material in this documentation is taken with permission from
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M002560" class="method-detail">
-        <a name="M002560"></a>
+      <div id="method-M002554" class="method-detail">
+        <a name="M002554"></a>
 
         <div class="method-heading">
 
-          <a href="BasicSocket.src/M002560.html" target="Code" class="method-signature"
-            onclick="popupCode('BasicSocket.src/M002560.html');return false;">
+          <a href="BasicSocket.src/M002554.html" target="Code" class="method-signature"
+            onclick="popupCode('BasicSocket.src/M002554.html');return false;">
 
           <span class="method-name"> getsockopt(level, optname)<br />
 </span>
@@ -194,7 +194,7 @@ Socket::SO_REUSEADDR.
 <h3>Examples</h3>
 <p>
 Some socket options are integers with boolean values, in this case <a
-href="BasicSocket.html#M002560">getsockopt</a> could be called like this:
+href="BasicSocket.html#M002554">getsockopt</a> could be called like this:
 </p>
 <pre>
   optval = sock.getsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR)
@@ -203,7 +203,7 @@ href="BasicSocket.html#M002560">getsockopt</a> could be called like this:
 </pre>
 <p>
 Some socket options are integers with numeric values, in this case <a
-href="BasicSocket.html#M002560">getsockopt</a> could be called like this:
+href="BasicSocket.html#M002554">getsockopt</a> could be called like this:
 </p>
 <pre>
   optval = sock.getsockopt(Socket::IPPROTO_IP, Socket::IP_TTL)
@@ -222,7 +222,7 @@ as:
   };
 </pre>
 <p>
-In this case <a href="BasicSocket.html#M002560">getsockopt</a> could be
+In this case <a href="BasicSocket.html#M002554">getsockopt</a> could be
 called like this:
 </p>
 <pre>
@@ -234,13 +234,13 @@ called like this:
       </div>
 
 
-      <div id="method-M002561" class="method-detail">
-        <a name="M002561"></a>
+      <div id="method-M002555" class="method-detail">
+        <a name="M002555"></a>
 
         <div class="method-heading">
 
-          <a href="BasicSocket.src/M002561.html" target="Code" class="method-signature"
-            onclick="popupCode('BasicSocket.src/M002561.html');return false;">
+          <a href="BasicSocket.src/M002555.html" target="Code" class="method-signature"
+            onclick="popupCode('BasicSocket.src/M002555.html');return false;">
 
           <span class="method-name">basicsocket.recv_nonblock(maxlen) => mesg<br />
 basicsocket.recv_nonblock(maxlen, flags) => mesg<br />
@@ -283,18 +283,18 @@ etc.
      p s.recv_nonblock(10) #=&gt; &quot;aaa&quot;
 </pre>
 <p>
-Refer to <a href="Socket.html#M001668">Socket#recvfrom</a> for the
+Refer to <a href="Socket.html#M001662">Socket#recvfrom</a> for the
 exceptions that may be thrown if the call to <em><a
-href="BasicSocket.html#M002561">recv_nonblock</a></em> fails.
+href="BasicSocket.html#M002555">recv_nonblock</a></em> fails.
 </p>
 <p>
-<a href="BasicSocket.html#M002561">BasicSocket#recv_nonblock</a> may raise
+<a href="BasicSocket.html#M002555">BasicSocket#recv_nonblock</a> may raise
 any error corresponding to recvfrom(2) failure, including
 Errno::EWOULDBLOCK.
 </p>
 <h3>See</h3>
 <ul>
-<li><a href="Socket.html#M001668">Socket#recvfrom</a>
+<li><a href="Socket.html#M001662">Socket#recvfrom</a>
 
 </li>
 </ul>
@@ -303,13 +303,13 @@ Errno::EWOULDBLOCK.
       </div>
 
 
-      <div id="method-M002559" class="method-detail">
-        <a name="M002559"></a>
+      <div id="method-M002553" class="method-detail">
+        <a name="M002553"></a>
 
         <div class="method-heading">
 
-          <a href="BasicSocket.src/M002559.html" target="Code" class="method-signature"
-            onclick="popupCode('BasicSocket.src/M002559.html');return false;">
+          <a href="BasicSocket.src/M002553.html" target="Code" class="method-signature"
+            onclick="popupCode('BasicSocket.src/M002553.html');return false;">
 
           <span class="method-name"> setsockopt(level, optname, optval)<br />
 </span>
@@ -357,14 +357,14 @@ must be passed, not <tt>nil</tt>.
 <h3>Examples</h3>
 <p>
 Some socket options are integers with boolean values, in this case <a
-href="BasicSocket.html#M002559">setsockopt</a> could be called like this:
+href="BasicSocket.html#M002553">setsockopt</a> could be called like this:
 </p>
 <pre>
   sock.setsockopt(Socket::SOL_SOCKET,Socket::SO_REUSEADDR, true)
 </pre>
 <p>
 Some socket options are integers with numeric values, in this case <a
-href="BasicSocket.html#M002559">setsockopt</a> could be called like this:
+href="BasicSocket.html#M002553">setsockopt</a> could be called like this:
 </p>
 <pre>
   sock.setsockopt(Socket::IPPROTO_IP, Socket::IP_TTL, 255)
@@ -382,7 +382,7 @@ as:
   };
 </pre>
 <p>
-In this case <a href="BasicSocket.html#M002559">setsockopt</a> could be
+In this case <a href="BasicSocket.html#M002553">setsockopt</a> could be
 called like this:
 </p>
 <pre>

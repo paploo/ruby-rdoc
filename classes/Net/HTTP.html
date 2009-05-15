@@ -178,9 +178,9 @@ Example 4: More generic GET+print
                               {'q' =&gt; ['ruby', 'perl'], 'max' =&gt; '50'})
     puts res.body
 </pre>
-<h3>Accessing via <a href="HTTP.html#M003916">Proxy</a></h3>
+<h3>Accessing via <a href="HTTP.html#M003571">Proxy</a></h3>
 <p>
-<a href="HTTP.html#M003916">Net::HTTP.Proxy</a> creates http proxy class.
+<a href="HTTP.html#M003571">Net::HTTP.Proxy</a> creates http proxy class.
 It has same methods of <a href="HTTP.html">Net::HTTP</a> but its instances
 always connect to proxy, instead of given host.
 </p>
@@ -196,13 +196,13 @@ always connect to proxy, instead of given host.
     }
 </pre>
 <p>
-Since <a href="HTTP.html#M003916">Net::HTTP.Proxy</a> returns <a
+Since <a href="HTTP.html#M003571">Net::HTTP.Proxy</a> returns <a
 href="HTTP.html">Net::HTTP</a> itself when proxy_addr is nil, there&#8217;s
 no need to change code if there&#8217;s proxy or not.
 </p>
 <p>
 There are two additional parameters in <a
-href="HTTP.html#M003916">Net::HTTP.Proxy</a> which allow to specify proxy
+href="HTTP.html#M003571">Net::HTTP.Proxy</a> which allow to specify proxy
 user name and password:
 </p>
 <pre>
@@ -346,8 +346,8 @@ are defined in <a href="../Net.html">Net</a> module.
 <h2>Switching <a href="HTTP.html">Net::HTTP</a> versions</h2>
 <p>
 You can use net/http.rb 1.1 features (bundled with Ruby 1.6) by calling <a
-href="HTTP.html#M003890">HTTP.version_1_1</a>. Calling <a
-href="HTTP.html#M003889">Net::HTTP.version_1_2</a> allows you to use 1.2
+href="HTTP.html#M003545">HTTP.version_1_1</a>. Calling <a
+href="HTTP.html#M003544">Net::HTTP.version_1_2</a> allows you to use 1.2
 features again.
 </p>
 <pre>
@@ -374,147 +374,147 @@ This function is NOT thread-safe.
 
       <div class="name-list">
 
-        <a href="#M003956">D</a>&nbsp;&nbsp;
+        <a href="#M003611">D</a>&nbsp;&nbsp;
 
-        <a href="#M003916">Proxy</a>&nbsp;&nbsp;
+        <a href="#M003571">Proxy</a>&nbsp;&nbsp;
 
-        <a href="#M003908">active?</a>&nbsp;&nbsp;
+        <a href="#M003563">active?</a>&nbsp;&nbsp;
 
-        <a href="#M003955">addr_port</a>&nbsp;&nbsp;
+        <a href="#M003610">addr_port</a>&nbsp;&nbsp;
 
-        <a href="#M003950">begin_transport</a>&nbsp;&nbsp;
+        <a href="#M003605">begin_transport</a>&nbsp;&nbsp;
 
-        <a href="#M003925">conn_address</a>&nbsp;&nbsp;
+        <a href="#M003580">conn_address</a>&nbsp;&nbsp;
 
-        <a href="#M003926">conn_port</a>&nbsp;&nbsp;
+        <a href="#M003581">conn_port</a>&nbsp;&nbsp;
 
-        <a href="#M003912">connect</a>&nbsp;&nbsp;
+        <a href="#M003567">connect</a>&nbsp;&nbsp;
 
-        <a href="#M003938">copy</a>&nbsp;&nbsp;
+        <a href="#M003593">copy</a>&nbsp;&nbsp;
 
-        <a href="#M003897">default_port</a>&nbsp;&nbsp;
+        <a href="#M003552">default_port</a>&nbsp;&nbsp;
 
-        <a href="#M003936">delete</a>&nbsp;&nbsp;
+        <a href="#M003591">delete</a>&nbsp;&nbsp;
 
-        <a href="#M003915">do_finish</a>&nbsp;&nbsp;
+        <a href="#M003570">do_finish</a>&nbsp;&nbsp;
 
-        <a href="#M003911">do_start</a>&nbsp;&nbsp;
+        <a href="#M003566">do_start</a>&nbsp;&nbsp;
 
-        <a href="#M003927">edit_path</a>&nbsp;&nbsp;
+        <a href="#M003582">edit_path</a>&nbsp;&nbsp;
 
-        <a href="#M003951">end_transport</a>&nbsp;&nbsp;
+        <a href="#M003606">end_transport</a>&nbsp;&nbsp;
 
-        <a href="#M003914">finish</a>&nbsp;&nbsp;
+        <a href="#M003569">finish</a>&nbsp;&nbsp;
 
-        <a href="#M003894">get</a>&nbsp;&nbsp;
+        <a href="#M003549">get</a>&nbsp;&nbsp;
 
-        <a href="#M003928">get</a>&nbsp;&nbsp;
+        <a href="#M003583">get</a>&nbsp;&nbsp;
 
-        <a href="#M003944">get2</a>&nbsp;&nbsp;
+        <a href="#M003599">get2</a>&nbsp;&nbsp;
 
-        <a href="#M003893">get_print</a>&nbsp;&nbsp;
+        <a href="#M003548">get_print</a>&nbsp;&nbsp;
 
-        <a href="#M003895">get_response</a>&nbsp;&nbsp;
+        <a href="#M003550">get_response</a>&nbsp;&nbsp;
 
-        <a href="#M003929">head</a>&nbsp;&nbsp;
+        <a href="#M003584">head</a>&nbsp;&nbsp;
 
-        <a href="#M003945">head2</a>&nbsp;&nbsp;
+        <a href="#M003600">head2</a>&nbsp;&nbsp;
 
-        <a href="#M003898">http_default_port</a>&nbsp;&nbsp;
+        <a href="#M003553">http_default_port</a>&nbsp;&nbsp;
 
-        <a href="#M003899">https_default_port</a>&nbsp;&nbsp;
+        <a href="#M003554">https_default_port</a>&nbsp;&nbsp;
 
-        <a href="#M003904">inspect</a>&nbsp;&nbsp;
+        <a href="#M003559">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M003952">keep_alive?</a>&nbsp;&nbsp;
+        <a href="#M003607">keep_alive?</a>&nbsp;&nbsp;
 
-        <a href="#M003932">lock</a>&nbsp;&nbsp;
+        <a href="#M003587">lock</a>&nbsp;&nbsp;
 
-        <a href="#M003939">mkcol</a>&nbsp;&nbsp;
+        <a href="#M003594">mkcol</a>&nbsp;&nbsp;
 
-        <a href="#M003937">move</a>&nbsp;&nbsp;
+        <a href="#M003592">move</a>&nbsp;&nbsp;
 
-        <a href="#M003903">new</a>&nbsp;&nbsp;
+        <a href="#M003558">new</a>&nbsp;&nbsp;
 
-        <a href="#M003901">new</a>&nbsp;&nbsp;
+        <a href="#M003556">new</a>&nbsp;&nbsp;
 
-        <a href="#M003902">newobj</a>&nbsp;&nbsp;
+        <a href="#M003557">newobj</a>&nbsp;&nbsp;
 
-        <a href="#M003913">on_connect</a>&nbsp;&nbsp;
+        <a href="#M003568">on_connect</a>&nbsp;&nbsp;
 
-        <a href="#M003934">options</a>&nbsp;&nbsp;
+        <a href="#M003589">options</a>&nbsp;&nbsp;
 
-        <a href="#M003959">peer_cert</a>&nbsp;&nbsp;
+        <a href="#M003614">peer_cert</a>&nbsp;&nbsp;
 
-        <a href="#M003930">post</a>&nbsp;&nbsp;
+        <a href="#M003585">post</a>&nbsp;&nbsp;
 
-        <a href="#M003946">post2</a>&nbsp;&nbsp;
+        <a href="#M003601">post2</a>&nbsp;&nbsp;
 
-        <a href="#M003896">post_form</a>&nbsp;&nbsp;
+        <a href="#M003551">post_form</a>&nbsp;&nbsp;
 
-        <a href="#M003935">propfind</a>&nbsp;&nbsp;
+        <a href="#M003590">propfind</a>&nbsp;&nbsp;
 
-        <a href="#M003931">proppatch</a>&nbsp;&nbsp;
+        <a href="#M003586">proppatch</a>&nbsp;&nbsp;
 
-        <a href="#M003918">proxy?</a>&nbsp;&nbsp;
+        <a href="#M003573">proxy?</a>&nbsp;&nbsp;
 
-        <a href="#M003919">proxy_address</a>&nbsp;&nbsp;
+        <a href="#M003574">proxy_address</a>&nbsp;&nbsp;
 
-        <a href="#M003917">proxy_class?</a>&nbsp;&nbsp;
+        <a href="#M003572">proxy_class?</a>&nbsp;&nbsp;
 
-        <a href="#M003922">proxy_pass</a>&nbsp;&nbsp;
+        <a href="#M003577">proxy_pass</a>&nbsp;&nbsp;
 
-        <a href="#M003920">proxy_port</a>&nbsp;&nbsp;
+        <a href="#M003575">proxy_port</a>&nbsp;&nbsp;
 
-        <a href="#M003921">proxy_user</a>&nbsp;&nbsp;
+        <a href="#M003576">proxy_user</a>&nbsp;&nbsp;
 
-        <a href="#M003923">proxyaddr</a>&nbsp;&nbsp;
+        <a href="#M003578">proxyaddr</a>&nbsp;&nbsp;
 
-        <a href="#M003924">proxyport</a>&nbsp;&nbsp;
+        <a href="#M003579">proxyport</a>&nbsp;&nbsp;
 
-        <a href="#M003906">read_timeout=</a>&nbsp;&nbsp;
+        <a href="#M003561">read_timeout=</a>&nbsp;&nbsp;
 
-        <a href="#M003948">request</a>&nbsp;&nbsp;
+        <a href="#M003603">request</a>&nbsp;&nbsp;
 
-        <a href="#M003941">request_get</a>&nbsp;&nbsp;
+        <a href="#M003596">request_get</a>&nbsp;&nbsp;
 
-        <a href="#M003942">request_head</a>&nbsp;&nbsp;
+        <a href="#M003597">request_head</a>&nbsp;&nbsp;
 
-        <a href="#M003943">request_post</a>&nbsp;&nbsp;
+        <a href="#M003598">request_post</a>&nbsp;&nbsp;
 
-        <a href="#M003947">send_request</a>&nbsp;&nbsp;
+        <a href="#M003602">send_request</a>&nbsp;&nbsp;
 
-        <a href="#M003905">set_debug_output</a>&nbsp;&nbsp;
+        <a href="#M003560">set_debug_output</a>&nbsp;&nbsp;
 
-        <a href="#M003954">sspi_auth</a>&nbsp;&nbsp;
+        <a href="#M003609">sspi_auth</a>&nbsp;&nbsp;
 
-        <a href="#M003953">sspi_auth?</a>&nbsp;&nbsp;
+        <a href="#M003608">sspi_auth?</a>&nbsp;&nbsp;
 
-        <a href="#M003910">start</a>&nbsp;&nbsp;
+        <a href="#M003565">start</a>&nbsp;&nbsp;
 
-        <a href="#M003900">start</a>&nbsp;&nbsp;
+        <a href="#M003555">start</a>&nbsp;&nbsp;
 
-        <a href="#M003907">started?</a>&nbsp;&nbsp;
+        <a href="#M003562">started?</a>&nbsp;&nbsp;
 
-        <a href="#M003940">trace</a>&nbsp;&nbsp;
+        <a href="#M003595">trace</a>&nbsp;&nbsp;
 
-        <a href="#M003949">transport_request</a>&nbsp;&nbsp;
+        <a href="#M003604">transport_request</a>&nbsp;&nbsp;
 
-        <a href="#M003933">unlock</a>&nbsp;&nbsp;
+        <a href="#M003588">unlock</a>&nbsp;&nbsp;
 
-        <a href="#M003958">use_ssl=</a>&nbsp;&nbsp;
+        <a href="#M003613">use_ssl=</a>&nbsp;&nbsp;
 
-        <a href="#M003909">use_ssl?</a>&nbsp;&nbsp;
+        <a href="#M003564">use_ssl?</a>&nbsp;&nbsp;
 
-        <a href="#M003957">use_ssl?</a>&nbsp;&nbsp;
+        <a href="#M003612">use_ssl?</a>&nbsp;&nbsp;
 
-        <a href="#M003890">version_1_1</a>&nbsp;&nbsp;
+        <a href="#M003545">version_1_1</a>&nbsp;&nbsp;
 
-        <a href="#M003892">version_1_1?</a>&nbsp;&nbsp;
+        <a href="#M003547">version_1_1?</a>&nbsp;&nbsp;
 
-        <a href="#M003889">version_1_2</a>&nbsp;&nbsp;
+        <a href="#M003544">version_1_2</a>&nbsp;&nbsp;
 
-        <a href="#M003891">version_1_2?</a>&nbsp;&nbsp;
+        <a href="#M003546">version_1_2?</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -698,13 +698,13 @@ seconds, it raises a TimeoutError exception.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M003916" class="method-detail">
-        <a name="M003916"></a>
+      <div id="method-M003571" class="method-detail">
+        <a name="M003571"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003916.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003916.html');return false;">
+          <a href="HTTP.src/M003571.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003571.html');return false;">
 
           <span class="method-name">Proxy</span><span class="method-args">(p_addr, p_port = nil, p_user = nil, p_pass = nil)</span>
 
@@ -738,13 +738,13 @@ href="HTTP.html">Net::HTTP</a>).
       </div>
 
 
-      <div id="method-M003897" class="method-detail">
-        <a name="M003897"></a>
+      <div id="method-M003552" class="method-detail">
+        <a name="M003552"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003897.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003897.html');return false;">
+          <a href="HTTP.src/M003552.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003552.html');return false;">
 
           <span class="method-name">default_port</span><span class="method-args">()</span>
 
@@ -763,13 +763,13 @@ to 80.
       </div>
 
 
-      <div id="method-M003894" class="method-detail">
-        <a name="M003894"></a>
+      <div id="method-M003549" class="method-detail">
+        <a name="M003549"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003894.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003894.html');return false;">
+          <a href="HTTP.src/M003549.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003549.html');return false;">
 
           <span class="method-name">get</span><span class="method-args">(uri_or_host, path = nil, port = nil)</span>
 
@@ -798,13 +798,13 @@ or:
       </div>
 
 
-      <div id="method-M003893" class="method-detail">
-        <a name="M003893"></a>
+      <div id="method-M003548" class="method-detail">
+        <a name="M003548"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003893.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003893.html');return false;">
+          <a href="HTTP.src/M003548.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003548.html');return false;">
 
           <span class="method-name">get_print</span><span class="method-args">(uri_or_host, path = nil, port = nil)</span>
 
@@ -833,13 +833,13 @@ or:
       </div>
 
 
-      <div id="method-M003895" class="method-detail">
-        <a name="M003895"></a>
+      <div id="method-M003550" class="method-detail">
+        <a name="M003550"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003895.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003895.html');return false;">
+          <a href="HTTP.src/M003550.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003550.html');return false;">
 
           <span class="method-name">get_response</span><span class="method-args">(uri_or_host, path = nil, port = nil, &amp;block)</span>
 
@@ -871,13 +871,13 @@ or:
       </div>
 
 
-      <div id="method-M003898" class="method-detail">
-        <a name="M003898"></a>
+      <div id="method-M003553" class="method-detail">
+        <a name="M003553"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003898.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003898.html');return false;">
+          <a href="HTTP.src/M003553.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003553.html');return false;">
 
           <span class="method-name">http_default_port</span><span class="method-args">()</span>
 
@@ -896,13 +896,13 @@ to 80.
       </div>
 
 
-      <div id="method-M003899" class="method-detail">
-        <a name="M003899"></a>
+      <div id="method-M003554" class="method-detail">
+        <a name="M003554"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003899.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003899.html');return false;">
+          <a href="HTTP.src/M003554.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003554.html');return false;">
 
           <span class="method-name">https_default_port</span><span class="method-args">()</span>
 
@@ -920,13 +920,13 @@ The default port to use for HTTPS requests; defaults to 443.
       </div>
 
 
-      <div id="method-M003903" class="method-detail">
-        <a name="M003903"></a>
+      <div id="method-M003558" class="method-detail">
+        <a name="M003558"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003903.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003903.html');return false;">
+          <a href="HTTP.src/M003558.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003558.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(address, port = nil)</span>
 
@@ -945,13 +945,13 @@ Creates a new <a href="HTTP.html">Net::HTTP</a> object for the specified
       </div>
 
 
-      <div id="method-M003901" class="method-detail">
-        <a name="M003901"></a>
+      <div id="method-M003556" class="method-detail">
+        <a name="M003556"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003901.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003901.html');return false;">
+          <a href="HTTP.src/M003556.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003556.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(address, port = nil, p_addr = nil, p_port = nil, p_user = nil, p_pass = nil)</span>
 
@@ -971,8 +971,8 @@ object with proxy support. This method does not open the TCP connection.
       </div>
 
 
-      <div id="method-M003902" class="method-detail">
-        <a name="M003902"></a>
+      <div id="method-M003557" class="method-detail">
+        <a name="M003557"></a>
 
         <div class="method-heading">
 
@@ -983,20 +983,20 @@ object with proxy support. This method does not open the TCP connection.
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003901">new</a>
+Alias for <a href="HTTP.html#M003556">new</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003896" class="method-detail">
-        <a name="M003896"></a>
+      <div id="method-M003551" class="method-detail">
+        <a name="M003551"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003896.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003896.html');return false;">
+          <a href="HTTP.src/M003551.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003551.html');return false;">
 
           <span class="method-name">post_form</span><span class="method-args">(url, params)</span>
 
@@ -1032,13 +1032,13 @@ Example:
       </div>
 
 
-      <div id="method-M003917" class="method-detail">
-        <a name="M003917"></a>
+      <div id="method-M003572" class="method-detail">
+        <a name="M003572"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003917.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003917.html');return false;">
+          <a href="HTTP.src/M003572.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003572.html');return false;">
 
           <span class="method-name">proxy_class?</span><span class="method-args">()</span>
 
@@ -1056,13 +1056,13 @@ returns true if self is a class which was created by HTTP::Proxy.
       </div>
 
 
-      <div id="method-M003900" class="method-detail">
-        <a name="M003900"></a>
+      <div id="method-M003555" class="method-detail">
+        <a name="M003555"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003900.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003900.html');return false;">
+          <a href="HTTP.src/M003555.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003555.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">(address, port = nil, p_addr = nil, p_port = nil, p_user = nil, p_pass = nil) {|+http+| ...}</span>
 
@@ -1087,13 +1087,13 @@ for closing it upon completion.
       </div>
 
 
-      <div id="method-M003890" class="method-detail">
-        <a name="M003890"></a>
+      <div id="method-M003545" class="method-detail">
+        <a name="M003545"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003890.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003890.html');return false;">
+          <a href="HTTP.src/M003545.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003545.html');return false;">
 
           <span class="method-name">version_1_1</span><span class="method-args">()</span>
 
@@ -1111,13 +1111,13 @@ Turns on net/http 1.1 (ruby 1.6) features. Defaults to OFF in ruby 1.8.
       </div>
 
 
-      <div id="method-M003892" class="method-detail">
-        <a name="M003892"></a>
+      <div id="method-M003547" class="method-detail">
+        <a name="M003547"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003892.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003892.html');return false;">
+          <a href="HTTP.src/M003547.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003547.html');return false;">
 
           <span class="method-name">version_1_1?</span><span class="method-args">()</span>
 
@@ -1135,13 +1135,13 @@ true if net/http is in version 1.1 compatible mode. Defaults to true.
       </div>
 
 
-      <div id="method-M003889" class="method-detail">
-        <a name="M003889"></a>
+      <div id="method-M003544" class="method-detail">
+        <a name="M003544"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003889.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003889.html');return false;">
+          <a href="HTTP.src/M003544.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003544.html');return false;">
 
           <span class="method-name">version_1_2</span><span class="method-args">()</span>
 
@@ -1166,13 +1166,13 @@ I strongly recommend to call this method always.
       </div>
 
 
-      <div id="method-M003891" class="method-detail">
-        <a name="M003891"></a>
+      <div id="method-M003546" class="method-detail">
+        <a name="M003546"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003891.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003891.html');return false;">
+          <a href="HTTP.src/M003546.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003546.html');return false;">
 
           <span class="method-name">version_1_2?</span><span class="method-args">()</span>
 
@@ -1193,8 +1193,8 @@ true if net/http is in version 1.2 mode. Defaults to true.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M003908" class="method-detail">
-        <a name="M003908"></a>
+      <div id="method-M003563" class="method-detail">
+        <a name="M003563"></a>
 
         <div class="method-heading">
 
@@ -1205,20 +1205,20 @@ true if net/http is in version 1.2 mode. Defaults to true.
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003907">started?</a>
+Alias for <a href="HTTP.html#M003562">started?</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003938" class="method-detail">
-        <a name="M003938"></a>
+      <div id="method-M003593" class="method-detail">
+        <a name="M003593"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003938.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003938.html');return false;">
+          <a href="HTTP.src/M003593.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003593.html');return false;">
 
           <span class="method-name">copy</span><span class="method-args">(path, initheader = nil)</span>
 
@@ -1237,13 +1237,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003936" class="method-detail">
-        <a name="M003936"></a>
+      <div id="method-M003591" class="method-detail">
+        <a name="M003591"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003936.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003936.html');return false;">
+          <a href="HTTP.src/M003591.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003591.html');return false;">
 
           <span class="method-name">delete</span><span class="method-args">(path, initheader = {'Depth' =&gt; 'Infinity'})</span>
 
@@ -1262,13 +1262,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003914" class="method-detail">
-        <a name="M003914"></a>
+      <div id="method-M003569" class="method-detail">
+        <a name="M003569"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003914.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003914.html');return false;">
+          <a href="HTTP.src/M003569.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003569.html');return false;">
 
           <span class="method-name">finish</span><span class="method-args">()</span>
 
@@ -1287,13 +1287,13 @@ Raises <a href="../IOError.html">IOError</a> if not started.
       </div>
 
 
-      <div id="method-M003928" class="method-detail">
-        <a name="M003928"></a>
+      <div id="method-M003583" class="method-detail">
+        <a name="M003583"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003928.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003928.html');return false;">
+          <a href="HTTP.src/M003583.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003583.html');return false;">
 
           <span class="method-name">get</span><span class="method-args">(path, initheader = {}, dest = nil) {|+body_segment+| ...}</span>
 
@@ -1358,8 +1358,8 @@ In version 1.2, this method never raises exception.
       </div>
 
 
-      <div id="method-M003944" class="method-detail">
-        <a name="M003944"></a>
+      <div id="method-M003599" class="method-detail">
+        <a name="M003599"></a>
 
         <div class="method-heading">
 
@@ -1370,20 +1370,20 @@ In version 1.2, this method never raises exception.
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003941">request_get</a>
+Alias for <a href="HTTP.html#M003596">request_get</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003929" class="method-detail">
-        <a name="M003929"></a>
+      <div id="method-M003584" class="method-detail">
+        <a name="M003584"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003929.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003929.html');return false;">
+          <a href="HTTP.src/M003584.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003584.html');return false;">
 
           <span class="method-name">head</span><span class="method-args">(path, initheader = nil)</span>
 
@@ -1420,8 +1420,8 @@ raises an exception.
       </div>
 
 
-      <div id="method-M003945" class="method-detail">
-        <a name="M003945"></a>
+      <div id="method-M003600" class="method-detail">
+        <a name="M003600"></a>
 
         <div class="method-heading">
 
@@ -1432,20 +1432,20 @@ raises an exception.
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003942">request_head</a>
+Alias for <a href="HTTP.html#M003597">request_head</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003904" class="method-detail">
-        <a name="M003904"></a>
+      <div id="method-M003559" class="method-detail">
+        <a name="M003559"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003904.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003904.html');return false;">
+          <a href="HTTP.src/M003559.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003559.html');return false;">
 
           <span class="method-name">inspect</span><span class="method-args">()</span>
 
@@ -1459,13 +1459,13 @@ Alias for <a href="HTTP.html#M003942">request_head</a>
       </div>
 
 
-      <div id="method-M003932" class="method-detail">
-        <a name="M003932"></a>
+      <div id="method-M003587" class="method-detail">
+        <a name="M003587"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003932.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003932.html');return false;">
+          <a href="HTTP.src/M003587.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003587.html');return false;">
 
           <span class="method-name">lock</span><span class="method-args">(path, body, initheader = nil)</span>
 
@@ -1484,13 +1484,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003939" class="method-detail">
-        <a name="M003939"></a>
+      <div id="method-M003594" class="method-detail">
+        <a name="M003594"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003939.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003939.html');return false;">
+          <a href="HTTP.src/M003594.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003594.html');return false;">
 
           <span class="method-name">mkcol</span><span class="method-args">(path, body = nil, initheader = nil)</span>
 
@@ -1509,13 +1509,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003937" class="method-detail">
-        <a name="M003937"></a>
+      <div id="method-M003592" class="method-detail">
+        <a name="M003592"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003937.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003937.html');return false;">
+          <a href="HTTP.src/M003592.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003592.html');return false;">
 
           <span class="method-name">move</span><span class="method-args">(path, initheader = nil)</span>
 
@@ -1534,13 +1534,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003934" class="method-detail">
-        <a name="M003934"></a>
+      <div id="method-M003589" class="method-detail">
+        <a name="M003589"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003934.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003934.html');return false;">
+          <a href="HTTP.src/M003589.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003589.html');return false;">
 
           <span class="method-name">options</span><span class="method-args">(path, initheader = nil)</span>
 
@@ -1559,13 +1559,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003959" class="method-detail">
-        <a name="M003959"></a>
+      <div id="method-M003614" class="method-detail">
+        <a name="M003614"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003959.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003959.html');return false;">
+          <a href="HTTP.src/M003614.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003614.html');return false;">
 
           <span class="method-name">peer_cert</span><span class="method-args">()</span>
 
@@ -1579,13 +1579,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003930" class="method-detail">
-        <a name="M003930"></a>
+      <div id="method-M003585" class="method-detail">
+        <a name="M003585"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003930.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003930.html');return false;">
+          <a href="HTTP.src/M003585.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003585.html');return false;">
 
           <span class="method-name">post</span><span class="method-args">(path, data, initheader = nil, dest = nil) {|+body_segment+| ...}</span>
 
@@ -1644,8 +1644,8 @@ field given, this method uses
       </div>
 
 
-      <div id="method-M003946" class="method-detail">
-        <a name="M003946"></a>
+      <div id="method-M003601" class="method-detail">
+        <a name="M003601"></a>
 
         <div class="method-heading">
 
@@ -1656,20 +1656,20 @@ field given, this method uses
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003943">request_post</a>
+Alias for <a href="HTTP.html#M003598">request_post</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003935" class="method-detail">
-        <a name="M003935"></a>
+      <div id="method-M003590" class="method-detail">
+        <a name="M003590"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003935.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003935.html');return false;">
+          <a href="HTTP.src/M003590.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003590.html');return false;">
 
           <span class="method-name">propfind</span><span class="method-args">(path, body = nil, initheader = {'Depth' =&gt; '0'})</span>
 
@@ -1688,13 +1688,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003931" class="method-detail">
-        <a name="M003931"></a>
+      <div id="method-M003586" class="method-detail">
+        <a name="M003586"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003931.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003931.html');return false;">
+          <a href="HTTP.src/M003586.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003586.html');return false;">
 
           <span class="method-name">proppatch</span><span class="method-args">(path, body, initheader = nil)</span>
 
@@ -1713,13 +1713,13 @@ Sends a PROPPATCH request to the <tt>path</tt> and gets a response, as an
       </div>
 
 
-      <div id="method-M003918" class="method-detail">
-        <a name="M003918"></a>
+      <div id="method-M003573" class="method-detail">
+        <a name="M003573"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003918.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003918.html');return false;">
+          <a href="HTTP.src/M003573.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003573.html');return false;">
 
           <span class="method-name">proxy?</span><span class="method-args">()</span>
 
@@ -1737,13 +1737,13 @@ True if self is a <a href="HTTP.html">HTTP</a> proxy class.
       </div>
 
 
-      <div id="method-M003919" class="method-detail">
-        <a name="M003919"></a>
+      <div id="method-M003574" class="method-detail">
+        <a name="M003574"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003919.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003919.html');return false;">
+          <a href="HTTP.src/M003574.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003574.html');return false;">
 
           <span class="method-name">proxy_address</span><span class="method-args">()</span>
 
@@ -1761,13 +1761,13 @@ Address of proxy host. If self does not use a proxy, nil.
       </div>
 
 
-      <div id="method-M003922" class="method-detail">
-        <a name="M003922"></a>
+      <div id="method-M003577" class="method-detail">
+        <a name="M003577"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003922.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003922.html');return false;">
+          <a href="HTTP.src/M003577.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003577.html');return false;">
 
           <span class="method-name">proxy_pass</span><span class="method-args">()</span>
 
@@ -1785,13 +1785,13 @@ User password for accessing proxy. If self does not use a proxy, nil.
       </div>
 
 
-      <div id="method-M003920" class="method-detail">
-        <a name="M003920"></a>
+      <div id="method-M003575" class="method-detail">
+        <a name="M003575"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003920.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003920.html');return false;">
+          <a href="HTTP.src/M003575.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003575.html');return false;">
 
           <span class="method-name">proxy_port</span><span class="method-args">()</span>
 
@@ -1809,13 +1809,13 @@ Port number of proxy host. If self does not use a proxy, nil.
       </div>
 
 
-      <div id="method-M003921" class="method-detail">
-        <a name="M003921"></a>
+      <div id="method-M003576" class="method-detail">
+        <a name="M003576"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003921.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003921.html');return false;">
+          <a href="HTTP.src/M003576.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003576.html');return false;">
 
           <span class="method-name">proxy_user</span><span class="method-args">()</span>
 
@@ -1833,8 +1833,8 @@ User name for accessing proxy. If self does not use a proxy, nil.
       </div>
 
 
-      <div id="method-M003923" class="method-detail">
-        <a name="M003923"></a>
+      <div id="method-M003578" class="method-detail">
+        <a name="M003578"></a>
 
         <div class="method-heading">
 
@@ -1845,15 +1845,15 @@ User name for accessing proxy. If self does not use a proxy, nil.
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003919">proxy_address</a>
+Alias for <a href="HTTP.html#M003574">proxy_address</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003924" class="method-detail">
-        <a name="M003924"></a>
+      <div id="method-M003579" class="method-detail">
+        <a name="M003579"></a>
 
         <div class="method-heading">
 
@@ -1864,20 +1864,20 @@ Alias for <a href="HTTP.html#M003919">proxy_address</a>
         <div class="method-description">
 
           <p>
-Alias for <a href="HTTP.html#M003920">proxy_port</a>
+Alias for <a href="HTTP.html#M003575">proxy_port</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003906" class="method-detail">
-        <a name="M003906"></a>
+      <div id="method-M003561" class="method-detail">
+        <a name="M003561"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003906.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003906.html');return false;">
+          <a href="HTTP.src/M003561.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003561.html');return false;">
 
           <span class="method-name">read_timeout=</span><span class="method-args">(sec)</span>
 
@@ -1895,13 +1895,13 @@ Setter for the read_timeout attribute.
       </div>
 
 
-      <div id="method-M003948" class="method-detail">
-        <a name="M003948"></a>
+      <div id="method-M003603" class="method-detail">
+        <a name="M003603"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003948.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003948.html');return false;">
+          <a href="HTTP.src/M003603.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003603.html');return false;">
 
           <span class="method-name">request</span><span class="method-args">(req, body = nil) {|+response+| ...}</span>
 
@@ -1921,7 +1921,7 @@ href="../ArgumentError.html">ArgumentError</a>.
 When called with a block, yields an <a
 href="HTTPResponse.html">HTTPResponse</a> object. The body of this response
 will not have been read yet; the caller can process it using <a
-href="HTTPResponse.html#M003979">HTTPResponse#read_body</a>, if desired.
+href="HTTPResponse.html#M003634">HTTPResponse#read_body</a>, if desired.
 </p>
 <p>
 Returns a <a href="HTTPResponse.html">HTTPResponse</a> object.
@@ -1934,13 +1934,13 @@ This method never raises Net::* exceptions.
       </div>
 
 
-      <div id="method-M003941" class="method-detail">
-        <a name="M003941"></a>
+      <div id="method-M003596" class="method-detail">
+        <a name="M003596"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003941.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003941.html');return false;">
+          <a href="HTTP.src/M003596.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003596.html');return false;">
 
           <span class="method-name">request_get</span><span class="method-args">(path, initheader = nil) {|+response+| ...}</span>
 
@@ -1958,7 +1958,7 @@ href="HTTPResponse.html">HTTPResponse</a> object.
 When called with a block, yields an <a
 href="HTTPResponse.html">HTTPResponse</a> object. The body of this response
 will not have been read yet; the caller can process it using <a
-href="HTTPResponse.html#M003979">HTTPResponse#read_body</a>, if desired.
+href="HTTPResponse.html#M003634">HTTPResponse#read_body</a>, if desired.
 </p>
 <p>
 Returns the response.
@@ -1985,13 +1985,13 @@ This method never raises Net::* exceptions.
       </div>
 
 
-      <div id="method-M003942" class="method-detail">
-        <a name="M003942"></a>
+      <div id="method-M003597" class="method-detail">
+        <a name="M003597"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003942.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003942.html');return false;">
+          <a href="HTTP.src/M003597.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003597.html');return false;">
 
           <span class="method-name">request_head</span><span class="method-args">(path, initheader = nil, &amp;block)</span>
 
@@ -2020,13 +2020,13 @@ This method never raises Net::* exceptions.
       </div>
 
 
-      <div id="method-M003943" class="method-detail">
-        <a name="M003943"></a>
+      <div id="method-M003598" class="method-detail">
+        <a name="M003598"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003943.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003943.html');return false;">
+          <a href="HTTP.src/M003598.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003598.html');return false;">
 
           <span class="method-name">request_post</span><span class="method-args">(path, data, initheader = nil) {|+response+| ...}</span>
 
@@ -2044,7 +2044,7 @@ href="HTTPResponse.html">HTTPResponse</a> object.
 When called with a block, yields an <a
 href="HTTPResponse.html">HTTPResponse</a> object. The body of this response
 will not have been read yet; the caller can process it using <a
-href="HTTPResponse.html#M003979">HTTPResponse#read_body</a>, if desired.
+href="HTTPResponse.html#M003634">HTTPResponse#read_body</a>, if desired.
 </p>
 <p>
 Returns the response.
@@ -2072,13 +2072,13 @@ This method never raises Net::* exceptions.
       </div>
 
 
-      <div id="method-M003947" class="method-detail">
-        <a name="M003947"></a>
+      <div id="method-M003602" class="method-detail">
+        <a name="M003602"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003947.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003947.html');return false;">
+          <a href="HTTP.src/M003602.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003602.html');return false;">
 
           <span class="method-name">send_request</span><span class="method-args">(name, path, data = nil, header = nil)</span>
 
@@ -2108,13 +2108,13 @@ This method never raises Net::* exceptions.
       </div>
 
 
-      <div id="method-M003905" class="method-detail">
-        <a name="M003905"></a>
+      <div id="method-M003560" class="method-detail">
+        <a name="M003560"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003905.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003905.html');return false;">
+          <a href="HTTP.src/M003560.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003560.html');return false;">
 
           <span class="method-name">set_debug_output</span><span class="method-args">(output)</span>
 
@@ -2141,13 +2141,13 @@ method in production code.
       </div>
 
 
-      <div id="method-M003910" class="method-detail">
-        <a name="M003910"></a>
+      <div id="method-M003565" class="method-detail">
+        <a name="M003565"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003910.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003910.html');return false;">
+          <a href="HTTP.src/M003565.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003565.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">( {|http| ...}</span>
 
@@ -2174,13 +2174,13 @@ returns self.
       </div>
 
 
-      <div id="method-M003907" class="method-detail">
-        <a name="M003907"></a>
+      <div id="method-M003562" class="method-detail">
+        <a name="M003562"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003907.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003907.html');return false;">
+          <a href="HTTP.src/M003562.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003562.html');return false;">
 
           <span class="method-name">started?</span><span class="method-args">()</span>
 
@@ -2198,13 +2198,13 @@ returns true if the <a href="HTTP.html">HTTP</a> session is started.
       </div>
 
 
-      <div id="method-M003940" class="method-detail">
-        <a name="M003940"></a>
+      <div id="method-M003595" class="method-detail">
+        <a name="M003595"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003940.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003940.html');return false;">
+          <a href="HTTP.src/M003595.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003595.html');return false;">
 
           <span class="method-name">trace</span><span class="method-args">(path, initheader = nil)</span>
 
@@ -2223,13 +2223,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003933" class="method-detail">
-        <a name="M003933"></a>
+      <div id="method-M003588" class="method-detail">
+        <a name="M003588"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003933.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003933.html');return false;">
+          <a href="HTTP.src/M003588.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003588.html');return false;">
 
           <span class="method-name">unlock</span><span class="method-args">(path, body, initheader = nil)</span>
 
@@ -2248,13 +2248,13 @@ href="HTTPResponse.html">HTTPResponse</a> object.
       </div>
 
 
-      <div id="method-M003958" class="method-detail">
-        <a name="M003958"></a>
+      <div id="method-M003613" class="method-detail">
+        <a name="M003613"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003958.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003958.html');return false;">
+          <a href="HTTP.src/M003613.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003613.html');return false;">
 
           <span class="method-name">use_ssl=</span><span class="method-args">(flag)</span>
 
@@ -2275,13 +2275,13 @@ href="../IOError.html">IOError</a>.
       </div>
 
 
-      <div id="method-M003909" class="method-detail">
-        <a name="M003909"></a>
+      <div id="method-M003564" class="method-detail">
+        <a name="M003564"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003909.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003909.html');return false;">
+          <a href="HTTP.src/M003564.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003564.html');return false;">
 
           <span class="method-name">use_ssl?</span><span class="method-args">()</span>
 
@@ -2299,13 +2299,13 @@ returns true if use SSL/TLS with <a href="HTTP.html">HTTP</a>.
       </div>
 
 
-      <div id="method-M003957" class="method-detail">
-        <a name="M003957"></a>
+      <div id="method-M003612" class="method-detail">
+        <a name="M003612"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003957.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003957.html');return false;">
+          <a href="HTTP.src/M003612.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003612.html');return false;">
 
           <span class="method-name">use_ssl?</span><span class="method-args">()</span>
 
@@ -2322,13 +2322,13 @@ returns true if use SSL/TLS with <a href="HTTP.html">HTTP</a>.
       <h3 class="section-bar">Private Instance methods</h3>
 
 
-      <div id="method-M003956" class="method-detail">
-        <a name="M003956"></a>
+      <div id="method-M003611" class="method-detail">
+        <a name="M003611"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003956.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003956.html');return false;">
+          <a href="HTTP.src/M003611.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003611.html');return false;">
 
           <span class="method-name">D</span><span class="method-args">(msg)</span>
 
@@ -2342,13 +2342,13 @@ returns true if use SSL/TLS with <a href="HTTP.html">HTTP</a>.
       </div>
 
 
-      <div id="method-M003955" class="method-detail">
-        <a name="M003955"></a>
+      <div id="method-M003610" class="method-detail">
+        <a name="M003610"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003955.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003955.html');return false;">
+          <a href="HTTP.src/M003610.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003610.html');return false;">
 
           <span class="method-name">addr_port</span><span class="method-args">()</span>
 
@@ -2366,13 +2366,13 @@ utils
       </div>
 
 
-      <div id="method-M003950" class="method-detail">
-        <a name="M003950"></a>
+      <div id="method-M003605" class="method-detail">
+        <a name="M003605"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003950.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003950.html');return false;">
+          <a href="HTTP.src/M003605.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003605.html');return false;">
 
           <span class="method-name">begin_transport</span><span class="method-args">(req)</span>
 
@@ -2386,13 +2386,13 @@ utils
       </div>
 
 
-      <div id="method-M003925" class="method-detail">
-        <a name="M003925"></a>
+      <div id="method-M003580" class="method-detail">
+        <a name="M003580"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003925.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003925.html');return false;">
+          <a href="HTTP.src/M003580.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003580.html');return false;">
 
           <span class="method-name">conn_address</span><span class="method-args">()</span>
 
@@ -2410,13 +2410,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003926" class="method-detail">
-        <a name="M003926"></a>
+      <div id="method-M003581" class="method-detail">
+        <a name="M003581"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003926.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003926.html');return false;">
+          <a href="HTTP.src/M003581.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003581.html');return false;">
 
           <span class="method-name">conn_port</span><span class="method-args">()</span>
 
@@ -2430,13 +2430,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003912" class="method-detail">
-        <a name="M003912"></a>
+      <div id="method-M003567" class="method-detail">
+        <a name="M003567"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003912.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003912.html');return false;">
+          <a href="HTTP.src/M003567.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003567.html');return false;">
 
           <span class="method-name">connect</span><span class="method-args">()</span>
 
@@ -2450,13 +2450,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003915" class="method-detail">
-        <a name="M003915"></a>
+      <div id="method-M003570" class="method-detail">
+        <a name="M003570"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003915.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003915.html');return false;">
+          <a href="HTTP.src/M003570.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003570.html');return false;">
 
           <span class="method-name">do_finish</span><span class="method-args">()</span>
 
@@ -2470,13 +2470,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003911" class="method-detail">
-        <a name="M003911"></a>
+      <div id="method-M003566" class="method-detail">
+        <a name="M003566"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003911.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003911.html');return false;">
+          <a href="HTTP.src/M003566.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003566.html');return false;">
 
           <span class="method-name">do_start</span><span class="method-args">()</span>
 
@@ -2490,13 +2490,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003927" class="method-detail">
-        <a name="M003927"></a>
+      <div id="method-M003582" class="method-detail">
+        <a name="M003582"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003927.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003927.html');return false;">
+          <a href="HTTP.src/M003582.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003582.html');return false;">
 
           <span class="method-name">edit_path</span><span class="method-args">(path)</span>
 
@@ -2510,13 +2510,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003951" class="method-detail">
-        <a name="M003951"></a>
+      <div id="method-M003606" class="method-detail">
+        <a name="M003606"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003951.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003951.html');return false;">
+          <a href="HTTP.src/M003606.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003606.html');return false;">
 
           <span class="method-name">end_transport</span><span class="method-args">(req, res)</span>
 
@@ -2530,13 +2530,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003952" class="method-detail">
-        <a name="M003952"></a>
+      <div id="method-M003607" class="method-detail">
+        <a name="M003607"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003952.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003952.html');return false;">
+          <a href="HTTP.src/M003607.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003607.html');return false;">
 
           <span class="method-name">keep_alive?</span><span class="method-args">(req, res)</span>
 
@@ -2550,13 +2550,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003913" class="method-detail">
-        <a name="M003913"></a>
+      <div id="method-M003568" class="method-detail">
+        <a name="M003568"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003913.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003913.html');return false;">
+          <a href="HTTP.src/M003568.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003568.html');return false;">
 
           <span class="method-name">on_connect</span><span class="method-args">()</span>
 
@@ -2570,13 +2570,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003954" class="method-detail">
-        <a name="M003954"></a>
+      <div id="method-M003609" class="method-detail">
+        <a name="M003609"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003954.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003954.html');return false;">
+          <a href="HTTP.src/M003609.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003609.html');return false;">
 
           <span class="method-name">sspi_auth</span><span class="method-args">(req)</span>
 
@@ -2590,13 +2590,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003953" class="method-detail">
-        <a name="M003953"></a>
+      <div id="method-M003608" class="method-detail">
+        <a name="M003608"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003953.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003953.html');return false;">
+          <a href="HTTP.src/M003608.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003608.html');return false;">
 
           <span class="method-name">sspi_auth?</span><span class="method-args">(res)</span>
 
@@ -2610,13 +2610,13 @@ without proxy
       </div>
 
 
-      <div id="method-M003949" class="method-detail">
-        <a name="M003949"></a>
+      <div id="method-M003604" class="method-detail">
+        <a name="M003604"></a>
 
         <div class="method-heading">
 
-          <a href="HTTP.src/M003949.html" target="Code" class="method-signature"
-            onclick="popupCode('HTTP.src/M003949.html');return false;">
+          <a href="HTTP.src/M003604.html" target="Code" class="method-signature"
+            onclick="popupCode('HTTP.src/M003604.html');return false;">
 
           <span class="method-name">transport_request</span><span class="method-args">(req) {|res if block_given?| ...}</span>
 

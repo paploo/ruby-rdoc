@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>break_outmost_groups (PrettyPrint)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/prettyprint.rb, line 124</span>
+124:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">break_outmost_groups</span>
+125:     <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@maxwidth</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@output_width</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@buffer_width</span>
+126:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">group</span> = <span class="ruby-ivar">@group_queue</span>.<span class="ruby-identifier">deq</span>
+127:       <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">group</span>.<span class="ruby-identifier">breakables</span>.<span class="ruby-identifier">empty?</span>
+128:         <span class="ruby-identifier">data</span> = <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">shift</span>
+129:         <span class="ruby-ivar">@output_width</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">output</span>(<span class="ruby-ivar">@output</span>, <span class="ruby-ivar">@output_width</span>)
+130:         <span class="ruby-ivar">@buffer_width</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">width</span>
+131:       <span class="ruby-keyword kw">end</span>
+132:       <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Text</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">first</span>
+133:         <span class="ruby-identifier">text</span> = <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">shift</span>
+134:         <span class="ruby-ivar">@output_width</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">output</span>(<span class="ruby-ivar">@output</span>, <span class="ruby-ivar">@output_width</span>)
+135:         <span class="ruby-ivar">@buffer_width</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">width</span>
+136:       <span class="ruby-keyword kw">end</span>
+137:     <span class="ruby-keyword kw">end</span>
+138:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

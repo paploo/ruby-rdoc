@@ -2,30 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>names (MatchData)</title>
+  <title>to_a (MatchData)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    mtch.names   =&gt; [name1, name2, ...]
+ *  call-seq:
+ *     mtch.to_a   =&gt; anArray
  *
- * Returns a list of names of captures as an array of strings.
- * It is same as mtch.regexp.names.
+ *  Returns the array of matches.
  *
- *     /(?&lt;foo&gt;.)(?&lt;bar&gt;.)(?&lt;baz&gt;.)/.match(&quot;hoge&quot;).names
- *     #=&gt; [&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;]
+ *     m = /(.)(.)(\d+)(\d)/.match(&quot;THX1138.&quot;)
+ *     m.to_a   #=&gt; [&quot;HX1138&quot;, &quot;H&quot;, &quot;X&quot;, &quot;113&quot;, &quot;8&quot;]
  *
- *     m = /(?&lt;x&gt;.)(?&lt;y&gt;.)?/.match(&quot;a&quot;) #=&gt; #&lt;MatchData &quot;a&quot; x:&quot;a&quot; y:nil&gt;
- *     m.names                          #=&gt; [&quot;x&quot;, &quot;y&quot;]
+ *  Because &lt;code&gt;to_a&lt;/code&gt; is called when expanding
+ *  &lt;code&gt;*&lt;/code&gt;&lt;em&gt;variable&lt;/em&gt;, there's a useful assignment
+ *  shortcut for extracting matched fields. This is slightly slower than
+ *  accessing the fields directly (as an intermediate array is
+ *  generated).
+ *
+ *     all,f1,f2,f3 = *(/(.)(.)(\d+)(\d)/.match(&quot;THX1138.&quot;))
+ *     all   #=&gt; &quot;HX1138&quot;
+ *     f1    #=&gt; &quot;H&quot;
+ *     f2    #=&gt; &quot;X&quot;
+ *     f3    #=&gt; &quot;113&quot;
  */
 
 static VALUE
-match_names(VALUE match)
+match_to_a(VALUE match)
 {
-    match_check(match);
-    return rb_reg_names(RMATCH(match)-&gt;regexp);
+    return match_array(match, 0);
 }</pre>
 </body>
 </html>

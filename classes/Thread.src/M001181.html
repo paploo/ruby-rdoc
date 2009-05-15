@@ -2,29 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>priority (Thread)</title>
+  <title>abort_on_exception= (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     thr.priority   =&gt; integer
+ *     thr.abort_on_exception= boolean   =&gt; true or false
  *
- *  Returns the priority of &lt;i&gt;thr&lt;/i&gt;. Default is inherited from the
- *  current thread which creating the new thread, or zero for the
- *  initial main thread; higher-priority threads will run before
- *  lower-priority threads.
- *
- *     Thread.current.priority   #=&gt; 0
+ *  When set to &lt;code&gt;true&lt;/code&gt;, causes all threads (including the main
+ *  program) to abort if an exception is raised in &lt;i&gt;thr&lt;/i&gt;. The process will
+ *  effectively &lt;code&gt;exit(0)&lt;/code&gt;.
  */
 
 static VALUE
-rb_thread_priority(VALUE thread)
+rb_thread_abort_exc_set(VALUE thread, VALUE val)
 {
     rb_thread_t *th;
+    rb_secure(4);
+
     GetThreadPtr(thread, th);
-    return INT2NUM(th-&gt;priority);
+    th-&gt;abort_on_exception = RTEST(val);
+    return val;
 }</pre>
 </body>
 </html>

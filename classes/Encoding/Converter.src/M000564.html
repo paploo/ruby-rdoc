@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   ec.inspect         -&gt; string
+ *
+ * Returns a printable version of &lt;i&gt;ec&lt;/i&gt;
+ *
+ *   ec = Encoding::Converter.new(&quot;iso-8859-1&quot;, &quot;utf-8&quot;)
+ *   puts ec.inspect    #=&gt; #&lt;Encoding::Converter: ISO-8859-1 to UTF-8&gt;
+ *
+ */
+static VALUE
+econv_inspect(VALUE self)
+{
+    const char *cname = rb_obj_classname(self);
+    rb_econv_t *ec = DATA_PTR(self);
+
+    if (!ec)
+        return rb_sprintf(&quot;#&lt;%s: uninitialized&gt;&quot;, cname);
+    else {
+        const char *sname = ec-&gt;source_encoding_name;
+        const char *dname = ec-&gt;destination_encoding_name;
+        VALUE str;
+        str = rb_sprintf(&quot;#&lt;%s: &quot;, cname);
+        econv_description(sname, dname, ec-&gt;flags, str);
+        rb_str_cat2(str, &quot;&gt;&quot;);
+        return str;
+    }
+}</pre>
+</body>
+</html>

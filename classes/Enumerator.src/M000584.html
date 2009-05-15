@@ -2,34 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each (Enumerator)</title>
+  <title>rewind (Enumerator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *    enum.each {...}
+ * call-seq:
+ *   e.rewind   =&gt; e
  *
- *  Iterates the given block using the object and the method specified
- *  in the first place.  If no block is given, returns self.
+ * Rewinds the enumeration sequence by the next method.
  *
+ * If the enclosed object responds to a &quot;rewind&quot; method, it is called.
  */
-static VALUE
-enumerator_each(VALUE obj)
-{
-    struct enumerator *e;
-    int argc = 0;
-    VALUE *argv = 0;
 
-    if (!rb_block_given_p()) return obj;
-    e = enumerator_ptr(obj);
-    if (e-&gt;args) {
-        argc = RARRAY_LEN(e-&gt;args);
-        argv = RARRAY_PTR(e-&gt;args);
-    }
-    return rb_block_call(e-&gt;obj, e-&gt;meth, argc, argv,
-                         enumerator_each_i, (VALUE)e);
+static VALUE
+enumerator_rewind(VALUE obj)
+{
+    struct enumerator *e = enumerator_ptr(obj);
+
+    if (rb_respond_to(e-&gt;obj, id_rewind))
+        rb_funcall(e-&gt;obj, id_rewind, 0);
+
+    e-&gt;fib = 0;
+    e-&gt;dst = Qnil;
+    e-&gt;no_next = Qfalse;
+    return obj;
 }</pre>
 </body>
 </html>

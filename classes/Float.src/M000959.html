@@ -2,34 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_i (Float)</title>
+  <title>nan? (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     flt.to_i       =&gt; integer
- *     flt.to_int     =&gt; integer
- *     flt.truncate   =&gt; integer
+ *     flt.nan? -&gt; true or false
  *
- *  Returns &lt;i&gt;flt&lt;/i&gt; truncated to an &lt;code&gt;Integer&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;flt&lt;/i&gt; is an invalid IEEE floating
+ *  point number.
+ *
+ *     a = -1.0      #=&gt; -1.0
+ *     a.nan?        #=&gt; false
+ *     a = 0.0/0.0   #=&gt; NaN
+ *     a.nan?        #=&gt; true
  */
 
 static VALUE
-flo_truncate(VALUE num)
+flo_is_nan_p(VALUE num)
 {
-    double f = RFLOAT_VALUE(num);
-    long val;
+    double value = RFLOAT_VALUE(num);
 
-    if (f &gt; 0.0) f = floor(f);
-    if (f &lt; 0.0) f = ceil(f);
-
-    if (!FIXABLE(f)) {
-        return rb_dbl2big(f);
-    }
-    val = f;
-    return LONG2FIX(val);
+    return isnan(value) ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

@@ -2,50 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>zone (Time)</title>
+  <title>sunday? (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.zone =&gt; string
+ *     time.sunday? =&gt; true or false
  *  
- *  Returns the name of the time zone used for &lt;i&gt;time&lt;/i&gt;. As of Ruby
- *  1.8, returns ``UTC'' rather than ``GMT'' for UTC times.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Sunday.
  *     
- *     t = Time.gm(2000, &quot;jan&quot;, 1, 20, 15, 1)
- *     t.zone   #=&gt; &quot;UTC&quot;
- *     t = Time.local(2000, &quot;jan&quot;, 1, 20, 15, 1)
- *     t.zone   #=&gt; &quot;CST&quot;
+ *     t = Time.local(1990, 4, 1)       #=&gt; 1990-04-01 00:00:00 -0600
+ *     t.sunday?                        #=&gt; true
  */
 
 static VALUE
-time_zone(VALUE time)
+time_sunday(VALUE time)
 {
-    struct time_object *tobj;
-#if !defined(HAVE_TM_ZONE) &amp;&amp; (!defined(HAVE_TZNAME) || !defined(HAVE_DAYLIGHT))
-    char buf[64];
-    int len;
-#endif
-    
-    GetTimeval(time, tobj);
-    if (tobj-&gt;tm_got == 0) {
-        time_get_tm(time, tobj-&gt;gmt);
-    }
-
-    if (tobj-&gt;gmt == 1) {
-        return rb_str_new2(&quot;UTC&quot;);
-    }
-#if defined(HAVE_TM_ZONE)
-    return rb_str_new2(tobj-&gt;tm.tm_zone);
-#elif defined(HAVE_TZNAME) &amp;&amp; defined(HAVE_DAYLIGHT)
-    return rb_str_new2(tzname[daylight &amp;&amp; tobj-&gt;tm.tm_isdst]);
-#else
-    len = rb_strftime(buf, sizeof(buf), &quot;%Z&quot;,
-                      &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
-    return rb_str_new(buf, len);
-#endif
+    wday_p(0);
 }</pre>
 </body>
 </html>

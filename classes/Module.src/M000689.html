@@ -2,42 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>instance_methods (Module)</title>
+  <title>const_set (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.instance_methods(include_super=true)   =&gt; array
+ *     mod.const_set(sym, obj)    =&gt; obj
  *  
- *  Returns an array containing the names of instance methods that is callable
- *  from outside in the receiver. For a module, these are the public methods;
- *  for a class, they are the instance (not singleton) methods. With no
- *  argument, or with an argument that is &lt;code&gt;false&lt;/code&gt;, the
- *  instance methods in &lt;i&gt;mod&lt;/i&gt; are returned, otherwise the methods
- *  in &lt;i&gt;mod&lt;/i&gt; and &lt;i&gt;mod&lt;/i&gt;'s superclasses are returned.
+ *  Sets the named constant to the given object, returning that object.
+ *  Creates a new constant if no constant with the given name previously
+ *  existed.
  *     
- *     module A
- *       def method1()  end
- *     end
- *     class B
- *       def method2()  end
- *     end
- *     class C &lt; B
- *       def method3()  end
- *     end
- *     
- *     A.instance_methods                #=&gt; [:method1]
- *     B.instance_methods(false)         #=&gt; [:method2]
- *     C.instance_methods(false)         #=&gt; [:method3]
- *     C.instance_methods(true).length   #=&gt; 43
+ *     Math.const_set(&quot;HIGH_SCHOOL_PI&quot;, 22.0/7.0)   #=&gt; 3.14285714285714
+ *     Math::HIGH_SCHOOL_PI - Math::PI              #=&gt; 0.00126448926734968
  */
 
-VALUE
-rb_class_instance_methods(int argc, VALUE *argv, VALUE mod)
+static VALUE
+rb_mod_const_set(VALUE mod, VALUE name, VALUE value)
 {
-    return class_instance_method_list(argc, argv, mod, ins_methods_i);
+    ID id = rb_to_id(name);
+
+    if (!rb_is_const_id(id)) {
+        rb_name_error(id, &quot;wrong constant name %s&quot;, rb_id2name(id));
+    }
+    rb_const_set(mod, id, value);
+    return value;
 }</pre>
 </body>
 </html>

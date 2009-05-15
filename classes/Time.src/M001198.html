@@ -2,33 +2,53 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_f (Time)</title>
+  <title>gmtime (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.to_f =&gt; float
+ *     time.gmtime    =&gt; time
+ *     time.utc       =&gt; time
  *  
- *  Returns the value of &lt;i&gt;time&lt;/i&gt; as a floating point number of
- *  seconds since the Epoch.
+ *  Converts &lt;i&gt;time&lt;/i&gt; to UTC (GMT), modifying the receiver.
  *     
- *     t = Time.now
- *     &quot;%10.5f&quot; % t.to_f   #=&gt; &quot;1049896564.13654&quot;
- *     t.to_i              #=&gt; 1049896564
+ *     t = Time.now   #=&gt; 2007-11-19 08:18:31 -0600
+ *     t.gmt?         #=&gt; false
+ *     t.gmtime       #=&gt; 2007-11-19 14:18:31 UTC
+ *     t.gmt?         #=&gt; true
  *
- *  Note that IEEE 754 double is not accurate enough to represent
- *  nanoseconds from the Epoch.
+ *     t = Time.now   #=&gt; 2007-11-19 08:18:51 -0600
+ *     t.utc?         #=&gt; false
+ *     t.utc          #=&gt; 2007-11-19 14:18:51 UTC
+ *     t.utc?         #=&gt; true
  */
 
 static VALUE
-time_to_f(VALUE time)
+time_gmtime(VALUE time)
 {
     struct time_object *tobj;
+    struct tm *tm_tmp;
+    time_t t;
+    IF_HAVE_GMTIME_R(struct tm result);
 
     GetTimeval(time, tobj);
-    return DBL2NUM((double)tobj-&gt;ts.tv_sec+(double)tobj-&gt;ts.tv_nsec/1e9);
+    if (tobj-&gt;gmt) {
+        if (tobj-&gt;tm_got)
+            return time;
+    }
+    else {
+        time_modify(time);
+    }
+    t = tobj-&gt;ts.tv_sec;
+    tm_tmp = GMTIME(&amp;t, result);
+    if (!tm_tmp)
+        rb_raise(rb_eArgError, &quot;gmtime error&quot;);
+    tobj-&gt;tm = *tm_tmp;
+    tobj-&gt;tm_got = 1;
+    tobj-&gt;gmt = 1;
+    return time;
 }</pre>
 </body>
 </html>

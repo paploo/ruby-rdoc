@@ -2,42 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eql? (Range)</title>
+  <title>first (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     rng.eql?(obj)    =&gt; true or false
+ *     rng.first    =&gt; obj
+ *     rng.first(n) =&gt; an_array
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; only if &lt;i&gt;obj&lt;/i&gt; is a Range, has equivalent
- *  beginning and end items (by comparing them with #eql?), and has the same
- *  #exclude_end? setting as &lt;i&gt;rng&lt;/i&gt;.
- *     
- *    (0..2) == (0..2)            #=&gt; true
- *    (0..2) == Range.new(0,2)    #=&gt; true
- *    (0..2) == (0...2)           #=&gt; false
- *     
+ *  Returns the first object in &lt;i&gt;rng&lt;/i&gt;, or the first +n+ elements.
  */
 
 static VALUE
-range_eql(VALUE range, VALUE obj)
+range_first(int argc, VALUE *argv, VALUE range)
 {
-    if (range == obj)
-        return Qtrue;
-    if (!rb_obj_is_instance_of(obj, rb_obj_class(range)))
-        return Qfalse;
+    VALUE n, ary[2];
 
-    if (!rb_eql(RANGE_BEG(range), RANGE_BEG(obj)))
-        return Qfalse;
-    if (!rb_eql(RANGE_END(range), RANGE_END(obj)))
-        return Qfalse;
+    if (argc == 0) return RANGE_BEG(range);
 
-    if (EXCL(range) != EXCL(obj))
-        return Qfalse;
+    rb_scan_args(argc, argv, &quot;1&quot;, &amp;n);
+    ary[0] = n;
+    ary[1] = rb_ary_new2(NUM2LONG(n));
+    rb_block_call(range, rb_intern(&quot;each&quot;), 0, 0, first_i, (VALUE)ary);
 
-    return Qtrue;
+    return ary[1];
 }</pre>
 </body>
 </html>

@@ -2,20 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>diagonal (Matrix)</title>
+  <title>new (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 158</span>
-158:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">diagonal</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">values</span>)
-159:     <span class="ruby-identifier">size</span> = <span class="ruby-identifier">values</span>.<span class="ruby-identifier">size</span>
-160:     <span class="ruby-identifier">rows</span> = (<span class="ruby-value">0</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">size</span>  <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
-161:       <span class="ruby-identifier">row</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">size</span>).<span class="ruby-identifier">fill</span>(<span class="ruby-value">0</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">size</span>)
-162:       <span class="ruby-identifier">row</span>[<span class="ruby-identifier">j</span>] = <span class="ruby-identifier">values</span>[<span class="ruby-identifier">j</span>]
-163:       <span class="ruby-identifier">row</span>
-164:     }
-165:     <span class="ruby-identifier">rows</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-keyword kw">false</span>)
-166:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 243</span>
+243:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">init_method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">argv</span>)
+244:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">init_method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">argv</span>)
+245:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

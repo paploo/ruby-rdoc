@@ -2,14 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>valid_commercial? (Date)</title>
+  <title>nth_kday (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/date.rb, line 745</span>
-745:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">valid_commercial?</span> (<span class="ruby-identifier">y</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
-746:     <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">_valid_commercial?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">sg</span>)
-747:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/date.rb, line 846</span>
+846:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">nth_kday</span>(<span class="ruby-identifier">y</span>=<span class="ruby-value">-4712</span>, <span class="ruby-identifier">m</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">n</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">k</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
+847:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">_valid_nth_kday?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">k</span>, <span class="ruby-identifier">sg</span>)
+848:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'invalid date'</span>
+849:     <span class="ruby-keyword kw">end</span>
+850:     <span class="ruby-identifier">new!</span>(<span class="ruby-identifier">jd_to_ajd</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>)
+851:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,30 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>push (Array)</title>
+  <title>each_index (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array.push(obj, ... )   -&gt; array
+ *     array.each_index {|index| block }  -&gt;  array
  *  
- *  Append---Pushes the given object(s) on to the end of this array. This
- *  expression returns the array itself, so several appends
- *  may be chained together.
- *
+ *  Same as &lt;code&gt;Array#each&lt;/code&gt;, but passes the index of the element
+ *  instead of the element itself.
+ *     
  *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.push(&quot;d&quot;, &quot;e&quot;, &quot;f&quot;)  
- *             #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+ *     a.each_index {|x| print x, &quot; -- &quot; }
+ *     
+ *  produces:
+ *     
+ *     0 -- 1 -- 2 --
  */
 
 static VALUE
-rb_ary_push_m(int argc, VALUE *argv, VALUE ary)
+rb_ary_each_index(VALUE ary)
 {
-    rb_ary_modify_check(ary);
-    while (argc--) {
-        rb_ary_push(ary, *argv++);
+    long i;
+    RETURN_ENUMERATOR(ary, 0, 0);
+
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        rb_yield(LONG2NUM(i));
     }
     return ary;
 }</pre>

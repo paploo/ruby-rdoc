@@ -2,25 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pipe? (File::Stat)</title>
+  <title>setgid? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.pipe?    =&gt; true or false
+ *     stat.setgid?   =&gt; true or false
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if the operating system supports pipes and
- *  &lt;i&gt;stat&lt;/i&gt; is a pipe; &lt;code&gt;false&lt;/code&gt; otherwise.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;stat&lt;/i&gt; has the set-group-id
+ *  permission bit set, &lt;code&gt;false&lt;/code&gt; if it doesn't or if the
+ *  operating system doesn't support this feature.
+ *     
+ *     File.stat(&quot;/usr/sbin/lpc&quot;).setgid?   #=&gt; true
+ *     
  */
 
 static VALUE
-rb_stat_p(VALUE obj)
+rb_stat_sgid(VALUE obj)
 {
-#ifdef S_IFIFO
-    if (S_ISFIFO(get_stat(obj)-&gt;st_mode)) return Qtrue;
-
+#ifdef S_ISGID
+    if (get_stat(obj)-&gt;st_mode &amp; S_ISGID) return Qtrue;
 #endif
     return Qfalse;
 }</pre>

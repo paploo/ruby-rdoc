@@ -2,29 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>string= (StringScanner)</title>
+  <title>pointer= (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: string=(str)
+ * call-seq: pos=(n)
  *
- * Changes the string being scanned to +str+ and resets the scanner.
- * Returns +str+.
+ * Modify the scan pointer.
+ *
+ *   s = StringScanner.new('test string')
+ *   s.pos = 7            # -&gt; 7
+ *   s.rest               # -&gt; &quot;ring&quot;
  */
 static VALUE
-strscan_set_string(VALUE self, VALUE str)
+strscan_set_pos(VALUE self, VALUE v)
 {
     struct strscanner *p;
+    long i;
 
-    Data_Get_Struct(self, struct strscanner, p);
-    StringValue(str);
-    p-&gt;str = rb_str_dup(str);
-    rb_obj_freeze(p-&gt;str);
-    p-&gt;curr = 0;
-    CLEAR_MATCH_STATUS(p);
-    return str;
+    GET_SCANNER(self, p);
+    i = NUM2INT(v);
+    if (i &lt; 0) i += S_LEN(p);
+    if (i &lt; 0) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
+    if (i &gt; S_LEN(p)) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
+    p-&gt;curr = i;
+    return INT2NUM(i);
 }</pre>
 </body>
 </html>

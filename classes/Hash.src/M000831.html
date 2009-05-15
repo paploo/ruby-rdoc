@@ -2,35 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_pair (Hash)</title>
+  <title>delete (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.each {| key, value | block } -&gt; hsh
- *     hsh.each_pair {| key, value | block } -&gt; hsh
+ *     hsh.delete(key)                   =&gt; value
+ *     hsh.delete(key) {| key | block }  =&gt; value
  *
- *  Calls &lt;i&gt;block&lt;/i&gt; once for each key in &lt;i&gt;hsh&lt;/i&gt;, passing the key-value
- *  pair as parameters.
+ *  Deletes and returns a key-value pair from &lt;i&gt;hsh&lt;/i&gt; whose key is
+ *  equal to &lt;i&gt;key&lt;/i&gt;. If the key is not found, returns the
+ *  &lt;em&gt;default value&lt;/em&gt;. If the optional code block is given and the
+ *  key is not found, pass in the key and return the result of
+ *  &lt;i&gt;block&lt;/i&gt;.
  *
  *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.each {|key, value| puts &quot;#{key} is #{value}&quot; }
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     a is 100
- *     b is 200
+ *     h.delete(&quot;a&quot;)                              #=&gt; 100
+ *     h.delete(&quot;z&quot;)                              #=&gt; nil
+ *     h.delete(&quot;z&quot;) { |el| &quot;#{el} not found&quot; }   #=&gt; &quot;z not found&quot;
  *
  */
 
-static VALUE
-rb_hash_each_pair(VALUE hash)
+VALUE
+rb_hash_delete(VALUE hash, VALUE key)
 {
-    RETURN_ENUMERATOR(hash, 0, 0);
-    rb_hash_foreach(hash, each_pair_i, 0);
-    return hash;
+    VALUE val;
+
+    rb_hash_modify(hash);
+    val = rb_hash_delete_key(hash, key);
+    if (val != Qundef) return val;
+    if (rb_block_given_p()) {
+        return rb_yield(key);
+    }
+    return Qnil;
 }</pre>
 </body>
 </html>

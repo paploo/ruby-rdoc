@@ -2,18 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>update (List)</title>
+  <title>summarize (List)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/optparse.rb, line 559</span>
-559:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">sw</span>, <span class="ruby-identifier">sopts</span>, <span class="ruby-identifier">lopts</span>, <span class="ruby-identifier">nsw</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">nlopts</span> = <span class="ruby-keyword kw">nil</span>)
-560:       <span class="ruby-identifier">sopts</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@short</span>[<span class="ruby-identifier">o</span>] = <span class="ruby-identifier">sw</span>} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sopts</span>
-561:       <span class="ruby-identifier">lopts</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@long</span>[<span class="ruby-identifier">o</span>] = <span class="ruby-identifier">sw</span>} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lopts</span>
-562:       <span class="ruby-identifier">nlopts</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@long</span>[<span class="ruby-identifier">o</span>] = <span class="ruby-identifier">nsw</span>} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">nsw</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">nlopts</span>
-563:       <span class="ruby-identifier">used</span> = <span class="ruby-ivar">@short</span>.<span class="ruby-identifier">invert</span>.<span class="ruby-identifier">update</span>(<span class="ruby-ivar">@long</span>.<span class="ruby-identifier">invert</span>)
-564:       <span class="ruby-ivar">@list</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-constant">Switch</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">used</span>[<span class="ruby-identifier">o</span>]}
-565:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/optparse.rb, line 633</span>
+633:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">summarize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+634:       <span class="ruby-identifier">sum</span> = []
+635:       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">reverse_each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span>
+636:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:summarize</span>) <span class="ruby-comment cmt"># perhaps OptionParser::Switch</span>
+637:           <span class="ruby-identifier">s</span> = []
+638:           <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">summarize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">l</span>}
+639:           <span class="ruby-identifier">sum</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">reverse</span>)
+640:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">opt</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">empty?</span>
+641:           <span class="ruby-identifier">sum</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&quot;</span>
+642:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:each_line</span>)
+643:           <span class="ruby-identifier">sum</span>.<span class="ruby-identifier">concat</span>([<span class="ruby-operator">*</span><span class="ruby-identifier">opt</span>.<span class="ruby-identifier">each_line</span>].<span class="ruby-identifier">reverse</span>)
+644:         <span class="ruby-keyword kw">else</span>
+645:           <span class="ruby-identifier">sum</span>.<span class="ruby-identifier">concat</span>([<span class="ruby-operator">*</span><span class="ruby-identifier">opt</span>.<span class="ruby-identifier">each</span>].<span class="ruby-identifier">reverse</span>)
+646:         <span class="ruby-keyword kw">end</span>
+647:       <span class="ruby-keyword kw">end</span>
+648:       <span class="ruby-identifier">sum</span>.<span class="ruby-identifier">reverse_each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+649:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

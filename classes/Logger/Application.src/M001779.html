@@ -2,23 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>start (Logger::Application)</title>
+  <title>log (Logger::Application)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 672</span>
-672:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>
-673:       <span class="ruby-identifier">status</span> = <span class="ruby-value">-1</span>
-674:       <span class="ruby-keyword kw">begin</span>
-675:         <span class="ruby-identifier">log</span>(<span class="ruby-constant">INFO</span>, <span class="ruby-node">&quot;Start of #{ @appname }.&quot;</span>)
-676:         <span class="ruby-identifier">status</span> = <span class="ruby-identifier">run</span>
-677:       <span class="ruby-keyword kw">rescue</span>
-678:         <span class="ruby-identifier">log</span>(<span class="ruby-constant">FATAL</span>, <span class="ruby-node">&quot;Detected an exception. Stopping ... #{$!} (#{$!.class})\n&quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">$@</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>))
-679:       <span class="ruby-keyword kw">ensure</span>
-680:         <span class="ruby-identifier">log</span>(<span class="ruby-constant">INFO</span>, <span class="ruby-node">&quot;End of #{ @appname }. (status: #{ status.to_s })&quot;</span>)
-681:       <span class="ruby-keyword kw">end</span>
-682:       <span class="ruby-identifier">status</span>
-683:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 722</span>
+722:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">severity</span>, <span class="ruby-identifier">message</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+723:       <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">severity</span>, <span class="ruby-identifier">message</span>, <span class="ruby-ivar">@appname</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@log</span>
+724:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

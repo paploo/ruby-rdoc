@@ -2,32 +2,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>try_convert (Regexp)</title>
+  <title>=== (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Regexp.try_convert(obj) -&gt; re or nil
+ *     rxp === str   =&gt; true or false
  *
- *  Try to convert &lt;i&gt;obj&lt;/i&gt; into a Regexp, using to_regexp method.
- *  Returns converted regexp or nil if &lt;i&gt;obj&lt;/i&gt; cannot be converted
- *  for any reason.
+ *  Case Equality---Synonym for &lt;code&gt;Regexp#=~&lt;/code&gt; used in case statements.
  *
- *     Regexp.try_convert(/re/)         #=&gt; /re/
- *     Regexp.try_convert(&quot;re&quot;)         #=&gt; nil
+ *     a = &quot;HELLO&quot;
+ *     case a
+ *     when /^[a-z]*$/; print &quot;Lower case\n&quot;
+ *     when /^[A-Z]*$/; print &quot;Upper case\n&quot;
+ *     else;            print &quot;Mixed case\n&quot;
+ *     end
  *
- *     o = Object.new
- *     Regexp.try_convert(o)            #=&gt; nil
- *     def o.to_regexp() /foo/ end
- *     Regexp.try_convert(o)            #=&gt; /foo/
+ *  &lt;em&gt;produces:&lt;/em&gt;
  *
+ *     Upper case
  */
-static VALUE
-rb_reg_s_try_convert(VALUE dummy, VALUE re)
+
+VALUE
+rb_reg_eqq(VALUE re, VALUE str)
 {
-    return rb_check_regexp_type(re);
+    long start;
+
+    str = reg_operand(str, Qfalse);
+    if (NIL_P(str)) {
+        rb_backref_set(Qnil);
+        return Qfalse;
+    }
+    start = rb_reg_search(re, str, 0, 0);
+    if (start &lt; 0) {
+        return Qfalse;
+    }
+    return Qtrue;
 }</pre>
 </body>
 </html>

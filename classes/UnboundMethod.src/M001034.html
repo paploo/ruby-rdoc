@@ -2,39 +2,66 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (UnboundMethod)</title>
+  <title>to_s (UnboundMethod)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   meth == other_meth  =&gt; true or false
+ *  call-seq:
+ *   meth.to_s      =&gt;  string
+ *   meth.inspect   =&gt;  string
  *
- * Two method objects are equal if that are bound to the same
- * object and contain the same body.
+ *  Show the name of the underlying method.
+ *
+ *    &quot;cat&quot;.method(:count).inspect   #=&gt; &quot;#&lt;Method: String#count&gt;&quot;
  */
 
-
 static VALUE
-method_eq(VALUE method, VALUE other)
+method_inspect(VALUE method)
 {
-    struct METHOD *m1, *m2;
+    struct METHOD *data;
+    VALUE str;
+    const char *s;
+    const char *sharp = &quot;#&quot;;
 
-    if (TYPE(other) != T_DATA
-        || RDATA(other)-&gt;dmark != (RUBY_DATA_FUNC) bm_mark)
-        return Qfalse;
-    if (CLASS_OF(method) != CLASS_OF(other))
-        return Qfalse;
+    Data_Get_Struct(method, struct METHOD, data);
+    str = rb_str_buf_new2(&quot;#&lt;&quot;);
+    s = rb_obj_classname(method);
+    rb_str_buf_cat2(str, s);
+    rb_str_buf_cat2(str, &quot;: &quot;);
 
-    Data_Get_Struct(method, struct METHOD, m1);
-    Data_Get_Struct(other, struct METHOD, m2);
+    if (FL_TEST(data-&gt;oclass, FL_SINGLETON)) {
+        VALUE v = rb_iv_get(data-&gt;oclass, &quot;__attached__&quot;);
 
-    if (m1-&gt;oclass != m2-&gt;oclass || m1-&gt;rclass != m2-&gt;rclass ||
-        m1-&gt;recv != m2-&gt;recv || m1-&gt;body != m2-&gt;body)
-        return Qfalse;
+        if (data-&gt;recv == Qundef) {
+            rb_str_buf_append(str, rb_inspect(data-&gt;oclass));
+        }
+        else if (data-&gt;recv == v) {
+            rb_str_buf_append(str, rb_inspect(v));
+            sharp = &quot;.&quot;;
+        }
+        else {
+            rb_str_buf_append(str, rb_inspect(data-&gt;recv));
+            rb_str_buf_cat2(str, &quot;(&quot;);
+            rb_str_buf_append(str, rb_inspect(v));
+            rb_str_buf_cat2(str, &quot;)&quot;);
+            sharp = &quot;.&quot;;
+        }
+    }
+    else {
+        rb_str_buf_cat2(str, rb_class2name(data-&gt;rclass));
+        if (data-&gt;rclass != data-&gt;oclass) {
+            rb_str_buf_cat2(str, &quot;(&quot;);
+            rb_str_buf_cat2(str, rb_class2name(data-&gt;oclass));
+            rb_str_buf_cat2(str, &quot;)&quot;);
+        }
+    }
+    rb_str_buf_cat2(str, sharp);
+    rb_str_append(str, rb_id2str(data-&gt;oid));
+    rb_str_buf_cat2(str, &quot;&gt;&quot;);
 
-    return Qtrue;
+    return str;
 }</pre>
 </body>
 </html>

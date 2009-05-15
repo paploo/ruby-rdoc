@@ -2,17 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>read (CSV)</title>
+  <title>headers (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1391</span>
-1391:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
-1392:     <span class="ruby-identifier">encoding</span> =  <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:encoding</span>)
-1393:     <span class="ruby-identifier">mode</span>     =  <span class="ruby-value str">&quot;rb&quot;</span>
-1394:     <span class="ruby-identifier">mode</span>     <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;:#{encoding}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">encoding</span>
-1395:     <span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">mode</span>, <span class="ruby-identifier">options</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">csv</span><span class="ruby-operator">|</span> <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">read</span> }
-1396:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1621</span>
+1621:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">headers</span>
+1622:     <span class="ruby-ivar">@headers</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@use_headers</span>
+1623:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,33 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>take_while (Array)</title>
+  <title>to_csv (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     ary.take_while {|arr| block }   =&gt; array
- *  
- *  Passes elements to the block until the block returns nil or false,
- *  then stops iterating and returns an array of all prior elements.
- *     
- *     a = [1, 2, 3, 4, 5, 0]
- *     a.take_while {|i| i &lt; 3 }   # =&gt; [1, 2]
- *     
- */
-
-static VALUE
-rb_ary_take_while(VALUE ary)
-{
-    long i;
-
-    RETURN_ENUMERATOR(ary, 0, 0);
-    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
-        if (!RTEST(rb_yield(RARRAY_PTR(ary)[i]))) break;
-    }
-    return rb_ary_take(ary, LONG2FIX(i));
-}</pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2299</span>
+2299:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_csv</span>(<span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
+2300:     <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">generate_line</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">options</span>)
+2301:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

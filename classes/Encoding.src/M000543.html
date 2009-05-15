@@ -2,28 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>names (Encoding)</title>
+  <title>compatible? (Encoding)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   enc.names =&gt; array
+ *   Encoding.compatible?(str1, str2) =&gt; enc or nil
  *
- * Returns the list of name and aliases of the encoding.
+ * Checks the compatibility of two strings.
+ * If they are compatible, means concatenatable, 
+ * returns an encoding which the concatinated string will be.
+ * If they are not compatible, nil is returned.
  *
- *   Encoding::WINDOWS_31J.names =&gt; [&quot;Windows-31J&quot;, &quot;CP932&quot;, &quot;csWindows31J&quot;]
+ *   Encoding.compatible?(&quot;\xa1&quot;.force_encoding(&quot;iso-8859-1&quot;), &quot;b&quot;)
+ *   =&gt; #&lt;Encoding:ISO-8859-1&gt;
+ *
+ *   Encoding.compatible?(
+ *     &quot;\xa1&quot;.force_encoding(&quot;iso-8859-1&quot;),
+ *     &quot;\xa1\xa1&quot;.force_encoding(&quot;euc-jp&quot;))
+ *   =&gt; nil
+ *
  */
 static VALUE
-enc_names(VALUE self)
+enc_compatible_p(VALUE klass, VALUE str1, VALUE str2)
 {
-    VALUE args[2];
+    rb_encoding *enc;
 
-    args[0] = (VALUE)rb_to_encoding_index(self);
-    args[1] = rb_ary_new2(0);
-    st_foreach(enc_table.names, enc_names_i, (st_data_t)args);
-    return args[1];
+    if (!enc_capable(str1)) return Qnil;
+    if (!enc_capable(str2)) return Qnil;
+    enc = rb_enc_compatible(str1, str2);
+    if (!enc) return Qnil;
+    return rb_enc_from_encoding(enc);
 }</pre>
 </body>
 </html>

@@ -2,15 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>in_service? (GServer)</title>
+  <title>connecting (GServer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/gserver.rb, line 102</span>
-102:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">GServer</span>.<span class="ruby-identifier">in_service?</span>(<span class="ruby-identifier">port</span>, <span class="ruby-identifier">host</span> = <span class="ruby-constant">DEFAULT_HOST</span>)
-103:     <span class="ruby-ivar">@@services</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">host</span>) <span class="ruby-keyword kw">and</span>
-104:       <span class="ruby-ivar">@@services</span>[<span class="ruby-identifier">host</span>].<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">port</span>)
-105:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/gserver.rb, line 134</span>
+134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connecting</span>(<span class="ruby-identifier">client</span>)
+135:     <span class="ruby-identifier">addr</span> = <span class="ruby-identifier">client</span>.<span class="ruby-identifier">peeraddr</span>
+136:     <span class="ruby-identifier">log</span>(<span class="ruby-node">&quot;#{self.class.to_s} #{@host}:#{@port} client:#{addr[1]} &quot;</span> <span class="ruby-operator">+</span>
+137:         <span class="ruby-node">&quot;#{addr[2]}&lt;#{addr[3]}&gt; connect&quot;</span>)
+138:     <span class="ruby-keyword kw">true</span>
+139:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

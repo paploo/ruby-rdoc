@@ -2,42 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>include? (Module)</title>
+  <title>new (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.include?(module)    =&gt; true or false
+ *    Module.new                  =&gt; mod
+ *    Module.new {|mod| block }   =&gt; mod
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;module&lt;/i&gt; is included in
- *  &lt;i&gt;mod&lt;/i&gt; or one of &lt;i&gt;mod&lt;/i&gt;'s ancestors.
+ *  Creates a new anonymous module. If a block is given, it is passed
+ *  the module object, and the block is evaluated in the context of this
+ *  module using &lt;code&gt;module_eval&lt;/code&gt;.
  *     
- *     module A
+ *     Fred = Module.new do
+ *       def meth1
+ *         &quot;hello&quot;
+ *       end
+ *       def meth2
+ *         &quot;bye&quot;
+ *       end
  *     end
- *     class B
- *       include A
- *     end
- *     class C &lt; B
- *     end
- *     B.include?(A)   #=&gt; true
- *     C.include?(A)   #=&gt; true
- *     A.include?(A)   #=&gt; false
+ *     a = &quot;my string&quot;
+ *     a.extend(Fred)   #=&gt; &quot;my string&quot;
+ *     a.meth1          #=&gt; &quot;hello&quot;
+ *     a.meth2          #=&gt; &quot;bye&quot;
  */
 
-VALUE
-rb_mod_include_p(VALUE mod, VALUE mod2)
+static VALUE
+rb_mod_initialize(VALUE module)
 {
-    VALUE p;
+    extern VALUE rb_mod_module_exec(int argc, VALUE *argv, VALUE mod);
 
-    Check_Type(mod2, T_MODULE);
-    for (p = RCLASS_SUPER(mod); p; p = RCLASS_SUPER(p)) {
-	if (BUILTIN_TYPE(p) == T_ICLASS) {
-	    if (RBASIC(p)-&gt;klass == mod2) return Qtrue;
-	}
+    if (rb_block_given_p()) {
+        rb_mod_module_exec(1, &amp;module, module);
     }
-    return Qfalse;
+    return Qnil;
 }</pre>
 </body>
 </html>

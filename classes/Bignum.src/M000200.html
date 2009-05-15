@@ -2,30 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>coerce (Bignum)</title>
+  <title>% (Bignum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * MISSING: documentation
+ *  call-seq:
+ *     big % other         =&gt; Numeric
+ *     big.modulo(other)   =&gt; Numeric
+ *
+ *  Returns big modulo other. See Numeric.divmod for more
+ *  information.
  */
 
-static VALUE
-rb_big_coerce(VALUE x, VALUE y)
+VALUE
+rb_big_modulo(VALUE x, VALUE y)
 {
-    if (FIXNUM_P(y)) {
-        return rb_assoc_new(rb_int2big(FIX2LONG(y)), x);
+    VALUE z;
+
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        y = rb_int2big(FIX2LONG(y));
+        break;
+
+      case T_BIGNUM:
+        break;
+
+      default:
+        return rb_num_coerce_bin(x, y, '%');
     }
-    else if (TYPE(y) == T_BIGNUM) {
-       return rb_assoc_new(y, x);
-    }
-    else {
-        rb_raise(rb_eTypeError, &quot;can't coerce %s to Bignum&quot;,
-                 rb_obj_classname(y));
-    }
-    /* not reached */
-    return Qnil;
+    bigdivmod(x, y, 0, &amp;z);
+
+    return bignorm(z);
 }</pre>
 </body>
 </html>

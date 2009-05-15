@@ -2,42 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>% (Float)</title>
+  <title>&gt; (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     flt % other         =&gt; float
- *     flt.modulo(other)   =&gt; float
+ * call-seq:
+ *   flt &gt; other    =&gt;  true or false
  *
- *  Return the modulo after division of &lt;code&gt;flt&lt;/code&gt; by &lt;code&gt;other&lt;/code&gt;.
- *
- *     6543.21.modulo(137)      #=&gt; 104.21
- *     6543.21.modulo(137.24)   #=&gt; 92.9299999999996
+ * &lt;code&gt;true&lt;/code&gt; if &lt;code&gt;flt&lt;/code&gt; is greater than &lt;code&gt;other&lt;/code&gt;.
  */
 
 static VALUE
-flo_mod(VALUE x, VALUE y)
+flo_gt(VALUE x, VALUE y)
 {
-    double fy, mod;
+    double a, b;
 
+    a = RFLOAT_VALUE(x);
     switch (TYPE(y)) {
       case T_FIXNUM:
-        fy = (double)FIX2LONG(y);
+        b = (double)FIX2LONG(y);
         break;
+
       case T_BIGNUM:
-        fy = rb_big2dbl(y);
+        b = rb_big2dbl(y);
         break;
+
       case T_FLOAT:
-        fy = RFLOAT_VALUE(y);
+        b = RFLOAT_VALUE(y);
+        if (isnan(b)) return Qfalse;
         break;
+
       default:
-        return rb_num_coerce_bin(x, y, '%');
+        return rb_num_coerce_relop(x, y, '&gt;');
     }
-    flodivmod(RFLOAT_VALUE(x), fy, 0, &amp;mod);
-    return DBL2NUM(mod);
+    if (isnan(a)) return Qfalse;
+    return (a &gt; b)?Qtrue:Qfalse;
 }</pre>
 </body>
 </html>

@@ -2,20 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>clear (StringScanner)</title>
+  <title>pos= (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Equivalent to #terminate.
- * This method is obsolete; use #terminate instead.
+ * call-seq: pos=(n)
+ *
+ * Modify the scan pointer.
+ *
+ *   s = StringScanner.new('test string')
+ *   s.pos = 7            # -&gt; 7
+ *   s.rest               # -&gt; &quot;ring&quot;
  */
 static VALUE
-strscan_clear(VALUE self)
+strscan_set_pos(VALUE self, VALUE v)
 {
-    rb_warning(&quot;StringScanner#clear is obsolete; use #terminate instead&quot;);
-    return strscan_terminate(self);
+    struct strscanner *p;
+    long i;
+
+    GET_SCANNER(self, p);
+    i = NUM2INT(v);
+    if (i &lt; 0) i += S_LEN(p);
+    if (i &lt; 0) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
+    if (i &gt; S_LEN(p)) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
+    p-&gt;curr = i;
+    return INT2NUM(i);
 }</pre>
 </body>
 </html>

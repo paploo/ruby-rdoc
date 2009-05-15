@@ -2,15 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getaddress (Resolv::DNS)</title>
+  <title>getresource (Resolv::DNS)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 356</span>
-356:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getaddress</span>(<span class="ruby-identifier">name</span>)
-357:       <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">address</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">address</span>}
-358:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;DNS result has no information for #{name}&quot;</span>)
-359:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 452</span>
+452:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getresource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">typeclass</span>)
+453:       <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">typeclass</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">resource</span>}
+454:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;DNS result has no information for #{name}&quot;</span>)
+455:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

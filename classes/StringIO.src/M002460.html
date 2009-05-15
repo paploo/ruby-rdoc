@@ -2,28 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_char (StringIO)</title>
+  <title>getbyte (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.each_char {|char| block }  -&gt; strio
+ *   strio.getbyte   -&gt; fixnum or nil
  *
- * See IO#each_char.
+ * See IO#getbyte.
  */
 static VALUE
-strio_each_char(VALUE self)
+strio_getbyte(VALUE self)
 {
-    VALUE c;
-
-    RETURN_ENUMERATOR(self, 0, 0);
-
-    while (!NIL_P(c = strio_getc(self))) {
-        rb_yield(c);
+    struct StringIO *ptr = readable(StringIO(self));
+    int c;
+    if (ptr-&gt;pos &gt;= RSTRING_LEN(ptr-&gt;string)) {
+        return Qnil;
     }
-    return self;
+    c = RSTRING_PTR(ptr-&gt;string)[ptr-&gt;pos++];
+    return CHR2FIX(c);
 }</pre>
 </body>
 </html>

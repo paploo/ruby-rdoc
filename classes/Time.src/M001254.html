@@ -2,19 +2,52 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_datetime (Time)</title>
+  <title>apply_offset (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1776</span>
-1776:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_datetime</span>
-1777:     <span class="ruby-identifier">jd</span> = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:civil_to_jd</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">mday</span>, <span class="ruby-constant">DateTime</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1778:     <span class="ruby-identifier">fr</span> = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:time_to_day_fraction</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, [<span class="ruby-identifier">sec</span>, <span class="ruby-value">59</span>].<span class="ruby-identifier">min</span>) <span class="ruby-operator">+</span>
-1779:       <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">nsec</span>, <span class="ruby-value">86400_000_000_000</span>)
-1780:     <span class="ruby-identifier">of</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">utc_offset</span>, <span class="ruby-value">86400</span>)
-1781:     <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:jd_to_ajd</span>, <span class="ruby-identifier">jd</span>, <span class="ruby-identifier">fr</span>, <span class="ruby-identifier">of</span>),
-1782:                   <span class="ruby-identifier">of</span>, <span class="ruby-constant">DateTime</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1783:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 126</span>
+126:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_offset</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">off</span>)
+127:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">off</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+128:         <span class="ruby-identifier">off</span> = <span class="ruby-operator">-</span><span class="ruby-identifier">off</span>
+129:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)
+130:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">sec</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">sec</span> = <span class="ruby-identifier">sec</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+131:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)
+132:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">min</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">min</span> = <span class="ruby-identifier">min</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+133:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">24</span>)
+134:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">hour</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">hour</span> = <span class="ruby-identifier">hour</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">24</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+135:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">off</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+136:           <span class="ruby-identifier">day</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">off</span>
+137:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">month_days</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>) <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">day</span>
+138:             <span class="ruby-identifier">mon</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+139:             <span class="ruby-keyword kw">if</span> <span class="ruby-value">12</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">mon</span>
+140:               <span class="ruby-identifier">mon</span> = <span class="ruby-value">1</span>
+141:               <span class="ruby-identifier">year</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+142:             <span class="ruby-keyword kw">end</span>
+143:             <span class="ruby-identifier">day</span> = <span class="ruby-value">1</span>
+144:           <span class="ruby-keyword kw">end</span>
+145:         <span class="ruby-keyword kw">end</span>
+146:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-value">0</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">off</span>
+147:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)
+148:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">sec</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">sec</span> = <span class="ruby-identifier">sec</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+149:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>)
+150:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">min</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">min</span> = <span class="ruby-identifier">min</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+151:         <span class="ruby-identifier">off</span>, <span class="ruby-identifier">o</span> = <span class="ruby-identifier">off</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">24</span>)
+152:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">hour</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span>; <span class="ruby-identifier">o</span>, <span class="ruby-identifier">hour</span> = <span class="ruby-identifier">hour</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">24</span>); <span class="ruby-identifier">off</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">o</span> <span class="ruby-keyword kw">end</span>
+153:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">off</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span>
+154:           <span class="ruby-identifier">day</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">off</span>
+155:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">day</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+156:             <span class="ruby-identifier">mon</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+157:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mon</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+158:               <span class="ruby-identifier">year</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+159:               <span class="ruby-identifier">mon</span> = <span class="ruby-value">12</span>
+160:             <span class="ruby-keyword kw">end</span>
+161:             <span class="ruby-identifier">day</span> = <span class="ruby-identifier">month_days</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>)
+162:           <span class="ruby-keyword kw">end</span>
+163:         <span class="ruby-keyword kw">end</span>
+164:       <span class="ruby-keyword kw">end</span>
+165:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>
+166:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,30 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>attr_reader (Module)</title>
+  <title>protected_instance_methods (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     attr_reader(symbol, ...)    =&gt; nil
- *     attr(symbol, ...)             =&gt; nil
+ *     mod.protected_instance_methods(include_super=true)   =&gt; array
  *  
- *  Creates instance variables and corresponding methods that return the
- *  value of each instance variable. Equivalent to calling
- *  ``&lt;code&gt;attr&lt;/code&gt;&lt;i&gt;:name&lt;/i&gt;'' on each name in turn.
+ *  Returns a list of the protected instance methods defined in
+ *  &lt;i&gt;mod&lt;/i&gt;. If the optional parameter is not &lt;code&gt;false&lt;/code&gt;, the
+ *  methods of any ancestors are included.
  */
 
-static VALUE
-rb_mod_attr_reader(int argc, VALUE *argv, VALUE klass)
+VALUE
+rb_class_protected_instance_methods(int argc, VALUE *argv, VALUE mod)
 {
-    int i;
-
-    for (i=0; i&lt;argc; i++) {
-        rb_attr(klass, rb_to_id(argv[i]), Qtrue, Qfalse, Qtrue);
-    }
-    return Qnil;
+    return class_instance_method_list(argc, argv, mod, ins_methods_prot_i);
 }</pre>
 </body>
 </html>

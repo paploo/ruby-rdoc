@@ -2,22 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_s (NilClass)</title>
+  <title>nil? (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     nil.to_s    =&gt; &quot;&quot;
- *  
- *  Always returns the empty string.
+ * call_seq:
+ *   nil.nil?               =&gt; true
+ *
+ * Only the object &lt;i&gt;nil&lt;/i&gt; responds &lt;code&gt;true&lt;/code&gt; to &lt;code&gt;nil?&lt;/code&gt;.
  */
 
 static VALUE
-nil_to_s(VALUE obj)
+rb_true(VALUE obj)
 {
-    return rb_usascii_str_new(0, 0);
+    return Qtrue;
 }</pre>
 </body>
 </html>

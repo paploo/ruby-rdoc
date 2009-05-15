@@ -2,14 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>initialize_copy (Set)</title>
+  <title>to_a (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/set.rb, line 80</span>
-80:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_copy</span>(<span class="ruby-identifier">orig</span>)
-81:     <span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">orig</span>.<span class="ruby-identifier">instance_eval</span>{<span class="ruby-ivar">@hash</span>}.<span class="ruby-identifier">dup</span>
-82:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 133</span>
+133:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_a</span>
+134:     <span class="ruby-ivar">@hash</span>.<span class="ruby-identifier">keys</span>
+135:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

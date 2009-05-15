@@ -2,45 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>quo (BigDecimal)</title>
+  <title>abs (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* call-seq:
-  * div(value, digits)
-  * quo(value)
-  *
-  * Divide by the specified value. 
-  *
-  * e.g.
-  *   c = a.div(b,n)
-  *
-  * digits:: If specified and less than the number of significant digits of the result, the result is rounded to that number of digits, according to BigDecimal.mode.
-  * 
-  * If digits is 0, the result is the same as the / operator. If not, the
-  * result is an integer BigDecimal, by analogy with Float#div.
-  *
-  * The alias quo is provided since div(value, 0) is the same as computing
-  * the quotient; see divmod.
-  */
+  <pre>/* Returns the absolute value.
+ *
+ * BigDecimal('5').abs -&gt; 5
+ *
+ * BigDecimal('-3').abs -&gt; 3
+ */
 static VALUE
-BigDecimal_div(VALUE self, VALUE r)
-/* For c = self/r: with round operation */
+BigDecimal_abs(VALUE self)
 {
     ENTER(5);
-    Real *c=NULL, *res=NULL, *div = NULL;
-    r = BigDecimal_divide(&amp;c, &amp;res, &amp;div, self, r);
-    if(r!=(VALUE)0) return r; /* coerced by other */
-    SAVE(c);SAVE(res);SAVE(div);
-    /* a/b = c + r/b */
-    /* c xxxxx
-       r 00000yyyyy  ==&gt; (y/b)*BASE &gt;= HALF_BASE
-     */
-    /* Round */
-    if(VpHasVal(div)) { /* frac[0] must be zero for NaN,INF,Zero */
-       VpInternalRound(c,0,c-&gt;frac[c-&gt;Prec-1],(VpBaseVal()*res-&gt;frac[0])/div-&gt;frac[0]);
-    }
+    Real *c, *a;
+    U_LONG mx;
+
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpAsgn(c, a, 1);
+    VpChangeSign(c,(S_INT)1);
     return ToValue(c);
 }</pre>
 </body>

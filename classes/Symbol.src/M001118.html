@@ -2,28 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>id2name (Symbol)</title>
+  <title>to_yaml (Symbol)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     sym.id2name   =&gt; string
- *     sym.to_s      =&gt; string
- *  
- *  Returns the name or string corresponding to &lt;i&gt;sym&lt;/i&gt;.
- *     
- *     :fred.id2name   #=&gt; &quot;fred&quot;
- */
-
-
-VALUE
-rb_sym_to_s(VALUE sym)
-{
-    ID id = SYM2ID(sym);
-
-    return str_new3(rb_cString, rb_id2str(id));
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 192</span>
+192:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+193:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+194:             <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-value str">&quot;tag:yaml.org,2002:str&quot;</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-identifier">:plain</span> )
+195:         <span class="ruby-keyword kw">end</span>
+196:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

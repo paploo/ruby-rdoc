@@ -2,31 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ungetc (RubyLex)</title>
+  <title>prompt (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 144</span>
-144:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span> = <span class="ruby-keyword kw">nil</span>)
-145:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">empty?</span>
-146:       <span class="ruby-identifier">c2</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">pop</span>
-147:     <span class="ruby-keyword kw">else</span>
-148:       <span class="ruby-identifier">c2</span> = <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">pop</span>
-149:     <span class="ruby-keyword kw">end</span>
-150:     <span class="ruby-identifier">c</span> = <span class="ruby-identifier">c2</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">c</span>
-151:     <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">c</span> <span class="ruby-comment cmt">#c = </span>
-152:       <span class="ruby-ivar">@seek</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
-153:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
-154:       <span class="ruby-ivar">@line_no</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> 
-155:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">idx</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
-156:         <span class="ruby-ivar">@char_no</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">idx</span>
-157:       <span class="ruby-keyword kw">else</span>
-158:         <span class="ruby-ivar">@char_no</span> = <span class="ruby-ivar">@base_char_no</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">size</span>
-159:       <span class="ruby-keyword kw">end</span>
-160:     <span class="ruby-keyword kw">else</span>
-161:       <span class="ruby-ivar">@char_no</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
-162:     <span class="ruby-keyword kw">end</span>
-163:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 205</span>
+205:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prompt</span>
+206:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@prompt</span>
+207:       <span class="ruby-ivar">@prompt</span>.<span class="ruby-identifier">call</span>(<span class="ruby-ivar">@ltype</span>, <span class="ruby-ivar">@indent</span>, <span class="ruby-ivar">@continue</span>, <span class="ruby-ivar">@line_no</span>)
+208:     <span class="ruby-keyword kw">end</span>
+209:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

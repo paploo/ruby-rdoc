@@ -2,38 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>instance_variable_defined? (Object)</title>
+  <title>method (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.instance_variable_defined?(symbol)    =&gt; true or false
- *
- *  Returns &lt;code&gt;true&lt;/code&gt; if the given instance variable is
- *  defined in &lt;i&gt;obj&lt;/i&gt;.
- *
- *     class Fred
- *       def initialize(p1, p2)
- *         @a, @b = p1, p2
+ *     obj.method(sym)    =&gt; method
+ *  
+ *  Looks up the named method as a receiver in &lt;i&gt;obj&lt;/i&gt;, returning a
+ *  &lt;code&gt;Method&lt;/code&gt; object (or raising &lt;code&gt;NameError&lt;/code&gt;). The
+ *  &lt;code&gt;Method&lt;/code&gt; object acts as a closure in &lt;i&gt;obj&lt;/i&gt;'s object
+ *  instance, so instance variables and the value of &lt;code&gt;self&lt;/code&gt;
+ *  remain available.
+ *     
+ *     class Demo
+ *       def initialize(n)
+ *         @iv = n
+ *       end
+ *       def hello()
+ *         &quot;Hello, @iv = #{@iv}&quot;
  *       end
  *     end
- *     fred = Fred.new('cat', 99)
- *     fred.instance_variable_defined?(:@a)    #=&gt; true
- *     fred.instance_variable_defined?(&quot;@b&quot;)   #=&gt; true
- *     fred.instance_variable_defined?(&quot;@c&quot;)   #=&gt; false
+ *     
+ *     k = Demo.new(99)
+ *     m = k.method(:hello)
+ *     m.call   #=&gt; &quot;Hello, @iv = 99&quot;
+ *     
+ *     l = Demo.new('Fred')
+ *     m = l.method(&quot;hello&quot;)
+ *     m.call   #=&gt; &quot;Hello, @iv = Fred&quot;
  */
 
-static VALUE
-rb_obj_ivar_defined(VALUE obj, VALUE iv)
+VALUE
+rb_obj_method(VALUE obj, VALUE vid)
 {
-    ID id = rb_to_id(iv);
-
-    if (!rb_is_instance_id(id)) {
-        rb_name_error(id, &quot;`%s' is not allowed as an instance variable name&quot;, rb_id2name(id));
-    }
-    return rb_ivar_defined(obj, id);
+    return mnew(CLASS_OF(obj), obj, rb_to_id(vid), rb_cMethod, Qfalse);
 }</pre>
 </body>
 </html>

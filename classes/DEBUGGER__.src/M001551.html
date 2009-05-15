@@ -2,45 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>debug_method_info (DEBUGGER__)</title>
+  <title>frame_set_pos (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 176</span>
-176:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug_method_info</span>(<span class="ruby-identifier">input</span>, <span class="ruby-identifier">binding</span>)
-177:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">input</span>
-178:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^i(:?nstance)?\s+/</span>
-179:       <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">$'</span>, <span class="ruby-identifier">binding</span>)
-180: 
-181:       <span class="ruby-identifier">len</span> = <span class="ruby-value">0</span>
-182:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">v</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">methods</span>.<span class="ruby-identifier">sort</span>
-183:         <span class="ruby-identifier">len</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-184:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">70</span>
-185:           <span class="ruby-identifier">len</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-186:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
-187:         <span class="ruby-keyword kw">end</span>
-188:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">v</span>, <span class="ruby-value str">&quot; &quot;</span>
-189:       <span class="ruby-keyword kw">end</span>
-190:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
-191: 
-192:     <span class="ruby-keyword kw">else</span>
-193:       <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">debug_eval</span>(<span class="ruby-identifier">input</span>, <span class="ruby-identifier">binding</span>)
-194:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Module</span>
-195:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Should be Class/Module: &quot;</span>, <span class="ruby-identifier">input</span>, <span class="ruby-value str">&quot;\n&quot;</span>
-196:       <span class="ruby-keyword kw">else</span>
-197:         <span class="ruby-identifier">len</span> = <span class="ruby-value">0</span>
-198:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">v</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword kw">false</span>).<span class="ruby-identifier">sort</span>
-199:           <span class="ruby-identifier">len</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-200:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">70</span>
-201:             <span class="ruby-identifier">len</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-202:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
-203:           <span class="ruby-keyword kw">end</span>
-204:           <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">v</span>, <span class="ruby-value str">&quot; &quot;</span>
-205:         <span class="ruby-keyword kw">end</span>
-206:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\n&quot;</span>
-207:       <span class="ruby-keyword kw">end</span>
-208:     <span class="ruby-keyword kw">end</span>
-209:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 570</span>
+570:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">frame_set_pos</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>)
+571:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@frames</span>[<span class="ruby-value">0</span>]
+572:       <span class="ruby-ivar">@frames</span>[<span class="ruby-value">0</span>][<span class="ruby-value">1</span>] = <span class="ruby-identifier">file</span>
+573:       <span class="ruby-ivar">@frames</span>[<span class="ruby-value">0</span>][<span class="ruby-value">2</span>] = <span class="ruby-identifier">line</span>
+574:     <span class="ruby-keyword kw">end</span>
+575:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

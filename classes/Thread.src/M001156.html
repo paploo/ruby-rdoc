@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>stop (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Thread.stop   =&gt; nil
+ *
+ *  Stops execution of the current thread, putting it into a ``sleep'' state,
+ *  and schedules execution of another thread.
+ *
+ *     a = Thread.new { print &quot;a&quot;; Thread.stop; print &quot;c&quot; }
+ *     Thread.pass
+ *     print &quot;b&quot;
+ *     a.run
+ *     a.join
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     abc
+ */
+
+VALUE
+rb_thread_stop(void)
+{
+    if (rb_thread_alone()) {
+        rb_raise(rb_eThreadError,
+                 &quot;stopping only thread\n\tnote: use sleep to stop forever&quot;);
+    }
+    rb_thread_sleep_deadly();
+    return Qnil;
+}</pre>
+</body>
+</html>

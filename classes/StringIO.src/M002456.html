@@ -2,34 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_line (StringIO)</title>
+  <title>getc (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.each(sep=$/) {|line| block }         -&gt; strio
- *   strio.each(limit) {|line| block }          -&gt; strio
- *   strio.each(sep, limit) {|line| block }     -&gt; strio
- *   strio.each_line(sep=$/) {|line| block }    -&gt; strio
- *   strio.each_line(limit) {|line| block }     -&gt; strio
- *   strio.each_line(sep,limit) {|line| block } -&gt; strio
+ *   strio.getc   -&gt; string or nil
  *
- * See IO#each.
+ * See IO#getc.
  */
 static VALUE
-strio_each(int argc, VALUE *argv, VALUE self)
+strio_getc(VALUE self)
 {
-    struct StringIO *ptr = StringIO(self);
-    VALUE line;
+    struct StringIO *ptr = readable(StringIO(self));
+    rb_encoding *enc = rb_enc_get(ptr-&gt;string);
+    int len;
+    char *p;
 
-    RETURN_ENUMERATOR(self, argc, argv);
-
-    while (!NIL_P(line = strio_getline(argc, argv, readable(ptr)))) {
-        rb_yield(line);
+    if (ptr-&gt;pos &gt;= RSTRING_LEN(ptr-&gt;string)) {
+        return Qnil;
     }
-    return self;
+    p = RSTRING_PTR(ptr-&gt;string)+ptr-&gt;pos;
+    len = rb_enc_mbclen(p, RSTRING_END(ptr-&gt;string), enc);
+    ptr-&gt;pos += len;
+    return rb_enc_str_new(p, len, rb_enc_get(ptr-&gt;string));
 }</pre>
 </body>
 </html>

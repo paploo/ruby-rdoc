@@ -2,42 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>load_data (PStore)</title>
+  <title>empty_marshal_data (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 399</span>
-399:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_data</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">read_only</span>)
-400:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">read_only</span>
-401:       <span class="ruby-keyword kw">begin</span>
-402:         <span class="ruby-identifier">table</span> = <span class="ruby-identifier">load</span>(<span class="ruby-identifier">file</span>)
-403:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">table</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
-404:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">Error</span>, <span class="ruby-value str">&quot;PStore file seems to be corrupted.&quot;</span>
-405:         <span class="ruby-keyword kw">end</span>
-406:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">EOFError</span>
-407:         <span class="ruby-comment cmt"># This seems to be a newly-created file.</span>
-408:         <span class="ruby-identifier">table</span> = {}
-409:       <span class="ruby-keyword kw">end</span>
-410:       <span class="ruby-identifier">table</span>
-411:     <span class="ruby-keyword kw">else</span>
-412:       <span class="ruby-identifier">data</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">read</span>
-413:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">empty?</span>
-414:         <span class="ruby-comment cmt"># This seems to be a newly-created file.</span>
-415:         <span class="ruby-identifier">table</span> = {}
-416:         <span class="ruby-identifier">checksum</span> = <span class="ruby-identifier">empty_marshal_checksum</span>
-417:         <span class="ruby-identifier">size</span> = <span class="ruby-identifier">empty_marshal_data</span>.<span class="ruby-identifier">size</span>
-418:       <span class="ruby-keyword kw">else</span>
-419:         <span class="ruby-identifier">table</span> = <span class="ruby-identifier">load</span>(<span class="ruby-identifier">data</span>)
-420:         <span class="ruby-identifier">checksum</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-identifier">data</span>)
-421:         <span class="ruby-identifier">size</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">size</span>
-422:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">table</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
-423:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">Error</span>, <span class="ruby-value str">&quot;PStore file seems to be corrupted.&quot;</span>
-424:         <span class="ruby-keyword kw">end</span>
-425:       <span class="ruby-keyword kw">end</span>
-426:       <span class="ruby-identifier">data</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-constant">EMPTY_STRING</span>)
-427:       [<span class="ruby-identifier">table</span>, <span class="ruby-identifier">checksum</span>, <span class="ruby-identifier">size</span>]
-428:     <span class="ruby-keyword kw">end</span>
-429:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 515</span>
+515:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty_marshal_data</span>
+516:     <span class="ruby-constant">EMPTY_MARSHAL_DATA</span>
+517:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

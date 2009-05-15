@@ -2,26 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pp (PP::PPMethods)</title>
+  <title>pp_hash (PP::PPMethods)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 144</span>
-144:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pp</span>(<span class="ruby-identifier">obj</span>)
-145:       <span class="ruby-identifier">id</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">object_id</span>
-146: 
-147:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">check_inspect_key</span>(<span class="ruby-identifier">id</span>)
-148:         <span class="ruby-identifier">group</span> {<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">pretty_print_cycle</span> <span class="ruby-keyword kw">self</span>}
-149:         <span class="ruby-keyword kw">return</span>
-150:       <span class="ruby-keyword kw">end</span>
-151: 
-152:       <span class="ruby-keyword kw">begin</span>
-153:         <span class="ruby-identifier">push_inspect_key</span>(<span class="ruby-identifier">id</span>)
-154:         <span class="ruby-identifier">group</span> {<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">pretty_print</span> <span class="ruby-keyword kw">self</span>}
-155:       <span class="ruby-keyword kw">ensure</span>
-156:         <span class="ruby-identifier">pop_inspect_key</span>(<span class="ruby-identifier">id</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">PP</span>.<span class="ruby-identifier">sharing_detection</span>
-157:       <span class="ruby-keyword kw">end</span>
-158:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 248</span>
+248:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pp_hash</span>(<span class="ruby-identifier">obj</span>)
+249:       <span class="ruby-identifier">group</span>(<span class="ruby-value">1</span>, <span class="ruby-value str">'{'</span>, <span class="ruby-value str">'}'</span>) {
+250:         <span class="ruby-identifier">seplist</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">:each_pair</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+251:           <span class="ruby-identifier">group</span> {
+252:             <span class="ruby-identifier">pp</span> <span class="ruby-identifier">k</span>
+253:             <span class="ruby-identifier">text</span> <span class="ruby-value str">'=&gt;'</span>
+254:             <span class="ruby-identifier">group</span>(<span class="ruby-value">1</span>) {
+255:               <span class="ruby-identifier">breakable</span> <span class="ruby-value str">''</span>
+256:               <span class="ruby-identifier">pp</span> <span class="ruby-identifier">v</span>
+257:             }
+258:           }
+259:         }
+260:       }
+261:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

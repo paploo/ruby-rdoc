@@ -101,7 +101,7 @@ seconds.
 </p>
 </li>
 <li>Do some experiments sequentially using the <a
-href="Benchmark.html#M003244">bm</a> method:
+href="Benchmark.html#M002899">bm</a> method:
 
 <pre>
     require 'benchmark'
@@ -150,7 +150,7 @@ The result:
 <li>The times for some benchmarks depend on the order in which items are run.
 These differences are due to the cost of memory allocation and garbage
 collection. To avoid these discrepancies, the <a
-href="Benchmark.html#M003245">bmbm</a> method is provided. For example, to
+href="Benchmark.html#M002900">bmbm</a> method is provided. For example, to
 compare ways to sort an array of floats:
 
 <pre>
@@ -178,10 +178,11 @@ The result:
 </pre>
 </li>
 <li>Report statistics of sequential experiments with unique labels, using the
-<a href="Benchmark.html#M003243">benchmark</a> method:
+<a href="Benchmark.html#M002898">benchmark</a> method:
 
 <pre>
     require 'benchmark'
+    include Benchmark         # we need the CAPTION and FMTSTR constants
 
     n = 50000
     Benchmark.benchmark(&quot; &quot;*7 + CAPTION, 7, FMTSTR, &quot;&gt;total:&quot;, &quot;&gt;avg:&quot;) do |x|
@@ -215,25 +216,25 @@ The result:
 
       <div class="name-list">
 
-        <a href="#M003243">benchmark</a>&nbsp;&nbsp;
+        <a href="#M002898">benchmark</a>&nbsp;&nbsp;
 
-        <a href="#M003248">benchmark</a>&nbsp;&nbsp;
+        <a href="#M002903">benchmark</a>&nbsp;&nbsp;
 
-        <a href="#M003249">bm</a>&nbsp;&nbsp;
+        <a href="#M002904">bm</a>&nbsp;&nbsp;
 
-        <a href="#M003244">bm</a>&nbsp;&nbsp;
+        <a href="#M002899">bm</a>&nbsp;&nbsp;
 
-        <a href="#M003245">bmbm</a>&nbsp;&nbsp;
+        <a href="#M002900">bmbm</a>&nbsp;&nbsp;
 
-        <a href="#M003250">bmbm</a>&nbsp;&nbsp;
+        <a href="#M002905">bmbm</a>&nbsp;&nbsp;
 
-        <a href="#M003246">measure</a>&nbsp;&nbsp;
+        <a href="#M002901">measure</a>&nbsp;&nbsp;
 
-        <a href="#M003251">measure</a>&nbsp;&nbsp;
+        <a href="#M002906">measure</a>&nbsp;&nbsp;
 
-        <a href="#M003247">realtime</a>&nbsp;&nbsp;
+        <a href="#M002902">realtime</a>&nbsp;&nbsp;
 
-        <a href="#M003252">realtime</a>&nbsp;&nbsp;
+        <a href="#M002907">realtime</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -285,7 +286,7 @@ The default caption string (heading above the output times).
           <td>&nbsp;</td>
           <td class="context-item-desc">
 The default format string used to display times. See also <a
-href="Benchmark/Tms.html#M003260">Benchmark::Tms#format</a>.
+href="Benchmark/Tms.html#M002915">Benchmark::Tms#format</a>.
 
 </td>
 
@@ -305,13 +306,13 @@ href="Benchmark/Tms.html#M003260">Benchmark::Tms#format</a>.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M003248" class="method-detail">
-        <a name="M003248"></a>
+      <div id="method-M002903" class="method-detail">
+        <a name="M002903"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003248.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003248.html');return false;">
+          <a href="Benchmark.src/M002903.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002903.html');return false;">
 
           <span class="method-name">benchmark</span><span class="method-args">(caption = &quot;&quot;, label_width = nil, fmtstr = nil, *labels) {|report| ...}</span>
 
@@ -335,8 +336,8 @@ lines.
 <em>Note</em>: Other methods provide a simpler interface to this one, and
 are suitable for nearly all benchmarking requirements. See the examples in
 <a href="Benchmark.html">Benchmark</a>, and the <a
-href="Benchmark.html#M003244">bm</a> and <a
-href="Benchmark.html#M003245">bmbm</a> methods.
+href="Benchmark.html#M002899">bm</a> and <a
+href="Benchmark.html#M002900">bmbm</a> methods.
 </p>
 <p>
 Example:
@@ -369,13 +370,13 @@ Example:
       </div>
 
 
-      <div id="method-M003249" class="method-detail">
-        <a name="M003249"></a>
+      <div id="method-M002904" class="method-detail">
+        <a name="M002904"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003249.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003249.html');return false;">
+          <a href="Benchmark.src/M002904.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002904.html');return false;">
 
           <span class="method-name">bm</span><span class="method-args">(label_width = 0, *labels) {|report| ...}</span>
 
@@ -386,10 +387,10 @@ Example:
         <div class="method-description">
 
           <p>
-A simple interface to the <a href="Benchmark.html#M003243">benchmark</a>
-method, <a href="Benchmark.html#M003244">bm</a> is generates sequential
+A simple interface to the <a href="Benchmark.html#M002898">benchmark</a>
+method, <a href="Benchmark.html#M002899">bm</a> is generates sequential
 reports with labels. The parameters have the same meaning as for <a
-href="Benchmark.html#M003243">benchmark</a>.
+href="Benchmark.html#M002898">benchmark</a>.
 </p>
 <pre>
     require 'benchmark'
@@ -415,13 +416,13 @@ href="Benchmark.html#M003243">benchmark</a>.
       </div>
 
 
-      <div id="method-M003250" class="method-detail">
-        <a name="M003250"></a>
+      <div id="method-M002905" class="method-detail">
+        <a name="M002905"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003250.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003250.html');return false;">
+          <a href="Benchmark.src/M002905.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002905.html');return false;">
 
           <span class="method-name">bmbm</span><span class="method-args">(width = 0) {|job| ...}</span>
 
@@ -434,17 +435,17 @@ href="Benchmark.html#M003243">benchmark</a>.
           <p>
 Sometimes benchmark results are skewed because code executed earlier
 encounters different garbage collection overheads than that run later. <a
-href="Benchmark.html#M003245">bmbm</a> attempts to minimize this effect by
+href="Benchmark.html#M002900">bmbm</a> attempts to minimize this effect by
 running the tests twice, the first time as a rehearsal in order to get the
 runtime environment stable, the second time for real. <tt><a
-href="GC.html#M003098">GC.start</a></tt> is executed before the start of
+href="GC.html#M002753">GC.start</a></tt> is executed before the start of
 each of the real timings; the cost of this is not included in the timings.
 In reality, though, there&#8217;s only so much that <a
-href="Benchmark.html#M003245">bmbm</a> can do, and the results are not
+href="Benchmark.html#M002900">bmbm</a> can do, and the results are not
 guaranteed to be isolated from garbage collection and other effects.
 </p>
 <p>
-Because <a href="Benchmark.html#M003245">bmbm</a> takes two passes through
+Because <a href="Benchmark.html#M002900">bmbm</a> takes two passes through
 the tests, it can calculate the required label width.
 </p>
 <pre>
@@ -471,7 +472,7 @@ the tests, it can calculate the required label width.
        sort   12.007000   0.000000  12.007000 ( 12.791000)
 </pre>
 <p>
-<a href="Benchmark.html#M003245">bmbm</a> yields a Benchmark::Job object
+<a href="Benchmark.html#M002900">bmbm</a> yields a Benchmark::Job object
 and returns an array of <a href="Benchmark/Tms.html">Benchmark::Tms</a>
 objects.
 </p>
@@ -480,13 +481,13 @@ objects.
       </div>
 
 
-      <div id="method-M003251" class="method-detail">
-        <a name="M003251"></a>
+      <div id="method-M002906" class="method-detail">
+        <a name="M002906"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003251.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003251.html');return false;">
+          <a href="Benchmark.src/M002906.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002906.html');return false;">
 
           <span class="method-name">measure</span><span class="method-args">(label = &quot;&quot;) {|| ...}</span>
 
@@ -505,13 +506,13 @@ href="Benchmark/Tms.html">Benchmark::Tms</a> object.
       </div>
 
 
-      <div id="method-M003252" class="method-detail">
-        <a name="M003252"></a>
+      <div id="method-M002907" class="method-detail">
+        <a name="M002907"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003252.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003252.html');return false;">
+          <a href="Benchmark.src/M002907.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002907.html');return false;">
 
           <span class="method-name">realtime</span><span class="method-args">() {|| ...}</span>
 
@@ -532,13 +533,13 @@ Returns the elapsed real time used to execute the given block.
       <h3 class="section-bar">Private Instance methods</h3>
 
 
-      <div id="method-M003243" class="method-detail">
-        <a name="M003243"></a>
+      <div id="method-M002898" class="method-detail">
+        <a name="M002898"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003243.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003243.html');return false;">
+          <a href="Benchmark.src/M002898.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002898.html');return false;">
 
           <span class="method-name">benchmark</span><span class="method-args">(caption = &quot;&quot;, label_width = nil, fmtstr = nil, *labels) {|report| ...}</span>
 
@@ -562,8 +563,8 @@ lines.
 <em>Note</em>: Other methods provide a simpler interface to this one, and
 are suitable for nearly all benchmarking requirements. See the examples in
 <a href="Benchmark.html">Benchmark</a>, and the <a
-href="Benchmark.html#M003244">bm</a> and <a
-href="Benchmark.html#M003245">bmbm</a> methods.
+href="Benchmark.html#M002899">bm</a> and <a
+href="Benchmark.html#M002900">bmbm</a> methods.
 </p>
 <p>
 Example:
@@ -596,13 +597,13 @@ Example:
       </div>
 
 
-      <div id="method-M003244" class="method-detail">
-        <a name="M003244"></a>
+      <div id="method-M002899" class="method-detail">
+        <a name="M002899"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003244.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003244.html');return false;">
+          <a href="Benchmark.src/M002899.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002899.html');return false;">
 
           <span class="method-name">bm</span><span class="method-args">(label_width = 0, *labels) {|report| ...}</span>
 
@@ -613,10 +614,10 @@ Example:
         <div class="method-description">
 
           <p>
-A simple interface to the <a href="Benchmark.html#M003243">benchmark</a>
-method, <a href="Benchmark.html#M003244">bm</a> is generates sequential
+A simple interface to the <a href="Benchmark.html#M002898">benchmark</a>
+method, <a href="Benchmark.html#M002899">bm</a> is generates sequential
 reports with labels. The parameters have the same meaning as for <a
-href="Benchmark.html#M003243">benchmark</a>.
+href="Benchmark.html#M002898">benchmark</a>.
 </p>
 <pre>
     require 'benchmark'
@@ -642,13 +643,13 @@ href="Benchmark.html#M003243">benchmark</a>.
       </div>
 
 
-      <div id="method-M003245" class="method-detail">
-        <a name="M003245"></a>
+      <div id="method-M002900" class="method-detail">
+        <a name="M002900"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003245.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003245.html');return false;">
+          <a href="Benchmark.src/M002900.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002900.html');return false;">
 
           <span class="method-name">bmbm</span><span class="method-args">(width = 0) {|job| ...}</span>
 
@@ -661,17 +662,17 @@ href="Benchmark.html#M003243">benchmark</a>.
           <p>
 Sometimes benchmark results are skewed because code executed earlier
 encounters different garbage collection overheads than that run later. <a
-href="Benchmark.html#M003245">bmbm</a> attempts to minimize this effect by
+href="Benchmark.html#M002900">bmbm</a> attempts to minimize this effect by
 running the tests twice, the first time as a rehearsal in order to get the
 runtime environment stable, the second time for real. <tt><a
-href="GC.html#M003098">GC.start</a></tt> is executed before the start of
+href="GC.html#M002753">GC.start</a></tt> is executed before the start of
 each of the real timings; the cost of this is not included in the timings.
 In reality, though, there&#8217;s only so much that <a
-href="Benchmark.html#M003245">bmbm</a> can do, and the results are not
+href="Benchmark.html#M002900">bmbm</a> can do, and the results are not
 guaranteed to be isolated from garbage collection and other effects.
 </p>
 <p>
-Because <a href="Benchmark.html#M003245">bmbm</a> takes two passes through
+Because <a href="Benchmark.html#M002900">bmbm</a> takes two passes through
 the tests, it can calculate the required label width.
 </p>
 <pre>
@@ -698,7 +699,7 @@ the tests, it can calculate the required label width.
        sort   12.007000   0.000000  12.007000 ( 12.791000)
 </pre>
 <p>
-<a href="Benchmark.html#M003245">bmbm</a> yields a Benchmark::Job object
+<a href="Benchmark.html#M002900">bmbm</a> yields a Benchmark::Job object
 and returns an array of <a href="Benchmark/Tms.html">Benchmark::Tms</a>
 objects.
 </p>
@@ -707,13 +708,13 @@ objects.
       </div>
 
 
-      <div id="method-M003246" class="method-detail">
-        <a name="M003246"></a>
+      <div id="method-M002901" class="method-detail">
+        <a name="M002901"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003246.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003246.html');return false;">
+          <a href="Benchmark.src/M002901.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002901.html');return false;">
 
           <span class="method-name">measure</span><span class="method-args">(label = &quot;&quot;) {|| ...}</span>
 
@@ -732,13 +733,13 @@ href="Benchmark/Tms.html">Benchmark::Tms</a> object.
       </div>
 
 
-      <div id="method-M003247" class="method-detail">
-        <a name="M003247"></a>
+      <div id="method-M002902" class="method-detail">
+        <a name="M002902"></a>
 
         <div class="method-heading">
 
-          <a href="Benchmark.src/M003247.html" target="Code" class="method-signature"
-            onclick="popupCode('Benchmark.src/M003247.html');return false;">
+          <a href="Benchmark.src/M002902.html" target="Code" class="method-signature"
+            onclick="popupCode('Benchmark.src/M002902.html');return false;">
 
           <span class="method-name">realtime</span><span class="method-args">() {|| ...}</span>
 

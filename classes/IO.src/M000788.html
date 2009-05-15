@@ -2,32 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tty? (IO)</title>
+  <title>pid (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.isatty   =&gt; true or false
- *     ios.tty?     =&gt; true or false
+ *     ios.pid    =&gt; fixnum
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is associated with a
- *  terminal device (tty), &lt;code&gt;false&lt;/code&gt; otherwise.
+ *  Returns the process ID of a child process associated with
+ *  &lt;em&gt;ios&lt;/em&gt;. This will be set by &lt;code&gt;IO.popen&lt;/code&gt;.
  *
- *     File.new(&quot;testfile&quot;).isatty   #=&gt; false
- *     File.new(&quot;/dev/tty&quot;).isatty   #=&gt; true
+ *     pipe = IO.popen(&quot;-&quot;)
+ *     if pipe
+ *       $stderr.puts &quot;In parent, child pid is #{pipe.pid}&quot;
+ *     else
+ *       $stderr.puts &quot;In child, pid is #{$$}&quot;
+ *     end
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     In child, pid is 26209
+ *     In parent, child pid is 26209
  */
 
 static VALUE
-rb_io_isatty(VALUE io)
+rb_io_pid(VALUE io)
 {
     rb_io_t *fptr;
 
     GetOpenFile(io, fptr);
-    if (isatty(fptr-&gt;fd) == 0)
-        return Qfalse;
-    return Qtrue;
+    if (!fptr-&gt;pid)
+        return Qnil;
+    return PIDT2NUM(fptr-&gt;pid);
 }</pre>
 </body>
 </html>

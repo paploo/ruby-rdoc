@@ -2,33 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>unscan (StringScanner)</title>
+  <title>matched (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Set the scan pointer to the previous position.  Only one previous position is
- * remembered, and it changes with each scanning operation.
- *
+ * Returns the last matched string.
+ * 
  *   s = StringScanner.new('test string')
- *   s.scan(/\w+/)        # =&gt; &quot;test&quot;
- *   s.unscan
- *   s.scan(/../)         # =&gt; &quot;te&quot;
- *   s.scan(/\d/)         # =&gt; nil
- *   s.unscan             # ScanError: unscan failed: previous match record not exist
+ *   s.match?(/\w+/)     # -&gt; 4
+ *   s.matched           # -&gt; &quot;test&quot;
  */
 static VALUE
-strscan_unscan(VALUE self)
+strscan_matched(VALUE self)
 {
     struct strscanner *p;
 
     GET_SCANNER(self, p);
-    if (! MATCHED_P(p))
-        rb_raise(ScanError, &quot;unscan failed: previous match record not exist&quot;);
-    p-&gt;curr = p-&gt;prev;
-    CLEAR_MATCH_STATUS(p);
-    return self;
+    if (! MATCHED_P(p)) return Qnil;
+    return extract_range(p, p-&gt;prev + p-&gt;regs.beg[0],
+                            p-&gt;prev + p-&gt;regs.end[0]);
 }</pre>
 </body>
 </html>

@@ -2,27 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>owned? (File::Stat)</title>
+  <title>chardev? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.owned?    =&gt; true or false
+ *     stat.chardev?    =&gt; true or false
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if the effective user id of the process is
- *  the same as the owner of &lt;i&gt;stat&lt;/i&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the file is a character device,
+ *  &lt;code&gt;false&lt;/code&gt; if it isn't or if the operating system doesn't
+ *  support this feature.
  *     
- *     File.stat(&quot;testfile&quot;).owned?      #=&gt; true
- *     File.stat(&quot;/etc/passwd&quot;).owned?   #=&gt; false
+ *     File.stat(&quot;/dev/tty&quot;).chardev?   #=&gt; true
  *     
  */
 
 static VALUE
-rb_stat_owned(VALUE obj)
+rb_stat_c(VALUE obj)
 {
-    if (get_stat(obj)-&gt;st_uid == geteuid()) return Qtrue;
+    if (S_ISCHR(get_stat(obj)-&gt;st_mode)) return Qtrue;
+
     return Qfalse;
 }</pre>
 </body>

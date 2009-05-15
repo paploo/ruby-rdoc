@@ -2,34 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>class_variable_get (Module)</title>
+  <title>class_exec (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.class_variable_get(symbol)    =&gt; obj
- *  
- *  Returns the value of the given class variable (or throws a
- *  &lt;code&gt;NameError&lt;/code&gt; exception). The &lt;code&gt;@@&lt;/code&gt; part of the
- *  variable name should be included for regular class variables
- *     
- *     class Fred
- *       @@foo = 99
+ *     mod.module_exec(arg...) {|var...| block }       =&gt; obj
+ *     mod.class_exec(arg...) {|var...| block }        =&gt; obj
+ *
+ *  Evaluates the given block in the context of the class/module.
+ *  The method defined in the block will belong to the receiver.
+ *
+ *     class Thing
  *     end
- *     Fred.class_variable_get(:@@foo)     #=&gt; 99
+ *     Thing.class_exec{
+ *       def hello() &quot;Hello there!&quot; end
+ *     }
+ *     puts Thing.new.hello()
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     Hello there!
  */
 
-static VALUE
-rb_mod_cvar_get(VALUE obj, VALUE iv)
+VALUE
+rb_mod_module_exec(int argc, VALUE *argv, VALUE mod)
 {
-    ID id = rb_to_id(iv);
-
-    if (!rb_is_class_id(id)) {
-        rb_name_error(id, &quot;`%s' is not allowed as a class variable name&quot;, rb_id2name(id));
-    }
-    return rb_cvar_get(obj, id);
+    return yield_under(mod, mod, rb_ary_new4(argc, argv));
 }</pre>
 </body>
 </html>

@@ -2,237 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>split (String)</title>
+  <title>reverse! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.split(pattern=$;, [limit])   =&gt; anArray
+ *     str.reverse!   =&gt; str
  *  
- *  Divides &lt;i&gt;str&lt;/i&gt; into substrings based on a delimiter, returning an array
- *  of these substrings.
- *     
- *  If &lt;i&gt;pattern&lt;/i&gt; is a &lt;code&gt;String&lt;/code&gt;, then its contents are used as
- *  the delimiter when splitting &lt;i&gt;str&lt;/i&gt;. If &lt;i&gt;pattern&lt;/i&gt; is a single
- *  space, &lt;i&gt;str&lt;/i&gt; is split on whitespace, with leading whitespace and runs
- *  of contiguous whitespace characters ignored.
- *     
- *  If &lt;i&gt;pattern&lt;/i&gt; is a &lt;code&gt;Regexp&lt;/code&gt;, &lt;i&gt;str&lt;/i&gt; is divided where the
- *  pattern matches. Whenever the pattern matches a zero-length string,
- *  &lt;i&gt;str&lt;/i&gt; is split into individual characters. If &lt;i&gt;pattern&lt;/i&gt; contains
- *  groups, the respective matches will be returned in the array as well.
- *     
- *  If &lt;i&gt;pattern&lt;/i&gt; is omitted, the value of &lt;code&gt;$;&lt;/code&gt; is used.  If
- *  &lt;code&gt;$;&lt;/code&gt; is &lt;code&gt;nil&lt;/code&gt; (which is the default), &lt;i&gt;str&lt;/i&gt; is
- *  split on whitespace as if ` ' were specified.
- *     
- *  If the &lt;i&gt;limit&lt;/i&gt; parameter is omitted, trailing null fields are
- *  suppressed. If &lt;i&gt;limit&lt;/i&gt; is a positive number, at most that number of
- *  fields will be returned (if &lt;i&gt;limit&lt;/i&gt; is &lt;code&gt;1&lt;/code&gt;, the entire
- *  string is returned as the only entry in an array). If negative, there is no
- *  limit to the number of fields returned, and trailing null fields are not
- *  suppressed.
- *     
- *     &quot; now's  the time&quot;.split        #=&gt; [&quot;now's&quot;, &quot;the&quot;, &quot;time&quot;]
- *     &quot; now's  the time&quot;.split(' ')   #=&gt; [&quot;now's&quot;, &quot;the&quot;, &quot;time&quot;]
- *     &quot; now's  the time&quot;.split(/ /)   #=&gt; [&quot;&quot;, &quot;now's&quot;, &quot;&quot;, &quot;the&quot;, &quot;time&quot;]
- *     &quot;1, 2.34,56, 7&quot;.split(%r{,\s*}) #=&gt; [&quot;1&quot;, &quot;2.34&quot;, &quot;56&quot;, &quot;7&quot;]
- *     &quot;hello&quot;.split(//)               #=&gt; [&quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot;]
- *     &quot;hello&quot;.split(//, 3)            #=&gt; [&quot;h&quot;, &quot;e&quot;, &quot;llo&quot;]
- *     &quot;hi mom&quot;.split(%r{\s*})         #=&gt; [&quot;h&quot;, &quot;i&quot;, &quot;m&quot;, &quot;o&quot;, &quot;m&quot;]
- *     
- *     &quot;mellow yellow&quot;.split(&quot;ello&quot;)   #=&gt; [&quot;m&quot;, &quot;w y&quot;, &quot;w&quot;]
- *     &quot;1,2,,3,4,,&quot;.split(',')         #=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;&quot;, &quot;3&quot;, &quot;4&quot;]
- *     &quot;1,2,,3,4,,&quot;.split(',', 4)      #=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;&quot;, &quot;3,4,,&quot;]
- *     &quot;1,2,,3,4,,&quot;.split(',', -4)     #=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;&quot;, &quot;3&quot;, &quot;4&quot;, &quot;&quot;, &quot;&quot;]
+ *  Reverses &lt;i&gt;str&lt;/i&gt; in place.
  */
 
 static VALUE
-rb_str_split_m(int argc, VALUE *argv, VALUE str)
+rb_str_reverse_bang(VALUE str)
 {
-    rb_encoding *enc;
-    VALUE spat;
-    VALUE limit;
-    enum {awk, string, regexp} split_type;
-    long beg, end, i = 0;
-    int lim = 0;
-    VALUE result, tmp;
+    if (RSTRING_LEN(str) &gt; 1) {
+        if (single_byte_optimizable(str)) {
+            char *s, *e, c;
 
-    if (rb_scan_args(argc, argv, &quot;02&quot;, &amp;spat, &amp;limit) == 2) {
-        lim = NUM2INT(limit);
-        if (lim &lt;= 0) limit = Qnil;
-        else if (lim == 1) {
-            if (RSTRING_LEN(str) == 0)
-                return rb_ary_new2(0);
-            return rb_ary_new3(1, str);
-        }
-        i = 1;
-    }
-
-    enc = STR_ENC_GET(str);
-    if (NIL_P(spat)) {
-        if (!NIL_P(rb_fs)) {
-            spat = rb_fs;
-            goto fs_set;
-        }
-        split_type = awk;
-    }
-    else {
-      fs_set:
-        if (TYPE(spat) == T_STRING) {
-            rb_encoding *enc2 = STR_ENC_GET(spat);
-
-            split_type = string;
-            if (RSTRING_LEN(spat) == 0) {
-                /* Special case - split into chars */
-                spat = rb_reg_regcomp(spat);
-                split_type = regexp;
-            }
-            else if (rb_enc_asciicompat(enc2) == 1) {
-                if (RSTRING_LEN(spat) == 1 &amp;&amp; RSTRING_PTR(spat)[0] == ' '){
-                    split_type = awk;
-                }
-            }
-            else {
-                int l;
-                if (rb_enc_ascget(RSTRING_PTR(spat), RSTRING_END(spat), &amp;l, enc2) == ' ' &amp;&amp;
-                    RSTRING_LEN(spat) == l) {
-                    split_type = awk;
-                }
+            str_modify_keep_cr(str);
+            s = RSTRING_PTR(str);
+            e = RSTRING_END(str) - 1;
+            while (s &lt; e) {
+                c = *s;
+                *s++ = *e;
+                *e-- = c;
             }
         }
         else {
-            spat = get_pat(spat, 1);
-            split_type = regexp;
+            rb_str_shared_replace(str, rb_str_reverse(str));
         }
     }
-
-    result = rb_ary_new();
-    beg = 0;
-    if (split_type == awk) {
-        char *ptr = RSTRING_PTR(str);
-        char *eptr = RSTRING_END(str);
-        char *bptr = ptr;
-        int skip = 1;
-        unsigned int c;
-
-        end = beg;
-        while (ptr &lt; eptr) {
-            c = rb_enc_codepoint(ptr, eptr, enc);
-            ptr += rb_enc_mbclen(ptr, eptr, enc);
-            if (skip) {
-                if (rb_enc_isspace(c, enc)) {
-                    beg = ptr - bptr;
-                }
-                else {
-                    end = ptr - bptr;
-                    skip = 0;
-                    if (!NIL_P(limit) &amp;&amp; lim &lt;= i) break;
-                }
-            }
-            else {
-                if (rb_enc_isspace(c, enc)) {
-                    rb_ary_push(result, rb_str_subseq(str, beg, end-beg));
-                    skip = 1;
-                    beg = ptr - bptr;
-                    if (!NIL_P(limit)) ++i;
-                }
-                else {
-                    end = ptr - bptr;
-                }
-            }
-        }
-    }
-    else if (split_type == string) {
-        char *ptr = RSTRING_PTR(str);
-        char *eptr = RSTRING_END(str);
-        char *sptr = RSTRING_PTR(spat);
-        int slen = RSTRING_LEN(spat);
-
-        if (is_broken_string(str)) {
-            rb_raise(rb_eArgError, &quot;invalid byte sequence in %s&quot;, rb_enc_name(STR_ENC_GET(str)));
-        }
-        if (is_broken_string(spat)) {
-            rb_raise(rb_eArgError, &quot;invalid byte sequence in %s&quot;, rb_enc_name(STR_ENC_GET(spat)));
-        }
-        enc = rb_enc_check(str, spat);
-        while (ptr &lt; eptr &amp;&amp;
-               (end = rb_memsearch(sptr, slen, ptr, eptr - ptr, enc)) &gt;= 0) {
-            /* Check we are at the start of a char */
-            char *t = rb_enc_right_char_head(ptr, ptr + end, eptr, enc);
-            if (t != ptr + end) {
-                ptr = t;
-                continue;
-            }
-            rb_ary_push(result, rb_str_subseq(str, ptr - RSTRING_PTR(str), end));
-            ptr += end + slen;
-            if (!NIL_P(limit) &amp;&amp; lim &lt;= ++i) break;
-        }
-        beg = ptr - RSTRING_PTR(str);
-    }
-    else {
-        long start = beg;
-        long idx;
-        int last_null = 0;
-        struct re_registers *regs;
-
-        while ((end = rb_reg_search(spat, str, start, 0)) &gt;= 0) {
-            regs = RMATCH_REGS(rb_backref_get());
-            if (start == end &amp;&amp; BEG(0) == END(0)) {
-                if (!RSTRING_PTR(str)) {
-                    rb_ary_push(result, rb_str_new(&quot;&quot;, 0));
-                    break;
-                }
-                else if (last_null == 1) {
-                    rb_ary_push(result, rb_str_subseq(str, beg,
-                                                      rb_enc_mbclen(RSTRING_PTR(str)+beg,
-                                                                    RSTRING_END(str),
-                                                                    enc)));
-                    beg = start;
-                }
-                else {
-                    if (RSTRING_PTR(str)+start == RSTRING_END(str))
-                        start++;
-                    else
-                        start += rb_enc_mbclen(RSTRING_PTR(str)+start,RSTRING_END(str),enc);
-                    last_null = 1;
-                    continue;
-                }
-            }
-            else {
-                rb_ary_push(result, rb_str_subseq(str, beg, end-beg));
-                beg = start = END(0);
-            }
-            last_null = 0;
-
-            for (idx=1; idx &lt; regs-&gt;num_regs; idx++) {
-                if (BEG(idx) == -1) continue;
-                if (BEG(idx) == END(idx))
-                    tmp = rb_str_new5(str, 0, 0);
-                else
-                    tmp = rb_str_subseq(str, BEG(idx), END(idx)-BEG(idx));
-                rb_ary_push(result, tmp);
-            }
-            if (!NIL_P(limit) &amp;&amp; lim &lt;= ++i) break;
-        }
-    }
-    if (RSTRING_LEN(str) &gt; 0 &amp;&amp; (!NIL_P(limit) || RSTRING_LEN(str) &gt; beg || lim &lt; 0)) {
-        if (RSTRING_LEN(str) == beg)
-            tmp = rb_str_new5(str, 0, 0);
-        else
-            tmp = rb_str_subseq(str, beg, RSTRING_LEN(str)-beg);
-        rb_ary_push(result, tmp);
-    }
-    if (NIL_P(limit) &amp;&amp; lim == 0) {
-        long len;
-        while ((len = RARRAY_LEN(result)) &gt; 0 &amp;&amp;
-               (tmp = RARRAY_PTR(result)[len-1], RSTRING_LEN(tmp) == 0))
-            rb_ary_pop(result);
-    }
-
-    return result;
+    return str;
 }</pre>
 </body>
 </html>

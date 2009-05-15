@@ -2,26 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>compact (Array)</title>
+  <title>shuffle (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.compact     -&gt;  an_array
- *
- *  Returns a copy of _self_ with all +nil+ elements removed.
- *
- *     [ &quot;a&quot;, nil, &quot;b&quot;, nil, &quot;c&quot;, nil ].compact
- *                       #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     array.shuffle -&gt; an_array
+ *  
+ *  Returns a new array with elements of this array shuffled.
+ *     
+ *     a = [ 1, 2, 3 ]           #=&gt; [1, 2, 3]
+ *     a.shuffle                 #=&gt; [2, 3, 1]
  */
 
 static VALUE
-rb_ary_compact(VALUE ary)
+rb_ary_shuffle(VALUE ary)
 {
     ary = rb_ary_dup(ary);
-    rb_ary_compact_bang(ary);
+    rb_ary_shuffle_bang(ary);
     return ary;
 }</pre>
 </body>

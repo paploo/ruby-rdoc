@@ -2,31 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>open_and_lock_file (PStore)</title>
+  <title>save_data_with_fast_strategy (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 374</span>
-374:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open_and_lock_file</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">read_only</span>)
-375:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">read_only</span>
-376:       <span class="ruby-keyword kw">begin</span>
-377:         <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-constant">RD_ACCESS</span>)
-378:         <span class="ruby-keyword kw">begin</span>
-379:           <span class="ruby-identifier">file</span>.<span class="ruby-identifier">flock</span>(<span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">LOCK_SH</span>)
-380:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">file</span>
-381:         <span class="ruby-keyword kw">rescue</span>
-382:           <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span>
-383:           <span class="ruby-identifier">raise</span>
-384:         <span class="ruby-keyword kw">end</span>
-385:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
-386:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
-387:       <span class="ruby-keyword kw">end</span>
-388:     <span class="ruby-keyword kw">else</span>
-389:       <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-constant">RDWR_ACCESS</span>)
-390:       <span class="ruby-identifier">file</span>.<span class="ruby-identifier">flock</span>(<span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">LOCK_EX</span>)
-391:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">file</span>
-392:     <span class="ruby-keyword kw">end</span>
-393:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 496</span>
+496:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_data_with_fast_strategy</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">file</span>)
+497:     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">rewind</span>
+498:     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">truncate</span>(<span class="ruby-value">0</span>)
+499:     <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">data</span>)
+500:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

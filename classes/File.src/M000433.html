@@ -2,38 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ftype (File)</title>
+  <title>chown (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.ftype(file_name)   =&gt; string
+ *     File.chown(owner_int, group_int, file_name,... ) -&gt; integer
  *  
- *  Identifies the type of the named file; the return string is one of
- *  ``&lt;code&gt;file&lt;/code&gt;'', ``&lt;code&gt;directory&lt;/code&gt;'',
- *  ``&lt;code&gt;characterSpecial&lt;/code&gt;'', ``&lt;code&gt;blockSpecial&lt;/code&gt;'',
- *  ``&lt;code&gt;fifo&lt;/code&gt;'', ``&lt;code&gt;link&lt;/code&gt;'',
- *  ``&lt;code&gt;socket&lt;/code&gt;'', or ``&lt;code&gt;unknown&lt;/code&gt;''.
+ *  Changes the owner and group of the named file(s) to the given
+ *  numeric owner and group id's. Only a process with superuser
+ *  privileges may change the owner of a file. The current owner of a
+ *  file may change the file's group to any group to which the owner
+ *  belongs. A &lt;code&gt;nil&lt;/code&gt; or -1 owner or group id is ignored.
+ *  Returns the number of files processed.
  *     
- *     File.ftype(&quot;testfile&quot;)            #=&gt; &quot;file&quot;
- *     File.ftype(&quot;/dev/tty&quot;)            #=&gt; &quot;characterSpecial&quot;
- *     File.ftype(&quot;/tmp/.X11-unix/X0&quot;)   #=&gt; &quot;socket&quot;
+ *     File.chown(nil, 100, &quot;testfile&quot;)
+ *     
  */
 
 static VALUE
-rb_file_s_ftype(VALUE klass, VALUE fname)
+rb_file_s_chown(int argc, VALUE *argv)
 {
-    struct stat st;
+    VALUE o, g, rest;
+    struct chown_args arg;
+    long n;
 
     rb_secure(2);
-    FilePathValue(fname);
-    if (lstat(StringValueCStr(fname), &amp;st) == -1) {
-        rb_sys_fail(RSTRING_PTR(fname));
+    rb_scan_args(argc, argv, &quot;2*&quot;, &amp;o, &amp;g, &amp;rest);
+    if (NIL_P(o)) {
+        arg.owner = -1;
+    }
+    else {
+        arg.owner = NUM2UIDT(o);
+    }
+    if (NIL_P(g)) {
+        arg.group = -1;
+    }
+    else {
+        arg.group = NUM2GIDT(g);
     }
 
-    return rb_file_ftype(&amp;st);
+    n = apply2files(chown_internal, rest, &amp;arg);
+    return LONG2FIX(n);
 }</pre>
 </body>
 </html>

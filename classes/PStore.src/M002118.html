@@ -2,14 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>in_transaction (PStore)</title>
+  <title>roots (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 142</span>
-142:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_transaction</span>
-143:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">PStore</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-value str">&quot;not in transaction&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@transaction</span>
-144:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 228</span>
+228:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">roots</span>
+229:     <span class="ruby-identifier">in_transaction</span>
+230:     <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">keys</span>
+231:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

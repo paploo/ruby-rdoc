@@ -2,26 +2,74 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>remainder (BigDecimal)</title>
+  <title>round (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns the remainder from dividing by the value.
+  <pre>/* call-seq:
+ * round(n,mode)
  *
- * If the values divided are of the same sign, the remainder is the same as
- * the modulus (see divmod).
+ * Round to the nearest 1 (by default), returning the result as a BigDecimal.
  *
- * Otherwise, the remainder is the modulus minus the value divided by.
+ * BigDecimal('3.14159').round -&gt; 3
+ *
+ * BigDecimal('8.7').round -&gt; 9
+ *
+ * If n is specified and positive, the fractional part of the result has no
+ * more than that many digits. 
+ *
+ * If n is specified and negative, at least that many digits to the left of the
+ * decimal point will be 0 in the result.
+ *
+ * BigDecimal('3.14159').round(3) -&gt; 3.142
+ *
+ * BigDecimal('13345.234').round(-2) -&gt; 13300.0
+ *
+ * The value of the optional mode argument can be used to determine how 
+ * rounding is performed; see BigDecimal.mode.
  */
 static VALUE
-BigDecimal_remainder(VALUE self, VALUE r) /* remainder */
+BigDecimal_round(int argc, VALUE *argv, VALUE self)
 {
-    VALUE  f;
-    Real  *d,*rv=0;
-    f = BigDecimal_divremain(self,r,&amp;d,&amp;rv);
-    if(f!=(VALUE)0) return f;
-    return ToValue(rv);
+    ENTER(5);
+    Real   *c, *a;
+    int    iLoc = 0;
+    U_LONG mx;
+    VALUE  vLoc;
+    VALUE  vRound;
+    U_LONG pl;
+
+    int    sw = VpGetRoundMode();
+
+    int na = rb_scan_args(argc,argv,&quot;02&quot;,&amp;vLoc,&amp;vRound);
+    switch(na) {
+    case 0:
+        iLoc = 0;
+        break;
+    case 1:
+        Check_Type(vLoc, T_FIXNUM);
+        iLoc = FIX2INT(vLoc);
+        break;
+    case 2:
+        Check_Type(vLoc, T_FIXNUM);
+        iLoc = FIX2INT(vLoc);
+        Check_Type(vRound, T_FIXNUM);
+        sw   = FIX2INT(vRound);
+        if(!VpIsRoundMode(sw)) {
+            rb_raise(rb_eTypeError, &quot;invalid rounding mode&quot;);
+            return Qnil;
+        }
+        break;
+    }
+
+    pl = VpSetPrecLimit(0);
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpSetPrecLimit(pl);
+    VpActiveRound(c,a,sw,iLoc);
+    return ToValue(c);
 }</pre>
 </body>
 </html>

@@ -2,43 +2,73 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>socket? (File)</title>
+  <title>identical? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   File.socket?(file_name)   =&gt;  true or false
+ *   File.identical?(file_1, file_2)   =&gt;  true or false
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a socket.
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named files are identical.
+ *
+ *     open(&quot;a&quot;, &quot;w&quot;) {}
+ *     p File.identical?(&quot;a&quot;, &quot;a&quot;)      #=&gt; true
+ *     p File.identical?(&quot;a&quot;, &quot;./a&quot;)    #=&gt; true
+ *     File.link(&quot;a&quot;, &quot;b&quot;)
+ *     p File.identical?(&quot;a&quot;, &quot;b&quot;)      #=&gt; true
+ *     File.symlink(&quot;a&quot;, &quot;c&quot;)
+ *     p File.identical?(&quot;a&quot;, &quot;c&quot;)      #=&gt; true
+ *     open(&quot;d&quot;, &quot;w&quot;) {}
+ *     p File.identical?(&quot;a&quot;, &quot;d&quot;)      #=&gt; false
  */
 
 static VALUE
-rb_file_socket_p(VALUE obj, VALUE fname)
+rb_file_identical_p(VALUE obj, VALUE fname1, VALUE fname2)
 {
-#ifndef S_ISSOCK
-#  ifdef _S_ISSOCK
-#    define S_ISSOCK(m) _S_ISSOCK(m)
-#  else
-#    ifdef _S_IFSOCK
-#      define S_ISSOCK(m) ((m &amp; S_IFMT) == _S_IFSOCK)
-#    else
-#      ifdef S_IFSOCK
-#        define S_ISSOCK(m) ((m &amp; S_IFMT) == S_IFSOCK)
-#      endif
-#    endif
-#  endif
+#ifndef DOSISH
+    struct stat st1, st2;
+
+    if (rb_stat(fname1, &amp;st1) &lt; 0) return Qfalse;
+    if (rb_stat(fname2, &amp;st2) &lt; 0) return Qfalse;
+    if (st1.st_dev != st2.st_dev) return Qfalse;
+    if (st1.st_ino != st2.st_ino) return Qfalse;
+#else
+#ifdef _WIN32
+    BY_HANDLE_FILE_INFORMATION st1, st2;
+    HANDLE f1 = 0, f2 = 0;
 #endif
 
-#ifdef S_ISSOCK
-    struct stat st;
+    rb_secure(2);
+#ifdef _WIN32
+    f1 = w32_io_info(&amp;fname1, &amp;st1);
+    if (f1 == INVALID_HANDLE_VALUE) return Qfalse;
+    f2 = w32_io_info(&amp;fname2, &amp;st2);
+    if (f1) CloseHandle(f1);
+    if (f2 == INVALID_HANDLE_VALUE) return Qfalse;
+    if (f2) CloseHandle(f2);
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (S_ISSOCK(st.st_mode)) return Qtrue;
-
+    if (st1.dwVolumeSerialNumber == st2.dwVolumeSerialNumber &amp;&amp;
+        st1.nFileIndexHigh == st2.nFileIndexHigh &amp;&amp;
+        st1.nFileIndexLow == st2.nFileIndexLow)
+        return Qtrue;
+    if (!f1 || !f2) return Qfalse;
+    if (rb_w32_iswin95()) return Qfalse;
+#else
+    FilePathValue(fname1);
+    fname1 = rb_str_new4(fname1);
+    FilePathValue(fname2);
+    if (access(RSTRING_PTR(fname1), 0)) return Qfalse;
+    if (access(RSTRING_PTR(fname2), 0)) return Qfalse;
 #endif
-    return Qfalse;
+    fname1 = rb_file_expand_path(fname1, Qnil);
+    fname2 = rb_file_expand_path(fname2, Qnil);
+    if (RSTRING_LEN(fname1) != RSTRING_LEN(fname2)) return Qfalse;
+    if (rb_memcicmp(RSTRING_PTR(fname1), RSTRING_PTR(fname2), RSTRING_LEN(fname1)))
+        return Qfalse;
+#endif
+    return Qtrue;
 }</pre>
 </body>
 </html>

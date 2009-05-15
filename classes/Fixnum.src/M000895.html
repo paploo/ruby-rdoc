@@ -2,43 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>divmod (Fixnum)</title>
+  <title>&lt;=&gt; (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     fix.divmod(numeric)    =&gt; array
+ *     fix &lt;=&gt; numeric    =&gt; -1, 0, +1
  *
- *  See &lt;code&gt;Numeric#divmod&lt;/code&gt;.
+ *  Comparison---Returns -1, 0, or +1 depending on whether &lt;i&gt;fix&lt;/i&gt; is
+ *  less than, equal to, or greater than &lt;i&gt;numeric&lt;/i&gt;. This is the
+ *  basis for the tests in &lt;code&gt;Comparable&lt;/code&gt;.
  */
+
 static VALUE
-fix_divmod(VALUE x, VALUE y)
+fix_cmp(VALUE x, VALUE y)
 {
+    if (x == y) return INT2FIX(0);
     if (FIXNUM_P(y)) {
-        long div, mod;
-
-        fixdivmod(FIX2LONG(x), FIX2LONG(y), &amp;div, &amp;mod);
-
-        return rb_assoc_new(LONG2NUM(div), LONG2NUM(mod));
+        if (FIX2LONG(x) &gt; FIX2LONG(y)) return INT2FIX(1);
+        return INT2FIX(-1);
     }
     switch (TYPE(y)) {
       case T_BIGNUM:
-        x = rb_int2big(FIX2LONG(x));
-        return rb_big_divmod(x, y);
+        return rb_big_cmp(rb_int2big(FIX2LONG(x)), y);
       case T_FLOAT:
-        {
-            double div, mod;
-            volatile VALUE a, b;
-
-            flodivmod((double)FIX2LONG(x), RFLOAT_VALUE(y), &amp;div, &amp;mod);
-            a = dbl2ival(div);
-            b = DBL2NUM(mod);
-            return rb_assoc_new(a, b);
-        }
+        return rb_dbl_cmp((double)FIX2LONG(x), RFLOAT_VALUE(y));
       default:
-        return rb_num_coerce_bin(x, y, rb_intern(&quot;divmod&quot;));
+        return rb_num_coerce_cmp(x, y, rb_intern(&quot;&lt;=&gt;&quot;));
     }
 }</pre>
 </body>

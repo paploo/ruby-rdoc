@@ -2,92 +2,71 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>squeeze! (String)</title>
+  <title>slice (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.squeeze!([other_str]*)   =&gt; str or nil
+ *     str[fixnum]                 =&gt; new_str or nil
+ *     str[fixnum, fixnum]         =&gt; new_str or nil
+ *     str[range]                  =&gt; new_str or nil
+ *     str[regexp]                 =&gt; new_str or nil
+ *     str[regexp, fixnum]         =&gt; new_str or nil
+ *     str[other_str]              =&gt; new_str or nil
+ *     str.slice(fixnum)           =&gt; new_str or nil
+ *     str.slice(fixnum, fixnum)   =&gt; new_str or nil
+ *     str.slice(range)            =&gt; new_str or nil
+ *     str.slice(regexp)           =&gt; new_str or nil
+ *     str.slice(regexp, fixnum)   =&gt; new_str or nil
+ *     str.slice(other_str)        =&gt; new_str or nil
  *  
- *  Squeezes &lt;i&gt;str&lt;/i&gt; in place, returning either &lt;i&gt;str&lt;/i&gt;, or
- *  &lt;code&gt;nil&lt;/code&gt; if no changes were made.
+ *  Element Reference---If passed a single &lt;code&gt;Fixnum&lt;/code&gt;, returns a
+ *  substring of one character at that position. If passed two &lt;code&gt;Fixnum&lt;/code&gt;
+ *  objects, returns a substring starting at the offset given by the first, and
+ *  a length given by the second. If given a range, a substring containing
+ *  characters at offsets given by the range is returned. In all three cases, if
+ *  an offset is negative, it is counted from the end of &lt;i&gt;str&lt;/i&gt;. Returns
+ *  &lt;code&gt;nil&lt;/code&gt; if the initial offset falls outside the string, the length
+ *  is negative, or the beginning of the range is greater than the end.
+ *     
+ *  If a &lt;code&gt;Regexp&lt;/code&gt; is supplied, the matching portion of &lt;i&gt;str&lt;/i&gt; is
+ *  returned. If a numeric parameter follows the regular expression, that
+ *  component of the &lt;code&gt;MatchData&lt;/code&gt; is returned instead. If a
+ *  &lt;code&gt;String&lt;/code&gt; is given, that string is returned if it occurs in
+ *  &lt;i&gt;str&lt;/i&gt;. In both cases, &lt;code&gt;nil&lt;/code&gt; is returned if there is no
+ *  match.
+ *     
+ *     a = &quot;hello there&quot;
+ *     a[1]                   #=&gt; &quot;e&quot;
+ *     a[1,3]                 #=&gt; &quot;ell&quot;
+ *     a[1..3]                #=&gt; &quot;ell&quot;
+ *     a[-3,2]                #=&gt; &quot;er&quot;
+ *     a[-4..-2]              #=&gt; &quot;her&quot;
+ *     a[12..-1]              #=&gt; nil
+ *     a[-2..-4]              #=&gt; &quot;&quot;
+ *     a[/[aeiou](.)\1/]      #=&gt; &quot;ell&quot;
+ *     a[/[aeiou](.)\1/, 0]   #=&gt; &quot;ell&quot;
+ *     a[/[aeiou](.)\1/, 1]   #=&gt; &quot;l&quot;
+ *     a[/[aeiou](.)\1/, 2]   #=&gt; nil
+ *     a[&quot;lo&quot;]                #=&gt; &quot;lo&quot;
+ *     a[&quot;bye&quot;]               #=&gt; nil
  */
 
 static VALUE
-rb_str_squeeze_bang(int argc, VALUE *argv, VALUE str)
+rb_str_aref_m(int argc, VALUE *argv, VALUE str)
 {
-    char squeez[256];
-    rb_encoding *enc = 0;
-    VALUE del = 0, nodel = 0;
-    char *s, *send, *t;
-    int save, modify = 0;
-    int i;
-    int ascompat, singlebyte = single_byte_optimizable(str);
-
-    if (argc == 0) {
-        enc = STR_ENC_GET(str);
-    }
-    else {
-        for (i=0; i&lt;argc; i++) {
-            VALUE s = argv[i];
-
-            StringValue(s);
-            enc = rb_enc_check(str, s);
-            if (singlebyte &amp;&amp; !single_byte_optimizable(s))
-                singlebyte = 0;
-            tr_setup_table(s, squeez, i==0, &amp;del, &amp;nodel, enc);
+    if (argc == 2) {
+        if (TYPE(argv[0]) == T_REGEXP) {
+            return rb_str_subpat(str, argv[0], NUM2INT(argv[1]));
         }
+        return rb_str_substr(str, NUM2LONG(argv[0]), NUM2LONG(argv[1]));
     }
-
-    str_modify_keep_cr(str);
-    s = t = RSTRING_PTR(str);
-    if (!s || RSTRING_LEN(str) == 0) return Qnil;
-    send = RSTRING_END(str);
-    save = -1;
-    ascompat = rb_enc_asciicompat(enc);
-
-    if (singlebyte) {
-        while (s &lt; send) {
-            unsigned int c = *(unsigned char*)s++;
-            if (c != save || (argc &gt; 0 &amp;&amp; !squeez[c])) {
-                *t++ = save = c;
-            }
-        }
-    } else {
-        while (s &lt; send) {
-            unsigned int c;
-            int clen;
-
-            if (ascompat &amp;&amp; (c = *(unsigned char*)s) &lt; 0x80) {
-                if (c != save || (argc &gt; 0 &amp;&amp; !squeez[c])) {
-                    *t++ = save = c;
-                }
-                s++;
-            }
-            else {
-                c = rb_enc_codepoint(s, send, enc);
-                clen = rb_enc_codelen(c, enc);
-
-                if (c != save || (argc &gt; 0 &amp;&amp; !tr_find(c, squeez, del, nodel))) {
-                    if (t != s) rb_enc_mbcput(c, t, enc);
-                    save = c;
-                    t += clen;
-                }
-                s += clen;
-            }
-        }
+    if (argc != 1) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
     }
-
-    *t = '\0';
-    if (t - RSTRING_PTR(str) != RSTRING_LEN(str)) {
-        STR_SET_LEN(str, t - RSTRING_PTR(str));
-        modify = 1;
-    }
-
-    if (modify) return str;
-    return Qnil;
+    return rb_str_aref(str, argv[0]);
 }</pre>
 </body>
 </html>

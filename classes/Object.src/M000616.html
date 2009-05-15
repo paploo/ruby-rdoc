@@ -2,50 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>methods (Object)</title>
+  <title>instance_variable_get (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.methods    =&gt; array
- *  
- *  Returns a list of the names of methods publicly accessible in
- *  &lt;i&gt;obj&lt;/i&gt;. This will include all the methods accessible in
- *  &lt;i&gt;obj&lt;/i&gt;'s ancestors.
+ *     obj.instance_variable_get(symbol)    =&gt; obj
+ *
+ *  Returns the value of the given instance variable, or nil if the
+ *  instance variable is not set. The &lt;code&gt;@&lt;/code&gt; part of the
+ *  variable name should be included for regular instance
+ *  variables. Throws a &lt;code&gt;NameError&lt;/code&gt; exception if the
+ *  supplied symbol is not valid as an instance variable name.
  *     
- *     class Klass
- *       def kMethod()
+ *     class Fred
+ *       def initialize(p1, p2)
+ *         @a, @b = p1, p2
  *       end
  *     end
- *     k = Klass.new
- *     k.methods[0..9]    #=&gt; [&quot;kMethod&quot;, &quot;freeze&quot;, &quot;nil?&quot;, &quot;is_a?&quot;, 
- *                        #    &quot;class&quot;, &quot;instance_variable_set&quot;,
- *                        #    &quot;methods&quot;, &quot;extend&quot;, &quot;__send__&quot;, &quot;instance_eval&quot;]
- *     k.methods.length   #=&gt; 42
+ *     fred = Fred.new('cat', 99)
+ *     fred.instance_variable_get(:@a)    #=&gt; &quot;cat&quot;
+ *     fred.instance_variable_get(&quot;@b&quot;)   #=&gt; 99
  */
 
 static VALUE
-rb_obj_methods(int argc, VALUE *argv, VALUE obj)
+rb_obj_ivar_get(VALUE obj, VALUE iv)
 {
-  retry:
-    if (argc == 0) {
-        VALUE args[1];
+    ID id = rb_to_id(iv);
 
-        args[0] = Qtrue;
-        return rb_class_instance_methods(1, args, CLASS_OF(obj));
+    if (!rb_is_instance_id(id)) {
+        rb_name_error(id, &quot;`%s' is not allowed as an instance variable name&quot;, rb_id2name(id));
     }
-    else {
-        VALUE recur;
-
-        rb_scan_args(argc, argv, &quot;1&quot;, &amp;recur);
-        if (RTEST(recur)) {
-            argc = 0;
-            goto retry;
-        }
-        return rb_obj_singleton_methods(argc, argv, obj);
-    }
+    return rb_ivar_get(obj, id);
 }</pre>
 </body>
 </html>

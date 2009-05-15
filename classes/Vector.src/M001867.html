@@ -2,20 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inner_product (Vector)</title>
+  <title>to_a (Vector)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1276</span>
-1276:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inner_product</span>(<span class="ruby-identifier">v</span>)
-1277:     <span class="ruby-constant">Vector</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">ErrDimensionMismatch</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span>
-1278:     
-1279:     <span class="ruby-identifier">p</span> = <span class="ruby-value">0</span>
-1280:     <span class="ruby-identifier">each2</span>(<span class="ruby-identifier">v</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">v1</span>, <span class="ruby-identifier">v2</span><span class="ruby-operator">|</span>
-1281:       <span class="ruby-identifier">p</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">v1</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">v2</span>
-1282:     }
-1283:     <span class="ruby-identifier">p</span>
-1284:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1333</span>
+1333:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_a</span>
+1334:     <span class="ruby-ivar">@elements</span>.<span class="ruby-identifier">dup</span>
+1335:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

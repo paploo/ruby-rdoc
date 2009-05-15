@@ -2,37 +2,56 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (Array)</title>
+  <title>fetch (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array == other_array   -&gt;   bool
- *
- *  Equality---Two arrays are equal if they contain the same number
- *  of elements and if each element is equal to (according to
- *  Object.==) the corresponding element in the other array.
- *
- *     [ &quot;a&quot;, &quot;c&quot; ]    == [ &quot;a&quot;, &quot;c&quot;, 7 ]     #=&gt; false
- *     [ &quot;a&quot;, &quot;c&quot;, 7 ] == [ &quot;a&quot;, &quot;c&quot;, 7 ]     #=&gt; true
- *     [ &quot;a&quot;, &quot;c&quot;, 7 ] == [ &quot;a&quot;, &quot;d&quot;, &quot;f&quot; ]   #=&gt; false
- *
+ *     array.fetch(index)                    -&gt; obj
+ *     array.fetch(index, default )          -&gt; obj
+ *     array.fetch(index) {|index| block }   -&gt; obj
+ *  
+ *  Tries to return the element at position &lt;i&gt;index&lt;/i&gt;. If the index
+ *  lies outside the array, the first form throws an
+ *  &lt;code&gt;IndexError&lt;/code&gt; exception, the second form returns
+ *  &lt;i&gt;default&lt;/i&gt;, and the third form returns the value of invoking
+ *  the block, passing in the index. Negative values of &lt;i&gt;index&lt;/i&gt;
+ *  count from the end of the array.
+ *     
+ *     a = [ 11, 22, 33, 44 ]
+ *     a.fetch(1)               #=&gt; 22
+ *     a.fetch(-1)              #=&gt; 44
+ *     a.fetch(4, 'cat')        #=&gt; &quot;cat&quot;
+ *     a.fetch(4) { |i| i*i }   #=&gt; 16
  */
 
 static VALUE
-rb_ary_equal(VALUE ary1, VALUE ary2)
+rb_ary_fetch(int argc, VALUE *argv, VALUE ary)
 {
-    if (ary1 == ary2) return Qtrue;
-    if (TYPE(ary2) != T_ARRAY) {
-        if (!rb_respond_to(ary2, rb_intern(&quot;to_ary&quot;))) {
-            return Qfalse;
-        }
-        return rb_equal(ary2, ary1);
+    VALUE pos, ifnone;
+    long block_given;
+    long idx;
+
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;pos, &amp;ifnone);
+    block_given = rb_block_given_p();
+    if (block_given &amp;&amp; argc == 2) {
+        rb_warn(&quot;block supersedes default value argument&quot;);
     }
-    if (RARRAY_LEN(ary1) != RARRAY_LEN(ary2)) return Qfalse;
-    return rb_exec_recursive(recursive_equal, ary1, ary2);
+    idx = NUM2LONG(pos);
+
+    if (idx &lt; 0) {
+        idx +=  RARRAY_LEN(ary);
+    }
+    if (idx &lt; 0 || RARRAY_LEN(ary) &lt;= idx) {
+        if (block_given) return rb_yield(pos);
+        if (argc == 1) {
+            rb_raise(rb_eIndexError, &quot;index %ld out of array&quot;, idx);
+        }
+        return ifnone;
+    }
+    return RARRAY_PTR(ary)[idx];
 }</pre>
 </body>
 </html>

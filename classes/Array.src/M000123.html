@@ -2,34 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>last (Array)</title>
+  <title>unshift (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.last     -&gt;  obj or nil
- *     array.last(n)  -&gt;  an_array
+ *     array.unshift(obj, ...)  -&gt; array
  *  
- *  Returns the last element(s) of &lt;i&gt;self&lt;/i&gt;. If the array is empty,
- *  the first form returns &lt;code&gt;nil&lt;/code&gt;.
+ *  Prepends objects to the front of &lt;i&gt;array&lt;/i&gt;.
+ *  other elements up one.
  *     
- *     a = [ &quot;w&quot;, &quot;x&quot;, &quot;y&quot;, &quot;z&quot; ]
- *     a.last     #=&gt; &quot;z&quot;
- *     a.last(2)  #=&gt; [&quot;y&quot;, &quot;z&quot;]
+ *     a = [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
+ *     a.unshift(&quot;a&quot;)   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ *     a.unshift(1, 2)  #=&gt; [ 1, 2, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
  */
 
-VALUE
-rb_ary_last(int argc, VALUE *argv, VALUE ary)
+static VALUE
+rb_ary_unshift_m(int argc, VALUE *argv, VALUE ary)
 {
-    if (argc == 0) {
-        if (RARRAY_LEN(ary) == 0) return Qnil;
-        return RARRAY_PTR(ary)[RARRAY_LEN(ary)-1];
+    long len;
+
+    if (argc == 0) return ary;
+    rb_ary_modify(ary);
+    if (ARY_CAPA(ary) &lt;= (len = RARRAY_LEN(ary)) + argc) {
+        ary_resize_capa(ary, len + argc + ARY_DEFAULT_SIZE);
     }
-    else {
-        return ary_take_first_or_last(argc, argv, ary, ARY_TAKE_LAST);
-    }
+
+    /* sliding items */
+    MEMMOVE(RARRAY_PTR(ary) + argc, RARRAY_PTR(ary), VALUE, len);
+    MEMCPY(RARRAY_PTR(ary), argv, VALUE, argc);
+    ARY_INCREASE_LEN(ary, argc);
+    
+    return ary;
 }</pre>
 </body>
 </html>

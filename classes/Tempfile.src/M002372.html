@@ -2,17 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>open (Tempfile)</title>
+  <title>size (Tempfile)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/tempfile.rb, line 97</span>
- 97:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open</span>
- 98:     <span class="ruby-ivar">@tmpfile</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tmpfile</span>
- 99:     <span class="ruby-ivar">@tmpfile</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@tmpname</span>, <span class="ruby-value str">'r+'</span>)
-100:     <span class="ruby-ivar">@data</span>[<span class="ruby-value">1</span>] = <span class="ruby-ivar">@tmpfile</span>
-101:     <span class="ruby-identifier">__setobj__</span>(<span class="ruby-ivar">@tmpfile</span>)
-102:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/tempfile.rb, line 156</span>
+156:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
+157:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tmpfile</span>
+158:       <span class="ruby-ivar">@tmpfile</span>.<span class="ruby-identifier">flush</span>
+159:       <span class="ruby-ivar">@tmpfile</span>.<span class="ruby-identifier">stat</span>.<span class="ruby-identifier">size</span>
+160:     <span class="ruby-keyword kw">else</span>
+161:       <span class="ruby-value">0</span>
+162:     <span class="ruby-keyword kw">end</span>
+163:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,14 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>scalar (Matrix)</title>
+  <title>init_rows (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 175</span>
-175:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">scalar</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">value</span>)
-176:     <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">diagonal</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span>).<span class="ruby-identifier">fill</span>(<span class="ruby-identifier">value</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">n</span>))
-177:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 247</span>
+247:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init_rows</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-identifier">copy</span>)
+248:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">copy</span>
+249:       <span class="ruby-ivar">@rows</span> = <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">dup</span>}
+250:     <span class="ruby-keyword kw">else</span>
+251:       <span class="ruby-ivar">@rows</span> = <span class="ruby-identifier">rows</span>
+252:     <span class="ruby-keyword kw">end</span>
+253:     <span class="ruby-keyword kw">self</span>
+254:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,15 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>first? (PrettyPrint)</title>
+  <title>group_sub (PrettyPrint)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/prettyprint.rb, line 119</span>
-119:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">first?</span>
-120:     <span class="ruby-identifier">warn</span> <span class="ruby-value str">&quot;PrettyPrint#first? is obsoleted at 1.8.2.&quot;</span>
-121:     <span class="ruby-identifier">current_group</span>.<span class="ruby-identifier">first?</span>
-122:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/prettyprint.rb, line 207</span>
+207:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group_sub</span>
+208:     <span class="ruby-identifier">group</span> = <span class="ruby-constant">Group</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@group_stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">depth</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+209:     <span class="ruby-ivar">@group_stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">group</span>
+210:     <span class="ruby-ivar">@group_queue</span>.<span class="ruby-identifier">enq</span> <span class="ruby-identifier">group</span>
+211:     <span class="ruby-keyword kw">begin</span>
+212:       <span class="ruby-keyword kw">yield</span>
+213:     <span class="ruby-keyword kw">ensure</span>
+214:       <span class="ruby-ivar">@group_stack</span>.<span class="ruby-identifier">pop</span>
+215:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">group</span>.<span class="ruby-identifier">breakables</span>.<span class="ruby-identifier">empty?</span>
+216:         <span class="ruby-ivar">@group_queue</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">group</span>
+217:       <span class="ruby-keyword kw">end</span>
+218:     <span class="ruby-keyword kw">end</span>
+219:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

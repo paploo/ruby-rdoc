@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>foreach (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     IO.foreach(name, sep=$/ [, open_args]) {|line| block }     =&gt; nil
+ *     IO.foreach(name, limit [, open_args]) {|line| block }      =&gt; nil
+ *     IO.foreach(name, sep, limit [, open_args]) {|line| block } =&gt; nil
+ *
+ *  Executes the block for every line in the named I/O port, where lines
+ *  are separated by &lt;em&gt;sep&lt;/em&gt;.
+ *
+ *     IO.foreach(&quot;testfile&quot;) {|x| print &quot;GOT &quot;, x }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     GOT This is line one
+ *     GOT This is line two
+ *     GOT This is line three
+ *     GOT And so on...
+ *
+ *  If the last argument is a hash, it's the keyword argument to open.
+ *  See &lt;code&gt;IO.read&lt;/code&gt; for detail.
+ *
+ */
+
+static VALUE
+rb_io_s_foreach(int argc, VALUE *argv, VALUE self)
+{
+    struct foreach_arg arg;
+
+    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, NULL, NULL);
+    RETURN_ENUMERATOR(self, argc, argv);
+    open_key_args(argc, argv, &amp;arg);
+    if (NIL_P(arg.io)) return Qnil;
+    return rb_ensure(io_s_foreach, (VALUE)&amp;arg, rb_io_close, arg.io);
+}</pre>
+</body>
+</html>

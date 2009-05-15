@@ -2,29 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>class (Object)</title>
+  <title>untrust (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.class    =&gt; class
+ *     obj.untrust -&gt; obj
  *  
- *  Returns the class of &lt;i&gt;obj&lt;/i&gt;, now preferred over
- *  &lt;code&gt;Object#type&lt;/code&gt;, as an object's type in Ruby is only
- *  loosely tied to that object's class. This method must always be
- *  called with an explicit receiver, as &lt;code&gt;class&lt;/code&gt; is also a
- *  reserved word in Ruby.
- *     
- *     1.class      #=&gt; Fixnum
- *     self.class   #=&gt; Object
+ *  Marks &lt;i&gt;obj&lt;/i&gt; as untrusted.
  */
 
 VALUE
-rb_obj_class(VALUE obj)
+rb_obj_untrust(VALUE obj)
 {
-    return rb_class_real(CLASS_OF(obj));
+    rb_secure(4);
+    if (!OBJ_UNTRUSTED(obj)) {
+        if (OBJ_FROZEN(obj)) {
+            rb_error_frozen(&quot;object&quot;);
+        }
+        OBJ_UNTRUST(obj);
+    }
+    return obj;
 }</pre>
 </body>
 </html>

@@ -2,16 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>by_col! (CSV::Table)</title>
+  <title>[] (CSV::Table)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/csv.rb, line 565</span>
-565:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">by_col!</span>
-566:       <span class="ruby-ivar">@mode</span> = <span class="ruby-identifier">:col</span>
-567:       
-568:       <span class="ruby-keyword kw">self</span>
-569:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/csv.rb, line 643</span>
+643:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">index_or_header</span>)
+644:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:row</span> <span class="ruby-keyword kw">or</span>  <span class="ruby-comment cmt"># by index</span>
+645:          (<span class="ruby-ivar">@mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:col_or_row</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">index_or_header</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Integer</span>)
+646:         <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">index_or_header</span>]
+647:       <span class="ruby-keyword kw">else</span>                 <span class="ruby-comment cmt"># by header</span>
+648:         <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">row</span>[<span class="ruby-identifier">index_or_header</span>] }
+649:       <span class="ruby-keyword kw">end</span>
+650:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

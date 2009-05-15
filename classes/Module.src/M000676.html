@@ -2,27 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt; (Module)</title>
+  <title>include? (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   mod &lt; other   =&gt;  true, false, or nil
- *
- * Returns true if &lt;i&gt;mod&lt;/i&gt; is a subclass of &lt;i&gt;other&lt;/i&gt;. Returns 
- * &lt;code&gt;nil&lt;/code&gt; if there's no relationship between the two. 
- * (Think of the relationship in terms of the class definition: 
- * &quot;class A&lt;B&quot; implies &quot;A&lt;B&quot;).
- *
+ *  call-seq:
+ *     mod.include?(module)    =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;module&lt;/i&gt; is included in
+ *  &lt;i&gt;mod&lt;/i&gt; or one of &lt;i&gt;mod&lt;/i&gt;'s ancestors.
+ *     
+ *     module A
+ *     end
+ *     class B
+ *       include A
+ *     end
+ *     class C &lt; B
+ *     end
+ *     B.include?(A)   #=&gt; true
+ *     C.include?(A)   #=&gt; true
+ *     A.include?(A)   #=&gt; false
  */
 
-static VALUE
-rb_mod_lt(VALUE mod, VALUE arg)
+VALUE
+rb_mod_include_p(VALUE mod, VALUE mod2)
 {
-    if (mod == arg) return Qfalse;
-    return rb_class_inherited_p(mod, arg);
+    VALUE p;
+
+    Check_Type(mod2, T_MODULE);
+    for (p = RCLASS_SUPER(mod); p; p = RCLASS_SUPER(p)) {
+	if (BUILTIN_TYPE(p) == T_ICLASS) {
+	    if (RBASIC(p)-&gt;klass == mod2) return Qtrue;
+	}
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

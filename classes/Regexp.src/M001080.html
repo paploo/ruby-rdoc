@@ -2,39 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>~ (Regexp)</title>
+  <title>options (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ~ rxp   =&gt; integer or nil
+ *     rxp.options   =&gt; fixnum
  *
- *  Match---Matches &lt;i&gt;rxp&lt;/i&gt; against the contents of &lt;code&gt;$_&lt;/code&gt;.
- *  Equivalent to &lt;code&gt;&lt;i&gt;rxp&lt;/i&gt; =~ $_&lt;/code&gt;.
+ *  Returns the set of bits corresponding to the options used when creating this
+ *  Regexp (see &lt;code&gt;Regexp::new&lt;/code&gt; for details. Note that additional bits
+ *  may be set in the returned options: these are used internally by the regular
+ *  expression code. These extra bits are ignored if the options are passed to
+ *  &lt;code&gt;Regexp::new&lt;/code&gt;.
  *
- *     $_ = &quot;input data&quot;
- *     ~ /at/   #=&gt; 7
+ *     Regexp::IGNORECASE                  #=&gt; 1
+ *     Regexp::EXTENDED                    #=&gt; 2
+ *     Regexp::MULTILINE                   #=&gt; 4
+ *
+ *     /cat/.options                       #=&gt; 0
+ *     /cat/ix.options                     #=&gt; 3
+ *     Regexp.new('cat', true).options     #=&gt; 1
+ *     /\xa1\xa2/e.options                 #=&gt; 16
+ *
+ *     r = /cat/ix
+ *     Regexp.new(r.source, r.options)     #=&gt; /cat/ix
  */
 
-VALUE
-rb_reg_match2(VALUE re)
+static VALUE
+rb_reg_options_m(VALUE re)
 {
-    long start;
-    VALUE line = rb_lastline_get();
-
-    if (TYPE(line) != T_STRING) {
-        rb_backref_set(Qnil);
-        return Qnil;
-    }
-
-    start = rb_reg_search(re, line, 0, 0);
-    if (start &lt; 0) {
-        return Qnil;
-    }
-    start = rb_str_sublen(line, start);
-    return LONG2FIX(start);
+    int options = rb_reg_options(re);
+    return INT2NUM(options);
 }</pre>
 </body>
 </html>

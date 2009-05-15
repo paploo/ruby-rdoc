@@ -2,42 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lstat (File)</title>
+  <title>truncate (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     file.lstat   =&gt;  stat
+ *     file.truncate(integer)    =&gt; 0
  *  
- *  Same as &lt;code&gt;IO#stat&lt;/code&gt;, but does not follow the last symbolic
- *  link. Instead, reports on the link itself.
+ *  Truncates &lt;i&gt;file&lt;/i&gt; to at most &lt;i&gt;integer&lt;/i&gt; bytes. The file
+ *  must be opened for writing. Not available on all platforms.
  *     
- *     File.symlink(&quot;testfile&quot;, &quot;link2test&quot;)   #=&gt; 0
- *     File.stat(&quot;testfile&quot;).size              #=&gt; 66
- *     f = File.new(&quot;link2test&quot;)
- *     f.lstat.size                            #=&gt; 8
- *     f.stat.size                             #=&gt; 66
+ *     f = File.new(&quot;out&quot;, &quot;w&quot;)
+ *     f.syswrite(&quot;1234567890&quot;)   #=&gt; 10
+ *     f.truncate(5)              #=&gt; 0
+ *     f.close()                  #=&gt; nil
+ *     File.size(&quot;out&quot;)           #=&gt; 5
  */
 
 static VALUE
-rb_file_lstat(VALUE obj)
+rb_file_truncate(VALUE obj, VALUE len)
 {
-#ifdef HAVE_LSTAT
     rb_io_t *fptr;
-    struct stat st;
+    off_t pos;
 
     rb_secure(2);
+    pos = NUM2OFFT(len);
     GetOpenFile(obj, fptr);
-    if (NIL_P(fptr-&gt;pathv)) return Qnil;
-    if (lstat(RSTRING_PTR(fptr-&gt;pathv), &amp;st) == -1) {
-        rb_sys_fail_path(fptr-&gt;pathv);
+    if (!(fptr-&gt;mode &amp; FMODE_WRITABLE)) {
+        rb_raise(rb_eIOError, &quot;not opened for writing&quot;);
     }
-    return stat_new(&amp;st);
+    rb_io_flush(obj);
+#ifdef HAVE_FTRUNCATE
+    if (ftruncate(fptr-&gt;fd, pos) &lt; 0)
+        rb_sys_fail_path(fptr-&gt;pathv);
 #else
-    return rb_io_stat(obj);
+# ifdef HAVE_CHSIZE
+    if (chsize(fptr-&gt;fd, pos) &lt; 0)
+        rb_sys_fail(fptr-&gt;pathv);
+# else
+    rb_notimplement();
+# endif
 #endif
+    return INT2FIX(0);
 }</pre>
 </body>
 </html>

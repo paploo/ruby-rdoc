@@ -2,34 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>+ (Bignum)</title>
+  <title>modulo (Bignum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     big + other  =&gt; Numeric
+ *     big % other         =&gt; Numeric
+ *     big.modulo(other)   =&gt; Numeric
  *
- *  Adds big and other, returning the result.
+ *  Returns big modulo other. See Numeric.divmod for more
+ *  information.
  */
 
 VALUE
-rb_big_plus(VALUE x, VALUE y)
+rb_big_modulo(VALUE x, VALUE y)
 {
+    VALUE z;
+
     switch (TYPE(y)) {
       case T_FIXNUM:
         y = rb_int2big(FIX2LONG(y));
-        /* fall through */
-      case T_BIGNUM:
-        return bignorm(bigadd(x, y, 1));
+        break;
 
-      case T_FLOAT:
-        return DBL2NUM(rb_big2dbl(x) + RFLOAT_VALUE(y));
+      case T_BIGNUM:
+        break;
 
       default:
-        return rb_num_coerce_bin(x, y, '+');
+        return rb_num_coerce_bin(x, y, '%');
     }
+    bigdivmod(x, y, 0, &amp;z);
+
+    return bignorm(z);
 }</pre>
 </body>
 </html>

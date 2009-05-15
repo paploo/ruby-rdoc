@@ -2,43 +2,52 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>seek (IO)</title>
+  <title>close_on_exec? (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.seek(amount, whence=SEEK_SET) -&gt; 0
+ *     ios.close_on_exec?   =&gt; true or false
  *
- *  Seeks to a given offset &lt;i&gt;anInteger&lt;/i&gt; in the stream according to
- *  the value of &lt;i&gt;whence&lt;/i&gt;:
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; will be closed on exec.
  *
- *    IO::SEEK_CUR  | Seeks to _amount_ plus current position
- *    --------------+----------------------------------------------------
- *    IO::SEEK_END  | Seeks to _amount_ plus end of stream (you probably
- *                  | want a negative value for _amount_)
- *    --------------+----------------------------------------------------
- *    IO::SEEK_SET  | Seeks to the absolute location given by _amount_
- *
- *  Example:
- *
- *     f = File.new(&quot;testfile&quot;)
- *     f.seek(-13, IO::SEEK_END)   #=&gt; 0
- *     f.readline                  #=&gt; &quot;And so on...\n&quot;
+ *     f = open(&quot;/dev/null&quot;)
+ *     f.close_on_exec?                 #=&gt; false
+ *     f.close_on_exec = true
+ *     f.close_on_exec?                 #=&gt; true
+ *     f.close_on_exec = false
+ *     f.close_on_exec?                 #=&gt; false
  */
 
 static VALUE
-rb_io_seek_m(int argc, VALUE *argv, VALUE io)
+rb_io_close_on_exec_p(VALUE io)
 {
-    VALUE offset, ptrname;
-    int whence = SEEK_SET;
+#if defined(HAVE_FCNTL) &amp;&amp; defined(F_GETFD) &amp;&amp; defined(F_SETFD) &amp;&amp; defined(FD_CLOEXEC)
+    rb_io_t *fptr;
+    VALUE write_io;
+    int fd, ret;
 
-    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;offset, &amp;ptrname) == 2) {
-        whence = NUM2INT(ptrname);
+    write_io = GetWriteIO(io);
+    if (io != write_io) {
+        GetOpenFile(write_io, fptr);
+        if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
+            if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
+            if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
+        }
     }
 
-    return rb_io_seek(io, offset, whence);
+    GetOpenFile(io, fptr);
+    if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
+        if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
+        if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
+    }
+    return Qtrue;
+#else
+    rb_notimplement();
+    return Qnil;                /* not reached */
+#endif
 }</pre>
 </body>
 </html>

@@ -2,54 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Time)</title>
+  <title>getutc (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Time.new -&gt; time
+ *     time.getgm  =&gt; new_time
+ *     time.getutc =&gt; new_time
  *  
- *  Returns a &lt;code&gt;Time&lt;/code&gt; object initialized to the current system
- *  time. &lt;b&gt;Note:&lt;/b&gt; The object created will be created using the
- *  resolution available on your system clock, and so may include
- *  fractional seconds.
+ *  Returns a new &lt;code&gt;new_time&lt;/code&gt; object representing &lt;i&gt;time&lt;/i&gt; in
+ *  UTC.
  *     
- *     a = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
- *     b = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
- *     a == b            #=&gt; false
- *     &quot;%.6f&quot; % a.to_f   #=&gt; &quot;1195480202.282373&quot;
- *     &quot;%.6f&quot; % b.to_f   #=&gt; &quot;1195480202.283415&quot;
- *     
+ *     t = Time.local(2000,1,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 -0600
+ *     t.gmt?                             #=&gt; false
+ *     y = t.getgm                        #=&gt; 2000-01-02 02:15:01 UTC
+ *     y.gmt?                             #=&gt; true
+ *     t == y                             #=&gt; true
  */
 
 static VALUE
-time_init(VALUE time)
+time_getgmtime(VALUE time)
 {
-    struct time_object *tobj;
-
-    time_modify(time);
-    GetTimeval(time, tobj);
-    tobj-&gt;tm_got=0;
-    tobj-&gt;ts.tv_sec = 0;
-    tobj-&gt;ts.tv_nsec = 0;
-#ifdef HAVE_CLOCK_GETTIME
-    if (clock_gettime(CLOCK_REALTIME, &amp;tobj-&gt;ts) == -1) {
-        rb_sys_fail(&quot;clock_gettime&quot;);
-    }
-#else
-    {
-        struct timeval tv; 
-        if (gettimeofday(&amp;tv, 0) &lt; 0) {
-            rb_sys_fail(&quot;gettimeofday&quot;);
-        }
-        tobj-&gt;ts.tv_sec = tv.tv_sec;
-        tobj-&gt;ts.tv_nsec = tv.tv_usec * 1000;
-    }
-#endif
-
-    return time;
+    return time_gmtime(time_dup(time));
 }</pre>
 </body>
 </html>

@@ -2,21 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>append (Shell::CommandProcessor)</title>
+  <title>undef_system_command (Shell::CommandProcessor)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 318</span>
-318:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append</span>(<span class="ruby-identifier">to</span>, <span class="ruby-identifier">filter</span>)
-319:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">to</span>
-320:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
-321:         <span class="ruby-constant">AppendFile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@shell</span>, <span class="ruby-identifier">to</span>, <span class="ruby-identifier">filter</span>)
-322:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">IO</span>
-323:         <span class="ruby-constant">AppendIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@shell</span>, <span class="ruby-identifier">to</span>, <span class="ruby-identifier">filter</span>)
-324:       <span class="ruby-keyword kw">else</span>
-325:         <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CantApplyMethod</span>, <span class="ruby-value str">&quot;append&quot;</span>, <span class="ruby-identifier">to</span>.<span class="ruby-identifier">class</span>
-326:       <span class="ruby-keyword kw">end</span>
-327:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 393</span>
+393:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">undef_system_command</span>(<span class="ruby-identifier">command</span>)
+394:       <span class="ruby-identifier">command</span> = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+395:       <span class="ruby-identifier">remove_method</span>(<span class="ruby-identifier">command</span>)
+396:       <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">module_eval</span>{<span class="ruby-identifier">remove_method</span>(<span class="ruby-identifier">command</span>)}
+397:       <span class="ruby-constant">Filter</span>.<span class="ruby-identifier">module_eval</span>{<span class="ruby-identifier">remove_method</span>(<span class="ruby-identifier">command</span>)}
+398:       <span class="ruby-keyword kw">self</span>
+399:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

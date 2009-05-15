@@ -2,74 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>extname (File)</title>
+  <title>mtime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.extname(path) -&gt; string
+ *     file.mtime -&gt; time
  *  
- *  Returns the extension (the portion of file name in &lt;i&gt;path&lt;/i&gt;
- *  after the period).
+ *  Returns the modification time for &lt;i&gt;file&lt;/i&gt;.
  *     
- *     File.extname(&quot;test.rb&quot;)         #=&gt; &quot;.rb&quot;
- *     File.extname(&quot;a/b/d/test.rb&quot;)   #=&gt; &quot;.rb&quot;
- *     File.extname(&quot;test&quot;)            #=&gt; &quot;&quot;
- *     File.extname(&quot;.profile&quot;)        #=&gt; &quot;&quot;
+ *     File.new(&quot;testfile&quot;).mtime   #=&gt; Wed Apr 09 08:53:14 CDT 2003
  *     
  */
 
 static VALUE
-rb_file_s_extname(VALUE klass, VALUE fname)
+rb_file_mtime(VALUE obj)
 {
-    const char *name, *p, *e;
-    VALUE extname;
+    rb_io_t *fptr;
+    struct stat st;
 
-    FilePathStringValue(fname);
-    name = StringValueCStr(fname);
-    p = strrdirsep(name);       /* get the last path component */
-    if (!p)
-        p = name;
-    else
-        name = ++p;
-
-    e = 0;
-    while (*p &amp;&amp; *p == '.') p++;
-    while (*p) {
-        if (*p == '.' || istrailinggabage(*p)) {
-#if USE_NTFS
-            const char *last = p++, *dot = last;
-            while (istrailinggabage(*p)) {
-                if (*p == '.') dot = p;
-                p++;
-            }
-            if (!*p || *p == ':') {
-                p = last;
-                break;
-            }
-            if (*last == '.') e = dot;
-            continue;
-#else
-            e = p;       /* get the last dot of the last component */
-#endif
-        }
-#if USE_NTFS
-        else if (*p == ':') {
-            break;
-        }
-#endif
-        else if (isdirsep(*p))
-            break;
-        p = CharNext(p);
+    GetOpenFile(obj, fptr);
+    if (fstat(fptr-&gt;fd, &amp;st) == -1) {
+        rb_sys_fail_path(fptr-&gt;pathv);
     }
-    if (!e || e == name || e+1 == p)    /* no dot, or the only dot is first or end? */
-        return rb_str_new(0, 0);
-    extname = rb_str_new(e, p - e);     /* keep the dot, too! */
-    rb_enc_copy(extname, fname);
-    OBJ_INFECT(extname, fname);
-    return extname;
+    return stat_mtime(&amp;st);
 }</pre>
 </body>
 </html>

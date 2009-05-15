@@ -2,33 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>name_list (Encoding)</title>
+  <title>default_internal (Encoding)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   Encoding.name_list =&gt; [&quot;enc1&quot;, &quot;enc2&quot;, ...]
+ *   Encoding.default_internal =&gt; enc
  *
- * Returns the list of available encoding names.
+ * Returns default internal encoding.
  *
- *   Encoding.name_list
- *   =&gt; [&quot;US-ASCII&quot;, &quot;ASCII-8BIT&quot;, &quot;UTF-8&quot;,
- *       &quot;ISO-8859-1&quot;, &quot;Shift_JIS&quot;, &quot;EUC-JP&quot;,
- *       &quot;Windows-31J&quot;,
- *       &quot;BINARY&quot;, &quot;CP932&quot;, &quot;eucJP&quot;]
- *
- * This list doesn't include dummy encodings.
- *
+ * It is initialized by the source internal_encoding or -E option.
  */
-
 static VALUE
-rb_enc_name_list(VALUE klass)
+get_default_internal(VALUE klass)
 {
-    VALUE ary = rb_ary_new2(enc_table.names-&gt;num_entries);
-    st_foreach(enc_table.names, rb_enc_name_list_i, (st_data_t)ary);
-    return ary;
+    return rb_enc_default_internal();
 }</pre>
 </body>
 </html>

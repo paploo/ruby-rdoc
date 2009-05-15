@@ -2,48 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_s (Float)</title>
+  <title>/ (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     flt.to_s    =&gt; string
+ * call-seq:
+ *   float / other   =&gt; float
  *
- *  Returns a string containing a representation of self. As well as a
- *  fixed or exponential form of the number, the call may return
- *  ``&lt;code&gt;NaN&lt;/code&gt;'', ``&lt;code&gt;Infinity&lt;/code&gt;'', and
- *  ``&lt;code&gt;-Infinity&lt;/code&gt;''.
+ * Returns a new float which is the result of dividing
+ * &lt;code&gt;float&lt;/code&gt; by &lt;code&gt;other&lt;/code&gt;.
  */
 
 static VALUE
-flo_to_s(VALUE flt)
+flo_div(VALUE x, VALUE y)
 {
-    char buf[32];
-    double value = RFLOAT_VALUE(flt);
-    char *p, *e;
+    long f_y;
+    double d;
 
-    if (isinf(value))
-        return rb_usascii_str_new2(value &lt; 0 ? &quot;-Infinity&quot; : &quot;Infinity&quot;);
-    else if(isnan(value))
-        return rb_usascii_str_new2(&quot;NaN&quot;);
-
-    snprintf(buf, sizeof(buf), &quot;%#.15g&quot;, value); /* ensure to print decimal point */
-    if (!(e = strchr(buf, 'e'))) {
-        e = buf + strlen(buf);
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        f_y = FIX2LONG(y);
+        return DBL2NUM(RFLOAT_VALUE(x) / (double)f_y);
+      case T_BIGNUM:
+        d = rb_big2dbl(y);
+        return DBL2NUM(RFLOAT_VALUE(x) / d);
+      case T_FLOAT:
+        return DBL2NUM(RFLOAT_VALUE(x) / RFLOAT_VALUE(y));
+      default:
+        return rb_num_coerce_bin(x, y, '/');
     }
-    if (!ISDIGIT(e[-1])) { /* reformat if ended with decimal point (ex 111111111111111.) */
-        snprintf(buf, sizeof(buf), &quot;%#.14e&quot;, value);
-        if (!(e = strchr(buf, 'e'))) {
-            e = buf + strlen(buf);
-        }
-    }
-    p = e;
-    while (p[-1]=='0' &amp;&amp; ISDIGIT(p[-2]))
-        p--;
-    memmove(p, e, strlen(e)+1);
-    return rb_usascii_str_new2(buf);
 }</pre>
 </body>
 </html>

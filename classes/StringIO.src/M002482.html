@@ -2,19 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tty? (StringIO)</title>
+  <title>external_encoding (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns +false+.  Just for compatibility to IO.
+ *  call-seq:
+ *     strio.external_encoding   =&gt; encoding
+ *
+ *  Returns the Encoding object that represents the encoding of the file.
+ *  If strio is write mode and no encoding is specified, returns &lt;code&gt;nil&lt;/code&gt;.
  */
+
 static VALUE
-strio_false(VALUE self)
+strio_external_encoding(VALUE self)
 {
-    StringIO(self);
-    return Qfalse;
+    return rb_enc_from_encoding(rb_enc_get(StringIO(self)-&gt;string));
 }</pre>
 </body>
 </html>

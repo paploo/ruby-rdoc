@@ -2,34 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pos (IO)</title>
+  <title>close (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.pos     =&gt; integer
- *     ios.tell    =&gt; integer
+ *     ios.close   =&gt; nil
  *
- *  Returns the current offset (in bytes) of &lt;em&gt;ios&lt;/em&gt;.
+ *  Closes &lt;em&gt;ios&lt;/em&gt; and flushes any pending writes to the operating
+ *  system. The stream is unavailable for any further data operations;
+ *  an &lt;code&gt;IOError&lt;/code&gt; is raised if such an attempt is made. I/O
+ *  streams are automatically closed when they are claimed by the
+ *  garbage collector.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     f.pos    #=&gt; 0
- *     f.gets   #=&gt; &quot;This is line one\n&quot;
- *     f.pos    #=&gt; 17
+ *  If &lt;em&gt;ios&lt;/em&gt; is opened by &lt;code&gt;IO.popen&lt;/code&gt;,
+ *  &lt;code&gt;close&lt;/code&gt; sets &lt;code&gt;$?&lt;/code&gt;.
  */
 
 static VALUE
-rb_io_tell(VALUE io)
+rb_io_close_m(VALUE io)
 {
-    rb_io_t *fptr;
-    off_t pos;
-
-    GetOpenFile(io, fptr);
-    pos = io_tell(fptr);
-    if (pos &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
-    return OFFT2NUM(pos);
+    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(io)) {
+        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
+    }
+    rb_io_check_closed(RFILE(io)-&gt;fptr);
+    rb_io_close(io);
+    return Qnil;
 }</pre>
 </body>
 </html>

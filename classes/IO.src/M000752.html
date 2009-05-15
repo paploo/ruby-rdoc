@@ -2,22 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_io (IO)</title>
+  <title>readlines (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.to_io -&gt; ios
+ *     ios.readlines(sep=$/)     =&gt; array
+ *     ios.readlines(limit)      =&gt; array
+ *     ios.readlines(sep, limit) =&gt; array
  *
- *  Returns &lt;em&gt;ios&lt;/em&gt;.
+ *  Reads all of the lines in &lt;em&gt;ios&lt;/em&gt;, and returns them in
+ *  &lt;i&gt;anArray&lt;/i&gt;. Lines are separated by the optional &lt;i&gt;sep&lt;/i&gt;. If
+ *  &lt;i&gt;sep&lt;/i&gt; is &lt;code&gt;nil&lt;/code&gt;, the rest of the stream is returned
+ *  as a single record.  If the first argument is an integer, or
+ *  optional second argument is given, the returning string would not be
+ *  longer than the given value in bytes. The stream must be opened for
+ *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
+ *
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.readlines[0]   #=&gt; &quot;This is line one\n&quot;
  */
 
 static VALUE
-rb_io_to_io(VALUE io)
+rb_io_readlines(int argc, VALUE *argv, VALUE io)
 {
-    return io;
+    VALUE line, ary, rs;
+    long limit;
+
+    prepare_getline_args(argc, argv, &amp;rs, &amp;limit, io);
+    ary = rb_ary_new();
+    while (!NIL_P(line = rb_io_getline_1(rs, limit, io))) {
+        rb_ary_push(ary, line);
+    }
+    return ary;
 }</pre>
 </body>
 </html>

@@ -2,35 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>exception (Exception)</title>
+  <title>backtrace (Exception)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: exception
- *
  *  call-seq:
- *     exc.exception(string) -&gt; an_exception or exc
+ *     exception.backtrace    =&gt; array
  *  
- *  With no argument, or if the argument is the same as the receiver,
- *  return the receiver. Otherwise, create a new
- *  exception object of the same class as the receiver, but with a
- *  message equal to &lt;code&gt;string.to_str&lt;/code&gt;.
+ *  Returns any backtrace associated with the exception. The backtrace
+ *  is an array of strings, each containing either ``filename:lineNo: in
+ *  `method''' or ``filename:lineNo.''
  *     
- */
+ *     def a
+ *       raise &quot;boom&quot;
+ *     end
+ *     
+ *     def b
+ *       a()
+ *     end
+ *     
+ *     begin
+ *       b()
+ *     rescue =&gt; detail
+ *       print detail.backtrace.join(&quot;\n&quot;)
+ *     end
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     prog.rb:2:in `a'
+ *     prog.rb:6:in `b'
+ *     prog.rb:10
+*/
 
 static VALUE
-exc_exception(int argc, VALUE *argv, VALUE self)
+exc_backtrace(VALUE exc)
 {
-    VALUE exc;
+    ID bt;
 
-    if (argc == 0) return self;
-    if (argc == 1 &amp;&amp; self == argv[0]) return self;
-    exc = rb_obj_clone(self);
-    exc_initialize(argc, argv, exc);
-
-    return exc;
+    CONST_ID(bt, &quot;bt&quot;);
+    return rb_attr_get(exc, bt);
 }</pre>
 </body>
 </html>

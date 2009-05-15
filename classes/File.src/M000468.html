@@ -2,35 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>directory? (File)</title>
+  <title>writable? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Document-method: directory?
- *
  * call-seq:
- *   File.directory?(file_name)   =&gt;  true or false
+ *    File.writable?(file_name)   =&gt; true or false
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a directory,
- * &lt;code&gt;false&lt;/code&gt; otherwise.
- *
- *    File.directory?(&quot;.&quot;)
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named file is writable by the effective
+ * user id of this process.
  */
 
-VALUE
-rb_file_directory_p(VALUE obj, VALUE fname)
+static VALUE
+rb_file_writable_p(VALUE obj, VALUE fname)
 {
-#ifndef S_ISDIR
-#   define S_ISDIR(m) ((m &amp; S_IFMT) == S_IFDIR)
-#endif
-
-    struct stat st;
-
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (S_ISDIR(st.st_mode)) return Qtrue;
-    return Qfalse;
+    rb_secure(2);
+    FilePathValue(fname);
+    if (eaccess(StringValueCStr(fname), W_OK) &lt; 0) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

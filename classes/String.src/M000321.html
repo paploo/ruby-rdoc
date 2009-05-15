@@ -2,39 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reverse! (String)</title>
+  <title>ord (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.reverse!   =&gt; str
+ *     str.ord   =&gt; integer
  *  
- *  Reverses &lt;i&gt;str&lt;/i&gt; in place.
+ *  Return the &lt;code&gt;Integer&lt;/code&gt; ordinal of a one-character string.
+ *     
+ *     &quot;a&quot;.ord         #=&gt; 97
  */
 
-static VALUE
-rb_str_reverse_bang(VALUE str)
+VALUE
+rb_str_ord(VALUE s)
 {
-    if (RSTRING_LEN(str) &gt; 1) {
-        if (single_byte_optimizable(str)) {
-            char *s, *e, c;
+    unsigned int c;
 
-            str_modify_keep_cr(str);
-            s = RSTRING_PTR(str);
-            e = RSTRING_END(str) - 1;
-            while (s &lt; e) {
-                c = *s;
-                *s++ = *e;
-                *e-- = c;
-            }
-        }
-        else {
-            rb_str_shared_replace(str, rb_str_reverse(str));
-        }
-    }
-    return str;
+    c = rb_enc_codepoint(RSTRING_PTR(s), RSTRING_END(s), STR_ENC_GET(s));
+    return UINT2NUM(c);
 }</pre>
 </body>
 </html>

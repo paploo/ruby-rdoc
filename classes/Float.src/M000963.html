@@ -2,58 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>round (Float)</title>
+  <title>to_yaml (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     flt.round([ndigits])   =&gt; integer or float
- *
- *  Rounds &lt;i&gt;flt&lt;/i&gt; to a given precision in decimal digits (default 0 digits).
- *  Precision may be negative.  Returns a a floating point number when ndigits
- *  is more than one.
- *
- *     1.5.round      #=&gt; 2
- *     (-1.5).round   #=&gt; -2
- */
-
-static VALUE
-flo_round(int argc, VALUE *argv, VALUE num)
-{
-    VALUE nd;
-    double number, f;
-    int ndigits = 0, i;
-    long val;
-
-    if (argc &gt; 0 &amp;&amp; rb_scan_args(argc, argv, &quot;01&quot;, &amp;nd) == 1) {
-        ndigits = NUM2INT(nd);
-    }
-    number  = RFLOAT_VALUE(num);
-    f = 1.0;
-    i = abs(ndigits);
-    while  (--i &gt;= 0)
-        f = f*10.0;
-
-    if (isinf(f)) {
-        if (ndigits &lt; 0) number = 0;
-    }
-    else {
-        if (ndigits &lt; 0) number /= f;
-        else number *= f;
-        number = round(number);
-        if (ndigits &lt; 0) number *= f;
-        else number /= f;
-    }
-
-    if (ndigits &gt; 0) return DBL2NUM(number);
-
-    if (!FIXABLE(number)) {
-        return rb_dbl2big(number);
-    }
-    val = number;
-    return LONG2FIX(val);
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 367</span>
+367:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+368:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+369:             <span class="ruby-identifier">str</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>
+370:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Infinity&quot;</span>
+371:                 <span class="ruby-identifier">str</span> = <span class="ruby-value str">&quot;.Inf&quot;</span>
+372:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;-Infinity&quot;</span>
+373:                 <span class="ruby-identifier">str</span> = <span class="ruby-value str">&quot;-.Inf&quot;</span>
+374:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;NaN&quot;</span>
+375:                 <span class="ruby-identifier">str</span> = <span class="ruby-value str">&quot;.NaN&quot;</span>
+376:             <span class="ruby-keyword kw">end</span>
+377:             <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-value str">&quot;tag:yaml.org,2002:float&quot;</span>, <span class="ruby-identifier">str</span>, <span class="ruby-identifier">:plain</span> )
+378:         <span class="ruby-keyword kw">end</span>
+379:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

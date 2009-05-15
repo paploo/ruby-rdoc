@@ -2,32 +2,117 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Range)</title>
+  <title>step (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Range.new(start, end, exclusive=false)    =&gt; range
+ *     rng.step(n=1) {| obj | block }    =&gt; rng
  *  
- *  Constructs a range using the given &lt;i&gt;start&lt;/i&gt; and &lt;i&gt;end&lt;/i&gt;. If the third
- *  parameter is omitted or is &lt;code&gt;false&lt;/code&gt;, the &lt;i&gt;range&lt;/i&gt; will include
- *  the end object; otherwise, it will be excluded.
+ *  Iterates over &lt;i&gt;rng&lt;/i&gt;, passing each &lt;i&gt;n&lt;/i&gt;th element to the block. If
+ *  the range contains numbers, &lt;i&gt;n&lt;/i&gt; is added for each iteration.  Otherwise
+ *  &lt;code&gt;step&lt;/code&gt; invokes &lt;code&gt;succ&lt;/code&gt; to iterate through range
+ *  elements. The following code uses class &lt;code&gt;Xs&lt;/code&gt;, which is defined
+ *  in the class-level documentation.
+ *     
+ *     range = Xs.new(1)..Xs.new(10)
+ *     range.step(2) {|x| puts x}
+ *     range.step(3) {|x| puts x}
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *      1 x
+ *      3 xxx
+ *      5 xxxxx
+ *      7 xxxxxxx
+ *      9 xxxxxxxxx
+ *      1 x
+ *      4 xxxx
+ *      7 xxxxxxx
+ *     10 xxxxxxxxxx
  */
 
+
 static VALUE
-range_initialize(int argc, VALUE *argv, VALUE range)
+range_step(int argc, VALUE *argv, VALUE range)
 {
-    VALUE beg, end, flags;
-    
-    rb_scan_args(argc, argv, &quot;21&quot;, &amp;beg, &amp;end, &amp;flags);
-    /* Ranges are immutable, so that they should be initialized only once. */
-    if (RANGE_EXCL(range) != Qnil) {
-        rb_name_error(rb_intern(&quot;initialize&quot;), &quot;`initialize' called twice&quot;);
+    VALUE b, e, step, tmp;
+
+    RETURN_ENUMERATOR(range, argc, argv);
+
+    b = RANGE_BEG(range);
+    e = RANGE_END(range);
+    if (argc == 0) {
+        step = INT2FIX(1);
     }
-    range_init(range, beg, end, RTEST(flags));
-    return Qnil;
+    else {
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;step);
+        if (!rb_obj_is_kind_of(step, rb_cNumeric)) {
+            step = rb_to_int(step);
+        }
+        if (rb_funcall(step, '&lt;', 1, INT2FIX(0))) {
+            rb_raise(rb_eArgError, &quot;step can't be negative&quot;);
+        }
+        else if (!rb_funcall(step, '&gt;', 1, INT2FIX(0))) {
+            rb_raise(rb_eArgError, &quot;step can't be 0&quot;);
+        }
+    }
+
+    if (FIXNUM_P(b) &amp;&amp; FIXNUM_P(e) &amp;&amp; FIXNUM_P(step)) { /* fixnums are special */
+        long end = FIX2LONG(e);
+        long i, unit = FIX2LONG(step);
+
+        if (!EXCL(range))
+            end += 1;
+        i = FIX2LONG(b);       
+        while (i &lt; end) {
+            rb_yield(LONG2NUM(i));
+            if (i + unit &lt; i) break;
+            i += unit;
+        }
+
+    }
+    else if (ruby_float_step(b, e, step, EXCL(range))) {
+        /* done */
+    }
+    else if (rb_obj_is_kind_of(b, rb_cNumeric) ||
+             !NIL_P(rb_check_to_integer(b, &quot;to_int&quot;)) ||
+             !NIL_P(rb_check_to_integer(e, &quot;to_int&quot;))) {
+        ID op = EXCL(range) ? '&lt;' : rb_intern(&quot;&lt;=&quot;);
+
+        while (RTEST(rb_funcall(b, op, 1, e))) {
+            rb_yield(b);
+            b = rb_funcall(b, '+', 1, step);
+        }
+    }
+    else {
+        tmp = rb_check_string_type(b);
+
+        if (!NIL_P(tmp)) {
+            VALUE args[2], iter[2];
+
+            b = tmp;
+            args[0] = e;
+            args[1] = EXCL(range) ? Qtrue : Qfalse;
+            iter[0] = INT2FIX(1);
+            iter[1] = step;
+            rb_block_call(b, rb_intern(&quot;upto&quot;), 2, args, step_i, (VALUE)iter);
+        }
+        else {
+            VALUE args[2];
+
+            if (!rb_respond_to(b, id_succ)) {
+                rb_raise(rb_eTypeError, &quot;can't iterate from %s&quot;,
+                         rb_obj_classname(b));
+            }
+            args[0] = INT2FIX(1);
+            args[1] = step;
+            range_each_func(range, step_i, args);
+        }
+    }
+    return range;
 }</pre>
 </body>
 </html>

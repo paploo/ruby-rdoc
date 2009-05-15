@@ -2,32 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>isatty (IO)</title>
+  <title>fcntl (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.isatty   =&gt; true or false
- *     ios.tty?     =&gt; true or false
+ *     ios.fcntl(integer_cmd, arg)    =&gt; integer
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is associated with a
- *  terminal device (tty), &lt;code&gt;false&lt;/code&gt; otherwise.
- *
- *     File.new(&quot;testfile&quot;).isatty   #=&gt; false
- *     File.new(&quot;/dev/tty&quot;).isatty   #=&gt; true
+ *  Provides a mechanism for issuing low-level commands to control or
+ *  query file-oriented I/O streams. Arguments and results are platform
+ *  dependent. If &lt;i&gt;arg&lt;/i&gt; is a number, its value is passed
+ *  directly. If it is a string, it is interpreted as a binary sequence
+ *  of bytes (&lt;code&gt;Array#pack&lt;/code&gt; might be a useful way to build this
+ *  string). On Unix platforms, see &lt;code&gt;fcntl(2)&lt;/code&gt; for details.
+ *  Not implemented on all platforms.
  */
 
 static VALUE
-rb_io_isatty(VALUE io)
+rb_io_fcntl(int argc, VALUE *argv, VALUE io)
 {
-    rb_io_t *fptr;
+#ifdef HAVE_FCNTL
+    VALUE req, arg;
 
-    GetOpenFile(io, fptr);
-    if (isatty(fptr-&gt;fd) == 0)
-        return Qfalse;
-    return Qtrue;
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;req, &amp;arg);
+    return rb_io_ctl(io, req, arg, 0);
+#else
+    rb_notimplement();
+    return Qnil;                /* not reached */
+#endif
 }</pre>
 </body>
 </html>

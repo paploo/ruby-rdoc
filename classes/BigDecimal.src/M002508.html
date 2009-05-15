@@ -2,18 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>% (BigDecimal)</title>
+  <title>sqrt (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/* call-seq:
- * a % b
- * a.modulo(b)
+ * sqrt(n)
  *
- * Returns the modulus from dividing by b. See divmod.
+ * Returns the square root of the value.
+ *
+ * If n is specified, returns at least that many significant digits.
  */
 static VALUE
-BigDecimal_mod(VALUE self, VALUE r) </pre>
+BigDecimal_sqrt(VALUE self, VALUE nFig)
+{
+    ENTER(5);
+    Real *c, *a;
+    S_INT mx, n;
+
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+
+    n = GetPositiveInt(nFig) + VpDblFig() + 1;
+    if(mx &lt;= n) mx = n;
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpSqrt(c, a);
+    return ToValue(c);
+}</pre>
 </body>
 </html>

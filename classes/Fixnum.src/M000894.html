@@ -2,42 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>modulo (Fixnum)</title>
+  <title>== (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *    fix % other         =&gt; Numeric
- *    fix.modulo(other)   =&gt; Numeric
+ * call-seq:
+ *   fix == other
  *
- *  Returns &lt;code&gt;fix&lt;/code&gt; modulo &lt;code&gt;other&lt;/code&gt;.
- *  See &lt;code&gt;Numeric.divmod&lt;/code&gt; for more information.
+ * Return &lt;code&gt;true&lt;/code&gt; if &lt;code&gt;fix&lt;/code&gt; equals &lt;code&gt;other&lt;/code&gt;
+ * numerically.
+ *
+ *   1 == 2      #=&gt; false
+ *   1 == 1.0    #=&gt; true
  */
 
 static VALUE
-fix_mod(VALUE x, VALUE y)
+fix_equal(VALUE x, VALUE y)
 {
-    if (FIXNUM_P(y)) {
-        long mod;
-
-        fixdivmod(FIX2LONG(x), FIX2LONG(y), 0, &amp;mod);
-        return LONG2NUM(mod);
-    }
+    if (x == y) return Qtrue;
+    if (FIXNUM_P(y)) return Qfalse;
     switch (TYPE(y)) {
       case T_BIGNUM:
-        x = rb_int2big(FIX2LONG(x));
-        return rb_big_modulo(x, y);
+        return rb_big_eq(y, x);
       case T_FLOAT:
-        {
-            double mod;
-
-            flodivmod((double)FIX2LONG(x), RFLOAT_VALUE(y), 0, &amp;mod);
-            return DBL2NUM(mod);
-        }
+        return (double)FIX2LONG(x) == RFLOAT_VALUE(y) ? Qtrue : Qfalse;
       default:
-        return rb_num_coerce_bin(x, y, '%');
+        return num_equal(x, y);
     }
 }</pre>
 </body>

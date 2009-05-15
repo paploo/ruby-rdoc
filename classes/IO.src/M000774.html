@@ -2,34 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tell (IO)</title>
+  <title>eof? (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.pos     =&gt; integer
- *     ios.tell    =&gt; integer
+ *     ios.eof     =&gt; true or false
+ *     ios.eof?    =&gt; true or false
  *
- *  Returns the current offset (in bytes) of &lt;em&gt;ios&lt;/em&gt;.
+ *  Returns true if &lt;em&gt;ios&lt;/em&gt; is at end of file that means
+ *  there are no more data to read.
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt; will be
+ *  raised.
  *
  *     f = File.new(&quot;testfile&quot;)
- *     f.pos    #=&gt; 0
- *     f.gets   #=&gt; &quot;This is line one\n&quot;
- *     f.pos    #=&gt; 17
+ *     dummy = f.readlines
+ *     f.eof   #=&gt; true
+ *
+ *  If &lt;em&gt;ios&lt;/em&gt; is a stream such as pipe or socket, &lt;code&gt;IO#eof?&lt;/code&gt;
+ *  blocks until the other end sends some data or closes it.
+ *
+ *     r, w = IO.pipe
+ *     Thread.new { sleep 1; w.close }
+ *     r.eof?  #=&gt; true after 1 second blocking
+ *
+ *     r, w = IO.pipe
+ *     Thread.new { sleep 1; w.puts &quot;a&quot; }
+ *     r.eof?  #=&gt; false after 1 second blocking
+ *
+ *     r, w = IO.pipe
+ *     r.eof?  # blocks forever
+ *
+ *  Note that &lt;code&gt;IO#eof?&lt;/code&gt; reads data to a input buffer.
+ *  So &lt;code&gt;IO#sysread&lt;/code&gt; doesn't work with &lt;code&gt;IO#eof?&lt;/code&gt;.
  */
 
-static VALUE
-rb_io_tell(VALUE io)
+VALUE
+rb_io_eof(VALUE io)
 {
     rb_io_t *fptr;
-    off_t pos;
 
     GetOpenFile(io, fptr);
-    pos = io_tell(fptr);
-    if (pos &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
-    return OFFT2NUM(pos);
+    rb_io_check_readable(fptr);
+
+    if (READ_DATA_PENDING(fptr)) return Qfalse;
+    READ_CHECK(fptr);
+    if (io_fillbuf(fptr) &lt; 0) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

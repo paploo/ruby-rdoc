@@ -2,33 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>check_break_points (DEBUGGER__)</title>
+  <title>break_points (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 630</span>
-630:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_break_points</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">pos</span>, <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">id</span>)
-631:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">break_points</span>.<span class="ruby-identifier">empty?</span>
-632:     <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
-633:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">b</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">break_points</span>
-634:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">0</span>]           <span class="ruby-comment cmt"># valid</span>
-635:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">0</span>   <span class="ruby-comment cmt"># breakpoint</span>
-636:           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">file</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">pos</span>) <span class="ruby-keyword kw">or</span>
-637:               (<span class="ruby-identifier">klass</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">klass</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">3</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">pos</span>)
-638:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Breakpoint %d, %s at %s:%s\n&quot;</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">debug_funcname</span>(<span class="ruby-identifier">id</span>), <span class="ruby-identifier">file</span>, <span class="ruby-identifier">pos</span>
-639:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
-640:           <span class="ruby-keyword kw">end</span>
-641:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">b</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>        <span class="ruby-comment cmt"># watchpoint</span>
-642:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">debug_silent_eval</span>(<span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>], <span class="ruby-identifier">binding</span>)
-643:             <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Watchpoint %d, %s at %s:%s\n&quot;</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">debug_funcname</span>(<span class="ruby-identifier">id</span>), <span class="ruby-identifier">file</span>, <span class="ruby-identifier">pos</span>
-644:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
-645:           <span class="ruby-keyword kw">end</span>
-646:         <span class="ruby-keyword kw">end</span>
-647:       <span class="ruby-keyword kw">end</span>
-648:       <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-649:     <span class="ruby-keyword kw">end</span>
-650:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
-651:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 745</span>
+745:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">break_points</span>
+746:     <span class="ruby-ivar">@break_points</span>
+747:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

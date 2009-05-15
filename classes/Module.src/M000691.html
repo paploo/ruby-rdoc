@@ -2,24 +2,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>protected_instance_methods (Module)</title>
+  <title>remove_const (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.protected_instance_methods(include_super=true)   =&gt; array
- *  
- *  Returns a list of the protected instance methods defined in
- *  &lt;i&gt;mod&lt;/i&gt;. If the optional parameter is not &lt;code&gt;false&lt;/code&gt;, the
- *  methods of any ancestors are included.
+ *     remove_const(sym)   =&gt; obj
+ *
+ *  Removes the definition of the given constant, returning that
+ *  constant's value. Predefined classes and singleton objects (such as
+ *  &lt;i&gt;true&lt;/i&gt;) cannot be removed.
  */
 
 VALUE
-rb_class_protected_instance_methods(int argc, VALUE *argv, VALUE mod)
+rb_mod_remove_const(VALUE mod, VALUE name)
 {
-    return class_instance_method_list(argc, argv, mod, ins_methods_prot_i);
+    const ID id = rb_to_id(name);
+    VALUE val;
+    st_data_t v, n = id;
+
+    rb_vm_change_state();
+
+    if (!rb_is_const_id(id)) {
+	rb_name_error(id, &quot;`%s' is not allowed as a constant name&quot;, rb_id2name(id));
+    }
+    if (!OBJ_UNTRUSTED(mod) &amp;&amp; rb_safe_level() &gt;= 4)
+	rb_raise(rb_eSecurityError, &quot;Insecure: can't remove constant&quot;);
+    if (OBJ_FROZEN(mod)) rb_error_frozen(&quot;class/module&quot;);
+
+    if (RCLASS_IV_TBL(mod) &amp;&amp; st_delete(RCLASS_IV_TBL(mod), &amp;n, &amp;v)) {
+	val = (VALUE)v;
+	if (val == Qundef) {
+	    autoload_delete(mod, id);
+	    val = Qnil;
+	}
+	return val;
+    }
+    if (rb_const_defined_at(mod, id)) {
+	rb_name_error(id, &quot;cannot remove %s::%s&quot;,
+		 rb_class2name(mod), rb_id2name(id));
+    }
+    rb_name_error(id, &quot;constant %s::%s not defined&quot;,
+		  rb_class2name(mod), rb_id2name(id));
+    return Qnil;		/* not reached */
 }</pre>
 </body>
 </html>

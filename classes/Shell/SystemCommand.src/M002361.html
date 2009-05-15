@@ -2,24 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>start (Shell::SystemCommand)</title>
+  <title>each (Shell::SystemCommand)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/shell/system-command.rb, line 48</span>
-48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>
-49:       <span class="ruby-identifier">notify</span>([<span class="ruby-ivar">@command</span>, <span class="ruby-operator">*</span><span class="ruby-ivar">@opts</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; &quot;</span>))
-50: 
-51:       <span class="ruby-ivar">@pid</span>, <span class="ruby-ivar">@pipe_in</span>, <span class="ruby-ivar">@pipe_out</span> = <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">process_controller</span>.<span class="ruby-identifier">sfork</span>(<span class="ruby-keyword kw">self</span>) {
-52:         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">pwd</span>
-53:         <span class="ruby-identifier">$0</span> = <span class="ruby-ivar">@command</span>
-54:         <span class="ruby-identifier">exec</span>(<span class="ruby-ivar">@command</span>, <span class="ruby-operator">*</span><span class="ruby-ivar">@opts</span>)
-55:       }
-56:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@input</span>
-57:         <span class="ruby-identifier">start_export</span>
-58:       <span class="ruby-keyword kw">end</span>
-59:       <span class="ruby-identifier">start_import</span>
-60:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/system-command.rb, line 136</span>
+136:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-identifier">rs</span> = <span class="ruby-keyword kw">nil</span>)
+137:       <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">l</span> = <span class="ruby-ivar">@input_queue</span>.<span class="ruby-identifier">pop</span>) <span class="ruby-operator">!=</span> <span class="ruby-identifier">:EOF</span>
+138:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">l</span>
+139:       <span class="ruby-keyword kw">end</span>
+140:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

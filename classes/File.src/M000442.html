@@ -2,39 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>link (File)</title>
+  <title>umask (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.link(old_name, new_name)    =&gt; 0
+ *     File.umask()          =&gt; integer
+ *     File.umask(integer)   =&gt; integer
  *  
- *  Creates a new name for an existing file using a hard link. Will not
- *  overwrite &lt;i&gt;new_name&lt;/i&gt; if it already exists (raising a subclass
- *  of &lt;code&gt;SystemCallError&lt;/code&gt;). Not available on all platforms.
+ *  Returns the current umask value for this process. If the optional
+ *  argument is given, set the umask to that value and return the
+ *  previous value. Umask values are &lt;em&gt;subtracted&lt;/em&gt; from the
+ *  default permissions, so a umask of &lt;code&gt;0222&lt;/code&gt; would make a
+ *  file read-only for everyone.
  *     
- *     File.link(&quot;testfile&quot;, &quot;.testfile&quot;)   #=&gt; 0
- *     IO.readlines(&quot;.testfile&quot;)[0]         #=&gt; &quot;This is line one\n&quot;
+ *     File.umask(0006)   #=&gt; 18
+ *     File.umask         #=&gt; 6
  */
 
 static VALUE
-rb_file_s_link(VALUE klass, VALUE from, VALUE to)
+rb_file_s_umask(int argc, VALUE *argv)
 {
-#ifdef HAVE_LINK
-    rb_secure(2);
-    FilePathValue(from);
-    FilePathValue(to);
+    int omask = 0;
 
-    if (link(StringValueCStr(from), StringValueCStr(to)) &lt; 0) {
-        sys_fail2(from, to);
+    rb_secure(2);
+    if (argc == 0) {
+        omask = umask(0);
+        umask(omask);
     }
-    return INT2FIX(0);
-#else
-    rb_notimplement();
-    return Qnil;                /* not reached */
-#endif
+    else if (argc == 1) {
+        omask = umask(NUM2INT(argv[0]));
+    }
+    else {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments&quot;);
+    }
+    return INT2FIX(omask);
 }</pre>
 </body>
 </html>

@@ -2,33 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eql? (Time)</title>
+  <title>getlocal (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *  time.eql?(other_time)
- *
- * Return &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; and &lt;i&gt;other_time&lt;/i&gt; are
- * both &lt;code&gt;Time&lt;/code&gt; objects with the same seconds and fractional
- * seconds.
+ *  call-seq:
+ *     time.getlocal =&gt; new_time
+ *  
+ *  Returns a new &lt;code&gt;new_time&lt;/code&gt; object representing &lt;i&gt;time&lt;/i&gt; in
+ *  local time (using the local time zone in effect for this process).
+ *     
+ *     t = Time.gm(2000,1,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 UTC
+ *     t.gmt?                          #=&gt; true
+ *     l = t.getlocal                  #=&gt; 2000-01-01 14:15:01 -0600
+ *     l.gmt?                          #=&gt; false
+ *     t == l                          #=&gt; true
  */
 
 static VALUE
-time_eql(VALUE time1, VALUE time2)
+time_getlocaltime(VALUE time)
 {
-    struct time_object *tobj1, *tobj2;
-
-    GetTimeval(time1, tobj1);
-    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
-        GetTimeval(time2, tobj2);
-        if (tobj1-&gt;ts.tv_sec == tobj2-&gt;ts.tv_sec) {
-            if (tobj1-&gt;ts.tv_nsec == tobj2-&gt;ts.tv_nsec) return Qtrue;
-        }
-    }
-    return Qfalse;
+    return time_localtime(time_dup(time));
 }</pre>
 </body>
 </html>

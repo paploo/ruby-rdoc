@@ -2,27 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>abs (Float)</title>
+  <title>ceil (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     flt.abs    =&gt; float
+ *     flt.ceil    =&gt; integer
  *
- *  Returns the absolute value of &lt;i&gt;flt&lt;/i&gt;.
+ *  Returns the smallest &lt;code&gt;Integer&lt;/code&gt; greater than or equal to
+ *  &lt;i&gt;flt&lt;/i&gt;.
  *
- *     (-34.56).abs   #=&gt; 34.56
- *     -34.56.abs     #=&gt; 34.56
- *
+ *     1.2.ceil      #=&gt; 2
+ *     2.0.ceil      #=&gt; 2
+ *     (-1.2).ceil   #=&gt; -1
+ *     (-2.0).ceil   #=&gt; -2
  */
 
 static VALUE
-flo_abs(VALUE flt)
+flo_ceil(VALUE num)
 {
-    double val = fabs(RFLOAT_VALUE(flt));
-    return DBL2NUM(val);
+    double f = ceil(RFLOAT_VALUE(num));
+    long val;
+
+    if (!FIXABLE(f)) {
+        return rb_dbl2big(f);
+    }
+    val = f;
+    return LONG2FIX(val);
 }</pre>
 </body>
 </html>

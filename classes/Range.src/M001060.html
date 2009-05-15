@@ -2,25 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Range)</title>
+  <title>yaml_new (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * call-seq:
- *   rng.inspect  =&gt; string
- *
- * Convert this range object to a printable form (using 
- * &lt;code&gt;inspect&lt;/code&gt; to convert the start and end
- * objects).
- */
-
-
-static VALUE
-range_inspect(VALUE range)
-{
-    return rb_exec_recursive(inspect_range, range, 0);
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 201</span>
+201:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Range</span>.<span class="ruby-identifier">yaml_new</span>( <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">val</span> )
+202:         <span class="ruby-identifier">inr</span> = <span class="ruby-regexp re">%r'(\w+|[+-]?\d+(?:\.\d+)?(?:e[+-]\d+)?|&quot;(?:[^\\&quot;]|\\.)*&quot;)'</span>
+203:         <span class="ruby-identifier">opts</span> = {}
+204:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^#{inr}(\.{2,3})#{inr}$/o</span>
+205:             <span class="ruby-identifier">r1</span>, <span class="ruby-identifier">rdots</span>, <span class="ruby-identifier">r2</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>, <span class="ruby-identifier">$3</span>
+206:             <span class="ruby-identifier">opts</span> = {
+207:                 <span class="ruby-value str">'begin'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>( <span class="ruby-node">&quot;--- #{r1}&quot;</span> ),
+208:                 <span class="ruby-value str">'end'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>( <span class="ruby-node">&quot;--- #{r2}&quot;</span> ),
+209:                 <span class="ruby-value str">'excl'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">rdots</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+210:             }
+211:             <span class="ruby-identifier">val</span> = {}
+212:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
+213:             <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'begin'</span>] = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'begin'</span>)
+214:             <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'end'</span>] = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'end'</span>)
+215:             <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'excl'</span>] = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'excl'</span>)
+216:         <span class="ruby-keyword kw">end</span>
+217:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">opts</span>
+218:             <span class="ruby-identifier">r</span> = <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">object_maker</span>( <span class="ruby-identifier">klass</span>, {} )
+219:             <span class="ruby-comment cmt"># Thank you, NaHi</span>
+220:             <span class="ruby-constant">Range</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-identifier">:initialize</span>).
+221:                   <span class="ruby-identifier">bind</span>(<span class="ruby-identifier">r</span>).
+222:                   <span class="ruby-identifier">call</span>( <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'begin'</span>], <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'end'</span>], <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'excl'</span>] )
+223:             <span class="ruby-identifier">val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">instance_variable_set</span>( <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> ) }
+224:             <span class="ruby-identifier">r</span>
+225:         <span class="ruby-keyword kw">else</span>
+226:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;Invalid Range: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">inspect</span>
+227:         <span class="ruby-keyword kw">end</span>
+228:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

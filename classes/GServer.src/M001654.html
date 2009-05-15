@@ -2,17 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>connecting (GServer)</title>
+  <title>new (GServer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/gserver.rb, line 134</span>
-134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connecting</span>(<span class="ruby-identifier">client</span>)
-135:     <span class="ruby-identifier">addr</span> = <span class="ruby-identifier">client</span>.<span class="ruby-identifier">peeraddr</span>
-136:     <span class="ruby-identifier">log</span>(<span class="ruby-node">&quot;#{self.class.to_s} #{@host}:#{@port} client:#{addr[1]} &quot;</span> <span class="ruby-operator">+</span>
-137:         <span class="ruby-node">&quot;#{addr[2]}&lt;#{addr[3]}&gt; connect&quot;</span>)
-138:     <span class="ruby-keyword kw">true</span>
-139:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/gserver.rb, line 171</span>
+171:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">port</span>, <span class="ruby-identifier">host</span> = <span class="ruby-constant">DEFAULT_HOST</span>, <span class="ruby-identifier">maxConnections</span> = <span class="ruby-value">4</span>,
+172:     <span class="ruby-identifier">stdlog</span> = <span class="ruby-identifier">$stderr</span>, <span class="ruby-identifier">audit</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">debug</span> = <span class="ruby-keyword kw">false</span>)
+173:     <span class="ruby-ivar">@tcpServerThread</span> = <span class="ruby-keyword kw">nil</span>
+174:     <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">port</span>
+175:     <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">host</span>
+176:     <span class="ruby-ivar">@maxConnections</span> = <span class="ruby-identifier">maxConnections</span>
+177:     <span class="ruby-ivar">@connections</span> = []
+178:     <span class="ruby-ivar">@connectionsMutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+179:     <span class="ruby-ivar">@connectionsCV</span> = <span class="ruby-constant">ConditionVariable</span>.<span class="ruby-identifier">new</span>
+180:     <span class="ruby-ivar">@stdlog</span> = <span class="ruby-identifier">stdlog</span>
+181:     <span class="ruby-ivar">@audit</span> = <span class="ruby-identifier">audit</span>
+182:     <span class="ruby-ivar">@debug</span> = <span class="ruby-identifier">debug</span>
+183:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

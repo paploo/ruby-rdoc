@@ -2,29 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ord (Integer)</title>
+  <title>gcd (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     int.ord    =&gt; int
- *
- *  Returns the int itself.
- *
- *     ?a.ord    #=&gt; 97
- *
- *  This method is intended for compatibility to
- *  character constant in Ruby 1.9.
- *  For example, ?a.ord returns 97 both in 1.8 and 1.9.
- */
+  <pre>/* --- */
 
-static VALUE
-int_ord(num)
-    VALUE num;
+VALUE
+rb_gcd(VALUE self, VALUE other)
 {
-    return num;
+    other = nurat_int_value(other);
+    return f_gcd(self, other);
 }</pre>
 </body>
 </html>

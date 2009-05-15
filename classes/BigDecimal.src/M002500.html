@@ -2,60 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_int (BigDecimal)</title>
+  <title>/ (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns the value as an integer (Fixnum or Bignum).
- *
- * If the BigNumber is infinity or NaN, returns nil.
- */
+  <pre>/* call-seq:
+  * div(value, digits)
+  * quo(value)
+  *
+  * Divide by the specified value. 
+  *
+  * e.g.
+  *   c = a.div(b,n)
+  *
+  * digits:: If specified and less than the number of significant digits of the result, the result is rounded to that number of digits, according to BigDecimal.mode.
+  * 
+  * If digits is 0, the result is the same as the / operator. If not, the
+  * result is an integer BigDecimal, by analogy with Float#div.
+  *
+  * The alias quo is provided since div(value, 0) is the same as computing
+  * the quotient; see divmod.
+  */
 static VALUE
-BigDecimal_to_i(VALUE self)
+BigDecimal_div(VALUE self, VALUE r)
+/* For c = self/r: with round operation */
 {
     ENTER(5);
-    int e,n,i,nf;
-    U_LONG v,b,j;
-    volatile VALUE str;
-    char *psz,*pch;
-    Real *p;
-
-    GUARD_OBJ(p,GetVpValue(self,1));
-    BigDecimal_check_num(p);
-
-    e = VpExponent10(p);
-    if(e&lt;=0) return INT2FIX(0);
-    nf = VpBaseFig();
-    if(e&lt;=nf) {
-        e = VpGetSign(p)*p-&gt;frac[0];
-        return INT2FIX(e);
+    Real *c=NULL, *res=NULL, *div = NULL;
+    r = BigDecimal_divide(&amp;c, &amp;res, &amp;div, self, r);
+    if(r!=(VALUE)0) return r; /* coerced by other */
+    SAVE(c);SAVE(res);SAVE(div);
+    /* a/b = c + r/b */
+    /* c xxxxx
+       r 00000yyyyy  ==&gt; (y/b)*BASE &gt;= HALF_BASE
+     */
+    /* Round */
+    if(VpHasVal(div)) { /* frac[0] must be zero for NaN,INF,Zero */
+       VpInternalRound(c,0,c-&gt;frac[c-&gt;Prec-1],(VpBaseVal()*res-&gt;frac[0])/div-&gt;frac[0]);
     }
-    str = rb_str_new(0, e+nf+2);
-    psz = RSTRING_PTR(str);
-
-    n = (e+nf-1)/nf;
-    pch = psz;
-    if(VpGetSign(p)&lt;0) *pch++ = '-';
-    for(i=0;i&lt;n;++i) {
-        b = VpBaseVal()/10;
-        if(i&gt;=(int)p-&gt;Prec) {
-            while(b) {
-                *pch++ = '0';
-                b /= 10;
-            }
-            continue;
-        }
-        v = p-&gt;frac[i];
-        while(b) {
-            j = v/b;
-            *pch++ = (char)(j + '0');
-            v -= j*b;
-            b /= 10;
-        }
-    }
-    *pch++ = 0;
-    return rb_cstr2inum(psz,10);
+    return ToValue(c);
 }</pre>
 </body>
 </html>

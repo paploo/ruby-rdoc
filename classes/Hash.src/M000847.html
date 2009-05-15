@@ -2,31 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>merge (Hash)</title>
+  <title>has_key? (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.merge(other_hash)                              -&gt; a_hash
- *     hsh.merge(other_hash){|key, oldval, newval| block} -&gt; a_hash
+ *     hsh.has_key?(key)    =&gt; true or false
+ *     hsh.include?(key)    =&gt; true or false
+ *     hsh.key?(key)        =&gt; true or false
+ *     hsh.member?(key)     =&gt; true or false
  *
- *  Returns a new hash containing the contents of &lt;i&gt;other_hash&lt;/i&gt; and
- *  the contents of &lt;i&gt;hsh&lt;/i&gt;, overwriting entries in &lt;i&gt;hsh&lt;/i&gt; with
- *  duplicate keys with those from &lt;i&gt;other_hash&lt;/i&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the given key is present in &lt;i&gt;hsh&lt;/i&gt;.
  *
- *     h1 = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h2 = { &quot;b&quot; =&gt; 254, &quot;c&quot; =&gt; 300 }
- *     h1.merge(h2)   #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;254, &quot;c&quot;=&gt;300}
- *     h1             #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;200}
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.has_key?(&quot;a&quot;)   #=&gt; true
+ *     h.has_key?(&quot;z&quot;)   #=&gt; false
  *
  */
 
 static VALUE
-rb_hash_merge(VALUE hash1, VALUE hash2)
+rb_hash_has_key(VALUE hash, VALUE key)
 {
-    return rb_hash_update(rb_obj_dup(hash1), hash2);
+    if (!RHASH(hash)-&gt;ntbl)
+        return Qfalse;
+    if (st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

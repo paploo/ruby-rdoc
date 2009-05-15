@@ -2,28 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reopen (StringIO)</title>
+  <title>close (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.reopen(other_StrIO)     -&gt; strio
- *   strio.reopen(string, mode)    -&gt; strio
+ *   strio.close  -&gt; nil
  *
- * Reinitializes *strio* with the given &lt;i&gt;other_StrIO&lt;/i&gt; or _string_ 
- * and _mode_ (see StringIO#new).
+ * Closes strio.  The *strio* is unavailable for any further data 
+ * operations; an +IOError+ is raised if such an attempt is made.
  */
 static VALUE
-strio_reopen(int argc, VALUE *argv, VALUE self)
+strio_close(VALUE self)
 {
-    if (!OBJ_TAINTED(self)) rb_secure(4);
-    if (argc == 1 &amp;&amp; TYPE(*argv) != T_STRING) {
-        return strio_copy(self, *argv);
+    struct StringIO *ptr = StringIO(self);
+    if (CLOSED(ptr)) {
+        rb_raise(rb_eIOError, &quot;closed stream&quot;);
     }
-    strio_init(argc, argv, StringIO(self));
-    return self;
+    ptr-&gt;flags &amp;= ~FMODE_READWRITE;
+    return Qnil;
 }</pre>
 </body>
 </html>

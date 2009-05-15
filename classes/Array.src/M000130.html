@@ -2,41 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>insert (Array)</title>
+  <title>find_index (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.insert(index, obj...)  -&gt; array
+ *     array.index(obj)           -&gt;  int or nil
+ *     array.index {|item| block} -&gt;  int or nil
  *  
- *  Inserts the given values before the element with the given index
- *  (which may be negative).
+ *  Returns the index of the first object in &lt;i&gt;self&lt;/i&gt; such that is
+ *  &lt;code&gt;==&lt;/code&gt; to &lt;i&gt;obj&lt;/i&gt;. If a block is given instead of an
+ *  argument, returns first object for which &lt;em&gt;block&lt;/em&gt; is true.
+ *  Returns &lt;code&gt;nil&lt;/code&gt; if no match is found.
  *     
- *     a = %w{ a b c d }
- *     a.insert(2, 99)         #=&gt; [&quot;a&quot;, &quot;b&quot;, 99, &quot;c&quot;, &quot;d&quot;]
- *     a.insert(-2, 1, 2, 3)   #=&gt; [&quot;a&quot;, &quot;b&quot;, 99, &quot;c&quot;, 1, 2, 3, &quot;d&quot;]
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.index(&quot;b&quot;)        #=&gt; 1
+ *     a.index(&quot;z&quot;)        #=&gt; nil
+ *     a.index{|x|x==&quot;b&quot;}  #=&gt; 1
+ *
+ *  This is an alias of &lt;code&gt;#find_index&lt;/code&gt;.
  */
 
 static VALUE
-rb_ary_insert(int argc, VALUE *argv, VALUE ary)
+rb_ary_index(int argc, VALUE *argv, VALUE ary)
 {
-    long pos;
+    VALUE val;
+    long i;
 
-    if (argc == 1) return ary;
-    if (argc &lt; 1) {
-        rb_raise(rb_eArgError, &quot;wrong number of arguments (at least 1)&quot;);
+    if (argc  == 0) {
+        RETURN_ENUMERATOR(ary, 0, 0);
+        for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+            if (RTEST(rb_yield(RARRAY_PTR(ary)[i]))) {
+                return LONG2NUM(i);
+            }
+        }
+        return Qnil;
     }
-    pos = NUM2LONG(argv[0]);
-    if (pos == -1) {
-        pos = RARRAY_LEN(ary);
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;val);
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        if (rb_equal(RARRAY_PTR(ary)[i], val))
+            return LONG2NUM(i);
     }
-    if (pos &lt; 0) {
-        pos++;
-    }
-    rb_ary_splice(ary, pos, 0, rb_ary_new4(argc - 1, argv + 1));
-    return ary;
+    return Qnil;
 }</pre>
 </body>
 </html>

@@ -2,28 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Dir)</title>
+  <title>pos (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     dir.inspect =&gt; string
+ *     dir.pos =&gt; integer
+ *     dir.tell =&gt; integer
  *
- *  Return a string describing this Dir object.
+ *  Returns the current position in &lt;em&gt;dir&lt;/em&gt;. See also
+ *  &lt;code&gt;Dir#seek&lt;/code&gt;.
+ *
+ *     d = Dir.new(&quot;testdir&quot;)
+ *     d.tell   #=&gt; 0
+ *     d.read   #=&gt; &quot;.&quot;
+ *     d.tell   #=&gt; 12
  */
 static VALUE
-dir_inspect(VALUE dir)
+dir_tell(VALUE dir)
 {
+#ifdef HAVE_TELLDIR
     struct dir_data *dirp;
+    long pos;
 
-    Data_Get_Struct(dir, struct dir_data, dirp);
-    if (!NIL_P(dirp-&gt;path)) {
-        const char *c = rb_obj_classname(dir);
-        return rb_sprintf(&quot;#&lt;%s:%s&gt;&quot;, c, RSTRING_PTR(dirp-&gt;path));
-    }
-    return rb_funcall(dir, rb_intern(&quot;to_s&quot;), 0, 0);
+    GetDIR(dir, dirp);
+    pos = telldir(dirp-&gt;dir);
+    return rb_int2inum(pos);
+#else
+    rb_notimplement();
+#endif
 }</pre>
 </body>
 </html>

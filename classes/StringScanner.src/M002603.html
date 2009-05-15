@@ -2,20 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>matchedsize (StringScanner)</title>
+  <title>restsize (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Equivalent to #matched_size.
- * This method is obsolete; use #matched_size instead.
+ * &lt;tt&gt;s.restsize&lt;/tt&gt; is equivalent to &lt;tt&gt;s.rest_size&lt;/tt&gt;.
+ * This method is obsolete; use #rest_size instead.
  */
 static VALUE
-strscan_matchedsize(VALUE self)
+strscan_restsize(VALUE self)
 {
-    rb_warning(&quot;StringScanner#matchedsize is obsolete; use #matched_size instead&quot;);
-    return strscan_matched_size(self);
+    rb_warning(&quot;StringScanner#restsize is obsolete; use #rest_size instead&quot;);
+    return strscan_rest_size(self);
 }</pre>
 </body>
 </html>

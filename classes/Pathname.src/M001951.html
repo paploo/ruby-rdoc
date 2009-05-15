@@ -2,14 +2,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>absolute? (Pathname)</title>
+  <title>plus (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 500</span>
-500:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">absolute?</span>
-501:     <span class="ruby-operator">!</span><span class="ruby-identifier">relative?</span>
-502:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 619</span>
+619:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plus</span>(<span class="ruby-identifier">path1</span>, <span class="ruby-identifier">path2</span>) <span class="ruby-comment cmt"># -&gt; path</span>
+620:     <span class="ruby-identifier">prefix2</span> = <span class="ruby-identifier">path2</span>
+621:     <span class="ruby-identifier">index_list2</span> = []
+622:     <span class="ruby-identifier">basename_list2</span> = []
+623:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r2</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">prefix2</span>)
+624:       <span class="ruby-identifier">prefix2</span>, <span class="ruby-identifier">basename2</span> = <span class="ruby-identifier">r2</span>
+625:       <span class="ruby-identifier">index_list2</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">prefix2</span>.<span class="ruby-identifier">length</span>
+626:       <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">basename2</span>
+627:     <span class="ruby-keyword kw">end</span>
+628:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">path2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prefix2</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">''</span>
+629:     <span class="ruby-identifier">prefix1</span> = <span class="ruby-identifier">path1</span>
+630:     <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+631:       <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span>
+632:         <span class="ruby-identifier">index_list2</span>.<span class="ruby-identifier">shift</span>
+633:         <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">shift</span>
+634:       <span class="ruby-keyword kw">end</span>
+635:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">r1</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">prefix1</span>)
+636:       <span class="ruby-identifier">prefix1</span>, <span class="ruby-identifier">basename1</span> = <span class="ruby-identifier">r1</span>
+637:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">basename1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span>
+638:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">basename1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'..'</span>
+639:         <span class="ruby-identifier">prefix1</span> = <span class="ruby-identifier">prefix1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">basename1</span>
+640:         <span class="ruby-keyword kw">break</span>
+641:       <span class="ruby-keyword kw">end</span>
+642:       <span class="ruby-identifier">index_list2</span>.<span class="ruby-identifier">shift</span>
+643:       <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">shift</span>
+644:     <span class="ruby-keyword kw">end</span>
+645:     <span class="ruby-identifier">r1</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">prefix1</span>)
+646:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">r1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">/#{SEPARATOR_PAT}/o</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">prefix1</span>)
+647:       <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+648:         <span class="ruby-identifier">index_list2</span>.<span class="ruby-identifier">shift</span>
+649:         <span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">shift</span>
+650:       <span class="ruby-keyword kw">end</span>
+651:     <span class="ruby-keyword kw">end</span>
+652:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">basename_list2</span>.<span class="ruby-identifier">empty?</span>
+653:       <span class="ruby-identifier">suffix2</span> = <span class="ruby-identifier">path2</span>[<span class="ruby-identifier">index_list2</span>.<span class="ruby-identifier">first</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+654:       <span class="ruby-identifier">r1</span> <span class="ruby-value">? </span><span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">prefix1</span>, <span class="ruby-identifier">suffix2</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">prefix1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">suffix2</span>
+655:     <span class="ruby-keyword kw">else</span>
+656:       <span class="ruby-identifier">r1</span> <span class="ruby-value">? </span><span class="ruby-identifier">prefix1</span> <span class="ruby-operator">:</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">prefix1</span>)
+657:     <span class="ruby-keyword kw">end</span>
+658:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

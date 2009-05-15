@@ -2,26 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>exists? (File)</title>
+  <title>world_writable? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *    File.exist?(file_name)    =&gt;  true or false
- *    File.exists?(file_name)   =&gt;  true or false
+ *    File.world_writable?(file_name)   =&gt; fixnum or nil
  *
- * Return &lt;code&gt;true&lt;/code&gt; if the named file exists.
+ * If &lt;i&gt;file_name&lt;/i&gt; is writable by others, returns an integer
+ * representing the file permission bits of &lt;i&gt;file_name&lt;/i&gt;. Returns
+ * &lt;code&gt;nil&lt;/code&gt; otherwise. The meaning of the bits is platform
+ * dependent; on Unix systems, see &lt;code&gt;stat(2)&lt;/code&gt;.
+ *     
+ *    File.world_writable?(&quot;/tmp&quot;)                  #=&gt; 511
+ *    m = File.world_writable?(&quot;/tmp&quot;)
+ *    sprintf(&quot;%o&quot;, m)                              #=&gt; &quot;777&quot;
  */
 
 static VALUE
-rb_file_exist_p(VALUE obj, VALUE fname)
+rb_file_world_writable_p(VALUE obj, VALUE fname)
 {
+#ifdef S_IWOTH
     struct stat st;
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    return Qtrue;
+    if (rb_stat(fname, &amp;st) &lt; 0) return Qnil;
+    if ((st.st_mode &amp; (S_IWOTH)) == S_IWOTH) {
+        return UINT2NUM(st.st_mode &amp; (S_IRUGO|S_IWUGO|S_IXUGO));
+    }
+#endif
+    return Qnil;
 }</pre>
 </body>
 </html>

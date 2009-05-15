@@ -8,37 +8,62 @@
 </head>
 <body class="standalone-code">
   <pre>/*
- * Document-method: Iconv::iconv
- * call-seq: Iconv.iconv(to, from, *strs)
+ * Document-method: Iconv#iconv
+ * call-seq: iconv(str, start=0, length=-1)
  *
- * Shorthand for
- *   Iconv.open(to, from) { |cd|
- *     (strs + [nil]).collect { |s| cd.iconv(s) }
- *   }
+ * Converts string and returns the result.
+ * * If +str+ is a String, converts &lt;tt&gt;str[start, length]&lt;/tt&gt; and returns the converted string.
+ * * If +str+ is +nil+, places converter itself into initial shift state and
+ *   just returns a string containing the byte sequence to change the output
+ *   buffer to its initial shift state.
+ * * Otherwise, raises an exception.
  *
  * === Parameters
  *
- * &lt;tt&gt;to, from&lt;/tt&gt;:: see Iconv.new
- * &lt;tt&gt;strs&lt;/tt&gt;:: strings to be converted
+ * str::    string to be converted, or nil
+ * start::  starting offset
+ * length:: conversion length; nil or -1 means whole the string from start
  *
  * === Exceptions
  *
- * Exceptions thrown by Iconv.new, Iconv.open and Iconv#iconv.
+ * * IconvIllegalSequence
+ * * IconvInvalidCharacter
+ * * IconvOutOfRange
+ *
+ * === Examples
+ *
+ * See the Iconv documentation.
  */
 static VALUE
-iconv_s_iconv(int argc, VALUE *argv, VALUE self)
+iconv_iconv(int argc, VALUE *argv, VALUE self)
 {
-    struct iconv_env_t arg;
+    VALUE str, n1, n2;
+    VALUE cd = check_iconv(self);
+    long start = 0, length = 0, slen = 0;
 
-    if (argc &lt; 2)               /* needs `to' and `from' arguments at least */
-        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for %d)&quot;, argc, 2);
+    rb_scan_args(argc, argv, &quot;12&quot;, &amp;str, &amp;n1, &amp;n2);
+    if (!NIL_P(str)) {
+        VALUE n = rb_str_length(StringValue(str));
+        slen = NUM2LONG(n);
+    }
+    if (argc != 2 || !RTEST(rb_range_beg_len(n1, &amp;start, &amp;length, slen, 0))) {
+        if (NIL_P(n1) || ((start = NUM2LONG(n1)) &lt; 0 ? (start += slen) &gt;= 0 : start &lt; slen)) {
+            length = NIL_P(n2) ? -1 : NUM2LONG(n2);
+        }
+    }
+    if (start &gt; 0 || length &gt; 0) {
+        rb_encoding *enc = rb_enc_get(str);
+        const char *s = RSTRING_PTR(str), *e = s + RSTRING_LEN(str);
+        const char *ps = s;
+        if (start &gt; 0) {
+            start = (ps = rb_enc_nth(s, e, start, enc)) - s;
+        }
+        if (length &gt; 0) {
+            length = rb_enc_nth(ps, e, length, enc) - ps;
+        }
+    }
 
-    arg.argc = argc -= 2;
-    arg.argv = argv + 2;
-    arg.append = rb_ary_push;
-    arg.ret = rb_ary_new2(argc);
-    arg.cd = iconv_create(argv[0], argv[1], NULL, &amp;arg.toidx);
-    return rb_ensure(iconv_s_convert, (VALUE)&amp;arg, iconv_free, ICONV2VALUE(arg.cd));
+    return iconv_convert(VALUE2ICONV(cd), str, start, length, ENCODING_GET(self), NULL);
 }</pre>
 </body>
 </html>

@@ -2,51 +2,61 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rename (File)</title>
+  <title>dirname (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.rename(old_name, new_name)   =&gt; 0
+ *     File.dirname(file_name ) -&gt; dir_name
  *  
- *  Renames the given file to the new name. Raises a
- *  &lt;code&gt;SystemCallError&lt;/code&gt; if the file cannot be renamed.
+ *  Returns all components of the filename given in &lt;i&gt;file_name&lt;/i&gt;
+ *  except the last one. The filename must be formed using forward
+ *  slashes (``&lt;code&gt;/&lt;/code&gt;'') regardless of the separator used on the
+ *  local file system.
  *     
- *     File.rename(&quot;afile&quot;, &quot;afile.bak&quot;)   #=&gt; 0
+ *     File.dirname(&quot;/home/gumby/work/ruby.rb&quot;)   #=&gt; &quot;/home/gumby/work&quot;
  */
 
 static VALUE
-rb_file_s_rename(VALUE klass, VALUE from, VALUE to)
+rb_file_s_dirname(VALUE klass, VALUE fname)
 {
-    const char *src, *dst;
+    const char *name, *root, *p;
+    VALUE dirname;
 
-    rb_secure(2);
-    FilePathValue(from);
-    FilePathValue(to);
-    src = StringValueCStr(from);
-    dst = StringValueCStr(to);
-#if defined __CYGWIN__
-    errno = 0;
+    FilePathStringValue(fname);
+    name = StringValueCStr(fname);
+    root = skiproot(name);
+#ifdef DOSISH_UNC
+    if (root &gt; name + 1 &amp;&amp; isdirsep(*name))
+        root = skipprefix(name = root - 2);
+#else
+    if (root &gt; name + 1)
+        name = root - 1;
 #endif
-    if (rename(src, dst) &lt; 0) {
-#if defined DOSISH &amp;&amp; !defined _WIN32
-        switch (errno) {
-          case EEXIST:
-#if defined (__EMX__)
-          case EACCES:
-#endif
-            if (chmod(dst, 0666) == 0 &amp;&amp;
-                unlink(dst) == 0 &amp;&amp;
-                rename(src, dst) == 0)
-                return INT2FIX(0);
-        }
-#endif
-        sys_fail2(from, to);
+    p = strrdirsep(root);
+    if (!p) {
+        p = root;
     }
-
-    return INT2FIX(0);
+    if (p == name)
+        return rb_usascii_str_new2(&quot;.&quot;);
+#ifdef DOSISH_DRIVE_LETTER
+    if (has_drive_letter(name) &amp;&amp; isdirsep(*(name + 2))) {
+        const char *top = skiproot(name + 2);
+        dirname = rb_str_new(name, 3);
+        rb_str_cat(dirname, top, p - top);
+    }
+    else
+#endif
+    dirname = rb_str_new(name, p - name);
+#ifdef DOSISH_DRIVE_LETTER
+    if (has_drive_letter(name) &amp;&amp; root == name + 2 &amp;&amp; p - name == 2)
+        rb_str_cat(dirname, &quot;.&quot;, 1);
+#endif
+    rb_enc_copy(dirname, fname);
+    OBJ_INFECT(dirname, fname);
+    return dirname;
 }</pre>
 </body>
 </html>

@@ -2,31 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tv_sec (Time)</title>
+  <title>_dump (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     time.to_i   =&gt; int
- *     time.tv_sec =&gt; int
- *  
- *  Returns the value of &lt;i&gt;time&lt;/i&gt; as an integer number of seconds
- *  since the Epoch.
- *     
- *     t = Time.now
- *     &quot;%10.5f&quot; % t.to_f   #=&gt; &quot;1049896564.17839&quot;
- *     t.to_i              #=&gt; 1049896564
+ * call-seq:
+ *   time._dump   =&gt; string
+ *
+ * Dump _time_ for marshaling.
  */
 
 static VALUE
-time_to_i(VALUE time)
+time_dump(int argc, VALUE *argv, VALUE time)
 {
-    struct time_object *tobj;
+    VALUE str;
 
-    GetTimeval(time, tobj);
-    return LONG2NUM(tobj-&gt;ts.tv_sec);
+    rb_scan_args(argc, argv, &quot;01&quot;, 0);
+    str = time_mdump(time); 
+
+    return str;
 }</pre>
 </body>
 </html>

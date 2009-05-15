@@ -2,35 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>world_readable? (File::Stat)</title>
+  <title>file? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    stat.world_readable? =&gt; fixnum or nil
- *
- * If &lt;i&gt;stat&lt;/i&gt; is readable by others, returns an integer
- * representing the file permission bits of &lt;i&gt;stat&lt;/i&gt;. Returns
- * &lt;code&gt;nil&lt;/code&gt; otherwise. The meaning of the bits is platform
- * dependent; on Unix systems, see &lt;code&gt;stat(2)&lt;/code&gt;.
+ *  call-seq:
+ *     stat.file?    =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;stat&lt;/i&gt; is a regular file (not
+ *  a device file, pipe, socket, etc.).
  *     
- *    m = File.stat(&quot;/etc/passwd&quot;).world_readable?  # =&gt; 420
- *    sprintf(&quot;%o&quot;, m)                              # =&gt; &quot;644&quot;
+ *     File.stat(&quot;testfile&quot;).file?   #=&gt; true
+ *     
  */
 
 static VALUE
-rb_stat_wr(VALUE obj)
+rb_stat_f(VALUE obj)
 {
-#ifdef S_IROTH
-    if ((get_stat(obj)-&gt;st_mode &amp; (S_IROTH)) == S_IROTH) {
-        return UINT2NUM(get_stat(obj)-&gt;st_mode &amp; (S_IRUGO|S_IWUGO|S_IXUGO));
-    }
-    else {
-        return Qnil;
-    }
-#endif
+    if (S_ISREG(get_stat(obj)-&gt;st_mode)) return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

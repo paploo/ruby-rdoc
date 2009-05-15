@@ -2,56 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>fetch (Array)</title>
+  <title>pop (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.fetch(index)                    -&gt; obj
- *     array.fetch(index, default )          -&gt; obj
- *     array.fetch(index) {|index| block }   -&gt; obj
+ *     array.pop    -&gt; obj or nil
+ *     array.pop(n) -&gt; array
  *  
- *  Tries to return the element at position &lt;i&gt;index&lt;/i&gt;. If the index
- *  lies outside the array, the first form throws an
- *  &lt;code&gt;IndexError&lt;/code&gt; exception, the second form returns
- *  &lt;i&gt;default&lt;/i&gt;, and the third form returns the value of invoking
- *  the block, passing in the index. Negative values of &lt;i&gt;index&lt;/i&gt;
- *  count from the end of the array.
+ *  Removes the last element from &lt;i&gt;self&lt;/i&gt; and returns it, or
+ *  &lt;code&gt;nil&lt;/code&gt; if the array is empty.
+ *
+ *  If a number _n_ is given, returns an array of the last n elements
+ *  (or less) just like &lt;code&gt;array.slice!(-n, n)&lt;/code&gt; does.
  *     
- *     a = [ 11, 22, 33, 44 ]
- *     a.fetch(1)               #=&gt; 22
- *     a.fetch(-1)              #=&gt; 44
- *     a.fetch(4, 'cat')        #=&gt; &quot;cat&quot;
- *     a.fetch(4) { |i| i*i }   #=&gt; 16
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
+ *     a.pop     #=&gt; &quot;d&quot;
+ *     a.pop(2)  #=&gt; [&quot;b&quot;, &quot;c&quot;]
+ *     a         #=&gt; [&quot;a&quot;]
  */
 
 static VALUE
-rb_ary_fetch(int argc, VALUE *argv, VALUE ary)
+rb_ary_pop_m(int argc, VALUE *argv, VALUE ary)
 {
-    VALUE pos, ifnone;
-    long block_given;
-    long idx;
+    VALUE result;
 
-    rb_scan_args(argc, argv, &quot;11&quot;, &amp;pos, &amp;ifnone);
-    block_given = rb_block_given_p();
-    if (block_given &amp;&amp; argc == 2) {
-        rb_warn(&quot;block supersedes default value argument&quot;);
+    if (argc == 0) {
+        return rb_ary_pop(ary);
     }
-    idx = NUM2LONG(pos);
 
-    if (idx &lt; 0) {
-        idx +=  RARRAY_LEN(ary);
-    }
-    if (idx &lt; 0 || RARRAY_LEN(ary) &lt;= idx) {
-        if (block_given) return rb_yield(pos);
-        if (argc == 1) {
-            rb_raise(rb_eIndexError, &quot;index %ld out of array&quot;, idx);
-        }
-        return ifnone;
-    }
-    return RARRAY_PTR(ary)[idx];
+    rb_ary_modify_check(ary);
+    result = ary_take_first_or_last(argc, argv, ary, ARY_TAKE_LAST);
+    ARY_INCREASE_LEN(ary, -RARRAY_LEN(result));
+    return result;
 }</pre>
 </body>
 </html>

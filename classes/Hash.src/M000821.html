@@ -2,43 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>default (Hash)</title>
+  <title>length (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.default(key=nil)   =&gt; obj
+ *     hsh.length    =&gt;  fixnum
+ *     hsh.size      =&gt;  fixnum
  *
- *  Returns the default value, the value that would be returned by
- *  &lt;i&gt;hsh&lt;/i&gt;[&lt;i&gt;key&lt;/i&gt;] if &lt;i&gt;key&lt;/i&gt; did not exist in &lt;i&gt;hsh&lt;/i&gt;.
- *  See also &lt;code&gt;Hash::new&lt;/code&gt; and &lt;code&gt;Hash#default=&lt;/code&gt;.
+ *  Returns the number of key-value pairs in the hash.
  *
- *     h = Hash.new                            #=&gt; {}
- *     h.default                               #=&gt; nil
- *     h.default(2)                            #=&gt; nil
- *
- *     h = Hash.new(&quot;cat&quot;)                     #=&gt; {}
- *     h.default                               #=&gt; &quot;cat&quot;
- *     h.default(2)                            #=&gt; &quot;cat&quot;
- *
- *     h = Hash.new {|h,k| h[k] = k.to_i*10}   #=&gt; {}
- *     h.default                               #=&gt; nil
- *     h.default(2)                            #=&gt; 20
+ *     h = { &quot;d&quot; =&gt; 100, &quot;a&quot; =&gt; 200, &quot;v&quot; =&gt; 300, &quot;e&quot; =&gt; 400 }
+ *     h.length        #=&gt; 4
+ *     h.delete(&quot;a&quot;)   #=&gt; 200
+ *     h.length        #=&gt; 3
  */
 
 static VALUE
-rb_hash_default(int argc, VALUE *argv, VALUE hash)
+rb_hash_size(VALUE hash)
 {
-    VALUE key;
-
-    rb_scan_args(argc, argv, &quot;01&quot;, &amp;key);
-    if (FL_TEST(hash, HASH_PROC_DEFAULT)) {
-        if (argc == 0) return Qnil;
-        return rb_funcall(RHASH(hash)-&gt;ifnone, id_yield, 2, hash, key);
-    }
-    return RHASH(hash)-&gt;ifnone;
+    if (!RHASH(hash)-&gt;ntbl)
+        return INT2FIX(0);
+    return INT2FIX(RHASH(hash)-&gt;ntbl-&gt;num_entries);
 }</pre>
 </body>
 </html>

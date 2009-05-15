@@ -2,28 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;&lt; (Array)</title>
+  <title>each (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array &lt;&lt; obj            -&gt; array
+ *     array.each {|item| block }   -&gt;   array
  *  
- *  Append---Pushes the given object on to the end of this array. This
- *  expression returns the array itself, so several appends
- *  may be chained together.
- *
- *     [ 1, 2 ] &lt;&lt; &quot;c&quot; &lt;&lt; &quot;d&quot; &lt;&lt; [ 3, 4 ]
- *             #=&gt;  [ 1, 2, &quot;c&quot;, &quot;d&quot;, [ 3, 4 ] ]
- *
+ *  Calls &lt;i&gt;block&lt;/i&gt; once for each element in &lt;i&gt;self&lt;/i&gt;, passing that
+ *  element as a parameter.
+ *     
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.each {|x| print x, &quot; -- &quot; }
+ *     
+ *  produces:
+ *     
+ *     a -- b -- c --
  */
 
 VALUE
-rb_ary_push(VALUE ary, VALUE item)
+rb_ary_each(VALUE ary)
 {
-    rb_ary_store(ary, RARRAY_LEN(ary), item);
+    long i;
+
+    RETURN_ENUMERATOR(ary, 0, 0);
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        rb_yield(RARRAY_PTR(ary)[i]);
+    }
     return ary;
 }</pre>
 </body>

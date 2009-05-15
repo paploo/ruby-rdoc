@@ -2,12 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>force_quotes? (CSV)</title>
+  <title>header_convert (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1648</span>
-1648:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">force_quotes?</span>()       <span class="ruby-ivar">@force_quotes</span>       <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1743</span>
+1743:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">header_convert</span>(<span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">converter</span>)
+1744:     <span class="ruby-identifier">add_converter</span>( <span class="ruby-identifier">:header_converters</span>,
+1745:                    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">HeaderConverters</span>,
+1746:                    <span class="ruby-identifier">name</span>,
+1747:                    <span class="ruby-operator">&amp;</span><span class="ruby-identifier">converter</span> )
+1748:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

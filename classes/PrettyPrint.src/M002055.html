@@ -2,26 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>text (PrettyPrint)</title>
+  <title>flush (PrettyPrint)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/prettyprint.rb, line 144</span>
-144:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">width</span>=<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">length</span>)
-145:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">empty?</span>
-146:       <span class="ruby-ivar">@output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">obj</span>
-147:       <span class="ruby-ivar">@output_width</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">width</span>
-148:     <span class="ruby-keyword kw">else</span>
-149:       <span class="ruby-identifier">text</span> = <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">last</span>
-150:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Text</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">text</span>
-151:         <span class="ruby-identifier">text</span> = <span class="ruby-constant">Text</span>.<span class="ruby-identifier">new</span>
-152:         <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span>
-153:       <span class="ruby-keyword kw">end</span>
-154:       <span class="ruby-identifier">text</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">width</span>)
-155:       <span class="ruby-ivar">@buffer_width</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">width</span>
-156:       <span class="ruby-identifier">break_outmost_groups</span>
-157:     <span class="ruby-keyword kw">end</span>
-158:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/prettyprint.rb, line 235</span>
+235:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush</span>
+236:     <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">data</span><span class="ruby-operator">|</span>
+237:       <span class="ruby-ivar">@output_width</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">output</span>(<span class="ruby-ivar">@output</span>, <span class="ruby-ivar">@output_width</span>)
+238:     }
+239:     <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">clear</span>
+240:     <span class="ruby-ivar">@buffer_width</span> = <span class="ruby-value">0</span>
+241:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

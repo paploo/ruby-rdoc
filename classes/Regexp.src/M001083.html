@@ -2,30 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Regexp)</title>
+  <title>names (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *    rxp.inspect   =&gt; string
+ *    rxp.names   =&gt; [name1, name2, ...]
  *
- * Produce a nicely formatted string-version of _rxp_. Perhaps surprisingly,
- * &lt;code&gt;#inspect&lt;/code&gt; actually produces the more natural version of
- * the string than &lt;code&gt;#to_s&lt;/code&gt;.
+ * Returns a list of names of captures as an array of strings.
  *
- *      /ab+c/ix.inspect        #=&gt; &quot;/ab+c/ix&quot;
+ *     /(?&lt;foo&gt;.)(?&lt;bar&gt;.)(?&lt;baz&gt;.)/.names
+ *     #=&gt; [&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;]
  *
+ *     /(?&lt;foo&gt;.)(?&lt;foo&gt;.)/.names
+ *     #=&gt; [&quot;foo&quot;]
+ *
+ *     /(.)(.)/.names
+ *     #=&gt; []
  */
 
 static VALUE
-rb_reg_inspect(VALUE re)
+rb_reg_names(VALUE re)
 {
-    if (!RREGEXP(re)-&gt;ptr || !RREGEXP_SRC(re) || !RREGEXP_SRC_PTR(re)) {
-        return rb_any_to_s(re);
-    }
-    return rb_reg_desc(RREGEXP_SRC_PTR(re), RREGEXP_SRC_LEN(re), re);
+    VALUE ary = rb_ary_new();
+    rb_reg_check(re);
+    onig_foreach_name(RREGEXP(re)-&gt;ptr, reg_names_iter, (void*)ary);
+    return ary;
 }</pre>
 </body>
 </html>

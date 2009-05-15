@@ -2,60 +2,45 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>object_id (Object)</title>
+  <title>eql? (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.hash    =&gt; fixnum
+ *     obj == other        =&gt; true or false
+ *     obj.equal?(other)   =&gt; true or false
+ *     obj.eql?(other)     =&gt; true or false
+ *  
+ *  Equality---At the &lt;code&gt;Object&lt;/code&gt; level, &lt;code&gt;==&lt;/code&gt; returns
+ *  &lt;code&gt;true&lt;/code&gt; only if &lt;i&gt;obj&lt;/i&gt; and &lt;i&gt;other&lt;/i&gt; are the
+ *  same object. Typically, this method is overridden in descendent
+ *  classes to provide class-specific meaning.
  *
- *  Generates a &lt;code&gt;Fixnum&lt;/code&gt; hash value for this object. This
- *  function must have the property that &lt;code&gt;a.eql?(b)&lt;/code&gt; implies
- *  &lt;code&gt;a.hash == b.hash&lt;/code&gt;. The hash value is used by class
- *  &lt;code&gt;Hash&lt;/code&gt;. Any hash value that exceeds the capacity of a
- *  &lt;code&gt;Fixnum&lt;/code&gt; will be truncated before being used.
+ *  Unlike &lt;code&gt;==&lt;/code&gt;, the &lt;code&gt;equal?&lt;/code&gt; method should never be
+ *  overridden by subclasses: it is used to determine object identity
+ *  (that is, &lt;code&gt;a.equal?(b)&lt;/code&gt; iff &lt;code&gt;a&lt;/code&gt; is the same
+ *  object as &lt;code&gt;b&lt;/code&gt;).
+ *
+ *  The &lt;code&gt;eql?&lt;/code&gt; method returns &lt;code&gt;true&lt;/code&gt; if
+ *  &lt;i&gt;obj&lt;/i&gt; and &lt;i&gt;anObject&lt;/i&gt; have the same value. Used by
+ *  &lt;code&gt;Hash&lt;/code&gt; to test members for equality.  For objects of
+ *  class &lt;code&gt;Object&lt;/code&gt;, &lt;code&gt;eql?&lt;/code&gt; is synonymous with
+ *  &lt;code&gt;==&lt;/code&gt;. Subclasses normally continue this tradition, but
+ *  there are exceptions. &lt;code&gt;Numeric&lt;/code&gt; types, for example,
+ *  perform type conversion across &lt;code&gt;==&lt;/code&gt;, but not across
+ *  &lt;code&gt;eql?&lt;/code&gt;, so:
+ *     
+ *     1 == 1.0     #=&gt; true
+ *     1.eql? 1.0   #=&gt; false
  */
 
 VALUE
-rb_obj_id(VALUE obj)
+rb_obj_equal(VALUE obj1, VALUE obj2)
 {
-    /*
-     *                32-bit VALUE space
-     *          MSB ------------------------ LSB
-     *  false   00000000000000000000000000000000
-     *  true    00000000000000000000000000000010
-     *  nil     00000000000000000000000000000100
-     *  undef   00000000000000000000000000000110
-     *  symbol  ssssssssssssssssssssssss00001110
-     *  object  oooooooooooooooooooooooooooooo00        = 0 (mod sizeof(RVALUE))
-     *  fixnum  fffffffffffffffffffffffffffffff1
-     *
-     *                    object_id space
-     *                                       LSB
-     *  false   00000000000000000000000000000000
-     *  true    00000000000000000000000000000010
-     *  nil     00000000000000000000000000000100
-     *  undef   00000000000000000000000000000110
-     *  symbol   000SSSSSSSSSSSSSSSSSSSSSSSSSSS0        S...S % A = 4 (S...S = s...s * A + 4)
-     *  object   oooooooooooooooooooooooooooooo0        o...o % A = 0
-     *  fixnum  fffffffffffffffffffffffffffffff1        bignum if required
-     *
-     *  where A = sizeof(RVALUE)/4
-     *
-     *  sizeof(RVALUE) is
-     *  20 if 32-bit, double is 4-byte aligned
-     *  24 if 32-bit, double is 8-byte aligned
-     *  40 if 64-bit
-     */
-    if (TYPE(obj) == T_SYMBOL) {
-        return (SYM2ID(obj) * sizeof(RVALUE) + (4 &lt;&lt; 2)) | FIXNUM_FLAG;
-    }
-    if (SPECIAL_CONST_P(obj)) {
-        return LONG2NUM((SIGNED_VALUE)obj);
-    }
-    return (VALUE)((SIGNED_VALUE)obj|FIXNUM_FLAG);
+    if (obj1 == obj2) return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

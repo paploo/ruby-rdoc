@@ -2,29 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>unlink (File)</title>
+  <title>absolute_path (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.delete(file_name, ...)  =&gt; integer
- *     File.unlink(file_name, ...)  =&gt; integer
+ *     File.absolute_path(file_name [, dir_string] ) -&gt; abs_file_name
  *  
- *  Deletes the named files, returning the number of names
- *  passed as arguments. Raises an exception on any error.
- *  See also &lt;code&gt;Dir::rmdir&lt;/code&gt;.
+ *  Converts a pathname to an absolute pathname. Relative paths are
+ *  referenced from the current working directory of the process unless
+ *  &lt;i&gt;dir_string&lt;/i&gt; is given, in which case it will be used as the
+ *  starting point. If the given pathname starts with a ``&lt;code&gt;~&lt;/code&gt;''
+ *  it is NOT expanded, it is treated as a normal directory name.
+ *     
+ *     File.absolute_path(&quot;~oracle/bin&quot;)       #=&gt; &quot;&lt;relative_path&gt;/~oracle/bin&quot;
  */
 
-static VALUE
-rb_file_s_unlink(VALUE klass, VALUE args)
+VALUE
+rb_file_s_absolute_path(int argc, VALUE *argv)
 {
-    long n;
+    VALUE fname, dname;
 
-    rb_secure(2);
-    n = apply2files(unlink_internal, args, 0);
-    return LONG2FIX(n);
+    if (argc == 1) {
+        return rb_file_absolute_path(argv[0], Qnil);
+    }
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;fname, &amp;dname);
+
+    return rb_file_absolute_path(fname, dname);
 }</pre>
 </body>
 </html>

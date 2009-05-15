@@ -2,19 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chop_basename (Pathname)</title>
+  <title>add_trailing_separator (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 275</span>
-275:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
-276:     <span class="ruby-identifier">base</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)
-277:     <span class="ruby-keyword kw">if</span> <span class="ruby-node">/\A#{SEPARATOR_PAT}?\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">base</span>
-278:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
-279:     <span class="ruby-keyword kw">else</span>
-280:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">path</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-identifier">base</span>)], <span class="ruby-identifier">base</span>
-281:     <span class="ruby-keyword kw">end</span>
-282:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 387</span>
+387:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_trailing_separator</span>(<span class="ruby-identifier">path</span>)
+388:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'a'</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'a'</span>
+389:       <span class="ruby-identifier">path</span>
+390:     <span class="ruby-keyword kw">else</span>
+391:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-comment cmt"># xxx: Is File.join is appropriate to add separator?</span>
+392:     <span class="ruby-keyword kw">end</span>
+393:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,23 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>[]= (Thread)</title>
+  <title>alive? (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *      thr[sym] = obj   =&gt; obj
+ *     thr.alive?   =&gt; true or false
  *
- *  Attribute Assignment---Sets or creates the value of a thread-local variable,
- *  using either a symbol or a string. See also &lt;code&gt;Thread#[]&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;thr&lt;/i&gt; is running or sleeping.
+ *
+ *     thr = Thread.new { }
+ *     thr.join                #=&gt; #&lt;Thread:0x401b3fb0 dead&gt;
+ *     Thread.current.alive?   #=&gt; true
+ *     thr.alive?              #=&gt; false
  */
 
 static VALUE
-rb_thread_aset(VALUE self, ID id, VALUE val)
+rb_thread_alive_p(VALUE thread)
 {
-    return rb_thread_local_aset(self, rb_to_id(id), val);
+    rb_thread_t *th;
+    GetThreadPtr(thread, th);
+
+    if (rb_thread_dead(th))
+        return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

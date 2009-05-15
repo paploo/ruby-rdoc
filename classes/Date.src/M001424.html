@@ -2,15 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>jd (Date)</title>
+  <title>strptime (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/date.rb, line 772</span>
-772:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">jd</span>(<span class="ruby-identifier">jd</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
-773:     <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">_valid_jd?</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">sg</span>)
-774:     <span class="ruby-identifier">new!</span>(<span class="ruby-identifier">jd_to_ajd</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>)
-775:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1044</span>
+1044:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">strptime</span>(<span class="ruby-identifier">str</span>=<span class="ruby-value str">'-4712-01-01'</span>, <span class="ruby-identifier">fmt</span>=<span class="ruby-value str">'%F'</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
+1045:     <span class="ruby-identifier">elem</span> = <span class="ruby-identifier">_strptime</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">fmt</span>)
+1046:     <span class="ruby-identifier">new_by_frags</span>(<span class="ruby-identifier">elem</span>, <span class="ruby-identifier">sg</span>)
+1047:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

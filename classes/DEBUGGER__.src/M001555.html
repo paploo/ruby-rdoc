@@ -2,21 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>display_expressions (DEBUGGER__)</title>
+  <title>line_at (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 555</span>
-555:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_expressions</span>(<span class="ruby-identifier">binding</span>)
-556:     <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
-557:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">d</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">display</span>
-558:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>]
-559:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%d: &quot;</span>, <span class="ruby-identifier">n</span>
-560:         <span class="ruby-identifier">display_expression</span>(<span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">binding</span>)
-561:       <span class="ruby-keyword kw">end</span>
-562:       <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-563:     <span class="ruby-keyword kw">end</span>
-564:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 611</span>
+611:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">line_at</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>)
+612:     <span class="ruby-identifier">lines</span> = <span class="ruby-constant">SCRIPT_LINES__</span>[<span class="ruby-identifier">file</span>]
+613:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lines</span>
+614:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lines</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">true</span>
+615:       <span class="ruby-identifier">line</span> = <span class="ruby-identifier">lines</span>[<span class="ruby-identifier">line</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+616:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>
+617:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">line</span>
+618:     <span class="ruby-keyword kw">end</span>
+619:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;\n&quot;</span>
+620:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

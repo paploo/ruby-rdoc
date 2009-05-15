@@ -2,28 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ljust (String)</title>
+  <title>chomp (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.ljust(integer, padstr=' ')   =&gt; new_str
+ *     str.chomp(separator=$/)   =&gt; new_str
  *  
- *  If &lt;i&gt;integer&lt;/i&gt; is greater than the length of &lt;i&gt;str&lt;/i&gt;, returns a new
- *  &lt;code&gt;String&lt;/code&gt; of length &lt;i&gt;integer&lt;/i&gt; with &lt;i&gt;str&lt;/i&gt; left justified
- *  and padded with &lt;i&gt;padstr&lt;/i&gt;; otherwise, returns &lt;i&gt;str&lt;/i&gt;.
+ *  Returns a new &lt;code&gt;String&lt;/code&gt; with the given record separator removed
+ *  from the end of &lt;i&gt;str&lt;/i&gt; (if present). If &lt;code&gt;$/&lt;/code&gt; has not been
+ *  changed from the default Ruby record separator, then &lt;code&gt;chomp&lt;/code&gt; also
+ *  removes carriage return characters (that is it will remove &lt;code&gt;\n&lt;/code&gt;,
+ *  &lt;code&gt;\r&lt;/code&gt;, and &lt;code&gt;\r\n&lt;/code&gt;).
  *     
- *     &quot;hello&quot;.ljust(4)            #=&gt; &quot;hello&quot;
- *     &quot;hello&quot;.ljust(20)           #=&gt; &quot;hello               &quot;
- *     &quot;hello&quot;.ljust(20, '1234')   #=&gt; &quot;hello123412341234123&quot;
+ *     &quot;hello&quot;.chomp            #=&gt; &quot;hello&quot;
+ *     &quot;hello\n&quot;.chomp          #=&gt; &quot;hello&quot;
+ *     &quot;hello\r\n&quot;.chomp        #=&gt; &quot;hello&quot;
+ *     &quot;hello\n\r&quot;.chomp        #=&gt; &quot;hello\n&quot;
+ *     &quot;hello\r&quot;.chomp          #=&gt; &quot;hello&quot;
+ *     &quot;hello \n there&quot;.chomp   #=&gt; &quot;hello \n there&quot;
+ *     &quot;hello&quot;.chomp(&quot;llo&quot;)     #=&gt; &quot;he&quot;
  */
 
 static VALUE
-rb_str_ljust(int argc, VALUE *argv, VALUE str)
+rb_str_chomp(int argc, VALUE *argv, VALUE str)
 {
-    return rb_str_justify(argc, argv, str, 'l');
+    str = rb_str_dup(str);
+    rb_str_chomp_bang(argc, argv, str);
+    return str;
 }</pre>
 </body>
 </html>

@@ -2,21 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mountpoint? (Pathname)</title>
+  <title>ascend (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 476</span>
-476:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mountpoint?</span>
-477:     <span class="ruby-keyword kw">begin</span>
-478:       <span class="ruby-identifier">stat1</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">lstat</span>
-479:       <span class="ruby-identifier">stat2</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">lstat</span>
-480:       <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">||</span>
-481:         <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span>
-482:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
-483:       <span class="ruby-keyword kw">false</span>
-484:     <span class="ruby-keyword kw">end</span>
-485:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 594</span>
+594:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ascend</span>
+595:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+596:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+597:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+598:       <span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">r</span>
+599:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
+600:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>))
+601:     <span class="ruby-keyword kw">end</span>
+602:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

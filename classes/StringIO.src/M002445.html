@@ -2,19 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>flush (StringIO)</title>
+  <title>sync (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns *strio* itself.  Just for compatibility to IO.
+ * call-seq:
+ *   strio.sync    -&gt; true
+ *
+ * Returns +true+ always.
  */
 static VALUE
-strio_self(VALUE self)
+strio_get_sync(VALUE self)
 {
     StringIO(self);
-    return self;
+    return Qtrue;
 }</pre>
 </body>
 </html>

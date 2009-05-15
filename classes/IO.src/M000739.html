@@ -2,34 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>putc (IO)</title>
+  <title>each_char (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.putc(obj)    =&gt; obj
+ *     ios.each_char {|c| block }  =&gt; ios
  *
- *  If &lt;i&gt;obj&lt;/i&gt; is &lt;code&gt;Numeric&lt;/code&gt;, write the character whose
- *  code is &lt;i&gt;obj&lt;/i&gt;, otherwise write the first character of the
- *  string representation of  &lt;i&gt;obj&lt;/i&gt; to &lt;em&gt;ios&lt;/em&gt;.
+ *  Calls the given block once for each character in &lt;em&gt;ios&lt;/em&gt;,
+ *  passing the character as an argument. The stream must be opened for
+ *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
  *
- *     $stdout.putc &quot;A&quot;
- *     $stdout.putc 65
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     AA
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.each_char {|c| print c, ' ' }   #=&gt; #&lt;File:testfile&gt;
  */
 
 static VALUE
-rb_io_putc(VALUE io, VALUE ch)
+rb_io_each_char(VALUE io)
 {
-    char c = NUM2CHR(ch);
+    rb_io_t *fptr;
+    rb_encoding *enc;
+    VALUE c;
 
-    rb_io_write(io, rb_str_new(&amp;c, 1));
-    return ch;
+    RETURN_ENUMERATOR(io, 0, 0);
+    GetOpenFile(io, fptr);
+    rb_io_check_readable(fptr);
+
+    enc = io_input_encoding(fptr);
+    READ_CHECK(fptr);
+    while (!NIL_P(c = io_getc(fptr, enc))) {
+        rb_yield(c);
+    }
+    return io;
 }</pre>
 </body>
 </html>

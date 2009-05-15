@@ -2,39 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rassoc (Array)</title>
+  <title>uniq (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.rassoc(obj) -&gt; an_array or nil
+ *     array.uniq   -&gt; an_array
  *  
- *  Searches through the array whose elements are also arrays. Compares
- *  _obj_ with the second element of each contained array using
- *  &lt;code&gt;==&lt;/code&gt;. Returns the first contained array that matches. See
- *  also &lt;code&gt;Array#assoc&lt;/code&gt;.
+ *  Returns a new array by removing duplicate values in &lt;i&gt;self&lt;/i&gt;.
  *     
- *     a = [ [ 1, &quot;one&quot;], [2, &quot;two&quot;], [3, &quot;three&quot;], [&quot;ii&quot;, &quot;two&quot;] ]
- *     a.rassoc(&quot;two&quot;)    #=&gt; [2, &quot;two&quot;]
- *     a.rassoc(&quot;four&quot;)   #=&gt; nil
+ *     a = [ &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.uniq   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
  */
 
-VALUE
-rb_ary_rassoc(VALUE ary, VALUE value)
+static VALUE
+rb_ary_uniq(VALUE ary)
 {
-    long i;
-    VALUE v;
-
-    for (i = 0; i &lt; RARRAY_LEN(ary); ++i) {
-        v = RARRAY_PTR(ary)[i];
-        if (TYPE(v) == T_ARRAY &amp;&amp;
-            RARRAY_LEN(v) &gt; 1 &amp;&amp;
-            rb_equal(RARRAY_PTR(v)[1], value))
-            return v;
-    }
-    return Qnil;
+    ary = rb_ary_dup(ary);
+    rb_ary_uniq_bang(ary);
+    return ary;
 }</pre>
 </body>
 </html>

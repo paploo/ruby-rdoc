@@ -2,40 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>call (Proc)</title>
+  <title>== (Proc)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     prc === obj   =&gt; obj
- *  
- *  Invokes the block, with &lt;i&gt;obj&lt;/i&gt; as the block's parameter.  It is
- *  to allow a proc object to be a target of when clause in the case statement.
+ * call-seq:
+ *   prc == other_proc   =&gt;  true or false
+ *
+ * Return &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;prc&lt;/i&gt; is the same object as
+ * &lt;i&gt;other_proc&lt;/i&gt;, or if they are both procs with the same body.
  */
 
 static VALUE
-proc_call(int argc, VALUE *argv, VALUE procval)
+proc_eq(VALUE self, VALUE other)
 {
-    rb_proc_t *proc;
-    rb_block_t *blockptr = 0;
-    rb_iseq_t *iseq;
-    GetProcPtr(procval, proc);
-
-    iseq = proc-&gt;block.iseq;
-    if (BUILTIN_TYPE(iseq) == T_NODE || iseq-&gt;arg_block != -1) {
-        if (rb_block_given_p()) {
-            rb_proc_t *proc;
-            VALUE procval;
-            procval = rb_block_proc();
-            GetProcPtr(procval, proc);
-            blockptr = &amp;proc-&gt;block;
+    if (self == other) {
+        return Qtrue;
+    }
+    else {
+        if (TYPE(other)          == T_DATA &amp;&amp;
+            RDATA(other)-&gt;dmark  == proc_mark) {
+            rb_proc_t *p1, *p2;
+            GetProcPtr(self, p1);
+            GetProcPtr(other, p2);
+            if (p1-&gt;envval == p2-&gt;envval &amp;&amp;
+                p1-&gt;block.iseq-&gt;iseq_size == p2-&gt;block.iseq-&gt;iseq_size &amp;&amp;
+                p1-&gt;block.iseq-&gt;local_size == p2-&gt;block.iseq-&gt;local_size &amp;&amp;
+                MEMCMP(p1-&gt;block.iseq-&gt;iseq, p2-&gt;block.iseq-&gt;iseq, VALUE,
+                       p1-&gt;block.iseq-&gt;iseq_size) == 0) {
+                return Qtrue;
+            }
         }
     }
-
-    return rb_vm_invoke_proc(GET_THREAD(), proc, proc-&gt;block.self,
-                             argc, argv, blockptr);
+    return Qfalse;
 }</pre>
 </body>
 </html>

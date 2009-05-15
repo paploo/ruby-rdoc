@@ -2,19 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>must_C_version (StringScanner)</title>
+  <title>concat (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: StringScanner.must_C_version
+ * call-seq:
+ *   concat(str)
+ *   &lt;&lt;(str)
  *
- * This method is defined for backward compatibility.
+ * Appends +str+ to the string being scanned.
+ * This method does not affect scan pointer.
+ *
+ *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
+ *   s.scan(/Fri /)
+ *   s &lt;&lt; &quot; +1000 GMT&quot;
+ *   s.string            # -&gt; &quot;Fri Dec 12 1975 14:39 +1000 GMT&quot;
+ *   s.scan(/Dec/)       # -&gt; &quot;Dec&quot;
  */
 static VALUE
-strscan_s_mustc(VALUE self)
+strscan_concat(VALUE self, VALUE str)
 {
+    struct strscanner *p;
+
+    GET_SCANNER(self, p);
+    StringValue(str);
+    rb_str_append(p-&gt;str, str);
     return self;
 }</pre>
 </body>

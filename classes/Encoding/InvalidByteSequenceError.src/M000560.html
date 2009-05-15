@@ -2,21 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>source_encoding_name (Encoding::InvalidByteSequenceError)</title>
+  <title>incomplete_input? (Encoding::InvalidByteSequenceError)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   ecerr.source_encoding_name         -&gt; string
+ *   ecerr.incomplete_input?         -&gt; true or false
  *
- * Returns the source encoding name as a string.
+ * Returns true if the invalid byte sequence error is caused by
+ * premature end of string.
+ *
+ *  ec = Encoding::Converter.new(&quot;EUC-JP&quot;, &quot;ISO-8859-1&quot;)
+ *
+ *  begin
+ *    ec.convert(&quot;abc\xA1z&quot;)
+ *  rescue Encoding::InvalidByteSequenceError
+ *    p $!      #=&gt; #&lt;Encoding::InvalidByteSequenceError: &quot;\xA1&quot; followed by &quot;z&quot; on EUC-JP&gt;
+ *    p $!.incomplete_input?    #=&gt; false
+ *  end
+ *
+ *  begin
+ *    ec.convert(&quot;abc\xA1&quot;)
+ *    ec.finish
+ *  rescue Encoding::InvalidByteSequenceError
+ *    p $!      #=&gt; #&lt;Encoding::InvalidByteSequenceError: incomplete &quot;\xA1&quot; on EUC-JP&gt;
+ *    p $!.incomplete_input?    #=&gt; true
+ *  end
  */
 static VALUE
-ecerr_source_encoding_name(VALUE self)
+ecerr_incomplete_input(VALUE self)
 {
-    return rb_attr_get(self, rb_intern(&quot;source_encoding_name&quot;));
+    return rb_attr_get(self, rb_intern(&quot;incomplete_input&quot;));
 }</pre>
 </body>
 </html>

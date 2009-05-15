@@ -2,64 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Dir)</title>
+  <title>tell (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Dir.new( string ) -&gt; aDir
+ *     dir.pos =&gt; integer
+ *     dir.tell =&gt; integer
  *
- *  Returns a new directory object for the named directory.
+ *  Returns the current position in &lt;em&gt;dir&lt;/em&gt;. See also
+ *  &lt;code&gt;Dir#seek&lt;/code&gt;.
+ *
+ *     d = Dir.new(&quot;testdir&quot;)
+ *     d.tell   #=&gt; 0
+ *     d.read   #=&gt; &quot;.&quot;
+ *     d.tell   #=&gt; 12
  */
 static VALUE
-dir_initialize(int argc, VALUE *argv, VALUE dir)
+dir_tell(VALUE dir)
 {
-    struct dir_data *dp;
-    rb_encoding  *fsenc;
-    VALUE dirname, opt;
-    static VALUE sym_enc;
+#ifdef HAVE_TELLDIR
+    struct dir_data *dirp;
+    long pos;
 
-    if (!sym_enc) {
-        sym_enc = ID2SYM(rb_intern(&quot;encoding&quot;));
-    }
-    fsenc = rb_filesystem_encoding();
-
-    rb_scan_args(argc, argv, &quot;11&quot;, &amp;dirname, &amp;opt);
-
-    if (!NIL_P(opt)) {
-        VALUE v, enc=Qnil;
-        opt = rb_convert_type(opt, T_HASH, &quot;Hash&quot;, &quot;to_hash&quot;);
-
-        v = rb_hash_aref(opt, sym_enc);
-        if (!NIL_P(v)) enc = v;
-
-        if (!NIL_P(enc)) {
-            fsenc = rb_to_encoding(enc);
-        }
-    }
-
-    FilePathValue(dirname);
-
-    Data_Get_Struct(dir, struct dir_data, dp);
-    if (dp-&gt;dir) closedir(dp-&gt;dir);
-    dp-&gt;dir = NULL;
-    dp-&gt;path = Qnil;
-    dp-&gt;enc = fsenc;
-    dp-&gt;dir = opendir(RSTRING_PTR(dirname));
-    if (dp-&gt;dir == NULL) {
-        if (errno == EMFILE || errno == ENFILE) {
-            rb_gc();
-            dp-&gt;dir = opendir(RSTRING_PTR(dirname));
-        }
-        if (dp-&gt;dir == NULL) {
-            rb_sys_fail(RSTRING_PTR(dirname));
-        }
-    }
-    dp-&gt;path = rb_str_dup_frozen(dirname);
-
-    return dir;
+    GetDIR(dir, dirp);
+    pos = telldir(dirp-&gt;dir);
+    return rb_int2inum(pos);
+#else
+    rb_notimplement();
+#endif
 }</pre>
 </body>
 </html>

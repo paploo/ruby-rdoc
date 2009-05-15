@@ -2,20 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ascend (Pathname)</title>
+  <title>each_line (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 573</span>
-573:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ascend</span>
-574:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
-575:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
-576:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
-577:       <span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">r</span>
-578:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
-579:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>))
-580:     <span class="ruby-keyword kw">end</span>
-581:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 770</span>
+770:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_line</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: line</span>
+771:     <span class="ruby-constant">IO</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+772:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

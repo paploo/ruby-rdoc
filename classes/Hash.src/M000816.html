@@ -2,23 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hash (Hash)</title>
+  <title>default= (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.hash   -&gt; fixnum
+ *     hsh.default = obj     =&gt; obj
  *
- *  Compute a hash-code for this array. Two arrays with the same content
- *  will have the same hash code (and will compare using &lt;code&gt;eql?&lt;/code&gt;).
+ *  Sets the default value, the value returned for a key that does not
+ *  exist in the hash. It is not possible to set the a default to a
+ *  &lt;code&gt;Proc&lt;/code&gt; that will be executed on each key lookup.
+ *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.default = &quot;Go fish&quot;
+ *     h[&quot;a&quot;]     #=&gt; 100
+ *     h[&quot;z&quot;]     #=&gt; &quot;Go fish&quot;
+ *     # This doesn't do what you might hope...
+ *     h.default = proc do |hash, key|
+ *       hash[key] = key + key
+ *     end
+ *     h[2]       #=&gt; #&lt;Proc:0x401b3948@-:6&gt;
+ *     h[&quot;cat&quot;]   #=&gt; #&lt;Proc:0x401b3948@-:6&gt;
  */
 
 static VALUE
-rb_hash_hash(VALUE hash)
+rb_hash_set_default(VALUE hash, VALUE ifnone)
 {
-    return rb_exec_recursive(recursive_hash, hash, 0);
+    rb_hash_modify(hash);
+    RHASH(hash)-&gt;ifnone = ifnone;
+    FL_UNSET(hash, HASH_PROC_DEFAULT);
+    return ifnone;
 }</pre>
 </body>
 </html>

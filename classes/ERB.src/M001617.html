@@ -2,14 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>version (ERB)</title>
+  <title>def_module (ERB)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 260</span>
-260:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span>
-261:     <span class="ruby-node">&quot;erb.rb [2.1.0 #{ERB::Revision.split[1]}]&quot;</span>
-262:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/erb.rb, line 782</span>
+782:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_module</span>(<span class="ruby-identifier">methodname</span>=<span class="ruby-value str">'erb'</span>)
+783:     <span class="ruby-identifier">mod</span> = <span class="ruby-constant">Module</span>.<span class="ruby-identifier">new</span>
+784:     <span class="ruby-identifier">def_method</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">methodname</span>, <span class="ruby-ivar">@filename</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'(ERB)'</span>)
+785:     <span class="ruby-identifier">mod</span>
+786:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

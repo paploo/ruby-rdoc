@@ -2,46 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>determinant_e (Matrix)</title>
+  <title>transpose (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 717</span>
-717:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">determinant_e</span>
-718:     <span class="ruby-keyword kw">return</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">square?</span>
-719:     
-720:     <span class="ruby-identifier">size</span> = <span class="ruby-identifier">row_size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
-721:     <span class="ruby-identifier">a</span> = <span class="ruby-identifier">to_a</span>
-722:     
-723:     <span class="ruby-identifier">det</span> = <span class="ruby-value">1</span>
-724:     <span class="ruby-identifier">k</span> = <span class="ruby-value">0</span>
-725:     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
-726:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>].<span class="ruby-identifier">zero?</span>
-727:         <span class="ruby-identifier">i</span> = <span class="ruby-identifier">k</span>
-728:         <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
-729:           <span class="ruby-keyword kw">return</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span>
-730:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>].<span class="ruby-identifier">zero?</span>
-731:         <span class="ruby-keyword kw">end</span>
-732:         <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>]
-733:         <span class="ruby-identifier">det</span> <span class="ruby-operator">*=</span> <span class="ruby-value">-1</span>
-734:       <span class="ruby-keyword kw">end</span>
-735: 
-736:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> (<span class="ruby-identifier">k</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)<span class="ruby-operator">..</span><span class="ruby-identifier">size</span>
-737:         <span class="ruby-identifier">q</span> = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>].<span class="ruby-identifier">quo</span>(<span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>])
-738:         <span class="ruby-identifier">k</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">size</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
-739:           <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">q</span>
-740:         <span class="ruby-keyword kw">end</span>
-741:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>].<span class="ruby-identifier">zero?</span>
-742:           <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>], <span class="ruby-identifier">a</span>[<span class="ruby-identifier">i</span>]
-743:           <span class="ruby-identifier">det</span> <span class="ruby-operator">*=</span> <span class="ruby-value">-1</span>
-744:           <span class="ruby-keyword kw">redo</span>
-745:         <span class="ruby-keyword kw">end</span>
-746:       <span class="ruby-keyword kw">end</span>
-747:       <span class="ruby-identifier">det</span> <span class="ruby-operator">*=</span> <span class="ruby-identifier">a</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>]
-748:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">k</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">size</span>
-749:     <span class="ruby-keyword kw">end</span>
-750:     <span class="ruby-identifier">det</span>
-751:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 880</span>
+880:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transpose</span>
+881:     <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">columns</span>(<span class="ruby-ivar">@rows</span>)
+882:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

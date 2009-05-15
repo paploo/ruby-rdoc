@@ -2,28 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>dummy? (Encoding)</title>
+  <title>default_external (Encoding)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   enc.dummy? =&gt; true or false
+ *   Encoding.default_external =&gt; enc
  *
- * Returns true for dummy encodings.
- * A dummy encoding is an encoding for which character handling is not properly
- * implemented.
- * It is used for stateful encodings.
+ * Returns default external encoding.
  *
- *   Encoding::ISO_2022_JP.dummy?       #=&gt; true
- *   Encoding::UTF_8.dummy?             #=&gt; false
- *
+ * It is initialized by the locale or -E option.
  */
 static VALUE
-enc_dummy_p(VALUE enc)
+get_default_external(VALUE klass)
 {
-    return ENC_DUMMY_P(enc_table.list[must_encoding(enc)].enc) ? Qtrue : Qfalse;
+    return rb_enc_default_external();
 }</pre>
 </body>
 </html>

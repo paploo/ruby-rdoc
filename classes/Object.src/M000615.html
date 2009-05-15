@@ -2,50 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (Object)</title>
+  <title>instance_variables (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.inspect   =&gt; string
- *  
- *  Returns a string containing a human-readable representation of
- *  &lt;i&gt;obj&lt;/i&gt;. If not overridden, uses the &lt;code&gt;to_s&lt;/code&gt; method to
- *  generate the string.
- *     
- *     [ 1, 2, 3..4, 'five' ].inspect   #=&gt; &quot;[1, 2, 3..4, \&quot;five\&quot;]&quot;
- *     Time.new.inspect                 #=&gt; &quot;2008-03-08 19:43:39 +0900&quot;
+ *     obj.instance_variables    =&gt; array
+ *
+ *  Returns an array of instance variable names for the receiver. Note
+ *  that simply defining an accessor does not create the corresponding
+ *  instance variable.
+ *
+ *     class Fred
+ *       attr_accessor :a1
+ *       def initialize
+ *         @iv = 3
+ *       end
+ *     end
+ *     Fred.new.instance_variables   #=&gt; [:@iv]
  */
 
-
-static VALUE
-rb_obj_inspect(VALUE obj)
+VALUE
+rb_obj_instance_variables(VALUE obj)
 {
+    VALUE ary;
 
-    if (TYPE(obj) == T_OBJECT) {
-        int has_ivar = 0;
-        VALUE *ptr = ROBJECT_IVPTR(obj);
-        long len = ROBJECT_NUMIV(obj);
-        long i;
-
-        for (i = 0; i &lt; len; i++) {
-            if (ptr[i] != Qundef) {
-                has_ivar = 1;
-                break;
-            }
-        }
-
-        if (has_ivar) {
-            VALUE str;
-            const char *c = rb_obj_classname(obj);
-
-            str = rb_sprintf(&quot;-&lt;%s:%p&quot;, c, (void*)obj);
-            return rb_exec_recursive(inspect_obj, obj, str);
-        }
-    }
-    return rb_funcall(obj, rb_intern(&quot;to_s&quot;), 0, 0);
+    ary = rb_ary_new();
+    rb_ivar_foreach(obj, ivar_i, ary);
+    return ary;
 }</pre>
 </body>
 </html>

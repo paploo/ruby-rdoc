@@ -2,22 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (Set)</title>
+  <title>replace (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/set.rb, line 67</span>
-67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">enum</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yields: o</span>
-68:     <span class="ruby-ivar">@hash</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-69: 
-70:     <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">return</span>
-71: 
-72:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
-73:       <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">block</span>[<span class="ruby-identifier">o</span>]) }
-74:     <span class="ruby-keyword kw">else</span>
-75:       <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">enum</span>)
-76:     <span class="ruby-keyword kw">end</span>
-77:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 121</span>
+121:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replace</span>(<span class="ruby-identifier">enum</span>)
+122:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>
+123:       <span class="ruby-ivar">@hash</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">enum</span>.<span class="ruby-identifier">instance_eval</span> { <span class="ruby-ivar">@hash</span> })
+124:     <span class="ruby-keyword kw">else</span>
+125:       <span class="ruby-identifier">clear</span>
+126:       <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">o</span>) }
+127:     <span class="ruby-keyword kw">end</span>
+128: 
+129:     <span class="ruby-keyword kw">self</span>
+130:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,22 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>div (Fixnum)</title>
+  <title>abs (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   fix.div(numeric)   =&gt;  numeric_result
+ *  call-seq:
+ *     fix.abs -&gt; aFixnum
  *
- * Performs integer division: returns integer value.
+ *  Returns the absolute value of &lt;i&gt;fix&lt;/i&gt;.
+ *
+ *     -12345.abs   #=&gt; 12345
+ *     12345.abs    #=&gt; 12345
+ *
  */
 
 static VALUE
-fix_idiv(VALUE x, VALUE y)
+fix_abs(VALUE fix)
 {
-    return fix_divide(x, y, rb_intern(&quot;div&quot;));
+    long i = FIX2LONG(fix);
+
+    if (i &lt; 0) i = -i;
+
+    return LONG2NUM(i);
 }</pre>
 </body>
 </html>

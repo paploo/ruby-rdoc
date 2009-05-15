@@ -2,27 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>clone (Method)</title>
+  <title>to_proc (Method)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * MISSING: documentation
+ *  call-seq:
+ *     meth.to_proc    =&gt; prc
+ *  
+ *  Returns a &lt;code&gt;Proc&lt;/code&gt; object corresponding to this method.
  */
 
 static VALUE
-method_clone(VALUE self)
+method_proc(VALUE method)
 {
-    VALUE clone;
-    struct METHOD *orig, *data;
-
-    Data_Get_Struct(self, struct METHOD, orig);
-    clone = Data_Make_Struct(CLASS_OF(self), struct METHOD, bm_mark, -1, data);
-    CLONESETUP(clone, self);
-    *data = *orig;
-
-    return clone;
+    VALUE procval;
+    rb_proc_t *proc;
+    /*
+     * class Method
+     *   def to_proc
+     *     proc{|*args|
+     *       self.call(*args)
+     *     }
+     *   end
+     * end
+     */
+    procval = rb_iterate(mlambda, 0, bmcall, method);
+    GetProcPtr(procval, proc);
+    proc-&gt;is_from_method = 1;
+    return procval;
 }</pre>
 </body>
 </html>

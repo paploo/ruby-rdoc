@@ -2,39 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>conv (Iconv)</title>
+  <title>charset_map (Iconv)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Document-method: conv
- * call-seq: conv(str...)
+ * Document-method: charset_map
+ * call-seq: Iconv.charset_map
  *
- * Equivalent to
- *
- *   iconv(nil, str..., nil).join
+ * Returns the map from canonical name to system dependent name.
  */
 static VALUE
-iconv_conv(int argc, VALUE *argv, VALUE self)
+charset_map_get(void)
 {
-    iconv_t cd = VALUE2ICONV(check_iconv(self));
-    VALUE str, s;
-    int toidx = ENCODING_GET(self);
-
-    str = iconv_convert(cd, Qnil, 0, 0, toidx, NULL);
-    if (argc &gt; 0) {
-        do {
-            s = iconv_convert(cd, *argv++, 0, -1, toidx, NULL);
-            if (RSTRING_LEN(s))
-                rb_str_buf_append(str, s);
-        } while (--argc);
-        s = iconv_convert(cd, Qnil, 0, 0, toidx, NULL);
-        if (RSTRING_LEN(s))
-            rb_str_buf_append(str, s);
-    }
-
-    return str;
+    return charset_map;
 }</pre>
 </body>
 </html>

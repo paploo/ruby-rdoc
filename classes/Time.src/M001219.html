@@ -2,23 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hour (Time)</title>
+  <title>wday (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.hour =&gt; fixnum
+ *     time.wday =&gt; fixnum
  *  
- *  Returns the hour of the day (0..23) for &lt;i&gt;time&lt;/i&gt;.
+ *  Returns an integer representing the day of the week, 0..6, with
+ *  Sunday == 0.
  *     
- *     t = Time.now   #=&gt; 2007-11-19 08:26:20 -0600
- *     t.hour         #=&gt; 8
+ *     t = Time.now   #=&gt; 2007-11-20 02:35:35 -0600
+ *     t.wday         #=&gt; 2
+ *     t.sunday?      #=&gt; false
+ *     t.monday?      #=&gt; false
+ *     t.tuesday?     #=&gt; true
+ *     t.wednesday?   #=&gt; false
+ *     t.thursday?    #=&gt; false
+ *     t.friday?      #=&gt; false
+ *     t.saturday?    #=&gt; false
  */
 
 static VALUE
-time_hour(VALUE time)
+time_wday(VALUE time)
 {
     struct time_object *tobj;
 
@@ -26,7 +34,7 @@ time_hour(VALUE time)
     if (tobj-&gt;tm_got == 0) {
         time_get_tm(time, tobj-&gt;gmt);
     }
-    return INT2FIX(tobj-&gt;tm.tm_hour);
+    return INT2FIX(tobj-&gt;tm.tm_wday);
 }</pre>
 </body>
 </html>

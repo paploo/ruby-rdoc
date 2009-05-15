@@ -2,37 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>list (Thread)</title>
+  <title>kill (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.list   =&gt; array
+ *     thr.exit        =&gt; thr or nil
+ *     thr.kill        =&gt; thr or nil
+ *     thr.terminate   =&gt; thr or nil
  *
- *  Returns an array of &lt;code&gt;Thread&lt;/code&gt; objects for all threads that are
- *  either runnable or stopped.
- *
- *     Thread.new { sleep(200) }
- *     Thread.new { 1000000.times {|i| i*i } }
- *     Thread.new { Thread.stop }
- *     Thread.list.each {|t| p t}
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     #&lt;Thread:0x401b3e84 sleep&gt;
- *     #&lt;Thread:0x401b3f38 run&gt;
- *     #&lt;Thread:0x401b3fb0 sleep&gt;
- *     #&lt;Thread:0x401bdf4c run&gt;
+ *  Terminates &lt;i&gt;thr&lt;/i&gt; and schedules another thread to be run. If this thread
+ *  is already marked to be killed, &lt;code&gt;exit&lt;/code&gt; returns the
+ *  &lt;code&gt;Thread&lt;/code&gt;. If this is the main thread, or the last thread, exits
+ *  the process.
  */
 
 VALUE
-rb_thread_list(void)
+rb_thread_kill(VALUE thread)
 {
-    VALUE ary = rb_ary_new();
-    st_foreach(GET_THREAD()-&gt;vm-&gt;living_threads, thread_list_i, ary);
-    return ary;
+    rb_thread_t *th;
+
+    GetThreadPtr(thread, th);
+
+    if (th != GET_THREAD() &amp;&amp; th-&gt;safe_level &lt; 4) {
+        rb_secure(4);
+    }
+    if (th-&gt;status == THREAD_TO_KILL || th-&gt;status == THREAD_KILLED) {
+        return thread;
+    }
+    if (th == th-&gt;vm-&gt;main_thread) {
+        rb_exit(EXIT_SUCCESS);
+    }
+
+    thread_debug(&quot;rb_thread_kill: %p (%p)\n&quot;, (void *)th, (void *)th-&gt;thread_id);
+
+    rb_thread_interrupt(th);
+    th-&gt;thrown_errinfo = eKillSignal;
+    th-&gt;status = THREAD_TO_KILL;
+
+    return thread;
 }</pre>
 </body>
 </html>

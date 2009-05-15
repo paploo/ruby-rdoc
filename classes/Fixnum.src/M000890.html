@@ -2,63 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>* (Fixnum)</title>
+  <title>fdiv (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   fix * numeric   =&gt;  numeric_result
+ *  call-seq:
+ *     fix.fdiv(numeric)   =&gt; float
  *
- * Performs multiplication: the class of the resulting object depends on
- * the class of &lt;code&gt;numeric&lt;/code&gt; and on the magnitude of the
- * result.
+ *  Returns the floating point result of dividing &lt;i&gt;fix&lt;/i&gt; by
+ *  &lt;i&gt;numeric&lt;/i&gt;.
+ *
+ *     654321.fdiv(13731)      #=&gt; 47.6528293642124
+ *     654321.fdiv(13731.24)   #=&gt; 47.6519964693647
+ *
  */
 
 static VALUE
-fix_mul(VALUE x, VALUE y)
+fix_fdiv(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
-#ifdef __HP_cc
-/* avoids an optimization bug of HP aC++/ANSI C B3910B A.06.05 [Jul 25 2005] */
-        volatile
-#endif
-        SIGNED_VALUE a, b;
-#if SIZEOF_VALUE * 2 &lt;= SIZEOF_LONG_LONG
-        LONG_LONG d;
-#else
-        SIGNED_VALUE c;
-        VALUE r;
-#endif
-
-        a = FIX2LONG(x);
-        b = FIX2LONG(y);
-
-#if SIZEOF_VALUE * 2 &lt;= SIZEOF_LONG_LONG
-        d = (LONG_LONG)a * b;
-        if (FIXABLE(d)) return LONG2FIX(d);
-        return rb_ll2inum(d);
-#else
-        if (FIT_SQRT_LONG(a) &amp;&amp; FIT_SQRT_LONG(b))
-            return LONG2FIX(a*b);
-        c = a * b;
-        r = LONG2FIX(c);
-
-        if (a == 0) return x;
-        if (FIX2LONG(r) != c || c/a != b) {
-            r = rb_big_mul(rb_int2big(a), rb_int2big(b));
-        }
-        return r;
-#endif
+        return DBL2NUM((double)FIX2LONG(x) / (double)FIX2LONG(y));
     }
     switch (TYPE(y)) {
       case T_BIGNUM:
-        return rb_big_mul(y, x);
+        return DBL2NUM((double)FIX2LONG(x) / rb_big2dbl(y));
       case T_FLOAT:
-        return DBL2NUM((double)FIX2LONG(x) * RFLOAT_VALUE(y));
+        return DBL2NUM((double)FIX2LONG(x) / RFLOAT_VALUE(y));
       default:
-        return rb_num_coerce_bin(x, y, '*');
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;fdiv&quot;));
     }
 }</pre>
 </body>

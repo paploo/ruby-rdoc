@@ -2,22 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_hash (Hash)</title>
+  <title>hash (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    hsh.to_hash   =&gt; hsh
+ *  call-seq:
+ *     array.hash   -&gt; fixnum
  *
- * Returns &lt;i&gt;self&lt;/i&gt;.
+ *  Compute a hash-code for this array. Two arrays with the same content
+ *  will have the same hash code (and will compare using &lt;code&gt;eql?&lt;/code&gt;).
  */
 
 static VALUE
-rb_hash_to_hash(VALUE hash)
+rb_hash_hash(VALUE hash)
 {
-    return hash;
+    return rb_exec_recursive(recursive_hash, hash, 0);
 }</pre>
 </body>
 </html>

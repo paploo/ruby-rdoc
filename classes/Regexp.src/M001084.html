@@ -2,34 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>source (Regexp)</title>
+  <title>named_captures (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *      rxp.source   =&gt; str
+ * call-seq:
+ *    rxp.named_captures  =&gt; hash
  *
- *  Returns the original string of the pattern.
+ * Returns a hash representing information about named captures of &lt;i&gt;rxp&lt;/i&gt;.
  *
- *      /ab+c/ix.source #=&gt; &quot;ab+c&quot;
+ * A key of the hash is a name of the named captures.
+ * A value of the hash is an array which is list of indexes of corresponding
+ * named captures.
+ * 
+ *    /(?&lt;foo&gt;.)(?&lt;bar&gt;.)/.named_captures
+ *    #=&gt; {&quot;foo&quot;=&gt;[1], &quot;bar&quot;=&gt;[2]}
  *
- *  Note that escape sequences are retained as is.
+ *    /(?&lt;foo&gt;.)(?&lt;foo&gt;.)/.named_captures
+ *    #=&gt; {&quot;foo&quot;=&gt;[1, 2]}
  *
- *     /\x20\+/.source  #=&gt; &quot;\\x20\\+&quot;
+ * If there are no named captures, an empty hash is returned.
  *
+ *    /(.)(.)/.named_captures
+ *    #=&gt; {}
  */
 
 static VALUE
-rb_reg_source(VALUE re)
+rb_reg_named_captures(VALUE re)
 {
-    VALUE str;
-
+    VALUE hash = rb_hash_new();
     rb_reg_check(re);
-    str = rb_enc_str_new(RREGEXP_SRC_PTR(re),RREGEXP_SRC_LEN(re), rb_enc_get(re));
-    if (OBJ_TAINTED(re)) OBJ_TAINT(str);
-    return str;
+    onig_foreach_name(RREGEXP(re)-&gt;ptr, reg_named_captures_iter, (void*)hash);
+    return hash;
 }</pre>
 </body>
 </html>

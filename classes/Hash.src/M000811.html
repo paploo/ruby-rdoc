@@ -2,32 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_a (Hash)</title>
+  <title>eql? (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.to_a -&gt; array
+ *     hash.eql?(other)  -&gt; true or false
  *
- *  Converts &lt;i&gt;hsh&lt;/i&gt; to a nested array of &lt;code&gt;[&lt;/code&gt; &lt;i&gt;key,
- *  value&lt;/i&gt; &lt;code&gt;]&lt;/code&gt; arrays.
- *
- *     h = { &quot;c&quot; =&gt; 300, &quot;a&quot; =&gt; 100, &quot;d&quot; =&gt; 400, &quot;c&quot; =&gt; 300  }
- *     h.to_a   #=&gt; [[&quot;c&quot;, 300], [&quot;a&quot;, 100], [&quot;d&quot;, 400]]
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;hash&lt;/i&gt; and &lt;i&gt;other&lt;/i&gt; are
+ *  both hashes with the same content.
  */
 
 static VALUE
-rb_hash_to_a(VALUE hash)
+rb_hash_eql(VALUE hash1, VALUE hash2)
 {
-    VALUE ary;
-
-    ary = rb_ary_new();
-    rb_hash_foreach(hash, to_a_i, ary);
-    OBJ_INFECT(ary, hash);
-
-    return ary;
+    return hash_equal(hash1, hash2, Qtrue);
 }</pre>
 </body>
 </html>

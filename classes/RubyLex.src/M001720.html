@@ -2,18 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>buf_input (RubyLex)</title>
+  <title>token (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 187</span>
-187:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">buf_input</span>
-188:     <span class="ruby-identifier">prompt</span>
-189:     <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@input</span>.<span class="ruby-identifier">call</span>
-190:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>
-191:     <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chars</span>.<span class="ruby-identifier">to_a</span>
-192:     <span class="ruby-keyword kw">true</span>
-193:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 279</span>
+279:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">token</span>
+280:     <span class="ruby-comment cmt">#      require &quot;tracer&quot;</span>
+281:     <span class="ruby-comment cmt">#      Tracer.on</span>
+282:     <span class="ruby-ivar">@prev_seek</span> = <span class="ruby-ivar">@seek</span>
+283:     <span class="ruby-ivar">@prev_line_no</span> = <span class="ruby-ivar">@line_no</span>
+284:     <span class="ruby-ivar">@prev_char_no</span> = <span class="ruby-ivar">@char_no</span>
+285:     <span class="ruby-keyword kw">begin</span>
+286:       <span class="ruby-keyword kw">begin</span>
+287:         <span class="ruby-identifier">tk</span> = <span class="ruby-ivar">@OP</span>.<span class="ruby-identifier">match</span>(<span class="ruby-keyword kw">self</span>)
+288:         <span class="ruby-ivar">@space_seen</span> = <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">TkSPACE</span>)
+289:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SyntaxError</span>
+290:         <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@exception_on_syntax_error</span>
+291:         <span class="ruby-identifier">tk</span> = <span class="ruby-constant">TkError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@seek</span>, <span class="ruby-ivar">@line_no</span>, <span class="ruby-ivar">@char_no</span>)
+292:       <span class="ruby-keyword kw">end</span>
+293:     <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@skip_space</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">TkSPACE</span>)
+294:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@readed_auto_clean_up</span>
+295:       <span class="ruby-identifier">get_readed</span>
+296:     <span class="ruby-keyword kw">end</span>
+297:     <span class="ruby-comment cmt">#      Tracer.off</span>
+298:     <span class="ruby-identifier">tk</span>
+299:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

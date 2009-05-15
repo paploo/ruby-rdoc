@@ -2,32 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>+ (Time)</title>
+  <title>mday (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time + numeric =&gt; time
+ *     time.day  =&gt; fixnum
+ *     time.mday =&gt; fixnum
  *  
- *  Addition---Adds some number of seconds (possibly fractional) to
- *  &lt;i&gt;time&lt;/i&gt; and returns that value as a new time.
+ *  Returns the day of the month (1..n) for &lt;i&gt;time&lt;/i&gt;.
  *     
- *     t = Time.now         #=&gt; 2007-11-19 08:22:21 -0600
- *     t + (60 * 60 * 24)   #=&gt; 2007-11-20 08:22:21 -0600
+ *     t = Time.now   #=&gt; 2007-11-19 08:27:03 -0600
+ *     t.day          #=&gt; 19
+ *     t.mday         #=&gt; 19
  */
 
 static VALUE
-time_plus(VALUE time1, VALUE time2)
+time_mday(VALUE time)
 {
     struct time_object *tobj;
-    GetTimeval(time1, tobj);
 
-    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
-        rb_raise(rb_eTypeError, &quot;time + time?&quot;);
+    GetTimeval(time, tobj);
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
     }
-    return time_add(tobj, time2, 1);
+    return INT2FIX(tobj-&gt;tm.tm_mday);
 }</pre>
 </body>
 </html>

@@ -2,25 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>thursday? (Time)</title>
+  <title>tv_nsec (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.thursday? =&gt; true or false
+ *     time.nsec    =&gt; int
+ *     time.tv_nsec =&gt; int
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Thursday.
+ *  Returns just the number of nanoseconds for &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now        #=&gt; 2007-11-17 15:18:03 +0900
+ *     &quot;%10.9f&quot; % t.to_f   #=&gt; &quot;1195280283.536151409&quot;
+ *     t.nsec              #=&gt; 536151406
  *
- *     t = Time.local(1995, 12, 21)     #=&gt; 1995-12-21 00:00:00 -0600
- *     p t.thursday?                    #=&gt; true
+ *  The lowest digit of to_f and nsec is different because
+ *  IEEE 754 double is not accurate enough to represent
+ *  nanoseconds from the Epoch.
+ *  The accurate value is returned by nsec.
  */
 
 static VALUE
-time_thursday(VALUE time)
+time_nsec(VALUE time)
 {
-    wday_p(4);
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    return LONG2NUM(tobj-&gt;ts.tv_nsec);
 }</pre>
 </body>
 </html>

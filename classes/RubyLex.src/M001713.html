@@ -2,20 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gets (RubyLex)</title>
+  <title>peek (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 122</span>
-122:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gets</span>
-123:     <span class="ruby-identifier">l</span> = <span class="ruby-value str">&quot;&quot;</span>
-124:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
-125:       <span class="ruby-identifier">l</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">c</span>)
-126:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
-127:     <span class="ruby-keyword kw">end</span>
-128:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">l</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">nil?</span>
-129:     <span class="ruby-identifier">l</span>
-130:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 180</span>
+180:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">peek</span>(<span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>)
+181:     <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">i</span>
+182:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">buf_input</span>
+183:     <span class="ruby-keyword kw">end</span>
+184:     <span class="ruby-ivar">@rests</span>[<span class="ruby-identifier">i</span>]
+185:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

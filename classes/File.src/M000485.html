@@ -2,33 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pipe? (File)</title>
+  <title>setgid? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   File.pipe?(file_name)   =&gt;  true or false
+ *   File.setgid?(file_name)   =&gt;  true or false
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a pipe.
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named file has the setgid bit set.
  */
 
 static VALUE
-rb_file_pipe_p(VALUE obj, VALUE fname)
+rb_file_sgid_p(VALUE obj, VALUE fname)
 {
-#ifdef S_IFIFO
-#  ifndef S_ISFIFO
-#    define S_ISFIFO(m) ((m &amp; S_IFMT) == S_IFIFO)
-#  endif
-
-    struct stat st;
-
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (S_ISFIFO(st.st_mode)) return Qtrue;
-
-#endif
+#ifdef S_ISGID
+    return check3rdbyte(fname, S_ISGID);
+#else
     return Qfalse;
+#endif
 }</pre>
 </body>
 </html>

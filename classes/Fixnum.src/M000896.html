@@ -2,36 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>fdiv (Fixnum)</title>
+  <title>&gt; (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     fix.fdiv(numeric)   =&gt; float
+ * call-seq:
+ *   fix &gt; other     =&gt; true or false
  *
- *  Returns the floating point result of dividing &lt;i&gt;fix&lt;/i&gt; by
- *  &lt;i&gt;numeric&lt;/i&gt;.
- *
- *     654321.fdiv(13731)      #=&gt; 47.6528293642124
- *     654321.fdiv(13731.24)   #=&gt; 47.6519964693647
- *
+ * Returns &lt;code&gt;true&lt;/code&gt; if the value of &lt;code&gt;fix&lt;/code&gt; is
+ * greater than that of &lt;code&gt;other&lt;/code&gt;.
  */
 
 static VALUE
-fix_fdiv(VALUE x, VALUE y)
+fix_gt(VALUE x, VALUE y)
 {
     if (FIXNUM_P(y)) {
-        return DBL2NUM((double)FIX2LONG(x) / (double)FIX2LONG(y));
+        if (FIX2LONG(x) &gt; FIX2LONG(y)) return Qtrue;
+        return Qfalse;
     }
     switch (TYPE(y)) {
       case T_BIGNUM:
-        return DBL2NUM((double)FIX2LONG(x) / rb_big2dbl(y));
+        return FIX2INT(rb_big_cmp(rb_int2big(FIX2LONG(x)), y)) &gt; 0 ? Qtrue : Qfalse;
       case T_FLOAT:
-        return DBL2NUM((double)FIX2LONG(x) / RFLOAT_VALUE(y));
+        return (double)FIX2LONG(x) &gt; RFLOAT_VALUE(y) ? Qtrue : Qfalse;
       default:
-        return rb_num_coerce_bin(x, y, rb_intern(&quot;fdiv&quot;));
+        return rb_num_coerce_relop(x, y, '&gt;');
     }
 }</pre>
 </body>

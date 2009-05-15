@@ -2,21 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>set_input (RubyLex)</title>
+  <title>ungetc (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 77</span>
-77:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_input</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">p</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-78:     <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">io</span>
-79:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:call</span>)
-80:       <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">p</span>
-81:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">block_given?</span>
-82:       <span class="ruby-ivar">@input</span> = <span class="ruby-identifier">block</span>
-83:     <span class="ruby-keyword kw">else</span>
-84:       <span class="ruby-ivar">@input</span> = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span>{<span class="ruby-ivar">@io</span>.<span class="ruby-identifier">gets</span>}
-85:     <span class="ruby-keyword kw">end</span>
-86:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 144</span>
+144:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span> = <span class="ruby-keyword kw">nil</span>)
+145:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">empty?</span>
+146:       <span class="ruby-identifier">c2</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">pop</span>
+147:     <span class="ruby-keyword kw">else</span>
+148:       <span class="ruby-identifier">c2</span> = <span class="ruby-ivar">@here_readed</span>.<span class="ruby-identifier">pop</span>
+149:     <span class="ruby-keyword kw">end</span>
+150:     <span class="ruby-identifier">c</span> = <span class="ruby-identifier">c2</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">c</span>
+151:     <span class="ruby-ivar">@rests</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">c</span> <span class="ruby-comment cmt">#c = </span>
+152:       <span class="ruby-ivar">@seek</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+153:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;\n&quot;</span>
+154:       <span class="ruby-ivar">@line_no</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> 
+155:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">idx</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+156:         <span class="ruby-ivar">@char_no</span> = <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">idx</span>
+157:       <span class="ruby-keyword kw">else</span>
+158:         <span class="ruby-ivar">@char_no</span> = <span class="ruby-ivar">@base_char_no</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@readed</span>.<span class="ruby-identifier">size</span>
+159:       <span class="ruby-keyword kw">end</span>
+160:     <span class="ruby-keyword kw">else</span>
+161:       <span class="ruby-ivar">@char_no</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+162:     <span class="ruby-keyword kw">end</span>
+163:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

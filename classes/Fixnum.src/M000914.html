@@ -2,27 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size (Fixnum)</title>
+  <title>** (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     fix.size -&gt; fixnum
- *
- *  Returns the number of &lt;em&gt;bytes&lt;/em&gt; in the machine representation
- *  of a &lt;code&gt;Fixnum&lt;/code&gt;.
- *
- *     1.size            #=&gt; 4
- *     -1.size           #=&gt; 4
- *     2147483647.size   #=&gt; 4
- */
-
-static VALUE
-fix_size(VALUE fix)
-{
-    return INT2FIX(sizeof(long));
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/mathn.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">**</span> (<span class="ruby-identifier">other</span>)
+31:     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">round</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">other</span>
+32:       <span class="ruby-constant">Complex</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-value">0</span><span class="ruby-value">.0</span>) <span class="ruby-operator">**</span> <span class="ruby-identifier">other</span>
+33:     <span class="ruby-keyword kw">else</span>
+34:       <span class="ruby-identifier">power!</span>(<span class="ruby-identifier">other</span>)
+35:     <span class="ruby-keyword kw">end</span>
+36:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

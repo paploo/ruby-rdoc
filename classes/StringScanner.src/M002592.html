@@ -2,20 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getbyte (StringScanner)</title>
+  <title>empty? (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Equivalent to #get_byte.
- * This method is obsolete; use #get_byte instead.
+ * Equivalent to #eos?.
+ * This method is obsolete, use #eos? instead.
  */
 static VALUE
-strscan_getbyte(VALUE self)
+strscan_empty_p(VALUE self)
 {
-    rb_warning(&quot;StringScanner#getbyte is obsolete; use #get_byte instead&quot;);
-    return strscan_get_byte(self);
+    rb_warning(&quot;StringScanner#empty? is obsolete; use #eos? instead&quot;);
+    return strscan_eos_p(self);
 }</pre>
 </body>
 </html>

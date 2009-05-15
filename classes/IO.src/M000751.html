@@ -2,32 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>fileno (IO)</title>
+  <title>lineno= (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.fileno    =&gt; fixnum
- *     ios.to_i      =&gt; fixnum
+ *     ios.lineno = integer    =&gt; integer
  *
- *  Returns an integer representing the numeric file descriptor for
- *  &lt;em&gt;ios&lt;/em&gt;.
+ *  Manually sets the current line number to the given value.
+ *  &lt;code&gt;$.&lt;/code&gt; is updated only on the next read.
  *
- *     $stdin.fileno    #=&gt; 0
- *     $stdout.fileno   #=&gt; 1
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.gets                     #=&gt; &quot;This is line one\n&quot;
+ *     $.                         #=&gt; 1
+ *     f.lineno = 1000
+ *     f.lineno                   #=&gt; 1000
+ *     $.                         #=&gt; 1         # lineno of last read
+ *     f.gets                     #=&gt; &quot;This is line two\n&quot;
+ *     $.                         #=&gt; 1001      # lineno of last read
  */
 
 static VALUE
-rb_io_fileno(VALUE io)
+rb_io_set_lineno(VALUE io, VALUE lineno)
 {
     rb_io_t *fptr;
-    int fd;
 
     GetOpenFile(io, fptr);
-    fd = fptr-&gt;fd;
-    return INT2FIX(fd);
+    rb_io_check_readable(fptr);
+    fptr-&gt;lineno = NUM2INT(lineno);
+    return lineno;
 }</pre>
 </body>
 </html>

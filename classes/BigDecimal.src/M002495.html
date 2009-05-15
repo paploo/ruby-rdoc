@@ -2,37 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>_load (BigDecimal)</title>
+  <title>to_r (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * Internal method used to provide marshalling support. See the Marshal module.
+  <pre>/* Converts a BigDecimal to a Rational.
  */
 static VALUE
-BigDecimal_load(VALUE self, VALUE str)
+BigDecimal_to_r(VALUE self)
 {
-    ENTER(2);
-    Real *pv;
-    unsigned char *pch;
-    unsigned char ch;
-    unsigned long m=0;
+    Real *p;
+    S_LONG sign, power, denomi_power;
+    VALUE a, digits, numerator;
 
-    SafeStringValue(str);
-    pch = (unsigned char *)RSTRING_PTR(str);
-    /* First get max prec */
-    while((*pch)!=(unsigned char)'\0' &amp;&amp; (ch=*pch++)!=(unsigned char)':') {
-        if(!ISDIGIT(ch)) {
-            rb_raise(rb_eTypeError, &quot;load failed: invalid character in the marshaled string&quot;);
-        }
-        m = m*10 + (unsigned long)(ch-'0');
+    p = GetVpValue(self,1);
+    BigDecimal_check_num(p);
+
+    sign = VpGetSign(p);
+    power = VpExponent10(p);
+    a = BigDecimal_split(self);
+    digits = RARRAY_PTR(a)[1];
+    denomi_power = power - RSTRING_LEN(digits);
+    numerator = rb_funcall(digits, rb_intern(&quot;to_i&quot;), 0);
+    
+    if (sign &lt; 0) {
+        numerator = rb_funcall(numerator, '*', 1, INT2FIX(-1));
     }
-    if(m&gt;VpBaseFig()) m -= VpBaseFig();
-    GUARD_OBJ(pv,VpNewRbClass(m,(char *)pch,self));
-    m /= VpBaseFig();
-    if(m &amp;&amp; pv-&gt;MaxPrec&gt;m) pv-&gt;MaxPrec = m+1;
-    return ToValue(pv);
+    if (denomi_power &lt; 0) {
+        return rb_Rational(numerator,
+                           rb_funcall(INT2FIX(10), rb_intern(&quot;**&quot;), 1,
+                                      INT2FIX(-denomi_power)));
+    }
+    else {
+        return rb_Rational1(rb_funcall(numerator, '*', 1,
+                                       rb_funcall(INT2FIX(10), rb_intern(&quot;**&quot;), 1,
+                                                  INT2FIX(denomi_power))));
+    }
 }</pre>
 </body>
 </html>

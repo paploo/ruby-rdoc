@@ -2,18 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>r (Vector)</title>
+  <title>coerce (Vector)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1311</span>
-1311:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">r</span>
-1312:     <span class="ruby-identifier">v</span> = <span class="ruby-value">0</span>
-1313:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">e</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@elements</span>
-1314:       <span class="ruby-identifier">v</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">e</span><span class="ruby-operator">*</span><span class="ruby-identifier">e</span>
-1315:     <span class="ruby-keyword kw">end</span>
-1316:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-identifier">v</span>)
-1317:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1352</span>
+1352:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">coerce</span>(<span class="ruby-identifier">other</span>)
+1353:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other</span>
+1354:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+1355:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Matrix</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">other</span>), <span class="ruby-keyword kw">self</span>
+1356:     <span class="ruby-keyword kw">else</span>
+1357:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;#{self.class} can't be coerced into #{other.class}&quot;</span>
+1358:     <span class="ruby-keyword kw">end</span>
+1359:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

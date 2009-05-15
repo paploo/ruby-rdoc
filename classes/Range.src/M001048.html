@@ -2,35 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>=== (Range)</title>
+  <title>end (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     rng === obj       =&gt;  true or false
+ *     rng.end    =&gt; obj
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is an element of
- *  &lt;i&gt;rng&lt;/i&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. Conveniently,
- *  &lt;code&gt;===&lt;/code&gt; is the comparison operator used by
- *  &lt;code&gt;case&lt;/code&gt; statements.
+ *  Returns the object that defines the end of &lt;i&gt;rng&lt;/i&gt;.
  *     
- *     case 79
- *     when 1..50   then   print &quot;low\n&quot;
- *     when 51..75  then   print &quot;medium\n&quot;
- *     when 76..100 then   print &quot;high\n&quot;
- *     end
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     high
+ *     (1..10).end    #=&gt; 10
+ *     (1...10).end   #=&gt; 10
  */
 
+
 static VALUE
-range_eqq(VALUE range, VALUE val)
+range_end(VALUE range)
 {
-    return rb_funcall(range, rb_intern(&quot;include?&quot;), 1, val);
+    return RANGE_END(range);
 }</pre>
 </body>
 </html>

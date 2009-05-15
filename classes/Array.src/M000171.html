@@ -2,27 +2,56 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>uniq (Array)</title>
+  <title>count (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.uniq   -&gt; an_array
+ *     array.count      -&gt; int
+ *     array.count(obj) -&gt; int
+ *     array.count { |item| block }  -&gt; int
  *  
- *  Returns a new array by removing duplicate values in &lt;i&gt;self&lt;/i&gt;.
- *     
- *     a = [ &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.uniq   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+ *  Returns the number of elements.  If an argument is given, counts
+ *  the number of elements which equals to &lt;i&gt;obj&lt;/i&gt;.  If a block is
+ *  given, counts the number of elements yielding a true value.
+ *
+ *     ary = [1, 2, 4, 2]
+ *     ary.count             # =&gt; 4
+ *     ary.count(2)          # =&gt; 2
+ *     ary.count{|x|x%2==0}  # =&gt; 3
+ *
  */
 
 static VALUE
-rb_ary_uniq(VALUE ary)
+rb_ary_count(int argc, VALUE *argv, VALUE ary)
 {
-    ary = rb_ary_dup(ary);
-    rb_ary_uniq_bang(ary);
-    return ary;
+    long n = 0;
+
+    if (argc == 0) {
+        VALUE *p, *pend;
+
+        if (!rb_block_given_p())
+            return LONG2NUM(RARRAY_LEN(ary));
+
+        for (p = RARRAY_PTR(ary), pend = p + RARRAY_LEN(ary); p &lt; pend; p++) {
+            if (RTEST(rb_yield(*p))) n++;
+        }
+    }
+    else {
+        VALUE obj, *p, *pend;
+
+        rb_scan_args(argc, argv, &quot;1&quot;, &amp;obj);
+        if (rb_block_given_p()) {
+            rb_warn(&quot;given block not used&quot;);
+        }
+        for (p = RARRAY_PTR(ary), pend = p + RARRAY_LEN(ary); p &lt; pend; p++) {
+            if (rb_equal(*p, obj)) n++;
+        }
+    }
+
+    return LONG2NUM(n);
 }</pre>
 </body>
 </html>

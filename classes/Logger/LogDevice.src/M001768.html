@@ -2,23 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>write (Logger::LogDevice)</title>
+  <title>shift_log_age (Logger::LogDevice)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 512</span>
-512:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">message</span>)
-513:       <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
-514:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@shift_age</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@dev</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:stat</span>)
-515:           <span class="ruby-keyword kw">begin</span>
-516:             <span class="ruby-identifier">check_shift_log</span>
-517:           <span class="ruby-keyword kw">rescue</span>
-518:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">ShiftingError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Shifting failed. #{$!}&quot;</span>)
-519:           <span class="ruby-keyword kw">end</span>
-520:         <span class="ruby-keyword kw">end</span>
-521:         <span class="ruby-ivar">@dev</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">message</span>)
-522:       <span class="ruby-keyword kw">end</span>
-523:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 570</span>
+570:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shift_log_age</span>
+571:       (<span class="ruby-ivar">@shift_age</span><span class="ruby-operator">-</span><span class="ruby-value">3</span>).<span class="ruby-identifier">downto</span>(<span class="ruby-value">0</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+572:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-node">&quot;#{@filename}.#{i}&quot;</span>)
+573:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">rename</span>(<span class="ruby-node">&quot;#{@filename}.#{i}&quot;</span>, <span class="ruby-node">&quot;#{@filename}.#{i+1}&quot;</span>)
+574:         <span class="ruby-keyword kw">end</span>
+575:       <span class="ruby-keyword kw">end</span>
+576:       <span class="ruby-ivar">@dev</span>.<span class="ruby-identifier">close</span>
+577:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">rename</span>(<span class="ruby-node">&quot;#{@filename}&quot;</span>, <span class="ruby-node">&quot;#{@filename}.0&quot;</span>)
+578:       <span class="ruby-ivar">@dev</span> = <span class="ruby-identifier">create_logfile</span>(<span class="ruby-ivar">@filename</span>)
+579:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+580:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

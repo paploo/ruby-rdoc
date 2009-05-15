@@ -2,17 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>activate (Shell::ProcessController)</title>
+  <title>jobs (Shell::ProcessController)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 38</span>
-38:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">activate</span>(<span class="ruby-identifier">pc</span>)
-39:         <span class="ruby-identifier">process_controllers_exclusive</span> <span class="ruby-keyword kw">do</span>
-40:           <span class="ruby-ivar">@ProcessControllers</span>[<span class="ruby-identifier">pc</span>] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>
-41:           <span class="ruby-ivar">@ProcessControllers</span>[<span class="ruby-identifier">pc</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-42:         <span class="ruby-keyword kw">end</span>
-43:       <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 105</span>
+105:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">jobs</span>
+106:       <span class="ruby-identifier">jobs</span> = []
+107:       <span class="ruby-ivar">@jobs_sync</span>.<span class="ruby-identifier">synchronize</span>(<span class="ruby-identifier">:SH</span>) <span class="ruby-keyword kw">do</span>
+108:         <span class="ruby-identifier">jobs</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@waiting_jobs</span>
+109:         <span class="ruby-identifier">jobs</span>.<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@active_jobs</span>
+110:       <span class="ruby-keyword kw">end</span>
+111:       <span class="ruby-identifier">jobs</span>
+112:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

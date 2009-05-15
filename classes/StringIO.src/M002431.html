@@ -2,20 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>string (StringIO)</title>
+  <title>close_read (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: strio.string     -&gt; string
+ * call-seq:
+ *   strio.close_read    -&gt; nil
  *
- * Returns underlying String object, the subject of IO.
+ * Closes the read end of a StringIO.  Will raise an +IOError+ if the
+ * *strio* is not readable.
  */
 static VALUE
-strio_get_string(VALUE self)
+strio_close_read(VALUE self)
 {
-    return StringIO(self)-&gt;string;
+    struct StringIO *ptr = StringIO(self);
+    if (!READABLE(ptr)) {
+        rb_raise(rb_eIOError, &quot;closing non-duplex IO for reading&quot;);
+    }
+    ptr-&gt;flags &amp;= ~FMODE_READABLE;
+    return Qnil;
 }</pre>
 </body>
 </html>

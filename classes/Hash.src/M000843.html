@@ -2,30 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>invert (Hash)</title>
+  <title>rassoc (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.invert -&gt; aHash
+ *     hash.rassoc(key) -&gt; an_array or nil
  *
- *  Returns a new hash created by using &lt;i&gt;hsh&lt;/i&gt;'s values as keys, and
- *  the keys as values.
+ *  Searches through the hash comparing _obj_ with the value using &lt;code&gt;==&lt;/code&gt;.
+ *  Returns the first key-value pair (two elements array) that matches. See
+ *  also &lt;code&gt;Array#rassoc&lt;/code&gt;.
  *
- *     h = { &quot;n&quot; =&gt; 100, &quot;m&quot; =&gt; 100, &quot;y&quot; =&gt; 300, &quot;d&quot; =&gt; 200, &quot;a&quot; =&gt; 0 }
- *     h.invert   #=&gt; {0=&gt;&quot;a&quot;, 100=&gt;&quot;m&quot;, 200=&gt;&quot;d&quot;, 300=&gt;&quot;y&quot;}
- *
+ *     a = {1=&gt; &quot;one&quot;, 2 =&gt; &quot;two&quot;, 3 =&gt; &quot;three&quot;, &quot;ii&quot; =&gt; &quot;two&quot;}
+ *     a.rassoc(&quot;two&quot;)    #=&gt; [2, &quot;two&quot;]
+ *     a.rassoc(&quot;four&quot;)   #=&gt; nil
  */
 
-static VALUE
-rb_hash_invert(VALUE hash)
+VALUE
+rb_hash_rassoc(VALUE hash, VALUE obj)
 {
-    VALUE h = rb_hash_new();
+    VALUE args[2];
 
-    rb_hash_foreach(hash, rb_hash_invert_i, h);
-    return h;
+    args[0] = obj;
+    args[1] = Qnil;
+    rb_hash_foreach(hash, rassoc_i, (st_data_t)args);
+    return args[1];
 }</pre>
 </body>
 </html>

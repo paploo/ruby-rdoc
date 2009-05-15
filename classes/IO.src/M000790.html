@@ -2,23 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>binmode? (IO)</title>
+  <title>external_encoding (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.binmode?    =&gt; true or false
+ *     io.external_encoding   =&gt; encoding
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is binmode.
+ *  Returns the Encoding object that represents the encoding of the file.
+ *  If io is write mode and no encoding is specified, returns &lt;code&gt;nil&lt;/code&gt;.
  */
+
 static VALUE
-rb_io_binmode_p(VALUE io)
+rb_io_external_encoding(VALUE io)
 {
     rb_io_t *fptr;
+
     GetOpenFile(io, fptr);
-    return fptr-&gt;mode &amp; FMODE_BINMODE ? Qtrue : Qfalse;
+    if (fptr-&gt;encs.enc2) {
+        return rb_enc_from_encoding(fptr-&gt;encs.enc2);
+    }
+    if (fptr-&gt;mode &amp; FMODE_WRITABLE) {
+        if (fptr-&gt;encs.enc)
+            return rb_enc_from_encoding(fptr-&gt;encs.enc);
+        return Qnil;
+    }
+    return rb_enc_from_encoding(io_read_encoding(fptr));
 }</pre>
 </body>
 </html>

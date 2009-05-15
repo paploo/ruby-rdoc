@@ -2,64 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reverse (String)</title>
+  <title>to_sym (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.reverse   =&gt; new_str
+ *     str.intern   =&gt; symbol
+ *     str.to_sym   =&gt; symbol
  *  
- *  Returns a new string with the characters from &lt;i&gt;str&lt;/i&gt; in reverse order.
+ *  Returns the &lt;code&gt;Symbol&lt;/code&gt; corresponding to &lt;i&gt;str&lt;/i&gt;, creating the
+ *  symbol if it did not previously exist. See &lt;code&gt;Symbol#id2name&lt;/code&gt;.
  *     
- *     &quot;stressed&quot;.reverse   #=&gt; &quot;desserts&quot;
+ *     &quot;Koala&quot;.intern         #=&gt; :Koala
+ *     s = 'cat'.to_sym       #=&gt; :cat
+ *     s == :cat              #=&gt; true
+ *     s = '@cat'.to_sym      #=&gt; :@cat
+ *     s == :@cat             #=&gt; true
+ *
+ *  This can also be used to create symbols that cannot be represented using the
+ *  &lt;code&gt;:xxx&lt;/code&gt; notation.
+ *     
+ *     'cat and dog'.to_sym   #=&gt; :&quot;cat and dog&quot;
  */
 
-static VALUE
-rb_str_reverse(VALUE str)
+VALUE
+rb_str_intern(VALUE s)
 {
-    rb_encoding *enc;
-    VALUE rev;
-    char *s, *e, *p;
-    int single = 1;
+    VALUE str = RB_GC_GUARD(s);
+    VALUE sym;
+    ID id, id2;
 
-    if (RSTRING_LEN(str) &lt;= 1) return rb_str_dup(str);
-    enc = STR_ENC_GET(str);
-    rev = rb_str_new5(str, 0, RSTRING_LEN(str));
-    s = RSTRING_PTR(str); e = RSTRING_END(str);
-    p = RSTRING_END(rev);
+    id = rb_intern_str(str);
+    sym = ID2SYM(id);
+    id2 = SYM2ID(sym);
+    if (id != id2) {
+        const char *name = rb_id2name(id2);
 
-    if (RSTRING_LEN(str) &gt; 1) {
-        if (single_byte_optimizable(str)) {
-            while (s &lt; e) {
-                *--p = *s++;
-            }
+        if (name) {
+            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (%s given for %s)&quot;,
+                     name, RSTRING_PTR(str));
         }
         else {
-            while (s &lt; e) {
-                int clen = rb_enc_mbclen(s, e, enc);
-
-                if (clen &gt; 1 || (*s &amp; 0x80)) single = 0;
-                p -= clen;
-                memcpy(p, s, clen);
-                s += clen;
-            }
+            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (symbol %s)&quot;,
+                     RSTRING_PTR(str));
         }
     }
-    STR_SET_LEN(rev, RSTRING_LEN(str));
-    OBJ_INFECT(rev, str);
-    if (ENC_CODERANGE(str) == ENC_CODERANGE_UNKNOWN) {
-        if (single) {
-            ENC_CODERANGE_SET(str, ENC_CODERANGE_7BIT);
-        }
-        else {
-            ENC_CODERANGE_SET(str, ENC_CODERANGE_VALID);
-        }
-    }
-    rb_enc_cr_str_copy_for_substr(rev, str);
-
-    return rev;
+    return sym;
 }</pre>
 </body>
 </html>

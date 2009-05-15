@@ -2,40 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>included_modules (Module)</title>
+  <title>attr_accessor (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.included_modules -&gt; array
+ *     attr_accessor(symbol, ...)    =&gt; nil
  *  
- *  Returns the list of modules included in &lt;i&gt;mod&lt;/i&gt;.
+ *  Defines a named attribute for this module, where the name is
+ *  &lt;i&gt;symbol.&lt;/i&gt;&lt;code&gt;id2name&lt;/code&gt;, creating an instance variable
+ *  (&lt;code&gt;@name&lt;/code&gt;) and a corresponding access method to read it.
+ *  Also creates a method called &lt;code&gt;name=&lt;/code&gt; to set the attribute.
  *     
- *     module Mixin
+ *     module Mod
+ *       attr_accessor(:one, :two)
  *     end
- *     
- *     module Outer
- *       include Mixin
- *     end
- *     
- *     Mixin.included_modules   #=&gt; []
- *     Outer.included_modules   #=&gt; [Mixin]
+ *     Mod.instance_methods.sort   #=&gt; [:one, :one=, :two, :two=]
  */
 
-VALUE
-rb_mod_included_modules(VALUE mod)
+static VALUE
+rb_mod_attr_accessor(int argc, VALUE *argv, VALUE klass)
 {
-    VALUE ary = rb_ary_new();
-    VALUE p;
+    int i;
 
-    for (p = RCLASS_SUPER(mod); p; p = RCLASS_SUPER(p)) {
-	if (BUILTIN_TYPE(p) == T_ICLASS) {
-	    rb_ary_push(ary, RBASIC(p)-&gt;klass);
-	}
+    for (i=0; i&lt;argc; i++) {
+        rb_attr(klass, rb_to_id(argv[i]), Qtrue, Qtrue, Qtrue);
     }
-    return ary;
+    return Qnil;
 }</pre>
 </body>
 </html>

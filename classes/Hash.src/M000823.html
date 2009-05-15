@@ -2,33 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>default_proc (Hash)</title>
+  <title>each_value (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.default_proc -&gt; anObject
+ *     hsh.each_value {| value | block } -&gt; hsh
  *
- *  If &lt;code&gt;Hash::new&lt;/code&gt; was invoked with a block, return that
- *  block, otherwise return &lt;code&gt;nil&lt;/code&gt;.
+ *  Calls &lt;i&gt;block&lt;/i&gt; once for each key in &lt;i&gt;hsh&lt;/i&gt;, passing the
+ *  value as a parameter.
  *
- *     h = Hash.new {|h,k| h[k] = k*k }   #=&gt; {}
- *     p = h.default_proc                 #=&gt; #&lt;Proc:0x401b3d08@-:1&gt;
- *     a = []                             #=&gt; []
- *     p.call(a, 2)
- *     a                                  #=&gt; [nil, nil, 4]
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.each_value {|value| puts value }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     100
+ *     200
  */
 
-
 static VALUE
-rb_hash_default_proc(VALUE hash)
+rb_hash_each_value(VALUE hash)
 {
-    if (FL_TEST(hash, HASH_PROC_DEFAULT)) {
-        return RHASH(hash)-&gt;ifnone;
-    }
-    return Qnil;
+    RETURN_ENUMERATOR(hash, 0, 0);
+    rb_hash_foreach(hash, each_value_i, 0);
+    return hash;
 }</pre>
 </body>
 </html>

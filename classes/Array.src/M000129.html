@@ -2,40 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>unshift (Array)</title>
+  <title>empty? (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.unshift(obj, ...)  -&gt; array
+ *     array.empty?   -&gt; true or false
  *  
- *  Prepends objects to the front of &lt;i&gt;array&lt;/i&gt;.
- *  other elements up one.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;self&lt;/i&gt; array contains no elements.
  *     
- *     a = [ &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
- *     a.unshift(&quot;a&quot;)   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
- *     a.unshift(1, 2)  #=&gt; [ 1, 2, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ *     [].empty?   #=&gt; true
  */
 
 static VALUE
-rb_ary_unshift_m(int argc, VALUE *argv, VALUE ary)
+rb_ary_empty_p(VALUE ary)
 {
-    long len;
-
-    if (argc == 0) return ary;
-    rb_ary_modify(ary);
-    if (ARY_CAPA(ary) &lt;= (len = RARRAY_LEN(ary)) + argc) {
-        ary_resize_capa(ary, len + argc + ARY_DEFAULT_SIZE);
-    }
-
-    /* sliding items */
-    MEMMOVE(RARRAY_PTR(ary) + argc, RARRAY_PTR(ary), VALUE, len);
-    MEMCPY(RARRAY_PTR(ary), argv, VALUE, argc);
-    ARY_INCREASE_LEN(ary, argc);
-    
-    return ary;
+    if (RARRAY_LEN(ary) == 0)
+        return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

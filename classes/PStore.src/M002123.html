@@ -2,15 +2,45 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>delete (PStore)</title>
+  <title>transaction (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 217</span>
-217:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">name</span>)
-218:     <span class="ruby-identifier">in_transaction_wr</span>()
-219:     <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">name</span>
-220:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 318</span>
+318:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">transaction</span>(<span class="ruby-identifier">read_only</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)  <span class="ruby-comment cmt"># :yields:  pstore</span>
+319:     <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">nil</span>
+320:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">PStore</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-value str">&quot;nested transaction&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@transaction</span>
+321:     <span class="ruby-ivar">@lock</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+322:       <span class="ruby-ivar">@rdonly</span> = <span class="ruby-identifier">read_only</span>
+323:       <span class="ruby-ivar">@transaction</span> = <span class="ruby-keyword kw">true</span>
+324:       <span class="ruby-ivar">@abort</span> = <span class="ruby-keyword kw">false</span>
+325:       <span class="ruby-identifier">file</span> = <span class="ruby-identifier">open_and_lock_file</span>(<span class="ruby-ivar">@filename</span>, <span class="ruby-identifier">read_only</span>)
+326:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span>
+327:         <span class="ruby-keyword kw">begin</span>
+328:           <span class="ruby-ivar">@table</span>, <span class="ruby-identifier">checksum</span>, <span class="ruby-identifier">original_data_size</span> = <span class="ruby-identifier">load_data</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">read_only</span>)
+329:           
+330:           <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:pstore_abort_transaction</span>) <span class="ruby-keyword kw">do</span>
+331:             <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-keyword kw">self</span>)
+332:           <span class="ruby-keyword kw">end</span>
+333:           
+334:           <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@abort</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">read_only</span>
+335:             <span class="ruby-identifier">save_data</span>(<span class="ruby-identifier">checksum</span>, <span class="ruby-identifier">original_data_size</span>, <span class="ruby-identifier">file</span>)
+336:           <span class="ruby-keyword kw">end</span>
+337:         <span class="ruby-keyword kw">ensure</span>
+338:           <span class="ruby-identifier">file</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">file</span>.<span class="ruby-identifier">closed?</span>
+339:         <span class="ruby-keyword kw">end</span>
+340:       <span class="ruby-keyword kw">else</span>
+341:         <span class="ruby-comment cmt"># This can only occur if read_only == true.</span>
+342:         <span class="ruby-ivar">@table</span> = {}
+343:         <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:pstore_abort_transaction</span>) <span class="ruby-keyword kw">do</span>
+344:           <span class="ruby-identifier">value</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-keyword kw">self</span>)
+345:         <span class="ruby-keyword kw">end</span>
+346:       <span class="ruby-keyword kw">end</span>
+347:     <span class="ruby-keyword kw">end</span>
+348:     <span class="ruby-identifier">value</span>
+349:   <span class="ruby-keyword kw">ensure</span>
+350:     <span class="ruby-ivar">@transaction</span> = <span class="ruby-keyword kw">false</span>
+351:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

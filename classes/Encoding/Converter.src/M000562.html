@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>search_convpath (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Encoding::Converter.search_convpath(source_encoding, destination_encoding)         -&gt; ary
+ *   Encoding::Converter.search_convpath(source_encoding, destination_encoding, opt)    -&gt; ary
+ *
+ *  Returns a conversion path.
+ *
+ *   p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;)
+ *   #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ *   #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;]]
+ *
+ *   p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;, universal_newline: true)
+ *   #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ *   #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;],
+ *   #    &quot;universal_newline&quot;]
+ *
+ *   p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;UTF-32BE&quot;, universal_newline: true)
+ *   #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ *   #    &quot;universal_newline&quot;,
+ *   #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-32BE&gt;]]
+ */
+static VALUE
+econv_s_search_convpath(int argc, VALUE *argv, VALUE klass)
+{
+    volatile VALUE snamev, dnamev;
+    const char *sname, *dname;
+    rb_encoding *senc, *denc;
+    int ecflags;
+    VALUE ecopts;
+    VALUE convpath;
+
+    econv_args(argc, argv, &amp;snamev, &amp;dnamev, &amp;sname, &amp;dname, &amp;senc, &amp;denc, &amp;ecflags, &amp;ecopts);
+
+    convpath = Qnil;
+    transcode_search_path(sname, dname, search_convpath_i, &amp;convpath);
+
+    if (NIL_P(convpath))
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+
+    if (decorate_convpath(convpath, ecflags) == -1)
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+
+    return convpath;
+}</pre>
+</body>
+</html>

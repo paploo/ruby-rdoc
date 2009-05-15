@@ -2,43 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>concat (String)</title>
+  <title>include? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str &lt;&lt; integer       =&gt; str
- *     str.concat(integer)  =&gt; str
- *     str &lt;&lt; obj           =&gt; str
- *     str.concat(obj)      =&gt; str
+ *     str.include? other_str   =&gt; true or false
  *  
- *  Append---Concatenates the given object to &lt;i&gt;str&lt;/i&gt;. If the object is a
- *  &lt;code&gt;Integer&lt;/code&gt;, it is considered as a codepoint, and is converted
- *  to a character before concatenation.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; contains the given string or
+ *  character.
  *     
- *     a = &quot;hello &quot;
- *     a &lt;&lt; &quot;world&quot;   #=&gt; &quot;hello world&quot;
- *     a.concat(33)   #=&gt; &quot;hello world!&quot;
+ *     &quot;hello&quot;.include? &quot;lo&quot;   #=&gt; true
+ *     &quot;hello&quot;.include? &quot;ol&quot;   #=&gt; false
+ *     &quot;hello&quot;.include? ?h     #=&gt; true
  */
 
-VALUE
-rb_str_concat(VALUE str1, VALUE str2)
+static VALUE
+rb_str_include(VALUE str, VALUE arg)
 {
-    if (FIXNUM_P(str2) || TYPE(str2) == T_BIGNUM) {
-        rb_encoding *enc = STR_ENC_GET(str1);
-        unsigned int c = NUM2UINT(str2);
-        int pos = RSTRING_LEN(str1);
-        int len = rb_enc_codelen(c, enc);
-        int cr = ENC_CODERANGE(str1);
+    long i;
 
-        rb_str_resize(str1, pos+len);
-        rb_enc_mbcput(c, RSTRING_PTR(str1)+pos, enc);
-        ENC_CODERANGE_SET(str1, cr);
-        return str1;
-    }
-    return rb_str_append(str1, str2);
+    StringValue(arg);
+    i = rb_str_index(str, arg, 0);
+
+    if (i == -1) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

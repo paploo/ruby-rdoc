@@ -2,52 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close_on_exec? (IO)</title>
+  <title>isatty (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close_on_exec?   =&gt; true or false
+ *     ios.isatty   =&gt; true or false
+ *     ios.tty?     =&gt; true or false
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; will be closed on exec.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is associated with a
+ *  terminal device (tty), &lt;code&gt;false&lt;/code&gt; otherwise.
  *
- *     f = open(&quot;/dev/null&quot;)
- *     f.close_on_exec?                 #=&gt; false
- *     f.close_on_exec = true
- *     f.close_on_exec?                 #=&gt; true
- *     f.close_on_exec = false
- *     f.close_on_exec?                 #=&gt; false
+ *     File.new(&quot;testfile&quot;).isatty   #=&gt; false
+ *     File.new(&quot;/dev/tty&quot;).isatty   #=&gt; true
  */
 
 static VALUE
-rb_io_close_on_exec_p(VALUE io)
+rb_io_isatty(VALUE io)
 {
-#if defined(HAVE_FCNTL) &amp;&amp; defined(F_GETFD) &amp;&amp; defined(F_SETFD) &amp;&amp; defined(FD_CLOEXEC)
     rb_io_t *fptr;
-    VALUE write_io;
-    int fd, ret;
-
-    write_io = GetWriteIO(io);
-    if (io != write_io) {
-        GetOpenFile(write_io, fptr);
-        if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-            if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-            if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
-        }
-    }
 
     GetOpenFile(io, fptr);
-    if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-        if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-        if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
-    }
+    if (isatty(fptr-&gt;fd) == 0)
+        return Qfalse;
     return Qtrue;
-#else
-    rb_notimplement();
-    return Qnil;                /* not reached */
-#endif
 }</pre>
 </body>
 </html>

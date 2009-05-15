@@ -2,19 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>coerce (Matrix)</title>
+  <title>elements_to_r (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 892</span>
-892:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">coerce</span>(<span class="ruby-identifier">other</span>)
-893:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">other</span>
-894:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
-895:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Scalar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">other</span>), <span class="ruby-keyword kw">self</span>
-896:     <span class="ruby-keyword kw">else</span>
-897:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;#{self.class} can't be coerced into #{other.class}&quot;</span>
-898:     <span class="ruby-keyword kw">end</span>
-899:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 936</span>
+936:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">elements_to_r</span>
+937:     <span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_r</span>}
+938:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

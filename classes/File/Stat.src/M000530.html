@@ -2,28 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>grpowned? (File::Stat)</title>
+  <title>setuid? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.grpowned?   =&gt; true or false
+ *     stat.setuid?    =&gt; true or false
  *  
- *  Returns true if the effective group id of the process is the same as
- *  the group id of &lt;i&gt;stat&lt;/i&gt;. On Windows NT, returns &lt;code&gt;false&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;stat&lt;/i&gt; has the set-user-id
+ *  permission bit set, &lt;code&gt;false&lt;/code&gt; if it doesn't or if the
+ *  operating system doesn't support this feature.
  *     
- *     File.stat(&quot;testfile&quot;).grpowned?      #=&gt; true
- *     File.stat(&quot;/etc/passwd&quot;).grpowned?   #=&gt; false
- *     
+ *     File.stat(&quot;/bin/su&quot;).setuid?   #=&gt; true
  */
 
 static VALUE
-rb_stat_grpowned(VALUE obj)
+rb_stat_suid(VALUE obj)
 {
-#ifndef _WIN32
-    if (group_member(get_stat(obj)-&gt;st_gid)) return Qtrue;
+#ifdef S_ISUID
+    if (get_stat(obj)-&gt;st_mode &amp; S_ISUID) return Qtrue;
 #endif
     return Qfalse;
 }</pre>

@@ -2,38 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>coerce (BigDecimal)</title>
+  <title>finite? (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* The coerce method provides support for Ruby type coercion. It is not
- * enabled by default.
- * 
- * This means that binary operations like + * / or - can often be performed 
- * on a BigDecimal and an object of another type, if the other object can
- * be coerced into a BigDecimal value.
- *
- * e.g.
- * a = BigDecimal.new(&quot;1.0&quot;)
- * b = a / 2.0  -&gt; 0.5
- *
- * Note that coercing a String to a BigDecimal is not supported by default;
- * it requires a special compile-time option when building Ruby.
- */
+  <pre>/* Returns True if the value is finite (not NaN or infinite) */
 static VALUE
-BigDecimal_coerce(VALUE self, VALUE other)
+BigDecimal_IsFinite(VALUE self)
 {
-    ENTER(2);
-    VALUE obj;
-    Real *b;
-    if(TYPE(other) == T_FLOAT) {
-       obj = rb_assoc_new(other, BigDecimal_to_f(self));
-    } else {
-       GUARD_OBJ(b,GetVpValue(other,1));
-       obj = rb_assoc_new(b-&gt;obj, self);
-    }
-    return obj;
+    Real *p = GetVpValue(self,1);
+    if(VpIsNaN(p)) return Qfalse;
+    if(VpIsInf(p)) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

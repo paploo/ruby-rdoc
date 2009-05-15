@@ -2,46 +2,36 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>shift (Hash)</title>
+  <title>clear (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.shift -&gt; anArray or obj
+ *     hsh.clear -&gt; hsh
  *
- *  Removes a key-value pair from &lt;i&gt;hsh&lt;/i&gt; and returns it as the
- *  two-item array &lt;code&gt;[&lt;/code&gt; &lt;i&gt;key, value&lt;/i&gt; &lt;code&gt;]&lt;/code&gt;, or
- *  the hash's default value if the hash is empty.
+ *  Removes all key-value pairs from &lt;i&gt;hsh&lt;/i&gt;.
  *
- *     h = { 1 =&gt; &quot;a&quot;, 2 =&gt; &quot;b&quot;, 3 =&gt; &quot;c&quot; }
- *     h.shift   #=&gt; [1, &quot;a&quot;]
- *     h         #=&gt; {2=&gt;&quot;b&quot;, 3=&gt;&quot;c&quot;}
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }   #=&gt; {&quot;a&quot;=&gt;100, &quot;b&quot;=&gt;200}
+ *     h.clear                          #=&gt; {}
+ *
  */
 
 static VALUE
-rb_hash_shift(VALUE hash)
+rb_hash_clear(VALUE hash)
 {
-    struct shift_var var;
+    rb_hash_modify_check(hash);
+    if (!RHASH(hash)-&gt;ntbl)
+        return hash;
+    if (RHASH(hash)-&gt;ntbl-&gt;num_entries &gt; 0) {
+        if (RHASH(hash)-&gt;iter_lev &gt; 0)
+            rb_hash_foreach(hash, clear_i, 0);
+        else
+            st_clear(RHASH(hash)-&gt;ntbl);
+    }
 
-    rb_hash_modify(hash);
-    var.key = Qundef;
-    rb_hash_foreach(hash, RHASH(hash)-&gt;iter_lev &gt; 0 ? shift_i_safe : shift_i,
-                    (st_data_t)&amp;var);
-
-    if (var.key != Qundef) {
-        if (RHASH(hash)-&gt;iter_lev &gt; 0) {
-            rb_hash_delete_key(hash, var.key);
-        }
-        return rb_assoc_new(var.key, var.val);
-    }
-    else if (FL_TEST(hash, HASH_PROC_DEFAULT)) {
-        return rb_funcall(RHASH(hash)-&gt;ifnone, id_yield, 2, hash, Qnil);
-    }
-    else {
-        return RHASH(hash)-&gt;ifnone;
-    }
+    return hash;
 }</pre>
 </body>
 </html>

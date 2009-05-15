@@ -2,30 +2,56 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>find (Encoding)</title>
+  <title>locale_charmap (Encoding)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   Encoding.find(string) =&gt; enc
- *   Encoding.find(symbol) =&gt; enc
+ *   Encoding.locale_charmap =&gt; string
  *
- * Search the encoding with specified &lt;i&gt;name&lt;/i&gt;.
- * &lt;i&gt;name&lt;/i&gt; should be a string or symbol.
+ * Returns the locale charmap name.
  *
- *   Encoding.find(&quot;US-ASCII&quot;)  =&gt; #&lt;Encoding:US-ASCII&gt;
- *   Encoding.find(:Shift_JIS)  =&gt; #&lt;Encoding:Shift_JIS&gt;
+ *   Debian GNU/Linux
+ *     LANG=C
+ *       Encoding.locale_charmap  =&gt; &quot;ANSI_X3.4-1968&quot;
+ *     LANG=ja_JP.EUC-JP
+ *       Encoding.locale_charmap  =&gt; &quot;EUC-JP&quot;
  *
- * An ArgumentError is raised when no encoding with &lt;i&gt;name&lt;/i&gt;.
- * Only +Encoding.find(&quot;internal&quot;)+ however returns nil when no encoding named &quot;internal&quot;,
- * in other words, when Ruby has no default internal encoding.
+ *   SunOS 5
+ *     LANG=C
+ *       Encoding.locale_charmap  =&gt; &quot;646&quot;
+ *     LANG=ja
+ *       Encoding.locale_charmap  =&gt; &quot;eucJP&quot;
+ *
+ * The result is higly platform dependent.
+ * So Encoding.find(Encoding.locale_charmap) may cause an error.
+ * If you need some encoding object even for unknown locale,
+ * Encoding.find(&quot;locale&quot;) can be used.
+ *
  */
-static VALUE
-enc_find(VALUE klass, VALUE enc)
+VALUE
+rb_locale_charmap(VALUE klass)
 {
-    return rb_enc_from_encoding(to_encoding(enc));
+#if defined NO_LOCALE_CHARMAP
+    return rb_usascii_str_new2(&quot;ASCII-8BIT&quot;);
+#elif defined _WIN32 || defined __CYGWIN__
+    const char *nl_langinfo_codeset(void);
+    const char *codeset = nl_langinfo_codeset();
+    char cp[sizeof(int) * 3 + 4];
+    if (!codeset) {
+        snprintf(cp, sizeof(cp), &quot;CP%d&quot;, GetConsoleCP());
+        codeset = cp;
+    }
+    return rb_usascii_str_new2(codeset);
+#elif defined HAVE_LANGINFO_H
+    char *codeset;
+    codeset = nl_langinfo(CODESET);
+    return rb_usascii_str_new2(codeset);
+#else
+    return Qnil;
+#endif
 }</pre>
 </body>
 </html>

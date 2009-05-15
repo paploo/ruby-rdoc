@@ -2,12 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new_start (Date)</title>
+  <title>new_offset (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1299</span>
-1299:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_start</span>(<span class="ruby-identifier">sg</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>) <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-ivar">@ajd</span>, <span class="ruby-ivar">@of</span>, <span class="ruby-identifier">sg</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1319</span>
+1319:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_offset</span>(<span class="ruby-identifier">of</span>=<span class="ruby-value">0</span>)
+1320:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">of</span>
+1321:       <span class="ruby-identifier">of</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">zone_to_diff</span>(<span class="ruby-identifier">of</span>) <span class="ruby-operator">||</span> <span class="ruby-value">0</span>, <span class="ruby-value">86400</span>)
+1322:     <span class="ruby-keyword kw">end</span>
+1323:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-ivar">@ajd</span>, <span class="ruby-identifier">of</span>, <span class="ruby-ivar">@sg</span>)
+1324:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

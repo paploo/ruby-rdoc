@@ -2,25 +2,66 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>exit (Thread)</title>
+  <title>join (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.exit   =&gt; thread
+ *     thr.join          =&gt; thr
+ *     thr.join(limit)   =&gt; thr
  *
- *  Terminates the currently running thread and schedules another thread to be
- *  run. If this thread is already marked to be killed, &lt;code&gt;exit&lt;/code&gt;
- *  returns the &lt;code&gt;Thread&lt;/code&gt;. If this is the main thread, or the last
- *  thread, exit the process.
+ *  The calling thread will suspend execution and run &lt;i&gt;thr&lt;/i&gt;. Does not
+ *  return until &lt;i&gt;thr&lt;/i&gt; exits or until &lt;i&gt;limit&lt;/i&gt; seconds have passed. If
+ *  the time limit expires, &lt;code&gt;nil&lt;/code&gt; will be returned, otherwise
+ *  &lt;i&gt;thr&lt;/i&gt; is returned.
+ *
+ *  Any threads not joined will be killed when the main program exits.  If
+ *  &lt;i&gt;thr&lt;/i&gt; had previously raised an exception and the
+ *  &lt;code&gt;abort_on_exception&lt;/code&gt; and &lt;code&gt;$DEBUG&lt;/code&gt; flags are not set
+ *  (so the exception has not yet been processed) it will be processed at this
+ *  time.
+ *
+ *     a = Thread.new { print &quot;a&quot;; sleep(10); print &quot;b&quot;; print &quot;c&quot; }
+ *     x = Thread.new { print &quot;x&quot;; Thread.pass; print &quot;y&quot;; print &quot;z&quot; }
+ *     x.join # Let x thread finish, a will be killed on exit.
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     axyz
+ *
+ *  The following example illustrates the &lt;i&gt;limit&lt;/i&gt; parameter.
+ *
+ *     y = Thread.new { 4.times { sleep 0.1; puts 'tick... ' }}
+ *     puts &quot;Waiting&quot; until y.join(0.15)
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     tick...
+ *     Waiting
+ *     tick...
+ *     Waitingtick...
+ *
+ *
+ *     tick...
  */
 
 static VALUE
-rb_thread_exit(void)
+thread_join_m(int argc, VALUE *argv, VALUE self)
 {
-    return rb_thread_kill(GET_THREAD()-&gt;self);
+    rb_thread_t *target_th;
+    double delay = DELAY_INFTY;
+    VALUE limit;
+
+    GetThreadPtr(self, target_th);
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;limit);
+    if (!NIL_P(limit)) {
+        delay = rb_num2dbl(limit);
+    }
+
+    return thread_join(target_th, delay);
 }</pre>
 </body>
 </html>

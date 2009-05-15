@@ -2,14 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>stdout (Tracer)</title>
+  <title>get_thread_no (Tracer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/tracer.rb, line 49</span>
-49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stdout</span>
-50:     <span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">stdout</span>
-51:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/tracer.rb, line 105</span>
+105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_thread_no</span>
+106:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">no</span> = <span class="ruby-ivar">@threads</span>[<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>.<span class="ruby-identifier">object_id</span>]
+107:       <span class="ruby-identifier">no</span>
+108:     <span class="ruby-keyword kw">else</span>
+109:       <span class="ruby-ivar">@threads</span>[<span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>.<span class="ruby-identifier">object_id</span>] = <span class="ruby-ivar">@threads</span>.<span class="ruby-identifier">size</span>
+110:     <span class="ruby-keyword kw">end</span>
+111:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,34 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chroot (Dir)</title>
+  <title>[] (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Dir.chroot( string ) =&gt; 0
+ *     Dir[ array ]                 =&gt; array
+ *     Dir[ string [, string ...] ] =&gt; array
  *
- *  Changes this process's idea of the file system root. Only a
- *  privileged process may make this call. Not available on all
- *  platforms. On Unix systems, see &lt;code&gt;chroot(2)&lt;/code&gt; for more
- *  information.
+ *  Equivalent to calling
+ *  &lt;code&gt;Dir.glob(&lt;/code&gt;&lt;i&gt;array,&lt;/i&gt;&lt;code&gt;0)&lt;/code&gt; and
+ *  &lt;code&gt;Dir.glob([&lt;/code&gt;&lt;i&gt;string,...&lt;/i&gt;&lt;code&gt;],0)&lt;/code&gt;.
+ *
  */
 static VALUE
-dir_s_chroot(VALUE dir, VALUE path)
+dir_s_aref(int argc, VALUE *argv, VALUE obj)
 {
-#if defined(HAVE_CHROOT) &amp;&amp; !defined(__CHECKER__)
-    check_dirname(&amp;path);
-
-    if (chroot(RSTRING_PTR(path)) == -1)
-        rb_sys_fail(RSTRING_PTR(path));
-
-    return INT2FIX(0);
-#else
-    rb_notimplement();
-    return Qnil;                /* not reached */
-#endif
+    if (argc == 1) {
+        return rb_push_glob(argv[0], 0);
+    }
+    return dir_globs(argc, argv, 0);
 }</pre>
 </body>
 </html>

@@ -2,35 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>list (Encoding)</title>
+  <title>default_external= (Encoding)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   Encoding.list =&gt; [enc1, enc2, ...]
+ *   Encoding.default_external = enc
  *
- * Returns the list of loaded encodings.
- *
- *   Encoding.list
- *   =&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
- *       #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
- *
- *   Encoding.find(&quot;US-ASCII&quot;)
- *   =&gt; #&lt;Encoding:US-ASCII&gt;
- *
- *   Encoding.list
- *   =&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
- *       #&lt;Encoding:US-ASCII&gt;, #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
- *
+ * Sets default external encoding.
  */
 static VALUE
-enc_list(VALUE klass)
+set_default_external(VALUE klass, VALUE encoding)
 {
-    VALUE ary = rb_ary_new2(0);
-    rb_ary_replace(ary, rb_encoding_list);
-    return ary;
+    rb_warning(&quot;setting Encoding.default_external&quot;);
+    rb_enc_set_default_external(encoding);
+    return encoding;
 }</pre>
 </body>
 </html>

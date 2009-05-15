@@ -2,31 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hash (UnboundMethod)</title>
+  <title>owner (UnboundMethod)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    meth.hash   =&gt; integer
- *
- * Return a hash value corresponding to the method object.
+ *  call-seq:
+ *     meth.owner    =&gt; class_or_module
+ *  
+ *  Returns the class or module that defines the method.
  */
 
 static VALUE
-method_hash(VALUE method)
+method_owner(VALUE obj)
 {
-    struct METHOD *m;
-    long hash;
+    struct METHOD *data;
 
-    Data_Get_Struct(method, struct METHOD, m);
-    hash = (long)m-&gt;oclass;
-    hash ^= (long)m-&gt;rclass;
-    hash ^= (long)m-&gt;recv;
-    hash ^= (long)m-&gt;body;
-
-    return INT2FIX(hash);
+    Data_Get_Struct(obj, struct METHOD, data);
+    return data-&gt;oclass;
 }</pre>
 </body>
 </html>

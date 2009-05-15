@@ -2,15 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>delete (Set)</title>
+  <title>merge (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 235</span>
-235:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">o</span>)
-236:     <span class="ruby-ivar">@hash</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">o</span>)
-237:     <span class="ruby-keyword kw">self</span>
-238:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 278</span>
+278:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">enum</span>)
+279:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Set</span>)
+280:       <span class="ruby-ivar">@hash</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">enum</span>.<span class="ruby-identifier">instance_eval</span> { <span class="ruby-ivar">@hash</span> })
+281:     <span class="ruby-keyword kw">else</span>
+282:       <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">o</span>) }
+283:     <span class="ruby-keyword kw">end</span>
+284: 
+285:     <span class="ruby-keyword kw">self</span>
+286:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

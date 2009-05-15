@@ -2,23 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>run_config (Shell::CommandProcessor)</title>
+  <title>test (Shell::CommandProcessor)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 51</span>
-51:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run_config</span>
-52:       <span class="ruby-keyword kw">begin</span>
-53:         <span class="ruby-identifier">load</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-value str">&quot;~/.rb_shell&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">&quot;HOME&quot;</span>)
-54:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
-55:       <span class="ruby-keyword kw">rescue</span>
-56:         <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;load error: #{rc}\n&quot;</span>
-57:         <span class="ruby-identifier">print</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">class</span>, <span class="ruby-value str">&quot;: &quot;</span>, <span class="ruby-identifier">$!</span>, <span class="ruby-value str">&quot;\n&quot;</span>
-58:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">err</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">$@</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">$@</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">2</span>]
-59:           <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\t&quot;</span>, <span class="ruby-identifier">err</span>, <span class="ruby-value str">&quot;\n&quot;</span>
-60:         <span class="ruby-keyword kw">end</span>
-61:       <span class="ruby-keyword kw">end</span>
-62:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 173</span>
+173:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">test</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>, <span class="ruby-identifier">file2</span>=<span class="ruby-keyword kw">nil</span>)
+174:       <span class="ruby-identifier">file1</span> = <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">file1</span>)
+175:       <span class="ruby-identifier">file2</span> = <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">file2</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file2</span>
+176:       <span class="ruby-identifier">command</span> = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+177: 
+178:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">command</span>
+179:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Integer</span>
+180:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file2</span>
+181:           <span class="ruby-identifier">top_level_test</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>, <span class="ruby-identifier">file2</span>)
+182:         <span class="ruby-keyword kw">else</span>
+183:           <span class="ruby-identifier">top_level_test</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>)
+184:         <span class="ruby-keyword kw">end</span>
+185:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+186:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+187:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file2</span>
+188:             <span class="ruby-identifier">top_level_test</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>, <span class="ruby-identifier">file2</span>)
+189:           <span class="ruby-keyword kw">else</span>
+190:             <span class="ruby-identifier">top_level_test</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>)
+191:           <span class="ruby-keyword kw">end</span>
+192:         <span class="ruby-keyword kw">else</span>
+193:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file2</span>
+194:             <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>, <span class="ruby-identifier">file2</span>)
+195:           <span class="ruby-keyword kw">else</span>
+196:             <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">file1</span>)
+197:           <span class="ruby-keyword kw">end</span>
+198:         <span class="ruby-keyword kw">end</span>
+199:       <span class="ruby-keyword kw">end</span>
+200:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

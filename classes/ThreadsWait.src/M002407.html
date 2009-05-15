@@ -2,21 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>all_waits (ThreadsWait)</title>
+  <title>next_wait (ThreadsWait)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/thwait.rb, line 64</span>
-64:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">ThreadsWait</span>.<span class="ruby-identifier">all_waits</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">threads</span>) <span class="ruby-comment cmt"># :yield: thread</span>
-65:     <span class="ruby-identifier">tw</span> = <span class="ruby-constant">ThreadsWait</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">threads</span>)
-66:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
-67:       <span class="ruby-identifier">tw</span>.<span class="ruby-identifier">all_waits</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">th</span><span class="ruby-operator">|</span>
-68:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">th</span>
-69:       <span class="ruby-keyword kw">end</span>
-70:     <span class="ruby-keyword kw">else</span>
-71:       <span class="ruby-identifier">tw</span>.<span class="ruby-identifier">all_waits</span>
-72:     <span class="ruby-keyword kw">end</span>
-73:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/thwait.rb, line 135</span>
+135:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_wait</span>(<span class="ruby-identifier">nonblock</span> = <span class="ruby-keyword kw">nil</span>)
+136:     <span class="ruby-constant">ThreadsWait</span>.<span class="ruby-identifier">fail</span> <span class="ruby-constant">ErrNoWaitingThread</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@threads</span>.<span class="ruby-identifier">empty?</span>
+137:     <span class="ruby-keyword kw">begin</span>
+138:       <span class="ruby-ivar">@threads</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">th</span> = <span class="ruby-ivar">@wait_queue</span>.<span class="ruby-identifier">pop</span>(<span class="ruby-identifier">nonblock</span>))
+139:       <span class="ruby-identifier">th</span>
+140:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ThreadError</span>
+141:       <span class="ruby-constant">ThreadsWait</span>.<span class="ruby-identifier">fail</span> <span class="ruby-constant">ErrNoFinishedThread</span>
+142:     <span class="ruby-keyword kw">end</span>
+143:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

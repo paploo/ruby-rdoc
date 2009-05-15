@@ -2,26 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>next! (String)</title>
+  <title>chr (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.succ!   =&gt; str
- *     str.next!   =&gt; str
- *  
- *  Equivalent to &lt;code&gt;String#succ&lt;/code&gt;, but modifies the receiver in
- *  place.
+ *     string.chr    -&gt;  string
+ *
+ *  Returns a one-character string at the beginning of the string.
+ *
+ *     a = &quot;abcde&quot;
+ *     a.chr    #=&gt; &quot;a&quot;
  */
 
 static VALUE
-rb_str_succ_bang(VALUE str)
+rb_str_chr(VALUE str)
 {
-    rb_str_shared_replace(str, rb_str_succ(str));
-
-    return str;
+    return rb_str_substr(str, 0, 1);
 }</pre>
 </body>
 </html>

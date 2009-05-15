@@ -2,17 +2,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>converters (CSV)</title>
+  <title>skip_blanks? (CSV)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1605</span>
-1605:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">converters</span>
-1606:     <span class="ruby-ivar">@converters</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter</span><span class="ruby-operator">|</span>
-1607:       <span class="ruby-identifier">name</span> = <span class="ruby-constant">Converters</span>.<span class="ruby-identifier">rassoc</span>(<span class="ruby-identifier">converter</span>)
-1608:       <span class="ruby-identifier">name</span> <span class="ruby-value">? </span><span class="ruby-identifier">name</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">converter</span>
-1609:     <span class="ruby-keyword kw">end</span>
-1610:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1646</span>
+1646:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip_blanks?</span>()        <span class="ruby-ivar">@skip_blanks</span>        <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

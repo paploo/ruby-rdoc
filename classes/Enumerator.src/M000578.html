@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each (Enumerator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    enum.each {...}
+ *
+ *  Iterates the given block using the object and the method specified
+ *  in the first place.  If no block is given, returns self.
+ *
+ */
+static VALUE
+enumerator_each(VALUE obj)
+{
+    struct enumerator *e;
+    int argc = 0;
+    VALUE *argv = 0;
+
+    if (!rb_block_given_p()) return obj;
+    e = enumerator_ptr(obj);
+    if (e-&gt;args) {
+        argc = RARRAY_LEN(e-&gt;args);
+        argv = RARRAY_PTR(e-&gt;args);
+    }
+    return rb_block_call(e-&gt;obj, e-&gt;meth, argc, argv,
+                         enumerator_each_i, (VALUE)e);
+}</pre>
+</body>
+</html>

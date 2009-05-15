@@ -2,33 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>const_set (Module)</title>
+  <title>class_variable_get (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.const_set(sym, obj)    =&gt; obj
+ *     mod.class_variable_get(symbol)    =&gt; obj
  *  
- *  Sets the named constant to the given object, returning that object.
- *  Creates a new constant if no constant with the given name previously
- *  existed.
+ *  Returns the value of the given class variable (or throws a
+ *  &lt;code&gt;NameError&lt;/code&gt; exception). The &lt;code&gt;@@&lt;/code&gt; part of the
+ *  variable name should be included for regular class variables
  *     
- *     Math.const_set(&quot;HIGH_SCHOOL_PI&quot;, 22.0/7.0)   #=&gt; 3.14285714285714
- *     Math::HIGH_SCHOOL_PI - Math::PI              #=&gt; 0.00126448926734968
+ *     class Fred
+ *       @@foo = 99
+ *     end
+ *     Fred.class_variable_get(:@@foo)     #=&gt; 99
  */
 
 static VALUE
-rb_mod_const_set(VALUE mod, VALUE name, VALUE value)
+rb_mod_cvar_get(VALUE obj, VALUE iv)
 {
-    ID id = rb_to_id(name);
+    ID id = rb_to_id(iv);
 
-    if (!rb_is_const_id(id)) {
-        rb_name_error(id, &quot;wrong constant name %s&quot;, rb_id2name(id));
+    if (!rb_is_class_id(id)) {
+        rb_name_error(id, &quot;`%s' is not allowed as a class variable name&quot;, rb_id2name(id));
     }
-    rb_const_set(mod, id, value);
-    return value;
+    return rb_cvar_get(obj, id);
 }</pre>
 </body>
 </html>

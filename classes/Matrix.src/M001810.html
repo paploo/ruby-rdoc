@@ -2,34 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>minor (Matrix)</title>
+  <title>compare_by_row_vectors (Matrix)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 344</span>
-344:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">minor</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">param</span>)
-345:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">size</span>
-346:     <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
-347:       <span class="ruby-identifier">from_row</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">first</span>
-348:       <span class="ruby-identifier">size_row</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">end</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">from_row</span>
-349:       <span class="ruby-identifier">size_row</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">param</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">exclude_end?</span>
-350:       <span class="ruby-identifier">from_col</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">first</span>
-351:       <span class="ruby-identifier">size_col</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">end</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">from_col</span>
-352:       <span class="ruby-identifier">size_col</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">param</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">exclude_end?</span>
-353:     <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span>
-354:       <span class="ruby-identifier">from_row</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">0</span>]
-355:       <span class="ruby-identifier">size_row</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">1</span>]
-356:       <span class="ruby-identifier">from_col</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">2</span>]
-357:       <span class="ruby-identifier">size_col</span> = <span class="ruby-identifier">param</span>[<span class="ruby-value">3</span>]
-358:     <span class="ruby-keyword kw">else</span>
-359:       <span class="ruby-constant">Matrix</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-identifier">param</span>.<span class="ruby-identifier">inspect</span>
-360:     <span class="ruby-keyword kw">end</span>
-361:     
-362:     <span class="ruby-identifier">rows</span> = <span class="ruby-ivar">@rows</span>[<span class="ruby-identifier">from_row</span>, <span class="ruby-identifier">size_row</span>].<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
-363:       <span class="ruby-identifier">row</span>[<span class="ruby-identifier">from_col</span>, <span class="ruby-identifier">size_col</span>]
-364:     }
-365:     <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">rows</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-keyword kw">false</span>)
-366:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/matrix.rb, line 415</span>
+415:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compare_by_row_vectors</span>(<span class="ruby-identifier">rows</span>, <span class="ruby-identifier">comparison</span> = <span class="ruby-identifier">:==</span>)
+416:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rows</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">rows</span>.<span class="ruby-identifier">size</span>
+417:     
+418:     <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@rows</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+419:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@rows</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">send</span>(<span class="ruby-identifier">comparison</span>, <span class="ruby-identifier">rows</span>[<span class="ruby-identifier">i</span>])
+420:     <span class="ruby-keyword kw">end</span>
+421:     <span class="ruby-keyword kw">true</span>
+422:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

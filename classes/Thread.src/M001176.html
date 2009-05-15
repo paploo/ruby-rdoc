@@ -2,40 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>wakeup (Thread)</title>
+  <title>priority= (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     thr.wakeup   =&gt; thr
+ *     thr.priority= integer   =&gt; thr
  *
- *  Marks &lt;i&gt;thr&lt;/i&gt; as eligible for scheduling (it may still remain blocked on
- *  I/O, however). Does not invoke the scheduler (see &lt;code&gt;Thread#run&lt;/code&gt;).
+ *  Sets the priority of &lt;i&gt;thr&lt;/i&gt; to &lt;i&gt;integer&lt;/i&gt;. Higher-priority threads
+ *  will run before lower-priority threads.
  *
- *     c = Thread.new { Thread.stop; puts &quot;hey!&quot; }
- *     c.wakeup
+ *     count1 = count2 = 0
+ *     a = Thread.new do
+ *           loop { count1 += 1 }
+ *         end
+ *     a.priority = -1
  *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     hey!
+ *     b = Thread.new do
+ *           loop { count2 += 1 }
+ *         end
+ *     b.priority = -2
+ *     sleep 1   #=&gt; 1
+ *     count1    #=&gt; 622504
+ *     count2    #=&gt; 5832
  */
 
-VALUE
-rb_thread_wakeup(VALUE thread)
+static VALUE
+rb_thread_priority_set(VALUE thread, VALUE prio)
 {
     rb_thread_t *th;
+    int priority;
     GetThreadPtr(thread, th);
 
-    if (th-&gt;status == THREAD_KILLED) {
-        rb_raise(rb_eThreadError, &quot;killed thread&quot;);
+    rb_secure(4);
+
+#if USE_NATIVE_THREAD_PRIORITY
+    th-&gt;priority = NUM2INT(prio);
+    native_thread_apply_priority(th);
+#else
+    priority = NUM2INT(prio);
+    if (priority &gt; RUBY_THREAD_PRIORITY_MAX) {
+        priority = RUBY_THREAD_PRIORITY_MAX;
     }
-    rb_thread_ready(th);
-    if (th-&gt;status != THREAD_TO_KILL) {
-        th-&gt;status = THREAD_RUNNABLE;
+    else if (priority &lt; RUBY_THREAD_PRIORITY_MIN) {
+        priority = RUBY_THREAD_PRIORITY_MIN;
     }
-    return thread;
+    th-&gt;priority = priority;
+    th-&gt;slice = priority;
+#endif
+    return INT2NUM(th-&gt;priority);
 }</pre>
 </body>
 </html>

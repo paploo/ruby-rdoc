@@ -2,72 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>singleton_methods (Object)</title>
+  <title>instance_variable_set (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.singleton_methods(all=true)    =&gt; array
+ *     obj.instance_variable_set(symbol, obj)    =&gt; obj
  *  
- *  Returns an array of the names of singleton methods for &lt;i&gt;obj&lt;/i&gt;.
- *  If the optional &lt;i&gt;all&lt;/i&gt; parameter is true, the list will include
- *  methods in modules included in &lt;i&gt;obj&lt;/i&gt;.
+ *  Sets the instance variable names by &lt;i&gt;symbol&lt;/i&gt; to
+ *  &lt;i&gt;object&lt;/i&gt;, thereby frustrating the efforts of the class's
+ *  author to attempt to provide proper encapsulation. The variable
+ *  did not have to exist prior to this call.
  *     
- *     module Other
- *       def three() end
- *     end
- *     
- *     class Single
- *       def Single.four() end
- *     end
- *     
- *     a = Single.new
- *     
- *     def a.one()
- *     end
- *     
- *     class &lt;&lt; a
- *       include Other
- *       def two()
+ *     class Fred
+ *       def initialize(p1, p2)
+ *         @a, @b = p1, p2
  *       end
  *     end
- *     
- *     Single.singleton_methods    #=&gt; [:four]
- *     a.singleton_methods(false)  #=&gt; [:two, :one]
- *     a.singleton_methods         #=&gt; [:two, :one, :three]
+ *     fred = Fred.new('cat', 99)
+ *     fred.instance_variable_set(:@a, 'dog')   #=&gt; &quot;dog&quot;
+ *     fred.instance_variable_set(:@c, 'cat')   #=&gt; &quot;cat&quot;
+ *     fred.inspect                             #=&gt; &quot;#&lt;Fred:0x401b3da8 @a=\&quot;dog\&quot;, @b=99, @c=\&quot;cat\&quot;&gt;&quot;
  */
 
-VALUE
-rb_obj_singleton_methods(int argc, VALUE *argv, VALUE obj)
+static VALUE
+rb_obj_ivar_set(VALUE obj, VALUE iv, VALUE val)
 {
-    VALUE recur, ary, klass;
-    st_table *list;
+    ID id = rb_to_id(iv);
 
-    if (argc == 0) {
-	recur = Qtrue;
+    if (!rb_is_instance_id(id)) {
+        rb_name_error(id, &quot;`%s' is not allowed as an instance variable name&quot;, rb_id2name(id));
     }
-    else {
-	rb_scan_args(argc, argv, &quot;01&quot;, &amp;recur);
-    }
-    klass = CLASS_OF(obj);
-    list = st_init_numtable();
-    if (klass &amp;&amp; FL_TEST(klass, FL_SINGLETON)) {
-	st_foreach(RCLASS_M_TBL(klass), method_entry, (st_data_t)list);
-	klass = RCLASS_SUPER(klass);
-    }
-    if (RTEST(recur)) {
-	while (klass &amp;&amp; (FL_TEST(klass, FL_SINGLETON) || TYPE(klass) == T_ICLASS)) {
-	    st_foreach(RCLASS_M_TBL(klass), method_entry, (st_data_t)list);
-	    klass = RCLASS_SUPER(klass);
-	}
-    }
-    ary = rb_ary_new();
-    st_foreach(list, ins_methods_i, ary);
-    st_free_table(list);
-
-    return ary;
+    return rb_ivar_set(obj, id, val);
 }</pre>
 </body>
 </html>

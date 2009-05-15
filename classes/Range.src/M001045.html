@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each (Range)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rng.each {| i | block } =&gt; rng
+ *  
+ *  Iterates over the elements &lt;i&gt;rng&lt;/i&gt;, passing each in turn to the
+ *  block. You can only iterate if the start object of the range
+ *  supports the +succ+ method (which means that you can't iterate over
+ *  ranges of +Float+ objects).
+ *     
+ *     (10..15).each do |n|
+ *        print n, ' '
+ *     end
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     10 11 12 13 14 15
+ */
+
+static VALUE
+range_each(VALUE range)
+{
+    VALUE beg, end;
+
+    RETURN_ENUMERATOR(range, 0, 0);
+
+    beg = RANGE_BEG(range);
+    end = RANGE_END(range);
+
+    if (!rb_respond_to(beg, id_succ)) {
+        rb_raise(rb_eTypeError, &quot;can't iterate from %s&quot;,
+                 rb_obj_classname(beg));
+    }
+    if (FIXNUM_P(beg) &amp;&amp; FIXNUM_P(end)) { /* fixnums are special */
+        long lim = FIX2LONG(end);
+        long i;
+
+        if (!EXCL(range))
+            lim += 1;
+        for (i = FIX2LONG(beg); i &lt; lim; i++) {
+            rb_yield(LONG2FIX(i));
+        }
+    }
+    else if (TYPE(beg) == T_STRING) {
+        VALUE args[2];
+
+        args[0] = end;
+        args[1] = EXCL(range) ? Qtrue : Qfalse;
+        rb_block_call(beg, rb_intern(&quot;upto&quot;), 2, args, rb_yield, 0);
+    }
+    else {
+        range_each_func(range, each_i, NULL);
+    }
+    return range;
+}</pre>
+</body>
+</html>

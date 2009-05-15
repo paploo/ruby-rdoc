@@ -2,27 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>owned? (File)</title>
+  <title>chardev? (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *    File.owned?(file_name)   =&gt; true or false
+ *   File.chardev?(file_name)   =&gt;  true or false
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file exists and the
- * effective used id of the calling process is the owner of
- * the file.
+ * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a character device.
  */
-
 static VALUE
-rb_file_owned_p(VALUE obj, VALUE fname)
+rb_file_chardev_p(VALUE obj, VALUE fname)
 {
+#ifndef S_ISCHR
+#   define S_ISCHR(m) ((m &amp; S_IFMT) == S_IFCHR)
+#endif
+
     struct stat st;
 
     if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (st.st_uid == geteuid()) return Qtrue;
+    if (S_ISCHR(st.st_mode)) return Qtrue;
+
     return Qfalse;
 }</pre>
 </body>

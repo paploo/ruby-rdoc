@@ -2,51 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>flush (IO)</title>
+  <title>eof (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.flush    =&gt; ios
+ *     ios.eof     =&gt; true or false
+ *     ios.eof?    =&gt; true or false
  *
- *  Flushes any buffered data within &lt;em&gt;ios&lt;/em&gt; to the underlying
- *  operating system (note that this is Ruby internal buffering only;
- *  the OS may buffer the data as well).
+ *  Returns true if &lt;em&gt;ios&lt;/em&gt; is at end of file that means
+ *  there are no more data to read.
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt; will be
+ *  raised.
  *
- *     $stdout.print &quot;no newline&quot;
- *     $stdout.flush
+ *     f = File.new(&quot;testfile&quot;)
+ *     dummy = f.readlines
+ *     f.eof   #=&gt; true
  *
- *  &lt;em&gt;produces:&lt;/em&gt;
+ *  If &lt;em&gt;ios&lt;/em&gt; is a stream such as pipe or socket, &lt;code&gt;IO#eof?&lt;/code&gt;
+ *  blocks until the other end sends some data or closes it.
  *
- *     no newline
+ *     r, w = IO.pipe
+ *     Thread.new { sleep 1; w.close }
+ *     r.eof?  #=&gt; true after 1 second blocking
+ *
+ *     r, w = IO.pipe
+ *     Thread.new { sleep 1; w.puts &quot;a&quot; }
+ *     r.eof?  #=&gt; false after 1 second blocking
+ *
+ *     r, w = IO.pipe
+ *     r.eof?  # blocks forever
+ *
+ *  Note that &lt;code&gt;IO#eof?&lt;/code&gt; reads data to a input buffer.
+ *  So &lt;code&gt;IO#sysread&lt;/code&gt; doesn't work with &lt;code&gt;IO#eof?&lt;/code&gt;.
  */
 
 VALUE
-rb_io_flush(VALUE io)
+rb_io_eof(VALUE io)
 {
     rb_io_t *fptr;
 
-    if (TYPE(io) != T_FILE) {
-        return rb_funcall(io, id_flush, 0);
-    }
-
-    io = GetWriteIO(io);
     GetOpenFile(io, fptr);
+    rb_io_check_readable(fptr);
 
-    if (fptr-&gt;mode &amp; FMODE_WRITABLE) {
-        if (io_fflush(fptr) &lt; 0)
-            rb_sys_fail(0);
-#ifdef _WIN32
-        fsync(fptr-&gt;fd);
-#endif
+    if (READ_DATA_PENDING(fptr)) return Qfalse;
+    READ_CHECK(fptr);
+    if (io_fillbuf(fptr) &lt; 0) {
+        return Qtrue;
     }
-    if (fptr-&gt;mode &amp; FMODE_READABLE) {
-        io_unread(fptr);
-    }
-
-    return io;
+    return Qfalse;
 }</pre>
 </body>
 </html>

@@ -2,27 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size (Struct)</title>
+  <title>select (Struct)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     struct.length    =&gt; fixnum
- *     struct.size      =&gt; fixnum
+ *     struct.select {|i| block }    =&gt; array
  *  
- *  Returns the number of instance variables.
+ *  Invokes the block passing in successive elements from
+ *  &lt;i&gt;struct&lt;/i&gt;, returning an array containing those elements
+ *  for which the block returns a true value (equivalent to
+ *  &lt;code&gt;Enumerable#select&lt;/code&gt;).
  *     
- *     Customer = Struct.new(:name, :address, :zip)
- *     joe = Customer.new(&quot;Joe Smith&quot;, &quot;123 Maple, Anytown NC&quot;, 12345)
- *     joe.length   #=&gt; 3
+ *     Lots = Struct.new(:a, :b, :c, :d, :e, :f)
+ *     l = Lots.new(11, 22, 33, 44, 55, 66)
+ *     l.select {|v| (v % 2).zero? }   #=&gt; [22, 44, 66]
  */
 
 static VALUE
-rb_struct_size(VALUE s)
+rb_struct_select(int argc, VALUE *argv, VALUE s)
 {
-    return LONG2FIX(RSTRUCT_LEN(s));
+    VALUE result;
+    long i;
+
+    if (argc &gt; 0) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 0)&quot;, argc);
+    }
+    result = rb_ary_new();
+    for (i = 0; i &lt; RSTRUCT_LEN(s); i++) {
+        if (RTEST(rb_yield(RSTRUCT_PTR(s)[i]))) {
+            rb_ary_push(result, RSTRUCT_PTR(s)[i]);
+        }
+    }
+
+    return result;
 }</pre>
 </body>
 </html>

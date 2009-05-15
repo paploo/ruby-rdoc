@@ -2,32 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>keys (Hash)</title>
+  <title>select (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.keys    =&gt; array
+ *     hsh.select {|key, value| block}   =&gt; a_hash
  *
- *  Returns a new array populated with the keys from this hash. See also
- *  &lt;code&gt;Hash#values&lt;/code&gt;.
+ *  Returns a new hash consisting of entries which the block returns true.
  *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300, &quot;d&quot; =&gt; 400 }
- *     h.keys   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
- *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300 }
+ *     h.select {|k,v| k &gt; &quot;a&quot;}  #=&gt; {&quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300}
+ *     h.select {|k,v| v &lt; 200}  #=&gt; {&quot;a&quot; =&gt; 100}
  */
 
-static VALUE
-rb_hash_keys(VALUE hash)
+VALUE
+rb_hash_select(VALUE hash)
 {
-    VALUE ary;
+    VALUE result;
 
-    ary = rb_ary_new();
-    rb_hash_foreach(hash, keys_i, ary);
-
-    return ary;
+    RETURN_ENUMERATOR(hash, 0, 0);
+    result = rb_hash_new();
+    rb_hash_foreach(hash, select_i, result);
+    return result;
 }</pre>
 </body>
 </html>

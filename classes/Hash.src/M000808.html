@@ -2,39 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>initialize_copy (Hash)</title>
+  <title>== (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.replace(other_hash) -&gt; hsh
+ *     hsh == other_hash    =&gt; true or false
  *
- *  Replaces the contents of &lt;i&gt;hsh&lt;/i&gt; with the contents of
- *  &lt;i&gt;other_hash&lt;/i&gt;.
+ *  Equality---Two hashes are equal if they each contain the same number
+ *  of keys and if each key-value pair is equal to (according to
+ *  &lt;code&gt;Object#==&lt;/code&gt;) the corresponding elements in the other
+ *  hash.
  *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.replace({ &quot;c&quot; =&gt; 300, &quot;d&quot; =&gt; 400 })   #=&gt; {&quot;c&quot;=&gt;300, &quot;d&quot;=&gt;400}
+ *     h1 = { &quot;a&quot; =&gt; 1, &quot;c&quot; =&gt; 2 }
+ *     h2 = { 7 =&gt; 35, &quot;c&quot; =&gt; 2, &quot;a&quot; =&gt; 1 }
+ *     h3 = { &quot;a&quot; =&gt; 1, &quot;c&quot; =&gt; 2, 7 =&gt; 35 }
+ *     h4 = { &quot;a&quot; =&gt; 1, &quot;d&quot; =&gt; 2, &quot;f&quot; =&gt; 35 }
+ *     h1 == h2   #=&gt; false
+ *     h2 == h3   #=&gt; true
+ *     h3 == h4   #=&gt; false
  *
  */
 
 static VALUE
-rb_hash_replace(VALUE hash, VALUE hash2)
+rb_hash_equal(VALUE hash1, VALUE hash2)
 {
-    hash2 = to_hash(hash2);
-    if (hash == hash2) return hash;
-    rb_hash_clear(hash);
-    rb_hash_foreach(hash2, replace_i, hash);
-    RHASH(hash)-&gt;ifnone = RHASH(hash2)-&gt;ifnone;
-    if (FL_TEST(hash2, HASH_PROC_DEFAULT)) {
-        FL_SET(hash, HASH_PROC_DEFAULT);
-    }
-    else {
-        FL_UNSET(hash, HASH_PROC_DEFAULT);
-    }
-
-    return hash;
+    return hash_equal(hash1, hash2, Qfalse);
 }</pre>
 </body>
 </html>

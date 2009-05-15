@@ -2,32 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (IO)</title>
+  <title>soak_up_spaces (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * call-seq:
- *   ios.inspect   =&gt; string
- *
- * Return a string describing this IO object.
- */
-
-static VALUE
-rb_io_inspect(VALUE obj)
-{
-    rb_io_t *fptr;
-    const char *cname;
-    const char *st = &quot;&quot;;
-
-    fptr = RFILE(rb_io_taint_check(obj))-&gt;fptr;
-    if (!fptr || NIL_P(fptr-&gt;pathv)) return rb_any_to_s(obj);
-    cname = rb_obj_classname(obj);
-    if (fptr-&gt;fd &lt; 0) {
-        st = &quot; (closed)&quot;;
-    }
-    return rb_sprintf(&quot;#&lt;%s:%s%s&gt;&quot;, cname, RSTRING_PTR(fptr-&gt;pathv), st);
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/scanf.rb, line 645</span>
+645:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">soak_up_spaces</span>
+646:     <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
+647:     <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span>
+648:     <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">eof</span> <span class="ruby-operator">||</span><span class="ruby-operator">!</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">||</span> <span class="ruby-regexp re">/\S/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">chr</span>)
+649:       <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
+650:     <span class="ruby-keyword kw">end</span>
+651:     <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span>) <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">c</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\S/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">chr</span>))
+652:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

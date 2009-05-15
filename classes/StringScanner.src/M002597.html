@@ -2,28 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eos? (StringScanner)</title>
+  <title>matchedsize (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns +true+ if the scan pointer is at the end of the string.
- *
- *   s = StringScanner.new('test string')
- *   p s.eos?          # =&gt; false
- *   s.scan(/test/)
- *   p s.eos?          # =&gt; false
- *   s.terminate
- *   p s.eos?          # =&gt; true
+ * Equivalent to #matched_size.
+ * This method is obsolete; use #matched_size instead.
  */
 static VALUE
-strscan_eos_p(VALUE self)
+strscan_matchedsize(VALUE self)
 {
-    struct strscanner *p;
-
-    GET_SCANNER(self, p);
-    return EOS_P(p) ? Qtrue : Qfalse;
+    rb_warning(&quot;StringScanner#matchedsize is obsolete; use #matched_size instead&quot;);
+    return strscan_matched_size(self);
 }</pre>
 </body>
 </html>

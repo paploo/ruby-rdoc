@@ -2,33 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hash (Range)</title>
+  <title>last (Range)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   rng.hash    =&gt; fixnum
- *
- * Generate a hash value such that two ranges with the same start and
- * end points, and the same value for the &quot;exclude end&quot; flag, generate
- * the same hash value.
+ *  call-seq:
+ *     rng.last    =&gt; obj
+ *     rng.last(n) =&gt; an_array
+ *  
+ *  Returns the last object in &lt;i&gt;rng&lt;/i&gt;, or the last +n+ elements.
  */
 
 static VALUE
-range_hash(VALUE range)
+range_last(int argc, VALUE *argv, VALUE range)
 {
-    long hash = EXCL(range);
-    VALUE v;
+    VALUE rb_ary_last(int, VALUE *, VALUE);
 
-    v = rb_hash(RANGE_BEG(range));
-    hash ^= v &lt;&lt; 1;
-    v = rb_hash(RANGE_END(range));
-    hash ^= v &lt;&lt; 9;
-    hash ^= EXCL(range) &lt;&lt; 24;
-
-    return LONG2FIX(hash);
+    if (argc == 0) return RANGE_END(range);
+    return rb_ary_last(argc, argv, rb_Array(range)); 
 }</pre>
 </body>
 </html>

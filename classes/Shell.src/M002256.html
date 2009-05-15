@@ -2,32 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chdir (Shell)</title>
+  <title>jobs (Shell)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell.rb, line 152</span>
-152:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">path</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">verbose</span> = <span class="ruby-ivar">@verbose</span>)
-153:     <span class="ruby-identifier">check_point</span>
-154: 
-155:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">iterator?</span>
-156:       <span class="ruby-identifier">notify</span>(<span class="ruby-node">&quot;chdir(with block) #{path}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
-157:       <span class="ruby-identifier">cwd_old</span> = <span class="ruby-ivar">@cwd</span>
-158:       <span class="ruby-keyword kw">begin</span>
-159:         <span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">nil</span>)
-160:         <span class="ruby-keyword kw">yield</span>
-161:       <span class="ruby-keyword kw">ensure</span>
-162:         <span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">cwd_old</span>, <span class="ruby-keyword kw">nil</span>)
-163:       <span class="ruby-keyword kw">end</span>
-164:     <span class="ruby-keyword kw">else</span>
-165:       <span class="ruby-identifier">notify</span>(<span class="ruby-node">&quot;chdir #{path}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">verbose</span>
-166:       <span class="ruby-identifier">path</span> = <span class="ruby-value str">&quot;~&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>
-167:       <span class="ruby-ivar">@cwd</span> = <span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">path</span>)
-168:       <span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;current dir: #{@cwd}&quot;</span>
-169:       <span class="ruby-identifier">rehash</span>
-170:       <span class="ruby-constant">Void</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
-171:     <span class="ruby-keyword kw">end</span>
-172:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell.rb, line 225</span>
+225:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">jobs</span>
+226:     <span class="ruby-ivar">@process_controller</span>.<span class="ruby-identifier">jobs</span>
+227:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

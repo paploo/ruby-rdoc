@@ -2,38 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>seek (Dir)</title>
+  <title>pwd (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     dir.seek( integer ) =&gt; dir
+ *     Dir.getwd =&gt; string
+ *     Dir.pwd =&gt; string
  *
- *  Seeks to a particular location in &lt;em&gt;dir&lt;/em&gt;. &lt;i&gt;integer&lt;/i&gt;
- *  must be a value returned by &lt;code&gt;Dir#tell&lt;/code&gt;.
+ *  Returns the path to the current working directory of this process as
+ *  a string.
  *
- *     d = Dir.new(&quot;testdir&quot;)   #=&gt; #&lt;Dir:0x401b3c40&gt;
- *     d.read                   #=&gt; &quot;.&quot;
- *     i = d.tell               #=&gt; 12
- *     d.read                   #=&gt; &quot;..&quot;
- *     d.seek(i)                #=&gt; #&lt;Dir:0x401b3c40&gt;
- *     d.read                   #=&gt; &quot;..&quot;
+ *     Dir.chdir(&quot;/tmp&quot;)   #=&gt; 0
+ *     Dir.getwd           #=&gt; &quot;/tmp&quot;
  */
 static VALUE
-dir_seek(VALUE dir, VALUE pos)
+dir_s_getwd(VALUE dir)
 {
-    struct dir_data *dirp;
-    off_t p = NUM2OFFT(pos);
+    char *path;
+    VALUE cwd;
 
-    GetDIR(dir, dirp);
-#ifdef HAVE_SEEKDIR
-    seekdir(dirp-&gt;dir, p);
-    return dir;
-#else
-    rb_notimplement();
-#endif
+    rb_secure(4);
+    path = my_getcwd();
+    cwd = rb_tainted_str_new2(path);
+
+    xfree(path);
+    return cwd;
 }</pre>
 </body>
 </html>

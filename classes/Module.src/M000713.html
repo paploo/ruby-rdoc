@@ -2,32 +2,49 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>public (Module)</title>
+  <title>private_method_defined? (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     public                 =&gt; self
- *     public(symbol, ...)    =&gt; self
+ *     mod.private_method_defined?(symbol)    =&gt; true or false
  *
- *  With no arguments, sets the default visibility for subsequently
- *  defined methods to public. With arguments, sets the named methods to
- *  have public visibility.
+ *  Returns +true+ if the named private method is defined by
+ *  _ mod_ (or its included modules and, if _mod_ is a class,
+ *  its ancestors).
+ *
+ *     module A
+ *       def method1()  end
+ *     end
+ *     class B
+ *       private
+ *       def method2()  end
+ *     end
+ *     class C &lt; B
+ *       include A
+ *       def method3()  end
+ *     end
+ *
+ *     A.method_defined? :method1            #=&gt; true
+ *     C.private_method_defined? &quot;method1&quot;   #=&gt; false
+ *     C.private_method_defined? &quot;method2&quot;   #=&gt; true
+ *     C.method_defined? &quot;method2&quot;           #=&gt; false
  */
 
 static VALUE
-rb_mod_public(int argc, VALUE *argv, VALUE module)
+rb_mod_private_method_defined(VALUE mod, VALUE mid)
 {
-    secure_visibility(module);
-    if (argc == 0) {
-        SCOPE_SET(NOEX_PUBLIC);
+    ID id = rb_to_id(mid);
+    NODE *method;
+
+    method = rb_method_node(mod, id);
+    if (method) {
+        if (VISI_CHECK(method-&gt;nd_noex, NOEX_PRIVATE))
+            return Qtrue;
     }
-    else {
-        set_method_visibility(module, argc, argv, NOEX_PUBLIC);
-    }
-    return module;
+    return Qfalse;
 }</pre>
 </body>
 </html>

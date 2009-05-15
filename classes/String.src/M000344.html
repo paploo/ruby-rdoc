@@ -2,32 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chop! (String)</title>
+  <title>tr_s (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.chop!   =&gt; str or nil
+ *     str.tr_s(from_str, to_str)   =&gt; new_str
  *  
- *  Processes &lt;i&gt;str&lt;/i&gt; as for &lt;code&gt;String#chop&lt;/code&gt;, returning &lt;i&gt;str&lt;/i&gt;,
- *  or &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; is the empty string.  See also
- *  &lt;code&gt;String#chomp!&lt;/code&gt;.
+ *  Processes a copy of &lt;i&gt;str&lt;/i&gt; as described under &lt;code&gt;String#tr&lt;/code&gt;,
+ *  then removes duplicate characters in regions that were affected by the
+ *  translation.
+ *     
+ *     &quot;hello&quot;.tr_s('l', 'r')     #=&gt; &quot;hero&quot;
+ *     &quot;hello&quot;.tr_s('el', '*')    #=&gt; &quot;h*o&quot;
+ *     &quot;hello&quot;.tr_s('el', 'hx')   #=&gt; &quot;hhxo&quot;
  */
 
 static VALUE
-rb_str_chop_bang(VALUE str)
+rb_str_tr_s(VALUE str, VALUE src, VALUE repl)
 {
-    if (RSTRING_LEN(str) &gt; 0) {
-        long len;
-        str_modify_keep_cr(str);
-        len = chopped_length(str);
-        STR_SET_LEN(str, len);
-        RSTRING_PTR(str)[len] = '\0';
-        return str;
-    }
-    return Qnil;
+    str = rb_str_dup(str);
+    tr_trans(str, src, repl, 1);
+    return str;
 }</pre>
 </body>
 </html>

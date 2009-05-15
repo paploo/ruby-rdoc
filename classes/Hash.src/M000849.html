@@ -2,33 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rassoc (Hash)</title>
+  <title>key? (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hash.rassoc(key) -&gt; an_array or nil
+ *     hsh.has_key?(key)    =&gt; true or false
+ *     hsh.include?(key)    =&gt; true or false
+ *     hsh.key?(key)        =&gt; true or false
+ *     hsh.member?(key)     =&gt; true or false
  *
- *  Searches through the hash comparing _obj_ with the value using &lt;code&gt;==&lt;/code&gt;.
- *  Returns the first key-value pair (two elements array) that matches. See
- *  also &lt;code&gt;Array#rassoc&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the given key is present in &lt;i&gt;hsh&lt;/i&gt;.
  *
- *     a = {1=&gt; &quot;one&quot;, 2 =&gt; &quot;two&quot;, 3 =&gt; &quot;three&quot;, &quot;ii&quot; =&gt; &quot;two&quot;}
- *     a.rassoc(&quot;two&quot;)    #=&gt; [2, &quot;two&quot;]
- *     a.rassoc(&quot;four&quot;)   #=&gt; nil
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.has_key?(&quot;a&quot;)   #=&gt; true
+ *     h.has_key?(&quot;z&quot;)   #=&gt; false
+ *
  */
 
-VALUE
-rb_hash_rassoc(VALUE hash, VALUE obj)
+static VALUE
+rb_hash_has_key(VALUE hash, VALUE key)
 {
-    VALUE args[2];
-
-    args[0] = obj;
-    args[1] = Qnil;
-    rb_hash_foreach(hash, rassoc_i, (st_data_t)args);
-    return args[1];
+    if (!RHASH(hash)-&gt;ntbl)
+        return Qfalse;
+    if (st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

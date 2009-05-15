@@ -2,52 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (Exception)</title>
+  <title>yaml_new (Exception)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     exc == obj   =&gt; true or false
- *  
- *  Equality---If &lt;i&gt;obj&lt;/i&gt; is not an &lt;code&gt;Exception&lt;/code&gt;, returns
- *  &lt;code&gt;false&lt;/code&gt;. Otherwise, returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;exc&lt;/i&gt; and 
- *  &lt;i&gt;obj&lt;/i&gt; share same class, messages, and backtrace.
- */
-
-static VALUE
-exc_equal(VALUE exc, VALUE obj)
-{
-    VALUE mesg, backtrace;
-    ID id_mesg;
-
-    if (exc == obj) return Qtrue;
-    CONST_ID(id_mesg, &quot;mesg&quot;);
-
-    if (rb_obj_class(exc) != rb_obj_class(obj)) {
-        ID id_message, id_backtrace;
-        CONST_ID(id_message, &quot;message&quot;);
-        CONST_ID(id_backtrace, &quot;backtrace&quot;);
-
-        if (rb_respond_to(obj, id_message) &amp;&amp; rb_respond_to(obj, id_backtrace)) {
-            mesg = rb_funcall(obj, id_message, 0, 0);
-            backtrace = rb_funcall(obj, id_backtrace, 0, 0);
-        }
-        else {
-            return Qfalse;
-        }
-    }
-    else {
-        mesg = rb_attr_get(obj, id_mesg);
-        backtrace = exc_backtrace(obj);
-    }
-
-    if (!rb_equal(rb_attr_get(exc, id_mesg), mesg))
-        return Qfalse;
-    if (!rb_equal(exc_backtrace(exc), backtrace))
-        return Qfalse;
-    return Qtrue;
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 119</span>
+119:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">yaml_new</span>( <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">val</span> )
+120:         <span class="ruby-identifier">o</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">object_maker</span>( <span class="ruby-identifier">klass</span>, { <span class="ruby-value str">'mesg'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-value str">'message'</span> ) } )
+121:         <span class="ruby-identifier">val</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+122:             <span class="ruby-identifier">o</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k}&quot;</span>, <span class="ruby-identifier">v</span>)
+123:         <span class="ruby-keyword kw">end</span>
+124:         <span class="ruby-identifier">o</span>
+125:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

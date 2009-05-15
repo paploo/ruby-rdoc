@@ -2,18 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close (Resolv::DNS)</title>
+  <title>each_name (Resolv::DNS)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 342</span>
-342:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
-343:       <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> {
-344:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@initialized</span>
-345:           <span class="ruby-ivar">@initialized</span> = <span class="ruby-keyword kw">false</span>
-346:         <span class="ruby-keyword kw">end</span>
-347:       }
-348:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 415</span>
+415:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>)
+416:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">address</span>
+417:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Name</span>
+418:         <span class="ruby-identifier">ptr</span> = <span class="ruby-identifier">address</span>
+419:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">IPv4</span><span class="ruby-operator">::</span><span class="ruby-constant">Regex</span>
+420:         <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">IPv4</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">address</span>).<span class="ruby-identifier">to_name</span>
+421:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">IPv6</span><span class="ruby-operator">::</span><span class="ruby-constant">Regex</span>
+422:         <span class="ruby-identifier">ptr</span> = <span class="ruby-constant">IPv6</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">address</span>).<span class="ruby-identifier">to_name</span>
+423:       <span class="ruby-keyword kw">else</span>
+424:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;cannot interpret as address: #{address}&quot;</span>)
+425:       <span class="ruby-keyword kw">end</span>
+426:       <span class="ruby-identifier">each_resource</span>(<span class="ruby-identifier">ptr</span>, <span class="ruby-constant">Resource</span><span class="ruby-operator">::</span><span class="ruby-constant">IN</span><span class="ruby-operator">::</span><span class="ruby-constant">PTR</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">name</span>}
+427:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

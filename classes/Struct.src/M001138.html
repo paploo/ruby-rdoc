@@ -2,48 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>[] (Struct)</title>
+  <title>pretty_print_cycle (Struct)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     struct[symbol]    =&gt; anObject
- *     struct[fixnum]    =&gt; anObject 
- *  
- *  Attribute Reference---Returns the value of the instance variable
- *  named by &lt;i&gt;symbol&lt;/i&gt;, or indexed (0..length-1) by
- *  &lt;i&gt;fixnum&lt;/i&gt;. Will raise &lt;code&gt;NameError&lt;/code&gt; if the named
- *  variable does not exist, or &lt;code&gt;IndexError&lt;/code&gt; if the index is
- *  out of range.
- *     
- *     Customer = Struct.new(:name, :address, :zip)
- *     joe = Customer.new(&quot;Joe Smith&quot;, &quot;123 Maple, Anytown NC&quot;, 12345)
- *     
- *     joe[&quot;name&quot;]   #=&gt; &quot;Joe Smith&quot;
- *     joe[:name]    #=&gt; &quot;Joe Smith&quot;
- *     joe[0]        #=&gt; &quot;Joe Smith&quot;
- */
-
-VALUE
-rb_struct_aref(VALUE s, VALUE idx)
-{
-    long i;
-
-    if (TYPE(idx) == T_STRING || TYPE(idx) == T_SYMBOL) {
-        return rb_struct_aref_id(s, rb_to_id(idx));
-    }
-
-    i = NUM2LONG(idx);
-    if (i &lt; 0) i = RSTRUCT_LEN(s) + i;
-    if (i &lt; 0)
-        rb_raise(rb_eIndexError, &quot;offset %ld too small for struct(size:%ld)&quot;,
-                 i, RSTRUCT_LEN(s));
-    if (RSTRUCT_LEN(s) &lt;= i)
-        rb_raise(rb_eIndexError, &quot;offset %ld too large for struct(size:%ld)&quot;,
-                 i, RSTRUCT_LEN(s));
-    return RSTRUCT_PTR(s)[i];
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 377</span>
+377:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty_print_cycle</span>(<span class="ruby-identifier">q</span>)
+378:     <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;#&lt;struct %s:...&gt;&quot;</span>, <span class="ruby-constant">PP</span>.<span class="ruby-identifier">mcall</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-constant">Kernel</span>, <span class="ruby-identifier">:class</span>).<span class="ruby-identifier">name</span>)
+379:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,34 +2,45 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>+ (Array)</title>
+  <title>uniq! (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array + other_array   -&gt; an_array
- *
- *  Concatenation---Returns a new array built by concatenating the
- *  two arrays together to produce a third array.
- * 
- *     [ 1, 2, 3 ] + [ 4, 5 ]    #=&gt; [ 1, 2, 3, 4, 5 ]
+ *     array.uniq! -&gt; array or nil
+ *  
+ *  Removes duplicate elements from _self_.
+ *  Returns &lt;code&gt;nil&lt;/code&gt; if no changes are made (that is, no
+ *  duplicates are found).
+ *     
+ *     a = [ &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.uniq!   #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+ *     b = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     b.uniq!   #=&gt; nil
  */
 
-VALUE
-rb_ary_plus(VALUE x, VALUE y)
+static VALUE
+rb_ary_uniq_bang(VALUE ary)
 {
-    VALUE z;
-    long len;
+    VALUE hash, v, vv;
+    long i, j;
 
-    y = to_ary(y);
-    len = RARRAY_LEN(x) + RARRAY_LEN(y);
-    z = rb_ary_new2(len);
-    MEMCPY(RARRAY_PTR(z), RARRAY_PTR(x), VALUE, RARRAY_LEN(x));
-    MEMCPY(RARRAY_PTR(z) + RARRAY_LEN(x), RARRAY_PTR(y), VALUE, RARRAY_LEN(y));
-    ARY_SET_LEN(z, len);
-    return z;
+    hash = ary_make_hash(ary, 0);
+
+    if (RARRAY_LEN(ary) == RHASH_SIZE(hash)) {
+        return Qnil;
+    }
+    for (i=j=0; i&lt;RARRAY_LEN(ary); i++) {
+        v = vv = rb_ary_elt(ary, i);
+        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
+            rb_ary_store(ary, j++, v);
+        }
+    }
+    ARY_SET_LEN(ary, j);
+
+    return ary;
 }</pre>
 </body>
 </html>

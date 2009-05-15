@@ -2,56 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>kind_of? (Object)</title>
+  <title>respond_to? (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.is_a?(class)       =&gt; true or false
- *     obj.kind_of?(class)    =&gt; true or false
- *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;class&lt;/i&gt; is the class of
- *  &lt;i&gt;obj&lt;/i&gt;, or if &lt;i&gt;class&lt;/i&gt; is one of the superclasses of
- *  &lt;i&gt;obj&lt;/i&gt; or modules included in &lt;i&gt;obj&lt;/i&gt;.
- *     
- *     module M;    end
- *     class A
- *       include M
- *     end
- *     class B &lt; A; end
- *     class C &lt; B; end
- *     b = B.new
- *     b.instance_of? A   #=&gt; false
- *     b.instance_of? B   #=&gt; true
- *     b.instance_of? C   #=&gt; false
- *     b.instance_of? M   #=&gt; false
- *     b.kind_of? A       #=&gt; true
- *     b.kind_of? B       #=&gt; true
- *     b.kind_of? C       #=&gt; false
- *     b.kind_of? M       #=&gt; true
+ *     obj.respond_to?(symbol, include_private=false) =&gt; true or false
+ *
+ *  Returns +true+ if _obj_ responds to the given
+ *  method. Private methods are included in the search only if the
+ *  optional second parameter evaluates to +true+.
  */
 
-VALUE
-rb_obj_is_kind_of(VALUE obj, VALUE c)
+static VALUE
+obj_respond_to(int argc, VALUE *argv, VALUE obj)
 {
-    VALUE cl = CLASS_OF(obj);
+    VALUE mid, priv;
+    ID id;
 
-    switch (TYPE(c)) {
-      case T_MODULE:
-      case T_CLASS:
-      case T_ICLASS:
-        break;
-
-      default:
-        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
-    }
-
-    while (cl) {
-        if (cl == c || RCLASS_M_TBL(cl) == RCLASS_M_TBL(c))
-            return Qtrue;
-        cl = RCLASS_SUPER(cl);
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;mid, &amp;priv);
+    id = rb_to_id(mid);
+    if (rb_method_boundp(CLASS_OF(obj), id, !RTEST(priv))) {
+        return Qtrue;
     }
     return Qfalse;
 }</pre>

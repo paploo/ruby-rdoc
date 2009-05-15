@@ -2,26 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sysread (StringIO)</title>
+  <title>putc (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.sysread(integer[, outbuf])    -&gt; string
+ *   strio.putc(obj)    -&gt; obj
  *
- * Similar to #read, but raises +EOFError+ at end of string instead of
- * returning +nil+, as well as IO#sysread does.
+ * See IO#putc.
  */
 static VALUE
-strio_sysread(int argc, VALUE *argv, VALUE self)
+strio_putc(VALUE self, VALUE ch)
 {
-    VALUE val = strio_read(argc, argv, self);
-    if (NIL_P(val)) {
-        rb_eof_error();
+    struct StringIO *ptr = writable(StringIO(self));
+    int c = NUM2CHR(ch);
+    long olen;
+
+    check_modifiable(ptr);
+    olen = RSTRING_LEN(ptr-&gt;string);
+    if (ptr-&gt;flags &amp; FMODE_APPEND) {
+        ptr-&gt;pos = olen;
     }
-    return val;
+    strio_extend(ptr, ptr-&gt;pos, 1);
+    RSTRING_PTR(ptr-&gt;string)[ptr-&gt;pos++] = c;
+    OBJ_INFECT(ptr-&gt;string, self);
+    return ch;
 }</pre>
 </body>
 </html>

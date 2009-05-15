@@ -2,28 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size? (File::Stat)</title>
+  <title>blockdev? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     state.size    =&gt; integer
+ *     stat.blockdev?   =&gt; true or false
  *  
- *  Returns the size of &lt;i&gt;stat&lt;/i&gt; in bytes.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the file is a block device,
+ *  &lt;code&gt;false&lt;/code&gt; if it isn't or if the operating system doesn't
+ *  support this feature.
  *     
- *     File.stat(&quot;testfile&quot;).size   #=&gt; 66
+ *     File.stat(&quot;testfile&quot;).blockdev?    #=&gt; false
+ *     File.stat(&quot;/dev/hda1&quot;).blockdev?   #=&gt; true
  *     
  */
 
 static VALUE
-rb_stat_s(VALUE obj)
+rb_stat_b(VALUE obj)
 {
-    off_t size = get_stat(obj)-&gt;st_size;
+#ifdef S_ISBLK
+    if (S_ISBLK(get_stat(obj)-&gt;st_mode)) return Qtrue;
 
-    if (size == 0) return Qnil;
-    return OFFT2NUM(size);
+#endif
+    return Qfalse;
 }</pre>
 </body>
 </html>

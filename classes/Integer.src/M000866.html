@@ -2,25 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>even? (Integer)</title>
+  <title>pred (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     int.even? -&gt; true or false
+ *     int.pred    =&gt; integer
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;int&lt;/i&gt; is an even number.
+ *  Returns the &lt;code&gt;Integer&lt;/code&gt; equal to &lt;i&gt;int&lt;/i&gt; - 1.
+ *
+ *     1.pred      #=&gt; 0
+ *     (-1).pred   #=&gt; -2
  */
 
 static VALUE
-int_even_p(VALUE num)
+int_pred(VALUE num)
 {
-    if (rb_funcall(num, '%', 1, INT2FIX(2)) == INT2FIX(0)) {
-        return Qtrue;
+    if (FIXNUM_P(num)) {
+        long i = FIX2LONG(num) - 1;
+        return LONG2NUM(i);
     }
-    return Qfalse;
+    return rb_funcall(num, '-', 1, INT2FIX(1));
 }</pre>
 </body>
 </html>

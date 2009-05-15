@@ -2,43 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>[] (StringScanner)</title>
+  <title>inspect (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: [](n)
- *
- * Return the n-th subgroup in the most recent match.
+ * Returns a string that represents the StringScanner object, showing:
+ * - the current position
+ * - the size of the string
+ * - the characters surrounding the scan pointer
  *
  *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
- *   s.scan(/(\w+) (\w+) (\d+) /)       # -&gt; &quot;Fri Dec 12 &quot;
- *   s[0]                               # -&gt; &quot;Fri Dec 12 &quot;
- *   s[1]                               # -&gt; &quot;Fri&quot;
- *   s[2]                               # -&gt; &quot;Dec&quot;
- *   s[3]                               # -&gt; &quot;12&quot;
- *   s.post_match                       # -&gt; &quot;1975 14:39&quot;
- *   s.pre_match                        # -&gt; &quot;&quot;
+ *   s.inspect            # -&gt; '#&lt;StringScanner 0/21 @ &quot;Fri D...&quot;&gt;'
+ *   s.scan_until /12/    # -&gt; &quot;Fri Dec 12&quot;
+ *   s.inspect            # -&gt; '#&lt;StringScanner 10/21 &quot;...ec 12&quot; @ &quot; 1975...&quot;&gt;'
  */
 static VALUE
-strscan_aref(VALUE self, VALUE idx)
+strscan_inspect(VALUE self)
 {
     struct strscanner *p;
-    long i;
+    char buf[BUFSIZE];
+    long len;
+    VALUE a, b;
 
-    GET_SCANNER(self, p);
-    if (! MATCHED_P(p))        return Qnil;
-    
-    i = NUM2LONG(idx);
-    if (i &lt; 0)
-        i += p-&gt;regs.num_regs;
-    if (i &lt; 0)                 return Qnil;
-    if (i &gt;= p-&gt;regs.num_regs) return Qnil;
-    if (p-&gt;regs.beg[i] == -1)  return Qnil;
-
-    return extract_range(p, p-&gt;prev + p-&gt;regs.beg[i],
-                            p-&gt;prev + p-&gt;regs.end[i]);
+    Data_Get_Struct(self, struct strscanner, p);
+    if (NIL_P(p-&gt;str)) {
+        len = snprintf(buf, BUFSIZE, &quot;#&lt;%s (uninitialized)&gt;&quot;,
+                       rb_class2name(CLASS_OF(self)));
+        return infect(rb_str_new(buf, len), p);
+    }
+    if (EOS_P(p)) {
+        len = snprintf(buf, BUFSIZE, &quot;#&lt;%s fin&gt;&quot;,
+                       rb_class2name(CLASS_OF(self)));
+        return infect(rb_str_new(buf, len), p);
+    }
+    if (p-&gt;curr == 0) {
+        b = inspect2(p);
+        len = snprintf(buf, BUFSIZE, &quot;#&lt;%s %ld/%ld @ %s&gt;&quot;,
+                       rb_class2name(CLASS_OF(self)),
+                       p-&gt;curr, S_LEN(p),
+                       RSTRING_PTR(b));
+        return infect(rb_str_new(buf, len), p);
+    }
+    a = inspect1(p);
+    b = inspect2(p);
+    len = snprintf(buf, BUFSIZE, &quot;#&lt;%s %ld/%ld %s @ %s&gt;&quot;,
+                   rb_class2name(CLASS_OF(self)),
+                   p-&gt;curr, S_LEN(p),
+                   RSTRING_PTR(a),
+                   RSTRING_PTR(b));
+    return infect(rb_str_new(buf, len), p);
 }</pre>
 </body>
 </html>

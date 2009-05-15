@@ -2,41 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>set_encoding (IO)</title>
+  <title>wait (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     io.set_encoding(ext_enc)                =&gt; io
- *     io.set_encoding(&quot;ext_enc:int_enc&quot;)      =&gt; io
- *     io.set_encoding(ext_enc, int_enc)       =&gt; io
- *     io.set_encoding(&quot;ext_enc:int_enc&quot;, opt) =&gt; io
- *     io.set_encoding(ext_enc, int_enc, opt)  =&gt; io
+ * call-seq:
+ *   io.wait          -&gt; IO, true, false or nil
+ *   io.wait(timeout) -&gt; IO, true, false or nil
  *
- *  If single argument is specified, read string from io is tagged
- *  with the encoding specified.  If encoding is a colon separated two
- *  encoding names &quot;A:B&quot;, the read string is converted from encoding A
- *  (external encoding) to encoding B (internal encoding), then tagged
- *  with B.  If two arguments are specified, those must be encoding
- *  objects or encoding names, and the first one is the external encoding, and the
- *  second one is the internal encoding.
- *  If the external encoding and the internal encoding is specified,
- *  optional hash argument specify the conversion option.
+ * Waits until input is available or times out and returns self or nil when
+ * EOF is reached.
  */
 
 static VALUE
-rb_io_set_encoding(int argc, VALUE *argv, VALUE io)
+io_wait(int argc, VALUE *argv, VALUE io)
 {
     rb_io_t *fptr;
-    VALUE v1, v2, opt;
+    struct wait_readable_arg arg;
+    int fd, i;
+    ioctl_arg n;
+    VALUE timeout;
+    struct timeval timerec;
 
-    opt = pop_last_hash(&amp;argc, argv);
-    rb_scan_args(argc, argv, &quot;11&quot;, &amp;v1, &amp;v2);
     GetOpenFile(io, fptr);
-    io_encoding_set(fptr, v1, v2, opt);
-    return io;
+    rb_io_check_readable(fptr);
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;timeout);
+    if (NIL_P(timeout)) {
+        arg.timeout = 0;
+    }
+    else {
+        timerec = rb_time_interval(timeout);
+        arg.timeout = &amp;timerec;
+    }
+
+    if (rb_io_read_pending(fptr)) return Qtrue;
+    if (!FIONREAD_POSSIBLE_P(fptr-&gt;fd)) return Qfalse;
+    fd = fptr-&gt;fd;
+    rb_fd_init(&amp;arg.fds);
+    rb_fd_set(fd, &amp;arg.fds);
+#ifdef HAVE_RB_FD_INIT
+    i = (int)rb_ensure(wait_readable, (VALUE)&amp;arg,
+                       (VALUE (*)_((VALUE)))rb_fd_term, (VALUE)&amp;arg.fds);
+#else
+    i = rb_thread_select(fd + 1, rb_fd_ptr(&amp;arg.fds), NULL, NULL, arg.timeout);
+#endif
+    if (i &lt; 0)
+        rb_sys_fail(0);
+    rb_io_check_closed(fptr);
+    if (ioctl(fptr-&gt;fd, FIONREAD, &amp;n)) rb_sys_fail(0);
+    if (n &gt; 0) return io;
+    return Qnil;
 }</pre>
 </body>
 </html>

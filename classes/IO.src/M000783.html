@@ -2,34 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close (IO)</title>
+  <title>binmode (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close   =&gt; nil
+ *     ios.binmode    =&gt; ios
  *
- *  Closes &lt;em&gt;ios&lt;/em&gt; and flushes any pending writes to the operating
- *  system. The stream is unavailable for any further data operations;
- *  an &lt;code&gt;IOError&lt;/code&gt; is raised if such an attempt is made. I/O
- *  streams are automatically closed when they are claimed by the
- *  garbage collector.
+ *  Puts &lt;em&gt;ios&lt;/em&gt; into binary mode.
+ *  Once a stream is in binary mode, it cannot be reset to nonbinary mode.
  *
- *  If &lt;em&gt;ios&lt;/em&gt; is opened by &lt;code&gt;IO.popen&lt;/code&gt;,
- *  &lt;code&gt;close&lt;/code&gt; sets &lt;code&gt;$?&lt;/code&gt;.
+ *  - newline conversion disabled
+ *  - encoding conversion disabled
+ *  - content is treated as ASCII-8BIT
+ *
  */
 
 static VALUE
-rb_io_close_m(VALUE io)
+rb_io_binmode_m(VALUE io)
 {
-    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(io)) {
-        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
-    }
-    rb_io_check_closed(RFILE(io)-&gt;fptr);
-    rb_io_close(io);
-    return Qnil;
+    VALUE write_io;
+
+    rb_io_ascii8bit_binmode(io);
+
+    write_io = GetWriteIO(io);
+    if (write_io != io)
+        rb_io_ascii8bit_binmode(write_io);
+    return io;
 }</pre>
 </body>
 </html>

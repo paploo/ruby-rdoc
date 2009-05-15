@@ -2,59 +2,53 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;=&gt; (Time)</title>
+  <title>utc (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time &lt;=&gt; other_time =&gt; -1, 0, +1 
+ *     time.gmtime    =&gt; time
+ *     time.utc       =&gt; time
  *  
- *  Comparison---Compares &lt;i&gt;time&lt;/i&gt; with &lt;i&gt;other_time&lt;/i&gt;.
+ *  Converts &lt;i&gt;time&lt;/i&gt; to UTC (GMT), modifying the receiver.
  *     
- *     t = Time.now       #=&gt; 2007-11-19 08:12:12 -0600
- *     t2 = t + 2592000   #=&gt; 2007-12-19 08:12:12 -0600
- *     t &lt;=&gt; t2           #=&gt; -1
- *     t2 &lt;=&gt; t           #=&gt; 1
- *     
- *     t = Time.now       #=&gt; 2007-11-19 08:13:38 -0600
- *     t2 = t + 0.1       #=&gt; 2007-11-19 08:13:38 -0600
- *     t.nsec             #=&gt; 98222999
- *     t2.nsec            #=&gt; 198222999
- *     t &lt;=&gt; t2           #=&gt; -1
- *     t2 &lt;=&gt; t           #=&gt; 1
- *     t &lt;=&gt; t            #=&gt; 0
+ *     t = Time.now   #=&gt; 2007-11-19 08:18:31 -0600
+ *     t.gmt?         #=&gt; false
+ *     t.gmtime       #=&gt; 2007-11-19 14:18:31 UTC
+ *     t.gmt?         #=&gt; true
+ *
+ *     t = Time.now   #=&gt; 2007-11-19 08:18:51 -0600
+ *     t.utc?         #=&gt; false
+ *     t.utc          #=&gt; 2007-11-19 14:18:51 UTC
+ *     t.utc?         #=&gt; true
  */
 
 static VALUE
-time_cmp(VALUE time1, VALUE time2)
+time_gmtime(VALUE time)
 {
-    struct time_object *tobj1, *tobj2;
+    struct time_object *tobj;
+    struct tm *tm_tmp;
+    time_t t;
+    IF_HAVE_GMTIME_R(struct tm result);
 
-    GetTimeval(time1, tobj1);
-    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
-        GetTimeval(time2, tobj2);
-        if (tobj1-&gt;ts.tv_sec == tobj2-&gt;ts.tv_sec) {
-            if (tobj1-&gt;ts.tv_nsec == tobj2-&gt;ts.tv_nsec) return INT2FIX(0);
-            if (tobj1-&gt;ts.tv_nsec &gt; tobj2-&gt;ts.tv_nsec) return INT2FIX(1);
-            return INT2FIX(-1);
-        }
-        if (tobj1-&gt;ts.tv_sec &gt; tobj2-&gt;ts.tv_sec) return INT2FIX(1);
-        return INT2FIX(-1);
+    GetTimeval(time, tobj);
+    if (tobj-&gt;gmt) {
+        if (tobj-&gt;tm_got)
+            return time;
     }
     else {
-        VALUE cmp;
-        int n;
-
-        cmp = rb_funcall(time2, rb_intern(&quot;&lt;=&gt;&quot;), 1, time1);
-        if (NIL_P(cmp)) return Qnil;
-
-        n = rb_cmpint(cmp, time1, time2);
-        if (n == 0) return INT2FIX(0);
-        if (n &gt; 0) return INT2FIX(1);
-        return INT2FIX(-1);
+        time_modify(time);
     }
+    t = tobj-&gt;ts.tv_sec;
+    tm_tmp = GMTIME(&amp;t, result);
+    if (!tm_tmp)
+        rb_raise(rb_eArgError, &quot;gmtime error&quot;);
+    tobj-&gt;tm = *tm_tmp;
+    tobj-&gt;tm_got = 1;
+    tobj-&gt;gmt = 1;
+    return time;
 }</pre>
 </body>
 </html>

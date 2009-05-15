@@ -2,26 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rest? (StringScanner)</title>
+  <title>pre_match (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns true iff there is more data in the string.  See #eos?.
- * This method is obsolete; use #eos? instead.
+ * Return the &lt;i&gt;&lt;b&gt;pre&lt;/b&gt;-match&lt;/i&gt; (in the regular expression sense) of the last scan.
  *
  *   s = StringScanner.new('test string')
- *   s.eos?              # These two
- *   s.rest?             # are opposites.
+ *   s.scan(/\w+/)           # -&gt; &quot;test&quot;
+ *   s.scan(/\s+/)           # -&gt; &quot; &quot;
+ *   s.pre_match             # -&gt; &quot;test&quot;
+ *   s.post_match            # -&gt; &quot;string&quot;
  */
 static VALUE
-strscan_rest_p(VALUE self)
+strscan_pre_match(VALUE self)
 {
     struct strscanner *p;
 
     GET_SCANNER(self, p);
-    return EOS_P(p) ? Qfalse : Qtrue;
+    if (! MATCHED_P(p)) return Qnil;
+    return extract_range(p, 0, p-&gt;prev + p-&gt;regs.beg[0]);
 }</pre>
 </body>
 </html>

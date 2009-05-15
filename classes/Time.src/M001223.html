@@ -2,33 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>month (Time)</title>
+  <title>zone (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.mon   =&gt; fixnum
- *     time.month =&gt; fixnum
+ *     time.zone =&gt; string
  *  
- *  Returns the month of the year (1..12) for &lt;i&gt;time&lt;/i&gt;.
+ *  Returns the name of the time zone used for &lt;i&gt;time&lt;/i&gt;. As of Ruby
+ *  1.8, returns ``UTC'' rather than ``GMT'' for UTC times.
  *     
- *     t = Time.now   #=&gt; 2007-11-19 08:27:30 -0600
- *     t.mon          #=&gt; 11
- *     t.month        #=&gt; 11
+ *     t = Time.gm(2000, &quot;jan&quot;, 1, 20, 15, 1)
+ *     t.zone   #=&gt; &quot;UTC&quot;
+ *     t = Time.local(2000, &quot;jan&quot;, 1, 20, 15, 1)
+ *     t.zone   #=&gt; &quot;CST&quot;
  */
 
 static VALUE
-time_mon(VALUE time)
+time_zone(VALUE time)
 {
     struct time_object *tobj;
-
+#if !defined(HAVE_TM_ZONE) &amp;&amp; (!defined(HAVE_TZNAME) || !defined(HAVE_DAYLIGHT))
+    char buf[64];
+    int len;
+#endif
+    
     GetTimeval(time, tobj);
     if (tobj-&gt;tm_got == 0) {
         time_get_tm(time, tobj-&gt;gmt);
     }
-    return INT2FIX(tobj-&gt;tm.tm_mon+1);
+
+    if (tobj-&gt;gmt == 1) {
+        return rb_str_new2(&quot;UTC&quot;);
+    }
+#if defined(HAVE_TM_ZONE)
+    return rb_str_new2(tobj-&gt;tm.tm_zone);
+#elif defined(HAVE_TZNAME) &amp;&amp; defined(HAVE_DAYLIGHT)
+    return rb_str_new2(tzname[daylight &amp;&amp; tobj-&gt;tm.tm_isdst]);
+#else
+    len = rb_strftime(buf, sizeof(buf), &quot;%Z&quot;,
+                      &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
+    return rb_str_new(buf, len);
+#endif
 }</pre>
 </body>
 </html>

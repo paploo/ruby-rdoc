@@ -2,54 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rpartition (String)</title>
+  <title>encode! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.rpartition(sep)            =&gt; [head, sep, tail]
- *  
- *  Searches &lt;i&gt;sep&lt;/i&gt; in the string from the end of the string, and
- *  returns the part before it, the &lt;i&gt;sep&lt;/i&gt;, and the part after it.
- *  If &lt;i&gt;sep&lt;/i&gt; is not found, returns two empty strings and
- *  &lt;i&gt;str&lt;/i&gt;.
- *     
- *     &quot;hello&quot;.rpartition(&quot;l&quot;)         #=&gt; [&quot;hel&quot;, &quot;l&quot;, &quot;o&quot;]
- *     &quot;hello&quot;.rpartition(&quot;x&quot;)         #=&gt; [&quot;&quot;, &quot;&quot;, &quot;hello&quot;]
+ *     str.encode!(encoding [, options] )   =&gt; str
+ *     str.encode!(dst_encoding, src_encoding [, options] )   =&gt; str
+ *
+ *  The first form transcodes the contents of &lt;i&gt;str&lt;/i&gt; from
+ *  str.encoding to +encoding+.
+ *  The second form transcodes the contents of &lt;i&gt;str&lt;/i&gt; from
+ *  src_encoding to dst_encoding.
+ *  The options Hash gives details for conversion. See String#encode
+ *  for details.
+ *  Returns the string even if no changes were made.
  */
 
 static VALUE
-rb_str_rpartition(VALUE str, VALUE sep)
+str_encode_bang(int argc, VALUE *argv, VALUE str)
 {
-    long pos = RSTRING_LEN(str);
-    int regex = Qfalse;
+    VALUE newstr = str;
+    int encidx = str_transcode(argc, argv, &amp;newstr);
 
-    if (TYPE(sep) == T_REGEXP) {
-        pos = rb_reg_search(sep, str, pos, 1);
-        regex = Qtrue;
-    }
-    else {
-        VALUE tmp;
-
-        tmp = rb_check_string_type(sep);
-        if (NIL_P(tmp)) {
-            rb_raise(rb_eTypeError, &quot;type mismatch: %s given&quot;,
-                     rb_obj_classname(sep));
-        }
-        pos = rb_str_sublen(str, pos);
-        pos = rb_str_rindex(str, sep, pos);
-    }
-    if (pos &lt; 0) {
-        return rb_ary_new3(3, rb_str_new(0,0),rb_str_new(0,0), str);
-    }
-    if (regex) {
-        sep = rb_reg_nth_match(0, rb_backref_get());
-    }
-    return rb_ary_new3(3, rb_str_substr(str, 0, pos),
-                          sep,
-                          rb_str_substr(str,pos+str_strlen(sep,STR_ENC_GET(sep)),RSTRING_LEN(str)));
+    if (encidx &lt; 0) return str;
+    rb_str_shared_replace(str, newstr);
+    return str_encode_associate(str, encidx);
 }</pre>
 </body>
 </html>

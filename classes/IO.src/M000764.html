@@ -2,41 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gets (IO)</title>
+  <title>ungetbyte (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.gets(sep=$/)     =&gt; string or nil
- *     ios.gets(limit)      =&gt; string or nil
- *     ios.gets(sep, limit) =&gt; string or nil
+ *     ios.ungetbyte(string)   =&gt; nil
+ *     ios.ungetbyte(integer)   =&gt; nil
  *
- *  Reads the next ``line'' from the I/O stream; lines are separated by
- *  &lt;i&gt;sep&lt;/i&gt;. A separator of &lt;code&gt;nil&lt;/code&gt; reads the entire
- *  contents, and a zero-length separator reads the input a paragraph at
- *  a time (two successive newlines in the input separate paragraphs).
- *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
- *  will be raised. The line read in will be returned and also assigned
- *  to &lt;code&gt;$_&lt;/code&gt;. Returns &lt;code&gt;nil&lt;/code&gt; if called at end of
- *  file.  If the first argument is an integer, or optional second
- *  argument is given, the returning string would not be longer than the
- *  given value in bytes.
+ *  Pushes back bytes (passed as a parameter) onto &lt;em&gt;ios&lt;/em&gt;,
+ *  such that a subsequent buffered read will return it. Only one byte
+ *  may be pushed back before a subsequent read operation (that is,
+ *  you will be able to read only the last of several bytes that have been pushed
+ *  back). Has no effect with unbuffered reads (such as &lt;code&gt;IO#sysread&lt;/code&gt;).
  *
- *     File.new(&quot;testfile&quot;).gets   #=&gt; &quot;This is line one\n&quot;
- *     $_                          #=&gt; &quot;This is line one\n&quot;
+ *     f = File.new(&quot;testfile&quot;)   #=&gt; #&lt;File:testfile&gt;
+ *     b = f.getbyte              #=&gt; 0x38
+ *     f.ungetbyte(b)             #=&gt; nil
+ *     f.getbyte                  #=&gt; 0x38
  */
 
-static VALUE
-rb_io_gets_m(int argc, VALUE *argv, VALUE io)
+VALUE
+rb_io_ungetbyte(VALUE io, VALUE b)
 {
-    VALUE str;
+    rb_io_t *fptr;
 
-    str = rb_io_getline(argc, argv, io);
-    rb_lastline_set(str);
-
-    return str;
+    GetOpenFile(io, fptr);
+    rb_io_check_readable(fptr);
+    io_unset_eof(fptr);
+    if (NIL_P(b)) return Qnil;
+    if (FIXNUM_P(b)) {
+        char cc = FIX2INT(b);
+        b = rb_str_new(&amp;cc, 1);
+    }
+    else {
+        SafeStringValue(b);
+    }
+    io_ungetbyte(b, fptr);
+    return Qnil;
 }</pre>
 </body>
 </html>

@@ -2,27 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>magnitude (Float)</title>
+  <title>round (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     flt.abs    =&gt; float
+ *     flt.round([ndigits])   =&gt; integer or float
  *
- *  Returns the absolute value of &lt;i&gt;flt&lt;/i&gt;.
+ *  Rounds &lt;i&gt;flt&lt;/i&gt; to a given precision in decimal digits (default 0 digits).
+ *  Precision may be negative.  Returns a a floating point number when ndigits
+ *  is more than one.
  *
- *     (-34.56).abs   #=&gt; 34.56
- *     -34.56.abs     #=&gt; 34.56
- *
+ *     1.5.round      #=&gt; 2
+ *     (-1.5).round   #=&gt; -2
  */
 
 static VALUE
-flo_abs(VALUE flt)
+flo_round(int argc, VALUE *argv, VALUE num)
 {
-    double val = fabs(RFLOAT_VALUE(flt));
-    return DBL2NUM(val);
+    VALUE nd;
+    double number, f;
+    int ndigits = 0, i;
+    long val;
+
+    if (argc &gt; 0 &amp;&amp; rb_scan_args(argc, argv, &quot;01&quot;, &amp;nd) == 1) {
+        ndigits = NUM2INT(nd);
+    }
+    number  = RFLOAT_VALUE(num);
+    f = 1.0;
+    i = abs(ndigits);
+    while  (--i &gt;= 0)
+        f = f*10.0;
+
+    if (isinf(f)) {
+        if (ndigits &lt; 0) number = 0;
+    }
+    else {
+        if (ndigits &lt; 0) number /= f;
+        else number *= f;
+        number = round(number);
+        if (ndigits &lt; 0) number *= f;
+        else number /= f;
+    }
+
+    if (ndigits &gt; 0) return DBL2NUM(number);
+
+    if (!FIXABLE(number)) {
+        return rb_dbl2big(number);
+    }
+    val = number;
+    return LONG2FIX(val);
 }</pre>
 </body>
 </html>

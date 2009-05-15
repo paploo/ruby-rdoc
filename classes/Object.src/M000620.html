@@ -2,30 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>public_methods (Object)</title>
+  <title>instance_of? (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.public_methods(all=true)   =&gt; array
+ *     obj.instance_of?(class)    =&gt; true or false
  *  
- *  Returns the list of public methods accessible to &lt;i&gt;obj&lt;/i&gt;. If
- *  the &lt;i&gt;all&lt;/i&gt; parameter is set to &lt;code&gt;false&lt;/code&gt;, only those methods
- *  in the receiver will be listed.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is an instance of the given
+ *  class. See also &lt;code&gt;Object#kind_of?&lt;/code&gt;.
  */
 
-static VALUE
-rb_obj_public_methods(int argc, VALUE *argv, VALUE obj)
+VALUE
+rb_obj_is_instance_of(VALUE obj, VALUE c)
 {
-    if (argc == 0) {            /* hack to stop warning */
-        VALUE args[1];
-
-        args[0] = Qtrue;
-        return rb_class_public_instance_methods(1, args, CLASS_OF(obj));
+    switch (TYPE(c)) {
+      case T_MODULE:
+      case T_CLASS:
+      case T_ICLASS:
+        break;
+      default:
+        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
     }
-    return rb_class_public_instance_methods(argc, argv, CLASS_OF(obj));
+
+    if (rb_obj_class(obj) == c) return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

@@ -2,14 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>valid_civil? (Date)</title>
+  <title>weeknum (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/date.rb, line 739</span>
-739:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">valid_civil?</span> (<span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
-740:     <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">_valid_civil?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">sg</span>)
-741:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/date.rb, line 837</span>
+837:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">weeknum</span>(<span class="ruby-identifier">y</span>=<span class="ruby-value">-4712</span>, <span class="ruby-identifier">w</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">d</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">f</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
+838:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">_valid_weeknum?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">w</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">f</span>, <span class="ruby-identifier">sg</span>)
+839:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'invalid date'</span>
+840:     <span class="ruby-keyword kw">end</span>
+841:     <span class="ruby-identifier">new!</span>(<span class="ruby-identifier">jd_to_ajd</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>), <span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>)
+842:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

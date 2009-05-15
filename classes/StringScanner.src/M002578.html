@@ -2,32 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pointer (StringScanner)</title>
+  <title>scan_full (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Returns the position of the scan pointer.  In the 'reset' position, this
- * value is zero.  In the 'terminated' position (i.e. the string is exhausted),
- * this value is the length of the string.
+ * call-seq: scan_full(pattern, advance_pointer_p, return_string_p)
  *
- * In short, it's a 0-based index into the string.
+ * Tests whether the given +pattern+ is matched from the current scan pointer.
+ * Advances the scan pointer if +advance_pointer_p+ is true.
+ * Returns the matched string if +return_string_p+ is true.
+ * The match register is affected.
  *
- *   s = StringScanner.new('test string')
- *   s.pos               # -&gt; 0
- *   s.scan_until /str/  # -&gt; &quot;test str&quot;
- *   s.pos               # -&gt; 8
- *   s.terminate         # -&gt; #&lt;StringScanner fin&gt;
- *   s.pos               # -&gt; 11
+ * &quot;full&quot; means &quot;#scan with full parameters&quot;.
  */
 static VALUE
-strscan_get_pos(VALUE self)
+strscan_scan_full(VALUE self, VALUE re, VALUE s, VALUE f)
 {
-    struct strscanner *p;
-
-    GET_SCANNER(self, p);
-    return INT2FIX(p-&gt;curr);
+    return strscan_do_scan(self, re, RTEST(s), RTEST(f), 1);
 }</pre>
 </body>
 </html>

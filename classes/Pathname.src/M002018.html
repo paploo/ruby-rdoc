@@ -2,15 +2,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chdir (Pathname)</title>
+  <title>rmdir (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 957</span>
-957:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chdir</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-958:     <span class="ruby-identifier">warn</span> <span class="ruby-value str">&quot;Pathname#chdir is obsoleted.  Use Dir.chdir.&quot;</span>
-959:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-960:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/pathname.rb, line 1011</span>
+1011:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rmdir</span>() <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">rmdir</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

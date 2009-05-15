@@ -2,36 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>open (IO)</title>
+  <title>read (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: IO::open
- *
  *  call-seq:
- *     IO.open(fd, mode_string=&quot;r&quot; [, opt] )               =&gt; io
- *     IO.open(fd, mode_string=&quot;r&quot; [, opt] ) {|io| block } =&gt; obj
+ *     IO.read(name, [length [, offset]] )   =&gt; string
+ *     IO.read(name, [length [, offset]], open_args)   =&gt; string
  *
- *  With no associated block, &lt;code&gt;open&lt;/code&gt; is a synonym for
- *  &lt;code&gt;IO.new&lt;/code&gt;. If the optional code block is given, it will
- *  be passed &lt;i&gt;io&lt;/i&gt; as an argument, and the IO object will
- *  automatically be closed when the block terminates. In this instance,
- *  &lt;code&gt;IO.open&lt;/code&gt; returns the value of the block.
+ *  Opens the file, optionally seeks to the given offset, then returns
+ *  &lt;i&gt;length&lt;/i&gt; bytes (defaulting to the rest of the file).
+ *  &lt;code&gt;read&lt;/code&gt; ensures the file is closed before returning.
  *
+ *  If the last argument is a hash, it specifies option for internal
+ *  open().  The key would be the following.  open_args: is exclusive
+ *  to others.
+ *
+ *   encoding: string or encoding
+ *
+ *    specifies encoding of the read string.  encoding will be ignored
+ *    if length is specified.
+ *
+ *   mode: string
+ *
+ *    specifies mode argument for open().  it should start with &quot;r&quot;
+ *    otherwise it would cause error.
+ *
+ *   open_args: array of strings
+ *
+ *    specifies arguments for open() as an array.
+ *
+ *     IO.read(&quot;testfile&quot;)           #=&gt; &quot;This is line one\nThis is line two\nThis is line three\nAnd so on...\n&quot;
+ *     IO.read(&quot;testfile&quot;, 20)       #=&gt; &quot;This is line one\nThi&quot;
+ *     IO.read(&quot;testfile&quot;, 20, 10)   #=&gt; &quot;ne one\nThis is line &quot;
  */
 
 static VALUE
-rb_io_s_open(int argc, VALUE *argv, VALUE klass)
+rb_io_s_read(int argc, VALUE *argv, VALUE io)
 {
-    VALUE io = rb_class_new_instance(argc, argv, klass);
+    VALUE offset;
+    struct foreach_arg arg;
 
-    if (rb_block_given_p()) {
-        return rb_ensure(rb_yield, io, io_close, io);
+    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, &amp;offset, NULL);
+    open_key_args(argc, argv, &amp;arg);
+    if (NIL_P(arg.io)) return Qnil;
+    if (!NIL_P(offset)) {
+        rb_io_binmode(arg.io);
+        rb_io_seek(arg.io, offset, SEEK_SET);
+        if (arg.argc == 2) arg.argc = 1;
     }
-
-    return io;
+    return rb_ensure(io_s_read, (VALUE)&amp;arg, rb_io_close, arg.io);
 }</pre>
 </body>
 </html>

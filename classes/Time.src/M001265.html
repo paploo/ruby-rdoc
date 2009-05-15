@@ -2,47 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>httpdate (Time)</title>
+  <title>xmlschema (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 343</span>
-343:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">httpdate</span>(<span class="ruby-identifier">date</span>)
-344:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\s*
-345:           (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),\x20
-346:           (\d{2})\x20
-347:           (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\x20
-348:           (\d{4})\x20
-349:           (\d{2}):(\d{2}):(\d{2})\x20
-350:           GMT
-351:           \s*\z/i</span><span class="ruby-identifier">x</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">date</span>
-352:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rfc2822</span>(<span class="ruby-identifier">date</span>)
-353:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-regexp re">/\A\s*
-354:              (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\x20
-355:              (\d\d)-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d\d)\x20
-356:              (\d\d):(\d\d):(\d\d)\x20
-357:              GMT
-358:              \s*\z/i</span><span class="ruby-identifier">x</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">date</span>
-359:         <span class="ruby-identifier">year</span> = <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">to_i</span>
-360:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">50</span>
-361:           <span class="ruby-identifier">year</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2000</span>
-362:         <span class="ruby-keyword kw">else</span>
-363:           <span class="ruby-identifier">year</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1900</span>
-364:         <span class="ruby-keyword kw">end</span>
-365:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">$2</span>, <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">$4</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_i</span>)
-366:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-regexp re">/\A\s*
-367:              (?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\x20
-368:              (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\x20
-369:              (\d\d|\x20\d)\x20
-370:              (\d\d):(\d\d):(\d\d)\x20
-371:              (\d{4})
-372:              \s*\z/i</span><span class="ruby-identifier">x</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">date</span>
-373:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-constant">MonthValue</span>[<span class="ruby-identifier">$1</span>.<span class="ruby-identifier">upcase</span>], <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">to_i</span>,
-374:                  <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">$4</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_i</span>)
-375:       <span class="ruby-keyword kw">else</span>
-376:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;not RFC 2616 compliant date: #{date.inspect}&quot;</span>)
-377:       <span class="ruby-keyword kw">end</span>
-378:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 485</span>
+485:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xmlschema</span>(<span class="ruby-identifier">fraction_digits</span>=<span class="ruby-value">0</span>)
+486:     <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%d-%02d-%02dT%02d:%02d:%02d'</span>,
+487:       <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>) <span class="ruby-operator">+</span>
+488:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+489:       <span class="ruby-value str">''</span>
+490:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">9</span>
+491:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>)[<span class="ruby-value">0</span>, <span class="ruby-identifier">fraction_digits</span>]
+492:     <span class="ruby-keyword kw">else</span>
+493:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'0'</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">-</span> <span class="ruby-value">9</span>)
+494:     <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span>
+495:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">utc?</span>
+496:       <span class="ruby-value str">'Z'</span>
+497:     <span class="ruby-keyword kw">else</span>
+498:       <span class="ruby-identifier">off</span> = <span class="ruby-identifier">utc_offset</span>
+499:       <span class="ruby-identifier">sign</span> = <span class="ruby-identifier">off</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'-'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'+'</span>
+500:       <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%s%02d:%02d'</span>, <span class="ruby-identifier">sign</span>, <span class="ruby-operator">*</span>(<span class="ruby-identifier">off</span>.<span class="ruby-identifier">abs</span> <span class="ruby-operator">/</span> <span class="ruby-value">60</span>).<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>))
+501:     <span class="ruby-keyword kw">end</span>
+502:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

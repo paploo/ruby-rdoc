@@ -2,30 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>take (Array)</title>
+  <title>abbrev (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     ary.take(n)               =&gt; array
- *  
- *  Returns first n elements from &lt;i&gt;ary&lt;/i&gt;.
- *     
- *     a = [1, 2, 3, 4, 5, 0]
- *     a.take(3)             # =&gt; [1, 2, 3]
- *     
- */
-
-static VALUE
-rb_ary_take(VALUE obj, VALUE n)
-{
-    long len = NUM2LONG(n);
-    if (len &lt; 0) {
-        rb_raise(rb_eArgError, &quot;attempt to take negative size&quot;);
-    }
-    return rb_ary_subseq(obj, 0, len);
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/abbrev.rb, line 90</span>
+90:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">abbrev</span>(<span class="ruby-identifier">pattern</span> = <span class="ruby-keyword kw">nil</span>)
+91:     <span class="ruby-constant">Abbrev</span><span class="ruby-operator">::</span><span class="ruby-identifier">abbrev</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">pattern</span>)
+92:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

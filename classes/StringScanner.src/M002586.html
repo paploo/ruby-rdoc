@@ -2,31 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>skip_until (StringScanner)</title>
+  <title>getbyte (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: skip_until(pattern)
- *
- * Advances the scan pointer until +pattern+ is matched and consumed.  Returns
- * the number of bytes advanced, or +nil+ if no match was found.
- *
- * Look ahead to match +pattern+, and advance the scan pointer to the _end_
- * of the match.  Return the number of characters advanced, or +nil+ if the
- * match was unsuccessful.
- *
- * It's similar to #scan_until, but without returning the intervening string.
- *
- *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
- *   s.skip_until /12/           # -&gt; 10
- *   s                           # 
+ * Equivalent to #get_byte.
+ * This method is obsolete; use #get_byte instead.
  */
 static VALUE
-strscan_skip_until(VALUE self, VALUE re)
+strscan_getbyte(VALUE self)
 {
-    return strscan_do_scan(self, re, 1, 0, 0);
+    rb_warning(&quot;StringScanner#getbyte is obsolete; use #get_byte instead&quot;);
+    return strscan_get_byte(self);
 }</pre>
 </body>
 </html>

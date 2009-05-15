@@ -2,45 +2,119 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_top_level_statement (RubyLex)</title>
+  <title>identify_identifier (RubyLex)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 227</span>
-227:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_top_level_statement</span>
-228:     <span class="ruby-identifier">initialize_input</span>
-229:     <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:TERM_INPUT</span>) <span class="ruby-keyword kw">do</span>
-230:       <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
-231:         <span class="ruby-keyword kw">begin</span>
-232:           <span class="ruby-ivar">@continue</span> = <span class="ruby-keyword kw">false</span>
-233:           <span class="ruby-identifier">prompt</span>
-234:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">l</span> = <span class="ruby-identifier">lex</span>
-235:             <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:TERM_INPUT</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">==</span> <span class="ruby-value str">''</span>
-236:           <span class="ruby-keyword kw">else</span>
-237:             <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">l</span>
-238:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ltype</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@continue</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-239:               <span class="ruby-keyword kw">next</span>
-240:             <span class="ruby-keyword kw">end</span>
-241:           <span class="ruby-keyword kw">end</span>
-242:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@line</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;\n&quot;</span>
-243:       <span class="ruby-ivar">@line</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-ivar">@io</span>.<span class="ruby-identifier">encoding</span>)
-244:             <span class="ruby-keyword kw">yield</span> <span class="ruby-ivar">@line</span>, <span class="ruby-ivar">@exp_line_no</span>
-245:           <span class="ruby-keyword kw">end</span>
-246:           <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">l</span>
-247:           <span class="ruby-ivar">@line</span> = <span class="ruby-value str">''</span>
-248:           <span class="ruby-ivar">@exp_line_no</span> = <span class="ruby-ivar">@line_no</span>
-249: 
-250:           <span class="ruby-ivar">@indent</span> = <span class="ruby-value">0</span>
-251:           <span class="ruby-ivar">@indent_stack</span> = []
-252:           <span class="ruby-identifier">prompt</span>
-253:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">TerminateLineInput</span>
-254:           <span class="ruby-identifier">initialize_input</span>
-255:           <span class="ruby-identifier">prompt</span>
-256:           <span class="ruby-identifier">get_readed</span>
-257:         <span class="ruby-keyword kw">end</span>
-258:       <span class="ruby-keyword kw">end</span>
-259:     <span class="ruby-keyword kw">end</span>
-260:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ruby-lex.rb, line 765</span>
+765:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">identify_identifier</span>
+766:     <span class="ruby-identifier">token</span> = <span class="ruby-value str">&quot;&quot;</span>
+767:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">peek</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/[$@]/</span>
+768:       <span class="ruby-identifier">token</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>)
+769:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;@&quot;</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">peek</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;@&quot;</span>
+770:         <span class="ruby-identifier">token</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">getc</span>
+771:       <span class="ruby-keyword kw">end</span>
+772:     <span class="ruby-keyword kw">end</span>
+773: 
+774:     <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">ch</span> = <span class="ruby-identifier">getc</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\w|_/</span>
+775:       <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;:&quot;</span>, <span class="ruby-identifier">ch</span>, <span class="ruby-value str">&quot;:&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RubyLex</span>.<span class="ruby-identifier">debug?</span>
+776:       <span class="ruby-identifier">token</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">ch</span>
+777:     <span class="ruby-keyword kw">end</span>
+778:     <span class="ruby-identifier">ungetc</span>
+779:     
+780:     <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;!&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;?&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">token</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\w/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">peek</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;=&quot;</span>
+781:       <span class="ruby-identifier">token</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">getc</span>
+782:     <span class="ruby-keyword kw">end</span>
+783: 
+784:     <span class="ruby-comment cmt"># almost fix token</span>
+785: 
+786:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">token</span>
+787:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\$/</span>
+788:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkGVAR</span>, <span class="ruby-identifier">token</span>)
+789:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\@\@/</span>
+790:       <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+791:       <span class="ruby-comment cmt"># p Token(TkCVAR, token)</span>
+792:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkCVAR</span>, <span class="ruby-identifier">token</span>)
+793:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\@/</span>
+794:       <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+795:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkIVAR</span>, <span class="ruby-identifier">token</span>)
+796:     <span class="ruby-keyword kw">end</span>
+797:     
+798:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">EXPR_DOT</span>
+799:       <span class="ruby-identifier">print</span> <span class="ruby-identifier">token</span>, <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RubyLex</span>.<span class="ruby-identifier">debug?</span>
+800: 
+801:       <span class="ruby-identifier">token_c</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">trans</span> = <span class="ruby-constant">TkReading2Token</span>[<span class="ruby-identifier">token</span>]
+802:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token_c</span>
+803:         <span class="ruby-comment cmt"># reserved word?</span>
+804: 
+805:         <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">EXPR_BEG</span> <span class="ruby-operator">&amp;&amp;</span>
+806:             <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">EXPR_FNAME</span> <span class="ruby-operator">&amp;&amp;</span>
+807:             <span class="ruby-identifier">trans</span>[<span class="ruby-value">1</span>])
+808:           <span class="ruby-comment cmt"># modifiers</span>
+809:           <span class="ruby-identifier">token_c</span> = <span class="ruby-constant">TkSymbol2Token</span>[<span class="ruby-identifier">trans</span>[<span class="ruby-value">1</span>]]
+810:           <span class="ruby-ivar">@lex_state</span> = <span class="ruby-identifier">trans</span>[<span class="ruby-value">0</span>]
+811:         <span class="ruby-keyword kw">else</span>
+812:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">EXPR_FNAME</span>
+813:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENINDENT_CLAUSE</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">token</span>)
+814:               <span class="ruby-comment cmt"># check for ``class = val'' etc.</span>
+815:               <span class="ruby-identifier">valid</span> = <span class="ruby-keyword kw">true</span>
+816:               <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">token</span>
+817:               <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;class&quot;</span>
+818:                 <span class="ruby-identifier">valid</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">peek_match?</span>(<span class="ruby-regexp re">/^\s*(&lt;&lt;|\w|::)/</span>)
+819:               <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;def&quot;</span>
+820:                 <span class="ruby-identifier">valid</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">peek_match?</span>(<span class="ruby-regexp re">/^\s*(([+\-\/*&amp;\|^]|&lt;&lt;|&gt;&gt;|\|\||\&amp;\&amp;)=|\&amp;\&amp;|\|\|)/</span>)
+821:               <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;do&quot;</span>
+822:                 <span class="ruby-identifier">valid</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">peek_match?</span>(<span class="ruby-regexp re">/^\s*([+\-\/*]?=|\*|&lt;|&gt;|\&amp;)/</span>)
+823:               <span class="ruby-keyword kw">when</span> <span class="ruby-operator">*</span><span class="ruby-constant">ENINDENT_CLAUSE</span>
+824:                 <span class="ruby-identifier">valid</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">peek_match?</span>(<span class="ruby-regexp re">/^\s*([+\-\/*]?=|\*|&lt;|&gt;|\&amp;|\|)/</span>)
+825:               <span class="ruby-keyword kw">else</span>
+826:                 <span class="ruby-comment cmt"># no nothing</span>
+827:               <span class="ruby-keyword kw">end</span>
+828:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">valid</span>
+829:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;do&quot;</span>
+830:                   <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>[<span class="ruby-constant">TkFOR</span>, <span class="ruby-constant">TkWHILE</span>, <span class="ruby-constant">TkUNTIL</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@indent_stack</span>.<span class="ruby-identifier">last</span>)
+831:                     <span class="ruby-ivar">@indent</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+832:                     <span class="ruby-ivar">@indent_stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">token_c</span>
+833:                   <span class="ruby-keyword kw">end</span>
+834:                 <span class="ruby-keyword kw">else</span>
+835:                   <span class="ruby-ivar">@indent</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+836:                   <span class="ruby-ivar">@indent_stack</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">token_c</span>
+837:                 <span class="ruby-keyword kw">end</span>
+838: <span class="ruby-comment cmt">#               p @indent_stack</span>
+839:               <span class="ruby-keyword kw">end</span>
+840: 
+841:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">DEINDENT_CLAUSE</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">token</span>)
+842:               <span class="ruby-ivar">@indent</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
+843:               <span class="ruby-ivar">@indent_stack</span>.<span class="ruby-identifier">pop</span>
+844:             <span class="ruby-keyword kw">end</span>
+845:             <span class="ruby-ivar">@lex_state</span> = <span class="ruby-identifier">trans</span>[<span class="ruby-value">0</span>]
+846:           <span class="ruby-keyword kw">else</span>
+847:             <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+848:           <span class="ruby-keyword kw">end</span>
+849:         <span class="ruby-keyword kw">end</span>
+850:         <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-identifier">token_c</span>, <span class="ruby-identifier">token</span>)
+851:       <span class="ruby-keyword kw">end</span>
+852:     <span class="ruby-keyword kw">end</span>
+853: 
+854:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EXPR_FNAME</span>
+855:       <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+856:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">peek</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">==</span> <span class="ruby-value str">'='</span>
+857:         <span class="ruby-identifier">token</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">getc</span>
+858:       <span class="ruby-keyword kw">end</span>
+859:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EXPR_BEG</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@lex_state</span> <span class="ruby-operator">==</span> <span class="ruby-constant">EXPR_DOT</span>
+860:       <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_ARG</span>
+861:     <span class="ruby-keyword kw">else</span>
+862:       <span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_END</span>
+863:     <span class="ruby-keyword kw">end</span>
+864: 
+865:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">token</span>[<span class="ruby-value">0</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/[A-Z]/</span>
+866:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkCONSTANT</span>, <span class="ruby-identifier">token</span>)
+867:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">token</span>[<span class="ruby-identifier">token</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-value">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/[!?]/</span>
+868:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkFID</span>, <span class="ruby-identifier">token</span>)
+869:     <span class="ruby-keyword kw">else</span>
+870:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">Token</span>(<span class="ruby-constant">TkIDENTIFIER</span>, <span class="ruby-identifier">token</span>)
+871:     <span class="ruby-keyword kw">end</span>
+872:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

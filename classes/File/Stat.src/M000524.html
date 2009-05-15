@@ -2,46 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>executable? (File::Stat)</title>
+  <title>grpowned? (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.executable?    =&gt; true or false
+ *     stat.grpowned?   =&gt; true or false
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;stat&lt;/i&gt; is executable or if the
- *  operating system doesn't distinguish executable files from
- *  nonexecutable files. The tests are made using the effective owner of
- *  the process.
+ *  Returns true if the effective group id of the process is the same as
+ *  the group id of &lt;i&gt;stat&lt;/i&gt;. On Windows NT, returns &lt;code&gt;false&lt;/code&gt;.
  *     
- *     File.stat(&quot;testfile&quot;).executable?   #=&gt; false
+ *     File.stat(&quot;testfile&quot;).grpowned?      #=&gt; true
+ *     File.stat(&quot;/etc/passwd&quot;).grpowned?   #=&gt; false
  *     
  */
 
 static VALUE
-rb_stat_x(VALUE obj)
+rb_stat_grpowned(VALUE obj)
 {
-    struct stat *st = get_stat(obj);
-
-#ifdef USE_GETEUID
-    if (geteuid() == 0) {
-        return st-&gt;st_mode &amp; S_IXUGO ? Qtrue : Qfalse;
-    }
+#ifndef _WIN32
+    if (group_member(get_stat(obj)-&gt;st_gid)) return Qtrue;
 #endif
-#ifdef S_IXUSR
-    if (rb_stat_owned(obj))
-        return st-&gt;st_mode &amp; S_IXUSR ? Qtrue : Qfalse;
-#endif
-#ifdef S_IXGRP
-    if (rb_stat_grpowned(obj))
-        return st-&gt;st_mode &amp; S_IXGRP ? Qtrue : Qfalse;
-#endif
-#ifdef S_IXOTH
-    if (!(st-&gt;st_mode &amp; S_IXOTH)) return Qfalse;
-#endif
-    return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

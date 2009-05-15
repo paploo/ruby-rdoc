@@ -2,29 +2,56 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>upcase (String)</title>
+  <title>capitalize! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.upcase   =&gt; new_str
+ *     str.capitalize!   =&gt; str or nil
  *  
- *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with all lowercase letters replaced with their
- *  uppercase counterparts. The operation is locale insensitive---only
- *  characters ``a'' to ``z'' are affected.
- *  Note: case replacement is effective only in ASCII region.
+ *  Modifies &lt;i&gt;str&lt;/i&gt; by converting the first character to uppercase and the
+ *  remainder to lowercase. Returns &lt;code&gt;nil&lt;/code&gt; if no changes are made.
+ *  Note: case conversion is effective only in ASCII region.
  *     
- *     &quot;hEllO&quot;.upcase   #=&gt; &quot;HELLO&quot;
+ *     a = &quot;hello&quot;
+ *     a.capitalize!   #=&gt; &quot;Hello&quot;
+ *     a               #=&gt; &quot;Hello&quot;
+ *     a.capitalize!   #=&gt; nil
  */
 
 static VALUE
-rb_str_upcase(VALUE str)
+rb_str_capitalize_bang(VALUE str)
 {
-    str = rb_str_dup(str);
-    rb_str_upcase_bang(str);
-    return str;
+    rb_encoding *enc;
+    char *s, *send;
+    int modify = 0;
+    unsigned int c;
+
+    str_modify_keep_cr(str);
+    enc = STR_ENC_GET(str);
+    rb_str_check_dummy_enc(enc);
+    if (RSTRING_LEN(str) == 0 || !RSTRING_PTR(str)) return Qnil;
+    s = RSTRING_PTR(str); send = RSTRING_END(str);
+
+    c = rb_enc_codepoint(s, send, enc);
+    if (rb_enc_islower(c, enc)) {
+        rb_enc_mbcput(rb_enc_toupper(c, enc), s, enc);
+        modify = 1;
+    }
+    s += rb_enc_codelen(c, enc);
+    while (s &lt; send) {
+        c = rb_enc_codepoint(s, send, enc);
+        if (rb_enc_isupper(c, enc)) {
+            rb_enc_mbcput(rb_enc_tolower(c, enc), s, enc);
+            modify = 1;
+        }
+        s += rb_enc_codelen(c, enc);
+    }
+
+    if (modify) return str;
+    return Qnil;
 }</pre>
 </body>
 </html>

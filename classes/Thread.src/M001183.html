@@ -2,47 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>status (Thread)</title>
+  <title>group (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     thr.status   =&gt; string, false or nil
+ *     thr.group   =&gt; thgrp or nil
  *
- *  Returns the status of &lt;i&gt;thr&lt;/i&gt;: ``&lt;code&gt;sleep&lt;/code&gt;'' if &lt;i&gt;thr&lt;/i&gt; is
- *  sleeping or waiting on I/O, ``&lt;code&gt;run&lt;/code&gt;'' if &lt;i&gt;thr&lt;/i&gt; is executing,
- *  ``&lt;code&gt;aborting&lt;/code&gt;'' if &lt;i&gt;thr&lt;/i&gt; is aborting, &lt;code&gt;false&lt;/code&gt; if
- *  &lt;i&gt;thr&lt;/i&gt; terminated normally, and &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;thr&lt;/i&gt;
- *  terminated with an exception.
+ *  Returns the &lt;code&gt;ThreadGroup&lt;/code&gt; which contains &lt;i&gt;thr&lt;/i&gt;, or nil if
+ *  the thread is not a member of any group.
  *
- *     a = Thread.new { raise(&quot;die now&quot;) }
- *     b = Thread.new { Thread.stop }
- *     c = Thread.new { Thread.exit }
- *     d = Thread.new { sleep }
- *     d.kill                  #=&gt; #&lt;Thread:0x401b3678 aborting&gt;
- *     a.status                #=&gt; nil
- *     b.status                #=&gt; &quot;sleep&quot;
- *     c.status                #=&gt; false
- *     d.status                #=&gt; &quot;aborting&quot;
- *     Thread.current.status   #=&gt; &quot;run&quot;
+ *     Thread.main.group   #=&gt; #&lt;ThreadGroup:0x4029d914&gt;
  */
 
-static VALUE
-rb_thread_status(VALUE thread)
+VALUE
+rb_thread_group(VALUE thread)
 {
     rb_thread_t *th;
+    VALUE group;
     GetThreadPtr(thread, th);
+    group = th-&gt;thgroup;
 
-    if (rb_thread_dead(th)) {
-        if (!NIL_P(th-&gt;errinfo) &amp;&amp; !FIXNUM_P(th-&gt;errinfo)
-            /* TODO */ ) {
-            return Qnil;
-        }
-        return Qfalse;
+    if (!group) {
+        group = Qnil;
     }
-    return rb_str_new2(thread_status_name(th-&gt;status));
+    return group;
 }</pre>
 </body>
 </html>

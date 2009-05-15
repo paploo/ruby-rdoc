@@ -2,25 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>div (Numeric)</title>
+  <title>to_int (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.div(numeric)    =&gt; integer
+ *     num.to_int    =&gt; integer
  *
- *  Uses &lt;code&gt;/&lt;/code&gt; to perform division, then converts the result to
- *  an integer. &lt;code&gt;Numeric&lt;/code&gt; does not define the &lt;code&gt;/&lt;/code&gt;
- *  operator; this is left to subclasses.
+ *  Invokes the child class's &lt;code&gt;to_i&lt;/code&gt; method to convert
+ *  &lt;i&gt;num&lt;/i&gt; to an integer.
  */
 
 static VALUE
-num_div(VALUE x, VALUE y)
+num_to_int(VALUE num)
 {
-    if (rb_equal(INT2FIX(0), y)) rb_num_zerodiv();
-    return num_floor(rb_funcall(x, '/', 1, y));
+    return rb_funcall(num, id_to_i, 0, 0);
 }</pre>
 </body>
 </html>

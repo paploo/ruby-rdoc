@@ -2,41 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>private (Module)</title>
+  <title>public_class_method (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     private                 =&gt; self
- *     private(symbol, ...)    =&gt; self
+ *     mod.public_class_method(symbol, ...)    =&gt; mod
  *
- *  With no arguments, sets the default visibility for subsequently
- *  defined methods to private. With arguments, sets the named methods
- *  to have private visibility.
- *
- *     module Mod
- *       def a()  end
- *       def b()  end
- *       private
- *       def c()  end
- *       private :a
- *     end
- *     Mod.private_instance_methods   #=&gt; [:a, :c]
+ *  Makes a list of existing class methods public.
  */
 
 static VALUE
-rb_mod_private(int argc, VALUE *argv, VALUE module)
+rb_mod_public_method(int argc, VALUE *argv, VALUE obj)
 {
-    secure_visibility(module);
-    if (argc == 0) {
-        SCOPE_SET(NOEX_PRIVATE);
-    }
-    else {
-        set_method_visibility(module, argc, argv, NOEX_PRIVATE);
-    }
-    return module;
+    set_method_visibility(CLASS_OF(obj), argc, argv, NOEX_PUBLIC);
+    return obj;
 }</pre>
 </body>
 </html>

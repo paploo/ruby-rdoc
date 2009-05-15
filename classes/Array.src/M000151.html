@@ -2,29 +2,62 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>delete_at (Array)</title>
+  <title>replace (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.delete_at(index)  -&gt; obj or nil
+ *     array.replace(other_array)  -&gt; array
  *  
- *  Deletes the element at the specified index, returning that element,
- *  or &lt;code&gt;nil&lt;/code&gt; if the index is out of range. See also
- *  &lt;code&gt;Array#slice!&lt;/code&gt;.
+ *  Replaces the contents of &lt;i&gt;self&lt;/i&gt; with the contents of
+ *  &lt;i&gt;other_array&lt;/i&gt;, truncating or expanding if necessary.
  *     
- *     a = %w( ant bat cat dog )
- *     a.delete_at(2)    #=&gt; &quot;cat&quot;
- *     a                 #=&gt; [&quot;ant&quot;, &quot;bat&quot;, &quot;dog&quot;]
- *     a.delete_at(99)   #=&gt; nil
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot; ]
+ *     a.replace([ &quot;x&quot;, &quot;y&quot;, &quot;z&quot; ])   #=&gt; [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]
+ *     a                              #=&gt; [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]
  */
 
-static VALUE
-rb_ary_delete_at_m(VALUE ary, VALUE pos)
+VALUE
+rb_ary_replace(VALUE copy, VALUE orig)
 {
-    return rb_ary_delete_at(ary, NUM2LONG(pos));
+    orig = to_ary(orig);
+    rb_ary_modify_check(copy);
+    if (copy == orig) return copy;
+
+    if (RARRAY_LEN(orig) &lt;= RARRAY_EMBED_LEN_MAX) {
+        VALUE *ptr;
+        VALUE shared = 0;
+        
+        if (ARY_OWNS_HEAP_P(copy)) {
+            xfree(RARRAY_PTR(copy));
+        }
+        else if (ARY_SHARED_P(copy)) {
+            shared = ARY_SHARED(copy);
+            FL_UNSET_SHARED(copy);
+        }
+        FL_SET_EMBED(copy);
+        ptr = RARRAY_PTR(orig);
+        MEMCPY(RARRAY_PTR(copy), ptr, VALUE, RARRAY_LEN(orig));
+        if (shared) {
+            rb_ary_decrement_share(shared);
+        }
+        ARY_SET_LEN(copy, RARRAY_LEN(orig));
+    }
+    else {
+        VALUE shared = ary_make_shared(orig);
+        if (ARY_OWNS_HEAP_P(copy)) {
+            xfree(RARRAY_PTR(copy));
+        } else {
+            rb_ary_unshare_safe(copy);
+        }
+        FL_UNSET_EMBED(copy);
+        ARY_SET_PTR(copy, RARRAY_PTR(orig));
+        ARY_SET_LEN(copy, RARRAY_LEN(orig));
+        rb_ary_set_shared(copy, shared);
+    }
+    return copy;
 }</pre>
 </body>
 </html>

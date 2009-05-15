@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wait_to_finish_all_process_controllers (Shell::ProcessController)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shell/process-controller.rb, line 68</span>
+68:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">wait_to_finish_all_process_controllers</span>
+69:         <span class="ruby-identifier">process_controllers_exclusive</span> <span class="ruby-keyword kw">do</span>
+70:           <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@ProcessControllers</span>.<span class="ruby-identifier">empty?</span>
+71:             <span class="ruby-constant">Shell</span><span class="ruby-operator">::</span><span class="ruby-identifier">notify</span>(<span class="ruby-value str">&quot;Process finishing, but active shell exists&quot;</span>,
+72:                           <span class="ruby-value str">&quot;You can use Shell#transact or Shell#check_point for more safe execution.&quot;</span>)
+73:             <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug?</span>
+74:               <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">pc</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@ProcessControllers</span>.<span class="ruby-identifier">keys</span>
+75:                 <span class="ruby-constant">Shell</span><span class="ruby-operator">::</span><span class="ruby-identifier">notify</span>(<span class="ruby-value str">&quot; Not finished jobs in &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">pc</span>.<span class="ruby-identifier">shell</span>.<span class="ruby-identifier">to_s</span>)
+76:                 <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">com</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">pc</span>.<span class="ruby-identifier">jobs</span>
+77:                   <span class="ruby-identifier">com</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-value str">&quot;  Jobs: %id&quot;</span>)
+78:                 <span class="ruby-keyword kw">end</span>
+79:               <span class="ruby-keyword kw">end</span>
+80:             <span class="ruby-keyword kw">end</span>
+81:             <span class="ruby-ivar">@ProcessControllersCV</span>.<span class="ruby-identifier">wait</span>(<span class="ruby-ivar">@ProcessControllersMonitor</span>)
+82:           <span class="ruby-keyword kw">end</span>
+83:         <span class="ruby-keyword kw">end</span>
+84:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

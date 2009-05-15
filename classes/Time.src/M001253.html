@@ -2,15 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_date (Time)</title>
+  <title>month_days (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1771</span>
-1771:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_date</span>
-1772:     <span class="ruby-identifier">jd</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:civil_to_jd</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">mday</span>, <span class="ruby-constant">Date</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1773:     <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-constant">Date</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:jd_to_ajd</span>, <span class="ruby-identifier">jd</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>), <span class="ruby-value">0</span>, <span class="ruby-constant">Date</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1774:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 117</span>
+117:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">month_days</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span>)
+118:       <span class="ruby-keyword kw">if</span> ((<span class="ruby-identifier">y</span> <span class="ruby-operator">%</span> <span class="ruby-value">4</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>) <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">y</span> <span class="ruby-operator">%</span> <span class="ruby-value">100</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>)) <span class="ruby-operator">||</span> (<span class="ruby-identifier">y</span> <span class="ruby-operator">%</span> <span class="ruby-value">400</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>)
+119:         <span class="ruby-constant">LeapYearMonthDays</span>[<span class="ruby-identifier">m</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+120:       <span class="ruby-keyword kw">else</span>
+121:         <span class="ruby-constant">CommonYearMonthDays</span>[<span class="ruby-identifier">m</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+122:       <span class="ruby-keyword kw">end</span>
+123:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

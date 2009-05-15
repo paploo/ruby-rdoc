@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>send_command (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1063</span>
+1063:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_command</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1064:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+1065:         <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+1066:           <span class="ruby-identifier">validate_data</span>(<span class="ruby-identifier">i</span>)
+1067:         <span class="ruby-keyword kw">end</span>
+1068:         <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">generate_tag</span>
+1069:         <span class="ruby-identifier">put_string</span>(<span class="ruby-identifier">tag</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cmd</span>)
+1070:         <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+1071:           <span class="ruby-identifier">put_string</span>(<span class="ruby-value str">&quot; &quot;</span>)
+1072:           <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">i</span>)
+1073:         <span class="ruby-keyword kw">end</span>
+1074:         <span class="ruby-identifier">put_string</span>(<span class="ruby-constant">CRLF</span>)
+1075:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cmd</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;LOGOUT&quot;</span>
+1076:           <span class="ruby-ivar">@logout_command_tag</span> = <span class="ruby-identifier">tag</span>
+1077:         <span class="ruby-keyword kw">end</span>
+1078:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+1079:           <span class="ruby-identifier">add_response_handler</span>(<span class="ruby-identifier">block</span>)
+1080:         <span class="ruby-keyword kw">end</span>
+1081:         <span class="ruby-keyword kw">begin</span>
+1082:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">get_tagged_response</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">cmd</span>)
+1083:         <span class="ruby-keyword kw">ensure</span>
+1084:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+1085:             <span class="ruby-identifier">remove_response_handler</span>(<span class="ruby-identifier">block</span>)
+1086:           <span class="ruby-keyword kw">end</span>
+1087:         <span class="ruby-keyword kw">end</span>
+1088:       <span class="ruby-keyword kw">end</span>
+1089:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

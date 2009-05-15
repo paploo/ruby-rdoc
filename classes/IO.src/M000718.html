@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>open (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  Document-method: IO::open
+ *
+ *  call-seq:
+ *     IO.open(fd, mode_string=&quot;r&quot; [, opt] )               =&gt; io
+ *     IO.open(fd, mode_string=&quot;r&quot; [, opt] ) {|io| block } =&gt; obj
+ *
+ *  With no associated block, &lt;code&gt;open&lt;/code&gt; is a synonym for
+ *  &lt;code&gt;IO.new&lt;/code&gt;. If the optional code block is given, it will
+ *  be passed &lt;i&gt;io&lt;/i&gt; as an argument, and the IO object will
+ *  automatically be closed when the block terminates. In this instance,
+ *  &lt;code&gt;IO.open&lt;/code&gt; returns the value of the block.
+ *
+ */
+
+static VALUE
+rb_io_s_open(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE io = rb_class_new_instance(argc, argv, klass);
+
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, io, io_close, io);
+    }
+
+    return io;
+}</pre>
+</body>
+</html>

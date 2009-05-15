@@ -2,30 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>scan (StringScanner)</title>
+  <title>skip_until (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: scan(pattern) =&gt; String
+ * call-seq: skip_until(pattern)
  *
- * Tries to match with +pattern+ at the current position. If there's a match,
- * the scanner advances the &quot;scan pointer&quot; and returns the matched string.
- * Otherwise, the scanner returns +nil+.
+ * Advances the scan pointer until +pattern+ is matched and consumed.  Returns
+ * the number of bytes advanced, or +nil+ if no match was found.
  *
- *   s = StringScanner.new('test string')
- *   p s.scan(/\w+/)   # -&gt; &quot;test&quot;
- *   p s.scan(/\w+/)   # -&gt; nil
- *   p s.scan(/\s+/)   # -&gt; &quot; &quot;
- *   p s.scan(/\w+/)   # -&gt; &quot;string&quot;
- *   p s.scan(/./)     # -&gt; nil
+ * Look ahead to match +pattern+, and advance the scan pointer to the _end_
+ * of the match.  Return the number of characters advanced, or +nil+ if the
+ * match was unsuccessful.
  *
+ * It's similar to #scan_until, but without returning the intervening string.
+ *
+ *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
+ *   s.skip_until /12/           # -&gt; 10
+ *   s                           # 
  */
 static VALUE
-strscan_scan(VALUE self, VALUE re)
+strscan_skip_until(VALUE self, VALUE re)
 {
-    return strscan_do_scan(self, re, 1, 1, 1);
+    return strscan_do_scan(self, re, 1, 0, 0);
 }</pre>
 </body>
 </html>

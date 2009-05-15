@@ -2,24 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_f (NilClass)</title>
+  <title>^ (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     nil.to_f    =&gt; 0.0
+ *     false ^ obj    =&gt; true or false
+ *     nil   ^ obj    =&gt; true or false
  *  
- *  Always returns zero.
+ *  Exclusive Or---If &lt;i&gt;obj&lt;/i&gt; is &lt;code&gt;nil&lt;/code&gt; or
+ *  &lt;code&gt;false&lt;/code&gt;, returns &lt;code&gt;false&lt;/code&gt;; otherwise, returns
+ *  &lt;code&gt;true&lt;/code&gt;.
  *     
- *     nil.to_f   #=&gt; 0.0
  */
 
 static VALUE
-nil_to_f(VALUE obj)
+false_xor(VALUE obj, VALUE obj2)
 {
-    return DBL2NUM(0.0);
+    return RTEST(obj2)?Qtrue:Qfalse;
 }</pre>
 </body>
 </html>

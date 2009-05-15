@@ -2,36 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>run (Thread)</title>
+  <title>priority (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     thr.run   =&gt; thr
+ *     thr.priority   =&gt; integer
  *
- *  Wakes up &lt;i&gt;thr&lt;/i&gt;, making it eligible for scheduling.
+ *  Returns the priority of &lt;i&gt;thr&lt;/i&gt;. Default is inherited from the
+ *  current thread which creating the new thread, or zero for the
+ *  initial main thread; higher-priority threads will run before
+ *  lower-priority threads.
  *
- *     a = Thread.new { puts &quot;a&quot;; Thread.stop; puts &quot;c&quot; }
- *     Thread.pass
- *     puts &quot;Got here&quot;
- *     a.run
- *     a.join
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     a
- *     Got here
- *     c
+ *     Thread.current.priority   #=&gt; 0
  */
 
-VALUE
-rb_thread_run(VALUE thread)
+static VALUE
+rb_thread_priority(VALUE thread)
 {
-    rb_thread_wakeup(thread);
-    rb_thread_schedule();
-    return thread;
+    rb_thread_t *th;
+    GetThreadPtr(thread, th);
+    return INT2NUM(th-&gt;priority);
 }</pre>
 </body>
 </html>

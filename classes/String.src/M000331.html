@@ -2,71 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>scan (String)</title>
+  <title>chop (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.scan(pattern)                         =&gt; array
- *     str.scan(pattern) {|match, ...| block }   =&gt; str
+ *     str.chop   =&gt; new_str
  *  
- *  Both forms iterate through &lt;i&gt;str&lt;/i&gt;, matching the pattern (which may be a
- *  &lt;code&gt;Regexp&lt;/code&gt; or a &lt;code&gt;String&lt;/code&gt;). For each match, a result is
- *  generated and either added to the result array or passed to the block. If
- *  the pattern contains no groups, each individual result consists of the
- *  matched string, &lt;code&gt;$&amp;&lt;/code&gt;.  If the pattern contains groups, each
- *  individual result is itself an array containing one entry per group.
+ *  Returns a new &lt;code&gt;String&lt;/code&gt; with the last character removed.  If the
+ *  string ends with &lt;code&gt;\r\n&lt;/code&gt;, both characters are removed. Applying
+ *  &lt;code&gt;chop&lt;/code&gt; to an empty string returns an empty
+ *  string. &lt;code&gt;String#chomp&lt;/code&gt; is often a safer alternative, as it leaves
+ *  the string unchanged if it doesn't end in a record separator.
  *     
- *     a = &quot;cruel world&quot;
- *     a.scan(/\w+/)        #=&gt; [&quot;cruel&quot;, &quot;world&quot;]
- *     a.scan(/.../)        #=&gt; [&quot;cru&quot;, &quot;el &quot;, &quot;wor&quot;]
- *     a.scan(/(...)/)      #=&gt; [[&quot;cru&quot;], [&quot;el &quot;], [&quot;wor&quot;]]
- *     a.scan(/(..)(..)/)   #=&gt; [[&quot;cr&quot;, &quot;ue&quot;], [&quot;l &quot;, &quot;wo&quot;]]
- *     
- *  And the block form:
- *     
- *     a.scan(/\w+/) {|w| print &quot;&lt;&lt;#{w}&gt;&gt; &quot; }
- *     print &quot;\n&quot;
- *     a.scan(/(.)(.)/) {|x,y| print y, x }
- *     print &quot;\n&quot;
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     &lt;&lt;cruel&gt;&gt; &lt;&lt;world&gt;&gt;
- *     rceu lowlr
+ *     &quot;string\r\n&quot;.chop   #=&gt; &quot;string&quot;
+ *     &quot;string\n\r&quot;.chop   #=&gt; &quot;string\n&quot;
+ *     &quot;string\n&quot;.chop     #=&gt; &quot;string&quot;
+ *     &quot;string&quot;.chop       #=&gt; &quot;strin&quot;
+ *     &quot;x&quot;.chop.chop       #=&gt; &quot;&quot;
  */
 
 static VALUE
-rb_str_scan(VALUE str, VALUE pat)
+rb_str_chop(VALUE str)
 {
-    VALUE result;
-    long start = 0;
-    long last = -1, prev = 0;
-    char *p = RSTRING_PTR(str); long len = RSTRING_LEN(str);
-
-    pat = get_pat(pat, 1);
-    if (!rb_block_given_p()) {
-        VALUE ary = rb_ary_new();
-
-        while (!NIL_P(result = scan_once(str, pat, &amp;start))) {
-            last = prev;
-            prev = start;
-            rb_ary_push(ary, result);
-        }
-        if (last &gt;= 0) rb_reg_search(pat, str, last, 0);
-        return ary;
-    }
-
-    while (!NIL_P(result = scan_once(str, pat, &amp;start))) {
-        last = prev;
-        prev = start;
-        rb_yield(result);
-        str_mod_check(str, p, len);
-    }
-    if (last &gt;= 0) rb_reg_search(pat, str, last, 0);
-    return str;
+    VALUE str2 = rb_str_new5(str, RSTRING_PTR(str), chopped_length(str));
+    rb_enc_cr_str_copy_for_substr(str2, str);
+    OBJ_INFECT(str2, str);
+    return str2;
 }</pre>
 </body>
 </html>

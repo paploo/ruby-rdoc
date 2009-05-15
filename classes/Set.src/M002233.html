@@ -2,15 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>subtract (Set)</title>
+  <title>&amp; (Set)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 290</span>
-290:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">subtract</span>(<span class="ruby-identifier">enum</span>)
-291:     <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">o</span>) }
-292:     <span class="ruby-keyword kw">self</span>
-293:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/set.rb, line 312</span>
+312:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&amp;</span>(<span class="ruby-identifier">enum</span>)
+313:     <span class="ruby-identifier">n</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>
+314:     <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">o</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">include?</span>(<span class="ruby-identifier">o</span>) }
+315:     <span class="ruby-identifier">n</span>
+316:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

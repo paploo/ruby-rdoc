@@ -2,23 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>closed_write? (StringIO)</title>
+  <title>pos (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.closed_write?    -&gt; true or false
+ *   strio.pos     -&gt; integer
+ *   strio.tell    -&gt; integer
  *
- * Returns +true+ if *strio* is not writable, +false+ otherwise.
+ * Returns the current offset (in bytes) of *strio*.
  */
 static VALUE
-strio_closed_write(VALUE self)
+strio_get_pos(VALUE self)
 {
-    struct StringIO *ptr = StringIO(self);
-    if (WRITABLE(ptr)) return Qfalse;
-    return Qtrue;
+    return LONG2NUM(StringIO(self)-&gt;pos);
 }</pre>
 </body>
 </html>

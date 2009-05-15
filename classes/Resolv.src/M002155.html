@@ -2,14 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getname (Resolv)</title>
+  <title>each_address (Resolv)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/resolv.rb, line 63</span>
-63:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">getname</span>(<span class="ruby-identifier">address</span>)
-64:     <span class="ruby-constant">DefaultResolver</span>.<span class="ruby-identifier">getname</span>(<span class="ruby-identifier">address</span>)
-65:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 108</span>
+108:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>)
+109:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">AddressRegex</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">name</span>
+110:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">name</span>
+111:       <span class="ruby-keyword kw">return</span>
+112:     <span class="ruby-keyword kw">end</span>
+113:     <span class="ruby-identifier">yielded</span> = <span class="ruby-keyword kw">false</span>
+114:     <span class="ruby-ivar">@resolvers</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+115:       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">address</span><span class="ruby-operator">|</span>
+116:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">address</span>.<span class="ruby-identifier">to_s</span>
+117:         <span class="ruby-identifier">yielded</span> = <span class="ruby-keyword kw">true</span>
+118:       }
+119:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">yielded</span>
+120:     }
+121:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

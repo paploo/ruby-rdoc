@@ -2,25 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tuesday? (Time)</title>
+  <title>tv_usec (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.tuesday? =&gt; true or false
+ *     time.usec    =&gt; int
+ *     time.tv_usec =&gt; int
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Tuesday.
- *
- *     t = Time.local(1991, 2, 19)      #=&gt; 1991-02-19 00:00:00 -0600
- *     p t.tuesday?                     #=&gt; true
+ *  Returns just the number of microseconds for &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now        #=&gt; 2007-11-19 08:03:26 -0600
+ *     &quot;%10.6f&quot; % t.to_f   #=&gt; &quot;1195481006.775195&quot;
+ *     t.usec              #=&gt; 775195
  */
 
 static VALUE
-time_tuesday(VALUE time)
+time_usec(VALUE time)
 {
-    wday_p(2);
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    return LONG2NUM(tobj-&gt;ts.tv_nsec/1000);
 }</pre>
 </body>
 </html>

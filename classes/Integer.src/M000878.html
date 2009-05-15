@@ -2,28 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ceil (Integer)</title>
+  <title>each_prime (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     int.to_i      =&gt; int
- *     int.to_int    =&gt; int
- *     int.floor     =&gt; int
- *     int.ceil      =&gt; int
- *     int.round     =&gt; int
- *     int.truncate  =&gt; int
- *
- *  As &lt;i&gt;int&lt;/i&gt; is already an &lt;code&gt;Integer&lt;/code&gt;, all these
- *  methods simply return the receiver.
- */
-
-static VALUE
-int_to_i(VALUE num)
-{
-    return num;
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/prime.rb, line 40</span>
+40:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Integer</span>.<span class="ruby-identifier">each_prime</span>(<span class="ruby-identifier">ubound</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yields: prime</span>
+41:     <span class="ruby-constant">Prime</span>.<span class="ruby-identifier">each</span>(<span class="ruby-identifier">ubound</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+42:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,25 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>dev (File::Stat)</title>
+  <title>uid (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.dev    =&gt; fixnum
+ *     stat.uid    =&gt; fixnum
  *  
- *  Returns an integer representing the device on which &lt;i&gt;stat&lt;/i&gt;
- *  resides.
+ *  Returns the numeric user id of the owner of &lt;i&gt;stat&lt;/i&gt;.
  *     
- *     File.stat(&quot;testfile&quot;).dev   #=&gt; 774
+ *     File.stat(&quot;testfile&quot;).uid   #=&gt; 501
+ *     
  */
 
 static VALUE
-rb_stat_dev(VALUE self)
+rb_stat_uid(VALUE self)
 {
-    return INT2NUM(get_stat(self)-&gt;st_dev);
+    return UIDT2NUM(get_stat(self)-&gt;st_uid);
 }</pre>
 </body>
 </html>

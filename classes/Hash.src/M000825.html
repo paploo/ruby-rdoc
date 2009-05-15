@@ -2,34 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>key (Hash)</title>
+  <title>each_pair (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.key(value)    =&gt; key
+ *     hsh.each {| key, value | block } -&gt; hsh
+ *     hsh.each_pair {| key, value | block } -&gt; hsh
  *
- *  Returns the key for a given value. If not found, returns &lt;code&gt;nil&lt;/code&gt;.
+ *  Calls &lt;i&gt;block&lt;/i&gt; once for each key in &lt;i&gt;hsh&lt;/i&gt;, passing the key-value
+ *  pair as parameters.
  *
  *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.key(200)   #=&gt; &quot;b&quot;
- *     h.key(999)   #=&gt; nil
+ *     h.each {|key, value| puts &quot;#{key} is #{value}&quot; }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     a is 100
+ *     b is 200
  *
  */
 
 static VALUE
-rb_hash_key(VALUE hash, VALUE value)
+rb_hash_each_pair(VALUE hash)
 {
-    VALUE args[2];
-
-    args[0] = value;
-    args[1] = Qnil;
-
-    rb_hash_foreach(hash, key_i, (st_data_t)args);
-
-    return args[1];
+    RETURN_ENUMERATOR(hash, 0, 0);
+    rb_hash_foreach(hash, each_pair_i, 0);
+    return hash;
 }</pre>
 </body>
 </html>

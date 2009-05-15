@@ -2,33 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>lchmod (File)</title>
+  <title>delete (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.lchmod(mode_int, file_name, ...)  =&gt; integer
+ *     File.delete(file_name, ...)  =&gt; integer
+ *     File.unlink(file_name, ...)  =&gt; integer
  *  
- *  Equivalent to &lt;code&gt;File::chmod&lt;/code&gt;, but does not follow symbolic
- *  links (so it will change the permissions associated with the link,
- *  not the file referenced by the link). Often not available.
- *     
+ *  Deletes the named files, returning the number of names
+ *  passed as arguments. Raises an exception on any error.
+ *  See also &lt;code&gt;Dir::rmdir&lt;/code&gt;.
  */
 
 static VALUE
-rb_file_s_lchmod(int argc, VALUE *argv)
+rb_file_s_unlink(VALUE klass, VALUE args)
 {
-    VALUE vmode;
-    VALUE rest;
-    long mode, n;
+    long n;
 
     rb_secure(2);
-    rb_scan_args(argc, argv, &quot;1*&quot;, &amp;vmode, &amp;rest);
-    mode = NUM2INT(vmode);
-
-    n = apply2files(lchmod_internal, rest, (void *)(long)mode);
+    n = apply2files(unlink_internal, args, 0);
     return LONG2FIX(n);
 }</pre>
 </body>

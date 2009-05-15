@@ -2,25 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>printf (IO)</title>
+  <title>bytes (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.printf(format_string [, obj, ...] )   =&gt; nil
+ *     ios.bytes   =&gt; anEnumerator
  *
- *  Formats and writes to &lt;em&gt;ios&lt;/em&gt;, converting parameters under
- *  control of the format string. See &lt;code&gt;Kernel#sprintf&lt;/code&gt;
- *  for details.
+ *  Returns an enumerator that gives each byte (0..255) in &lt;em&gt;ios&lt;/em&gt;.
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
+ *  will be raised.
+ *     
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.bytes.to_a  #=&gt; [104, 101, 108, 108, 111]
+ *     f.rewind
+ *     f.bytes.sort  #=&gt; [101, 104, 108, 108, 111]
  */
 
-VALUE
-rb_io_printf(int argc, VALUE *argv, VALUE out)
+static VALUE
+rb_io_bytes(VALUE io)
 {
-    rb_io_write(out, rb_f_sprintf(argc, argv));
-    return Qnil;
+    return rb_enumeratorize(io, ID2SYM(rb_intern(&quot;each_byte&quot;)), 0, 0);
 }</pre>
 </body>
 </html>

@@ -2,40 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>instance_variable_get (Object)</title>
+  <title>is_a? (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.instance_variable_get(symbol)    =&gt; obj
- *
- *  Returns the value of the given instance variable, or nil if the
- *  instance variable is not set. The &lt;code&gt;@&lt;/code&gt; part of the
- *  variable name should be included for regular instance
- *  variables. Throws a &lt;code&gt;NameError&lt;/code&gt; exception if the
- *  supplied symbol is not valid as an instance variable name.
+ *     obj.is_a?(class)       =&gt; true or false
+ *     obj.kind_of?(class)    =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;class&lt;/i&gt; is the class of
+ *  &lt;i&gt;obj&lt;/i&gt;, or if &lt;i&gt;class&lt;/i&gt; is one of the superclasses of
+ *  &lt;i&gt;obj&lt;/i&gt; or modules included in &lt;i&gt;obj&lt;/i&gt;.
  *     
- *     class Fred
- *       def initialize(p1, p2)
- *         @a, @b = p1, p2
- *       end
+ *     module M;    end
+ *     class A
+ *       include M
  *     end
- *     fred = Fred.new('cat', 99)
- *     fred.instance_variable_get(:@a)    #=&gt; &quot;cat&quot;
- *     fred.instance_variable_get(&quot;@b&quot;)   #=&gt; 99
+ *     class B &lt; A; end
+ *     class C &lt; B; end
+ *     b = B.new
+ *     b.instance_of? A   #=&gt; false
+ *     b.instance_of? B   #=&gt; true
+ *     b.instance_of? C   #=&gt; false
+ *     b.instance_of? M   #=&gt; false
+ *     b.kind_of? A       #=&gt; true
+ *     b.kind_of? B       #=&gt; true
+ *     b.kind_of? C       #=&gt; false
+ *     b.kind_of? M       #=&gt; true
  */
 
-static VALUE
-rb_obj_ivar_get(VALUE obj, VALUE iv)
+VALUE
+rb_obj_is_kind_of(VALUE obj, VALUE c)
 {
-    ID id = rb_to_id(iv);
+    VALUE cl = CLASS_OF(obj);
 
-    if (!rb_is_instance_id(id)) {
-        rb_name_error(id, &quot;`%s' is not allowed as an instance variable name&quot;, rb_id2name(id));
+    switch (TYPE(c)) {
+      case T_MODULE:
+      case T_CLASS:
+      case T_ICLASS:
+        break;
+
+      default:
+        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
     }
-    return rb_ivar_get(obj, id);
+
+    while (cl) {
+        if (cl == c || RCLASS_M_TBL(cl) == RCLASS_M_TBL(c))
+            return Qtrue;
+        cl = RCLASS_SUPER(cl);
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

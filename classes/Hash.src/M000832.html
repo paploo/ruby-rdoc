@@ -2,34 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each (Hash)</title>
+  <title>delete_if (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.each {| key, value | block } -&gt; hsh
- *     hsh.each_pair {| key, value | block } -&gt; hsh
+ *     hsh.delete_if {| key, value | block }  -&gt; hsh
  *
- *  Calls &lt;i&gt;block&lt;/i&gt; once for each key in &lt;i&gt;hsh&lt;/i&gt;, passing the key-value
- *  pair as parameters.
+ *  Deletes every key-value pair from &lt;i&gt;hsh&lt;/i&gt; for which &lt;i&gt;block&lt;/i&gt;
+ *  evaluates to &lt;code&gt;true&lt;/code&gt;.
  *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.each {|key, value| puts &quot;#{key} is #{value}&quot; }
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     a is 100
- *     b is 200
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300 }
+ *     h.delete_if {|key, value| key &gt;= &quot;b&quot; }   #=&gt; {&quot;a&quot;=&gt;100}
  *
  */
 
-static VALUE
-rb_hash_each_pair(VALUE hash)
+VALUE
+rb_hash_delete_if(VALUE hash)
 {
     RETURN_ENUMERATOR(hash, 0, 0);
-    rb_hash_foreach(hash, each_pair_i, 0);
+    rb_hash_modify(hash);
+    rb_hash_foreach(hash, delete_if_i, hash);
     return hash;
 }</pre>
 </body>

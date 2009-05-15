@@ -2,42 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>divmod (BigDecimal)</title>
+  <title>frac (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Divides by the specified value, and returns the quotient and modulus
- * as BigDecimal numbers. The quotient is rounded towards negative infinity.
- *
- * For example:
- *
- * require 'bigdecimal'
- *
- * a = BigDecimal.new(&quot;42&quot;)
- * b = BigDecimal.new(&quot;9&quot;)
- *
- * q,m = a.divmod(b)
- *
- * c = q * b + m
- *
- * a == c  -&gt; true
- *
- * The quotient q is (a/b).floor, and the modulus is the amount that must be 
- * added to q * b to get a.
+  <pre>/* Return the fractional part of the number.
  */
 static VALUE
-BigDecimal_divmod(VALUE self, VALUE r)
+BigDecimal_frac(VALUE self)
 {
     ENTER(5);
-    VALUE obj;
-    Real *div=NULL, *mod=NULL;
+    Real *c, *a;
+    U_LONG mx;
 
-    obj = BigDecimal_DoDivmod(self,r,&amp;div,&amp;mod);
-    if(obj!=(VALUE)0) return obj;
-    SAVE(div);SAVE(mod);
-    obj = rb_assoc_new(ToValue(div), ToValue(mod));
-    return obj;
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpFrac(c, a);
+    return ToValue(c);
 }</pre>
 </body>
 </html>

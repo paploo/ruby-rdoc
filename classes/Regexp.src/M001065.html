@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>union (Regexp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Regexp.union(pat1, pat2, ...)            =&gt; new_regexp
+ *     Regexp.union(pats_ary)                   =&gt; new_regexp
+ *
+ *  Return a &lt;code&gt;Regexp&lt;/code&gt; object that is the union of the given
+ *  &lt;em&gt;pattern&lt;/em&gt;s, i.e., will match any of its parts. The &lt;em&gt;pattern&lt;/em&gt;s
+ *  can be Regexp objects, in which case their options will be preserved, or
+ *  Strings. If no patterns are given, returns &lt;code&gt;/(?!)/&lt;/code&gt;.
+ *
+ *     Regexp.union                         #=&gt; /(?!)/
+ *     Regexp.union(&quot;penzance&quot;)             #=&gt; /penzance/
+ *     Regexp.union(&quot;a+b*c&quot;)                #=&gt; /a\+b\*c/
+ *     Regexp.union(&quot;skiing&quot;, &quot;sledding&quot;)   #=&gt; /skiing|sledding/
+ *     Regexp.union([&quot;skiing&quot;, &quot;sledding&quot;]) #=&gt; /skiing|sledding/
+ *     Regexp.union(/dogs/, /cats/i)        #=&gt; /(?-mix:dogs)|(?i-mx:cats)/
+ */
+static VALUE
+rb_reg_s_union_m(VALUE self, VALUE args)
+{
+    VALUE v;
+    if (RARRAY_LEN(args) == 1 &amp;&amp;
+        !NIL_P(v = rb_check_array_type(rb_ary_entry(args, 0)))) {
+        return rb_reg_s_union(self, v);
+    }
+    return rb_reg_s_union(self, args);
+}</pre>
+</body>
+</html>

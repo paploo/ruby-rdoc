@@ -2,34 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt; (Fixnum)</title>
+  <title>| (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   fix &gt; other     =&gt; true or false
+ *   fix | other     =&gt; integer
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the value of &lt;code&gt;fix&lt;/code&gt; is
- * greater than that of &lt;code&gt;other&lt;/code&gt;.
+ * Bitwise OR.
  */
 
 static VALUE
-fix_gt(VALUE x, VALUE y)
+fix_or(VALUE x, VALUE y)
 {
-    if (FIXNUM_P(y)) {
-        if (FIX2LONG(x) &gt; FIX2LONG(y)) return Qtrue;
-        return Qfalse;
+    long val;
+
+    if (!FIXNUM_P(y = bit_coerce(y))) {
+        return rb_big_or(y, x);
     }
-    switch (TYPE(y)) {
-      case T_BIGNUM:
-        return FIX2INT(rb_big_cmp(rb_int2big(FIX2LONG(x)), y)) &gt; 0 ? Qtrue : Qfalse;
-      case T_FLOAT:
-        return (double)FIX2LONG(x) &gt; RFLOAT_VALUE(y) ? Qtrue : Qfalse;
-      default:
-        return rb_num_coerce_relop(x, y, '&gt;');
-    }
+    val = FIX2LONG(x) | FIX2LONG(y);
+    return LONG2NUM(val);
 }</pre>
 </body>
 </html>

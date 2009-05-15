@@ -2,38 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>- (Array)</title>
+  <title>compact! (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/* 
  *  call-seq:
- *     array - other_array    -&gt; an_array
+ *     array.compact!    -&gt;   array  or  nil
  *
- *  Array Difference---Returns a new array that is a copy of
- *  the original array, removing any items that also appear in
- *  other_array. (If you need set-like behavior, see the
- *  library class Set.)
+ *  Removes +nil+ elements from array.
+ *  Returns +nil+ if no changes were made.
  *
- *     [ 1, 1, 2, 2, 3, 3, 4, 5 ] - [ 1, 2, 4 ]  #=&gt;  [ 3, 3, 5 ]
+ *     [ &quot;a&quot;, nil, &quot;b&quot;, nil, &quot;c&quot; ].compact! #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ].compact!           #=&gt; nil
  */
 
 static VALUE
-rb_ary_diff(VALUE ary1, VALUE ary2)
+rb_ary_compact_bang(VALUE ary)
 {
-    VALUE ary3;
-    volatile VALUE hash;
-    long i;
+    VALUE *p, *t, *end;
+    long n;
 
-    hash = ary_make_hash(to_ary(ary2), 0);
-    ary3 = rb_ary_new();
-
-    for (i=0; i&lt;RARRAY_LEN(ary1); i++) {
-        if (st_lookup(RHASH_TBL(hash), RARRAY_PTR(ary1)[i], 0)) continue;
-        rb_ary_push(ary3, rb_ary_elt(ary1, i));
+    rb_ary_modify(ary);
+    p = t = RARRAY_PTR(ary);
+    end = p + RARRAY_LEN(ary);
+    
+    while (t &lt; end) {
+        if (NIL_P(*t)) t++;
+        else *p++ = *t++;
     }
-    return ary3;
+    n = p - RARRAY_PTR(ary);
+    if (RARRAY_LEN(ary) == n) {
+        return Qnil;
+    }
+    ARY_SET_LEN(ary, n);
+    if (n * 2 &lt; ARY_CAPA(ary) &amp;&amp; ARY_DEFAULT_SIZE * 2 &lt; ARY_CAPA(ary)) {
+        ary_resize_capa(ary, n * 2);
+    }
+
+    return ary;
 }</pre>
 </body>
 </html>

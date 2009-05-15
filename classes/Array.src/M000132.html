@@ -2,36 +2,52 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_index (Array)</title>
+  <title>rindex (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.each_index {|index| block }  -&gt;  array
+ *     array.rindex(obj)    -&gt;  int or nil
  *  
- *  Same as &lt;code&gt;Array#each&lt;/code&gt;, but passes the index of the element
- *  instead of the element itself.
+ *  Returns the index of the last object in &lt;i&gt;array&lt;/i&gt;
+ *  &lt;code&gt;==&lt;/code&gt; to &lt;i&gt;obj&lt;/i&gt;. If a block is given instead of an
+ *  argument, returns first object for which &lt;em&gt;block&lt;/em&gt; is
+ *  true. Returns &lt;code&gt;nil&lt;/code&gt; if no match is found.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.each_index {|x| print x, &quot; -- &quot; }
- *     
- *  produces:
- *     
- *     0 -- 1 -- 2 --
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.rindex(&quot;b&quot;)        #=&gt; 3
+ *     a.rindex(&quot;z&quot;)        #=&gt; nil
+ *     a.rindex{|x|x==&quot;b&quot;}  #=&gt; 3
  */
 
 static VALUE
-rb_ary_each_index(VALUE ary)
+rb_ary_rindex(int argc, VALUE *argv, VALUE ary)
 {
-    long i;
-    RETURN_ENUMERATOR(ary, 0, 0);
+    VALUE val;
+    long i = RARRAY_LEN(ary);
 
-    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
-        rb_yield(LONG2NUM(i));
+    if (argc == 0) {
+        RETURN_ENUMERATOR(ary, 0, 0);
+        while (i--) {
+            if (RTEST(rb_yield(RARRAY_PTR(ary)[i])))
+                return LONG2NUM(i);
+            if (i &gt; RARRAY_LEN(ary)) {
+                i = RARRAY_LEN(ary);
+            }
+        }
+        return Qnil;
     }
-    return ary;
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;val);
+    while (i--) {
+        if (rb_equal(RARRAY_PTR(ary)[i], val))
+            return LONG2NUM(i);
+        if (i &gt; RARRAY_LEN(ary)) {
+            i = RARRAY_LEN(ary);
+        }
+    }
+    return Qnil;
 }</pre>
 </body>
 </html>

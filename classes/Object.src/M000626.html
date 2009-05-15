@@ -2,33 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>instance_of? (Object)</title>
+  <title>public_send (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.instance_of?(class)    =&gt; true or false
- *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is an instance of the given
- *  class. See also &lt;code&gt;Object#kind_of?&lt;/code&gt;.
+ *     obj.public_send(symbol [, args...])  =&gt; obj
+ *
+ *  Invokes the method identified by _symbol_, passing it any
+ *  arguments specified. Unlike send, public_send calls public
+ *  methods only.
+ *
+ *     1.public_send(:puts, &quot;hello&quot;)  # causes NoMethodError
  */
 
 VALUE
-rb_obj_is_instance_of(VALUE obj, VALUE c)
+rb_f_public_send(int argc, VALUE *argv, VALUE recv)
 {
-    switch (TYPE(c)) {
-      case T_MODULE:
-      case T_CLASS:
-      case T_ICLASS:
-        break;
-      default:
-        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
-    }
-
-    if (rb_obj_class(obj) == c) return Qtrue;
-    return Qfalse;
+    return send_internal(argc, argv, recv, NOEX_PUBLIC);
 }</pre>
 </body>
 </html>

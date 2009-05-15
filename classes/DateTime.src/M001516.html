@@ -2,21 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ordinal (DateTime)</title>
+  <title>to_time (DateTime)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1582</span>
-1582:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">ordinal</span>(<span class="ruby-identifier">y</span>=<span class="ruby-value">-4712</span>, <span class="ruby-identifier">d</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">h</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">min</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">s</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">of</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
-1583:     <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">jd</span> = <span class="ruby-identifier">_valid_ordinal?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">sg</span>)) <span class="ruby-operator">&amp;&amp;</span>
-1584:            (<span class="ruby-identifier">fr</span> = <span class="ruby-identifier">_valid_time?</span>(<span class="ruby-identifier">h</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">s</span>))
-1585:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'invalid date'</span>
-1586:     <span class="ruby-keyword kw">end</span>
-1587:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">of</span>
-1588:       <span class="ruby-identifier">of</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">zone_to_diff</span>(<span class="ruby-identifier">of</span>) <span class="ruby-operator">||</span> <span class="ruby-value">0</span>, <span class="ruby-value">86400</span>)
-1589:     <span class="ruby-keyword kw">end</span>
-1590:     <span class="ruby-identifier">new!</span>(<span class="ruby-identifier">jd_to_ajd</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">fr</span>, <span class="ruby-identifier">of</span>), <span class="ruby-identifier">of</span>, <span class="ruby-identifier">sg</span>)
-1591:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1820</span>
+1820:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_time</span>
+1821:     <span class="ruby-identifier">d</span> = <span class="ruby-identifier">new_offset</span>(<span class="ruby-value">0</span>)
+1822:     <span class="ruby-identifier">d</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword kw">do</span>
+1823:       <span class="ruby-constant">Time</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">mday</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span> <span class="ruby-operator">+</span>
+1824:                <span class="ruby-identifier">sec_fraction</span>)
+1825:     <span class="ruby-keyword kw">end</span>.
+1826:         <span class="ruby-identifier">getlocal</span>
+1827:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

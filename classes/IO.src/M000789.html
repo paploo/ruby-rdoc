@@ -2,35 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>binmode (IO)</title>
+  <title>inspect (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     ios.binmode    =&gt; ios
+ * call-seq:
+ *   ios.inspect   =&gt; string
  *
- *  Puts &lt;em&gt;ios&lt;/em&gt; into binary mode.
- *  Once a stream is in binary mode, it cannot be reset to nonbinary mode.
- *
- *  - newline conversion disabled
- *  - encoding conversion disabled
- *  - content is treated as ASCII-8BIT
- *
+ * Return a string describing this IO object.
  */
 
 static VALUE
-rb_io_binmode_m(VALUE io)
+rb_io_inspect(VALUE obj)
 {
-    VALUE write_io;
+    rb_io_t *fptr;
+    const char *cname;
+    const char *st = &quot;&quot;;
 
-    rb_io_ascii8bit_binmode(io);
-
-    write_io = GetWriteIO(io);
-    if (write_io != io)
-        rb_io_ascii8bit_binmode(write_io);
-    return io;
+    fptr = RFILE(rb_io_taint_check(obj))-&gt;fptr;
+    if (!fptr || NIL_P(fptr-&gt;pathv)) return rb_any_to_s(obj);
+    cname = rb_obj_classname(obj);
+    if (fptr-&gt;fd &lt; 0) {
+        st = &quot; (closed)&quot;;
+    }
+    return rb_sprintf(&quot;#&lt;%s:%s%s&gt;&quot;, cname, RSTRING_PTR(fptr-&gt;pathv), st);
 }</pre>
 </body>
 </html>

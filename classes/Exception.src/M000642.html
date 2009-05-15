@@ -2,27 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_s (Exception)</title>
+  <title>to_yaml (Exception)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * call-seq:
- *   exception.to_s   =&gt;  string
- *
- * Returns exception's message (or the name of the exception if
- * no message is set).
- */
-
-static VALUE
-exc_to_s(VALUE exc)
-{
-    VALUE mesg = rb_attr_get(exc, rb_intern(&quot;mesg&quot;));
-
-    if (NIL_P(mesg)) return rb_class_name(CLASS_OF(exc));
-    if (OBJ_TAINTED(exc)) OBJ_TAINT(mesg);
-    return mesg;
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 126</span>
+126:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+127:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+128:             <span class="ruby-identifier">out</span>.<span class="ruby-identifier">map</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-identifier">to_yaml_style</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">map</span><span class="ruby-operator">|</span>
+129:                 <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'message'</span>, <span class="ruby-identifier">message</span> )
+130:                                 <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+131:                     <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>], <span class="ruby-identifier">instance_variable_get</span>( <span class="ruby-identifier">m</span> ) )
+132:                 <span class="ruby-keyword kw">end</span>
+133:             <span class="ruby-keyword kw">end</span>
+134:         <span class="ruby-keyword kw">end</span>
+135:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

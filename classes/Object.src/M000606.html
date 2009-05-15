@@ -2,29 +2,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>taint (Object)</title>
+  <title>freeze (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.taint -&gt; obj
+ *     obj.freeze    =&gt; obj
  *  
- *  Marks &lt;i&gt;obj&lt;/i&gt; as tainted---if the &lt;code&gt;$SAFE&lt;/code&gt; level is
- *  set appropriately, many method calls which might alter the running
- *  programs environment will refuse to accept tainted strings.
+ *  Prevents further modifications to &lt;i&gt;obj&lt;/i&gt;. A
+ *  &lt;code&gt;RuntimeError&lt;/code&gt; will be raised if modification is attempted.
+ *  There is no way to unfreeze a frozen object. See also
+ *  &lt;code&gt;Object#frozen?&lt;/code&gt;.
+ *     
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.freeze
+ *     a &lt;&lt; &quot;z&quot;
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     prog.rb:3:in `&lt;&lt;': can't modify frozen array (RuntimeError)
+ *      from prog.rb:3
  */
 
 VALUE
-rb_obj_taint(VALUE obj)
+rb_obj_freeze(VALUE obj)
 {
-    rb_secure(4);
-    if (!OBJ_TAINTED(obj)) {
-        if (OBJ_FROZEN(obj)) {
-            rb_error_frozen(&quot;object&quot;);
+    if (!OBJ_FROZEN(obj)) {
+        if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(obj)) {
+            rb_raise(rb_eSecurityError, &quot;Insecure: can't freeze object&quot;);
         }
-        OBJ_TAINT(obj);
+        OBJ_FREEZE(obj);
+        if (SPECIAL_CONST_P(obj)) {
+            if (!immediate_frozen_tbl) {
+                immediate_frozen_tbl = st_init_numtable();
+            }
+            st_insert(immediate_frozen_tbl, obj, (st_data_t)Qtrue);
+        }
     }
     return obj;
 }</pre>

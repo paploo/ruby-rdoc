@@ -2,24 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>current (Thread)</title>
+  <title>abort_on_exception (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Thread.current   =&gt; thread
+ *     Thread.abort_on_exception   =&gt; true or false
  *
- *  Returns the currently executing thread.
- *
- *     Thread.current   #=&gt; #&lt;Thread:0x401bdf4c run&gt;
+ *  Returns the status of the global ``abort on exception'' condition.  The
+ *  default is &lt;code&gt;false&lt;/code&gt;. When set to &lt;code&gt;true&lt;/code&gt;, or if the
+ *  global &lt;code&gt;$DEBUG&lt;/code&gt; flag is &lt;code&gt;true&lt;/code&gt; (perhaps because the
+ *  command line option &lt;code&gt;-d&lt;/code&gt; was specified) all threads will abort
+ *  (the process will &lt;code&gt;exit(0)&lt;/code&gt;) if an exception is raised in any
+ *  thread. See also &lt;code&gt;Thread::abort_on_exception=&lt;/code&gt;.
  */
 
 static VALUE
-thread_s_current(VALUE klass)
+rb_thread_s_abort_exc(void)
 {
-    return rb_thread_current();
+    return GET_THREAD()-&gt;vm-&gt;thread_abort_on_exception ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

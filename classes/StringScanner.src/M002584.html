@@ -2,25 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>scan_full (StringScanner)</title>
+  <title>getch (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: scan_full(pattern, advance_pointer_p, return_string_p)
+ * Scans one character and returns it.
+ * This method is multibyte character sensitive.
  *
- * Tests whether the given +pattern+ is matched from the current scan pointer.
- * Advances the scan pointer if +advance_pointer_p+ is true.
- * Returns the matched string if +return_string_p+ is true.
- * The match register is affected.
+ *   s = StringScanner.new(&quot;ab&quot;)
+ *   s.getch           # =&gt; &quot;a&quot;
+ *   s.getch           # =&gt; &quot;b&quot;
+ *   s.getch           # =&gt; nil
  *
- * &quot;full&quot; means &quot;#scan with full parameters&quot;.
+ *   $KCODE = 'EUC'
+ *   s = StringScanner.new(&quot;\244\242&quot;)
+ *   s.getch           # =&gt; &quot;\244\242&quot;   # Japanese hira-kana &quot;A&quot; in EUC-JP
+ *   s.getch           # =&gt; nil
  */
 static VALUE
-strscan_scan_full(VALUE self, VALUE re, VALUE s, VALUE f)
+strscan_getch(VALUE self)
 {
-    return strscan_do_scan(self, re, RTEST(s), RTEST(f), 1);
+    struct strscanner *p;
+    long len;
+
+    GET_SCANNER(self, p);
+    CLEAR_MATCH_STATUS(p);
+    if (EOS_P(p))
+        return Qnil;
+
+    len = rb_enc_mbclen(CURPTR(p), S_PEND(p), rb_enc_get(p-&gt;str));
+    if (p-&gt;curr + len &gt; S_LEN(p)) {
+        len = S_LEN(p) - p-&gt;curr;
+    }
+    p-&gt;prev = p-&gt;curr;
+    p-&gt;curr += len;
+    MATCHED(p);
+    adjust_registers_to_matched(p);
+    return extract_range(p, p-&gt;prev + p-&gt;regs.beg[0],
+                            p-&gt;prev + p-&gt;regs.end[0]);
 }</pre>
 </body>
 </html>

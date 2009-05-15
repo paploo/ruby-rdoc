@@ -2,15 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>marshal_load (Date)</title>
+  <title>to_yaml (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1487</span>
-1487:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">marshal_load</span>(<span class="ruby-identifier">a</span>)
-1488:     <span class="ruby-ivar">@ajd</span>, <span class="ruby-ivar">@of</span>, <span class="ruby-ivar">@sg</span>, = <span class="ruby-identifier">a</span>
-1489:     <span class="ruby-ivar">@__ca__</span> = {}
-1490:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 349</span>
+349:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+350:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+351:             <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-value str">&quot;tag:yaml.org,2002:timestamp&quot;</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">:plain</span> )
+352:         <span class="ruby-keyword kw">end</span>
+353:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

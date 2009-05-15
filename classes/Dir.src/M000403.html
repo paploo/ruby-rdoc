@@ -2,29 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>entries (Dir)</title>
+  <title>rewind (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Dir.entries( dirname ) =&gt; array
+ *     dir.rewind =&gt; dir
  *
- *  Returns an array containing all of the filenames in the given
- *  directory. Will raise a &lt;code&gt;SystemCallError&lt;/code&gt; if the named
- *  directory doesn't exist.
+ *  Repositions &lt;em&gt;dir&lt;/em&gt; to the first entry.
  *
- *     Dir.entries(&quot;testdir&quot;)   #=&gt; [&quot;.&quot;, &quot;..&quot;, &quot;config.h&quot;, &quot;main.rb&quot;]
- *
+ *     d = Dir.new(&quot;testdir&quot;)
+ *     d.read     #=&gt; &quot;.&quot;
+ *     d.rewind   #=&gt; #&lt;Dir:0x401b3fb0&gt;
+ *     d.read     #=&gt; &quot;.&quot;
  */
 static VALUE
-dir_entries(int argc, VALUE *argv, VALUE io)
+dir_rewind(VALUE dir)
 {
-    VALUE dir;
+    struct dir_data *dirp;
 
-    dir = dir_open_dir(argc, argv);
-    return rb_ensure(rb_Array, dir, dir_close, dir);
+    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(dir)) {
+        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
+    }
+    GetDIR(dir, dirp);
+    rewinddir(dirp-&gt;dir);
+    return dir;
 }</pre>
 </body>
 </html>

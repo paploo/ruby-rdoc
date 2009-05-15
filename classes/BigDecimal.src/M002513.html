@@ -2,29 +2,52 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>abs (BigDecimal)</title>
+  <title>ceil (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns the absolute value.
+  <pre>/* call-seq:
+ * ceil(n)
  *
- * BigDecimal('5').abs -&gt; 5
+ * Return the smallest integer greater than or equal to the value, as a BigDecimal.
  *
- * BigDecimal('-3').abs -&gt; 3
+ * BigDecimal('3.14159').ceil -&gt; 4
+ *
+ * BigDecimal('-9.1').ceil -&gt; -9
+ *
+ * If n is specified and positive, the fractional part of the result has no
+ * more than that many digits.  
+ *
+ * If n is specified and negative, at least that
+ * many digits to the left of the decimal point will be 0 in the result.
+ *
+ * BigDecimal('3.14159').ceil(3) -&gt; 3.142
+ *
+ * BigDecimal('13345.234').ceil(-2) -&gt; 13400.0
  */
 static VALUE
-BigDecimal_abs(VALUE self)
+BigDecimal_ceil(int argc, VALUE *argv, VALUE self)
 {
     ENTER(5);
     Real *c, *a;
     U_LONG mx;
+    int iLoc;
+    VALUE vLoc;
+    U_LONG pl = VpSetPrecLimit(0);
+
+    if(rb_scan_args(argc,argv,&quot;01&quot;,&amp;vLoc)==0) {
+        iLoc = 0;
+    } else {
+        Check_Type(vLoc, T_FIXNUM);
+        iLoc = FIX2INT(vLoc);
+    }
 
     GUARD_OBJ(a,GetVpValue(self,1));
     mx = a-&gt;Prec *(VpBaseFig() + 1);
     GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
-    VpAsgn(c, a, 1);
-    VpChangeSign(c,(S_INT)1);
+    VpSetPrecLimit(pl);
+    VpActiveRound(c,a,VP_ROUND_CEIL,iLoc);
     return ToValue(c);
 }</pre>
 </body>

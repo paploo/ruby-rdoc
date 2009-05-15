@@ -2,14 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>display_expression (DEBUGGER__)</title>
+  <title>debug_funcname (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 566</span>
-566:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_expression</span>(<span class="ruby-identifier">exp</span>, <span class="ruby-identifier">binding</span>)
-567:     <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%s = %s\n&quot;</span>, <span class="ruby-identifier">exp</span>, <span class="ruby-identifier">debug_silent_eval</span>(<span class="ruby-identifier">exp</span>, <span class="ruby-identifier">binding</span>).<span class="ruby-identifier">to_s</span>
-568:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 622</span>
+622:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug_funcname</span>(<span class="ruby-identifier">id</span>)
+623:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">nil?</span>
+624:       <span class="ruby-value str">&quot;toplevel&quot;</span>
+625:     <span class="ruby-keyword kw">else</span>
+626:       <span class="ruby-identifier">id</span>.<span class="ruby-identifier">id2name</span>
+627:     <span class="ruby-keyword kw">end</span>
+628:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,39 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>options (Regexp)</title>
+  <title>to_yaml (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     rxp.options   =&gt; fixnum
- *
- *  Returns the set of bits corresponding to the options used when creating this
- *  Regexp (see &lt;code&gt;Regexp::new&lt;/code&gt; for details. Note that additional bits
- *  may be set in the returned options: these are used internally by the regular
- *  expression code. These extra bits are ignored if the options are passed to
- *  &lt;code&gt;Regexp::new&lt;/code&gt;.
- *
- *     Regexp::IGNORECASE                  #=&gt; 1
- *     Regexp::EXTENDED                    #=&gt; 2
- *     Regexp::MULTILINE                   #=&gt; 4
- *
- *     /cat/.options                       #=&gt; 0
- *     /cat/ix.options                     #=&gt; 3
- *     Regexp.new('cat', true).options     #=&gt; 1
- *     /\xa1\xa2/e.options                 #=&gt; 16
- *
- *     r = /cat/ix
- *     Regexp.new(r.source, r.options)     #=&gt; /cat/ix
- */
-
-static VALUE
-rb_reg_options_m(VALUE re)
-{
-    int options = rb_reg_options(re);
-    return INT2NUM(options);
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 278</span>
+278:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
+279:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
+280:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">empty?</span>
+281:                 <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inspect</span>, <span class="ruby-identifier">:plain</span> )
+282:             <span class="ruby-keyword kw">else</span>
+283:                 <span class="ruby-identifier">out</span>.<span class="ruby-identifier">map</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-identifier">to_yaml_style</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">map</span><span class="ruby-operator">|</span>
+284:                     <span class="ruby-identifier">src</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inspect</span>
+285:                     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">src</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\A\/(.*)\/([a-z]*)\Z/</span>
+286:                         <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'regexp'</span>, <span class="ruby-identifier">$1</span> )
+287:                         <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'mods'</span>, <span class="ruby-identifier">$2</span> )
+288:                     <span class="ruby-keyword kw">else</span>
+289:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;Invalid Regular expression: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">src</span>
+290:                     <span class="ruby-keyword kw">end</span>
+291:                     <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+292:                         <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-identifier">m</span>, <span class="ruby-identifier">instance_variable_get</span>( <span class="ruby-identifier">m</span> ) )
+293:                     <span class="ruby-keyword kw">end</span>
+294:                 <span class="ruby-keyword kw">end</span>
+295:             <span class="ruby-keyword kw">end</span>
+296:         <span class="ruby-keyword kw">end</span>
+297:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

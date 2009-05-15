@@ -2,27 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>empty? (String)</title>
+  <title>next! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.empty?   =&gt; true or false
+ *     str.succ!   =&gt; str
+ *     str.next!   =&gt; str
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; has a length of zero.
- *     
- *     &quot;hello&quot;.empty?   #=&gt; false
- *     &quot;&quot;.empty?        #=&gt; true
+ *  Equivalent to &lt;code&gt;String#succ&lt;/code&gt;, but modifies the receiver in
+ *  place.
  */
 
 static VALUE
-rb_str_empty(VALUE str)
+rb_str_succ_bang(VALUE str)
 {
-    if (RSTRING_LEN(str) == 0)
-        return Qtrue;
-    return Qfalse;
+    rb_str_shared_replace(str, rb_str_succ(str));
+
+    return str;
 }</pre>
 </body>
 </html>

@@ -2,33 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_value (Hash)</title>
+  <title>values_at (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     hsh.each_value {| value | block } -&gt; hsh
+ * call-seq:
+ *   hsh.values_at(key, ...)   =&gt; array
  *
- *  Calls &lt;i&gt;block&lt;/i&gt; once for each key in &lt;i&gt;hsh&lt;/i&gt;, passing the
- *  value as a parameter.
+ * Return an array containing the values associated with the given keys.
+ * Also see &lt;code&gt;Hash.select&lt;/code&gt;.
  *
- *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
- *     h.each_value {|value| puts value }
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     100
- *     200
+ *   h = { &quot;cat&quot; =&gt; &quot;feline&quot;, &quot;dog&quot; =&gt; &quot;canine&quot;, &quot;cow&quot; =&gt; &quot;bovine&quot; }
+ *   h.values_at(&quot;cow&quot;, &quot;cat&quot;)  #=&gt; [&quot;bovine&quot;, &quot;feline&quot;]
  */
 
-static VALUE
-rb_hash_each_value(VALUE hash)
+VALUE
+rb_hash_values_at(int argc, VALUE *argv, VALUE hash)
 {
-    RETURN_ENUMERATOR(hash, 0, 0);
-    rb_hash_foreach(hash, each_value_i, 0);
-    return hash;
+    VALUE result = rb_ary_new2(argc);
+    long i;
+
+    for (i=0; i&lt;argc; i++) {
+        rb_ary_push(result, rb_hash_aref(hash, argv[i]));
+    }
+    return result;
 }</pre>
 </body>
 </html>

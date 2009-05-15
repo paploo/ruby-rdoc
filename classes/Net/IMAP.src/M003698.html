@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>send_string_data (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1149</span>
+1149:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_string_data</span>(<span class="ruby-identifier">str</span>)
+1150:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">str</span>
+1151:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;&quot;</span>
+1152:         <span class="ruby-identifier">put_string</span>(<span class="ruby-value str">'&quot;&quot;'</span>)
+1153:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[\x80-\xff\r\n]/n</span>
+1154:         <span class="ruby-comment cmt"># literal</span>
+1155:         <span class="ruby-identifier">send_literal</span>(<span class="ruby-identifier">str</span>)
+1156:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/[(){ \x00-\x1f\x7f%*&quot;\\]/n</span>
+1157:         <span class="ruby-comment cmt"># quoted string</span>
+1158:         <span class="ruby-identifier">send_quoted_string</span>(<span class="ruby-identifier">str</span>)
+1159:       <span class="ruby-keyword kw">else</span>
+1160:         <span class="ruby-identifier">put_string</span>(<span class="ruby-identifier">str</span>)
+1161:       <span class="ruby-keyword kw">end</span>
+1162:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,31 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>frozen? (Object)</title>
+  <title>private_methods (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.frozen?    =&gt; true or false
+ *     obj.private_methods(all=true)   =&gt; array
  *  
- *  Returns the freeze status of &lt;i&gt;obj&lt;/i&gt;.
- *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.freeze    #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
- *     a.frozen?   #=&gt; true
+ *  Returns the list of private methods accessible to &lt;i&gt;obj&lt;/i&gt;. If
+ *  the &lt;i&gt;all&lt;/i&gt; parameter is set to &lt;code&gt;false&lt;/code&gt;, only those methods
+ *  in the receiver will be listed.
  */
 
-VALUE
-rb_obj_frozen_p(VALUE obj)
+static VALUE
+rb_obj_private_methods(int argc, VALUE *argv, VALUE obj)
 {
-    if (OBJ_FROZEN(obj)) return Qtrue;
-    if (SPECIAL_CONST_P(obj)) {
-        if (!immediate_frozen_tbl) return Qfalse;
-        if (st_lookup(immediate_frozen_tbl, obj, 0)) return Qtrue;
+    if (argc == 0) {            /* hack to stop warning */
+        VALUE args[1];
+
+        args[0] = Qtrue;
+        return rb_class_private_instance_methods(1, args, CLASS_OF(obj));
     }
-    return Qfalse;
+    return rb_class_private_instance_methods(argc, argv, CLASS_OF(obj));
 }</pre>
 </body>
 </html>

@@ -2,17 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each2 (Vector)</title>
+  <title>hash (Vector)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1153</span>
-1153:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each2</span>(<span class="ruby-identifier">v</span>) <span class="ruby-comment cmt"># :yield: e1, e2</span>
-1154:     <span class="ruby-constant">Vector</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">ErrDimensionMismatch</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span>
-1155:     <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-1156:       <span class="ruby-keyword kw">yield</span> <span class="ruby-ivar">@elements</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>]
-1157:     <span class="ruby-keyword kw">end</span>
-1158:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1206</span>
+1206:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hash</span>
+1207:     <span class="ruby-ivar">@elements</span>.<span class="ruby-identifier">hash</span>
+1208:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

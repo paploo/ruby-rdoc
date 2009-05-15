@@ -2,28 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>exist? (StringScanner)</title>
+  <title>peek (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: exist?(pattern)
+ * call-seq: peek(len)
  *
- * Looks _ahead_ to see if the +pattern+ exists _anywhere_ in the string,
- * without advancing the scan pointer.  This predicates whether a #scan_until
- * will return a value.
+ * Extracts a string corresponding to &lt;tt&gt;string[pos,len]&lt;/tt&gt;, without
+ * advancing the scan pointer.
  *
  *   s = StringScanner.new('test string')
- *   s.exist? /s/            # -&gt; 3
- *   s.scan /test/           # -&gt; &quot;test&quot;
- *   s.exist? /s/            # -&gt; 2
- *   s.exist? /e/            # -&gt; nil
+ *   s.peek(7)          # =&gt; &quot;test st&quot;
+ *   s.peek(7)          # =&gt; &quot;test st&quot;
+ *
  */
 static VALUE
-strscan_exist_p(VALUE self, VALUE re)
+strscan_peek(VALUE self, VALUE vlen)
 {
-    return strscan_do_scan(self, re, 0, 0, 0);
+    struct strscanner *p;
+    long len;
+
+    GET_SCANNER(self, p);
+
+    len = NUM2LONG(vlen);
+    if (EOS_P(p))
+        return infect(str_new(p, &quot;&quot;, 0), p);
+
+    if (p-&gt;curr + len &gt; S_LEN(p))
+        len = S_LEN(p) - p-&gt;curr;
+    return extract_beg_len(p, p-&gt;curr, len);
 }</pre>
 </body>
 </html>

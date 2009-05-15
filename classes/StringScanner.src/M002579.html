@@ -2,33 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pointer= (StringScanner)</title>
+  <title>scan_until (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq: pos=(n)
+ * call-seq: scan_until(pattern)
  *
- * Modify the scan pointer.
+ * Scans the string _until_ the +pattern+ is matched.  Returns the substring up
+ * to and including the end of the match, advancing the scan pointer to that
+ * location. If there is no match, +nil+ is returned.
  *
- *   s = StringScanner.new('test string')
- *   s.pos = 7            # -&gt; 7
- *   s.rest               # -&gt; &quot;ring&quot;
+ *   s = StringScanner.new(&quot;Fri Dec 12 1975 14:39&quot;)
+ *   s.scan_until(/1/)        # -&gt; &quot;Fri Dec 1&quot;
+ *   s.pre_match              # -&gt; &quot;Fri Dec &quot;
+ *   s.scan_until(/XYZ/)      # -&gt; nil
  */
 static VALUE
-strscan_set_pos(VALUE self, VALUE v)
+strscan_scan_until(VALUE self, VALUE re)
 {
-    struct strscanner *p;
-    long i;
-
-    GET_SCANNER(self, p);
-    i = NUM2INT(v);
-    if (i &lt; 0) i += S_LEN(p);
-    if (i &lt; 0) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
-    if (i &gt; S_LEN(p)) rb_raise(rb_eRangeError, &quot;index out of range&quot;);
-    p-&gt;curr = i;
-    return INT2NUM(i);
+    return strscan_do_scan(self, re, 1, 1, 0);
 }</pre>
 </body>
 </html>

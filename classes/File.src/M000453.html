@@ -2,61 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>dirname (File)</title>
+  <title>atime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.dirname(file_name ) -&gt; dir_name
+ *     file.atime    =&gt; time
  *  
- *  Returns all components of the filename given in &lt;i&gt;file_name&lt;/i&gt;
- *  except the last one. The filename must be formed using forward
- *  slashes (``&lt;code&gt;/&lt;/code&gt;'') regardless of the separator used on the
- *  local file system.
+ *  Returns the last access time (a &lt;code&gt;Time&lt;/code&gt; object)
+ *   for &lt;i&gt;file&lt;/i&gt;, or epoch if &lt;i&gt;file&lt;/i&gt; has not been accessed.
  *     
- *     File.dirname(&quot;/home/gumby/work/ruby.rb&quot;)   #=&gt; &quot;/home/gumby/work&quot;
+ *     File.new(&quot;testfile&quot;).atime   #=&gt; Wed Dec 31 18:00:00 CST 1969
+ *     
  */
 
 static VALUE
-rb_file_s_dirname(VALUE klass, VALUE fname)
+rb_file_atime(VALUE obj)
 {
-    const char *name, *root, *p;
-    VALUE dirname;
+    rb_io_t *fptr;
+    struct stat st;
 
-    FilePathStringValue(fname);
-    name = StringValueCStr(fname);
-    root = skiproot(name);
-#ifdef DOSISH_UNC
-    if (root &gt; name + 1 &amp;&amp; isdirsep(*name))
-        root = skipprefix(name = root - 2);
-#else
-    if (root &gt; name + 1)
-        name = root - 1;
-#endif
-    p = strrdirsep(root);
-    if (!p) {
-        p = root;
+    GetOpenFile(obj, fptr);
+    if (fstat(fptr-&gt;fd, &amp;st) == -1) {
+        rb_sys_fail_path(fptr-&gt;pathv);
     }
-    if (p == name)
-        return rb_usascii_str_new2(&quot;.&quot;);
-#ifdef DOSISH_DRIVE_LETTER
-    if (has_drive_letter(name) &amp;&amp; isdirsep(*(name + 2))) {
-        const char *top = skiproot(name + 2);
-        dirname = rb_str_new(name, 3);
-        rb_str_cat(dirname, top, p - top);
-    }
-    else
-#endif
-    dirname = rb_str_new(name, p - name);
-#ifdef DOSISH_DRIVE_LETTER
-    if (has_drive_letter(name) &amp;&amp; root == name + 2 &amp;&amp; p - name == 2)
-        rb_str_cat(dirname, &quot;.&quot;, 1);
-#endif
-    rb_enc_copy(dirname, fname);
-    OBJ_INFECT(dirname, fname);
-    return dirname;
+    return stat_atime(&amp;st);
 }</pre>
 </body>
 </html>

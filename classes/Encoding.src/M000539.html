@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>list (Encoding)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Encoding.list =&gt; [enc1, enc2, ...]
+ *
+ * Returns the list of loaded encodings.
+ *
+ *   Encoding.list
+ *   =&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
+ *       #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
+ *
+ *   Encoding.find(&quot;US-ASCII&quot;)
+ *   =&gt; #&lt;Encoding:US-ASCII&gt;
+ *
+ *   Encoding.list
+ *   =&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
+ *       #&lt;Encoding:US-ASCII&gt;, #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
+ *
+ */
+static VALUE
+enc_list(VALUE klass)
+{
+    VALUE ary = rb_ary_new2(0);
+    rb_ary_replace(ary, rb_encoding_list);
+    return ary;
+}</pre>
+</body>
+</html>

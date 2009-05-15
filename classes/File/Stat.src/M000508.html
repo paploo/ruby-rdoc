@@ -2,31 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rdev_minor (File::Stat)</title>
+  <title>ctime (File::Stat)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     stat.rdev_minor   =&gt; fixnum
+ *     stat.ctime -&gt; aTime
  *  
- *  Returns the minor part of &lt;code&gt;File_Stat#rdev&lt;/code&gt; or
- *  &lt;code&gt;nil&lt;/code&gt;.
+ *  Returns the change time for &lt;i&gt;stat&lt;/i&gt; (that is, the time
+ *  directory information about the file was changed, not the file
+ *  itself).
  *     
- *     File.stat(&quot;/dev/fd1&quot;).rdev_minor   #=&gt; 1
- *     File.stat(&quot;/dev/tty&quot;).rdev_minor   #=&gt; 0
+ *     File.stat(&quot;testfile&quot;).ctime   #=&gt; Wed Apr 09 08:53:14 CDT 2003
+ *     
  */
 
 static VALUE
-rb_stat_rdev_minor(VALUE self)
+rb_stat_ctime(VALUE self)
 {
-#if defined(HAVE_ST_RDEV) &amp;&amp; defined(minor)
-    long rdev = get_stat(self)-&gt;st_rdev;
-    return ULONG2NUM(minor(rdev));
-#else
-    return Qnil;
-#endif
+    return stat_ctime(get_stat(self));
 }</pre>
 </body>
 </html>

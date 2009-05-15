@@ -2,32 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>+ (Float)</title>
+  <title>divmod (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   float + other   =&gt; float
+ *  call-seq:
+ *     flt.divmod(numeric)    =&gt; array
  *
- * Returns a new float which is the sum of &lt;code&gt;float&lt;/code&gt;
- * and &lt;code&gt;other&lt;/code&gt;.
+ *  See &lt;code&gt;Numeric#divmod&lt;/code&gt;.
  */
 
 static VALUE
-flo_plus(VALUE x, VALUE y)
+flo_divmod(VALUE x, VALUE y)
 {
+    double fy, div, mod;
+    volatile VALUE a, b;
+
     switch (TYPE(y)) {
       case T_FIXNUM:
-        return DBL2NUM(RFLOAT_VALUE(x) + (double)FIX2LONG(y));
+        fy = (double)FIX2LONG(y);
+        break;
       case T_BIGNUM:
-        return DBL2NUM(RFLOAT_VALUE(x) + rb_big2dbl(y));
+        fy = rb_big2dbl(y);
+        break;
       case T_FLOAT:
-        return DBL2NUM(RFLOAT_VALUE(x) + RFLOAT_VALUE(y));
+        fy = RFLOAT_VALUE(y);
+        break;
       default:
-        return rb_num_coerce_bin(x, y, '+');
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;divmod&quot;));
     }
+    flodivmod(RFLOAT_VALUE(x), fy, &amp;div, &amp;mod);
+    a = dbl2ival(div);
+    b = DBL2NUM(mod);
+    return rb_assoc_new(a, b);
 }</pre>
 </body>
 </html>

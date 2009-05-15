@@ -2,32 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getc (StringIO)</title>
+  <title>gets (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *   strio.getc   -&gt; string or nil
+ *   strio.gets(sep=$/)     -&gt; string or nil
+ *   strio.gets(limit)      -&gt; string or nil
+ *   strio.gets(sep, limit) -&gt; string or nil
  *
- * See IO#getc.
+ * See IO#gets.
  */
 static VALUE
-strio_getc(VALUE self)
+strio_gets(int argc, VALUE *argv, VALUE self)
 {
-    struct StringIO *ptr = readable(StringIO(self));
-    rb_encoding *enc = rb_enc_get(ptr-&gt;string);
-    int len;
-    char *p;
+    VALUE str = strio_getline(argc, argv, readable(StringIO(self)));
 
-    if (ptr-&gt;pos &gt;= RSTRING_LEN(ptr-&gt;string)) {
-        return Qnil;
-    }
-    p = RSTRING_PTR(ptr-&gt;string)+ptr-&gt;pos;
-    len = rb_enc_mbclen(p, RSTRING_END(ptr-&gt;string), enc);
-    ptr-&gt;pos += len;
-    return rb_enc_str_new(p, len, rb_enc_get(ptr-&gt;string));
+    rb_lastline_set(str);
+    return str;
 }</pre>
 </body>
 </html>

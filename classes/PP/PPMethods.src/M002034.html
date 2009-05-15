@@ -2,29 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>guard_inspect_key (PP::PPMethods)</title>
+  <title>object_address_group (PP::PPMethods)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 108</span>
-108:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">guard_inspect_key</span>
-109:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-110:         <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>] = {}
-111:       <span class="ruby-keyword kw">end</span>
-112: 
-113:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
-114:         <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>] = {}
-115:       <span class="ruby-keyword kw">end</span>
-116: 
-117:       <span class="ruby-identifier">save</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>]
-118: 
-119:       <span class="ruby-keyword kw">begin</span>
-120:         <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>] = {}
-121:         <span class="ruby-keyword kw">yield</span>
-122:       <span class="ruby-keyword kw">ensure</span>
-123:         <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:__recursive_key__</span>][<span class="ruby-identifier">:inspect</span>] = <span class="ruby-identifier">save</span>
-124:       <span class="ruby-keyword kw">end</span>
-125:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 182</span>
+182:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">object_address_group</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+183:       <span class="ruby-identifier">id</span> = <span class="ruby-constant">PointerFormat</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">object_id</span> <span class="ruby-operator">*</span> <span class="ruby-value">2</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">PointerMask</span>)
+184:       <span class="ruby-identifier">group</span>(<span class="ruby-value">1</span>, <span class="ruby-node">&quot;\#&lt;#{obj.class}:0x#{id}&quot;</span>, <span class="ruby-value str">'&gt;'</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+185:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,24 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>force_encoding (String)</title>
+  <title>scanf (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     str.force_encoding(encoding)   =&gt; str
- *
- *  Changes the encoding to +encoding+ and returns self.
- */
-
-static VALUE
-rb_str_force_encoding(VALUE str, VALUE enc)
-{
-    str_modifiable(str);
-    rb_enc_associate(str, rb_to_encoding(enc));
-    return str;
-}</pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/scanf.rb, line 671</span>
+671:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scanf</span>(<span class="ruby-identifier">fstr</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+672:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">b</span>
+673:       <span class="ruby-identifier">block_scanf</span>(<span class="ruby-identifier">fstr</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+674:     <span class="ruby-keyword kw">else</span>
+675:       <span class="ruby-identifier">fs</span> = 
+676:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fstr</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Scanf</span><span class="ruby-operator">::</span><span class="ruby-constant">FormatString</span>
+677:           <span class="ruby-identifier">fstr</span> 
+678:         <span class="ruby-keyword kw">else</span> 
+679:           <span class="ruby-constant">Scanf</span><span class="ruby-operator">::</span><span class="ruby-constant">FormatString</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">fstr</span>)
+680:         <span class="ruby-keyword kw">end</span>
+681:       <span class="ruby-identifier">fs</span>.<span class="ruby-identifier">match</span>(<span class="ruby-keyword kw">self</span>)
+682:     <span class="ruby-keyword kw">end</span>
+683:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

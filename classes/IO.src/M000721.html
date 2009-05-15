@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>popen (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     IO.popen(cmd, mode=&quot;r&quot; [, opt])               =&gt; io
+ *     IO.popen(cmd, mode=&quot;r&quot; [, opt]) {|io| block } =&gt; obj
+ *
+ *  Runs the specified command as a subprocess; the subprocess's
+ *  standard input and output will be connected to the returned
+ *  &lt;code&gt;IO&lt;/code&gt; object.  If _cmd_ is a +String+
+ *  ``&lt;code&gt;-&lt;/code&gt;'', then a new instance of Ruby is started as the
+ *  subprocess.  If &lt;i&gt;cmd&lt;/i&gt; is an +Array+ of +String+, then it will
+ *  be used as the subprocess's +argv+ bypassing a shell.
+ *  The array can contains a hash at first for environments and
+ *  a hash at last for options similar to &lt;code&gt;spawn&lt;/code&gt;.  The default
+ *  mode for the new file object is ``r'', but &lt;i&gt;mode&lt;/i&gt; may be set
+ *  to any of the modes listed in the description for class IO.
+ *  The last argument &lt;i&gt;opt&lt;/i&gt; qualifies &lt;i&gt;mode&lt;/i&gt;.
+ *
+ *    # set IO encoding
+ *    nkf_io = IO.popen(&quot;nkf -e filename&quot;, :external_encoding=&gt;&quot;EUC-JP&quot;)
+ *    euc_jp_string = nkf_io.read
+ *
+ *    # discard standard error using spawn option.
+ *    # See the document of Kernel.spawn.
+ *    ls_io = IO.popen([&quot;ls&quot;, &quot;/&quot;, :err=&gt;&quot;/dev/null&quot;])
+ *    ls_result_with_error = ls_io.read
+ *
+ *  Raises exceptions which &lt;code&gt;IO.pipe&lt;/code&gt; and
+ *  &lt;code&gt;Kernel.spawn&lt;/code&gt; raise.
+ *
+ *  If a block is given, Ruby will run the command as a child connected
+ *  to Ruby with a pipe. Ruby's end of the pipe will be passed as a
+ *  parameter to the block.
+ *  At the end of block, Ruby close the pipe and sets &lt;code&gt;$?&lt;/code&gt;.
+ *  In this case &lt;code&gt;IO.popen&lt;/code&gt; returns
+ *  the value of the block.
+ *
+ *  If a block is given with a _cmd_ of ``&lt;code&gt;-&lt;/code&gt;'',
+ *  the block will be run in two separate processes: once in the parent,
+ *  and once in a child. The parent process will be passed the pipe
+ *  object as a parameter to the block, the child version of the block
+ *  will be passed &lt;code&gt;nil&lt;/code&gt;, and the child's standard in and
+ *  standard out will be connected to the parent through the pipe. Not
+ *  available on all platforms.
+ *
+ *     f = IO.popen(&quot;uname&quot;)
+ *     p f.readlines
+ *     puts &quot;Parent is #{Process.pid}&quot;
+ *     IO.popen(&quot;date&quot;) { |f| puts f.gets }
+ *     IO.popen(&quot;-&quot;) {|f| $stderr.puts &quot;#{Process.pid} is here, f is #{f}&quot;}
+ *     p $?
+ *     IO.popen(%w&quot;sed -e s|^|&lt;foo&gt;| -e s&amp;$&amp;;zot;&amp;&quot;, &quot;r+&quot;) {|f|
+ *       f.puts &quot;bar&quot;; f.close_write; puts f.gets
+ *     }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     [&quot;Linux\n&quot;]
+ *     Parent is 26166
+ *     Wed Apr  9 08:53:52 CDT 2003
+ *     26169 is here, f is
+ *     26166 is here, f is #&lt;IO:0x401b3d44&gt;
+ *     #&lt;Process::Status: pid=26166,exited(0)&gt;
+ *     &lt;foo&gt;bar;zot;
+ */
+
+static VALUE
+rb_io_s_popen(int argc, VALUE *argv, VALUE klass)
+{
+    const char *modestr;
+    VALUE pname, pmode, port, tmp, opt;
+    int oflags, fmode;
+    convconfig_t convconfig;
+
+    opt = pop_last_hash(&amp;argc, argv);
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;pname, &amp;pmode);
+
+    rb_io_extract_modeenc(&amp;pmode, 0, opt, &amp;oflags, &amp;fmode, &amp;convconfig);
+    modestr = rb_io_oflags_modestr(oflags);
+
+    tmp = rb_check_array_type(pname);
+    if (!NIL_P(tmp)) {
+        tmp = rb_ary_dup(tmp);
+        RBASIC(tmp)-&gt;klass = 0;
+        port = pipe_open_v(RARRAY_LEN(tmp), RARRAY_PTR(tmp), modestr, fmode, &amp;convconfig);
+        rb_ary_clear(tmp);
+    }
+    else {
+        SafeStringValue(pname);
+        port = pipe_open_s(pname, modestr, fmode, &amp;convconfig);
+    }
+    if (NIL_P(port)) {
+        /* child */
+        if (rb_block_given_p()) {
+            rb_yield(Qnil);
+            rb_io_flush(rb_stdout);
+            rb_io_flush(rb_stderr);
+            _exit(0);
+        }
+        return Qnil;
+    }
+    RBASIC(port)-&gt;klass = klass;
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, port, io_close, port);
+    }
+    return port;
+}</pre>
+</body>
+</html>

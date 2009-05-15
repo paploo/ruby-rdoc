@@ -2,43 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>get_byte (StringScanner)</title>
+  <title>eos? (StringScanner)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * Scans one byte and returns it.
- * This method is not multibyte character sensitive.
- * See also: #getch.
+ * Returns +true+ if the scan pointer is at the end of the string.
  *
- *   s = StringScanner.new('ab')
- *   s.get_byte         # =&gt; &quot;a&quot;
- *   s.get_byte         # =&gt; &quot;b&quot;
- *   s.get_byte         # =&gt; nil
- *
- *   $KCODE = 'EUC'
- *   s = StringScanner.new(&quot;\244\242&quot;)
- *   s.get_byte         # =&gt; &quot;\244&quot;
- *   s.get_byte         # =&gt; &quot;\242&quot;
- *   s.get_byte         # =&gt; nil
+ *   s = StringScanner.new('test string')
+ *   p s.eos?          # =&gt; false
+ *   s.scan(/test/)
+ *   p s.eos?          # =&gt; false
+ *   s.terminate
+ *   p s.eos?          # =&gt; true
  */
 static VALUE
-strscan_get_byte(VALUE self)
+strscan_eos_p(VALUE self)
 {
     struct strscanner *p;
 
     GET_SCANNER(self, p);
-    CLEAR_MATCH_STATUS(p);
-    if (EOS_P(p))
-        return Qnil;
-
-    p-&gt;prev = p-&gt;curr;
-    p-&gt;curr++;
-    MATCHED(p);
-    adjust_registers_to_matched(p);
-    return extract_range(p, p-&gt;prev + p-&gt;regs.beg[0],
-                            p-&gt;prev + p-&gt;regs.end[0]);
+    return EOS_P(p) ? Qtrue : Qfalse;
 }</pre>
 </body>
 </html>

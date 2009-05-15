@@ -2,66 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ungetc (IO)</title>
+  <title>pos (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.ungetc(string)   =&gt; nil
+ *     ios.pos     =&gt; integer
+ *     ios.tell    =&gt; integer
  *
- *  Pushes back one character (passed as a parameter) onto &lt;em&gt;ios&lt;/em&gt;,
- *  such that a subsequent buffered read will return it. Only one character
- *  may be pushed back before a subsequent read operation (that is,
- *  you will be able to read only the last of several characters that have been pushed
- *  back). Has no effect with unbuffered reads (such as &lt;code&gt;IO#sysread&lt;/code&gt;).
+ *  Returns the current offset (in bytes) of &lt;em&gt;ios&lt;/em&gt;.
  *
- *     f = File.new(&quot;testfile&quot;)   #=&gt; #&lt;File:testfile&gt;
- *     c = f.getc                 #=&gt; &quot;8&quot;
- *     f.ungetc(c)                #=&gt; nil
- *     f.getc                     #=&gt; &quot;8&quot;
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.pos    #=&gt; 0
+ *     f.gets   #=&gt; &quot;This is line one\n&quot;
+ *     f.pos    #=&gt; 17
  */
 
-VALUE
-rb_io_ungetc(VALUE io, VALUE c)
+static VALUE
+rb_io_tell(VALUE io)
 {
     rb_io_t *fptr;
-    long len;
+    off_t pos;
 
     GetOpenFile(io, fptr);
-    rb_io_check_readable(fptr);
-    io_unset_eof(fptr);
-    if (NIL_P(c)) return Qnil;
-    if (FIXNUM_P(c)) {
-        int cc = FIX2INT(c);
-        rb_encoding *enc = io_read_encoding(fptr);
-        char buf[16];
-
-        c = rb_str_new(buf, rb_enc_mbcput(cc, buf, enc));
-    }
-    else {
-        SafeStringValue(c);
-    }
-    if (NEED_READCONV(fptr)) {
-        len = RSTRING_LEN(c);
-        make_readconv(fptr, len);
-        if (fptr-&gt;cbuf_capa - fptr-&gt;cbuf_len &lt; len)
-            rb_raise(rb_eIOError, &quot;ungetc failed&quot;);
-        if (fptr-&gt;cbuf_off &lt; len) {
-            MEMMOVE(fptr-&gt;cbuf+fptr-&gt;cbuf_capa-fptr-&gt;cbuf_len,
-                    fptr-&gt;cbuf+fptr-&gt;cbuf_off,
-                    char, fptr-&gt;cbuf_len);
-            fptr-&gt;cbuf_off = fptr-&gt;cbuf_capa-fptr-&gt;cbuf_len;
-        }
-        fptr-&gt;cbuf_off -= len;
-        fptr-&gt;cbuf_len += len;
-        MEMMOVE(fptr-&gt;cbuf+fptr-&gt;cbuf_off, RSTRING_PTR(c), char, len);
-    }
-    else {
-        io_ungetbyte(c, fptr);
-    }
-    return Qnil;
+    pos = io_tell(fptr);
+    if (pos &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
+    return OFFT2NUM(pos);
 }</pre>
 </body>
 </html>

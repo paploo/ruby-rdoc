@@ -2,36 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pos (Dir)</title>
+  <title>chroot (Dir)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     dir.pos =&gt; integer
- *     dir.tell =&gt; integer
+ *     Dir.chroot( string ) =&gt; 0
  *
- *  Returns the current position in &lt;em&gt;dir&lt;/em&gt;. See also
- *  &lt;code&gt;Dir#seek&lt;/code&gt;.
- *
- *     d = Dir.new(&quot;testdir&quot;)
- *     d.tell   #=&gt; 0
- *     d.read   #=&gt; &quot;.&quot;
- *     d.tell   #=&gt; 12
+ *  Changes this process's idea of the file system root. Only a
+ *  privileged process may make this call. Not available on all
+ *  platforms. On Unix systems, see &lt;code&gt;chroot(2)&lt;/code&gt; for more
+ *  information.
  */
 static VALUE
-dir_tell(VALUE dir)
+dir_s_chroot(VALUE dir, VALUE path)
 {
-#ifdef HAVE_TELLDIR
-    struct dir_data *dirp;
-    long pos;
+#if defined(HAVE_CHROOT) &amp;&amp; !defined(__CHECKER__)
+    check_dirname(&amp;path);
 
-    GetDIR(dir, dirp);
-    pos = telldir(dirp-&gt;dir);
-    return rb_int2inum(pos);
+    if (chroot(RSTRING_PTR(path)) == -1)
+        rb_sys_fail(RSTRING_PTR(path));
+
+    return INT2FIX(0);
 #else
     rb_notimplement();
+    return Qnil;                /* not reached */
 #endif
 }</pre>
 </body>

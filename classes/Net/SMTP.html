@@ -113,7 +113,7 @@ href="http://www.ietf.org/rfc/rfc2822.txt">www.ietf.org/rfc/rfc2822.txt</a>).
 You must open a connection to an <a href="SMTP.html">SMTP</a> server before
 sending messages. The first argument is the address of your <a
 href="SMTP.html">SMTP</a> server, and the second argument is the port
-number. Using <a href="SMTP.html#M004161">SMTP.start</a> with a block is
+number. Using <a href="SMTP.html#M003817">SMTP.start</a> with a block is
 the simplest way to do this. This way, the <a href="SMTP.html">SMTP</a>
 connection is closed automatically after the block is executed.
 </p>
@@ -152,7 +152,7 @@ Then you can send messages.
 <h3>Closing the Session</h3>
 <p>
 You MUST close the <a href="SMTP.html">SMTP</a> session after sending
-messages, by calling the <a href="SMTP.html#M004164">finish</a> method:
+messages, by calling the <a href="SMTP.html#M003820">finish</a> method:
 </p>
 <pre>
     # using SMTP#finish
@@ -162,8 +162,8 @@ messages, by calling the <a href="SMTP.html#M004164">finish</a> method:
 </pre>
 <p>
 You can also use the block form of <a
-href="SMTP.html#M004161">SMTP.start</a>/<a
-href="SMTP.html#M004161">SMTP#start</a>. This closes the <a
+href="SMTP.html#M003817">SMTP.start</a>/<a
+href="SMTP.html#M003817">SMTP#start</a>. This closes the <a
 href="SMTP.html">SMTP</a> session automatically:
 </p>
 <pre>
@@ -178,8 +178,8 @@ I strongly recommend this scheme. This form is simpler and more robust.
 <h3>HELO domain</h3>
 <p>
 In almost all situations, you must provide a third argument to <a
-href="SMTP.html#M004161">SMTP.start</a>/<a
-href="SMTP.html#M004161">SMTP#start</a>. This is the domain name which you
+href="SMTP.html#M003817">SMTP.start</a>/<a
+href="SMTP.html#M003817">SMTP#start</a>. This is the domain name which you
 are on (the host to send mail from). It is called the &#8220;HELO
 domain&#8221;. The <a href="SMTP.html">SMTP</a> server will judge whether
 it should send or reject the <a href="SMTP.html">SMTP</a> session by
@@ -195,8 +195,8 @@ The <a href="SMTP.html">Net::SMTP</a> class supports three authentication
 schemes; PLAIN, LOGIN and CRAM MD5. (<a href="SMTP.html">SMTP</a>
 Authentication: [RFC2554]) To use <a href="SMTP.html">SMTP</a>
 authentication, pass extra arguments to <a
-href="SMTP.html#M004161">SMTP.start</a>/<a
-href="SMTP.html#M004161">SMTP#start</a>.
+href="SMTP.html#M003817">SMTP.start</a>/<a
+href="SMTP.html#M003817">SMTP#start</a>.
 </p>
 <pre>
     # PLAIN
@@ -221,149 +221,149 @@ href="SMTP.html#M004161">SMTP#start</a>.
 
       <div class="name-list">
 
-        <a href="#M004144">auth_capable?</a>&nbsp;&nbsp;
+        <a href="#M003800">auth_capable?</a>&nbsp;&nbsp;
 
-        <a href="#M004178">auth_cram_md5</a>&nbsp;&nbsp;
+        <a href="#M003834">auth_cram_md5</a>&nbsp;&nbsp;
 
-        <a href="#M004177">auth_login</a>&nbsp;&nbsp;
+        <a href="#M003833">auth_login</a>&nbsp;&nbsp;
 
-        <a href="#M004180">auth_method</a>&nbsp;&nbsp;
+        <a href="#M003836">auth_method</a>&nbsp;&nbsp;
 
-        <a href="#M004176">auth_plain</a>&nbsp;&nbsp;
+        <a href="#M003832">auth_plain</a>&nbsp;&nbsp;
 
-        <a href="#M004175">authenticate</a>&nbsp;&nbsp;
+        <a href="#M003831">authenticate</a>&nbsp;&nbsp;
 
-        <a href="#M004182">base64_encode</a>&nbsp;&nbsp;
+        <a href="#M003838">base64_encode</a>&nbsp;&nbsp;
 
-        <a href="#M004140">capable?</a>&nbsp;&nbsp;
+        <a href="#M003796">capable?</a>&nbsp;&nbsp;
 
-        <a href="#M004145">capable_auth_types</a>&nbsp;&nbsp;
+        <a href="#M003801">capable_auth_types</a>&nbsp;&nbsp;
 
-        <a href="#M004143">capable_cram_md5_auth?</a>&nbsp;&nbsp;
+        <a href="#M003799">capable_cram_md5_auth?</a>&nbsp;&nbsp;
 
-        <a href="#M004142">capable_login_auth?</a>&nbsp;&nbsp;
+        <a href="#M003798">capable_login_auth?</a>&nbsp;&nbsp;
 
-        <a href="#M004141">capable_plain_auth?</a>&nbsp;&nbsp;
+        <a href="#M003797">capable_plain_auth?</a>&nbsp;&nbsp;
 
-        <a href="#M004139">capable_starttls?</a>&nbsp;&nbsp;
+        <a href="#M003795">capable_starttls?</a>&nbsp;&nbsp;
 
-        <a href="#M004181">check_auth_args</a>&nbsp;&nbsp;
+        <a href="#M003837">check_auth_args</a>&nbsp;&nbsp;
 
-        <a href="#M004200">check_auth_continue</a>&nbsp;&nbsp;
+        <a href="#M003856">check_auth_continue</a>&nbsp;&nbsp;
 
-        <a href="#M004179">check_auth_method</a>&nbsp;&nbsp;
+        <a href="#M003835">check_auth_method</a>&nbsp;&nbsp;
 
-        <a href="#M004199">check_auth_response</a>&nbsp;&nbsp;
+        <a href="#M003855">check_auth_response</a>&nbsp;&nbsp;
 
-        <a href="#M004198">check_continue</a>&nbsp;&nbsp;
+        <a href="#M003854">check_continue</a>&nbsp;&nbsp;
 
-        <a href="#M004197">check_response</a>&nbsp;&nbsp;
+        <a href="#M003853">check_response</a>&nbsp;&nbsp;
 
-        <a href="#M004183">cram_md5_response</a>&nbsp;&nbsp;
+        <a href="#M003839">cram_md5_response</a>&nbsp;&nbsp;
 
-        <a href="#M004184">cram_secret</a>&nbsp;&nbsp;
+        <a href="#M003840">cram_secret</a>&nbsp;&nbsp;
 
-        <a href="#M004196">critical</a>&nbsp;&nbsp;
+        <a href="#M003852">critical</a>&nbsp;&nbsp;
 
-        <a href="#M004191">data</a>&nbsp;&nbsp;
+        <a href="#M003847">data</a>&nbsp;&nbsp;
 
-        <a href="#M004159">debug_output=</a>&nbsp;&nbsp;
+        <a href="#M003815">debug_output=</a>&nbsp;&nbsp;
 
-        <a href="#M004130">default_port</a>&nbsp;&nbsp;
+        <a href="#M003786">default_port</a>&nbsp;&nbsp;
 
-        <a href="#M004133">default_ssl_context</a>&nbsp;&nbsp;
+        <a href="#M003789">default_ssl_context</a>&nbsp;&nbsp;
 
-        <a href="#M004131">default_submission_port</a>&nbsp;&nbsp;
+        <a href="#M003787">default_submission_port</a>&nbsp;&nbsp;
 
-        <a href="#M004132">default_tls_port</a>&nbsp;&nbsp;
+        <a href="#M003788">default_tls_port</a>&nbsp;&nbsp;
 
-        <a href="#M004151">disable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003807">disable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004157">disable_starttls</a>&nbsp;&nbsp;
+        <a href="#M003813">disable_starttls</a>&nbsp;&nbsp;
 
-        <a href="#M004150">disable_tls</a>&nbsp;&nbsp;
+        <a href="#M003806">disable_tls</a>&nbsp;&nbsp;
 
-        <a href="#M004169">do_finish</a>&nbsp;&nbsp;
+        <a href="#M003825">do_finish</a>&nbsp;&nbsp;
 
-        <a href="#M004168">do_helo</a>&nbsp;&nbsp;
+        <a href="#M003824">do_helo</a>&nbsp;&nbsp;
 
-        <a href="#M004165">do_start</a>&nbsp;&nbsp;
+        <a href="#M003821">do_start</a>&nbsp;&nbsp;
 
-        <a href="#M004187">ehlo</a>&nbsp;&nbsp;
+        <a href="#M003843">ehlo</a>&nbsp;&nbsp;
 
-        <a href="#M004149">enable_ssl</a>&nbsp;&nbsp;
+        <a href="#M003805">enable_ssl</a>&nbsp;&nbsp;
 
-        <a href="#M004155">enable_starttls</a>&nbsp;&nbsp;
+        <a href="#M003811">enable_starttls</a>&nbsp;&nbsp;
 
-        <a href="#M004156">enable_starttls_auto</a>&nbsp;&nbsp;
+        <a href="#M003812">enable_starttls_auto</a>&nbsp;&nbsp;
 
-        <a href="#M004148">enable_tls</a>&nbsp;&nbsp;
+        <a href="#M003804">enable_tls</a>&nbsp;&nbsp;
 
-        <a href="#M004138">esmtp</a>&nbsp;&nbsp;
+        <a href="#M003794">esmtp</a>&nbsp;&nbsp;
 
-        <a href="#M004137">esmtp=</a>&nbsp;&nbsp;
+        <a href="#M003793">esmtp=</a>&nbsp;&nbsp;
 
-        <a href="#M004136">esmtp?</a>&nbsp;&nbsp;
+        <a href="#M003792">esmtp?</a>&nbsp;&nbsp;
 
-        <a href="#M004164">finish</a>&nbsp;&nbsp;
+        <a href="#M003820">finish</a>&nbsp;&nbsp;
 
-        <a href="#M004194">get_response</a>&nbsp;&nbsp;
+        <a href="#M003850">get_response</a>&nbsp;&nbsp;
 
-        <a href="#M004193">getok</a>&nbsp;&nbsp;
+        <a href="#M003849">getok</a>&nbsp;&nbsp;
 
-        <a href="#M004186">helo</a>&nbsp;&nbsp;
+        <a href="#M003842">helo</a>&nbsp;&nbsp;
 
-        <a href="#M004135">inspect</a>&nbsp;&nbsp;
+        <a href="#M003791">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M004201">logging</a>&nbsp;&nbsp;
+        <a href="#M003857">logging</a>&nbsp;&nbsp;
 
-        <a href="#M004188">mailfrom</a>&nbsp;&nbsp;
+        <a href="#M003844">mailfrom</a>&nbsp;&nbsp;
 
-        <a href="#M004134">new</a>&nbsp;&nbsp;
+        <a href="#M003790">new</a>&nbsp;&nbsp;
 
-        <a href="#M004167">new_internet_message_io</a>&nbsp;&nbsp;
+        <a href="#M003823">new_internet_message_io</a>&nbsp;&nbsp;
 
-        <a href="#M004173">open_message_stream</a>&nbsp;&nbsp;
+        <a href="#M003829">open_message_stream</a>&nbsp;&nbsp;
 
-        <a href="#M004192">quit</a>&nbsp;&nbsp;
+        <a href="#M003848">quit</a>&nbsp;&nbsp;
 
-        <a href="#M004190">rcptto</a>&nbsp;&nbsp;
+        <a href="#M003846">rcptto</a>&nbsp;&nbsp;
 
-        <a href="#M004189">rcptto_list</a>&nbsp;&nbsp;
+        <a href="#M003845">rcptto_list</a>&nbsp;&nbsp;
 
-        <a href="#M004158">read_timeout=</a>&nbsp;&nbsp;
+        <a href="#M003814">read_timeout=</a>&nbsp;&nbsp;
 
-        <a href="#M004174">ready</a>&nbsp;&nbsp;
+        <a href="#M003830">ready</a>&nbsp;&nbsp;
 
-        <a href="#M004195">recv_response</a>&nbsp;&nbsp;
+        <a href="#M003851">recv_response</a>&nbsp;&nbsp;
 
-        <a href="#M004171">send_mail</a>&nbsp;&nbsp;
+        <a href="#M003827">send_mail</a>&nbsp;&nbsp;
 
-        <a href="#M004170">send_message</a>&nbsp;&nbsp;
+        <a href="#M003826">send_message</a>&nbsp;&nbsp;
 
-        <a href="#M004172">sendmail</a>&nbsp;&nbsp;
+        <a href="#M003828">sendmail</a>&nbsp;&nbsp;
 
-        <a href="#M004160">set_debug_output</a>&nbsp;&nbsp;
+        <a href="#M003816">set_debug_output</a>&nbsp;&nbsp;
 
-        <a href="#M004147">ssl?</a>&nbsp;&nbsp;
+        <a href="#M003803">ssl?</a>&nbsp;&nbsp;
 
-        <a href="#M004163">start</a>&nbsp;&nbsp;
+        <a href="#M003819">start</a>&nbsp;&nbsp;
 
-        <a href="#M004161">start</a>&nbsp;&nbsp;
+        <a href="#M003817">start</a>&nbsp;&nbsp;
 
-        <a href="#M004162">started?</a>&nbsp;&nbsp;
+        <a href="#M003818">started?</a>&nbsp;&nbsp;
 
-        <a href="#M004185">starttls</a>&nbsp;&nbsp;
+        <a href="#M003841">starttls</a>&nbsp;&nbsp;
 
-        <a href="#M004152">starttls?</a>&nbsp;&nbsp;
+        <a href="#M003808">starttls?</a>&nbsp;&nbsp;
 
-        <a href="#M004153">starttls_always?</a>&nbsp;&nbsp;
+        <a href="#M003809">starttls_always?</a>&nbsp;&nbsp;
 
-        <a href="#M004154">starttls_auto?</a>&nbsp;&nbsp;
+        <a href="#M003810">starttls_auto?</a>&nbsp;&nbsp;
 
-        <a href="#M004146">tls?</a>&nbsp;&nbsp;
+        <a href="#M003802">tls?</a>&nbsp;&nbsp;
 
-        <a href="#M004166">tlsconnect</a>&nbsp;&nbsp;
+        <a href="#M003822">tlsconnect</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -514,13 +514,13 @@ read(2) call does not complete within this time, a TimeoutError is raised.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M004130" class="method-detail">
-        <a name="M004130"></a>
+      <div id="method-M003786" class="method-detail">
+        <a name="M003786"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004130.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004130.html');return false;">
+          <a href="SMTP.src/M003786.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003786.html');return false;">
 
           <span class="method-name">default_port</span><span class="method-args">()</span>
 
@@ -538,13 +538,13 @@ The default <a href="SMTP.html">SMTP</a> port number, 25.
       </div>
 
 
-      <div id="method-M004133" class="method-detail">
-        <a name="M004133"></a>
+      <div id="method-M003789" class="method-detail">
+        <a name="M003789"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004133.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004133.html');return false;">
+          <a href="SMTP.src/M003789.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003789.html');return false;">
 
           <span class="method-name">default_ssl_context</span><span class="method-args">()</span>
 
@@ -558,13 +558,13 @@ The default <a href="SMTP.html">SMTP</a> port number, 25.
       </div>
 
 
-      <div id="method-M004131" class="method-detail">
-        <a name="M004131"></a>
+      <div id="method-M003787" class="method-detail">
+        <a name="M003787"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004131.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004131.html');return false;">
+          <a href="SMTP.src/M003787.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003787.html');return false;">
 
           <span class="method-name">default_submission_port</span><span class="method-args">()</span>
 
@@ -582,13 +582,13 @@ The default mail submission port number, 587.
       </div>
 
 
-      <div id="method-M004132" class="method-detail">
-        <a name="M004132"></a>
+      <div id="method-M003788" class="method-detail">
+        <a name="M003788"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004132.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004132.html');return false;">
+          <a href="SMTP.src/M003788.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003788.html');return false;">
 
           <span class="method-name">default_tls_port</span><span class="method-args">()</span>
 
@@ -606,13 +606,13 @@ The default SMTPS port number, 465.
       </div>
 
 
-      <div id="method-M004134" class="method-detail">
-        <a name="M004134"></a>
+      <div id="method-M003790" class="method-detail">
+        <a name="M003790"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004134.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004134.html');return false;">
+          <a href="SMTP.src/M003790.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003790.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(address, port = nil)</span>
 
@@ -632,23 +632,23 @@ it defaults to port 25.
 </p>
 <p>
 This method does not open the TCP connection. You can use <a
-href="SMTP.html#M004161">SMTP.start</a> instead of <a
-href="SMTP.html#M004134">SMTP.new</a> if you want to do everything at once.
-Otherwise, follow <a href="SMTP.html#M004134">SMTP.new</a> with <a
-href="SMTP.html#M004161">SMTP#start</a>.
+href="SMTP.html#M003817">SMTP.start</a> instead of <a
+href="SMTP.html#M003790">SMTP.new</a> if you want to do everything at once.
+Otherwise, follow <a href="SMTP.html#M003790">SMTP.new</a> with <a
+href="SMTP.html#M003817">SMTP#start</a>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004161" class="method-detail">
-        <a name="M004161"></a>
+      <div id="method-M003817" class="method-detail">
+        <a name="M003817"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004161.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004161.html');return false;">
+          <a href="SMTP.src/M003817.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003817.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">(address, port = nil, helo = 'localhost', user = nil, secret = nil, authtype = nil) {|smtp| ...}</span>
 
@@ -737,13 +737,13 @@ This method may raise:
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M004178" class="method-detail">
-        <a name="M004178"></a>
+      <div id="method-M003834" class="method-detail">
+        <a name="M003834"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004178.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004178.html');return false;">
+          <a href="SMTP.src/M003834.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003834.html');return false;">
 
           <span class="method-name">auth_cram_md5</span><span class="method-args">(user, secret)</span>
 
@@ -757,13 +757,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004177" class="method-detail">
-        <a name="M004177"></a>
+      <div id="method-M003833" class="method-detail">
+        <a name="M003833"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004177.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004177.html');return false;">
+          <a href="SMTP.src/M003833.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003833.html');return false;">
 
           <span class="method-name">auth_login</span><span class="method-args">(user, secret)</span>
 
@@ -777,13 +777,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004176" class="method-detail">
-        <a name="M004176"></a>
+      <div id="method-M003832" class="method-detail">
+        <a name="M003832"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004176.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004176.html');return false;">
+          <a href="SMTP.src/M003832.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003832.html');return false;">
 
           <span class="method-name">auth_plain</span><span class="method-args">(user, secret)</span>
 
@@ -797,13 +797,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004175" class="method-detail">
-        <a name="M004175"></a>
+      <div id="method-M003831" class="method-detail">
+        <a name="M003831"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004175.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004175.html');return false;">
+          <a href="SMTP.src/M003831.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003831.html');return false;">
 
           <span class="method-name">authenticate</span><span class="method-args">(user, secret, authtype = DEFAULT_AUTH_TYPE)</span>
 
@@ -817,13 +817,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004145" class="method-detail">
-        <a name="M004145"></a>
+      <div id="method-M003801" class="method-detail">
+        <a name="M003801"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004145.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004145.html');return false;">
+          <a href="SMTP.src/M003801.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003801.html');return false;">
 
           <span class="method-name">capable_auth_types</span><span class="method-args">()</span>
 
@@ -842,13 +842,13 @@ valid value before opening <a href="SMTP.html">SMTP</a> session.
       </div>
 
 
-      <div id="method-M004143" class="method-detail">
-        <a name="M004143"></a>
+      <div id="method-M003799" class="method-detail">
+        <a name="M003799"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004143.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004143.html');return false;">
+          <a href="SMTP.src/M003799.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003799.html');return false;">
 
           <span class="method-name">capable_cram_md5_auth?</span><span class="method-args">()</span>
 
@@ -867,13 +867,13 @@ opening <a href="SMTP.html">SMTP</a> session.
       </div>
 
 
-      <div id="method-M004142" class="method-detail">
-        <a name="M004142"></a>
+      <div id="method-M003798" class="method-detail">
+        <a name="M003798"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004142.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004142.html');return false;">
+          <a href="SMTP.src/M003798.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003798.html');return false;">
 
           <span class="method-name">capable_login_auth?</span><span class="method-args">()</span>
 
@@ -892,13 +892,13 @@ opening <a href="SMTP.html">SMTP</a> session.
       </div>
 
 
-      <div id="method-M004141" class="method-detail">
-        <a name="M004141"></a>
+      <div id="method-M003797" class="method-detail">
+        <a name="M003797"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004141.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004141.html');return false;">
+          <a href="SMTP.src/M003797.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003797.html');return false;">
 
           <span class="method-name">capable_plain_auth?</span><span class="method-args">()</span>
 
@@ -917,13 +917,13 @@ opening <a href="SMTP.html">SMTP</a> session.
       </div>
 
 
-      <div id="method-M004139" class="method-detail">
-        <a name="M004139"></a>
+      <div id="method-M003795" class="method-detail">
+        <a name="M003795"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004139.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004139.html');return false;">
+          <a href="SMTP.src/M003795.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003795.html');return false;">
 
           <span class="method-name">capable_starttls?</span><span class="method-args">()</span>
 
@@ -942,13 +942,13 @@ opening <a href="SMTP.html">SMTP</a> session.
       </div>
 
 
-      <div id="method-M004191" class="method-detail">
-        <a name="M004191"></a>
+      <div id="method-M003847" class="method-detail">
+        <a name="M003847"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004191.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004191.html');return false;">
+          <a href="SMTP.src/M003847.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003847.html');return false;">
 
           <span class="method-name">data</span><span class="method-args">(msgstr = nil) {|stream| ...}</span>
 
@@ -987,13 +987,13 @@ message before the block is closed.
       </div>
 
 
-      <div id="method-M004159" class="method-detail">
-        <a name="M004159"></a>
+      <div id="method-M003815" class="method-detail">
+        <a name="M003815"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004159.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004159.html');return false;">
+          <a href="SMTP.src/M003815.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003815.html');return false;">
 
           <span class="method-name">debug_output=</span><span class="method-args">(arg)</span>
 
@@ -1009,7 +1009,7 @@ only debugging.
 </p>
 <p>
 <a href="../Set.html">Set</a> an output stream for debug logging. You must
-call this before <a href="SMTP.html#M004161">start</a>.
+call this before <a href="SMTP.html#M003817">start</a>.
 </p>
 <pre>
   # example
@@ -1024,8 +1024,8 @@ call this before <a href="SMTP.html#M004161">start</a>.
       </div>
 
 
-      <div id="method-M004151" class="method-detail">
-        <a name="M004151"></a>
+      <div id="method-M003807" class="method-detail">
+        <a name="M003807"></a>
 
         <div class="method-heading">
 
@@ -1036,20 +1036,20 @@ call this before <a href="SMTP.html#M004161">start</a>.
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004150">disable_tls</a>
+Alias for <a href="SMTP.html#M003806">disable_tls</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004157" class="method-detail">
-        <a name="M004157"></a>
+      <div id="method-M003813" class="method-detail">
+        <a name="M003813"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004157.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004157.html');return false;">
+          <a href="SMTP.src/M003813.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003813.html');return false;">
 
           <span class="method-name">disable_starttls</span><span class="method-args">()</span>
 
@@ -1068,13 +1068,13 @@ connection is established to have any effect.
       </div>
 
 
-      <div id="method-M004150" class="method-detail">
-        <a name="M004150"></a>
+      <div id="method-M003806" class="method-detail">
+        <a name="M003806"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004150.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004150.html');return false;">
+          <a href="SMTP.src/M003806.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003806.html');return false;">
 
           <span class="method-name">disable_tls</span><span class="method-args">()</span>
 
@@ -1093,13 +1093,13 @@ established to have any effect.
       </div>
 
 
-      <div id="method-M004187" class="method-detail">
-        <a name="M004187"></a>
+      <div id="method-M003843" class="method-detail">
+        <a name="M003843"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004187.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004187.html');return false;">
+          <a href="SMTP.src/M003843.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003843.html');return false;">
 
           <span class="method-name">ehlo</span><span class="method-args">(domain)</span>
 
@@ -1113,8 +1113,8 @@ established to have any effect.
       </div>
 
 
-      <div id="method-M004149" class="method-detail">
-        <a name="M004149"></a>
+      <div id="method-M003805" class="method-detail">
+        <a name="M003805"></a>
 
         <div class="method-heading">
 
@@ -1125,20 +1125,20 @@ established to have any effect.
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004148">enable_tls</a>
+Alias for <a href="SMTP.html#M003804">enable_tls</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004155" class="method-detail">
-        <a name="M004155"></a>
+      <div id="method-M003811" class="method-detail">
+        <a name="M003811"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004155.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004155.html');return false;">
+          <a href="SMTP.src/M003811.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003811.html');return false;">
 
           <span class="method-name">enable_starttls</span><span class="method-args">(context = SMTP.default_ssl_context)</span>
 
@@ -1157,13 +1157,13 @@ OpenSSL::SSL::SSLContext object.
       </div>
 
 
-      <div id="method-M004156" class="method-detail">
-        <a name="M004156"></a>
+      <div id="method-M003812" class="method-detail">
+        <a name="M003812"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004156.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004156.html');return false;">
+          <a href="SMTP.src/M003812.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003812.html');return false;">
 
           <span class="method-name">enable_starttls_auto</span><span class="method-args">(context = SMTP.default_ssl_context)</span>
 
@@ -1182,13 +1182,13 @@ Enables SMTP/TLS (STARTTLS) for this object if server accepts.
       </div>
 
 
-      <div id="method-M004148" class="method-detail">
-        <a name="M004148"></a>
+      <div id="method-M003804" class="method-detail">
+        <a name="M003804"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004148.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004148.html');return false;">
+          <a href="SMTP.src/M003804.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003804.html');return false;">
 
           <span class="method-name">enable_tls</span><span class="method-args">(context = SMTP.default_ssl_context)</span>
 
@@ -1209,8 +1209,8 @@ OpenSSL::SSL::SSLContext object.
       </div>
 
 
-      <div id="method-M004138" class="method-detail">
-        <a name="M004138"></a>
+      <div id="method-M003794" class="method-detail">
+        <a name="M003794"></a>
 
         <div class="method-heading">
 
@@ -1221,20 +1221,20 @@ OpenSSL::SSL::SSLContext object.
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004136">esmtp?</a>
+Alias for <a href="SMTP.html#M003792">esmtp?</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004137" class="method-detail">
-        <a name="M004137"></a>
+      <div id="method-M003793" class="method-detail">
+        <a name="M003793"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004137.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004137.html');return false;">
+          <a href="SMTP.src/M003793.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003793.html');return false;">
 
           <span class="method-name">esmtp=</span><span class="method-args">(bool)</span>
 
@@ -1246,8 +1246,8 @@ Alias for <a href="SMTP.html#M004136">esmtp?</a>
 
           <p>
 <a href="../Set.html">Set</a> whether to use ESMTP or not. This should be
-done before calling <a href="SMTP.html#M004161">start</a>. Note that if <a
-href="SMTP.html#M004161">start</a> is called in ESMTP mode, and the
+done before calling <a href="SMTP.html#M003817">start</a>. Note that if <a
+href="SMTP.html#M003817">start</a> is called in ESMTP mode, and the
 connection fails due to a ProtocolError, the <a href="SMTP.html">SMTP</a>
 object will automatically switch to plain <a href="SMTP.html">SMTP</a> mode
 and retry (but not vice versa).
@@ -1257,13 +1257,13 @@ and retry (but not vice versa).
       </div>
 
 
-      <div id="method-M004136" class="method-detail">
-        <a name="M004136"></a>
+      <div id="method-M003792" class="method-detail">
+        <a name="M003792"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004136.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004136.html');return false;">
+          <a href="SMTP.src/M003792.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003792.html');return false;">
 
           <span class="method-name">esmtp?</span><span class="method-args">()</span>
 
@@ -1282,13 +1282,13 @@ it does by default).
       </div>
 
 
-      <div id="method-M004164" class="method-detail">
-        <a name="M004164"></a>
+      <div id="method-M003820" class="method-detail">
+        <a name="M003820"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004164.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004164.html');return false;">
+          <a href="SMTP.src/M003820.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003820.html');return false;">
 
           <span class="method-name">finish</span><span class="method-args">()</span>
 
@@ -1307,13 +1307,13 @@ connection. Raises <a href="../IOError.html">IOError</a> if not started.
       </div>
 
 
-      <div id="method-M004186" class="method-detail">
-        <a name="M004186"></a>
+      <div id="method-M003842" class="method-detail">
+        <a name="M003842"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004186.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004186.html');return false;">
+          <a href="SMTP.src/M003842.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003842.html');return false;">
 
           <span class="method-name">helo</span><span class="method-args">(domain)</span>
 
@@ -1327,13 +1327,13 @@ connection. Raises <a href="../IOError.html">IOError</a> if not started.
       </div>
 
 
-      <div id="method-M004135" class="method-detail">
-        <a name="M004135"></a>
+      <div id="method-M003791" class="method-detail">
+        <a name="M003791"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004135.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004135.html');return false;">
+          <a href="SMTP.src/M003791.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003791.html');return false;">
 
           <span class="method-name">inspect</span><span class="method-args">()</span>
 
@@ -1351,13 +1351,13 @@ Provide human-readable stringification of class state.
       </div>
 
 
-      <div id="method-M004188" class="method-detail">
-        <a name="M004188"></a>
+      <div id="method-M003844" class="method-detail">
+        <a name="M003844"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004188.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004188.html');return false;">
+          <a href="SMTP.src/M003844.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003844.html');return false;">
 
           <span class="method-name">mailfrom</span><span class="method-args">(from_addr)</span>
 
@@ -1371,13 +1371,13 @@ Provide human-readable stringification of class state.
       </div>
 
 
-      <div id="method-M004173" class="method-detail">
-        <a name="M004173"></a>
+      <div id="method-M003829" class="method-detail">
+        <a name="M003829"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004173.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004173.html');return false;">
+          <a href="SMTP.src/M003829.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003829.html');return false;">
 
           <span class="method-name">open_message_stream</span><span class="method-args">(from_addr, *to_addrs) {|stream| ...}</span>
 
@@ -1464,13 +1464,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004192" class="method-detail">
-        <a name="M004192"></a>
+      <div id="method-M003848" class="method-detail">
+        <a name="M003848"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004192.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004192.html');return false;">
+          <a href="SMTP.src/M003848.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003848.html');return false;">
 
           <span class="method-name">quit</span><span class="method-args">()</span>
 
@@ -1484,13 +1484,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004190" class="method-detail">
-        <a name="M004190"></a>
+      <div id="method-M003846" class="method-detail">
+        <a name="M003846"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004190.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004190.html');return false;">
+          <a href="SMTP.src/M003846.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003846.html');return false;">
 
           <span class="method-name">rcptto</span><span class="method-args">(to_addr)</span>
 
@@ -1504,13 +1504,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004189" class="method-detail">
-        <a name="M004189"></a>
+      <div id="method-M003845" class="method-detail">
+        <a name="M003845"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004189.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004189.html');return false;">
+          <a href="SMTP.src/M003845.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003845.html');return false;">
 
           <span class="method-name">rcptto_list</span><span class="method-args">(to_addrs)</span>
 
@@ -1524,13 +1524,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004158" class="method-detail">
-        <a name="M004158"></a>
+      <div id="method-M003814" class="method-detail">
+        <a name="M003814"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004158.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004158.html');return false;">
+          <a href="SMTP.src/M003814.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003814.html');return false;">
 
           <span class="method-name">read_timeout=</span><span class="method-args">(sec)</span>
 
@@ -1549,8 +1549,8 @@ timing-out a read(2) call.
       </div>
 
 
-      <div id="method-M004174" class="method-detail">
-        <a name="M004174"></a>
+      <div id="method-M003830" class="method-detail">
+        <a name="M003830"></a>
 
         <div class="method-heading">
 
@@ -1561,15 +1561,15 @@ timing-out a read(2) call.
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004173">open_message_stream</a>
+Alias for <a href="SMTP.html#M003829">open_message_stream</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004171" class="method-detail">
-        <a name="M004171"></a>
+      <div id="method-M003827" class="method-detail">
+        <a name="M003827"></a>
 
         <div class="method-heading">
 
@@ -1580,20 +1580,20 @@ Alias for <a href="SMTP.html#M004173">open_message_stream</a>
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004170">send_message</a>
+Alias for <a href="SMTP.html#M003826">send_message</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004170" class="method-detail">
-        <a name="M004170"></a>
+      <div id="method-M003826" class="method-detail">
+        <a name="M003826"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004170.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004170.html');return false;">
+          <a href="SMTP.src/M003826.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003826.html');return false;">
 
           <span class="method-name">send_message</span><span class="method-args">(msgstr, from_addr, *to_addrs)</span>
 
@@ -1655,8 +1655,8 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004172" class="method-detail">
-        <a name="M004172"></a>
+      <div id="method-M003828" class="method-detail">
+        <a name="M003828"></a>
 
         <div class="method-heading">
 
@@ -1667,15 +1667,15 @@ This method may raise:
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004170">send_message</a>
+Alias for <a href="SMTP.html#M003826">send_message</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004160" class="method-detail">
-        <a name="M004160"></a>
+      <div id="method-M003816" class="method-detail">
+        <a name="M003816"></a>
 
         <div class="method-heading">
 
@@ -1686,15 +1686,15 @@ Alias for <a href="SMTP.html#M004170">send_message</a>
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004159">debug_output=</a>
+Alias for <a href="SMTP.html#M003815">debug_output=</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004147" class="method-detail">
-        <a name="M004147"></a>
+      <div id="method-M003803" class="method-detail">
+        <a name="M003803"></a>
 
         <div class="method-heading">
 
@@ -1705,20 +1705,20 @@ Alias for <a href="SMTP.html#M004159">debug_output=</a>
         <div class="method-description">
 
           <p>
-Alias for <a href="SMTP.html#M004146">tls?</a>
+Alias for <a href="SMTP.html#M003802">tls?</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M004163" class="method-detail">
-        <a name="M004163"></a>
+      <div id="method-M003819" class="method-detail">
+        <a name="M003819"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004163.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004163.html');return false;">
+          <a href="SMTP.src/M003819.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003819.html');return false;">
 
           <span class="method-name">start</span><span class="method-args">(helo = 'localhost', user = nil, secret = nil, authtype = nil) {|smtp| ...}</span>
 
@@ -1753,7 +1753,7 @@ responsibility to close the session when finished.
 <h3>Example</h3>
 <p>
 This is very similar to the class method <a
-href="SMTP.html#M004161">SMTP.start</a>.
+href="SMTP.html#M003817">SMTP.start</a>.
 </p>
 <pre>
     require 'net/smtp'
@@ -1764,9 +1764,9 @@ href="SMTP.html#M004161">SMTP.start</a>.
 </pre>
 <p>
 The primary use of this method (as opposed to <a
-href="SMTP.html#M004161">SMTP.start</a>) is probably to set debugging (<a
-href="SMTP.html#M004160">set_debug_output</a>) or ESMTP (<a
-href="SMTP.html#M004137">esmtp=</a>), which must be done before the session
+href="SMTP.html#M003817">SMTP.start</a>) is probably to set debugging (<a
+href="SMTP.html#M003816">set_debug_output</a>) or ESMTP (<a
+href="SMTP.html#M003793">esmtp=</a>), which must be done before the session
 is started.
 </p>
 <h3>Errors</h3>
@@ -1805,13 +1805,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004162" class="method-detail">
-        <a name="M004162"></a>
+      <div id="method-M003818" class="method-detail">
+        <a name="M003818"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004162.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004162.html');return false;">
+          <a href="SMTP.src/M003818.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003818.html');return false;">
 
           <span class="method-name">started?</span><span class="method-args">()</span>
 
@@ -1829,13 +1829,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004185" class="method-detail">
-        <a name="M004185"></a>
+      <div id="method-M003841" class="method-detail">
+        <a name="M003841"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004185.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004185.html');return false;">
+          <a href="SMTP.src/M003841.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003841.html');return false;">
 
           <span class="method-name">starttls</span><span class="method-args">()</span>
 
@@ -1853,13 +1853,13 @@ This method may raise:
       </div>
 
 
-      <div id="method-M004152" class="method-detail">
-        <a name="M004152"></a>
+      <div id="method-M003808" class="method-detail">
+        <a name="M003808"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004152.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004152.html');return false;">
+          <a href="SMTP.src/M003808.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003808.html');return false;">
 
           <span class="method-name">starttls?</span><span class="method-args">()</span>
 
@@ -1879,13 +1879,13 @@ server support TLS, returns :auto.
       </div>
 
 
-      <div id="method-M004153" class="method-detail">
-        <a name="M004153"></a>
+      <div id="method-M003809" class="method-detail">
+        <a name="M003809"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004153.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004153.html');return false;">
+          <a href="SMTP.src/M003809.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003809.html');return false;">
 
           <span class="method-name">starttls_always?</span><span class="method-args">()</span>
 
@@ -1903,13 +1903,13 @@ true if this object uses STARTTLS.
       </div>
 
 
-      <div id="method-M004154" class="method-detail">
-        <a name="M004154"></a>
+      <div id="method-M003810" class="method-detail">
+        <a name="M003810"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004154.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004154.html');return false;">
+          <a href="SMTP.src/M003810.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003810.html');return false;">
 
           <span class="method-name">starttls_auto?</span><span class="method-args">()</span>
 
@@ -1927,13 +1927,13 @@ true if this object uses STARTTLS when server advertises STARTTLS.
       </div>
 
 
-      <div id="method-M004146" class="method-detail">
-        <a name="M004146"></a>
+      <div id="method-M003802" class="method-detail">
+        <a name="M003802"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004146.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004146.html');return false;">
+          <a href="SMTP.src/M003802.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003802.html');return false;">
 
           <span class="method-name">tls?</span><span class="method-args">()</span>
 
@@ -1954,13 +1954,13 @@ true if this object uses SMTP/TLS (SMTPS).
       <h3 class="section-bar">Private Instance methods</h3>
 
 
-      <div id="method-M004144" class="method-detail">
-        <a name="M004144"></a>
+      <div id="method-M003800" class="method-detail">
+        <a name="M003800"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004144.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004144.html');return false;">
+          <a href="SMTP.src/M003800.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003800.html');return false;">
 
           <span class="method-name">auth_capable?</span><span class="method-args">(type)</span>
 
@@ -1974,13 +1974,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004180" class="method-detail">
-        <a name="M004180"></a>
+      <div id="method-M003836" class="method-detail">
+        <a name="M003836"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004180.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004180.html');return false;">
+          <a href="SMTP.src/M003836.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003836.html');return false;">
 
           <span class="method-name">auth_method</span><span class="method-args">(type)</span>
 
@@ -1994,13 +1994,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004182" class="method-detail">
-        <a name="M004182"></a>
+      <div id="method-M003838" class="method-detail">
+        <a name="M003838"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004182.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004182.html');return false;">
+          <a href="SMTP.src/M003838.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003838.html');return false;">
 
           <span class="method-name">base64_encode</span><span class="method-args">(str)</span>
 
@@ -2014,13 +2014,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004140" class="method-detail">
-        <a name="M004140"></a>
+      <div id="method-M003796" class="method-detail">
+        <a name="M003796"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004140.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004140.html');return false;">
+          <a href="SMTP.src/M003796.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003796.html');return false;">
 
           <span class="method-name">capable?</span><span class="method-args">(key)</span>
 
@@ -2034,13 +2034,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004181" class="method-detail">
-        <a name="M004181"></a>
+      <div id="method-M003837" class="method-detail">
+        <a name="M003837"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004181.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004181.html');return false;">
+          <a href="SMTP.src/M003837.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003837.html');return false;">
 
           <span class="method-name">check_auth_args</span><span class="method-args">(user, secret)</span>
 
@@ -2054,13 +2054,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004200" class="method-detail">
-        <a name="M004200"></a>
+      <div id="method-M003856" class="method-detail">
+        <a name="M003856"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004200.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004200.html');return false;">
+          <a href="SMTP.src/M003856.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003856.html');return false;">
 
           <span class="method-name">check_auth_continue</span><span class="method-args">(res)</span>
 
@@ -2074,13 +2074,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004179" class="method-detail">
-        <a name="M004179"></a>
+      <div id="method-M003835" class="method-detail">
+        <a name="M003835"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004179.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004179.html');return false;">
+          <a href="SMTP.src/M003835.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003835.html');return false;">
 
           <span class="method-name">check_auth_method</span><span class="method-args">(type)</span>
 
@@ -2094,13 +2094,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004199" class="method-detail">
-        <a name="M004199"></a>
+      <div id="method-M003855" class="method-detail">
+        <a name="M003855"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004199.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004199.html');return false;">
+          <a href="SMTP.src/M003855.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003855.html');return false;">
 
           <span class="method-name">check_auth_response</span><span class="method-args">(res)</span>
 
@@ -2114,13 +2114,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004198" class="method-detail">
-        <a name="M004198"></a>
+      <div id="method-M003854" class="method-detail">
+        <a name="M003854"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004198.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004198.html');return false;">
+          <a href="SMTP.src/M003854.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003854.html');return false;">
 
           <span class="method-name">check_continue</span><span class="method-args">(res)</span>
 
@@ -2134,13 +2134,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004197" class="method-detail">
-        <a name="M004197"></a>
+      <div id="method-M003853" class="method-detail">
+        <a name="M003853"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004197.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004197.html');return false;">
+          <a href="SMTP.src/M003853.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003853.html');return false;">
 
           <span class="method-name">check_response</span><span class="method-args">(res)</span>
 
@@ -2154,13 +2154,13 @@ true if this object uses SMTP/TLS (SMTPS).
       </div>
 
 
-      <div id="method-M004183" class="method-detail">
-        <a name="M004183"></a>
+      <div id="method-M003839" class="method-detail">
+        <a name="M003839"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004183.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004183.html');return false;">
+          <a href="SMTP.src/M003839.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003839.html');return false;">
 
           <span class="method-name">cram_md5_response</span><span class="method-args">(secret, challenge)</span>
 
@@ -2178,13 +2178,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004184" class="method-detail">
-        <a name="M004184"></a>
+      <div id="method-M003840" class="method-detail">
+        <a name="M003840"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004184.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004184.html');return false;">
+          <a href="SMTP.src/M003840.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003840.html');return false;">
 
           <span class="method-name">cram_secret</span><span class="method-args">(secret, mask)</span>
 
@@ -2198,13 +2198,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004196" class="method-detail">
-        <a name="M004196"></a>
+      <div id="method-M003852" class="method-detail">
+        <a name="M003852"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004196.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004196.html');return false;">
+          <a href="SMTP.src/M003852.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003852.html');return false;">
 
           <span class="method-name">critical</span><span class="method-args">() {|| ...}</span>
 
@@ -2218,13 +2218,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004169" class="method-detail">
-        <a name="M004169"></a>
+      <div id="method-M003825" class="method-detail">
+        <a name="M003825"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004169.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004169.html');return false;">
+          <a href="SMTP.src/M003825.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003825.html');return false;">
 
           <span class="method-name">do_finish</span><span class="method-args">()</span>
 
@@ -2238,13 +2238,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004168" class="method-detail">
-        <a name="M004168"></a>
+      <div id="method-M003824" class="method-detail">
+        <a name="M003824"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004168.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004168.html');return false;">
+          <a href="SMTP.src/M003824.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003824.html');return false;">
 
           <span class="method-name">do_helo</span><span class="method-args">(helo_domain)</span>
 
@@ -2258,13 +2258,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004165" class="method-detail">
-        <a name="M004165"></a>
+      <div id="method-M003821" class="method-detail">
+        <a name="M003821"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004165.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004165.html');return false;">
+          <a href="SMTP.src/M003821.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003821.html');return false;">
 
           <span class="method-name">do_start</span><span class="method-args">(helo_domain, user, secret, authtype)</span>
 
@@ -2278,13 +2278,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004194" class="method-detail">
-        <a name="M004194"></a>
+      <div id="method-M003850" class="method-detail">
+        <a name="M003850"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004194.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004194.html');return false;">
+          <a href="SMTP.src/M003850.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003850.html');return false;">
 
           <span class="method-name">get_response</span><span class="method-args">(reqline)</span>
 
@@ -2298,13 +2298,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004193" class="method-detail">
-        <a name="M004193"></a>
+      <div id="method-M003849" class="method-detail">
+        <a name="M003849"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004193.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004193.html');return false;">
+          <a href="SMTP.src/M003849.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003849.html');return false;">
 
           <span class="method-name">getok</span><span class="method-args">(reqline)</span>
 
@@ -2318,13 +2318,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004201" class="method-detail">
-        <a name="M004201"></a>
+      <div id="method-M003857" class="method-detail">
+        <a name="M003857"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004201.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004201.html');return false;">
+          <a href="SMTP.src/M003857.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003857.html');return false;">
 
           <span class="method-name">logging</span><span class="method-args">(msg)</span>
 
@@ -2338,13 +2338,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004167" class="method-detail">
-        <a name="M004167"></a>
+      <div id="method-M003823" class="method-detail">
+        <a name="M003823"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004167.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004167.html');return false;">
+          <a href="SMTP.src/M003823.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003823.html');return false;">
 
           <span class="method-name">new_internet_message_io</span><span class="method-args">(s)</span>
 
@@ -2358,13 +2358,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004195" class="method-detail">
-        <a name="M004195"></a>
+      <div id="method-M003851" class="method-detail">
+        <a name="M003851"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004195.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004195.html');return false;">
+          <a href="SMTP.src/M003851.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003851.html');return false;">
 
           <span class="method-name">recv_response</span><span class="method-args">()</span>
 
@@ -2378,13 +2378,13 @@ CRAM-MD5: [RFC2195]
       </div>
 
 
-      <div id="method-M004166" class="method-detail">
-        <a name="M004166"></a>
+      <div id="method-M003822" class="method-detail">
+        <a name="M003822"></a>
 
         <div class="method-heading">
 
-          <a href="SMTP.src/M004166.html" target="Code" class="method-signature"
-            onclick="popupCode('SMTP.src/M004166.html');return false;">
+          <a href="SMTP.src/M003822.html" target="Code" class="method-signature"
+            onclick="popupCode('SMTP.src/M003822.html');return false;">
 
           <span class="method-name">tlsconnect</span><span class="method-args">(s)</span>
 

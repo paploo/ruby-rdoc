@@ -2,47 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gm (Time)</title>
+  <title>eql? (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *    Time.utc(year) =&gt; time
- *    Time.utc(year, month) =&gt; time
- *    Time.utc(year, month, day) =&gt; time
- *    Time.utc(year, month, day, hour) =&gt; time
- *    Time.utc(year, month, day, hour, min) =&gt; time
- *    Time.utc(year, month, day, hour, min, sec_with_frac) =&gt; time
- *    Time.utc(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *    Time.utc(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *    Time.gm(year) =&gt; time
- *    Time.gm(year, month) =&gt; time
- *    Time.gm(year, month, day) =&gt; time
- *    Time.gm(year, month, day, hour) =&gt; time
- *    Time.gm(year, month, day, hour, min) =&gt; time
- *    Time.gm(year, month, day, hour, min, sec_with_frac) =&gt; time
- *    Time.gm(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *    Time.gm(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *     
- *  Creates a time based on given values, interpreted as UTC (GMT). The
- *  year must be specified. Other values default to the minimum value
- *  for that field (and may be &lt;code&gt;nil&lt;/code&gt; or omitted). Months may
- *  be specified by numbers from 1 to 12, or by the three-letter English
- *  month names. Hours are specified on a 24-hour clock (0..23). Raises
- *  an &lt;code&gt;ArgumentError&lt;/code&gt; if any values are out of range. Will
- *  also accept ten arguments in the order output by
- *  &lt;code&gt;Time#to_a&lt;/code&gt;.
- *  &lt;i&gt;sec_with_frac&lt;/i&gt; and &lt;i&gt;usec_with_frac&lt;/i&gt; can have a fractional part.
+ * call-seq:
+ *  time.eql?(other_time)
  *
- *     Time.utc(2000,&quot;jan&quot;,1,20,15,1)  #=&gt; 2000-01-01 20:15:01 UTC
- *     Time.gm(2000,&quot;jan&quot;,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 UTC
+ * Return &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; and &lt;i&gt;other_time&lt;/i&gt; are
+ * both &lt;code&gt;Time&lt;/code&gt; objects with the same seconds and fractional
+ * seconds.
  */
+
 static VALUE
-time_s_mkutc(int argc, VALUE *argv, VALUE klass)
+time_eql(VALUE time1, VALUE time2)
 {
-    return time_utc_or_local(argc, argv, Qtrue, klass);
+    struct time_object *tobj1, *tobj2;
+
+    GetTimeval(time1, tobj1);
+    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
+        GetTimeval(time2, tobj2);
+        if (tobj1-&gt;ts.tv_sec == tobj2-&gt;ts.tv_sec) {
+            if (tobj1-&gt;ts.tv_nsec == tobj2-&gt;ts.tv_nsec) return Qtrue;
+        }
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

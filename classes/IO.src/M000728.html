@@ -2,44 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>foreach (IO)</title>
+  <title>try_convert (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     IO.foreach(name, sep=$/ [, open_args]) {|line| block }     =&gt; nil
- *     IO.foreach(name, limit [, open_args]) {|line| block }      =&gt; nil
- *     IO.foreach(name, sep, limit [, open_args]) {|line| block } =&gt; nil
+ *     IO.try_convert(obj) -&gt; io or nil
  *
- *  Executes the block for every line in the named I/O port, where lines
- *  are separated by &lt;em&gt;sep&lt;/em&gt;.
+ *  Try to convert &lt;i&gt;obj&lt;/i&gt; into an IO, using to_io method.
+ *  Returns converted IO or nil if &lt;i&gt;obj&lt;/i&gt; cannot be converted
+ *  for any reason.
  *
- *     IO.foreach(&quot;testfile&quot;) {|x| print &quot;GOT &quot;, x }
+ *     IO.try_convert(STDOUT)     # =&gt; STDOUT
+ *     IO.try_convert(&quot;STDOUT&quot;)   # =&gt; nil
  *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     GOT This is line one
- *     GOT This is line two
- *     GOT This is line three
- *     GOT And so on...
- *
- *  If the last argument is a hash, it's the keyword argument to open.
- *  See &lt;code&gt;IO.read&lt;/code&gt; for detail.
+ *     require 'zlib'
+ *     f = open(&quot;/tmp/zz.gz&quot;)       # =&gt; #&lt;File:/tmp/zz.gz&gt;
+ *     z = Zlib::GzipReader.open(f) # =&gt; #&lt;Zlib::GzipReader:0x81d8744&gt;
+ *     IO.try_convert(z)            # =&gt; #&lt;File:/tmp/zz.gz&gt;
  *
  */
-
 static VALUE
-rb_io_s_foreach(int argc, VALUE *argv, VALUE self)
+rb_io_s_try_convert(VALUE dummy, VALUE io)
 {
-    struct foreach_arg arg;
-
-    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, NULL, NULL);
-    RETURN_ENUMERATOR(self, argc, argv);
-    open_key_args(argc, argv, &amp;arg);
-    if (NIL_P(arg.io)) return Qnil;
-    return rb_ensure(io_s_foreach, (VALUE)&amp;arg, rb_io_close, arg.io);
+    return rb_io_check_io(io);
 }</pre>
 </body>
 </html>

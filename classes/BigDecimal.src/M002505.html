@@ -2,38 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>* (BigDecimal)</title>
+  <title>divmod (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* call-seq:
-  * mult(value, digits)
-  *
-  * Multiply by the specified value. 
-  *
-  * e.g.
-  *   c = a.mult(b,n)
-  *   c = a * b
-  *
-  * digits:: If specified and less than the number of significant digits of the result, the result is rounded to that number of digits, according to BigDecimal.mode.
-  */
+  <pre>/* Divides by the specified value, and returns the quotient and modulus
+ * as BigDecimal numbers. The quotient is rounded towards negative infinity.
+ *
+ * For example:
+ *
+ * require 'bigdecimal'
+ *
+ * a = BigDecimal.new(&quot;42&quot;)
+ * b = BigDecimal.new(&quot;9&quot;)
+ *
+ * q,m = a.divmod(b)
+ *
+ * c = q * b + m
+ *
+ * a == c  -&gt; true
+ *
+ * The quotient q is (a/b).floor, and the modulus is the amount that must be 
+ * added to q * b to get a.
+ */
 static VALUE
-BigDecimal_mult(VALUE self, VALUE r)
+BigDecimal_divmod(VALUE self, VALUE r)
 {
     ENTER(5);
-    Real *c, *a, *b;
-    U_LONG mx;
+    VALUE obj;
+    Real *div=NULL, *mod=NULL;
 
-    GUARD_OBJ(a,GetVpValue(self,1));
-    b = GetVpValue(r,0);
-    if(!b) return DoSomeOne(self,r,'*');
-    SAVE(b);
-
-    mx = a-&gt;Prec + b-&gt;Prec;
-    GUARD_OBJ(c,VpCreateRbObject(mx *(VpBaseFig() + 1), &quot;0&quot;));
-    VpMult(c, a, b);
-    return ToValue(c);
+    obj = BigDecimal_DoDivmod(self,r,&amp;div,&amp;mod);
+    if(obj!=(VALUE)0) return obj;
+    SAVE(div);SAVE(mod);
+    obj = rb_assoc_new(ToValue(div), ToValue(mod));
+    return obj;
 }</pre>
 </body>
 </html>

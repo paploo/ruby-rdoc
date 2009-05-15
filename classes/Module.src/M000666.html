@@ -2,19 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>autoload? (Module)</title>
+  <title>freeze (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * MISSING: documentation
+ *  call-seq:
+ *     mod.freeze
+ *  
+ *  Prevents further modifications to &lt;i&gt;mod&lt;/i&gt;.
  */
 
 static VALUE
-rb_mod_autoload_p(VALUE mod, VALUE sym)
+rb_mod_freeze(VALUE mod)
 {
-    return rb_autoload_p(mod, rb_to_id(sym));
+    rb_class_name(mod);
+    return rb_obj_freeze(mod);
 }</pre>
 </body>
 </html>

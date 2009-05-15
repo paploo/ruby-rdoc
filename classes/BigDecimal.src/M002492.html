@@ -2,105 +2,95 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mode (BigDecimal)</title>
+  <title>to_s (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/* call-seq:
-  * BigDecimal.mode(mode, value)
-  *
-  * Controls handling of arithmetic exceptions and rounding. If no value
-  * is supplied, the current value is returned.
-  *
-  * Six values of the mode parameter control the handling of arithmetic
-  * exceptions:
-  *
-  * BigDecimal::EXCEPTION_NaN
-  * BigDecimal::EXCEPTION_INFINITY
-  * BigDecimal::EXCEPTION_UNDERFLOW
-  * BigDecimal::EXCEPTION_OVERFLOW
-  * BigDecimal::EXCEPTION_ZERODIVIDE
-  * BigDecimal::EXCEPTION_ALL
-  *
-  * For each mode parameter above, if the value set is false, computation 
-  * continues after an arithmetic exception of the appropriate type. 
-  * When computation continues, results are as follows:
-  *
-  * EXCEPTION_NaN:: NaN
-  * EXCEPTION_INFINITY:: +infinity or -infinity
-  * EXCEPTION_UNDERFLOW:: 0
-  * EXCEPTION_OVERFLOW:: +infinity or -infinity
-  * EXCEPTION_ZERODIVIDE:: +infinity or -infinity
-  *
-  * One value of the mode parameter controls the rounding of numeric values:
-  * BigDecimal::ROUND_MODE. The values it can take are:
-  *
-  * ROUND_UP:: round away from zero
-  * ROUND_DOWN:: round towards zero (truncate)
-  * ROUND_HALF_UP:: round up if the appropriate digit &gt;= 5, otherwise truncate (default)
-  * ROUND_HALF_DOWN:: round up if the appropriate digit &gt;= 6, otherwise truncate
-  * ROUND_HALF_EVEN:: round towards the even neighbor (Banker's rounding)
-  * ROUND_CEILING:: round towards positive infinity (ceil)
-  * ROUND_FLOOR:: round towards negative infinity (floor)
-  *
-  */
+ * to_s(s)
+ *
+ * Converts the value to a string.
+ *
+ * The default format looks like  0.xxxxEnn.
+ *
+ * The optional parameter s consists of either an integer; or an optional '+'
+ * or ' ', followed by an optional number, followed by an optional 'E' or 'F'.
+ *
+ * If there is a '+' at the start of s, positive values are returned with
+ * a leading '+'.
+ *
+ * A space at the start of s returns positive values with a leading space.
+ *
+ * If s contains a number, a space is inserted after each group of that many 
+ * fractional digits.
+ *
+ * If s ends with an 'E', engineering notation (0.xxxxEnn) is used.
+ *
+ * If s ends with an 'F', conventional floating point notation is used.
+ *
+ * Examples:
+ *
+ * BigDecimal.new('-123.45678901234567890').to_s('5F') -&gt; '-123.45678 90123 45678 9'
+ *
+ * BigDecimal.new('123.45678901234567890').to_s('+8F') -&gt; '+123.45678901 23456789'
+ *
+ * BigDecimal.new('123.45678901234567890').to_s(' F') -&gt; ' 123.4567890123456789'
+ */
 static VALUE
-BigDecimal_mode(int argc, VALUE *argv, VALUE self)
+BigDecimal_to_s(int argc, VALUE *argv, VALUE self)
 {
-    VALUE which;
-    VALUE val;
-    unsigned long f,fo;
- 
-    if(rb_scan_args(argc,argv,&quot;11&quot;,&amp;which,&amp;val)==1) val = Qnil;
+    ENTER(5);
+    int   fmt=0;   /* 0:E format */
+    int   fPlus=0; /* =0:default,=1: set ' ' before digits ,set '+' before digits. */
+    Real  *vp;
+    volatile VALUE str;
+    char  *psz;
+    char   ch;
+    U_LONG nc;
+    S_INT  mc = 0;
+    VALUE  f;
 
-    Check_Type(which, T_FIXNUM);
-    f = (unsigned long)FIX2INT(which);
+    GUARD_OBJ(vp,GetVpValue(self,1));
+    
+    if(rb_scan_args(argc,argv,&quot;01&quot;,&amp;f)==1) {
+        if(TYPE(f)==T_STRING) {
+            SafeStringValue(f);
+            psz = RSTRING_PTR(f);
+            if(*psz==' ') {
+                fPlus = 1; psz++;
+            } else if(*psz=='+') {
+                fPlus = 2; psz++;
+            }
+            while((ch=*psz++)!=0) {
+                if(ISSPACE(ch)) continue;
+                if(!ISDIGIT(ch)) {
+                    if(ch=='F' || ch=='f') fmt = 1; /* F format */
+                    break;
+                }
+                mc = mc * 10 + ch - '0';
+            }
+        } else {
+            mc  = GetPositiveInt(f);
+        }
+    }
+    if(fmt) {
+        nc = VpNumOfChars(vp,&quot;F&quot;);
+    } else {
+        nc = VpNumOfChars(vp,&quot;E&quot;);
+    }
+    if(mc&gt;0) nc += (nc + mc - 1) / mc + 1;
 
-    if(f&amp;VP_EXCEPTION_ALL) {
-        /* Exception mode setting */
-        fo = VpGetException();
-        if(val==Qnil) return INT2FIX(fo);
-        if(val!=Qfalse &amp;&amp; val!=Qtrue) {
-            rb_raise(rb_eTypeError, &quot;second argument must be true or false&quot;);
-            return Qnil; /* Not reached */
-        }
-        if(f&amp;VP_EXCEPTION_INFINITY) {
-            VpSetException((unsigned short)((val==Qtrue)?(fo|VP_EXCEPTION_INFINITY):
-                           (fo&amp;(~VP_EXCEPTION_INFINITY))));
-        }
-        fo = VpGetException();
-        if(f&amp;VP_EXCEPTION_NaN) {
-            VpSetException((unsigned short)((val==Qtrue)?(fo|VP_EXCEPTION_NaN):
-                           (fo&amp;(~VP_EXCEPTION_NaN))));
-        }
-        fo = VpGetException();
-        if(f&amp;VP_EXCEPTION_UNDERFLOW) {
-            VpSetException((unsigned short)((val==Qtrue)?(fo|VP_EXCEPTION_UNDERFLOW):
-                           (fo&amp;(~VP_EXCEPTION_UNDERFLOW))));
-        }
-        fo = VpGetException();
-        if(f&amp;VP_EXCEPTION_ZERODIVIDE) {
-            VpSetException((unsigned short)((val==Qtrue)?(fo|VP_EXCEPTION_ZERODIVIDE):
-                           (fo&amp;(~VP_EXCEPTION_ZERODIVIDE))));
-        }
-        fo = VpGetException();
-        return INT2FIX(fo);
+    str = rb_str_new(0, nc);
+    psz = RSTRING_PTR(str);
+
+    if(fmt) {
+        VpToFString(vp, psz, mc, fPlus);
+    } else {
+        VpToString (vp, psz, mc, fPlus);
     }
-    if(VP_ROUND_MODE==f) {
-        /* Rounding mode setting */
-        fo = VpGetRoundMode();
-        if(val==Qnil) return INT2FIX(fo);
-        Check_Type(val, T_FIXNUM);
-        if(!VpIsRoundMode(FIX2INT(val))) {
-            rb_raise(rb_eTypeError, &quot;invalid rounding mode&quot;);
-            return Qnil;
-        }
-        fo = VpSetRoundMode((unsigned long)FIX2INT(val));
-        return INT2FIX(fo);
-    }
-    rb_raise(rb_eTypeError, &quot;first argument for BigDecimal#mode invalid&quot;);
-    return Qnil;
+    rb_str_resize(str, strlen(psz));
+    return str;
 }</pre>
 </body>
 </html>

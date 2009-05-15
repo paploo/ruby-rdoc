@@ -2,25 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>empty? (Hash)</title>
+  <title>values (Hash)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     hsh.empty?    =&gt; true or false
+ *     hsh.values    =&gt; array
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;hsh&lt;/i&gt; contains no key-value pairs.
+ *  Returns a new array populated with the values from &lt;i&gt;hsh&lt;/i&gt;. See
+ *  also &lt;code&gt;Hash#keys&lt;/code&gt;.
  *
- *     {}.empty?   #=&gt; true
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300 }
+ *     h.values   #=&gt; [100, 200, 300]
  *
  */
 
 static VALUE
-rb_hash_empty_p(VALUE hash)
+rb_hash_values(VALUE hash)
 {
-    return RHASH_EMPTY_P(hash) ? Qtrue : Qfalse;
+    VALUE ary;
+
+    ary = rb_ary_new();
+    rb_hash_foreach(hash, values_i, ary);
+
+    return ary;
 }</pre>
 </body>
 </html>

@@ -2,29 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>escape (Regexp)</title>
+  <title>eql? (Regexp)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     Regexp.escape(str)   =&gt; string
- *     Regexp.quote(str)    =&gt; string
+ *     rxp == other_rxp      =&gt; true or false
+ *     rxp.eql?(other_rxp)   =&gt; true or false
  *
- *  Escapes any characters that would have special meaning in a regular
- *  expression. Returns a new escaped string, or self if no characters are
- *  escaped.  For any string,
- *  &lt;code&gt;Regexp.new(Regexp.escape(&lt;i&gt;str&lt;/i&gt;))=~&lt;i&gt;str&lt;/i&gt;&lt;/code&gt; will be true.
+ *  Equality---Two regexps are equal if their patterns are identical, they have
+ *  the same character set code, and their &lt;code&gt;casefold?&lt;/code&gt; values are the
+ *  same.
  *
- *     Regexp.escape('\*?{}.')   #=&gt; \\\*\?\{\}\.
- *
+ *     /abc/  == /abc/x   #=&gt; false
+ *     /abc/  == /abc/i   #=&gt; false
+ *     /abc/  == /abc/n   #=&gt; false
+ *     /abc/u == /abc/n   #=&gt; false
  */
 
 static VALUE
-rb_reg_s_quote(VALUE c, VALUE str)
+rb_reg_equal(VALUE re1, VALUE re2)
 {
-    return rb_reg_quote(reg_operand(str, Qtrue));
+    if (re1 == re2) return Qtrue;
+    if (TYPE(re2) != T_REGEXP) return Qfalse;
+    rb_reg_check(re1); rb_reg_check(re2);
+    if (FL_TEST(re1, KCODE_FIXED) != FL_TEST(re2, KCODE_FIXED)) return Qfalse;
+    if (RREGEXP(re1)-&gt;ptr-&gt;options != RREGEXP(re2)-&gt;ptr-&gt;options) return Qfalse;
+    if (RREGEXP_SRC_LEN(re1) != RREGEXP_SRC_LEN(re2)) return Qfalse;
+    if (ENCODING_GET(re1) != ENCODING_GET(re2)) return Qfalse;
+    if (memcmp(RREGEXP_SRC_PTR(re1), RREGEXP_SRC_PTR(re2), RREGEXP_SRC_LEN(re1)) == 0) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

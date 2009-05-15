@@ -2,14 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rewind (StringIO)</title>
+  <title>string= (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/yaml/stringio.rb, line 35</span>
-35:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewind</span>
-36:             <span class="ruby-identifier">seek</span>(<span class="ruby-value">0</span>,<span class="ruby-value">0</span>)
-37:         <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ * call-seq:
+ *   strio.string = string  -&gt; string
+ *
+ * Changes underlying String object, the subject of IO.
+ */
+static VALUE
+strio_set_string(VALUE self, VALUE string)
+{
+    struct StringIO *ptr = StringIO(self);
+
+    if (!OBJ_TAINTED(self)) rb_secure(4);
+    ptr-&gt;flags &amp;= ~FMODE_READWRITE;
+    StringValue(string);
+    ptr-&gt;flags = OBJ_FROZEN(string) ? FMODE_READABLE : FMODE_READWRITE;
+    ptr-&gt;pos = 0;
+    ptr-&gt;lineno = 0;
+    return ptr-&gt;string = string;
+}</pre>
 </body>
 </html>

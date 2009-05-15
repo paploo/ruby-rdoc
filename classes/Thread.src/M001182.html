@@ -2,57 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>priority= (Thread)</title>
+  <title>safe_level (Thread)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     thr.priority= integer   =&gt; thr
+ *     thr.safe_level   =&gt; integer
  *
- *  Sets the priority of &lt;i&gt;thr&lt;/i&gt; to &lt;i&gt;integer&lt;/i&gt;. Higher-priority threads
- *  will run before lower-priority threads.
+ *  Returns the safe level in effect for &lt;i&gt;thr&lt;/i&gt;. Setting thread-local safe
+ *  levels can help when implementing sandboxes which run insecure code.
  *
- *     count1 = count2 = 0
- *     a = Thread.new do
- *           loop { count1 += 1 }
- *         end
- *     a.priority = -1
- *
- *     b = Thread.new do
- *           loop { count2 += 1 }
- *         end
- *     b.priority = -2
- *     sleep 1   #=&gt; 1
- *     count1    #=&gt; 622504
- *     count2    #=&gt; 5832
+ *     thr = Thread.new { $SAFE = 3; sleep }
+ *     Thread.current.safe_level   #=&gt; 0
+ *     thr.safe_level              #=&gt; 3
  */
 
 static VALUE
-rb_thread_priority_set(VALUE thread, VALUE prio)
+rb_thread_safe_level(VALUE thread)
 {
     rb_thread_t *th;
-    int priority;
     GetThreadPtr(thread, th);
 
-    rb_secure(4);
-
-#if USE_NATIVE_THREAD_PRIORITY
-    th-&gt;priority = NUM2INT(prio);
-    native_thread_apply_priority(th);
-#else
-    priority = NUM2INT(prio);
-    if (priority &gt; RUBY_THREAD_PRIORITY_MAX) {
-        priority = RUBY_THREAD_PRIORITY_MAX;
-    }
-    else if (priority &lt; RUBY_THREAD_PRIORITY_MIN) {
-        priority = RUBY_THREAD_PRIORITY_MIN;
-    }
-    th-&gt;priority = priority;
-    th-&gt;slice = priority;
-#endif
-    return INT2NUM(th-&gt;priority);
+    return INT2NUM(th-&gt;safe_level);
 }</pre>
 </body>
 </html>

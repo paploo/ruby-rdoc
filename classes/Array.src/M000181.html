@@ -2,50 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>cycle (Array)</title>
+  <title>drop (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ary.cycle {|obj| block }
- *     ary.cycle(n) {|obj| block }
+ *     ary.drop(n)               =&gt; array
  *  
- *  Calls &lt;i&gt;block&lt;/i&gt; for each element repeatedly _n_ times or
- *  forever if none or nil is given.  If a non-positive number is
- *  given or the array is empty, does nothing.  Returns nil if the
- *  loop has finished without getting interrupted.
+ *  Drops first n elements from &lt;i&gt;ary&lt;/i&gt;, and returns rest elements
+ *  in an array.
  *     
- *     a = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
- *     a.cycle {|x| puts x }  # print, a, b, c, a, b, c,.. forever.
- *     a.cycle(2) {|x| puts x }  # print, a, b, c, a, b, c.
+ *     a = [1, 2, 3, 4, 5, 0]
+ *     a.drop(3)             # =&gt; [4, 5, 0]
  *     
  */
 
 static VALUE
-rb_ary_cycle(int argc, VALUE *argv, VALUE ary)
+rb_ary_drop(VALUE ary, VALUE n)
 {
-    long n, i;
-    VALUE nv = Qnil;
-
-    rb_scan_args(argc, argv, &quot;01&quot;, &amp;nv);
-
-    RETURN_ENUMERATOR(ary, argc, argv);
-    if (NIL_P(nv)) {
-        n = -1;
-    }
-    else {
-        n = NUM2LONG(nv);
-        if (n &lt;= 0) return Qnil;
+    VALUE result;
+    long pos = NUM2LONG(n);
+    if (pos &lt; 0) {
+        rb_raise(rb_eArgError, &quot;attempt to drop negative size&quot;);
     }
 
-    while (RARRAY_LEN(ary) &gt; 0 &amp;&amp; (n &lt; 0 || 0 &lt; n--)) {
-        for (i=0; i&lt;RARRAY_LEN(ary); i++) {
-            rb_yield(RARRAY_PTR(ary)[i]);
-        }
-    }
-    return Qnil;
+    result = rb_ary_subseq(ary, pos, RARRAY_LEN(ary));
+    if (result == Qnil) result = rb_ary_new();
+    return result;
 }</pre>
 </body>
 </html>

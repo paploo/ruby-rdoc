@@ -2,33 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ctime (File)</title>
+  <title>to_path (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     file.ctime -&gt; time
+ *     file.path -&gt; filename
  *  
- *  Returns the change time for &lt;i&gt;file&lt;/i&gt; (that is, the time directory
- *  information about the file was changed, not the file itself).
+ *  Returns the pathname used to create &lt;i&gt;file&lt;/i&gt; as a string. Does
+ *  not normalize the name.
  *     
- *     File.new(&quot;testfile&quot;).ctime   #=&gt; Wed Apr 09 08:53:14 CDT 2003
+ *     File.new(&quot;testfile&quot;).path               #=&gt; &quot;testfile&quot;
+ *     File.new(&quot;/tmp/../tmp/xxx&quot;, &quot;w&quot;).path   #=&gt; &quot;/tmp/../tmp/xxx&quot;
  *     
  */
 
 static VALUE
-rb_file_ctime(VALUE obj)
+rb_file_path(VALUE obj)
 {
     rb_io_t *fptr;
-    struct stat st;
 
-    GetOpenFile(obj, fptr);
-    if (fstat(fptr-&gt;fd, &amp;st) == -1) {
-        rb_sys_fail_path(fptr-&gt;pathv);
-    }
-    return stat_ctime(&amp;st);
+    fptr = RFILE(rb_io_taint_check(obj))-&gt;fptr;
+    rb_io_check_initialized(fptr);
+    if (NIL_P(fptr-&gt;pathv)) return Qnil;
+    return rb_obj_taint(rb_str_dup(fptr-&gt;pathv));
 }</pre>
 </body>
 </html>

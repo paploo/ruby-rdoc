@@ -2,24 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>on (Tracer)</title>
+  <title>trace_func (Tracer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/tracer.rb, line 53</span>
-53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on</span>
-54:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
-55:       <span class="ruby-identifier">on</span>
-56:       <span class="ruby-keyword kw">begin</span>
-57:         <span class="ruby-keyword kw">yield</span>
-58:       <span class="ruby-keyword kw">ensure</span>
-59:         <span class="ruby-identifier">off</span>
-60:       <span class="ruby-keyword kw">end</span>
-61:     <span class="ruby-keyword kw">else</span>
-62:       <span class="ruby-identifier">set_trace_func</span> <span class="ruby-identifier">method</span>(<span class="ruby-identifier">:trace_func</span>).<span class="ruby-identifier">to_proc</span>
-63:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Trace on\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Tracer</span>.<span class="ruby-identifier">verbose?</span>
-64:     <span class="ruby-keyword kw">end</span>
-65:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/tracer.rb, line 113</span>
+113:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trace_func</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-operator">*</span>)
+114:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">__FILE__</span>
+115:     
+116:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">p</span> <span class="ruby-keyword kw">in</span> <span class="ruby-ivar">@filters</span>
+117:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">event</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">binding</span>, <span class="ruby-identifier">klass</span>
+118:     <span class="ruby-keyword kw">end</span>
+119:     
+120:     <span class="ruby-comment cmt"># saved_crit = Thread.critical</span>
+121:     <span class="ruby-comment cmt"># Thread.critical = true</span>
+122:     <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span>(<span class="ruby-value str">&quot;#%d:%s:%d:%s:%s: %s&quot;</span>,
+123:       <span class="ruby-identifier">get_thread_no</span>,
+124:       <span class="ruby-identifier">file</span>,
+125:       <span class="ruby-identifier">line</span>,
+126:       <span class="ruby-identifier">klass</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>,
+127:       <span class="ruby-constant">EVENT_SYMBOL</span>[<span class="ruby-identifier">event</span>],
+128:       <span class="ruby-identifier">get_line</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>))
+129:     <span class="ruby-comment cmt"># Thread.critical = saved_crit</span>
+130:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

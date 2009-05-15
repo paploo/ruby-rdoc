@@ -2,19 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>has_trailing_separator? (Pathname)</title>
+  <title>parent (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 355</span>
-355:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_trailing_separator?</span>(<span class="ruby-identifier">path</span>)
-356:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
-357:       <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
-358:       <span class="ruby-identifier">pre</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">basename</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span>
-359:     <span class="ruby-keyword kw">else</span>
-360:       <span class="ruby-keyword kw">false</span>
-361:     <span class="ruby-keyword kw">end</span>
-362:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 492</span>
+492:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parent</span>
+493:     <span class="ruby-keyword kw">self</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'..'</span>
+494:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

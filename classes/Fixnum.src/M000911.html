@@ -2,30 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;&lt; (Fixnum)</title>
+  <title>even? (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   fix &lt;&lt; count     =&gt; integer
+ *  call-seq:
+ *     fix.even? -&gt; true or false
  *
- * Shifts _fix_ left _count_ positions (right if _count_ is negative).
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;fix&lt;/i&gt; is an even number.
  */
 
 static VALUE
-rb_fix_lshift(VALUE x, VALUE y)
+fix_even_p(VALUE num)
 {
-    long val, width;
-
-    val = NUM2LONG(x);
-    if (!FIXNUM_P(y))
-        return rb_big_lshift(rb_int2big(val), y);
-    width = FIX2LONG(y);
-    if (width &lt; 0)
-        return fix_rshift(val, (unsigned long)-width);
-    return fix_lshift(val, width);
+    if (num &amp; 2) {
+        return Qfalse;
+    }
+    return Qtrue;
 }</pre>
 </body>
 </html>

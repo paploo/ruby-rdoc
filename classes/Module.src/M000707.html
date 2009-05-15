@@ -2,35 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>class_exec (Module)</title>
+  <title>public (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     mod.module_exec(arg...) {|var...| block }       =&gt; obj
- *     mod.class_exec(arg...) {|var...| block }        =&gt; obj
+ *     public                 =&gt; self
+ *     public(symbol, ...)    =&gt; self
  *
- *  Evaluates the given block in the context of the class/module.
- *  The method defined in the block will belong to the receiver.
- *
- *     class Thing
- *     end
- *     Thing.class_exec{
- *       def hello() &quot;Hello there!&quot; end
- *     }
- *     puts Thing.new.hello()
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     Hello there!
+ *  With no arguments, sets the default visibility for subsequently
+ *  defined methods to public. With arguments, sets the named methods to
+ *  have public visibility.
  */
 
-VALUE
-rb_mod_module_exec(int argc, VALUE *argv, VALUE mod)
+static VALUE
+rb_mod_public(int argc, VALUE *argv, VALUE module)
 {
-    return yield_under(mod, mod, rb_ary_new4(argc, argv));
+    secure_visibility(module);
+    if (argc == 0) {
+        SCOPE_SET(NOEX_PUBLIC);
+    }
+    else {
+        set_method_visibility(module, argc, argv, NOEX_PUBLIC);
+    }
+    return module;
 }</pre>
 </body>
 </html>

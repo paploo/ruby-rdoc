@@ -2,27 +2,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>floor (Numeric)</title>
+  <title>im (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- *  call-seq:
- *     num.floor    =&gt; integer
- *
- *  Returns the largest integer less than or equal to &lt;i&gt;num&lt;/i&gt;.
- *  &lt;code&gt;Numeric&lt;/code&gt; implements this by converting &lt;i&gt;anInteger&lt;/i&gt;
- *  to a &lt;code&gt;Float&lt;/code&gt; and invoking &lt;code&gt;Float#floor&lt;/code&gt;.
- *
- *     1.floor      #=&gt; 1
- *     (-1).floor   #=&gt; -1
- */
-
-static VALUE
-num_floor(VALUE num)
-{
-    return flo_floor(rb_Float(num));
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/complex.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">im</span>() <span class="ruby-constant">Complex</span>(<span class="ruby-value">0</span>, <span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

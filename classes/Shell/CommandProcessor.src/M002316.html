@@ -2,23 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>def_system_command (Shell::CommandProcessor)</title>
+  <title>install_system_commands (Shell::CommandProcessor)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 380</span>
-380:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">def_system_command</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">path</span> = <span class="ruby-identifier">command</span>)
-381:       <span class="ruby-keyword kw">begin</span>
-382:         <span class="ruby-identifier">eval</span>((<span class="ruby-identifier">d</span> = <span class="ruby-node">%Q[def #{command}(*opts)
-383:                   SystemCommand.new(@shell, '#{path}', *opts)
-384:                end]</span>), <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
-385:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SyntaxError</span>
-386:         <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;warn: Can't define #{command} path: #{path}.&quot;</span> 
-387:       <span class="ruby-keyword kw">end</span>
-388:       <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;Define #{command} path: #{path}.&quot;</span>, <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug?</span>
-389:       <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-node">&quot;Definition of #{command}: &quot;</span>, <span class="ruby-identifier">d</span>, 
-390:              <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>)
-391:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 490</span>
+490:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">install_system_commands</span>(<span class="ruby-identifier">pre</span> = <span class="ruby-value str">&quot;sys_&quot;</span>)
+491:       <span class="ruby-identifier">defined_meth</span> = {}
+492:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">m</span> <span class="ruby-keyword kw">in</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">methods</span>
+493:         <span class="ruby-identifier">defined_meth</span>[<span class="ruby-identifier">m</span>] = <span class="ruby-keyword kw">true</span>
+494:       <span class="ruby-keyword kw">end</span>
+495:       <span class="ruby-identifier">sh</span> = <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">new</span>
+496:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword kw">in</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">default_system_path</span>
+497:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">directory?</span> <span class="ruby-identifier">path</span>
+498:         <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">cd</span> <span class="ruby-identifier">path</span>
+499:         <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">foreach</span> <span class="ruby-keyword kw">do</span>
+500:           <span class="ruby-operator">|</span><span class="ruby-identifier">cn</span><span class="ruby-operator">|</span>
+501:           <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">defined_meth</span>[<span class="ruby-identifier">pre</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cn</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">cn</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">executable?</span>(<span class="ruby-identifier">cn</span>)
+502:             <span class="ruby-identifier">command</span> = (<span class="ruby-identifier">pre</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cn</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\W/</span>, <span class="ruby-value str">&quot;_&quot;</span>).<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^([0-9])/</span>, <span class="ruby-value str">'_\1'</span>)
+503:             <span class="ruby-keyword kw">begin</span>
+504:               <span class="ruby-identifier">def_system_command</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">sh</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">cn</span>))
+505:             <span class="ruby-keyword kw">rescue</span>
+506:               <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;warn: Can't define #{command} path: #{cn}&quot;</span>
+507:             <span class="ruby-keyword kw">end</span>
+508:             <span class="ruby-identifier">defined_meth</span>[<span class="ruby-identifier">command</span>] = <span class="ruby-identifier">command</span>
+509:           <span class="ruby-keyword kw">end</span>
+510:         <span class="ruby-keyword kw">end</span>
+511:       <span class="ruby-keyword kw">end</span>
+512:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

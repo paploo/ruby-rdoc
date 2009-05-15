@@ -2,23 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>modulo (Numeric)</title>
+  <title>integer? (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.modulo(numeric)    =&gt; result
+ *     num.integer? -&gt; true or false
  *
- *  Equivalent to
- *  &lt;i&gt;num&lt;/i&gt;.&lt;code&gt;divmod(&lt;/code&gt;&lt;i&gt;aNumeric&lt;/i&gt;&lt;code&gt;)[1]&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;num&lt;/i&gt; is an &lt;code&gt;Integer&lt;/code&gt;
+ *  (including &lt;code&gt;Fixnum&lt;/code&gt; and &lt;code&gt;Bignum&lt;/code&gt;).
  */
 
 static VALUE
-num_modulo(VALUE x, VALUE y)
+num_int_p(VALUE num)
 {
-    return rb_funcall(x, '%', 1, y);
+    return Qfalse;
 }</pre>
 </body>
 </html>

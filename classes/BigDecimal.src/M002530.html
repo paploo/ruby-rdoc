@@ -2,17 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>zero? (BigDecimal)</title>
+  <title>nan? (BigDecimal)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* Returns True if the value is zero. */
+  <pre>/* Returns True if the value is Not a Number */
 static VALUE
-BigDecimal_zero(VALUE self)
+BigDecimal_IsNaN(VALUE self)
 {
-    Real *a = GetVpValue(self,1);
-    return VpIsZero(a) ? Qtrue : Qfalse;
+    Real *p = GetVpValue(self,1);
+    if(VpIsNaN(p))  return Qtrue;
+    return Qfalse;
 }</pre>
 </body>
 </html>

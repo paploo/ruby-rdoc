@@ -2,53 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>gmtime (Time)</title>
+  <title>asctime (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     time.gmtime    =&gt; time
- *     time.utc       =&gt; time
+ *     time.asctime =&gt; string
+ *     time.ctime   =&gt; string
  *  
- *  Converts &lt;i&gt;time&lt;/i&gt; to UTC (GMT), modifying the receiver.
+ *  Returns a canonical string representation of &lt;i&gt;time&lt;/i&gt;.
  *     
- *     t = Time.now   #=&gt; 2007-11-19 08:18:31 -0600
- *     t.gmt?         #=&gt; false
- *     t.gmtime       #=&gt; 2007-11-19 14:18:31 UTC
- *     t.gmt?         #=&gt; true
- *
- *     t = Time.now   #=&gt; 2007-11-19 08:18:51 -0600
- *     t.utc?         #=&gt; false
- *     t.utc          #=&gt; 2007-11-19 14:18:51 UTC
- *     t.utc?         #=&gt; true
+ *     Time.now.asctime   #=&gt; &quot;Wed Apr  9 08:56:03 2003&quot;
  */
 
 static VALUE
-time_gmtime(VALUE time)
+time_asctime(VALUE time)
 {
     struct time_object *tobj;
-    struct tm *tm_tmp;
-    time_t t;
-    IF_HAVE_GMTIME_R(struct tm result);
+    char *s;
+    IF_HAVE_GMTIME_R(char buf[32]);
 
     GetTimeval(time, tobj);
-    if (tobj-&gt;gmt) {
-        if (tobj-&gt;tm_got)
-            return time;
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
     }
-    else {
-        time_modify(time);
-    }
-    t = tobj-&gt;ts.tv_sec;
-    tm_tmp = GMTIME(&amp;t, result);
-    if (!tm_tmp)
-        rb_raise(rb_eArgError, &quot;gmtime error&quot;);
-    tobj-&gt;tm = *tm_tmp;
-    tobj-&gt;tm_got = 1;
-    tobj-&gt;gmt = 1;
-    return time;
+    s = ASCTIME(&amp;tobj-&gt;tm, buf);
+    if (s[24] == '\n') s[24] = '\0';
+#if (defined(_MSC_VER) &amp;&amp; defined(_DLL)) || defined(__MSVCRT__)
+    /* workaround for MSVCRT's bug */
+    if (s[8] == '0') s[8] = ' ';
+#endif
+
+    return rb_str_new2(s);
 }</pre>
 </body>
 </html>

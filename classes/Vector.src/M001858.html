@@ -2,17 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>collect2 (Vector)</title>
+  <title>* (Vector)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1164</span>
-1164:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">collect2</span>(<span class="ruby-identifier">v</span>) <span class="ruby-comment cmt"># :yield: e1, e2</span>
-1165:     <span class="ruby-constant">Vector</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">ErrDimensionMismatch</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">size</span>
-1166:     (<span class="ruby-value">0</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-1167:       <span class="ruby-keyword kw">yield</span> <span class="ruby-ivar">@elements</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">v</span>[<span class="ruby-identifier">i</span>]
-1168:     <span class="ruby-keyword kw">end</span>
-1169:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/matrix.rb, line 1217</span>
+1217:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">*</span>(<span class="ruby-identifier">x</span>)
+1218:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">x</span>
+1219:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+1220:       <span class="ruby-identifier">els</span> = <span class="ruby-ivar">@elements</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">x</span>}
+1221:       <span class="ruby-constant">Vector</span>.<span class="ruby-identifier">elements</span>(<span class="ruby-identifier">els</span>, <span class="ruby-keyword kw">false</span>)
+1222:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Matrix</span>
+1223:       <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">column_vector</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">x</span>
+1224:     <span class="ruby-keyword kw">else</span>
+1225:       <span class="ruby-identifier">s</span>, <span class="ruby-identifier">x</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">coerce</span>(<span class="ruby-keyword kw">self</span>)
+1226:       <span class="ruby-identifier">s</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">x</span>
+1227:     <span class="ruby-keyword kw">end</span>
+1228:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -2,16 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>abort (PStore)</title>
+  <title>save_data (PStore)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 295</span>
-295:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">abort</span>
-296:     <span class="ruby-identifier">in_transaction</span>
-297:     <span class="ruby-ivar">@abort</span> = <span class="ruby-keyword kw">true</span>
-298:     <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:pstore_abort_transaction</span>
-299:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pstore.rb, line 458</span>
+458:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_data</span>(<span class="ruby-identifier">original_checksum</span>, <span class="ruby-identifier">original_file_size</span>, <span class="ruby-identifier">file</span>)
+459:     <span class="ruby-comment cmt"># We only want to save the new data if the size or checksum has changed.</span>
+460:     <span class="ruby-comment cmt"># This results in less filesystem calls, which is good for performance.</span>
+461:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">marshal_dump_supports_canonical_option?</span>
+462:       <span class="ruby-identifier">new_data</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@table</span>, <span class="ruby-value">-1</span>, <span class="ruby-keyword kw">true</span>)
+463:     <span class="ruby-keyword kw">else</span>
+464:       <span class="ruby-identifier">new_data</span> = <span class="ruby-identifier">dump</span>(<span class="ruby-ivar">@table</span>)
+465:     <span class="ruby-keyword kw">end</span>
+466:     <span class="ruby-identifier">new_checksum</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-identifier">new_data</span>)
+467:     
+468:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_data</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">original_file_size</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">new_checksum</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">original_checksum</span>
+469:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ultra_safe</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">on_windows?</span>
+470:         <span class="ruby-comment cmt"># Windows doesn't support atomic file renames.</span>
+471:         <span class="ruby-identifier">save_data_with_atomic_file_rename_strategy</span>(<span class="ruby-identifier">new_data</span>, <span class="ruby-identifier">file</span>)
+472:       <span class="ruby-keyword kw">else</span>
+473:         <span class="ruby-identifier">save_data_with_fast_strategy</span>(<span class="ruby-identifier">new_data</span>, <span class="ruby-identifier">file</span>)
+474:       <span class="ruby-keyword kw">end</span>
+475:     <span class="ruby-keyword kw">end</span>
+476:     
+477:     <span class="ruby-identifier">new_data</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-constant">EMPTY_STRING</span>)
+478:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

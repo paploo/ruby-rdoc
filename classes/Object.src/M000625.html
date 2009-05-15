@@ -2,78 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>remove_instance_variable (Object)</title>
+  <title>send (Object)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     obj.remove_instance_variable(symbol)    =&gt; obj
- *  
- *  Removes the named instance variable from &lt;i&gt;obj&lt;/i&gt;, returning that
- *  variable's value.
- *     
- *     class Dummy
- *       attr_reader :var
- *       def initialize
- *         @var = 99
- *       end
- *       def remove
- *         remove_instance_variable(:@var)
+ *     obj.send(symbol [, args...])        =&gt; obj
+ *     obj.__send__(symbol [, args...])      =&gt; obj
+ *
+ *  Invokes the method identified by _symbol_, passing it any
+ *  arguments specified. You can use &lt;code&gt;__send__&lt;/code&gt; if the name
+ *  +send+ clashes with an existing method in _obj_.
+ *
+ *     class Klass
+ *       def hello(*args)
+ *         &quot;Hello &quot; + args.join(' ')
  *       end
  *     end
- *     d = Dummy.new
- *     d.var      #=&gt; 99
- *     d.remove   #=&gt; 99
- *     d.var      #=&gt; nil
+ *     k = Klass.new
+ *     k.send :hello, &quot;gentle&quot;, &quot;readers&quot;   #=&gt; &quot;Hello gentle readers&quot;
  */
 
 VALUE
-rb_obj_remove_instance_variable(VALUE obj, VALUE name)
+rb_f_send(int argc, VALUE *argv, VALUE recv)
 {
-    VALUE val = Qnil;
-    const ID id = rb_to_id(name);
-    st_data_t n, v;
-    struct st_table *iv_index_tbl;
-    st_data_t index;
-
-    if (!OBJ_UNTRUSTED(obj) &amp;&amp; rb_safe_level() &gt;= 4)
-	rb_raise(rb_eSecurityError, &quot;Insecure: can't modify instance variable&quot;);
-    if (OBJ_FROZEN(obj)) rb_error_frozen(&quot;object&quot;);
-    if (!rb_is_instance_id(id)) {
-	rb_name_error(id, &quot;`%s' is not allowed as an instance variable name&quot;, rb_id2name(id));
-    }
-
-    switch (TYPE(obj)) {
-      case T_OBJECT:
-        iv_index_tbl = ROBJECT_IV_INDEX_TBL(obj);
-        if (!iv_index_tbl) break;
-        if (!st_lookup(iv_index_tbl, id, &amp;index)) break;
-        if (ROBJECT_NUMIV(obj) &lt;= index) break;
-        val = ROBJECT_IVPTR(obj)[index];
-        if (val != Qundef) {
-            ROBJECT_IVPTR(obj)[index] = Qundef;
-            return val;
-        }
-	break;
-      case T_CLASS:
-      case T_MODULE:
-	n = id;
-	if (RCLASS_IV_TBL(obj) &amp;&amp; st_delete(RCLASS_IV_TBL(obj), &amp;n, &amp;v)) {
-	    return (VALUE)v;
-	}
-	break;
-      default:
-	if (FL_TEST(obj, FL_EXIVAR) || rb_special_const_p(obj)) {
-	    if (generic_ivar_remove(obj, id, &amp;val)) {
-		return val;
-	    }
-	}
-	break;
-    }
-    rb_name_error(id, &quot;instance variable %s not defined&quot;, rb_id2name(id));
-    return Qnil;		/* not reached */
+    return send_internal(argc, argv, recv, NOEX_NOSUPER | NOEX_PRIVATE);
 }</pre>
 </body>
 </html>

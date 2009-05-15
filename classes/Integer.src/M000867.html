@@ -2,47 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>upto (Integer)</title>
+  <title>chr (Integer)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     int.upto(limit) {|i| block }     =&gt; int
+ *     int.chr([encoding])    =&gt; string
  *
- *  Iterates &lt;em&gt;block&lt;/em&gt;, passing in integer values from &lt;i&gt;int&lt;/i&gt;
- *  up to and including &lt;i&gt;limit&lt;/i&gt;.
+ *  Returns a string containing the character represented by the
+ *  receiver's value according to +encoding+.
  *
- *     5.upto(10) { |i| print i, &quot; &quot; }
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     5 6 7 8 9 10
+ *     65.chr    #=&gt; &quot;A&quot;
+ *     230.chr   #=&gt; &quot;\346&quot;
+ *     255.chr(Encoding::UTF_8)   #=&gt; &quot;\303\277&quot;
  */
 
 static VALUE
-int_upto(VALUE from, VALUE to)
+int_chr(int argc, VALUE *argv, VALUE num)
 {
-    RETURN_ENUMERATOR(from, 1, &amp;to);
-    if (FIXNUM_P(from) &amp;&amp; FIXNUM_P(to)) {
-        long i, end;
+    char c;
+    int n;
+    long i = NUM2LONG(num);
+    rb_encoding *enc;
+    VALUE str;
 
-        end = FIX2LONG(to);
-        for (i = FIX2LONG(from); i &lt;= end; i++) {
-            rb_yield(LONG2FIX(i));
+    switch (argc) {
+      case 0:
+        if (i &lt; 0 || 0xff &lt; i) {
+          out_of_range:
+            rb_raise(rb_eRangeError, &quot;%&quot;PRIdVALUE &quot; out of char range&quot;, i);
         }
-    }
-    else {
-        VALUE i = from, c;
-
-        while (!(c = rb_funcall(i, '&gt;', 1, to))) {
-            rb_yield(i);
-            i = rb_funcall(i, '+', 1, INT2FIX(1));
+        c = i;
+        if (i &lt; 0x80) {
+            return rb_usascii_str_new(&amp;c, 1);
         }
-        if (NIL_P(c)) rb_cmperr(i, to);
+        else {
+            return rb_str_new(&amp;c, 1);
+        }
+      case 1:
+        break;
+      default:
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 0 or 1)&quot;, argc);
+        break;
     }
-    return from;
+    enc = rb_to_encoding(argv[0]);
+    if (!enc) enc = rb_ascii8bit_encoding();
+    if (i &lt; 0 || (n = rb_enc_codelen(i, enc)) &lt;= 0) goto out_of_range;
+    str = rb_enc_str_new(0, n, enc);
+    rb_enc_mbcput(i, RSTRING_PTR(str), enc);
+    return str;
 }</pre>
 </body>
 </html>

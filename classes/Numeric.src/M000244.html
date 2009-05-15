@@ -2,24 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;=&gt; (Numeric)</title>
+  <title>modulo (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num &lt;=&gt; other -&gt; 0 or nil
+ *     num.modulo(numeric)    =&gt; result
  *
- *  Returns zero if &lt;i&gt;num&lt;/i&gt; equals &lt;i&gt;other&lt;/i&gt;, &lt;code&gt;nil&lt;/code&gt;
- *  otherwise.
+ *  Equivalent to
+ *  &lt;i&gt;num&lt;/i&gt;.&lt;code&gt;divmod(&lt;/code&gt;&lt;i&gt;aNumeric&lt;/i&gt;&lt;code&gt;)[1]&lt;/code&gt;.
  */
 
 static VALUE
-num_cmp(VALUE x, VALUE y)
+num_modulo(VALUE x, VALUE y)
 {
-    if (x == y) return INT2FIX(0);
-    return Qnil;
+    return rb_funcall(x, '%', 1, y);
 }</pre>
 </body>
 </html>

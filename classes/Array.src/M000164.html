@@ -2,44 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>assoc (Array)</title>
+  <title>| (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/* 
  *  call-seq:
- *     array.assoc(obj)   -&gt;  an_array  or  nil
+ *     array | other_array     -&gt;  an_array
  *
- *  Searches through an array whose elements are also arrays
- *  comparing _obj_ with the first element of each contained array
- *  using obj.==.
- *  Returns the first contained array that matches (that
- *  is, the first associated array),
- *  or +nil+ if no match is found.
- *  See also &lt;code&gt;Array#rassoc&lt;/code&gt;.
+ *  Set Union---Returns a new array by joining this array with
+ *  other_array, removing duplicates.
  *
- *     s1 = [ &quot;colors&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;green&quot; ]
- *     s2 = [ &quot;letters&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     s3 = &quot;foo&quot;
- *     a  = [ s1, s2, s3 ]
- *     a.assoc(&quot;letters&quot;)  #=&gt; [ &quot;letters&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     a.assoc(&quot;foo&quot;)      #=&gt; nil
+ *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ] | [ &quot;c&quot;, &quot;d&quot;, &quot;a&quot; ]
+ *            #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
  */
 
-VALUE
-rb_ary_assoc(VALUE ary, VALUE key)
+static VALUE
+rb_ary_or(VALUE ary1, VALUE ary2)
 {
+    VALUE hash, ary3;
+    VALUE v, vv;
     long i;
-    VALUE v;
 
-    for (i = 0; i &lt; RARRAY_LEN(ary); ++i) {
-        v = rb_check_array_type(RARRAY_PTR(ary)[i]);
-        if (!NIL_P(v) &amp;&amp; RARRAY_LEN(v) &gt; 0 &amp;&amp;
-            rb_equal(RARRAY_PTR(v)[0], key))
-            return v;
+    ary2 = to_ary(ary2);
+    ary3 = rb_ary_new2(RARRAY_LEN(ary1)+RARRAY_LEN(ary2));
+    hash = ary_make_hash(ary1, ary2);
+
+    for (i=0; i&lt;RARRAY_LEN(ary1); i++) {
+        v = vv = rb_ary_elt(ary1, i);
+        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
+            rb_ary_push(ary3, v);
+        }
     }
-    return Qnil;
+    for (i=0; i&lt;RARRAY_LEN(ary2); i++) {
+        v = vv = rb_ary_elt(ary2, i);
+        if (st_delete(RHASH_TBL(hash), (st_data_t*)&amp;vv, 0)) {
+            rb_ary_push(ary3, v);
+        }
+    }
+    return ary3;
 }</pre>
 </body>
 </html>

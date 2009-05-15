@@ -2,76 +2,75 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>[] (MatchData)</title>
+  <title>inspect (MatchData)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     mtch[i]               =&gt; str or nil
- *     mtch[start, length]   =&gt; array
- *     mtch[range]           =&gt; array
- *     mtch[name]            =&gt; str or nil
+ * call-seq:
+ *    mtch.inspect   =&gt; str
  *
- *  Match Reference---&lt;code&gt;MatchData&lt;/code&gt; acts as an array, and may be
- *  accessed using the normal array indexing techniques.  &lt;i&gt;mtch&lt;/i&gt;[0] is
- *  equivalent to the special variable &lt;code&gt;$&amp;&lt;/code&gt;, and returns the entire
- *  matched string.  &lt;i&gt;mtch&lt;/i&gt;[1], &lt;i&gt;mtch&lt;/i&gt;[2], and so on return the values
- *  of the matched backreferences (portions of the pattern between parentheses).
+ * Returns a printable version of &lt;i&gt;mtch&lt;/i&gt;.
  *
- *     m = /(.)(.)(\d+)(\d)/.match(&quot;THX1138.&quot;)
- *     m          #=&gt; #&lt;MatchData &quot;HX1138&quot; 1:&quot;H&quot; 2:&quot;X&quot; 3:&quot;113&quot; 4:&quot;8&quot;&gt;
- *     m[0]       #=&gt; &quot;HX1138&quot;
- *     m[1, 2]    #=&gt; [&quot;H&quot;, &quot;X&quot;]
- *     m[1..3]    #=&gt; [&quot;H&quot;, &quot;X&quot;, &quot;113&quot;]
- *     m[-3, 2]   #=&gt; [&quot;X&quot;, &quot;113&quot;]
+ *     puts /.$/.match(&quot;foo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;o&quot;&gt;
  *
- *     m = /(?&lt;foo&gt;a+)b/.match(&quot;ccaaab&quot;)
- *     m          #=&gt; #&lt;MatchData &quot;aaab&quot; foo:&quot;aaa&quot;&gt;
- *     m[&quot;foo&quot;]   #=&gt; &quot;aaa&quot;
- *     m[:foo]    #=&gt; &quot;aaa&quot;
+ *     puts /(.)(.)(.)/.match(&quot;foo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;foo&quot; 1:&quot;f&quot; 2:&quot;o&quot; 3:&quot;o&quot;&gt;
+ *
+ *     puts /(.)(.)?(.)/.match(&quot;fo&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;fo&quot; 1:&quot;f&quot; 2:nil 3:&quot;o&quot;&gt;
+ *
+ *     puts /(?&lt;foo&gt;.)(?&lt;bar&gt;.)(?&lt;baz&gt;.)/.match(&quot;hoge&quot;).inspect
+ *     #=&gt; #&lt;MatchData &quot;hog&quot; foo:&quot;h&quot; bar:&quot;o&quot; baz:&quot;g&quot;&gt;
+ *
  */
 
 static VALUE
-match_aref(int argc, VALUE *argv, VALUE match)
+match_inspect(VALUE match)
 {
-    VALUE idx, rest;
+    const char *cname = rb_obj_classname(match);
+    VALUE str;
+    int i;
+    struct re_registers *regs = RMATCH_REGS(match);
+    int num_regs = regs-&gt;num_regs;
+    struct backref_name_tag *names;
+    VALUE regexp = RMATCH(match)-&gt;regexp;
 
-    match_check(match);
-    rb_scan_args(argc, argv, &quot;11&quot;, &amp;idx, &amp;rest);
-
-    if (NIL_P(rest)) {
-      if (FIXNUM_P(idx)) {
-        if (FIX2INT(idx) &gt;= 0) {
-          return rb_reg_nth_match(FIX2INT(idx), match);
-        }
-      }
-      else {
-        const char *p;
-        int num;
-
-        switch (TYPE(idx)) {
-          case T_SYMBOL:
-            p = rb_id2name(SYM2ID(idx));
-            goto name_to_backref;
-            break;
-          case T_STRING:
-            p = StringValuePtr(idx);
-
-          name_to_backref:
-            num = name_to_backref_number(RMATCH_REGS(match),
-                       RMATCH(match)-&gt;regexp, p, p + strlen(p));
-            return rb_reg_nth_match(num, match);
-            break;
-
-          default:
-            break;
-        }
-      }
+    if (regexp == 0) {
+        return rb_sprintf(&quot;#&lt;%s:%p&gt;&quot;, cname, (void*)match);
     }
 
-    return rb_ary_aref(argc, argv, match_to_a(match));
+    names = ALLOCA_N(struct backref_name_tag, num_regs);
+    MEMZERO(names, struct backref_name_tag, num_regs);
+
+    onig_foreach_name(RREGEXP(regexp)-&gt;ptr,
+            match_inspect_name_iter, names);
+
+    str = rb_str_buf_new2(&quot;#&lt;&quot;);
+    rb_str_buf_cat2(str, cname);
+
+    for (i = 0; i &lt; num_regs; i++) {
+        VALUE v;
+        rb_str_buf_cat2(str, &quot; &quot;);
+        if (0 &lt; i) {
+            if (names[i].name)
+                rb_str_buf_cat(str, (const char *)names[i].name, names[i].len);
+            else {
+                rb_str_catf(str, &quot;%d&quot;, i);
+            }
+            rb_str_buf_cat2(str, &quot;:&quot;);
+        }
+        v = rb_reg_nth_match(i, match);
+        if (v == Qnil)
+            rb_str_buf_cat2(str, &quot;nil&quot;);
+        else
+            rb_str_buf_append(str, rb_str_inspect(v));
+    }
+    rb_str_buf_cat2(str, &quot;&gt;&quot;);
+
+    return str;
 }</pre>
 </body>
 </html>

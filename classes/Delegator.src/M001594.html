@@ -2,15 +2,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>== (Delegator)</title>
+  <title>dup (Delegator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/delegate.rb, line 157</span>
-157:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">obj</span>)
-158:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">equal?</span>(<span class="ruby-keyword kw">self</span>)
-159:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">__getobj__</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">obj</span>
-160:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/delegate.rb, line 194</span>
+194:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dup</span>
+195:     <span class="ruby-identifier">new</span> = <span class="ruby-keyword kw">super</span>
+196:     <span class="ruby-identifier">new</span>.<span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">dup</span>)
+197:     <span class="ruby-identifier">new</span>
+198:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

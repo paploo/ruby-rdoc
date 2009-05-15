@@ -2,43 +2,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>% (Fixnum)</title>
+  <title>magnitude (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *    fix % other         =&gt; Numeric
- *    fix.modulo(other)   =&gt; Numeric
+ *     fix.abs -&gt; aFixnum
  *
- *  Returns &lt;code&gt;fix&lt;/code&gt; modulo &lt;code&gt;other&lt;/code&gt;.
- *  See &lt;code&gt;Numeric.divmod&lt;/code&gt; for more information.
+ *  Returns the absolute value of &lt;i&gt;fix&lt;/i&gt;.
+ *
+ *     -12345.abs   #=&gt; 12345
+ *     12345.abs    #=&gt; 12345
+ *
  */
 
 static VALUE
-fix_mod(VALUE x, VALUE y)
+fix_abs(VALUE fix)
 {
-    if (FIXNUM_P(y)) {
-        long mod;
+    long i = FIX2LONG(fix);
 
-        fixdivmod(FIX2LONG(x), FIX2LONG(y), 0, &amp;mod);
-        return LONG2NUM(mod);
-    }
-    switch (TYPE(y)) {
-      case T_BIGNUM:
-        x = rb_int2big(FIX2LONG(x));
-        return rb_big_modulo(x, y);
-      case T_FLOAT:
-        {
-            double mod;
+    if (i &lt; 0) i = -i;
 
-            flodivmod((double)FIX2LONG(x), RFLOAT_VALUE(y), 0, &amp;mod);
-            return DBL2NUM(mod);
-        }
-      default:
-        return rb_num_coerce_bin(x, y, '%');
-    }
+    return LONG2NUM(i);
 }</pre>
 </body>
 </html>

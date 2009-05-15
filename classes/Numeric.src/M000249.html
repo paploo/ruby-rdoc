@@ -2,56 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>divmod (Numeric)</title>
+  <title>real? (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.divmod( aNumeric ) -&gt; anArray
+ *     num.real? -&gt; true or false
  *
- *  Returns an array containing the quotient and modulus obtained by
- *  dividing &lt;i&gt;num&lt;/i&gt; by &lt;i&gt;aNumeric&lt;/i&gt;. If &lt;code&gt;q, r =
- *  x.divmod(y)&lt;/code&gt;, then
- *
- *      q = floor(float(x)/float(y))
- *      x = q*y + r
- *
- *  The quotient is rounded toward -infinity, as shown in the following table:
- *
- *     a    |  b  |  a.divmod(b)  |   a/b   | a.modulo(b) | a.remainder(b)
- *    ------+-----+---------------+---------+-------------+---------------
- *     13   |  4  |   3,    1     |   3     |    1        |     1
- *    ------+-----+---------------+---------+-------------+---------------
- *     13   | -4  |  -4,   -3     |  -3     |   -3        |     1
- *    ------+-----+---------------+---------+-------------+---------------
- *    -13   |  4  |  -4,    3     |  -4     |    3        |    -1
- *    ------+-----+---------------+---------+-------------+---------------
- *    -13   | -4  |   3,   -1     |   3     |   -1        |    -1
- *    ------+-----+---------------+---------+-------------+---------------
- *     11.5 |  4  |   2,    3.5   |   2.875 |    3.5      |     3.5
- *    ------+-----+---------------+---------+-------------+---------------
- *     11.5 | -4  |  -3,   -0.5   |  -2.875 |   -0.5      |     3.5
- *    ------+-----+---------------+---------+-------------+---------------
- *    -11.5 |  4  |  -3,    0.5   |  -2.875 |    0.5      |    -3.5
- *    ------+-----+---------------+---------+-------------+---------------
- *    -11.5 | -4  |   2,   -3.5   |   2.875 |   -3.5      |    -3.5
- *
- *
- *  Examples
- *
- *     11.divmod(3)         #=&gt; [3, 2]
- *     11.divmod(-3)        #=&gt; [-4, -1]
- *     11.divmod(3.5)       #=&gt; [3, 0.5]
- *     (-11).divmod(3.5)    #=&gt; [-4, 3.0]
- *     (11.5).divmod(3.5)   #=&gt; [3, 1.0]
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;num&lt;/i&gt; is a &lt;code&gt;Real&lt;/code&gt;
+ *  (i.e. non &lt;code&gt;Complex&lt;/code&gt;).
  */
 
 static VALUE
-num_divmod(VALUE x, VALUE y)
+num_real_p(VALUE num)
 {
-    return rb_assoc_new(num_div(x, y), rb_funcall(x, '%', 1, y));
+    return Qtrue;
 }</pre>
 </body>
 </html>

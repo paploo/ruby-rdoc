@@ -2,47 +2,59 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>utc (Time)</title>
+  <title>&lt;=&gt; (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *    Time.utc(year) =&gt; time
- *    Time.utc(year, month) =&gt; time
- *    Time.utc(year, month, day) =&gt; time
- *    Time.utc(year, month, day, hour) =&gt; time
- *    Time.utc(year, month, day, hour, min) =&gt; time
- *    Time.utc(year, month, day, hour, min, sec_with_frac) =&gt; time
- *    Time.utc(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *    Time.utc(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
- *    Time.gm(year) =&gt; time
- *    Time.gm(year, month) =&gt; time
- *    Time.gm(year, month, day) =&gt; time
- *    Time.gm(year, month, day, hour) =&gt; time
- *    Time.gm(year, month, day, hour, min) =&gt; time
- *    Time.gm(year, month, day, hour, min, sec_with_frac) =&gt; time
- *    Time.gm(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
- *    Time.gm(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
+ *     time &lt;=&gt; other_time =&gt; -1, 0, +1 
+ *  
+ *  Comparison---Compares &lt;i&gt;time&lt;/i&gt; with &lt;i&gt;other_time&lt;/i&gt;.
  *     
- *  Creates a time based on given values, interpreted as UTC (GMT). The
- *  year must be specified. Other values default to the minimum value
- *  for that field (and may be &lt;code&gt;nil&lt;/code&gt; or omitted). Months may
- *  be specified by numbers from 1 to 12, or by the three-letter English
- *  month names. Hours are specified on a 24-hour clock (0..23). Raises
- *  an &lt;code&gt;ArgumentError&lt;/code&gt; if any values are out of range. Will
- *  also accept ten arguments in the order output by
- *  &lt;code&gt;Time#to_a&lt;/code&gt;.
- *  &lt;i&gt;sec_with_frac&lt;/i&gt; and &lt;i&gt;usec_with_frac&lt;/i&gt; can have a fractional part.
- *
- *     Time.utc(2000,&quot;jan&quot;,1,20,15,1)  #=&gt; 2000-01-01 20:15:01 UTC
- *     Time.gm(2000,&quot;jan&quot;,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 UTC
+ *     t = Time.now       #=&gt; 2007-11-19 08:12:12 -0600
+ *     t2 = t + 2592000   #=&gt; 2007-12-19 08:12:12 -0600
+ *     t &lt;=&gt; t2           #=&gt; -1
+ *     t2 &lt;=&gt; t           #=&gt; 1
+ *     
+ *     t = Time.now       #=&gt; 2007-11-19 08:13:38 -0600
+ *     t2 = t + 0.1       #=&gt; 2007-11-19 08:13:38 -0600
+ *     t.nsec             #=&gt; 98222999
+ *     t2.nsec            #=&gt; 198222999
+ *     t &lt;=&gt; t2           #=&gt; -1
+ *     t2 &lt;=&gt; t           #=&gt; 1
+ *     t &lt;=&gt; t            #=&gt; 0
  */
+
 static VALUE
-time_s_mkutc(int argc, VALUE *argv, VALUE klass)
+time_cmp(VALUE time1, VALUE time2)
 {
-    return time_utc_or_local(argc, argv, Qtrue, klass);
+    struct time_object *tobj1, *tobj2;
+
+    GetTimeval(time1, tobj1);
+    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
+        GetTimeval(time2, tobj2);
+        if (tobj1-&gt;ts.tv_sec == tobj2-&gt;ts.tv_sec) {
+            if (tobj1-&gt;ts.tv_nsec == tobj2-&gt;ts.tv_nsec) return INT2FIX(0);
+            if (tobj1-&gt;ts.tv_nsec &gt; tobj2-&gt;ts.tv_nsec) return INT2FIX(1);
+            return INT2FIX(-1);
+        }
+        if (tobj1-&gt;ts.tv_sec &gt; tobj2-&gt;ts.tv_sec) return INT2FIX(1);
+        return INT2FIX(-1);
+    }
+    else {
+        VALUE cmp;
+        int n;
+
+        cmp = rb_funcall(time2, rb_intern(&quot;&lt;=&gt;&quot;), 1, time1);
+        if (NIL_P(cmp)) return Qnil;
+
+        n = -rb_cmpint(cmp, time1, time2);
+        if (n == 0) return INT2FIX(0);
+        if (n &gt; 0) return INT2FIX(1);
+        return INT2FIX(-1);
+    }
 }</pre>
 </body>
 </html>

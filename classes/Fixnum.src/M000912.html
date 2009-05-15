@@ -2,31 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt;&gt; (Fixnum)</title>
+  <title>succ (Fixnum)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   fix &gt;&gt; count     =&gt; integer
+ *  call-seq:
+ *     fixnum.next    =&gt; integer
+ *     fixnum.succ    =&gt; integer
  *
- * Shifts _fix_ right _count_ positions (left if _count_ is negative).
+ *  Returns the &lt;code&gt;Integer&lt;/code&gt; equal to &lt;i&gt;int&lt;/i&gt; + 1.
+ *
+ *     1.next      #=&gt; 2
+ *     (-1).next   #=&gt; 0
  */
 
 static VALUE
-rb_fix_rshift(VALUE x, VALUE y)
+fix_succ(VALUE num)
 {
-    long i, val;
-
-    val = FIX2LONG(x);
-    if (!FIXNUM_P(y))
-        return rb_big_rshift(rb_int2big(val), y);
-    i = FIX2LONG(y);
-    if (i == 0) return x;
-    if (i &lt; 0)
-        return fix_lshift(val, (unsigned long)-i);
-    return fix_rshift(val, i);
+    long i = FIX2LONG(num) + 1;
+    return LONG2NUM(i);
 }</pre>
 </body>
 </html>

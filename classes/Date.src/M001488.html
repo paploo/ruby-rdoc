@@ -2,18 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&gt;&gt; (Date)</title>
+  <title>step (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1407</span>
-1407:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;&gt;</span> (<span class="ruby-identifier">n</span>)
-1408:     <span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span> = (<span class="ruby-identifier">year</span> <span class="ruby-operator">*</span> <span class="ruby-value">12</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">mon</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">n</span>).<span class="ruby-identifier">divmod</span>(<span class="ruby-value">12</span>)
-1409:     <span class="ruby-identifier">m</span>,   = (<span class="ruby-identifier">m</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)                    .<span class="ruby-identifier">divmod</span>(<span class="ruby-value">1</span>)
-1410:     <span class="ruby-identifier">d</span> = <span class="ruby-identifier">mday</span>
-1411:     <span class="ruby-identifier">d</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">jd2</span> = <span class="ruby-identifier">_valid_civil?</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">d</span>, <span class="ruby-ivar">@sg</span>)
-1412:     <span class="ruby-keyword kw">self</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">jd2</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">jd</span>)
-1413:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1435</span>
+1435:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">step</span>(<span class="ruby-identifier">limit</span>, <span class="ruby-identifier">step</span>=<span class="ruby-value">1</span>) <span class="ruby-comment cmt"># :yield: date</span>
+1436: ??
+1437:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+1438:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">to_enum</span>(<span class="ruby-identifier">:step</span>, <span class="ruby-identifier">limit</span>, <span class="ruby-identifier">step</span>)
+1439:     <span class="ruby-keyword kw">end</span>
+1440:     <span class="ruby-identifier">da</span> = <span class="ruby-keyword kw">self</span>
+1441:     <span class="ruby-identifier">op</span> = <span class="ruby-node">%w(- &lt;= &gt;=)</span>[<span class="ruby-identifier">step</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-value">0</span>]
+1442:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">da</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">op</span>, <span class="ruby-identifier">limit</span>)
+1443:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">da</span>
+1444:       <span class="ruby-identifier">da</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">step</span>
+1445:     <span class="ruby-keyword kw">end</span>
+1446:     <span class="ruby-keyword kw">self</span>
+1447:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

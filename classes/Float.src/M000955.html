@@ -2,22 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_f (Float)</title>
+  <title>floor (Float)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   flt.to_f   =&gt; flt
+ *  call-seq:
+ *     flt.floor   =&gt; integer
  *
- * As &lt;code&gt;flt&lt;/code&gt; is already a float, returns &lt;i&gt;self&lt;/i&gt;.
+ *  Returns the largest integer less than or equal to &lt;i&gt;flt&lt;/i&gt;.
+ *
+ *     1.2.floor      #=&gt; 1
+ *     2.0.floor      #=&gt; 2
+ *     (-1.2).floor   #=&gt; -2
+ *     (-2.0).floor   #=&gt; -2
  */
 
 static VALUE
-flo_to_f(VALUE num)
+flo_floor(VALUE num)
 {
-    return num;
+    double f = floor(RFLOAT_VALUE(num));
+    long val;
+
+    if (!FIXABLE(f)) {
+        return rb_dbl2big(f);
+    }
+    val = f;
+    return LONG2FIX(val);
 }</pre>
 </body>
 </html>

@@ -2,17 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>var_list (DEBUGGER__)</title>
+  <title>display_expressions (DEBUGGER__)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 147</span>
-147:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">var_list</span>(<span class="ruby-identifier">ary</span>, <span class="ruby-identifier">binding</span>)
-148:     <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">sort!</span>
-149:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">v</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ary</span>
-150:       <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;  %s =&gt; %s\n&quot;</span>, <span class="ruby-identifier">v</span>, <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">v</span>, <span class="ruby-identifier">binding</span>).<span class="ruby-identifier">inspect</span>
-151:     <span class="ruby-keyword kw">end</span>
-152:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/debug.rb, line 555</span>
+555:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_expressions</span>(<span class="ruby-identifier">binding</span>)
+556:     <span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>
+557:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">d</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">display</span>
+558:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>]
+559:         <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;%d: &quot;</span>, <span class="ruby-identifier">n</span>
+560:         <span class="ruby-identifier">display_expression</span>(<span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">binding</span>)
+561:       <span class="ruby-keyword kw">end</span>
+562:       <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+563:     <span class="ruby-keyword kw">end</span>
+564:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

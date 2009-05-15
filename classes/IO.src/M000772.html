@@ -2,32 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;&lt; (IO)</title>
+  <title>pos= (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios &lt;&lt; obj     =&gt; ios
+ *     ios.pos = integer    =&gt; integer
  *
- *  String Output---Writes &lt;i&gt;obj&lt;/i&gt; to &lt;em&gt;ios&lt;/em&gt;.
- *  &lt;i&gt;obj&lt;/i&gt; will be converted to a string using
- *  &lt;code&gt;to_s&lt;/code&gt;.
+ *  Seeks to the given position (in bytes) in &lt;em&gt;ios&lt;/em&gt;.
  *
- *     $stdout &lt;&lt; &quot;Hello &quot; &lt;&lt; &quot;world!\n&quot;
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     Hello world!
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.pos = 17
+ *     f.gets   #=&gt; &quot;This is line two\n&quot;
  */
 
-
-VALUE
-rb_io_addstr(VALUE io, VALUE str)
+static VALUE
+rb_io_set_pos(VALUE io, VALUE offset)
 {
-    rb_io_write(io, str);
-    return io;
+    rb_io_t *fptr;
+    off_t pos;
+
+    pos = NUM2OFFT(offset);
+    GetOpenFile(io, fptr);
+    pos = io_seek(fptr, pos, SEEK_SET);
+    if (pos &lt; 0) rb_sys_fail_path(fptr-&gt;pathv);
+
+    return OFFT2NUM(pos);
 }</pre>
 </body>
 </html>

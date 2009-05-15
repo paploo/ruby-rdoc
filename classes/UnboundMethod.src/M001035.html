@@ -2,39 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eql? (UnboundMethod)</title>
+  <title>name (UnboundMethod)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   meth == other_meth  =&gt; true or false
- *
- * Two method objects are equal if that are bound to the same
- * object and contain the same body.
+ *  call-seq:
+ *     meth.name    =&gt; symbol
+ *  
+ *  Returns the name of the method.
  */
 
-
 static VALUE
-method_eq(VALUE method, VALUE other)
+method_name(VALUE obj)
 {
-    struct METHOD *m1, *m2;
+    struct METHOD *data;
 
-    if (TYPE(other) != T_DATA
-        || RDATA(other)-&gt;dmark != (RUBY_DATA_FUNC) bm_mark)
-        return Qfalse;
-    if (CLASS_OF(method) != CLASS_OF(other))
-        return Qfalse;
-
-    Data_Get_Struct(method, struct METHOD, m1);
-    Data_Get_Struct(other, struct METHOD, m2);
-
-    if (m1-&gt;oclass != m2-&gt;oclass || m1-&gt;rclass != m2-&gt;rclass ||
-        m1-&gt;recv != m2-&gt;recv || m1-&gt;body != m2-&gt;body)
-        return Qfalse;
-
-    return Qtrue;
+    Data_Get_Struct(obj, struct METHOD, data);
+    return ID2SYM(data-&gt;id);
 }</pre>
 </body>
 </html>

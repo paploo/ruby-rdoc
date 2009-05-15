@@ -2,33 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>succ (Time)</title>
+  <title>mon (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   time.succ   =&gt; new_time
- *
- * Return a new time object, one second later than &lt;code&gt;time&lt;/code&gt;.
- *
- *     t = Time.now       #=&gt; 2007-11-19 08:23:57 -0600
- *     t.succ             #=&gt; 2007-11-19 08:23:58 -0600
+ *  call-seq:
+ *     time.mon   =&gt; fixnum
+ *     time.month =&gt; fixnum
+ *  
+ *  Returns the month of the year (1..12) for &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now   #=&gt; 2007-11-19 08:27:30 -0600
+ *     t.mon          #=&gt; 11
+ *     t.month        #=&gt; 11
  */
 
 static VALUE
-time_succ(VALUE time)
+time_mon(VALUE time)
 {
     struct time_object *tobj;
-    int gmt;
 
     GetTimeval(time, tobj);
-    gmt = tobj-&gt;gmt;
-    time = rb_time_nano_new(tobj-&gt;ts.tv_sec + 1, tobj-&gt;ts.tv_nsec);
-    GetTimeval(time, tobj);
-    tobj-&gt;gmt = gmt;
-    return time;
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    return INT2FIX(tobj-&gt;tm.tm_mon+1);
 }</pre>
 </body>
 </html>

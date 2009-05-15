@@ -2,25 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_range (IPAddr)</title>
+  <title>in_addr (IPAddr)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 335</span>
-335:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_range</span>
-336:     <span class="ruby-identifier">begin_addr</span> = (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">&amp;</span> <span class="ruby-ivar">@mask_addr</span>)
-337: 
-338:     <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@family</span>
-339:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET</span>
-340:       <span class="ruby-identifier">end_addr</span> = (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">|</span> (<span class="ruby-constant">IN4MASK</span> <span class="ruby-operator">^</span> <span class="ruby-ivar">@mask_addr</span>))
-341:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Socket</span><span class="ruby-operator">::</span><span class="ruby-constant">AF_INET6</span>
-342:       <span class="ruby-identifier">end_addr</span> = (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">|</span> (<span class="ruby-constant">IN6MASK</span> <span class="ruby-operator">^</span> <span class="ruby-ivar">@mask_addr</span>))
-343:     <span class="ruby-keyword kw">else</span>
-344:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;unsupported address family&quot;</span>
-345:     <span class="ruby-keyword kw">end</span>
-346: 
-347:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">clone</span>.<span class="ruby-identifier">set</span>(<span class="ruby-identifier">begin_addr</span>, <span class="ruby-ivar">@family</span>)<span class="ruby-operator">..</span><span class="ruby-identifier">clone</span>.<span class="ruby-identifier">set</span>(<span class="ruby-identifier">end_addr</span>, <span class="ruby-ivar">@family</span>)
-348:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 501</span>
+501:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_addr</span>(<span class="ruby-identifier">addr</span>)
+502:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">addr</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\d+\.\d+\.\d+\.\d+$/</span>
+503:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">addr</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+504:         <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span> <span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_i</span>
+505:       }
+506:     <span class="ruby-keyword kw">end</span>
+507:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+508:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

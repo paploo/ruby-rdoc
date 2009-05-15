@@ -2,14 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>ipv4_mapped? (IPAddr)</title>
+  <title>ip6_arpa (IPAddr)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 249</span>
-249:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ipv4_mapped?</span>
-250:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ipv6?</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-ivar">@addr</span> <span class="ruby-operator">&gt;&gt;</span> <span class="ruby-value">32</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0xffff</span>
-251:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/ipaddr.rb, line 304</span>
+304:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ip6_arpa</span>
+305:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ipv6?</span>
+306:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;not an IPv6 address&quot;</span>
+307:     <span class="ruby-keyword kw">end</span>
+308:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">_reverse</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.ip6.arpa&quot;</span>
+309:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

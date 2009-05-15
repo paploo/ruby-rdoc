@@ -2,37 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>map (Array)</title>
+  <title>delete_if (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     array.collect {|item| block }  -&gt; an_array
- *     array.map     {|item| block }  -&gt; an_array
+ *     array.delete_if {|item| block }  -&gt; array
  *  
- *  Invokes &lt;i&gt;block&lt;/i&gt; once for each element of &lt;i&gt;self&lt;/i&gt;. Creates a 
- *  new array containing the values returned by the block.
- *  See also &lt;code&gt;Enumerable#collect&lt;/code&gt;.
+ *  Deletes every element of &lt;i&gt;self&lt;/i&gt; for which &lt;i&gt;block&lt;/i&gt; evaluates
+ *  to &lt;code&gt;true&lt;/code&gt;.
  *     
- *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot; ]
- *     a.collect {|x| x + &quot;!&quot; }   #=&gt; [&quot;a!&quot;, &quot;b!&quot;, &quot;c!&quot;, &quot;d!&quot;]
- *     a                          #=&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]
+ *     a = [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
+ *     a.delete_if {|x| x &gt;= &quot;b&quot; }   #=&gt; [&quot;a&quot;]
  */
 
 static VALUE
-rb_ary_collect(VALUE ary)
+rb_ary_delete_if(VALUE ary)
 {
-    long i;
-    VALUE collect;
-
     RETURN_ENUMERATOR(ary, 0, 0);
-    collect = rb_ary_new2(RARRAY_LEN(ary));
-    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
-        rb_ary_push(collect, rb_yield(RARRAY_PTR(ary)[i]));
-    }
-    return collect;
+    rb_ary_reject_bang(ary);
+    return ary;
 }</pre>
 </body>
 </html>

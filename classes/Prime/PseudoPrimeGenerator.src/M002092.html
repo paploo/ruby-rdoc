@@ -2,14 +2,17 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>upper_bound= (Prime::PseudoPrimeGenerator)</title>
+  <title>with_object (Prime::PseudoPrimeGenerator)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 224</span>
-224:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upper_bound=</span>(<span class="ruby-identifier">ubound</span>)
-225:       <span class="ruby-ivar">@ubound</span> = <span class="ruby-identifier">ubound</span>
-226:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 274</span>
+274:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_object</span>(<span class="ruby-identifier">obj</span>)
+275:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">:with_object</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+276:       <span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">prime</span><span class="ruby-operator">|</span>
+277:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">prime</span>, <span class="ruby-identifier">obj</span>
+278:       <span class="ruby-keyword kw">end</span>
+279:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

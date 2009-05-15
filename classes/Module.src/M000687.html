@@ -2,35 +2,45 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>attr_accessor (Module)</title>
+  <title>constants (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     attr_accessor(symbol, ...)    =&gt; nil
- *  
- *  Defines a named attribute for this module, where the name is
- *  &lt;i&gt;symbol.&lt;/i&gt;&lt;code&gt;id2name&lt;/code&gt;, creating an instance variable
- *  (&lt;code&gt;@name&lt;/code&gt;) and a corresponding access method to read it.
- *  Also creates a method called &lt;code&gt;name=&lt;/code&gt; to set the attribute.
- *     
- *     module Mod
- *       attr_accessor(:one, :two)
- *     end
- *     Mod.instance_methods.sort   #=&gt; [:one, :one=, :two, :two=]
+ *     mod.constants(inherit=true)    =&gt; array
+ *
+ *  Returns an array of the names of the constants accessible in
+ *  &lt;i&gt;mod&lt;/i&gt;. This includes the names of constants in any included
+ *  modules (example at start of section), unless the &lt;i&gt;all&lt;/i&gt;
+ *  parameter is set to &lt;code&gt;false&lt;/code&gt;.
+ *
+ *    IO.constants.include?(:SYNC)         =&gt; true
+ *    IO.constants(false).include?(:SYNC)  =&gt; false
+ *
+ *  Also see &lt;code&gt;Module::const_defined?&lt;/code&gt;.
  */
 
-static VALUE
-rb_mod_attr_accessor(int argc, VALUE *argv, VALUE klass)
+VALUE
+rb_mod_constants(int argc, VALUE *argv, VALUE mod)
 {
-    int i;
+    VALUE inherit;
+    st_table *tbl;
 
-    for (i=0; i&lt;argc; i++) {
-        rb_attr(klass, rb_to_id(argv[i]), Qtrue, Qtrue, Qtrue);
+    if (argc == 0) {
+	inherit = Qtrue;
     }
-    return Qnil;
+    else {
+	rb_scan_args(argc, argv, &quot;01&quot;, &amp;inherit);
+    }
+    if (RTEST(inherit)) {
+	tbl = rb_mod_const_of(mod, 0);
+    }
+    else {
+	tbl = rb_mod_const_at(mod, 0);
+    }
+    return rb_const_list(tbl);
 }</pre>
 </body>
 </html>

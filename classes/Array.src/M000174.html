@@ -2,46 +2,90 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>compact! (Array)</title>
+  <title>sample (Array)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/* 
+  <pre>/*
  *  call-seq:
- *     array.compact!    -&gt;   array  or  nil
- *
- *  Removes +nil+ elements from array.
- *  Returns +nil+ if no changes were made.
- *
- *     [ &quot;a&quot;, nil, &quot;b&quot;, nil, &quot;c&quot; ].compact! #=&gt; [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]
- *     [ &quot;a&quot;, &quot;b&quot;, &quot;c&quot; ].compact!           #=&gt; nil
+ *     array.sample        -&gt; obj
+ *     array.sample(n)     -&gt; an_array
+ *  
+ *  Choose a random element, or the random +n+ elements, from the array.
+ *  If the array is empty, the first form returns &lt;code&gt;nil&lt;/code&gt;, and the
+ *  second form returns an empty array.
+ *  
  */
 
+
 static VALUE
-rb_ary_compact_bang(VALUE ary)
+rb_ary_sample(int argc, VALUE *argv, VALUE ary)
 {
-    VALUE *p, *t, *end;
-    long n;
+    VALUE nv, result, *ptr;
+    long n, len, i, j, k, idx[10];
 
-    rb_ary_modify(ary);
-    p = t = RARRAY_PTR(ary);
-    end = p + RARRAY_LEN(ary);
-    
-    while (t &lt; end) {
-        if (NIL_P(*t)) t++;
-        else *p++ = *t++;
+    len = RARRAY_LEN(ary); 
+    if (argc == 0) {
+        if (len == 0) return Qnil;
+        i = len == 1 ? 0 : rb_genrand_real()*len;
+        return RARRAY_PTR(ary)[i];
     }
-    n = p - RARRAY_PTR(ary);
-    if (RARRAY_LEN(ary) == n) {
-        return Qnil;
+    rb_scan_args(argc, argv, &quot;1&quot;, &amp;nv);
+    n = NUM2LONG(nv);
+    ptr = RARRAY_PTR(ary); 
+    len = RARRAY_LEN(ary); 
+    if (n &gt; len) n = len;
+    switch (n) {
+      case 0: return rb_ary_new2(0);
+      case 1:
+        return rb_ary_new4(1, &amp;ptr[(long)(rb_genrand_real()*len)]);
+      case 2:
+        i = rb_genrand_real()*len;
+        j = rb_genrand_real()*(len-1);
+        if (j &gt;= i) j++;
+        return rb_ary_new3(2, ptr[i], ptr[j]);
+      case 3:
+        i = rb_genrand_real()*len;
+        j = rb_genrand_real()*(len-1);
+        k = rb_genrand_real()*(len-2);
+        {
+            long l = j, g = i;
+            if (j &gt;= i) l = i, g = ++j;
+            if (k &gt;= l &amp;&amp; (++k &gt;= g)) ++k;
+        }
+        return rb_ary_new3(3, ptr[i], ptr[j], ptr[k]);
     }
-    ARY_SET_LEN(ary, n);
-    if (n * 2 &lt; ARY_CAPA(ary) &amp;&amp; ARY_DEFAULT_SIZE * 2 &lt; ARY_CAPA(ary)) {
-        ary_resize_capa(ary, n * 2);
+    if (n &lt; sizeof(idx)/sizeof(idx[0])) {
+        long sorted[sizeof(idx)/sizeof(idx[0])];
+        sorted[0] = idx[0] = rb_genrand_real()*len;
+        for (i=1; i&lt;n; i++) {
+            k = rb_genrand_real()*--len;
+            for (j = 0; j &lt; i; ++j) {
+                if (k &lt; sorted[j]) break;
+                ++k;
+            }
+            memmove(&amp;sorted[j+1], &amp;sorted[j], sizeof(sorted[0])*(i-j));
+            sorted[j] = idx[i] = k;
+        }
+        result = rb_ary_new2(n);
+        for (i=0; i&lt;n; i++) {
+            RARRAY_PTR(result)[i] = RARRAY_PTR(ary)[idx[i]];
+        }
     }
+    else {
+        result = rb_ary_new4(len, ptr);
+        RB_GC_GUARD(ary);
+        for (i=0; i&lt;n; i++) {
+            j = (long)(rb_genrand_real()*(len-i)) + i;
+            nv = RARRAY_PTR(result)[j];
+            RARRAY_PTR(result)[j] = RARRAY_PTR(result)[i];
+            RARRAY_PTR(result)[i] = nv;
+        }
+    }
+    ARY_SET_LEN(result, n);
 
-    return ary;
+    return result;
 }</pre>
 </body>
 </html>
