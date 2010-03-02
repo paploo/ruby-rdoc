@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_encoding (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     io.set_encoding(ext_enc)                =&gt; io
+ *     io.set_encoding(&quot;ext_enc:int_enc&quot;)      =&gt; io
+ *     io.set_encoding(ext_enc, int_enc)       =&gt; io
+ *     io.set_encoding(&quot;ext_enc:int_enc&quot;, opt) =&gt; io
+ *     io.set_encoding(ext_enc, int_enc, opt)  =&gt; io
+ *
+ *  If single argument is specified, read string from io is tagged
+ *  with the encoding specified.  If encoding is a colon separated two
+ *  encoding names &quot;A:B&quot;, the read string is converted from encoding A
+ *  (external encoding) to encoding B (internal encoding), then tagged
+ *  with B.  If two arguments are specified, those must be encoding
+ *  objects or encoding names, and the first one is the external encoding, and the
+ *  second one is the internal encoding.
+ *  If the external encoding and the internal encoding is specified,
+ *  optional hash argument specify the conversion option.
+ */
+
+static VALUE
+rb_io_set_encoding(int argc, VALUE *argv, VALUE io)
+{
+    rb_io_t *fptr;
+    VALUE v1, v2, opt;
+
+    opt = pop_last_hash(&amp;argc, argv);
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;v1, &amp;v2);
+    GetOpenFile(io, fptr);
+    io_encoding_set(fptr, v1, v2, opt);
+    return io;
+}</pre>
+</body>
+</html>

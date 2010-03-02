@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Encoding::Converter.new(source_encoding, destination_encoding)
+ *   Encoding::Converter.new(source_encoding, destination_encoding, opt)
+ *   Encoding::Converter.new(convpath)
+ *
+ * possible options elements:
+ *   hash form:
+ *     :invalid =&gt; nil            # raise error on invalid byte sequence (default)
+ *     :invalid =&gt; :replace       # replace invalid byte sequence
+ *     :undef =&gt; nil              # raise error on undefined conversion (default)
+ *     :undef =&gt; :replace         # replace undefined conversion
+ *     :replace =&gt; string         # replacement string (&quot;?&quot; or &quot;\uFFFD&quot; if not specified)
+ *     :universal_newline =&gt; true # decorator for converting CRLF and CR to LF
+ *     :crlf_newline =&gt; true      # decorator for converting LF to CRLF
+ *     :cr_newline =&gt; true        # decorator for converting LF to CR
+ *     :xml =&gt; :text              # escape as XML CharData.
+ *     :xml =&gt; :attr              # escape as XML AttValue
+ *   integer form:
+ *     Encoding::Converter::INVALID_REPLACE
+ *     Encoding::Converter::UNDEF_REPLACE
+ *     Encoding::Converter::UNDEF_HEX_CHARREF
+ *     Encoding::Converter::UNIVERSAL_NEWLINE_DECORATOR
+ *     Encoding::Converter::CRLF_NEWLINE_DECORATOR
+ *     Encoding::Converter::CR_NEWLINE_DECORATOR
+ *     Encoding::Converter::XML_TEXT_DECORATOR
+ *     Encoding::Converter::XML_ATTR_CONTENT_DECORATOR
+ *     Encoding::Converter::XML_ATTR_QUOTE_DECORATOR
+ *
+ * Encoding::Converter.new creates an instance of Encoding::Converter.
+ *
+ * Source_encoding and destination_encoding should be a string or
+ * Encoding object.
+ *
+ * opt should be nil, a hash or an integer.
+ *
+ * convpath should be an array.
+ * convpath may contain
+ * - two-element arrays which contain encodings or encoding names, or
+ * - strings representing decorator names.
+ *
+ * Encoding::Converter.new optionally takes an option.
+ * The option should be a hash or an integer.
+ * The option hash can contain :invalid =&gt; nil, etc.
+ * The option integer should be logical-or of constants such as
+ * Encoding::Converter::INVALID_REPLACE, etc.
+ *
+ * [:invalid =&gt; nil]
+ *   Raise error on invalid byte sequence.  This is a default behavior.
+ * [:invalid =&gt; :replace]
+ *   Replace invalid byte sequence by replacement string.
+ * [:undef =&gt; nil]
+ *   Raise an error if a character in source_encoding is not defined in destination_encoding.
+ *   This is a default behavior.
+ * [:undef =&gt; :replace]
+ *   Replace undefined character in destination_encoding with replacement string.
+ * [:replace =&gt; string]
+ *   Specify the replacement string.
+ *   If not specified, &quot;\uFFFD&quot; is used for Unicode encodings and &quot;?&quot; for others.
+ * [:universal_newline =&gt; true]
+ *   Convert CRLF and CR to LF.
+ * [:crlf_newline =&gt; true]
+ *   Convert LF to CRLF.
+ * [:cr_newline =&gt; true]
+ *   Convert LF to CR.
+ * [:xml =&gt; :text]
+ *   Escape as XML CharData.
+ *   This form can be used as a HTML 4.0 #PCDATA.
+ *   - '&amp;' -&gt; '&amp;amp;'
+ *   - '&lt;' -&gt; '&amp;lt;'
+ *   - '&gt;' -&gt; '&amp;gt;'
+ *   - undefined characters in destination_encoding -&gt; hexadecimal CharRef such as &amp;#xHH;
+ * [:xml =&gt; :attr]
+ *   Escape as XML AttValue.
+ *   The converted result is quoted as &quot;...&quot;.
+ *   This form can be used as a HTML 4.0 attribute value.
+ *   - '&amp;' -&gt; '&amp;amp;'
+ *   - '&lt;' -&gt; '&amp;lt;'
+ *   - '&gt;' -&gt; '&amp;gt;'
+ *   - '&quot;' -&gt; '&amp;quot;'
+ *   - undefined characters in destination_encoding -&gt; hexadecimal CharRef such as &amp;#xHH;
+ *
+ * Examples:
+ *   # UTF-16BE to UTF-8
+ *   ec = Encoding::Converter.new(&quot;UTF-16BE&quot;, &quot;UTF-8&quot;)
+ *
+ *   # Usually, decorators such as newline conversion are inserted last.
+ *   ec = Encoding::Converter.new(&quot;UTF-16BE&quot;, &quot;UTF-8&quot;, :universal_newline =&gt; true)
+ *   p ec.convpath #=&gt; [[#&lt;Encoding:UTF-16BE&gt;, #&lt;Encoding:UTF-8&gt;],
+ *                 #    &quot;universal_newline&quot;]
+ *
+ *   # But, if the last encoding is ASCII incompatible, 
+ *   # decorators are inserted before the last conversion.
+ *   ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;, :crlf_newline =&gt; true)
+ *   p ec.convpath #=&gt; [&quot;crlf_newline&quot;,
+ *                 #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-16BE&gt;]]
+ *
+ *   # Conversion path can be specified directly.
+ *   ec = Encoding::Converter.new([&quot;universal_newline&quot;, [&quot;EUC-JP&quot;, &quot;UTF-8&quot;], [&quot;UTF-8&quot;, &quot;UTF-16BE&quot;]])
+ *   p ec.convpath #=&gt; [&quot;universal_newline&quot;,
+ *                 #    [#&lt;Encoding:EUC-JP&gt;, #&lt;Encoding:UTF-8&gt;],
+ *                 #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-16BE&gt;]]
+ */
+static VALUE
+econv_init(int argc, VALUE *argv, VALUE self)
+{
+    VALUE ecopts;
+    volatile VALUE snamev, dnamev;
+    const char *sname, *dname;
+    rb_encoding *senc, *denc;
+    rb_econv_t *ec;
+    int ecflags;
+    VALUE convpath;
+
+    if (DATA_PTR(self)) {
+        rb_raise(rb_eTypeError, &quot;already initialized&quot;);
+    }
+
+    if (argc == 1 &amp;&amp; !NIL_P(convpath = rb_check_array_type(argv[0]))) {
+        ec = rb_econv_init_by_convpath(self, convpath, &amp;sname, &amp;dname, &amp;senc, &amp;denc);
+        ecflags = 0;
+        ecopts = Qnil;
+    }
+    else {
+        econv_args(argc, argv, &amp;snamev, &amp;dnamev, &amp;sname, &amp;dname, &amp;senc, &amp;denc, &amp;ecflags, &amp;ecopts);
+        ec = rb_econv_open_opts(sname, dname, ecflags, ecopts);
+    }
+
+    if (!ec) {
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+    }
+
+    if (!DECORATOR_P(sname, dname)) {
+        if (!senc)
+            senc = make_dummy_encoding(sname);
+        if (!denc)
+            denc = make_dummy_encoding(dname);
+    }
+
+    ec-&gt;source_encoding = senc;
+    ec-&gt;destination_encoding = denc;
+
+    DATA_PTR(self) = ec;
+
+    return self;
+}</pre>
+</body>
+</html>

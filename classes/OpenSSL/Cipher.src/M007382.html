@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ciphers (OpenSSL::Cipher)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Cipher.ciphers -&gt; array[string...]
+ *
+ *  Returns the names of all available ciphers in an array.
+ */
+static VALUE
+ossl_s_ciphers(VALUE self)
+{
+#ifdef HAVE_OBJ_NAME_DO_ALL_SORTED
+    VALUE ary;
+
+    ary = rb_ary_new();
+    OBJ_NAME_do_all_sorted(OBJ_NAME_TYPE_CIPHER_METH,
+                    (void(*)(const OBJ_NAME*,void*))add_cipher_name_to_ary,
+                    (void*)ary);
+
+    return ary;
+#else
+    rb_notimplement();
+#endif
+}</pre>
+</body>
+</html>

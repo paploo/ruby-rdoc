@@ -2,12 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sticky? (Pathname)</title>
+  <title>del_trailing_separator (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 944</span>
-944:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sticky?</span>() <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">sticky?</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 396</span>
+396:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>)
+397:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+398:       <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+399:       <span class="ruby-identifier">pre</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">basename</span>
+400:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-node">/#{SEPARATOR_PAT}+\z/o</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">path</span>
+401:       <span class="ruby-identifier">$`</span> <span class="ruby-operator">+</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">path</span>)[<span class="ruby-node">/#{SEPARATOR_PAT}*\z/o</span>]
+402:     <span class="ruby-keyword kw">else</span>
+403:       <span class="ruby-identifier">path</span>
+404:     <span class="ruby-keyword kw">end</span>
+405:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

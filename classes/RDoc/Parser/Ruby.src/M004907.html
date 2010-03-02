@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_class_or_module (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1558</span>
+1558:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_class_or_module</span>(<span class="ruby-identifier">container</span>)
+1559:     <span class="ruby-identifier">skip_tkspace</span>
+1560:     <span class="ruby-identifier">name_t</span> = <span class="ruby-identifier">get_tk</span>
+1561: 
+1562:     <span class="ruby-comment cmt"># class ::A -&gt; A is in the top level</span>
+1563:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkCOLON2</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">name_t</span> <span class="ruby-keyword kw">then</span>
+1564:       <span class="ruby-identifier">name_t</span> = <span class="ruby-identifier">get_tk</span>
+1565:       <span class="ruby-identifier">container</span> = <span class="ruby-ivar">@top_level</span>
+1566:     <span class="ruby-keyword kw">end</span>
+1567: 
+1568:     <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">false</span>)
+1569: 
+1570:     <span class="ruby-keyword kw">while</span> <span class="ruby-constant">TkCOLON2</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">peek_tk</span> <span class="ruby-keyword kw">do</span>
+1571:       <span class="ruby-identifier">prev_container</span> = <span class="ruby-identifier">container</span>
+1572:       <span class="ruby-identifier">container</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">find_module_named</span>(<span class="ruby-identifier">name_t</span>.<span class="ruby-identifier">name</span>)
+1573:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">container</span>
+1574: <span class="ruby-comment cmt">#          warn(&quot;Couldn't find module #{name_t.name}&quot;)</span>
+1575:         <span class="ruby-identifier">container</span> = <span class="ruby-identifier">prev_container</span>.<span class="ruby-identifier">add_module</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalModule</span>, <span class="ruby-identifier">name_t</span>.<span class="ruby-identifier">name</span>
+1576:       <span class="ruby-keyword kw">end</span>
+1577:       <span class="ruby-identifier">get_tk</span>
+1578:       <span class="ruby-identifier">name_t</span> = <span class="ruby-identifier">get_tk</span>
+1579:     <span class="ruby-keyword kw">end</span>
+1580:     <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">false</span>)
+1581:     <span class="ruby-keyword kw">return</span> [<span class="ruby-identifier">container</span>, <span class="ruby-identifier">name_t</span>]
+1582:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

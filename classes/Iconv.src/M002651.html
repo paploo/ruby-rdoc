@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>transliterate? (Iconv)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Document-method: transliterate?
+ * call-seq: transliterate?
+ *
+ * Returns transliterate flag.
+ */
+static VALUE
+iconv_get_transliterate(VALUE self)
+{
+#ifdef ICONV_GET_TRANSLITERATE
+    int trans = 0;
+    iconv_ctl(self, ICONV_GET_TRANSLITERATE, trans);
+    if (trans) return Qtrue;
+#else
+    rb_notimplement();
+#endif
+    return Qfalse;
+}</pre>
+</body>
+</html>

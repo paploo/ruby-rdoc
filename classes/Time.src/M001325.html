@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>xmlschema (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 485</span>
+485:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xmlschema</span>(<span class="ruby-identifier">fraction_digits</span>=<span class="ruby-value">0</span>)
+486:     <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%d-%02d-%02dT%02d:%02d:%02d'</span>,
+487:       <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>) <span class="ruby-operator">+</span>
+488:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+489:       <span class="ruby-value str">''</span>
+490:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">9</span>
+491:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>)[<span class="ruby-value">0</span>, <span class="ruby-identifier">fraction_digits</span>]
+492:     <span class="ruby-keyword kw">else</span>
+493:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'0'</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">-</span> <span class="ruby-value">9</span>)
+494:     <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span>
+495:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">utc?</span>
+496:       <span class="ruby-value str">'Z'</span>
+497:     <span class="ruby-keyword kw">else</span>
+498:       <span class="ruby-identifier">off</span> = <span class="ruby-identifier">utc_offset</span>
+499:       <span class="ruby-identifier">sign</span> = <span class="ruby-identifier">off</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'-'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'+'</span>
+500:       <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%s%02d:%02d'</span>, <span class="ruby-identifier">sign</span>, <span class="ruby-operator">*</span>(<span class="ruby-identifier">off</span>.<span class="ruby-identifier">abs</span> <span class="ruby-operator">/</span> <span class="ruby-value">60</span>).<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>))
+501:     <span class="ruby-keyword kw">end</span>
+502:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

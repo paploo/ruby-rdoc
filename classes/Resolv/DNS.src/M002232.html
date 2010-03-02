@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>open (Resolv::DNS)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/resolv.rb, line 298</span>
+298:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">open</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+299:       <span class="ruby-identifier">dns</span> = <span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+300:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">dns</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+301:       <span class="ruby-keyword kw">begin</span>
+302:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">dns</span>
+303:       <span class="ruby-keyword kw">ensure</span>
+304:         <span class="ruby-identifier">dns</span>.<span class="ruby-identifier">close</span>
+305:       <span class="ruby-keyword kw">end</span>
+306:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

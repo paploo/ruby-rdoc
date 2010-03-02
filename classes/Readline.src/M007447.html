@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>input= (Readline)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Readline.input = input
+ *
+ * Specifies a File object +input+ that is input stream for
+ * Readline.readline method.
+ *
+ * Raises SecurityError exception if $SAFE is 4.
+ */
+static VALUE
+readline_s_set_input(VALUE self, VALUE input)
+{
+    rb_io_t *ifp;
+
+    rb_secure(4);
+    Check_Type(input, T_FILE);
+    GetOpenFile(input, ifp);
+    rl_instream = rb_io_stdio_file(ifp);
+    return input;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install_taxo_topic (RSS::Maker::TaxonomyTopicModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/taxonomy.rb, line 48</span>
+48:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">install_taxo_topic</span>(<span class="ruby-identifier">klass</span>)
+49:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;class TaxonomyTopics &lt; TaxonomyTopicsBase\nclass TaxonomyTopic &lt; TaxonomyTopicBase\nDublinCoreModel.install_dublin_core(self)\nTaxonomyTopicsModel.install_taxo_topics(self)\n\ndef to_feed(feed, current)\nif current.respond_to?(:taxo_topics)\ntopic = current.class::TaxonomyTopic.new(value)\ntopic.taxo_link = value\ntaxo_topics.to_feed(feed, topic) if taxo_topics\ncurrent.taxo_topics &lt;&lt; topic\nsetup_other_elements(feed, topic)\nend\nend\nend\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+50:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

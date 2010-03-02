@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>times (Process)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Process.times   =&gt; aStructTms
+ *
+ *  Returns a &lt;code&gt;Tms&lt;/code&gt; structure (see &lt;code&gt;Struct::Tms&lt;/code&gt;
+ *  on page 388) that contains user and system CPU times for this
+ *  process.
+ *
+ *     t = Process.times
+ *     [ t.utime, t.stime ]   #=&gt; [0.0, 0.02]
+ */
+
+VALUE
+rb_proc_times(VALUE obj)
+{
+#if defined(HAVE_TIMES) &amp;&amp; !defined(__CHECKER__)
+    const double hertz =
+#ifdef HAVE__SC_CLK_TCK
+        (double)sysconf(_SC_CLK_TCK);
+#else
+#ifndef HZ
+# ifdef CLK_TCK
+#   define HZ CLK_TCK
+# else
+#   define HZ 60
+# endif
+#endif /* HZ */
+        HZ;
+#endif
+    struct tms buf;
+    volatile VALUE utime, stime, cutime, sctime;
+
+    times(&amp;buf);
+    return rb_struct_new(rb_cProcessTms,
+                         utime = DBL2NUM(buf.tms_utime / hertz),
+                         stime = DBL2NUM(buf.tms_stime / hertz),
+                         cutime = DBL2NUM(buf.tms_cutime / hertz),
+                         sctime = DBL2NUM(buf.tms_cstime / hertz));
+#else
+    rb_notimplement();
+#endif
+}</pre>
+</body>
+</html>

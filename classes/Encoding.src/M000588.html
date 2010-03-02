@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>aliases (Encoding)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Encoding.aliases =&gt; {&quot;alias1&quot; =&gt; &quot;orig1&quot;, &quot;alias2&quot; =&gt; &quot;orig2&quot;, ...}
+ *
+ * Returns the hash of available encoding alias and original encoding name.
+ *
+ *   Encoding.aliases
+ *   =&gt; {&quot;BINARY&quot;=&gt;&quot;ASCII-8BIT&quot;, &quot;ASCII&quot;=&gt;&quot;US-ASCII&quot;, &quot;ANSI_X3.4-1986&quot;=&gt;&quot;US-ASCII&quot;,
+ *       &quot;SJIS&quot;=&gt;&quot;Shift_JIS&quot;, &quot;eucJP&quot;=&gt;&quot;EUC-JP&quot;, &quot;CP932&quot;=&gt;&quot;Windows-31J&quot;}
+ *
+ */
+
+static VALUE
+rb_enc_aliases(VALUE klass)
+{
+    VALUE aliases[2];
+    aliases[0] = rb_hash_new();
+    aliases[1] = rb_ary_new();
+    st_foreach(enc_table.names, rb_enc_aliases_enc_i, (st_data_t)aliases);
+    return aliases[0];
+}</pre>
+</body>
+</html>

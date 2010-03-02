@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>divmod (Float)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     flt.divmod(numeric)    =&gt; array
+ *
+ *  See &lt;code&gt;Numeric#divmod&lt;/code&gt;.
+ */
+
+static VALUE
+flo_divmod(VALUE x, VALUE y)
+{
+    double fy, div, mod;
+    volatile VALUE a, b;
+
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        fy = (double)FIX2LONG(y);
+        break;
+      case T_BIGNUM:
+        fy = rb_big2dbl(y);
+        break;
+      case T_FLOAT:
+        fy = RFLOAT_VALUE(y);
+        break;
+      default:
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;divmod&quot;));
+    }
+    flodivmod(RFLOAT_VALUE(x), fy, &amp;div, &amp;mod);
+    a = dbl2ival(div);
+    b = DBL2NUM(mod);
+    return rb_assoc_new(a, b);
+}</pre>
+</body>
+</html>

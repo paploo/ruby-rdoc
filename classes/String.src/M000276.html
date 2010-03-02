@@ -2,26 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size (String)</title>
+  <title>+ (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.length   =&gt; integer
- *     str.size     =&gt; integer
+ *     str + other_str   =&gt; new_str
  *  
- *  Returns the character length of &lt;i&gt;str&lt;/i&gt;.
+ *  Concatenation---Returns a new &lt;code&gt;String&lt;/code&gt; containing
+ *  &lt;i&gt;other_str&lt;/i&gt; concatenated to &lt;i&gt;str&lt;/i&gt;.
+ *     
+ *     &quot;Hello from &quot; + self.to_s   #=&gt; &quot;Hello from main&quot;
  */
 
 VALUE
-rb_str_length(VALUE str)
+rb_str_plus(VALUE str1, VALUE str2)
 {
-    int len;
+    VALUE str3;
+    rb_encoding *enc;
 
-    len = str_strlen(str, STR_ENC_GET(str));
-    return INT2NUM(len);
+    StringValue(str2);
+    enc = rb_enc_check(str1, str2);
+    str3 = rb_str_new(0, RSTRING_LEN(str1)+RSTRING_LEN(str2));
+    memcpy(RSTRING_PTR(str3), RSTRING_PTR(str1), RSTRING_LEN(str1));
+    memcpy(RSTRING_PTR(str3) + RSTRING_LEN(str1),
+           RSTRING_PTR(str2), RSTRING_LEN(str2));
+    RSTRING_PTR(str3)[RSTRING_LEN(str3)] = '\0';
+
+    if (OBJ_TAINTED(str1) || OBJ_TAINTED(str2))
+        OBJ_TAINT(str3);
+    ENCODING_CODERANGE_SET(str3, rb_enc_to_index(enc),
+                           ENC_CODERANGE_AND(ENC_CODERANGE(str1), ENC_CODERANGE(str2)));
+    return str3;
 }</pre>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>open (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      GDBM.open(filename, mode = 0666, flags = nil)
+ *      GDBM.open(filename, mode = 0666, flags = nil) { |gdbm| ... }
+ *
+ * If called without a block, this is synonymous to GDBM::new.
+ * If a block is given, the new GDBM instance will be passed to the block
+ * as a parameter, and the corresponding database file will be closed
+ * after the execution of the block code has been finished.
+ *
+ * Example for an open call with a block:
+ *
+ *   require 'gdbm'
+ *   GDBM.open(&quot;fruitstore.db&quot;) do |gdbm|
+ *     gdbm.each_pair do |key, value|
+ *       print &quot;#{key}: #{value}\n&quot;
+ *     end
+ *   end
+ */
+static VALUE
+fgdbm_s_open(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE obj = Data_Wrap_Struct(klass, 0, free_dbm, 0);
+
+    if (NIL_P(fgdbm_initialize(argc, argv, obj))) {
+        return Qnil;
+    }
+
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, obj, fgdbm_close, obj);
+    }
+
+    return obj;
+}</pre>
+</body>
+</html>

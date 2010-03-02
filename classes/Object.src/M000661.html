@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>public_methods (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.public_methods(all=true)   =&gt; array
+ *  
+ *  Returns the list of public methods accessible to &lt;i&gt;obj&lt;/i&gt;. If
+ *  the &lt;i&gt;all&lt;/i&gt; parameter is set to &lt;code&gt;false&lt;/code&gt;, only those methods
+ *  in the receiver will be listed.
+ */
+
+static VALUE
+rb_obj_public_methods(int argc, VALUE *argv, VALUE obj)
+{
+    if (argc == 0) {            /* hack to stop warning */
+        VALUE args[1];
+
+        args[0] = Qtrue;
+        return rb_class_public_instance_methods(1, args, CLASS_OF(obj));
+    }
+    return rb_class_public_instance_methods(argc, argv, CLASS_OF(obj));
+}</pre>
+</body>
+</html>

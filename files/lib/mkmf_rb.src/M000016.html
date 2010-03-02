@@ -7,15 +7,15 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 938</span>
-938: <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">try_const</span><span class="ruby-identifier">try_const</span>(<span class="ruby-identifier">const</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
-939:   <span class="ruby-identifier">const</span>, <span class="ruby-identifier">type</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">const</span>
-940:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_compile</span>(<span class="ruby-value str">&quot;\#{cpp_include(headers)}\n/*top*/\ntypedef \#{type || 'int'} conftest_type;\nconftest_type conftestval = \#{type ? '' : '(int)'}\#{const};\n&quot;</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
-941:     <span class="ruby-identifier">$defs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;-DHAVE_CONST_%s&quot;</span>, <span class="ruby-identifier">const</span>.<span class="ruby-identifier">tr_cpp</span>))
-942:     <span class="ruby-keyword kw">true</span>
-943:   <span class="ruby-keyword kw">else</span>
-944:     <span class="ruby-keyword kw">false</span>
-945:   <span class="ruby-keyword kw">end</span>
-946: <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 940</span>
+940: <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">try_const</span><span class="ruby-identifier">try_const</span>(<span class="ruby-identifier">const</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+941:   <span class="ruby-identifier">const</span>, <span class="ruby-identifier">type</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">const</span>
+942:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_compile</span>(<span class="ruby-value str">&quot;\#{cpp_include(headers)}\n/*top*/\ntypedef \#{type || 'int'} conftest_type;\nconftest_type conftestval = \#{type ? '' : '(int)'}\#{const};\n&quot;</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+943:     <span class="ruby-identifier">$defs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;-DHAVE_CONST_%s&quot;</span>, <span class="ruby-identifier">const</span>.<span class="ruby-identifier">tr_cpp</span>))
+944:     <span class="ruby-keyword kw">true</span>
+945:   <span class="ruby-keyword kw">else</span>
+946:     <span class="ruby-keyword kw">false</span>
+947:   <span class="ruby-keyword kw">end</span>
+948: <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

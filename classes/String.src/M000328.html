@@ -2,28 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>center (String)</title>
+  <title>ord (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.center(integer, padstr)   =&gt; new_str
+ *     str.ord   =&gt; integer
  *  
- *  If &lt;i&gt;integer&lt;/i&gt; is greater than the length of &lt;i&gt;str&lt;/i&gt;, returns a new
- *  &lt;code&gt;String&lt;/code&gt; of length &lt;i&gt;integer&lt;/i&gt; with &lt;i&gt;str&lt;/i&gt; centered and
- *  padded with &lt;i&gt;padstr&lt;/i&gt;; otherwise, returns &lt;i&gt;str&lt;/i&gt;.
+ *  Return the &lt;code&gt;Integer&lt;/code&gt; ordinal of a one-character string.
  *     
- *     &quot;hello&quot;.center(4)         #=&gt; &quot;hello&quot;
- *     &quot;hello&quot;.center(20)        #=&gt; &quot;       hello        &quot;
- *     &quot;hello&quot;.center(20, '123') #=&gt; &quot;1231231hello12312312&quot;
+ *     &quot;a&quot;.ord         #=&gt; 97
  */
 
-static VALUE
-rb_str_center(int argc, VALUE *argv, VALUE str)
+VALUE
+rb_str_ord(VALUE s)
 {
-    return rb_str_justify(argc, argv, str, 'c');
+    unsigned int c;
+
+    c = rb_enc_codepoint(RSTRING_PTR(s), RSTRING_END(s), STR_ENC_GET(s));
+    return UINT2NUM(c);
 }</pre>
 </body>
 </html>

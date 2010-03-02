@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenSSL::PKey::DSA [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenSSL::PKey::DSA</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/ext/openssl/ossl_pkey_c.html">
+
+                ext/openssl/ossl_pkey.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                cPKey
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+let rdoc know about mOSSL and m<a href="PKey.html">PKey</a>
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007225">export</a>&nbsp;&nbsp;
+
+        <a href="#M007220">generate</a>&nbsp;&nbsp;
+
+        <a href="#M007221">new</a>&nbsp;&nbsp;
+
+        <a href="#M007230">params</a>&nbsp;&nbsp;
+
+        <a href="#M007223">private?</a>&nbsp;&nbsp;
+
+        <a href="#M007222">public?</a>&nbsp;&nbsp;
+
+        <a href="#M007227">public_key</a>&nbsp;&nbsp;
+
+        <a href="#M007228">syssign</a>&nbsp;&nbsp;
+
+        <a href="#M007229">sysverify</a>&nbsp;&nbsp;
+
+        <a href="#M007226">to_der</a>&nbsp;&nbsp;
+
+        <a href="#M007231">to_pem</a>&nbsp;&nbsp;
+
+        <a href="#M007232">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M007224">to_text</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M007220" class="method-detail">
+        <a name="M007220"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007220.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007220.html');return false;">
+
+          <span class="method-name">DSA.generate(size) &rarr; dsa<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h3>Parameters</h3>
+<ul>
+<li><tt>size</tt> is an integer representing the desired key size.
+
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007221" class="method-detail">
+        <a name="M007221"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007221.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007221.html');return false;">
+
+          <span class="method-name">DSA.new([size | string [, pass]) &rarr; dsa<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h3>Parameters</h3>
+<ul>
+<li><tt>size</tt> is an integer representing the desired key size.
+
+</li>
+<li><tt>string</tt> contains a DER or PEM encoded key.
+
+</li>
+<li><tt>pass</tt> is a string that contains a optional password.
+
+</li>
+</ul>
+<h3>Examples</h3>
+<ul>
+<li><a href="DSA.html#M007221">DSA.new</a> -> dsa
+
+</li>
+<li><a href="DSA.html#M007221">DSA.new(1024)</a> -> dsa
+
+</li>
+<li><a href="DSA.html#M007221">DSA.new</a>(File.read(&#8216;dsa.pem&#8217;)) ->
+dsa
+
+</li>
+<li><a href="DSA.html#M007221">DSA.new</a>(File.read(&#8216;dsa.pem&#8217;),
+&#8216;mypassword&#8217;) -> dsa
+
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007225" class="method-detail">
+        <a name="M007225"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007225.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007225.html');return false;">
+
+          <span class="method-name">dsa.to_pem([cipher, password]) &rarr; aString<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h3>Parameters</h3>
+<p>
+<tt>cipher</tt> is an <a href="../Cipher.html">OpenSSL::Cipher</a>.
+<tt>password</tt> is a string containing your password.
+</p>
+<h3>Examples</h3>
+<ul>
+<li><a href="DSA.html#M007231">DSA.to_pem</a> -> a<a
+href="../../String.html">String</a>
+
+</li>
+<li><a href="DSA.html#M007231">DSA.to_pem</a>(cipher, &#8216;mypassword&#8217;)
+-> a<a href="../../String.html">String</a>
+
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007230" class="method-detail">
+        <a name="M007230"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007230.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007230.html');return false;">
+
+          <span class="method-name">dsa.params &rarr; hash<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Stores all parameters of key to the hash INSECURE: PRIVATE INFORMATIONS CAN
+LEAK OUT!!! Don&#8217;t use :-)) (I&#8217;s up to you)
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007223" class="method-detail">
+        <a name="M007223"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007223.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007223.html');return false;">
+
+          <span class="method-name">dsa.private? &rarr; true | false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007222" class="method-detail">
+        <a name="M007222"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007222.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007222.html');return false;">
+
+          <span class="method-name">dsa.public? &rarr; true | false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007227" class="method-detail">
+        <a name="M007227"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007227.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007227.html');return false;">
+
+          <span class="method-name">dsa.public_key &rarr; aDSA<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Makes new instance <a href="DSA.html">DSA</a> PUBLIC_KEY from PRIVATE_KEY
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007228" class="method-detail">
+        <a name="M007228"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007228.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007228.html');return false;">
+
+          <span class="method-name">dsa.syssign(string) &rarr; aString<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007229" class="method-detail">
+        <a name="M007229"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007229.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007229.html');return false;">
+
+          <span class="method-name">dsa.sysverify(digest, sig) &rarr; true | false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007226" class="method-detail">
+        <a name="M007226"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007226.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007226.html');return false;">
+
+          <span class="method-name">dsa.to_der &rarr; aString<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007231" class="method-detail">
+        <a name="M007231"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">to_pem</span><span class="method-args">(...)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="DSA.html#M007225">export</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007232" class="method-detail">
+        <a name="M007232"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">to_s</span><span class="method-args">(...)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="DSA.html#M007225">export</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007224" class="method-detail">
+        <a name="M007224"></a>
+
+        <div class="method-heading">
+
+          <a href="DSA.src/M007224.html" target="Code" class="method-signature"
+            onclick="popupCode('DSA.src/M007224.html');return false;">
+
+          <span class="method-name">dsa.to_text &rarr; aString<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Prints all parameters of key to buffer INSECURE: PRIVATE INFORMATIONS CAN
+LEAK OUT!!! Don&#8217;t use :-)) (I&#8217;s up to you)
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

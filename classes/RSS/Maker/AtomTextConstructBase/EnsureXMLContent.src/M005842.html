@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>included (RSS::Maker::AtomTextConstructBase::EnsureXMLContent)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 301</span>
+301:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+302:             <span class="ruby-keyword kw">super</span>
+303:             <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+304:               <span class="ruby-node">%w(type content xml_content)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+305:                 <span class="ruby-identifier">attr_reader</span> <span class="ruby-identifier">element</span>
+306:                 <span class="ruby-identifier">attr_writer</span> <span class="ruby-identifier">element</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;xml_content&quot;</span>
+307:                 <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">element</span>)
+308:               <span class="ruby-keyword kw">end</span>
+309: 
+310:               <span class="ruby-identifier">alias_method</span>(<span class="ruby-identifier">:xhtml</span>, <span class="ruby-identifier">:xml_content</span>)
+311:             <span class="ruby-keyword kw">end</span>
+312:           <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

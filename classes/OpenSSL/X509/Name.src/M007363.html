@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add_entry (OpenSSL::X509::Name)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    name.add_entry(oid, value [, type]) =&gt; self
+ */
+static
+VALUE ossl_x509name_add_entry(int argc, VALUE *argv, VALUE self)
+{
+    X509_NAME *name;
+    VALUE oid, value, type;
+
+    rb_scan_args(argc, argv, &quot;21&quot;, &amp;oid, &amp;value, &amp;type);
+    StringValue(oid);
+    StringValue(value);
+    if(NIL_P(type)) type = rb_aref(OBJECT_TYPE_TEMPLATE, oid);
+    GetX509Name(self, name);
+    if (!X509_NAME_add_entry_by_txt(name, RSTRING_PTR(oid), NUM2INT(type),
+                (const unsigned char *)RSTRING_PTR(value), RSTRING_LEN(value), -1, 0)) {
+        ossl_raise(eX509NameError, NULL);
+    }
+
+    return self;
+}</pre>
+</body>
+</html>

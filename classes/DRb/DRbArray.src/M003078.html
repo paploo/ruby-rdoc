@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (DRb::DRbArray)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 515</span>
+515:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">ary</span>)
+516:       <span class="ruby-ivar">@ary</span> = <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">obj</span><span class="ruby-operator">|</span> 
+517:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">DRbUndumped</span>
+518:           <span class="ruby-constant">DRbObject</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">obj</span>)
+519:         <span class="ruby-keyword kw">else</span>
+520:           <span class="ruby-keyword kw">begin</span>
+521:             <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">obj</span>)
+522:             <span class="ruby-identifier">obj</span>
+523:           <span class="ruby-keyword kw">rescue</span>
+524:             <span class="ruby-constant">DRbObject</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">obj</span>)
+525:           <span class="ruby-keyword kw">end</span>
+526:         <span class="ruby-keyword kw">end</span>
+527:       }
+528:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -72,6 +72,16 @@
 
         <br />
 
+
+                <a href="../files/ext/json/lib/json/common_rb.html">
+
+                ext/json/lib/json/common.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -164,17 +174,19 @@ meta-classes. All metaclasses are instances of the class `Class&#8217;.
 
       <div class="name-list">
 
-        <a href="#M000983">allocate</a>&nbsp;&nbsp;
+        <a href="#M001005">allocate</a>&nbsp;&nbsp;
 
-        <a href="#M000982">inherited</a>&nbsp;&nbsp;
+        <a href="#M001004">inherited</a>&nbsp;&nbsp;
 
-        <a href="#M000984">new</a>&nbsp;&nbsp;
+        <a href="#M001010">json_creatable?</a>&nbsp;&nbsp;
 
-        <a href="#M000985">new</a>&nbsp;&nbsp;
+        <a href="#M001006">new</a>&nbsp;&nbsp;
 
-        <a href="#M000986">superclass</a>&nbsp;&nbsp;
+        <a href="#M001007">new</a>&nbsp;&nbsp;
 
-        <a href="#M000987">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M001008">superclass</a>&nbsp;&nbsp;
+
+        <a href="#M001009">to_yaml</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -195,13 +207,13 @@ meta-classes. All metaclasses are instances of the class `Class&#8217;.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M000985" class="method-detail">
-        <a name="M000985"></a>
+      <div id="method-M001007" class="method-detail">
+        <a name="M001007"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000985.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000985.html');return false;">
+          <a href="Class.src/M001007.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001007.html');return false;">
 
           <span class="method-name">Class.new(super_class=Object)   =>    a_class<br />
 </span>
@@ -225,13 +237,13 @@ assigning the class object to a constant.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000983" class="method-detail">
-        <a name="M000983"></a>
+      <div id="method-M001005" class="method-detail">
+        <a name="M001005"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000983.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000983.html');return false;">
+          <a href="Class.src/M001005.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001005.html');return false;">
 
           <span class="method-name">class.allocate()   =>   obj<br />
 </span>
@@ -265,13 +277,13 @@ instance of <em>class</em>.
       </div>
 
 
-      <div id="method-M000982" class="method-detail">
-        <a name="M000982"></a>
+      <div id="method-M001004" class="method-detail">
+        <a name="M001004"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000982.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000982.html');return false;">
+          <a href="Class.src/M001004.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001004.html');return false;">
 
           <span class="method-name">inherited(subclass)<br />
 </span>
@@ -313,13 +325,40 @@ produces:
       </div>
 
 
-      <div id="method-M000984" class="method-detail">
-        <a name="M000984"></a>
+      <div id="method-M001010" class="method-detail">
+        <a name="M001010"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000984.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000984.html');return false;">
+          <a href="Class.src/M001010.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001010.html');return false;">
+
+          <span class="method-name">json_creatable?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns true, if this class can be used to create an instance from a
+serialised <a href="JSON.html">JSON</a> string. The class has to implement
+a class method <em>json_create</em> that expects a hash as first parameter,
+which includes the required data.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001006" class="method-detail">
+        <a name="M001006"></a>
+
+        <div class="method-heading">
+
+          <a href="Class.src/M001006.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001006.html');return false;">
 
           <span class="method-name">class.new(args, ...)    =>  obj<br />
 </span>
@@ -341,13 +380,13 @@ an object is constructed using .new.
       </div>
 
 
-      <div id="method-M000986" class="method-detail">
-        <a name="M000986"></a>
+      <div id="method-M001008" class="method-detail">
+        <a name="M001008"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000986.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000986.html');return false;">
+          <a href="Class.src/M001008.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001008.html');return false;">
 
           <span class="method-name">class.superclass &rarr; a_super_class or nil<br />
 </span>
@@ -380,13 +419,13 @@ returns nil when the given class hasn&#8217;t a parent class:
       </div>
 
 
-      <div id="method-M000987" class="method-detail">
-        <a name="M000987"></a>
+      <div id="method-M001009" class="method-detail">
+        <a name="M001009"></a>
 
         <div class="method-heading">
 
-          <a href="Class.src/M000987.html" target="Code" class="method-signature"
-            onclick="popupCode('Class.src/M000987.html');return false;">
+          <a href="Class.src/M001009.html" target="Code" class="method-signature"
+            onclick="popupCode('Class.src/M001009.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 

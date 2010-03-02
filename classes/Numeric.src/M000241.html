@@ -2,22 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>fdiv (Numeric)</title>
+  <title>singleton_method_added (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     num.fdiv(numeric)    =&gt;   float
- *
- *  Returns float division.
+ * Trap attempts to add methods to &lt;code&gt;Numeric&lt;/code&gt; objects. Always
+ * raises a &lt;code&gt;TypeError&lt;/code&gt;
  */
 
 static VALUE
-num_fdiv(VALUE x, VALUE y)
+num_sadded(VALUE x, VALUE name)
 {
-    return rb_funcall(rb_Float(x), '/', 1, y);
+    ID mid = rb_to_id(name);
+    /* ruby_frame = ruby_frame-&gt;prev; */ /* pop frame for &quot;singleton_method_added&quot; */
+    /* Numerics should be values; singleton_methods should not be added to them */
+    rb_remove_method_id(rb_singleton_class(x), mid);
+    rb_raise(rb_eTypeError,
+             &quot;can't define singleton method \&quot;%s\&quot; for %s&quot;,
+             rb_id2name(mid),
+             rb_obj_classname(x));
+    return Qnil;                /* not reached */
 }</pre>
 </body>
 </html>

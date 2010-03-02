@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>auth_login (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 737</span>
+737:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">auth_login</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">secret</span>)
+738:       <span class="ruby-identifier">check_auth_args</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">secret</span>
+739:       <span class="ruby-identifier">res</span> = <span class="ruby-identifier">critical</span> {
+740:         <span class="ruby-identifier">check_auth_continue</span> <span class="ruby-identifier">get_response</span>(<span class="ruby-value str">'AUTH LOGIN'</span>)
+741:         <span class="ruby-identifier">check_auth_continue</span> <span class="ruby-identifier">get_response</span>(<span class="ruby-identifier">base64_encode</span>(<span class="ruby-identifier">user</span>))
+742:         <span class="ruby-identifier">get_response</span>(<span class="ruby-identifier">base64_encode</span>(<span class="ruby-identifier">secret</span>))
+743:       }
+744:       <span class="ruby-identifier">check_auth_response</span> <span class="ruby-identifier">res</span>
+745:       <span class="ruby-identifier">res</span>
+746:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>content= (RSS::ITunesItemModel::ITunesDuration)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/itunes.rb, line 333</span>
+333:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content=</span>(<span class="ruby-identifier">value</span>)
+334:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>
+335:           <span class="ruby-ivar">@content</span> = <span class="ruby-keyword kw">nil</span>
+336:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>)
+337:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">content</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">content</span>
+338:         <span class="ruby-keyword kw">else</span>
+339:           <span class="ruby-keyword kw">begin</span>
+340:             <span class="ruby-ivar">@hour</span>, <span class="ruby-ivar">@minute</span>, <span class="ruby-ivar">@second</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">value</span>, <span class="ruby-ivar">@do_validate</span>)
+341:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ArgumentError</span>
+342:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotAvailableValueError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">value</span>)
+343:           <span class="ruby-keyword kw">end</span>
+344:           <span class="ruby-ivar">@content</span> = <span class="ruby-identifier">value</span>
+345:         <span class="ruby-keyword kw">end</span>
+346:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_path (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/generic.rb, line 469</span>
+469:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_path</span>(<span class="ruby-identifier">v</span>)
+470:       <span class="ruby-comment cmt"># raise if both hier and opaque are not nil, because:</span>
+471:       <span class="ruby-comment cmt"># absoluteURI   = scheme &quot;:&quot; ( hier_part | opaque_part )</span>
+472:       <span class="ruby-comment cmt"># hier_part     = ( net_path | abs_path ) [ &quot;?&quot; query ]</span>
+473:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@opaque</span>
+474:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidURIError</span>, 
+475:           <span class="ruby-value str">&quot;path conflicts with opaque&quot;</span>
+476:       <span class="ruby-keyword kw">end</span>
+477: 
+478:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@scheme</span>
+479:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">''</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:ABS_PATH</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span>
+480:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidComponentError</span>, 
+481:             <span class="ruby-node">&quot;bad component(expected absolute path component): #{v}&quot;</span>
+482:         <span class="ruby-keyword kw">end</span>
+483:       <span class="ruby-keyword kw">else</span>
+484:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">''</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:ABS_PATH</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:REL_PATH</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span>
+485:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidComponentError</span>, 
+486:             <span class="ruby-node">&quot;bad component(expected relative path component): #{v}&quot;</span>
+487:         <span class="ruby-keyword kw">end</span>
+488:       <span class="ruby-keyword kw">end</span>
+489: 
+490:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+491:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

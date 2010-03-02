@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>puts (Buffering)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/openssl/lib/openssl/buffering.rb, line 204</span>
+204:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">puts</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+205:     <span class="ruby-identifier">s</span> = <span class="ruby-value str">&quot;&quot;</span>
+206:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+207:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+208:     <span class="ruby-keyword kw">end</span>
+209:     <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+210:       <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">to_s</span>
+211:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\n\z/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">s</span>
+212:         <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+213:       <span class="ruby-keyword kw">end</span>
+214:     }
+215:     <span class="ruby-identifier">do_write</span>(<span class="ruby-identifier">s</span>)
+216:     <span class="ruby-keyword kw">nil</span>
+217:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

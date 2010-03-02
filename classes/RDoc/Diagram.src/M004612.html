@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_full_name (RDoc::Diagram)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/diagram.rb, line 112</span>
+112:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_full_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">mod</span>)
+113:       <span class="ruby-identifier">full_name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">dup</span>
+114:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">full_name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@local_names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">full_name</span>)
+115:       <span class="ruby-identifier">mod_path</span> = <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">full_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'::'</span>)[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]
+116:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">mod_path</span>.<span class="ruby-identifier">nil?</span>
+117:         <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">mod_path</span>.<span class="ruby-identifier">empty?</span>
+118:           <span class="ruby-identifier">full_name</span> = <span class="ruby-identifier">mod_path</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'::'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">full_name</span>
+119:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">full_name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@local_names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">full_name</span>)
+120:         <span class="ruby-keyword kw">end</span>
+121:       <span class="ruby-keyword kw">end</span>
+122:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">name</span>
+123:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pass (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Thread.pass   =&gt; nil
+ *
+ *  Invokes the thread scheduler to pass execution to another thread.
+ *
+ *     a = Thread.new { print &quot;a&quot;; Thread.pass;
+ *                      print &quot;b&quot;; Thread.pass;
+ *                      print &quot;c&quot; }
+ *     b = Thread.new { print &quot;x&quot;; Thread.pass;
+ *                      print &quot;y&quot;; Thread.pass;
+ *                      print &quot;z&quot; }
+ *     a.join
+ *     b.join
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     axbycz
+ */
+
+static VALUE
+thread_s_pass(VALUE klass)
+{
+    rb_thread_schedule();
+    return Qnil;
+}</pre>
+</body>
+</html>

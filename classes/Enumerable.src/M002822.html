@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>minmax_by (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.minmax_by {| obj| block }   =&gt; [min, max]
+ *
+ *  Returns two elements array array containing the objects in
+ *  &lt;i&gt;enum&lt;/i&gt; that gives the minimum and maximum values respectively
+ *  from the given block.
+ *
+ *     a = %w(albatross dog horse)
+ *     a.minmax_by {|x| x.length }   #=&gt; [&quot;dog&quot;, &quot;albatross&quot;]
+ */
+
+static VALUE
+enum_minmax_by(VALUE obj)
+{
+    VALUE memo[4];
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    memo[0] = Qundef;
+    memo[1] = Qundef;
+    memo[2] = Qnil;
+    memo[3] = Qnil;
+    rb_block_call(obj, id_each, 0, 0, minmax_by_i, (VALUE)memo);
+    return rb_assoc_new(memo[2], memo[3]);
+}</pre>
+</body>
+</html>

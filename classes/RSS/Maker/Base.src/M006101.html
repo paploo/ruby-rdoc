@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_classed_elements (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 118</span>
+118:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_classed_elements</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">plural_class_name</span>=<span class="ruby-keyword kw">nil</span>,
+119:                                  <span class="ruby-identifier">plural_name</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">new_name</span>=<span class="ruby-keyword kw">nil</span>)
+120:           <span class="ruby-identifier">plural_name</span> <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{name}s&quot;</span>
+121:           <span class="ruby-identifier">new_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
+122:           <span class="ruby-identifier">def_classed_element</span>(<span class="ruby-identifier">plural_name</span>, <span class="ruby-identifier">plural_class_name</span>)
+123:           <span class="ruby-identifier">local_variable_name</span> = <span class="ruby-node">&quot;_#{name}&quot;</span>
+124:           <span class="ruby-identifier">new_value_variable_name</span> = <span class="ruby-value str">&quot;new_value&quot;</span>
+125:           <span class="ruby-identifier">additional_setup_code</span> = <span class="ruby-keyword kw">nil</span>
+126:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+127:             <span class="ruby-identifier">additional_setup_code</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">local_variable_name</span>,
+128:                                           <span class="ruby-identifier">new_value_variable_name</span>)
+129:           <span class="ruby-keyword kw">end</span>
+130:           <span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;def \#{name}\n\#{local_variable_name} = \#{plural_name}.first\n\#{local_variable_name} ? \#{local_variable_name}.\#{attribute} : nil\nend\n\ndef \#{name}=(\#{new_value_variable_name})\n\#{local_variable_name} =\n\#{plural_name}.first || \#{plural_name}.new_\#{new_name}\n\#{additional_setup_code}\n\#{local_variable_name}.\#{attribute} = \#{new_value_variable_name}\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+131:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

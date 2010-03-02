@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>dump (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1034</span>
+1034:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">ary_of_objs</span>, <span class="ruby-identifier">io</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
+1035:     <span class="ruby-identifier">obj_template</span> = <span class="ruby-identifier">ary_of_objs</span>.<span class="ruby-identifier">first</span>
+1036:     
+1037:     <span class="ruby-identifier">csv</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">options</span>)
+1038:     
+1039:     <span class="ruby-comment cmt"># write meta information</span>
+1040:     <span class="ruby-keyword kw">begin</span>
+1041:       <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">csv_meta</span>
+1042:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+1043:       <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">:class</span>, <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">class</span>]
+1044:     <span class="ruby-keyword kw">end</span>
+1045: 
+1046:     <span class="ruby-comment cmt"># write headers</span>
+1047:     <span class="ruby-keyword kw">begin</span>
+1048:       <span class="ruby-identifier">headers</span> = <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">csv_headers</span>
+1049:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+1050:       <span class="ruby-identifier">headers</span> = <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">sort</span>
+1051:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">cls</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cls</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\AStruct\b/</span> }
+1052:         <span class="ruby-identifier">headers</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">obj_template</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">mem</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{mem}=&quot;</span> }.<span class="ruby-identifier">sort</span>
+1053:       <span class="ruby-keyword kw">end</span>
+1054:     <span class="ruby-keyword kw">end</span>
+1055:     <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">headers</span>
+1056:     
+1057:     <span class="ruby-comment cmt"># serialize each object</span>
+1058:     <span class="ruby-identifier">ary_of_objs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">obj</span><span class="ruby-operator">|</span>
+1059:       <span class="ruby-keyword kw">begin</span>
+1060:         <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">csv_dump</span>(<span class="ruby-identifier">headers</span>)
+1061:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+1062:         <span class="ruby-identifier">csv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+1063:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">var</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?@</span>
+1064:             <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">var</span>)
+1065:           <span class="ruby-keyword kw">else</span>
+1066:             <span class="ruby-identifier">obj</span>[<span class="ruby-identifier">var</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>]]
+1067:           <span class="ruby-keyword kw">end</span>
+1068:         <span class="ruby-keyword kw">end</span>
+1069:       <span class="ruby-keyword kw">end</span>
+1070:     <span class="ruby-keyword kw">end</span>
+1071:     
+1072:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+1073:       <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">string</span>
+1074:     <span class="ruby-keyword kw">else</span>
+1075:       <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">close</span>
+1076:     <span class="ruby-keyword kw">end</span>
+1077:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

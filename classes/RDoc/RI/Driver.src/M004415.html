@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>class_cache (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 333</span>
+333:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">class_cache</span>
+334:     <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@class_cache</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@class_cache</span>
+335: 
+336:     <span class="ruby-comment cmt"># Get the documentation directories used to make the cache in order to see</span>
+337:     <span class="ruby-comment cmt"># whether the cache is valid for the current ri instantiation.</span>
+338:     <span class="ruby-keyword kw">if</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-ivar">@cache_doc_dirs_path</span>))
+339:       <span class="ruby-identifier">cache_doc_dirs</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@cache_doc_dirs_path</span>).<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+340:     <span class="ruby-keyword kw">else</span>
+341:       <span class="ruby-identifier">cache_doc_dirs</span> = []
+342:     <span class="ruby-keyword kw">end</span>
+343: 
+344:     <span class="ruby-identifier">newest</span> = <span class="ruby-identifier">map_dirs</span>(<span class="ruby-value str">'created.rid'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+345:       <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span> <span class="ruby-identifier">f</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">test</span> <span class="ruby-operator">?</span><span class="ruby-identifier">f</span>, <span class="ruby-identifier">f</span>
+346:     <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">max</span>
+347: 
+348:     <span class="ruby-comment cmt"># An up to date cache file must have been created more recently than</span>
+349:     <span class="ruby-comment cmt"># the last modification of any of the documentation directories.  It also</span>
+350:     <span class="ruby-comment cmt"># must have been created with the same documentation directories</span>
+351:     <span class="ruby-comment cmt"># as those from which ri currently is sourcing documentation.</span>
+352:     <span class="ruby-identifier">up_to_date</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">class_cache_file_path</span>) <span class="ruby-keyword kw">and</span>
+353:                   <span class="ruby-identifier">newest</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">newest</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-identifier">class_cache_file_path</span>) <span class="ruby-keyword kw">and</span>
+354:                   (<span class="ruby-identifier">cache_doc_dirs</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@doc_dirs</span>))
+355: 
+356:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">up_to_date</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@use_cache</span> <span class="ruby-keyword kw">then</span>
+357:       <span class="ruby-identifier">open</span> <span class="ruby-identifier">class_cache_file_path</span>, <span class="ruby-value str">'rb'</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fp</span><span class="ruby-operator">|</span>
+358:         <span class="ruby-keyword kw">begin</span>
+359:           <span class="ruby-ivar">@class_cache</span> = <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span> <span class="ruby-identifier">fp</span>.<span class="ruby-identifier">read</span>
+360:         <span class="ruby-keyword kw">rescue</span>
+361:           <span class="ruby-comment cmt">#</span>
+362:           <span class="ruby-comment cmt"># This shouldn't be necessary, since the up_to_date logic above</span>
+363:           <span class="ruby-comment cmt"># should force the cache to be recreated when a new version of</span>
+364:           <span class="ruby-comment cmt"># rdoc is installed.  This seems like a worthwhile enhancement</span>
+365:           <span class="ruby-comment cmt"># to ri's robustness, however.</span>
+366:           <span class="ruby-comment cmt">#</span>
+367:           <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Error reading the class cache; recreating the class cache!&quot;</span>
+368:           <span class="ruby-ivar">@class_cache</span> = <span class="ruby-identifier">create_class_cache</span>
+369:         <span class="ruby-keyword kw">end</span>
+370:       <span class="ruby-keyword kw">end</span>
+371:     <span class="ruby-keyword kw">else</span>
+372:       <span class="ruby-ivar">@class_cache</span> = <span class="ruby-identifier">create_class_cache</span>
+373:     <span class="ruby-keyword kw">end</span>
+374: 
+375:     <span class="ruby-ivar">@class_cache</span>
+376:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

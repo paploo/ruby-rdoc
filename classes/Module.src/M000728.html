@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>name (Module)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     mod.name    =&gt; string
+ *
+ *  Returns the name of the module &lt;i&gt;mod&lt;/i&gt;.  Returns nil for anonymous modules.
+ */
+
+VALUE
+rb_mod_name(VALUE mod)
+{
+    VALUE path = classname(mod);
+
+    if (!NIL_P(path)) return rb_str_dup(path);
+    return path;
+}</pre>
+</body>
+</html>

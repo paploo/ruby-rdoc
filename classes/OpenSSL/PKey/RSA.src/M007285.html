@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>public_key (OpenSSL::PKey::RSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rsa.public_key -&gt; aRSA
+ *
+ * Makes new instance RSA PUBLIC_KEY from PRIVATE_KEY
+ */
+static VALUE
+ossl_rsa_to_public_key(VALUE self)
+{
+    EVP_PKEY *pkey;
+    RSA *rsa;
+    VALUE obj;
+    
+    GetPKeyRSA(self, pkey);
+    /* err check performed by rsa_instance */
+    rsa = RSAPublicKey_dup(pkey-&gt;pkey.rsa);
+    obj = rsa_instance(CLASS_OF(self), rsa);
+    if (obj == Qfalse) {
+        RSA_free(rsa);
+        ossl_raise(eRSAError, NULL);
+    }
+    return obj;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>count_objects (ObjectSpace)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ObjectSpace.count_objects([result_hash]) -&gt; hash
+ *
+ *  Counts objects for each type.
+ *
+ *  It returns a hash as:
+ *  {:TOTAL=&gt;10000, :FREE=&gt;3011, :T_OBJECT=&gt;6, :T_CLASS=&gt;404, ...}
+ *
+ *  If the optional argument, result_hash, is given,
+ *  it is overwritten and returned.
+ *  This is intended to avoid probe effect.
+ *
+ *  The contents of the returned hash is implementation defined.
+ *  It may be changed in future.
+ *
+ *  This method is not expected to work except C Ruby.
+ *
+ */
+
+static VALUE
+count_objects(int argc, VALUE *argv, VALUE os)
+{
+    rb_objspace_t *objspace = &amp;rb_objspace;
+    size_t counts[T_MASK+1];
+    size_t freed = 0;
+    size_t total = 0;
+    size_t i;
+    VALUE hash;
+
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;hash) == 1) {
+        if (TYPE(hash) != T_HASH)
+            rb_raise(rb_eTypeError, &quot;non-hash given&quot;);
+    }
+
+    for (i = 0; i &lt;= T_MASK; i++) {
+        counts[i] = 0;
+    }
+
+    for (i = 0; i &lt; heaps_used; i++) {
+        RVALUE *p, *pend;
+
+        p = heaps[i].slot; pend = p + heaps[i].limit;
+        for (;p &lt; pend; p++) {
+            if (p-&gt;as.basic.flags) {
+                counts[BUILTIN_TYPE(p)]++;
+            }
+            else {
+                freed++;
+            }
+        }
+        total += heaps[i].limit;
+    }
+
+    if (hash == Qnil) {
+        hash = rb_hash_new();
+    }
+    else if (!RHASH_EMPTY_P(hash)) {
+        st_foreach(RHASH_TBL(hash), set_zero, hash);
+    }
+    rb_hash_aset(hash, ID2SYM(rb_intern(&quot;TOTAL&quot;)), SIZET2NUM(total));
+    rb_hash_aset(hash, ID2SYM(rb_intern(&quot;FREE&quot;)), SIZET2NUM(freed));
+
+    for (i = 0; i &lt;= T_MASK; i++) {
+        VALUE type;
+        switch (i) {
+#define COUNT_TYPE(t) case t: type = ID2SYM(rb_intern(#t)); break;
+            COUNT_TYPE(T_NONE);
+            COUNT_TYPE(T_OBJECT);
+            COUNT_TYPE(T_CLASS);
+            COUNT_TYPE(T_MODULE);
+            COUNT_TYPE(T_FLOAT);
+            COUNT_TYPE(T_STRING);
+            COUNT_TYPE(T_REGEXP);
+            COUNT_TYPE(T_ARRAY);
+            COUNT_TYPE(T_HASH);
+            COUNT_TYPE(T_STRUCT);
+            COUNT_TYPE(T_BIGNUM);
+            COUNT_TYPE(T_FILE);
+            COUNT_TYPE(T_DATA);
+            COUNT_TYPE(T_MATCH);
+            COUNT_TYPE(T_COMPLEX);
+            COUNT_TYPE(T_RATIONAL);
+            COUNT_TYPE(T_NIL);
+            COUNT_TYPE(T_TRUE);
+            COUNT_TYPE(T_FALSE);
+            COUNT_TYPE(T_SYMBOL);
+            COUNT_TYPE(T_FIXNUM);
+            COUNT_TYPE(T_UNDEF);
+            COUNT_TYPE(T_NODE);
+            COUNT_TYPE(T_ICLASS);
+            COUNT_TYPE(T_ZOMBIE);
+#undef COUNT_TYPE
+          default:              type = INT2NUM(i); break;
+        }
+        if (counts[i])
+            rb_hash_aset(hash, type, SIZET2NUM(counts[i]));
+    }
+
+    return hash;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mask_protected_sequences (RDoc::Markup::AttributeManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/attribute_manager.rb, line 128</span>
+128:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mask_protected_sequences</span>
+129:     <span class="ruby-identifier">protect_pattern</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;\\\\([#{Regexp.escape(PROTECTABLE.join(''))}])&quot;</span>)
+130:     <span class="ruby-ivar">@str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-identifier">protect_pattern</span>, <span class="ruby-node">&quot;\\1#{PROTECT_ATTR}&quot;</span>)
+131:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

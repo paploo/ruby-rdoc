@@ -82,6 +82,16 @@
 
         <br />
 
+
+                <a href="../files/ext/json/lib/json/add/rails_rb.html">
+
+                ext/json/lib/json/add/rails.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -112,7 +122,7 @@
 <tt>Symbol</tt> objects represent names and some strings inside the Ruby
 interpreter. They are generated using the <tt>:name</tt> and
 <tt>:&quot;string&quot;</tt> literals syntax, and by the various <tt><a
-href="Symbol.html#M001114">to_sym</a></tt> methods. The same
+href="Symbol.html#M001171">to_sym</a></tt> methods. The same
 <tt>Symbol</tt> object will be created for a given name or string for the
 duration of a program&#8217;s execution, regardless of the context or
 meaning of that name. Thus if <tt>Fred</tt> is a constant in one context, a
@@ -147,27 +157,31 @@ method in another, and a class in a third, the <tt>Symbol</tt>
 
       <div class="name-list">
 
-        <a href="#M001109">==</a>&nbsp;&nbsp;
+        <a href="#M001165">==</a>&nbsp;&nbsp;
 
-        <a href="#M001108">all_symbols</a>&nbsp;&nbsp;
+        <a href="#M001166">===</a>&nbsp;&nbsp;
 
-        <a href="#M001116">dclone</a>&nbsp;&nbsp;
+        <a href="#M001164">all_symbols</a>&nbsp;&nbsp;
 
-        <a href="#M001112">id2name</a>&nbsp;&nbsp;
+        <a href="#M001173">dclone</a>&nbsp;&nbsp;
 
-        <a href="#M001110">inspect</a>&nbsp;&nbsp;
+        <a href="#M001169">id2name</a>&nbsp;&nbsp;
 
-        <a href="#M001113">intern</a>&nbsp;&nbsp;
+        <a href="#M001167">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M001115">to_proc</a>&nbsp;&nbsp;
+        <a href="#M001170">intern</a>&nbsp;&nbsp;
 
-        <a href="#M001111">to_s</a>&nbsp;&nbsp;
+        <a href="#M001176">to_json</a>&nbsp;&nbsp;
 
-        <a href="#M001114">to_sym</a>&nbsp;&nbsp;
+        <a href="#M001172">to_proc</a>&nbsp;&nbsp;
 
-        <a href="#M001118">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M001168">to_s</a>&nbsp;&nbsp;
 
-        <a href="#M001117">yaml_new</a>&nbsp;&nbsp;
+        <a href="#M001171">to_sym</a>&nbsp;&nbsp;
+
+        <a href="#M001175">to_yaml</a>&nbsp;&nbsp;
+
+        <a href="#M001174">yaml_new</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -198,13 +212,13 @@ method in another, and a class in a third, the <tt>Symbol</tt>
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M001108" class="method-detail">
-        <a name="M001108"></a>
+      <div id="method-M001164" class="method-detail">
+        <a name="M001164"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001108.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001108.html');return false;">
+          <a href="Symbol.src/M001164.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001164.html');return false;">
 
           <span class="method-name">Symbol.all_symbols    => array<br />
 </span>
@@ -232,13 +246,13 @@ Returns an array of all the symbols currently in Ruby&#8217;s symbol table.
       </div>
 
 
-      <div id="method-M001117" class="method-detail">
-        <a name="M001117"></a>
+      <div id="method-M001174" class="method-detail">
+        <a name="M001174"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001117.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001117.html');return false;">
+          <a href="Symbol.src/M001174.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001174.html');return false;">
 
           <span class="method-name">yaml_new</span><span class="method-args">( klass, tag, val )</span>
 
@@ -255,13 +269,13 @@ Returns an array of all the symbols currently in Ruby&#8217;s symbol table.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M001109" class="method-detail">
-        <a name="M001109"></a>
+      <div id="method-M001165" class="method-detail">
+        <a name="M001165"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001109.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001109.html');return false;">
+          <a href="Symbol.src/M001165.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001165.html');return false;">
 
           <span class="method-name">sym == obj   => true or false<br />
 </span>
@@ -281,13 +295,39 @@ symbol, returns <tt>true</tt>.
       </div>
 
 
-      <div id="method-M001116" class="method-detail">
-        <a name="M001116"></a>
+      <div id="method-M001166" class="method-detail">
+        <a name="M001166"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001116.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001116.html');return false;">
+          <a href="Symbol.src/M001166.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001166.html');return false;">
+
+          <span class="method-name">sym == obj   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Equality&#8212;If <em>sym</em> and <em>obj</em> are exactly the same
+symbol, returns <tt>true</tt>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001173" class="method-detail">
+        <a name="M001173"></a>
+
+        <div class="method-heading">
+
+          <a href="Symbol.src/M001173.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001173.html');return false;">
 
           <span class="method-name">dclone</span><span class="method-args">()</span>
 
@@ -301,13 +341,13 @@ symbol, returns <tt>true</tt>.
       </div>
 
 
-      <div id="method-M001112" class="method-detail">
-        <a name="M001112"></a>
+      <div id="method-M001169" class="method-detail">
+        <a name="M001169"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001112.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001112.html');return false;">
+          <a href="Symbol.src/M001169.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001169.html');return false;">
 
           <span class="method-name">sym.id2name   => string<br />
 sym.to_s      => string<br />
@@ -330,13 +370,13 @@ Returns the name or string corresponding to <em>sym</em>.
       </div>
 
 
-      <div id="method-M001110" class="method-detail">
-        <a name="M001110"></a>
+      <div id="method-M001167" class="method-detail">
+        <a name="M001167"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001110.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001110.html');return false;">
+          <a href="Symbol.src/M001167.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001167.html');return false;">
 
           <span class="method-name">sym.inspect    => string<br />
 </span>
@@ -358,13 +398,13 @@ Returns the representation of <em>sym</em> as a symbol literal.
       </div>
 
 
-      <div id="method-M001113" class="method-detail">
-        <a name="M001113"></a>
+      <div id="method-M001170" class="method-detail">
+        <a name="M001170"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001113.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001113.html');return false;">
+          <a href="Symbol.src/M001170.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001170.html');return false;">
 
           <span class="method-name">sym.to_sym   => sym<br />
 sym.intern   => sym<br />
@@ -377,7 +417,7 @@ sym.intern   => sym<br />
         <div class="method-description">
 
           <p>
-In general, <tt><a href="Symbol.html#M001114">to_sym</a></tt> returns the
+In general, <tt><a href="Symbol.html#M001171">to_sym</a></tt> returns the
 <tt>Symbol</tt> corresponding to an object. As <em>sym</em> is already a
 symbol, <tt>self</tt> is returned in this case.
 </p>
@@ -386,13 +426,33 @@ symbol, <tt>self</tt> is returned in this case.
       </div>
 
 
-      <div id="method-M001115" class="method-detail">
-        <a name="M001115"></a>
+      <div id="method-M001176" class="method-detail">
+        <a name="M001176"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001115.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001115.html');return false;">
+          <a href="Symbol.src/M001176.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001176.html');return false;">
+
+          <span class="method-name">to_json</span><span class="method-args">(*a)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001172" class="method-detail">
+        <a name="M001172"></a>
+
+        <div class="method-heading">
+
+          <a href="Symbol.src/M001172.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001172.html');return false;">
 
           <span class="method-name">sym.to_proc<br />
 </span>
@@ -415,13 +475,13 @@ Returns a <em>Proc</em> object which respond to the given method by
       </div>
 
 
-      <div id="method-M001111" class="method-detail">
-        <a name="M001111"></a>
+      <div id="method-M001168" class="method-detail">
+        <a name="M001168"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001111.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001111.html');return false;">
+          <a href="Symbol.src/M001168.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001168.html');return false;">
 
           <span class="method-name">sym.id2name   => string<br />
 sym.to_s      => string<br />
@@ -444,13 +504,13 @@ Returns the name or string corresponding to <em>sym</em>.
       </div>
 
 
-      <div id="method-M001114" class="method-detail">
-        <a name="M001114"></a>
+      <div id="method-M001171" class="method-detail">
+        <a name="M001171"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001114.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001114.html');return false;">
+          <a href="Symbol.src/M001171.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001171.html');return false;">
 
           <span class="method-name">sym.to_sym   => sym<br />
 sym.intern   => sym<br />
@@ -463,7 +523,7 @@ sym.intern   => sym<br />
         <div class="method-description">
 
           <p>
-In general, <tt><a href="Symbol.html#M001114">to_sym</a></tt> returns the
+In general, <tt><a href="Symbol.html#M001171">to_sym</a></tt> returns the
 <tt>Symbol</tt> corresponding to an object. As <em>sym</em> is already a
 symbol, <tt>self</tt> is returned in this case.
 </p>
@@ -472,13 +532,13 @@ symbol, <tt>self</tt> is returned in this case.
       </div>
 
 
-      <div id="method-M001118" class="method-detail">
-        <a name="M001118"></a>
+      <div id="method-M001175" class="method-detail">
+        <a name="M001175"></a>
 
         <div class="method-heading">
 
-          <a href="Symbol.src/M001118.html" target="Code" class="method-signature"
-            onclick="popupCode('Symbol.src/M001118.html');return false;">
+          <a href="Symbol.src/M001175.html" target="Code" class="method-signature"
+            onclick="popupCode('Symbol.src/M001175.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 

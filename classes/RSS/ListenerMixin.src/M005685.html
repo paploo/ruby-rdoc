@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tag_start (RSS::ListenerMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/parser.rb, line 297</span>
+297:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_start</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attributes</span>)
+298:       <span class="ruby-ivar">@text_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-value str">''</span>)
+299: 
+300:       <span class="ruby-identifier">ns</span> = <span class="ruby-ivar">@ns_stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">dup</span>
+301:       <span class="ruby-identifier">attrs</span> = {}
+302:       <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+303:         <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\Axmlns(?:\z|:)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">n</span>
+304:           <span class="ruby-identifier">ns</span>[<span class="ruby-identifier">$POSTMATCH</span>] = <span class="ruby-identifier">v</span>
+305:         <span class="ruby-keyword kw">else</span>
+306:           <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+307:         <span class="ruby-keyword kw">end</span>
+308:       <span class="ruby-keyword kw">end</span>
+309:       <span class="ruby-ivar">@ns_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">ns</span>)
+310: 
+311:       <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">local</span> = <span class="ruby-identifier">split_name</span>(<span class="ruby-identifier">name</span>)
+312:       <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">push</span>([<span class="ruby-identifier">_ns</span>(<span class="ruby-identifier">ns</span>, <span class="ruby-identifier">prefix</span>), <span class="ruby-identifier">local</span>])
+313:       <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">push</span>([])
+314:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xml_child_mode</span>
+315:         <span class="ruby-identifier">previous</span> = <span class="ruby-ivar">@last_xml_element</span>
+316:         <span class="ruby-identifier">element_attrs</span> = <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">dup</span>
+317:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">previous</span>
+318:           <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ns_prefix</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+319:             <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ns_prefix</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;xml&quot;</span>
+320:             <span class="ruby-identifier">key</span> = <span class="ruby-identifier">ns_prefix</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;xmlns&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;xmlns:#{ns_prefix}&quot;</span>
+321:             <span class="ruby-identifier">element_attrs</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">value</span>
+322:           <span class="ruby-keyword kw">end</span>
+323:         <span class="ruby-keyword kw">end</span>
+324:         <span class="ruby-identifier">next_element</span> = <span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">local</span>,
+325:                                         <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">prefix</span>,
+326:                                         <span class="ruby-identifier">_ns</span>(<span class="ruby-identifier">ns</span>, <span class="ruby-identifier">prefix</span>),
+327:                                         <span class="ruby-identifier">element_attrs</span>)
+328:         <span class="ruby-identifier">previous</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">next_element</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">previous</span>
+329:         <span class="ruby-ivar">@last_xml_element</span> = <span class="ruby-identifier">next_element</span>
+330:         <span class="ruby-identifier">pr</span> = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">text</span>, <span class="ruby-identifier">tags</span><span class="ruby-operator">|</span>
+331:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">previous</span>
+332:             <span class="ruby-ivar">@last_xml_element</span> = <span class="ruby-identifier">previous</span>
+333:           <span class="ruby-keyword kw">else</span>
+334:             <span class="ruby-ivar">@xml_element</span> = <span class="ruby-ivar">@last_xml_element</span>
+335:             <span class="ruby-ivar">@last_xml_element</span> = <span class="ruby-keyword kw">nil</span>
+336:           <span class="ruby-keyword kw">end</span>
+337:         <span class="ruby-keyword kw">end</span>
+338:         <span class="ruby-ivar">@proc_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">pr</span>)
+339:       <span class="ruby-keyword kw">else</span>
+340:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rss</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;initial_start_#{local}&quot;</span>, <span class="ruby-keyword kw">true</span>)
+341:           <span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;initial_start_#{local}&quot;</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">dup</span>)
+342:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;start_#{local}&quot;</span>, <span class="ruby-keyword kw">true</span>)
+343:           <span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;start_#{local}&quot;</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">dup</span>)
+344:         <span class="ruby-keyword kw">else</span>
+345:           <span class="ruby-identifier">start_else_element</span>(<span class="ruby-identifier">local</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>.<span class="ruby-identifier">dup</span>)
+346:         <span class="ruby-keyword kw">end</span>
+347:       <span class="ruby-keyword kw">end</span>
+348:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each_slice (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    e.each_slice(n) {...}
+ *    e.each_slice(n)
+ *
+ *  Iterates the given block for each slice of &lt;n&gt; elements.  If no
+ *  block is given, returns an enumerator.
+ *
+ *  e.g.:
+ *      (1..10).each_slice(3) {|a| p a}
+ *      # outputs below
+ *      [1, 2, 3]
+ *      [4, 5, 6]
+ *      [7, 8, 9]
+ *      [10]
+ *
+ */
+static VALUE
+enum_each_slice(VALUE obj, VALUE n)
+{
+    long size = NUM2LONG(n);
+    VALUE args[2], ary;
+
+    if (size &lt;= 0) rb_raise(rb_eArgError, &quot;invalid slice size&quot;);
+    RETURN_ENUMERATOR(obj, 1, &amp;n);
+    args[0] = rb_ary_new2(size);
+    args[1] = (VALUE)size;
+
+    rb_block_call(obj, SYM2ID(sym_each), 0, 0, each_slice_i, (VALUE)args);
+
+    ary = args[0];
+    if (RARRAY_LEN(ary) &gt; 0) rb_yield(ary);
+
+    return Qnil;
+}</pre>
+</body>
+</html>

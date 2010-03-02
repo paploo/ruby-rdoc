@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>convert (RDoc::RI::Driver::OpenStructHash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 24</span>
+24:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">convert</span>(<span class="ruby-identifier">object</span>)
+25:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">object</span>
+26:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span> <span class="ruby-keyword kw">then</span>
+27:         <span class="ruby-identifier">new_hash</span> = <span class="ruby-identifier">new</span> <span class="ruby-comment cmt"># Convert Hash -&gt; OpenStructHash</span>
+28: 
+29:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+30:           <span class="ruby-identifier">new_hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">convert</span>(<span class="ruby-identifier">value</span>)
+31:         <span class="ruby-keyword kw">end</span>
+32: 
+33:         <span class="ruby-identifier">new_hash</span>
+34:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span>
+35:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+36:           <span class="ruby-identifier">convert</span>(<span class="ruby-identifier">element</span>)
+37:         <span class="ruby-keyword kw">end</span>
+38:       <span class="ruby-keyword kw">else</span>
+39:         <span class="ruby-identifier">object</span>
+40:       <span class="ruby-keyword kw">end</span>
+41:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

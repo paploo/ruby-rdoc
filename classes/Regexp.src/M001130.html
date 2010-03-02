@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (Regexp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rxp.to_s   =&gt; str
+ *
+ *  Returns a string containing the regular expression and its options (using the
+ *  &lt;code&gt;(?opts:source)&lt;/code&gt; notation. This string can be fed back in to
+ *  &lt;code&gt;Regexp::new&lt;/code&gt; to a regular expression with the same semantics as
+ *  the original. (However, &lt;code&gt;Regexp#==&lt;/code&gt; may not return true when
+ *  comparing the two, as the source of the regular expression itself may
+ *  differ, as the example shows).  &lt;code&gt;Regexp#inspect&lt;/code&gt; produces a
+ *  generally more readable version of &lt;i&gt;rxp&lt;/i&gt;.
+ *
+ *      r1 = /ab+c/ix           #=&gt; /ab+c/ix
+ *      s1 = r1.to_s            #=&gt; &quot;(?ix-m:ab+c)&quot;
+ *      r2 = Regexp.new(s1)     #=&gt; /(?ix-m:ab+c)/
+ *      r1 == r2                #=&gt; false
+ *      r1.source               #=&gt; &quot;ab+c&quot;
+ *      r2.source               #=&gt; &quot;(?ix-m:ab+c)&quot;
+ */
+
+static VALUE
+rb_reg_to_s(VALUE re)
+{
+    int options, opt;
+    const int embeddable = ONIG_OPTION_MULTILINE|ONIG_OPTION_IGNORECASE|ONIG_OPTION_EXTEND;
+    long len;
+    const UChar* ptr;
+    VALUE str = rb_str_buf_new2(&quot;(?&quot;);
+    char optbuf[5];
+
+    rb_reg_check(re);
+
+    rb_enc_copy(str, re);
+    options = RREGEXP(re)-&gt;ptr-&gt;options;
+    ptr = (UChar*)RREGEXP_SRC_PTR(re);
+    len = RREGEXP_SRC_LEN(re);
+  again:
+    if (len &gt;= 4 &amp;&amp; ptr[0] == '(' &amp;&amp; ptr[1] == '?') {
+        int err = 1;
+        ptr += 2;
+        if ((len -= 2) &gt; 0) {
+            do {
+                opt = char_to_option((int )*ptr);
+                if (opt != 0) {
+                    options |= opt;
+                }
+                else {
+                    break;
+                }
+                ++ptr;
+            } while (--len &gt; 0);
+        }
+        if (len &gt; 1 &amp;&amp; *ptr == '-') {
+            ++ptr;
+            --len;
+            do {
+                opt = char_to_option((int )*ptr);
+                if (opt != 0) {
+                    options &amp;= ~opt;
+                }
+                else {
+                    break;
+                }
+                ++ptr;
+            } while (--len &gt; 0);
+        }
+        if (*ptr == ')') {
+            --len;
+            ++ptr;
+            goto again;
+        }
+        if (*ptr == ':' &amp;&amp; ptr[len-1] == ')') {
+            int r;
+            Regexp *rp;
+            r = onig_alloc_init(&amp;rp, ONIG_OPTION_DEFAULT,
+                                ONIGENC_CASE_FOLD_DEFAULT,
+                                rb_enc_get(re),
+                                OnigDefaultSyntax);
+            if (r == 0) {
+                 ++ptr;
+                 len -= 2;
+                 err = (onig_compile(rp, ptr, ptr + len, NULL) != 0);
+            }
+            onig_free(rp);
+        }
+        if (err) {
+            options = RREGEXP(re)-&gt;ptr-&gt;options;
+            ptr = (UChar*)RREGEXP_SRC_PTR(re);
+            len = RREGEXP_SRC_LEN(re);
+        }
+    }
+
+    if (*option_to_str(optbuf, options)) rb_str_buf_cat2(str, optbuf);
+
+    if ((options &amp; embeddable) != embeddable) {
+        optbuf[0] = '-';
+        option_to_str(optbuf + 1, ~options);
+        rb_str_buf_cat2(str, optbuf);
+    }
+
+    rb_str_buf_cat2(str, &quot;:&quot;);
+    rb_reg_expr_str(str, (char*)ptr, len);
+    rb_str_buf_cat2(str, &quot;)&quot;);
+    rb_enc_copy(str, re);
+
+    OBJ_INFECT(str, re);
+    return str;
+}</pre>
+</body>
+</html>

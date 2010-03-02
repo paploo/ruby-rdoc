@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.to_s    =&gt; string
+ *  
+ *  Returns a string representing &lt;i&gt;obj&lt;/i&gt;. The default
+ *  &lt;code&gt;to_s&lt;/code&gt; prints the object's class and an encoding of the
+ *  object id. As a special case, the top-level object that is the
+ *  initial execution context of Ruby programs returns ``main.''
+ */
+
+VALUE
+rb_any_to_s(VALUE obj)
+{
+    const char *cname = rb_obj_classname(obj);
+    VALUE str;
+
+    str = rb_sprintf(&quot;#&lt;%s:%p&gt;&quot;, cname, (void*)obj);
+    OBJ_INFECT(str, obj);
+
+    return str;
+}</pre>
+</body>
+</html>

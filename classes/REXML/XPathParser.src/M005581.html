@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>document_order (REXML::XPathParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/xpath_parser.rb, line 555</span>
+555:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">document_order</span>( <span class="ruby-identifier">array_of_nodes</span> )
+556:       <span class="ruby-identifier">new_arry</span> = []
+557:       <span class="ruby-identifier">array_of_nodes</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+558:         <span class="ruby-identifier">node_idx</span> = [] 
+559:         <span class="ruby-identifier">np</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:attribute</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">element</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">node</span>
+560:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">np</span>.<span class="ruby-identifier">parent</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">np</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:element</span>
+561:           <span class="ruby-identifier">node_idx</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">np</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">index</span>( <span class="ruby-identifier">np</span> )
+562:           <span class="ruby-identifier">np</span> = <span class="ruby-identifier">np</span>.<span class="ruby-identifier">parent</span>
+563:         <span class="ruby-keyword kw">end</span>
+564:         <span class="ruby-identifier">new_arry</span> <span class="ruby-operator">&lt;&lt;</span> [ <span class="ruby-identifier">node_idx</span>.<span class="ruby-identifier">reverse</span>, <span class="ruby-identifier">node</span> ]
+565:       }
+566:       <span class="ruby-comment cmt">#puts &quot;new_arry = #{new_arry.inspect}&quot;</span>
+567:       <span class="ruby-identifier">new_arry</span>.<span class="ruby-identifier">sort</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s1</span>, <span class="ruby-identifier">s2</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s1</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">s2</span>[<span class="ruby-value">0</span>] }.<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>[<span class="ruby-value">1</span>] }
+568:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

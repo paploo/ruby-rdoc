@@ -2,19 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_datetime (Time)</title>
+  <title>gm (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1776</span>
-1776:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_datetime</span>
-1777:     <span class="ruby-identifier">jd</span> = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:civil_to_jd</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">mday</span>, <span class="ruby-constant">DateTime</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1778:     <span class="ruby-identifier">fr</span> = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:time_to_day_fraction</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, [<span class="ruby-identifier">sec</span>, <span class="ruby-value">59</span>].<span class="ruby-identifier">min</span>) <span class="ruby-operator">+</span>
-1779:       <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">nsec</span>, <span class="ruby-value">86400_000_000_000</span>)
-1780:     <span class="ruby-identifier">of</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">utc_offset</span>, <span class="ruby-value">86400</span>)
-1781:     <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:jd_to_ajd</span>, <span class="ruby-identifier">jd</span>, <span class="ruby-identifier">fr</span>, <span class="ruby-identifier">of</span>),
-1782:                   <span class="ruby-identifier">of</span>, <span class="ruby-constant">DateTime</span><span class="ruby-operator">::</span><span class="ruby-constant">ITALY</span>)
-1783:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *    Time.utc(year) =&gt; time
+ *    Time.utc(year, month) =&gt; time
+ *    Time.utc(year, month, day) =&gt; time
+ *    Time.utc(year, month, day, hour) =&gt; time
+ *    Time.utc(year, month, day, hour, min) =&gt; time
+ *    Time.utc(year, month, day, hour, min, sec_with_frac) =&gt; time
+ *    Time.utc(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
+ *    Time.utc(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
+ *    Time.gm(year) =&gt; time
+ *    Time.gm(year, month) =&gt; time
+ *    Time.gm(year, month, day) =&gt; time
+ *    Time.gm(year, month, day, hour) =&gt; time
+ *    Time.gm(year, month, day, hour, min) =&gt; time
+ *    Time.gm(year, month, day, hour, min, sec_with_frac) =&gt; time
+ *    Time.gm(year, month, day, hour, min, sec, usec_with_frac) =&gt; time
+ *    Time.gm(sec, min, hour, day, month, year, wday, yday, isdst, tz) =&gt; time
+ *     
+ *  Creates a time based on given values, interpreted as UTC (GMT). The
+ *  year must be specified. Other values default to the minimum value
+ *  for that field (and may be &lt;code&gt;nil&lt;/code&gt; or omitted). Months may
+ *  be specified by numbers from 1 to 12, or by the three-letter English
+ *  month names. Hours are specified on a 24-hour clock (0..23). Raises
+ *  an &lt;code&gt;ArgumentError&lt;/code&gt; if any values are out of range. Will
+ *  also accept ten arguments in the order output by
+ *  &lt;code&gt;Time#to_a&lt;/code&gt;.
+ *  &lt;i&gt;sec_with_frac&lt;/i&gt; and &lt;i&gt;usec_with_frac&lt;/i&gt; can have a fractional part.
+ *
+ *     Time.utc(2000,&quot;jan&quot;,1,20,15,1)  #=&gt; 2000-01-01 20:15:01 UTC
+ *     Time.gm(2000,&quot;jan&quot;,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 UTC
+ */
+static VALUE
+time_s_mkutc(int argc, VALUE *argv, VALUE klass)
+{
+    return time_utc_or_local(argc, argv, Qtrue, klass);
+}</pre>
 </body>
 </html>

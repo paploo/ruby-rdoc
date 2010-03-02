@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>draw (RDoc::Diagram)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/diagram.rb, line 50</span>
+ 50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draw</span>
+ 51:       <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">quiet</span>
+ 52:         <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Diagrams: &quot;</span>
+ 53:         <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">flush</span>
+ 54:       <span class="ruby-keyword kw">end</span>
+ 55: 
+ 56:       <span class="ruby-ivar">@info</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">file_count</span><span class="ruby-operator">|</span>
+ 57:         <span class="ruby-ivar">@done_modules</span> = {}
+ 58:         <span class="ruby-ivar">@local_names</span> = <span class="ruby-identifier">find_names</span>(<span class="ruby-identifier">i</span>)
+ 59:         <span class="ruby-ivar">@global_names</span> = []
+ 60:         <span class="ruby-ivar">@global_graph</span> = <span class="ruby-identifier">graph</span> = <span class="ruby-constant">DOT</span><span class="ruby-operator">::</span><span class="ruby-constant">Digraph</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'TopLevel'</span>,
+ 61:                                                  <span class="ruby-value str">'fontname'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FONT</span>,
+ 62:                                                  <span class="ruby-value str">'fontsize'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'8'</span>,
+ 63:                                                  <span class="ruby-value str">'bgcolor'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'lightcyan1'</span>,
+ 64:                                                  <span class="ruby-value str">'compound'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>)
+ 65: 
+ 66:         <span class="ruby-comment cmt"># it's a little hack %) i'm too lazy to create a separate class</span>
+ 67:         <span class="ruby-comment cmt"># for default node</span>
+ 68:         <span class="ruby-identifier">graph</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">DOT</span><span class="ruby-operator">::</span><span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'node'</span>,
+ 69:                                <span class="ruby-value str">'fontname'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FONT</span>,
+ 70:                                <span class="ruby-value str">'color'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'black'</span>,
+ 71:                                <span class="ruby-value str">'fontsize'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8</span>)
+ 72: 
+ 73:         <span class="ruby-identifier">i</span>.<span class="ruby-identifier">modules</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mod</span><span class="ruby-operator">|</span>
+ 74:           <span class="ruby-identifier">draw_module</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">graph</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">i</span>.<span class="ruby-identifier">file_relative_name</span>)
+ 75:         <span class="ruby-keyword kw">end</span>
+ 76:         <span class="ruby-identifier">add_classes</span>(<span class="ruby-identifier">i</span>, <span class="ruby-identifier">graph</span>, <span class="ruby-identifier">i</span>.<span class="ruby-identifier">file_relative_name</span>)
+ 77: 
+ 78:         <span class="ruby-identifier">i</span>.<span class="ruby-identifier">diagram</span> = <span class="ruby-identifier">convert_to_png</span>(<span class="ruby-node">&quot;f_#{file_count}&quot;</span>, <span class="ruby-identifier">graph</span>)
+ 79: 
+ 80:         <span class="ruby-comment cmt"># now go through and document each top level class and</span>
+ 81:         <span class="ruby-comment cmt"># module independently</span>
+ 82:         <span class="ruby-identifier">i</span>.<span class="ruby-identifier">modules</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">mod</span>, <span class="ruby-identifier">count</span><span class="ruby-operator">|</span>
+ 83:           <span class="ruby-ivar">@done_modules</span> = {}
+ 84:           <span class="ruby-ivar">@local_names</span> = <span class="ruby-identifier">find_names</span>(<span class="ruby-identifier">mod</span>)
+ 85:           <span class="ruby-ivar">@global_names</span> = []
+ 86: 
+ 87:           <span class="ruby-ivar">@global_graph</span> = <span class="ruby-identifier">graph</span> = <span class="ruby-constant">DOT</span><span class="ruby-operator">::</span><span class="ruby-constant">Digraph</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'TopLevel'</span>,
+ 88:                                                    <span class="ruby-value str">'fontname'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FONT</span>,
+ 89:                                                    <span class="ruby-value str">'fontsize'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'8'</span>,
+ 90:                                                    <span class="ruby-value str">'bgcolor'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'lightcyan1'</span>,
+ 91:                                                    <span class="ruby-value str">'compound'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'true'</span>)
+ 92: 
+ 93:           <span class="ruby-identifier">graph</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">DOT</span><span class="ruby-operator">::</span><span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'name'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'node'</span>,
+ 94:                                  <span class="ruby-value str">'fontname'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FONT</span>,
+ 95:                                  <span class="ruby-value str">'color'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'black'</span>,
+ 96:                                  <span class="ruby-value str">'fontsize'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">8</span>)
+ 97:           <span class="ruby-identifier">draw_module</span>(<span class="ruby-identifier">mod</span>, <span class="ruby-identifier">graph</span>, <span class="ruby-keyword kw">true</span>)
+ 98:           <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">diagram</span> = <span class="ruby-identifier">convert_to_png</span>(<span class="ruby-node">&quot;m_#{file_count}_#{count}&quot;</span>,
+ 99:                                        <span class="ruby-identifier">graph</span>)
+100:         <span class="ruby-keyword kw">end</span>
+101:       <span class="ruby-keyword kw">end</span>
+102:       <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">quiet</span>
+103:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

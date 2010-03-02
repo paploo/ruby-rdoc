@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>not_after (OpenSSL::X509::Certificate)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    cert.not_after =&gt; time
+ */
+static VALUE 
+ossl_x509_get_not_after(VALUE self)
+{
+    X509 *x509;
+    ASN1_TIME *asn1time;
+
+    GetX509(self, x509);
+    if (!(asn1time = X509_get_notAfter(x509))) { /* NO DUP - don't free! */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return asn1time_to_time(asn1time);
+}</pre>
+</body>
+</html>

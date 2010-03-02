@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>year (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     time.year =&gt; fixnum
+ *  
+ *  Returns the year for &lt;i&gt;time&lt;/i&gt; (including the century).
+ *     
+ *     t = Time.now   #=&gt; 2007-11-19 08:27:51 -0600
+ *     t.year         #=&gt; 2007
+ */
+
+static VALUE
+time_year(VALUE time)
+{
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    return LONG2NUM((long)tobj-&gt;tm.tm_year+1900);
+}</pre>
+</body>
+</html>

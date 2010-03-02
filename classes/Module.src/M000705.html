@@ -2,62 +2,37 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>undef_method (Module)</title>
+  <title>append_features (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     undef_method(symbol)    =&gt; self
+ *     append_features(mod)   =&gt; mod
  *
- *  Prevents the current class from responding to calls to the named
- *  method. Contrast this with &lt;code&gt;remove_method&lt;/code&gt;, which deletes
- *  the method from the particular class; Ruby will still search
- *  superclasses and mixed-in modules for a possible receiver.
- *
- *     class Parent
- *       def hello
- *         puts &quot;In parent&quot;
- *       end
- *     end
- *     class Child &lt; Parent
- *       def hello
- *         puts &quot;In child&quot;
- *       end
- *     end
- *
- *
- *     c = Child.new
- *     c.hello
- *
- *
- *     class Child
- *       remove_method :hello  # remove from child, still in parent
- *     end
- *     c.hello
- *
- *
- *     class Child
- *       undef_method :hello   # prevent any calls to 'hello'
- *     end
- *     c.hello
- *
- *  &lt;em&gt;produces:&lt;/em&gt;
- *
- *     In child
- *     In parent
- *     prog.rb:23: undefined method `hello' for #&lt;Child:0x401b3bb4&gt; (NoMethodError)
+ *  When this module is included in another, Ruby calls
+ *  &lt;code&gt;append_features&lt;/code&gt; in this module, passing it the
+ *  receiving module in _mod_. Ruby's default implementation is
+ *  to add the constants, methods, and module variables of this module
+ *  to _mod_ if this module has not already been added to
+ *  _mod_ or one of its ancestors. See also &lt;code&gt;Module#include&lt;/code&gt;.
  */
 
 static VALUE
-rb_mod_undef_method(int argc, VALUE *argv, VALUE mod)
+rb_mod_append_features(VALUE module, VALUE include)
 {
-    int i;
-    for (i = 0; i &lt; argc; i++) {
-        rb_undef(mod, rb_to_id(argv[i]));
+    switch (TYPE(include)) {
+      case T_CLASS:
+      case T_MODULE:
+        break;
+      default:
+        Check_Type(include, T_CLASS);
+        break;
     }
-    return mod;
+    rb_include_module(include, module);
+
+    return module;
 }</pre>
 </body>
 </html>

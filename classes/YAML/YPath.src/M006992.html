@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each_path (YAML::YPath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/ypath.rb, line 25</span>
+25:         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">YPath</span>.<span class="ruby-identifier">each_path</span>( <span class="ruby-identifier">str</span> )
+26:             <span class="ruby-comment cmt">#</span>
+27:             <span class="ruby-comment cmt"># Find choices</span>
+28:             <span class="ruby-comment cmt">#</span>
+29:             <span class="ruby-identifier">paths</span> = []
+30:             <span class="ruby-identifier">str</span> = <span class="ruby-node">&quot;(#{ str })&quot;</span>
+31:             <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">sub!</span>( <span class="ruby-regexp re">/\(([^()]+)\)/</span>, <span class="ruby-node">&quot;\n#{ paths.length }\n&quot;</span> )
+32:                 <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">split</span>( <span class="ruby-value str">'|'</span> )
+33:             <span class="ruby-keyword kw">end</span>
+34: 
+35:             <span class="ruby-comment cmt">#</span>
+36:             <span class="ruby-comment cmt"># Construct all possible paths</span>
+37:             <span class="ruby-comment cmt">#</span>
+38:             <span class="ruby-identifier">all</span> = [ <span class="ruby-identifier">str</span> ]
+39:             ( <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> ).<span class="ruby-identifier">downto</span>( <span class="ruby-value">0</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+40:                 <span class="ruby-identifier">all</span> = <span class="ruby-identifier">all</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+41:                     <span class="ruby-identifier">paths</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+42:                         <span class="ruby-identifier">a</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-node">/\n#{ i }\n/</span>, <span class="ruby-identifier">p</span> )
+43:                     <span class="ruby-keyword kw">end</span>
+44:                 <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>
+45:             <span class="ruby-keyword kw">end</span>
+46:             <span class="ruby-identifier">all</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+47:                 <span class="ruby-keyword kw">yield</span> <span class="ruby-constant">YPath</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">path</span> )
+48:             <span class="ruby-keyword kw">end</span>
+49:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

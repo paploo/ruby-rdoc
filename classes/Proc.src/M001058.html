@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>curry (Proc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+  *  call-seq:
+  *     prc.curry         =&gt; a_proc
+  *     prc.curry(arity)  =&gt; a_proc
+  *
+  *  Returns a curried proc. If the optional &lt;i&gt;arity&lt;/i&gt; argument is given,
+  *  it determines the number of arguments.
+  *  A curried proc receives some arguments. If a sufficient number of
+  *  arguments are supplied, it passes the supplied arguments to the original
+  *  proc and returns the result. Otherwise, returns another curried proc that
+  *  takes the rest of arguments.
+  *
+  *     b = proc {|x, y, z| (x||0) + (y||0) + (z||0) }
+  *     p b.curry[1][2][3]           #=&gt; 6
+  *     p b.curry[1, 2][3, 4]        #=&gt; 6
+  *     p b.curry(5)[1][2][3][4][5]  #=&gt; 6
+  *     p b.curry(5)[1, 2][3, 4][5]  #=&gt; 6
+  *     p b.curry(1)[1]              #=&gt; 1
+  *
+  *     b = proc {|x, y, z, *w| (x||0) + (y||0) + (z||0) + w.inject(0, &amp;:+) }
+  *     p b.curry[1][2][3]           #=&gt; 6
+  *     p b.curry[1, 2][3, 4]        #=&gt; 10
+  *     p b.curry(5)[1][2][3][4][5]  #=&gt; 15
+  *     p b.curry(5)[1, 2][3, 4][5]  #=&gt; 15
+  *     p b.curry(1)[1]              #=&gt; 1
+  *
+  *     b = lambda {|x, y, z| (x||0) + (y||0) + (z||0) }
+  *     p b.curry[1][2][3]           #=&gt; 6
+  *     p b.curry[1, 2][3, 4]        #=&gt; wrong number of arguments (4 or 3)
+  *     p b.curry(5)                 #=&gt; wrong number of arguments (5 or 3)
+  *     p b.curry(1)                 #=&gt; wrong number of arguments (1 or 3)
+  *
+  *     b = lambda {|x, y, z, *w| (x||0) + (y||0) + (z||0) + w.inject(0, &amp;:+) }
+  *     p b.curry[1][2][3]           #=&gt; 6
+  *     p b.curry[1, 2][3, 4]        #=&gt; 10
+  *     p b.curry(5)[1][2][3][4][5]  #=&gt; 15
+  *     p b.curry(5)[1, 2][3, 4][5]  #=&gt; 15
+  *     p b.curry(1)                 #=&gt; wrong number of arguments (1 or 3)
+  *
+  *     b = proc { :foo }
+  *     p b.curry[]                  #=&gt; :foo
+  */
+static VALUE
+proc_curry(int argc, VALUE *argv, VALUE self)
+{
+    int sarity, marity = FIX2INT(proc_arity(self));
+    VALUE arity, opt = Qfalse;
+
+    if (marity &lt; 0) {
+        marity = -marity - 1;
+        opt = Qtrue;
+    }
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;arity);
+    if (NIL_P(arity)) {
+        arity = INT2FIX(marity);
+    }
+    else {
+        sarity = FIX2INT(arity);
+        if (proc_lambda_p(self) &amp;&amp; (sarity &lt; marity || (sarity &gt; marity &amp;&amp; !opt))) {
+            rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for %d)&quot;, sarity, marity);
+        }
+    }
+
+    return make_curry_proc(self, rb_ary_new(), arity);
+}</pre>
+</body>
+</html>

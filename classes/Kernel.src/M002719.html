@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>warn (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    warn(msg)   =&gt; nil
+ *
+ * Display the given message (followed by a newline) on STDERR unless
+ * warnings are disabled (for example with the &lt;code&gt;-W0&lt;/code&gt; flag).
+ */
+
+static VALUE
+rb_warn_m(VALUE self, VALUE mesg)
+{
+    if (!NIL_P(ruby_verbose)) {
+        rb_io_write(rb_stderr, mesg);
+        rb_io_write(rb_stderr, rb_default_rs);
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

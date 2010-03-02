@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>do_classes (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 126</span>
+126:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_classes</span>
+127:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/(\w+)\s* = \s*rb_define_module\s*\(\s*&quot;(\w+)&quot;\s*\)/</span><span class="ruby-identifier">mx</span>) <span class="ruby-keyword kw">do</span> 
+128:       <span class="ruby-operator">|</span><span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">class_name</span><span class="ruby-operator">|</span>
+129:       <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-value str">&quot;module&quot;</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>)
+130:     <span class="ruby-keyword kw">end</span>
+131: 
+132:     <span class="ruby-comment cmt"># The '.' lets us handle SWIG-generated files</span>
+133:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/([\w\.]+)\s* = \s*rb_define_class\s*
+134:               \(
+135:                  \s*&quot;(\w+)&quot;,
+136:                  \s*(\w+)\s*
+137:               \)/</span><span class="ruby-identifier">mx</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span><span class="ruby-operator">|</span>
+138:       <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-value str">&quot;class&quot;</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span>, <span class="ruby-keyword kw">nil</span>)
+139:     <span class="ruby-keyword kw">end</span>
+140: 
+141:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/(\w+)\s*=\s*boot_defclass\s*\(\s*&quot;(\w+?)&quot;,\s*(\w+?)\s*\)/</span>) <span class="ruby-keyword kw">do</span>
+142:       <span class="ruby-operator">|</span><span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span><span class="ruby-operator">|</span>
+143:       <span class="ruby-identifier">parent</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">parent</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;0&quot;</span>
+144:       <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-value str">&quot;class&quot;</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span>, <span class="ruby-keyword kw">nil</span>)
+145:     <span class="ruby-keyword kw">end</span>
+146: 
+147:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/(\w+)\s* = \s*rb_define_module_under\s*
+148:               \(
+149:                  \s*(\w+),
+150:                  \s*&quot;(\w+)&quot;
+151:               \s*\)/</span><span class="ruby-identifier">mx</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">in_module</span>, <span class="ruby-identifier">class_name</span><span class="ruby-operator">|</span>
+152:       <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-value str">&quot;module&quot;</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">in_module</span>)
+153:     <span class="ruby-keyword kw">end</span>
+154: 
+155:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/([\w\.]+)\s* = \s*rb_define_class_under\s*
+156:               \(
+157:                  \s*(\w+),
+158:                  \s*&quot;(\w+)&quot;,
+159:                  \s*([\w\*\s\(\)\.\-&gt;]+)\s*  # for SWIG
+160:               \s*\)/</span><span class="ruby-identifier">mx</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">in_module</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span><span class="ruby-operator">|</span>
+161:       <span class="ruby-identifier">handle_class_module</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-value str">&quot;class&quot;</span>, <span class="ruby-identifier">class_name</span>, <span class="ruby-identifier">parent</span>, <span class="ruby-identifier">in_module</span>)
+162:     <span class="ruby-keyword kw">end</span>
+163:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

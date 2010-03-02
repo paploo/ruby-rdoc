@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tag_filter (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 1200</span>
+1200:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_filter</span>(<span class="ruby-identifier">tags</span>)
+1201:       <span class="ruby-identifier">rv</span> = {}
+1202:       <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+1203:         <span class="ruby-identifier">rv</span>[<span class="ruby-identifier">tag</span>[<span class="ruby-value">0</span>]] = [] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">tag</span>[<span class="ruby-value">0</span>])
+1204:         <span class="ruby-identifier">rv</span>[<span class="ruby-identifier">tag</span>[<span class="ruby-value">0</span>]].<span class="ruby-identifier">push</span>(<span class="ruby-identifier">tag</span>[<span class="ruby-value">1</span>])
+1205:       <span class="ruby-keyword kw">end</span>
+1206:       <span class="ruby-identifier">rv</span>
+1207:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

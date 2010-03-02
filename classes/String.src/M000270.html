@@ -2,50 +2,60 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>* (String)</title>
+  <title>&lt;=&gt; (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str * integer   =&gt; new_str
+ *     str &lt;=&gt; other_str   =&gt; -1, 0, +1
  *  
- *  Copy---Returns a new &lt;code&gt;String&lt;/code&gt; containing &lt;i&gt;integer&lt;/i&gt; copies of
- *  the receiver.
+ *  Comparison---Returns -1 if &lt;i&gt;other_str&lt;/i&gt; is greater than, 0 if
+ *  &lt;i&gt;other_str&lt;/i&gt; is equal to, and +1 if &lt;i&gt;other_str&lt;/i&gt; is less than
+ *  &lt;i&gt;str&lt;/i&gt;. If the strings are of different lengths, and the strings are
+ *  equal when compared up to the shortest length, then the longer string is
+ *  considered greater than the shorter one. In older versions of Ruby, setting
+ *  &lt;code&gt;$=&lt;/code&gt; allowed case-insensitive comparisons; this is now deprecated
+ *  in favor of using &lt;code&gt;String#casecmp&lt;/code&gt;.
+ *
+ *  &lt;code&gt;&lt;=&gt;&lt;/code&gt; is the basis for the methods &lt;code&gt;&lt;&lt;/code&gt;,
+ *  &lt;code&gt;&lt;=&lt;/code&gt;, &lt;code&gt;&gt;&lt;/code&gt;, &lt;code&gt;&gt;=&lt;/code&gt;, and &lt;code&gt;between?&lt;/code&gt;,
+ *  included from module &lt;code&gt;Comparable&lt;/code&gt;.  The method
+ *  &lt;code&gt;String#==&lt;/code&gt; does not use &lt;code&gt;Comparable#==&lt;/code&gt;.
  *     
- *     &quot;Ho! &quot; * 3   #=&gt; &quot;Ho! Ho! Ho! &quot;
+ *     &quot;abcdef&quot; &lt;=&gt; &quot;abcde&quot;     #=&gt; 1
+ *     &quot;abcdef&quot; &lt;=&gt; &quot;abcdef&quot;    #=&gt; 0
+ *     &quot;abcdef&quot; &lt;=&gt; &quot;abcdefg&quot;   #=&gt; -1
+ *     &quot;abcdef&quot; &lt;=&gt; &quot;ABCDEF&quot;    #=&gt; 1
  */
 
-VALUE
-rb_str_times(VALUE str, VALUE times)
+static VALUE
+rb_str_cmp_m(VALUE str1, VALUE str2)
 {
-    VALUE str2;
-    long n, len;
+    long result;
 
-    len = NUM2LONG(times);
-    if (len &lt; 0) {
-        rb_raise(rb_eArgError, &quot;negative argument&quot;);
-    }
-    if (len &amp;&amp; LONG_MAX/len &lt;  RSTRING_LEN(str)) {
-        rb_raise(rb_eArgError, &quot;argument too big&quot;);
-    }
-
-    str2 = rb_str_new5(str, 0, len *= RSTRING_LEN(str));
-    if (len) {
-        n = RSTRING_LEN(str);
-        memcpy(RSTRING_PTR(str2), RSTRING_PTR(str), n);
-        while (n &lt;= len/2) {
-            memcpy(RSTRING_PTR(str2) + n, RSTRING_PTR(str2), n);
-            n *= 2;
+    if (TYPE(str2) != T_STRING) {
+        if (!rb_respond_to(str2, rb_intern(&quot;to_str&quot;))) {
+            return Qnil;
         }
-        memcpy(RSTRING_PTR(str2) + n, RSTRING_PTR(str2), len-n);
-    }
-    RSTRING_PTR(str2)[RSTRING_LEN(str2)] = '\0';
-    OBJ_INFECT(str2, str);
-    rb_enc_cr_str_copy_for_substr(str2, str);
+        else if (!rb_respond_to(str2, rb_intern(&quot;&lt;=&gt;&quot;))) {
+            return Qnil;
+        }
+        else {
+            VALUE tmp = rb_funcall(str2, rb_intern(&quot;&lt;=&gt;&quot;), 1, str1);
 
-    return str2;
+            if (NIL_P(tmp)) return Qnil;
+            if (!FIXNUM_P(tmp)) {
+                return rb_funcall(LONG2FIX(0), '-', 1, tmp);
+            }
+            result = -FIX2LONG(tmp);
+        }
+    }
+    else {
+        result = rb_str_cmp(str1, str2);
+    }
+    return LONG2NUM(result);
 }</pre>
 </body>
 </html>

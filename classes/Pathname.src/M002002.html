@@ -2,12 +2,19 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size (Pathname)</title>
+  <title>has_trailing_separator? (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 938</span>
-938:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>() <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">size</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 376</span>
+376:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_trailing_separator?</span>(<span class="ruby-identifier">path</span>)
+377:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+378:       <span class="ruby-identifier">pre</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+379:       <span class="ruby-identifier">pre</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">basename</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">length</span>
+380:     <span class="ruby-keyword kw">else</span>
+381:       <span class="ruby-keyword kw">false</span>
+382:     <span class="ruby-keyword kw">end</span>
+383:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

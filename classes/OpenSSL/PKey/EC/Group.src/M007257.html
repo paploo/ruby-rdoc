@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>curve_name (OpenSSL::PKey::EC::Group)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*  call-seq:
+ *     group.curve_name  =&gt; String
+ *
+ *  See the OpenSSL documentation for EC_GROUP_get_curve_name()
+ */
+static VALUE ossl_ec_group_get_curve_name(VALUE self)
+{
+    EC_GROUP *group = NULL;
+    int nid;
+
+    Get_EC_GROUP(self, group);
+    if (group == NULL)
+        return Qnil;
+
+    nid = EC_GROUP_get_curve_name(group);
+
+/* BUG: an nid or asn1 object should be returned, maybe. */
+    return rb_str_new2(OBJ_nid2sn(nid));
+}</pre>
+</body>
+</html>

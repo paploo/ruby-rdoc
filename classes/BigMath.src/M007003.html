@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>log (BigMath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/bigdecimal/lib/bigdecimal/math.rb, line 158</span>
+158:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">log</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">prec</span>)
+159:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Zero or negative argument for log&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">prec</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+160:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">x</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">infinite?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">nan?</span>
+161:     <span class="ruby-identifier">one</span> = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;1&quot;</span>)
+162:     <span class="ruby-identifier">two</span> = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;2&quot;</span>)
+163:     <span class="ruby-identifier">n</span>  = <span class="ruby-identifier">prec</span> <span class="ruby-operator">+</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+164:     <span class="ruby-identifier">x</span>  = (<span class="ruby-identifier">x</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">one</span>).<span class="ruby-identifier">div</span>(<span class="ruby-identifier">x</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">one</span>,<span class="ruby-identifier">n</span>)
+165:     <span class="ruby-identifier">x2</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">mult</span>(<span class="ruby-identifier">x</span>,<span class="ruby-identifier">n</span>)
+166:     <span class="ruby-identifier">y</span>  = <span class="ruby-identifier">x</span>
+167:     <span class="ruby-identifier">d</span>  = <span class="ruby-identifier">y</span>
+168:     <span class="ruby-identifier">i</span> = <span class="ruby-identifier">one</span>
+169:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">&amp;&amp;</span> ((<span class="ruby-identifier">m</span> = <span class="ruby-identifier">n</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">y</span>.<span class="ruby-identifier">exponent</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">exponent</span>).<span class="ruby-identifier">abs</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+170:       <span class="ruby-identifier">m</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+171:       <span class="ruby-identifier">x</span>  = <span class="ruby-identifier">x2</span>.<span class="ruby-identifier">mult</span>(<span class="ruby-identifier">x</span>,<span class="ruby-identifier">n</span>)
+172:       <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">two</span>
+173:       <span class="ruby-identifier">d</span>  = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">div</span>(<span class="ruby-identifier">i</span>,<span class="ruby-identifier">m</span>)
+174:       <span class="ruby-identifier">y</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">d</span>
+175:     <span class="ruby-keyword kw">end</span>
+176:     <span class="ruby-identifier">y</span><span class="ruby-operator">*</span><span class="ruby-identifier">two</span>
+177:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

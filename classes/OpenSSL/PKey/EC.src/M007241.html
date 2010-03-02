@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>private_key? (OpenSSL::PKey::EC)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     key.private_key? =&gt; true or false
+ *
+ *  Both public_key? and private_key? may return false at the same time unlike other PKey classes.
+ */
+static VALUE ossl_ec_key_is_private_key(VALUE self)
+{
+    EC_KEY *ec;
+
+    Require_EC_KEY(self, ec);
+
+    return (EC_KEY_get0_private_key(ec) ? Qtrue : Qfalse);
+}</pre>
+</body>
+</html>

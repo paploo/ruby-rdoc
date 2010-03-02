@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>basic_quote_characters (Readline)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   Readline.basic_quote_characters -&gt; string
+ *
+ * Gets a list of quote characters which can cause a word break.
+ *
+ * Raises NotImplementedError if the using readline library does not support.
+ *
+ * Raises SecurityError exception if $SAFE is 4.
+ */
+static VALUE
+readline_s_get_basic_quote_characters(VALUE self, VALUE str)
+{
+#ifdef HAVE_RL_BASIC_QUOTE_CHARACTERS
+    rb_secure(4);
+    if (rl_basic_quote_characters == NULL)
+        return Qnil;
+    return rb_locale_str_new_cstr(rl_basic_quote_characters);
+#else
+    rb_notimplement();
+    return Qnil; /* not reached */
+#endif /* HAVE_RL_BASIC_QUOTE_CHARACTERS */
+}</pre>
+</body>
+</html>

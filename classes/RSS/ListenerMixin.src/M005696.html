@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>start_have_something_element (RSS::ListenerMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/parser.rb, line 467</span>
+467:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_have_something_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>, <span class="ruby-identifier">klass</span>)
+468:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">check_ns</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">ns</span>, <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">required_uri</span>)
+469:         <span class="ruby-identifier">attributes</span> = <span class="ruby-identifier">collect_attributes</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>, <span class="ruby-identifier">klass</span>)
+470:         <span class="ruby-ivar">@proc_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">setup_next_element</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">attributes</span>))
+471:       <span class="ruby-keyword kw">else</span>
+472:         <span class="ruby-ivar">@proc_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">setup_next_element_in_unknown_element</span>)
+473:       <span class="ruby-keyword kw">end</span>
+474:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

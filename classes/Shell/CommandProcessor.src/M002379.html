@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>alias_command (Shell::CommandProcessor)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 410</span>
+410:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">alias_command</span>(<span class="ruby-identifier">ali</span>, <span class="ruby-identifier">command</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">opts</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+411:       <span class="ruby-identifier">ali</span> = <span class="ruby-identifier">ali</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ali</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+412:       <span class="ruby-identifier">command</span> = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+413:       <span class="ruby-keyword kw">begin</span>
+414:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">iterator?</span>
+415:           <span class="ruby-ivar">@alias_map</span>[<span class="ruby-identifier">ali</span>.<span class="ruby-identifier">intern</span>] = <span class="ruby-identifier">proc</span>
+416: 
+417:           <span class="ruby-identifier">eval</span>((<span class="ruby-identifier">d</span> = <span class="ruby-node">%Q[def #{ali}(*opts)
+418:                           @shell.__send__(:#{command},
+419:                                           *(CommandProcessor.alias_map[:#{ali}].call *opts))
+420:                         end]</span>), <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+421:     
+422:         <span class="ruby-keyword kw">else</span>
+423:            <span class="ruby-identifier">args</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span> <span class="ruby-value str">'&quot;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">opt</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'&quot;'</span>}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;,&quot;</span>)
+424:            <span class="ruby-identifier">eval</span>((<span class="ruby-identifier">d</span> = <span class="ruby-node">%Q[def #{ali}(*opts)
+425:                           @shell.__send__(:#{command}, #{args}, *opts)
+426:                         end]</span>), <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+427:         <span class="ruby-keyword kw">end</span>
+428:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SyntaxError</span>
+429:         <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;warn: Can't alias #{ali} command: #{command}.&quot;</span> 
+430:         <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-node">&quot;Definition of #{ali}: &quot;</span>, <span class="ruby-identifier">d</span>)
+431:         <span class="ruby-identifier">raise</span>
+432:       <span class="ruby-keyword kw">end</span>
+433:       <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;Define #{ali} command: #{command}.&quot;</span>, <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug?</span>
+434:       <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">notify</span>(<span class="ruby-node">&quot;Definition of #{ali}: &quot;</span>, <span class="ruby-identifier">d</span>, 
+435:              <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Integer</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Shell</span>.<span class="ruby-identifier">debug</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>)
+436:       <span class="ruby-keyword kw">self</span>
+437:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

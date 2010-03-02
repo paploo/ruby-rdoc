@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>=~ (Regexp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rxp =~ str    =&gt; integer or nil
+ *
+ *  Match---Matches &lt;i&gt;rxp&lt;/i&gt; against &lt;i&gt;str&lt;/i&gt;.
+ *
+ *     /at/ =~ &quot;input data&quot;   #=&gt; 7
+ *     /ax/ =~ &quot;input data&quot;   #=&gt; nil
+ *
+ *  If &lt;code&gt;=~&lt;/code&gt; is used with a regexp literal with named captures,
+ *  captured strings (or nil) is assigned to local variables named by
+ *  the capture names.
+ *
+ *     /(?&lt;lhs&gt;\w+)\s*=\s*(?&lt;rhs&gt;\w+)/ =~ &quot;  x = y  &quot;
+ *     p lhs    #=&gt; &quot;x&quot;
+ *     p rhs    #=&gt; &quot;y&quot;
+ *
+ *  If it is not matched, nil is assigned for the variables.
+ *
+ *     /(?&lt;lhs&gt;\w+)\s*=\s*(?&lt;rhs&gt;\w+)/ =~ &quot;  x = &quot;   
+ *     p lhs    #=&gt; nil
+ *     p rhs    #=&gt; nil
+ *
+ *  This assignment is implemented in the Ruby parser.
+ *  The parser detects 'regexp-literal =~ expression' for the assignment.
+ *  The regexp must be a literal without interpolation and placed at left hand side.
+ *
+ *  The assignment is not occur if the regexp is not a literal.
+ *
+ *     re = /(?&lt;lhs&gt;\w+)\s*=\s*(?&lt;rhs&gt;\w+)/
+ *     re =~ &quot;  x = y  &quot;
+ *     p lhs    # undefined local variable
+ *     p rhs    # undefined local variable
+ *
+ *  A regexp interpolation, &lt;code&gt;#{}&lt;/code&gt;, also disables
+ *  the assignment.
+ *
+ *     rhs_pat = /(?&lt;rhs&gt;\w+)/
+ *     /(?&lt;lhs&gt;\w+)\s*=\s*#{rhs_pat}/ =~ &quot;x = y&quot;
+ *     p lhs    # undefined local variable
+ *
+ *  The assignment is not occur if the regexp is placed at right hand side.
+ *
+ *    &quot;  x = y  &quot; =~ /(?&lt;lhs&gt;\w+)\s*=\s*(?&lt;rhs&gt;\w+)/
+ *    p lhs, rhs # undefined local variable
+ *
+ */
+
+VALUE
+rb_reg_match(VALUE re, VALUE str)
+{
+    long pos = reg_match_pos(re, &amp;str, 0);
+    if (pos &lt; 0) return Qnil;
+    pos = rb_str_sublen(str, pos);
+    return LONG2FIX(pos);
+}</pre>
+</body>
+</html>

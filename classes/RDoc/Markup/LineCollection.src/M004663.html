@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>accept (RDoc::Markup::LineCollection)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/fragments.rb, line 172</span>
+172:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accept</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">visitor</span>)
+173:       <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">start_accepting</span>
+174: 
+175:       <span class="ruby-ivar">@fragments</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fragment</span><span class="ruby-operator">|</span>
+176:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">fragment</span>
+177:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Verbatim</span>
+178:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_verbatim</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+179:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Rule</span>
+180:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_rule</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+181:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ListStart</span>
+182:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_list_start</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+183:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ListEnd</span>
+184:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_list_end</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+185:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ListItem</span>
+186:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_list_item</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+187:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">BlankLine</span>
+188:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_blank_line</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+189:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Heading</span>
+190:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_heading</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+191:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Paragraph</span>
+192:           <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">accept_paragraph</span>(<span class="ruby-identifier">am</span>, <span class="ruby-identifier">fragment</span>)
+193:         <span class="ruby-keyword kw">end</span>
+194:       <span class="ruby-keyword kw">end</span>
+195: 
+196:       <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">end_accepting</span>
+197:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

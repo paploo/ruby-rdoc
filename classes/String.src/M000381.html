@@ -2,12 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>toutf16 (String)</title>
+  <title>yaml_new (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File ext/nkf/lib/kconv.rb, line 241</span>
-241:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">toutf16</span>; <span class="ruby-constant">Kconv</span>.<span class="ruby-identifier">toutf16</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 148</span>
+148:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">String</span>.<span class="ruby-identifier">yaml_new</span>( <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">val</span> )
+149:         <span class="ruby-identifier">val</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;m&quot;</span>)[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;tag:yaml.org,2002:binary&quot;</span>
+150:         <span class="ruby-identifier">val</span> = { <span class="ruby-value str">'str'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">val</span> } <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
+151:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
+152:             <span class="ruby-identifier">s</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
+153:             <span class="ruby-comment cmt"># Thank you, NaHi</span>
+154:             <span class="ruby-constant">String</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-identifier">:initialize</span>).
+155:                   <span class="ruby-identifier">bind</span>(<span class="ruby-identifier">s</span>).
+156:                   <span class="ruby-identifier">call</span>( <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-value str">'str'</span> ) )
+157:             <span class="ruby-identifier">val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">instance_variable_set</span>( <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> ) }
+158:             <span class="ruby-identifier">s</span>
+159:         <span class="ruby-keyword kw">else</span>
+160:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;Invalid String: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">inspect</span>
+161:         <span class="ruby-keyword kw">end</span>
+162:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

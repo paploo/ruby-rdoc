@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new_alias_name (IRB::MethodExtender)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/extend-command.rb, line 264</span>
+264:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_alias_name</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">prefix</span> = <span class="ruby-value str">&quot;__alias_of__&quot;</span>, <span class="ruby-identifier">postfix</span> = <span class="ruby-value str">&quot;__&quot;</span>)
+265:       <span class="ruby-identifier">base_name</span> = <span class="ruby-node">&quot;#{prefix}#{name}#{postfix}&quot;</span>
+266:       <span class="ruby-identifier">all_methods</span> = <span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword kw">true</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">private_instance_methods</span>(<span class="ruby-keyword kw">true</span>)
+267:       <span class="ruby-identifier">same_methods</span> = <span class="ruby-identifier">all_methods</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-node">/^#{Regexp.quote(base_name)}[0-9]*$/</span>)
+268:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">base_name</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">same_methods</span>.<span class="ruby-identifier">empty?</span>
+269:       <span class="ruby-identifier">no</span> = <span class="ruby-identifier">same_methods</span>.<span class="ruby-identifier">size</span>
+270:       <span class="ruby-keyword kw">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">same_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">alias_name</span> = <span class="ruby-identifier">base_name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">no</span>)
+271:         <span class="ruby-identifier">no</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+272:       <span class="ruby-keyword kw">end</span>
+273:       <span class="ruby-identifier">alias_name</span>
+274:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

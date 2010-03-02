@@ -2,25 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_str (String)</title>
+  <title>clear (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.to_s     =&gt; str
- *     str.to_str   =&gt; str
- *  
- *  Returns the receiver.
+ *     string.clear    -&gt;  string
+ *
+ *  Makes string empty.
+ *
+ *     a = &quot;abcde&quot;
+ *     a.clear    #=&gt; &quot;&quot;
  */
 
 static VALUE
-rb_str_to_s(VALUE str)
+rb_str_clear(VALUE str)
 {
-    if (rb_obj_class(str) != rb_cString) {
-        return str_duplicate(rb_cString, str);
+    /* rb_str_modify() */       /* no need for str_make_independent */
+    if (str_independent(str) &amp;&amp; !STR_EMBED_P(str)) {
+        xfree(RSTRING_PTR(str));
     }
+    STR_SET_EMBED(str);
+    STR_SET_EMBED_LEN(str, 0);
+    RSTRING_PTR(str)[0] = 0;
+    if (rb_enc_asciicompat(STR_ENC_GET(str)))
+        ENC_CODERANGE_SET(str, ENC_CODERANGE_7BIT);
+    else
+        ENC_CODERANGE_SET(str, ENC_CODERANGE_VALID);
     return str;
 }</pre>
 </body>

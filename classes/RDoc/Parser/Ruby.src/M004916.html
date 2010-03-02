@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_attr (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1768</span>
+1768:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_attr</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">single</span>, <span class="ruby-identifier">tk</span>, <span class="ruby-identifier">comment</span>)
+1769:     <span class="ruby-identifier">args</span> = <span class="ruby-identifier">parse_symbol_arg</span>(<span class="ruby-value">1</span>)
+1770:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+1771:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
+1772:       <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;R&quot;</span>
+1773:       <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">false</span>)
+1774:       <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1775:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkCOMMA</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span> <span class="ruby-keyword kw">then</span>
+1776:         <span class="ruby-identifier">rw</span> = <span class="ruby-value str">&quot;RW&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">get_bool</span>
+1777:       <span class="ruby-keyword kw">else</span>
+1778:         <span class="ruby-identifier">unget_tk</span> <span class="ruby-identifier">tk</span>
+1779:       <span class="ruby-keyword kw">end</span>
+1780:       <span class="ruby-identifier">att</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Attr</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">get_tkread</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">rw</span>, <span class="ruby-identifier">comment</span>
+1781:       <span class="ruby-identifier">read_documentation_modifiers</span> <span class="ruby-identifier">att</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">ATTR_MODIFIERS</span>
+1782:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">att</span>.<span class="ruby-identifier">document_self</span>
+1783:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_attribute</span>(<span class="ruby-identifier">att</span>)
+1784:       <span class="ruby-keyword kw">end</span>
+1785:     <span class="ruby-keyword kw">else</span>
+1786:       <span class="ruby-identifier">warn</span>(<span class="ruby-value str">&quot;'attr' ignored - looks like a variable&quot;</span>)
+1787:     <span class="ruby-keyword kw">end</span>
+1788:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

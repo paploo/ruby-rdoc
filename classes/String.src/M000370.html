@@ -2,14 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>shellsplit (String)</title>
+  <title>valid_encoding? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/shellwords.rb, line 128</span>
-128:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shellsplit</span>
-129:     <span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">split</span>(<span class="ruby-keyword kw">self</span>)
-130:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     str.valid_encoding?  =&gt; true or false
+ *  
+ *  Returns true for a string which encoded correctly.
+ *
+ *    &quot;\xc2\xa1&quot;.force_encoding(&quot;UTF-8&quot;).valid_encoding? =&gt; true
+ *    &quot;\xc2&quot;.force_encoding(&quot;UTF-8&quot;).valid_encoding? =&gt; false
+ *    &quot;\x80&quot;.force_encoding(&quot;UTF-8&quot;).valid_encoding? =&gt; false
+ */
+
+static VALUE
+rb_str_valid_encoding_p(VALUE str)
+{
+    int cr = rb_enc_str_coderange(str);
+
+    return cr == ENC_CODERANGE_BROKEN ? Qfalse : Qtrue;
+}</pre>
 </body>
 </html>

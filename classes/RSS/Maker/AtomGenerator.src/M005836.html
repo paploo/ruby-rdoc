@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_feed (RSS::Maker::AtomGenerator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/atom.rb, line 130</span>
+130:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">feed</span>, <span class="ruby-identifier">current</span>)
+131:         <span class="ruby-identifier">generator</span> = <span class="ruby-identifier">current</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator</span>.<span class="ruby-identifier">new</span>
+132:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">setup_values</span>(<span class="ruby-identifier">generator</span>)
+133:           <span class="ruby-identifier">current</span>.<span class="ruby-identifier">generator</span> = <span class="ruby-identifier">generator</span>
+134:           <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">generator</span>, <span class="ruby-identifier">current</span>)
+135:           <span class="ruby-identifier">setup_other_elements</span>(<span class="ruby-identifier">feed</span>)
+136:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">variable_is_set?</span>
+137:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotSetError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">not_set_name</span>,
+138:                                 <span class="ruby-identifier">not_set_required_variables</span>)
+139:         <span class="ruby-keyword kw">end</span>
+140:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

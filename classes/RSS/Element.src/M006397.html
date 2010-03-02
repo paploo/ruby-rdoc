@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_corresponded_attr_writer (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 738</span>
+738:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_corresponded_attr_writer</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">disp_name</span>=<span class="ruby-keyword kw">nil</span>)
+739:         <span class="ruby-identifier">disp_name</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">name</span>
+740:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+741:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:integer</span>
+742:           <span class="ruby-identifier">integer_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+743:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:positive_integer</span>
+744:           <span class="ruby-identifier">positive_integer_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+745:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:boolean</span>
+746:           <span class="ruby-identifier">boolean_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+747:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:w3cdtf</span>, <span class="ruby-identifier">:rfc822</span>, <span class="ruby-identifier">:rfc2822</span>
+748:           <span class="ruby-identifier">date_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">disp_name</span>
+749:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:text_type</span>
+750:           <span class="ruby-identifier">text_type_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+751:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:content</span>
+752:           <span class="ruby-identifier">content_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+753:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_clean_other</span>
+754:           <span class="ruby-identifier">yes_clean_other_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+755:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_other</span>
+756:           <span class="ruby-identifier">yes_other_writer</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">disp_name</span>
+757:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:csv</span>
+758:           <span class="ruby-identifier">csv_writer</span> <span class="ruby-identifier">name</span>
+759:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:csv_integer</span>
+760:           <span class="ruby-identifier">csv_integer_writer</span> <span class="ruby-identifier">name</span>
+761:         <span class="ruby-keyword kw">else</span>
+762:           <span class="ruby-identifier">attr_writer</span> <span class="ruby-identifier">name</span>
+763:         <span class="ruby-keyword kw">end</span>
+764:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

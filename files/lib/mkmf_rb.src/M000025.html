@@ -7,61 +7,61 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/mkmf.rb, line 1458</span>
-1458: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">depend_rules</span>(<span class="ruby-identifier">depend</span>)
-1459:   <span class="ruby-identifier">suffixes</span> = []
-1460:   <span class="ruby-identifier">depout</span> = []
-1461:   <span class="ruby-identifier">cont</span> = <span class="ruby-identifier">implicit</span> = <span class="ruby-keyword kw">nil</span>
-1462:   <span class="ruby-identifier">impconv</span> = <span class="ruby-identifier">proc</span> <span class="ruby-keyword kw">do</span>
-1463:     <span class="ruby-constant">COMPILE_RULES</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">rule</span><span class="ruby-operator">|</span> <span class="ruby-identifier">depout</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">rule</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">implicit</span>[<span class="ruby-value">0</span>]) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">implicit</span>[<span class="ruby-value">1</span>]}
-1464:     <span class="ruby-identifier">implicit</span> = <span class="ruby-keyword kw">nil</span>
-1465:   <span class="ruby-keyword kw">end</span>
-1466:   <span class="ruby-identifier">ruleconv</span> = <span class="ruby-identifier">proc</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-1467:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">implicit</span>
-1468:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\t/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
-1469:         <span class="ruby-identifier">implicit</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
-1470:         <span class="ruby-keyword kw">next</span>
-1471:       <span class="ruby-keyword kw">else</span>
-1472:         <span class="ruby-identifier">impconv</span>[]
-1473:       <span class="ruby-keyword kw">end</span>
-1474:     <span class="ruby-keyword kw">end</span>
-1475:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-regexp re">/\A\.(\w+)\.(\w+)(?:\s*:)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>)
-1476:       <span class="ruby-identifier">suffixes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
-1477:       <span class="ruby-identifier">implicit</span> = [[<span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]], [<span class="ruby-identifier">m</span>.<span class="ruby-identifier">post_match</span>]]
-1478:       <span class="ruby-keyword kw">next</span>
-1479:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">RULE_SUBST</span> <span class="ruby-keyword kw">and</span> <span class="ruby-regexp re">/\A(?!\s*\w+\s*=)[$\w][^#]*:/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
-1480:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;(\s)(?!\.)([^$(){}+=:\s\/\\,]+)(?=\s|\z)&quot;</span>) {<span class="ruby-identifier">$1</span> <span class="ruby-operator">+</span> <span class="ruby-constant">RULE_SUBST</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">$2</span>}
-1481:     <span class="ruby-keyword kw">end</span>
-1482:     <span class="ruby-identifier">depout</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
-1483:   <span class="ruby-keyword kw">end</span>
-1484:   <span class="ruby-identifier">depend</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-1485:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\.o\b/</span>, <span class="ruby-node">&quot;.#{$OBJEXT}&quot;</span>)
-1486:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\$\((?:hdr|top)dir\)\/config.h/</span>, <span class="ruby-identifier">$config_h</span>)
-1487:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;\$\(hdrdir\)/(?!ruby(?![^:;/\s]))(?=[-\w]+\.h)&quot;</span>, <span class="ruby-value str">'\&amp;ruby/'</span>)
-1488:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$nmake</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\A\s*\$\(RM|COPY\)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
-1489:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;[-\w\./]{2,}&quot;</span>){<span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;/&quot;</span>, <span class="ruby-value str">&quot;\\&quot;</span>)}
-1490:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(\$\((?!RM|COPY)[^:)]+)(?=\))/</span>, <span class="ruby-value str">'\1:/=\\'</span>)
-1491:     <span class="ruby-keyword kw">end</span>
-1492:     <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/(?:^|[^\\])(?:\\\\)*\\$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
-1493:       (<span class="ruby-identifier">cont</span> <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
-1494:       <span class="ruby-keyword kw">next</span>
-1495:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">cont</span>
-1496:       <span class="ruby-identifier">line</span> = (<span class="ruby-identifier">cont</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>).<span class="ruby-identifier">join</span>
-1497:       <span class="ruby-identifier">cont</span> = <span class="ruby-keyword kw">nil</span>
-1498:     <span class="ruby-keyword kw">end</span>
-1499:     <span class="ruby-identifier">ruleconv</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">line</span>)
-1500:   <span class="ruby-keyword kw">end</span>
-1501:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cont</span>
-1502:     <span class="ruby-identifier">ruleconv</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">cont</span>.<span class="ruby-identifier">join</span>)
-1503:   <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">implicit</span>
-1504:     <span class="ruby-identifier">impconv</span>.<span class="ruby-identifier">call</span>
-1505:   <span class="ruby-keyword kw">end</span>
-1506:   <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">empty?</span>
-1507:     <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-value str">&quot;.SUFFIXES: .&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; .&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\n&quot;</span>)
-1508:   <span class="ruby-keyword kw">end</span>
-1509:   <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-value str">&quot;$(OBJS): $(RUBY_EXTCONF_H)\n\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$extconf_h</span>
-1510:   <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">flatten!</span>
-1511:   <span class="ruby-identifier">depout</span>
-1512: <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/mkmf.rb, line 1460</span>
+1460: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">depend_rules</span>(<span class="ruby-identifier">depend</span>)
+1461:   <span class="ruby-identifier">suffixes</span> = []
+1462:   <span class="ruby-identifier">depout</span> = []
+1463:   <span class="ruby-identifier">cont</span> = <span class="ruby-identifier">implicit</span> = <span class="ruby-keyword kw">nil</span>
+1464:   <span class="ruby-identifier">impconv</span> = <span class="ruby-identifier">proc</span> <span class="ruby-keyword kw">do</span>
+1465:     <span class="ruby-constant">COMPILE_RULES</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">rule</span><span class="ruby-operator">|</span> <span class="ruby-identifier">depout</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">rule</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">implicit</span>[<span class="ruby-value">0</span>]) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">implicit</span>[<span class="ruby-value">1</span>]}
+1466:     <span class="ruby-identifier">implicit</span> = <span class="ruby-keyword kw">nil</span>
+1467:   <span class="ruby-keyword kw">end</span>
+1468:   <span class="ruby-identifier">ruleconv</span> = <span class="ruby-identifier">proc</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+1469:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">implicit</span>
+1470:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\t/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1471:         <span class="ruby-identifier">implicit</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+1472:         <span class="ruby-keyword kw">next</span>
+1473:       <span class="ruby-keyword kw">else</span>
+1474:         <span class="ruby-identifier">impconv</span>[]
+1475:       <span class="ruby-keyword kw">end</span>
+1476:     <span class="ruby-keyword kw">end</span>
+1477:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-regexp re">/\A\.(\w+)\.(\w+)(?:\s*:)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">line</span>)
+1478:       <span class="ruby-identifier">suffixes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]
+1479:       <span class="ruby-identifier">implicit</span> = [[<span class="ruby-identifier">m</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">m</span>[<span class="ruby-value">2</span>]], [<span class="ruby-identifier">m</span>.<span class="ruby-identifier">post_match</span>]]
+1480:       <span class="ruby-keyword kw">next</span>
+1481:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">RULE_SUBST</span> <span class="ruby-keyword kw">and</span> <span class="ruby-regexp re">/\A(?!\s*\w+\s*=)[$\w][^#]*:/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1482:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;(\s)(?!\.)([^$(){}+=:\s\/\\,]+)(?=\s|\z)&quot;</span>) {<span class="ruby-identifier">$1</span> <span class="ruby-operator">+</span> <span class="ruby-constant">RULE_SUBST</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">$2</span>}
+1483:     <span class="ruby-keyword kw">end</span>
+1484:     <span class="ruby-identifier">depout</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+1485:   <span class="ruby-keyword kw">end</span>
+1486:   <span class="ruby-identifier">depend</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+1487:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\.o\b/</span>, <span class="ruby-node">&quot;.#{$OBJEXT}&quot;</span>)
+1488:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\$\((?:hdr|top)dir\)\/config.h/</span>, <span class="ruby-identifier">$config_h</span>)
+1489:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;\$\(hdrdir\)/(?!ruby(?![^:;/\s]))(?=[-\w]+\.h)&quot;</span>, <span class="ruby-value str">'\&amp;ruby/'</span>)
+1490:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$nmake</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\A\s*\$\(RM|COPY\)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1491:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">%r&quot;[-\w\./]{2,}&quot;</span>){<span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;/&quot;</span>, <span class="ruby-value str">&quot;\\&quot;</span>)}
+1492:       <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/(\$\((?!RM|COPY)[^:)]+)(?=\))/</span>, <span class="ruby-value str">'\1:/=\\'</span>)
+1493:     <span class="ruby-keyword kw">end</span>
+1494:     <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/(?:^|[^\\])(?:\\\\)*\\$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1495:       (<span class="ruby-identifier">cont</span> <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+1496:       <span class="ruby-keyword kw">next</span>
+1497:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">cont</span>
+1498:       <span class="ruby-identifier">line</span> = (<span class="ruby-identifier">cont</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>).<span class="ruby-identifier">join</span>
+1499:       <span class="ruby-identifier">cont</span> = <span class="ruby-keyword kw">nil</span>
+1500:     <span class="ruby-keyword kw">end</span>
+1501:     <span class="ruby-identifier">ruleconv</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">line</span>)
+1502:   <span class="ruby-keyword kw">end</span>
+1503:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cont</span>
+1504:     <span class="ruby-identifier">ruleconv</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">cont</span>.<span class="ruby-identifier">join</span>)
+1505:   <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">implicit</span>
+1506:     <span class="ruby-identifier">impconv</span>.<span class="ruby-identifier">call</span>
+1507:   <span class="ruby-keyword kw">end</span>
+1508:   <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">empty?</span>
+1509:     <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-value str">&quot;.SUFFIXES: .&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; .&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n\n&quot;</span>)
+1510:   <span class="ruby-keyword kw">end</span>
+1511:   <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-value str">&quot;$(OBJS): $(RUBY_EXTCONF_H)\n\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$extconf_h</span>
+1512:   <span class="ruby-identifier">depout</span>.<span class="ruby-identifier">flatten!</span>
+1513:   <span class="ruby-identifier">depout</span>
+1514: <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

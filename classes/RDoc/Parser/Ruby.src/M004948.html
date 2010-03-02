@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>skip_tkspace (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 2791</span>
+2791:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-identifier">skip_nl</span> = <span class="ruby-keyword kw">true</span>)
+2792:     <span class="ruby-identifier">tokens</span> = []
+2793: 
+2794:     <span class="ruby-keyword kw">while</span> <span class="ruby-constant">TkSPACE</span> <span class="ruby-operator">===</span> (<span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>) <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">skip_nl</span> <span class="ruby-keyword kw">and</span> <span class="ruby-constant">TkNL</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span>) <span class="ruby-keyword kw">do</span>
+2795:       <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">tk</span>
+2796:     <span class="ruby-keyword kw">end</span>
+2797: 
+2798:     <span class="ruby-identifier">unget_tk</span>(<span class="ruby-identifier">tk</span>)
+2799:     <span class="ruby-identifier">tokens</span>
+2800:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

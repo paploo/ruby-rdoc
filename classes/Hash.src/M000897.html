@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>assoc (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     hash.assoc(obj)   -&gt;  an_array  or  nil
+ *
+ *  Searches through the hash comparing _obj_ with the key using &lt;code&gt;==&lt;/code&gt;.
+ *  Returns the key-value pair (two elements array) or +nil+
+ *  if no match is found.  See &lt;code&gt;Array#assoc&lt;/code&gt;.
+ *
+ *     h = {&quot;colors&quot;  =&gt; [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;],
+ *          &quot;letters&quot; =&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot; ]}
+ *     h.assoc(&quot;letters&quot;)  #=&gt; [&quot;letters&quot;, [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]
+ *     h.assoc(&quot;foo&quot;)      #=&gt; nil
+ */
+
+VALUE
+rb_hash_assoc(VALUE hash, VALUE obj)
+{
+    VALUE args[2];
+
+    args[0] = obj;
+    args[1] = Qnil;
+    rb_hash_foreach(hash, assoc_i, (st_data_t)args);
+    return args[1];
+}</pre>
+</body>
+</html>

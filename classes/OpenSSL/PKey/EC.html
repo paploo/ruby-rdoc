@@ -1,0 +1,697 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenSSL::PKey::EC [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenSSL::PKey::EC</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/ext/openssl/ossl_pkey_c.html">
+
+                ext/openssl/ossl_pkey.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                cPKey
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+call-seq:
+</p>
+<pre>
+   point.to_bn   =&gt; OpenSSL::BN
+</pre>
+<p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_POINT_point2bn()
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007233">builtin_curves</a>&nbsp;&nbsp;
+
+        <a href="#M007244">check_key</a>&nbsp;&nbsp;
+
+        <a href="#M007245">dh_compute_key</a>&nbsp;&nbsp;
+
+        <a href="#M007246">dsa_sign_asn1</a>&nbsp;&nbsp;
+
+        <a href="#M007247">dsa_verify_asn1</a>&nbsp;&nbsp;
+
+        <a href="#M007243">generate_key</a>&nbsp;&nbsp;
+
+        <a href="#M007235">group</a>&nbsp;&nbsp;
+
+        <a href="#M007236">group=</a>&nbsp;&nbsp;
+
+        <a href="#M007234">new</a>&nbsp;&nbsp;
+
+        <a href="#M007237">private_key</a>&nbsp;&nbsp;
+
+        <a href="#M007238">private_key=</a>&nbsp;&nbsp;
+
+        <a href="#M007241">private_key?</a>&nbsp;&nbsp;
+
+        <a href="#M007239">public_key</a>&nbsp;&nbsp;
+
+        <a href="#M007240">public_key=</a>&nbsp;&nbsp;
+
+        <a href="#M007242">public_key?</a>&nbsp;&nbsp;
+
+        <a href="#M007249">to_der</a>&nbsp;&nbsp;
+
+        <a href="#M007248">to_pem</a>&nbsp;&nbsp;
+
+        <a href="#M007250">to_text</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="EC/Group.html" class="link">OpenSSL::PKey::EC::Group</a><br />
+Class <a href="EC/Point.html" class="link">OpenSSL::PKey::EC::Point</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">NAMED_CURVE</td>
+          <td>=</td>
+          <td class="context-item-value">ULONG2NUM(OPENSSL_EC_NAMED_CURVE)</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M007233" class="method-detail">
+        <a name="M007233"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007233.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007233.html');return false;">
+
+          <span class="method-name">EC.builtin_curves => [[name, comment], ...]<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_builtin_curves()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007234" class="method-detail">
+        <a name="M007234"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007234.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007234.html');return false;">
+
+          <span class="method-name">OpenSSL::PKey::EC.new()<br />
+OpenSSL::PKey::EC.new(ec_key)<br />
+OpenSSL::PKey::EC.new(ec_group)<br />
+OpenSSL::PKey::EC.new("secp112r1")<br />
+OpenSSL::PKey::EC.new(pem_string)<br />
+OpenSSL::PKey::EC.new(der_string)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for:
+</p>
+<pre>
+   EC_KEY_*
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007244" class="method-detail">
+        <a name="M007244"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007244.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007244.html');return false;">
+
+          <span class="method-name">key.check_key   => true<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Raises an exception if the key is invalid.
+</p>
+<p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_check_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007245" class="method-detail">
+        <a name="M007245"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007245.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007245.html');return false;">
+
+          <span class="method-name">key.dh_compute_key(pubkey)   => String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+ECDH_compute_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007246" class="method-detail">
+        <a name="M007246"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007246.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007246.html');return false;">
+
+          <span class="method-name">key.dsa_sign_asn1(data)   => String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+ECDSA_sign()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007247" class="method-detail">
+        <a name="M007247"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007247.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007247.html');return false;">
+
+          <span class="method-name">key.dsa_verify(data, sig)   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+ECDSA_verify()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007243" class="method-detail">
+        <a name="M007243"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007243.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007243.html');return false;">
+
+          <span class="method-name">key.generate_key   => self<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_generate_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007235" class="method-detail">
+        <a name="M007235"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007235.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007235.html');return false;">
+
+          <span class="method-name">key.group   => group<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a constant <tt>OpenSSL::EC::Group</tt> that is tied to the key.
+Modifying the returned group can make the key invalid.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007236" class="method-detail">
+        <a name="M007236"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007236.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007236.html');return false;">
+
+          <span class="method-name">key.group = group   => group<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the same object passed, not the group object associated with the
+key. If you wish to access the group object tied to the key call key.group
+after setting the group.
+</p>
+<p>
+Setting the group will immediately destroy any previously assigned group
+object. The group is internally copied by <a
+href="../../OpenSSL.html">OpenSSL</a>. Modifying the original group after
+assignment will not effect the internal key structure. (your changes may be
+lost). BE CAREFUL.
+</p>
+<p>
+EC_KEY_set_group calls EC_GROUP_free(key->group) then EC_GROUP_dup(), not
+EC_GROUP_copy. This documentation is accurate for <a
+href="../../OpenSSL.html">OpenSSL</a> 0.9.8b.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007237" class="method-detail">
+        <a name="M007237"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007237.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007237.html');return false;">
+
+          <span class="method-name">key.private_key   => OpenSSL::BN<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_get0_private_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007238" class="method-detail">
+        <a name="M007238"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007238.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007238.html');return false;">
+
+          <span class="method-name">key.private_key = openssl_bn<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_set_private_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007241" class="method-detail">
+        <a name="M007241"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007241.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007241.html');return false;">
+
+          <span class="method-name">key.private_key? => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Both <a href="EC.html#M007239">public_key</a>? and <a
+href="EC.html#M007237">private_key</a>? may return false at the same time
+unlike other <a href="PKey.html">PKey</a> classes.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007239" class="method-detail">
+        <a name="M007239"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007239.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007239.html');return false;">
+
+          <span class="method-name">key.public_key   => OpenSSL::PKey::EC::Point<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_get0_public_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007240" class="method-detail">
+        <a name="M007240"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007240.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007240.html');return false;">
+
+          <span class="method-name">key.public_key = ec_point<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_set_public_key()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007242" class="method-detail">
+        <a name="M007242"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007242.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007242.html');return false;">
+
+          <span class="method-name">key.public_key? => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Both <a href="EC.html#M007239">public_key</a>? and <a
+href="EC.html#M007237">private_key</a>? may return false at the same time
+unlike other <a href="PKey.html">PKey</a> classes.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007249" class="method-detail">
+        <a name="M007249"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007249.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007249.html');return false;">
+
+          <span class="method-name">key.to_der   => String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+i2d_ECPrivateKey_bio()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007248" class="method-detail">
+        <a name="M007248"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007248.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007248.html');return false;">
+
+          <span class="method-name">key.to_pem   => String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+PEM_write_bio_ECPrivateKey()
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007250" class="method-detail">
+        <a name="M007250"></a>
+
+        <div class="method-heading">
+
+          <a href="EC.src/M007250.html" target="Code" class="method-signature"
+            onclick="popupCode('EC.src/M007250.html');return false;">
+
+          <span class="method-name">key.to_text   => String<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+See the <a href="../../OpenSSL.html">OpenSSL</a> documentation for
+EC_KEY_print()
+</p>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

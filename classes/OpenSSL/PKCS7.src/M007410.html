@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write_smime (OpenSSL::PKCS7)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    PKCS7.write_smime(pkcs7 [, data [, flags]]) =&gt; string
+ */
+static VALUE
+ossl_pkcs7_s_write_smime(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE pkcs7, data, flags;
+    BIO *out, *in;
+    PKCS7 *p7;
+    VALUE str;
+    int flg;
+
+    rb_scan_args(argc, argv, &quot;12&quot;, &amp;pkcs7, &amp;data, &amp;flags);
+    flg = NIL_P(flags) ? 0 : NUM2INT(flags);
+    if(NIL_P(data)) data = ossl_pkcs7_get_data(pkcs7);
+    SafeGetPKCS7(pkcs7, p7);
+    if(!NIL_P(data) &amp;&amp; PKCS7_is_detached(p7))
+        flg |= PKCS7_DETACHED;
+    in = NIL_P(data) ? NULL : ossl_obj2bio(data);
+    if(!(out = BIO_new(BIO_s_mem()))){
+        BIO_free(in);
+        ossl_raise(ePKCS7Error, NULL);
+    }
+    if(!SMIME_write_PKCS7(out, p7, in, flg)){
+        BIO_free(out);
+        BIO_free(in);
+        ossl_raise(ePKCS7Error, NULL);
+    }
+    BIO_free(in);
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+</body>
+</html>

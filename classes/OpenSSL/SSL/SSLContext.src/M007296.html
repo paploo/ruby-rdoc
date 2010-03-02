@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup (OpenSSL::SSL::SSLContext)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    ctx.setup =&gt; Qtrue # first time
+ *    ctx.setup =&gt; nil # thereafter
+ *
+ * This method is called automatically when a new SSLSocket is created.
+ * Normally you do not need to call this method (unless you are writing an extension in C).
+ */
+static VALUE
+ossl_sslctx_setup(VALUE self)
+{
+    SSL_CTX *ctx;
+    X509 *cert = NULL, *client_ca = NULL;
+    X509_STORE *store;
+    EVP_PKEY *key = NULL;
+    char *ca_path = NULL, *ca_file = NULL;
+    int i, verify_mode;
+    VALUE val;
+
+    if(OBJ_FROZEN(self)) return Qnil;
+    Data_Get_Struct(self, SSL_CTX, ctx);
+
+#if !defined(OPENSSL_NO_DH)
+    if (RTEST(ossl_sslctx_get_tmp_dh_cb(self))){
+        SSL_CTX_set_tmp_dh_callback(ctx, ossl_tmp_dh_callback);
+    }
+    else{
+        SSL_CTX_set_tmp_dh_callback(ctx, ossl_default_tmp_dh_callback);
+    }
+#endif
+    SSL_CTX_set_ex_data(ctx, ossl_ssl_ex_ptr_idx, (void*)self);
+
+    val = ossl_sslctx_get_cert_store(self);
+    if(!NIL_P(val)){
+        /*
+         * WORKAROUND:
+         *   X509_STORE can count references, but
+         *   X509_STORE_free() doesn't care it.
+         *   So we won't increment it but mark it by ex_data.
+         */
+        store = GetX509StorePtr(val); /* NO NEED TO DUP */
+        SSL_CTX_set_cert_store(ctx, store);
+        SSL_CTX_set_ex_data(ctx, ossl_ssl_ex_store_p, (void*)1);
+    }
+
+    val = ossl_sslctx_get_extra_cert(self);
+    if(!NIL_P(val)){
+        rb_block_call(val, rb_intern(&quot;each&quot;), 0, 0, ossl_sslctx_add_extra_chain_cert_i, self);
+    }
+
+    /* private key may be bundled in certificate file. */
+    val = ossl_sslctx_get_cert(self);
+    cert = NIL_P(val) ? NULL : GetX509CertPtr(val); /* NO DUP NEEDED */
+    val = ossl_sslctx_get_key(self);
+    key = NIL_P(val) ? NULL : GetPKeyPtr(val); /* NO DUP NEEDED */
+    if (cert &amp;&amp; key) {
+        if (!SSL_CTX_use_certificate(ctx, cert)) {
+            /* Adds a ref =&gt; Safe to FREE */
+            ossl_raise(eSSLError, &quot;SSL_CTX_use_certificate:&quot;);
+        }
+        if (!SSL_CTX_use_PrivateKey(ctx, key)) {
+            /* Adds a ref =&gt; Safe to FREE */
+            ossl_raise(eSSLError, &quot;SSL_CTX_use_PrivateKey:&quot;);
+        }
+        if (!SSL_CTX_check_private_key(ctx)) {
+            ossl_raise(eSSLError, &quot;SSL_CTX_check_private_key:&quot;);
+        }
+    }
+
+    val = ossl_sslctx_get_client_ca(self);
+    if(!NIL_P(val)){
+        if(TYPE(val) == T_ARRAY){
+            for(i = 0; i &lt; RARRAY_LEN(val); i++){
+                client_ca = GetX509CertPtr(RARRAY_PTR(val)[i]);
+                if (!SSL_CTX_add_client_CA(ctx, client_ca)){
+                    /* Copies X509_NAME =&gt; FREE it. */
+                    ossl_raise(eSSLError, &quot;SSL_CTX_add_client_CA&quot;);
+                }
+            }
+        }
+        else{
+            client_ca = GetX509CertPtr(val); /* NO DUP NEEDED. */
+            if (!SSL_CTX_add_client_CA(ctx, client_ca)){
+                /* Copies X509_NAME =&gt; FREE it. */
+                ossl_raise(eSSLError, &quot;SSL_CTX_add_client_CA&quot;);
+            }
+        }
+    }
+
+    val = ossl_sslctx_get_ca_file(self);
+    ca_file = NIL_P(val) ? NULL : StringValuePtr(val);
+    val = ossl_sslctx_get_ca_path(self);
+    ca_path = NIL_P(val) ? NULL : StringValuePtr(val);
+    if(ca_file || ca_path){
+        if (!SSL_CTX_load_verify_locations(ctx, ca_file, ca_path))
+            rb_warning(&quot;can't set verify locations&quot;);
+    }
+
+    val = ossl_sslctx_get_verify_mode(self);
+    verify_mode = NIL_P(val) ? SSL_VERIFY_NONE : NUM2INT(val);
+    SSL_CTX_set_verify(ctx, verify_mode, ossl_ssl_verify_callback);
+    if (RTEST(ossl_sslctx_get_client_cert_cb(self)))
+        SSL_CTX_set_client_cert_cb(ctx, ossl_client_cert_cb);
+
+    val = ossl_sslctx_get_timeout(self);
+    if(!NIL_P(val)) SSL_CTX_set_timeout(ctx, NUM2LONG(val));
+
+    val = ossl_sslctx_get_verify_dep(self);
+    if(!NIL_P(val)) SSL_CTX_set_verify_depth(ctx, NUM2LONG(val));
+
+    val = ossl_sslctx_get_options(self);
+    if(!NIL_P(val)) SSL_CTX_set_options(ctx, NUM2LONG(val));
+    rb_obj_freeze(self);
+
+    val = ossl_sslctx_get_sess_id_ctx(self);
+    if (!NIL_P(val)){
+        StringValue(val);
+        if (!SSL_CTX_set_session_id_context(ctx, (unsigned char *)RSTRING_PTR(val),
+                                            RSTRING_LEN(val))){
+            ossl_raise(eSSLError, &quot;SSL_CTX_set_session_id_context:&quot;);
+        }
+    }
+
+    if (RTEST(rb_iv_get(self, &quot;@session_get_cb&quot;))) {
+        SSL_CTX_sess_set_get_cb(ctx, ossl_sslctx_session_get_cb);
+        OSSL_Debug(&quot;SSL SESSION get callback added&quot;);
+    }
+    if (RTEST(rb_iv_get(self, &quot;@session_new_cb&quot;))) {
+        SSL_CTX_sess_set_new_cb(ctx, ossl_sslctx_session_new_cb);
+        OSSL_Debug(&quot;SSL SESSION new callback added&quot;);
+    }
+    if (RTEST(rb_iv_get(self, &quot;@session_remove_cb&quot;))) {
+        SSL_CTX_sess_set_remove_cb(ctx, ossl_sslctx_session_remove_cb);
+        OSSL_Debug(&quot;SSL SESSION remove callback added&quot;);
+    }
+    return Qtrue;
+}</pre>
+</body>
+</html>

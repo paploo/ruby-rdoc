@@ -1,0 +1,884 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenSSL::X509::Certificate [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenSSL::X509::Certificate</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/ext/openssl/ossl_ssl_session_c.html">
+
+                ext/openssl/ossl_ssl_session.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+INIT
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007357">add_extension</a>&nbsp;&nbsp;
+
+        <a href="#M007354">check_private_key</a>&nbsp;&nbsp;
+
+        <a href="#M007355">extensions</a>&nbsp;&nbsp;
+
+        <a href="#M007356">extensions=</a>&nbsp;&nbsp;
+
+        <a href="#M007344">issuer</a>&nbsp;&nbsp;
+
+        <a href="#M007345">issuer=</a>&nbsp;&nbsp;
+
+        <a href="#M007333">new</a>&nbsp;&nbsp;
+
+        <a href="#M007348">not_after</a>&nbsp;&nbsp;
+
+        <a href="#M007349">not_after=</a>&nbsp;&nbsp;
+
+        <a href="#M007346">not_before</a>&nbsp;&nbsp;
+
+        <a href="#M007347">not_before=</a>&nbsp;&nbsp;
+
+        <a href="#M007350">public_key</a>&nbsp;&nbsp;
+
+        <a href="#M007351">public_key=</a>&nbsp;&nbsp;
+
+        <a href="#M007340">serial</a>&nbsp;&nbsp;
+
+        <a href="#M007341">serial=</a>&nbsp;&nbsp;
+
+        <a href="#M007352">sign</a>&nbsp;&nbsp;
+
+        <a href="#M007339">signature_algorithm</a>&nbsp;&nbsp;
+
+        <a href="#M007342">subject</a>&nbsp;&nbsp;
+
+        <a href="#M007343">subject=</a>&nbsp;&nbsp;
+
+        <a href="#M007334">to_der</a>&nbsp;&nbsp;
+
+        <a href="#M007335">to_pem</a>&nbsp;&nbsp;
+
+        <a href="#M007358">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M007336">to_text</a>&nbsp;&nbsp;
+
+        <a href="#M007353">verify</a>&nbsp;&nbsp;
+
+        <a href="#M007337">version</a>&nbsp;&nbsp;
+
+        <a href="#M007338">version=</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M007333" class="method-detail">
+        <a name="M007333"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007333.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007333.html');return false;">
+
+          <span class="method-name">new</span><span class="method-args">(...)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   Certificate.new =&gt; cert
+   Certificate.new(string) =&gt; cert
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007357" class="method-detail">
+        <a name="M007357"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007357.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007357.html');return false;">
+
+          <span class="method-name">add_extension</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.add_extension(extension) =&gt; extension
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007354" class="method-detail">
+        <a name="M007354"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007354.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007354.html');return false;">
+
+          <span class="method-name">cert.check_private_key(key)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Checks if &#8216;key&#8217; is PRIV key for this cert
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007355" class="method-detail">
+        <a name="M007355"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007355.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007355.html');return false;">
+
+          <span class="method-name">extensions</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.extensions =&gt; [extension...]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007356" class="method-detail">
+        <a name="M007356"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007356.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007356.html');return false;">
+
+          <span class="method-name">extensions=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.extensions = [ext...] =&gt; [ext...]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007344" class="method-detail">
+        <a name="M007344"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007344.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007344.html');return false;">
+
+          <span class="method-name">issuer</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.issuer =&gt; name
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007345" class="method-detail">
+        <a name="M007345"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007345.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007345.html');return false;">
+
+          <span class="method-name">issuer=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.issuer = name =&gt; name
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007348" class="method-detail">
+        <a name="M007348"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007348.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007348.html');return false;">
+
+          <span class="method-name">not_after</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.not_after =&gt; time
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007349" class="method-detail">
+        <a name="M007349"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007349.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007349.html');return false;">
+
+          <span class="method-name">not_after=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.not_before = time =&gt; time
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007346" class="method-detail">
+        <a name="M007346"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007346.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007346.html');return false;">
+
+          <span class="method-name">not_before</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.not_before =&gt; time
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007347" class="method-detail">
+        <a name="M007347"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007347.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007347.html');return false;">
+
+          <span class="method-name">not_before=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.not_before = time =&gt; time
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007350" class="method-detail">
+        <a name="M007350"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007350.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007350.html');return false;">
+
+          <span class="method-name">public_key</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.public_key =&gt; key
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007351" class="method-detail">
+        <a name="M007351"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007351.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007351.html');return false;">
+
+          <span class="method-name">public_key=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.public_key = key =&gt; key
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007340" class="method-detail">
+        <a name="M007340"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007340.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007340.html');return false;">
+
+          <span class="method-name">serial</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.serial =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007341" class="method-detail">
+        <a name="M007341"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007341.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007341.html');return false;">
+
+          <span class="method-name">serial=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.serial = integer =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007352" class="method-detail">
+        <a name="M007352"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007352.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007352.html');return false;">
+
+          <span class="method-name">sign</span><span class="method-args">(p1, p2)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.sign(key, digest) =&gt; self
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007339" class="method-detail">
+        <a name="M007339"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007339.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007339.html');return false;">
+
+          <span class="method-name">signature_algorithm</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.signature_algorithm =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007342" class="method-detail">
+        <a name="M007342"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007342.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007342.html');return false;">
+
+          <span class="method-name">subject</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.subject =&gt; name
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007343" class="method-detail">
+        <a name="M007343"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007343.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007343.html');return false;">
+
+          <span class="method-name">subject=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.subject = name =&gt; name
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007334" class="method-detail">
+        <a name="M007334"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007334.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007334.html');return false;">
+
+          <span class="method-name">to_der</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.to_der =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007335" class="method-detail">
+        <a name="M007335"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007335.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007335.html');return false;">
+
+          <span class="method-name">to_pem</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.to_pem =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007358" class="method-detail">
+        <a name="M007358"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Certificate.html#M007335">to_pem</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007336" class="method-detail">
+        <a name="M007336"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007336.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007336.html');return false;">
+
+          <span class="method-name">to_text</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.to_text =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007353" class="method-detail">
+        <a name="M007353"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007353.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007353.html');return false;">
+
+          <span class="method-name">cert.verify(key) => true | false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Checks that cert signature is made with PRIVversion of this PUBLIC
+&#8216;key&#8217;
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007337" class="method-detail">
+        <a name="M007337"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007337.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007337.html');return false;">
+
+          <span class="method-name">version</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.version =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007338" class="method-detail">
+        <a name="M007338"></a>
+
+        <div class="method-heading">
+
+          <a href="Certificate.src/M007338.html" target="Code" class="method-signature"
+            onclick="popupCode('Certificate.src/M007338.html');return false;">
+
+          <span class="method-name">version=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   cert.version = integer =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

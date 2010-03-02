@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (Process::Status)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     stat.inspect   =&gt; string
+ *
+ *  Override the inspection method.
+ */
+
+static VALUE
+pst_inspect(VALUE st)
+{
+    rb_pid_t pid;
+    int status;
+    VALUE vpid, str;
+
+    vpid = pst_pid(st);
+    if (NIL_P(vpid)) {
+        return rb_sprintf(&quot;#&lt;%s: uninitialized&gt;&quot;, rb_class2name(CLASS_OF(st)));
+    }
+    pid = NUM2LONG(vpid);
+    status = PST2INT(st);
+
+    str = rb_sprintf(&quot;#&lt;%s: &quot;, rb_class2name(CLASS_OF(st)));
+    pst_message(str, pid, status);
+    rb_str_cat2(str, &quot;&gt;&quot;);
+    return str;
+}</pre>
+</body>
+</html>

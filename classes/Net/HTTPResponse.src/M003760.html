@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>procdest (Net::HTTPResponse)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 2366</span>
+2366:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">procdest</span>(<span class="ruby-identifier">dest</span>, <span class="ruby-identifier">block</span>)
+2367:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'both arg and block given for HTTP method'</span> \
+2368:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>
+2369:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+2370:         <span class="ruby-constant">ReadAdapter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">block</span>)
+2371:       <span class="ruby-keyword kw">else</span>
+2372:         <span class="ruby-identifier">dest</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>
+2373:       <span class="ruby-keyword kw">end</span>
+2374:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

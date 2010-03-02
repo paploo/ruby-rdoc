@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (Struct)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   struct.to_s      =&gt; string
+ *   struct.inspect   =&gt; string
+ *
+ * Describe the contents of this struct in a string.
+ */
+
+static VALUE
+rb_struct_inspect(VALUE s)
+{
+    return rb_exec_recursive(inspect_struct, s, 0);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>do_start (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 545</span>
+545:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_start</span>(<span class="ruby-identifier">helo_domain</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">secret</span>, <span class="ruby-identifier">authtype</span>)
+546:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-value str">'SMTP session already started'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@started</span>
+547:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">secret</span>
+548:         <span class="ruby-identifier">check_auth_method</span>(<span class="ruby-identifier">authtype</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_AUTH_TYPE</span>)
+549:         <span class="ruby-identifier">check_auth_args</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">secret</span>
+550:       <span class="ruby-keyword kw">end</span>
+551:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@open_timeout</span>) { <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@address</span>, <span class="ruby-ivar">@port</span>) }   
+552:       <span class="ruby-identifier">logging</span> <span class="ruby-node">&quot;Connection opened: #{@address}:#{@port}&quot;</span>
+553:       <span class="ruby-ivar">@socket</span> = <span class="ruby-identifier">new_internet_message_io</span>(<span class="ruby-identifier">tls?</span> <span class="ruby-value">? </span><span class="ruby-identifier">tlsconnect</span>(<span class="ruby-identifier">s</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">s</span>)
+554:       <span class="ruby-identifier">check_response</span> <span class="ruby-identifier">critical</span> { <span class="ruby-identifier">recv_response</span>() }
+555:       <span class="ruby-identifier">do_helo</span> <span class="ruby-identifier">helo_domain</span>
+556:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">starttls_always?</span> <span class="ruby-keyword kw">or</span> (<span class="ruby-identifier">capable_starttls?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">starttls_auto?</span>)
+557:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">capable_starttls?</span>
+558:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">SMTPUnsupportedCommand</span>,
+559:               <span class="ruby-value str">&quot;STARTTLS is not supported on this server&quot;</span>
+560:         <span class="ruby-keyword kw">end</span>
+561:         <span class="ruby-identifier">starttls</span>
+562:         <span class="ruby-ivar">@socket</span> = <span class="ruby-identifier">new_internet_message_io</span>(<span class="ruby-identifier">tlsconnect</span>(<span class="ruby-identifier">s</span>))
+563:         <span class="ruby-comment cmt"># helo response may be different after STARTTLS</span>
+564:         <span class="ruby-identifier">do_helo</span> <span class="ruby-identifier">helo_domain</span>
+565:       <span class="ruby-keyword kw">end</span>
+566:       <span class="ruby-identifier">authenticate</span> <span class="ruby-identifier">user</span>, <span class="ruby-identifier">secret</span>, (<span class="ruby-identifier">authtype</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_AUTH_TYPE</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+567:       <span class="ruby-ivar">@started</span> = <span class="ruby-keyword kw">true</span>
+568:     <span class="ruby-keyword kw">ensure</span>
+569:       <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@started</span>
+570:         <span class="ruby-comment cmt"># authentication failed, cancel connection.</span>
+571:         <span class="ruby-identifier">s</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">s</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">closed?</span>
+572:         <span class="ruby-ivar">@socket</span> = <span class="ruby-keyword kw">nil</span>
+573:       <span class="ruby-keyword kw">end</span>
+574:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

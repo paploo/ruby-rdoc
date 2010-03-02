@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mu_extended (Mutex_m)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/mutex_m.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mu_extended</span>
+50:     <span class="ruby-keyword kw">unless</span> (<span class="ruby-keyword kw">defined?</span> <span class="ruby-identifier">locked?</span> <span class="ruby-keyword kw">and</span>
+51:             <span class="ruby-keyword kw">defined?</span> <span class="ruby-identifier">lock</span> <span class="ruby-keyword kw">and</span>
+52:             <span class="ruby-keyword kw">defined?</span> <span class="ruby-identifier">unlock</span> <span class="ruby-keyword kw">and</span>
+53:             <span class="ruby-keyword kw">defined?</span> <span class="ruby-identifier">try_lock</span> <span class="ruby-keyword kw">and</span>
+54:             <span class="ruby-keyword kw">defined?</span> <span class="ruby-identifier">synchronize</span>)
+55:       <span class="ruby-constant">Mutex_m</span>.<span class="ruby-identifier">define_aliases</span>(<span class="ruby-keyword kw">class</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-keyword kw">self</span>;<span class="ruby-keyword kw">self</span>;<span class="ruby-keyword kw">end</span>)
+56:     <span class="ruby-keyword kw">end</span>
+57:     <span class="ruby-identifier">mu_initialize</span>
+58:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

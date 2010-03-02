@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>truncate (BigDecimal)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* call-seq:
+ * truncate(n)
+ *
+ * Truncate to the nearest 1, returning the result as a BigDecimal.
+ *
+ * BigDecimal('3.14159').truncate -&gt; 3
+ *
+ * BigDecimal('8.7').truncate -&gt; 8
+ *
+ * If n is specified and positive, the fractional part of the result has no
+ * more than that many digits. 
+ *
+ * If n is specified and negative, at least that many digits to the left of the
+ * decimal point will be 0 in the result.
+ *
+ * BigDecimal('3.14159').truncate(3) -&gt; 3.141
+ *
+ * BigDecimal('13345.234').truncate(-2) -&gt; 13300.0
+ */
+static VALUE
+BigDecimal_truncate(int argc, VALUE *argv, VALUE self)
+{
+    ENTER(5);
+    Real *c, *a;
+    int iLoc;
+    U_LONG mx;
+    VALUE vLoc;
+    U_LONG pl = VpSetPrecLimit(0);
+
+    if(rb_scan_args(argc,argv,&quot;01&quot;,&amp;vLoc)==0) {
+        iLoc = 0;
+    } else {
+        Check_Type(vLoc, T_FIXNUM);
+        iLoc = FIX2INT(vLoc);
+    }
+
+    GUARD_OBJ(a,GetVpValue(self,1));
+    mx = a-&gt;Prec *(VpBaseFig() + 1);
+    GUARD_OBJ(c,VpCreateRbObject(mx, &quot;0&quot;));
+    VpSetPrecLimit(pl);
+    VpActiveRound(c,a,VP_ROUND_DOWN,iLoc); /* 0: truncate */
+    return ToValue(c);
+}</pre>
+</body>
+</html>

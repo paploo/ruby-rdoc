@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[] (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     hsh[key]    =&gt;  value
+ *
+ *  Element Reference---Retrieves the &lt;i&gt;value&lt;/i&gt; object corresponding
+ *  to the &lt;i&gt;key&lt;/i&gt; object. If not found, returns the a default value (see
+ *  &lt;code&gt;Hash::new&lt;/code&gt; for details).
+ *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h[&quot;a&quot;]   #=&gt; 100
+ *     h[&quot;c&quot;]   #=&gt; nil
+ *
+ */
+
+VALUE
+rb_hash_aref(VALUE hash, VALUE key)
+{
+    VALUE val;
+
+    if (!RHASH(hash)-&gt;ntbl || !st_lookup(RHASH(hash)-&gt;ntbl, key, &amp;val)) {
+        return rb_funcall(hash, id_default, 1, key);
+    }
+    return val;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_corresponded_attr_reader (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 766</span>
+766:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_corresponded_attr_reader</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+767:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+768:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:inherit</span>
+769:           <span class="ruby-identifier">inherit_convert_attr_reader</span> <span class="ruby-identifier">name</span>
+770:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:uri</span>
+771:           <span class="ruby-identifier">uri_convert_attr_reader</span> <span class="ruby-identifier">name</span>
+772:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_clean_other</span>
+773:           <span class="ruby-identifier">yes_clean_other_attr_reader</span> <span class="ruby-identifier">name</span>
+774:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_other</span>
+775:           <span class="ruby-identifier">yes_other_attr_reader</span> <span class="ruby-identifier">name</span>
+776:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:csv</span>
+777:           <span class="ruby-identifier">csv_attr_reader</span> <span class="ruby-identifier">name</span>
+778:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:csv_integer</span>
+779:           <span class="ruby-identifier">csv_attr_reader</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">:separator</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;,&quot;</span>
+780:         <span class="ruby-keyword kw">else</span>
+781:           <span class="ruby-identifier">convert_attr_reader</span> <span class="ruby-identifier">name</span>
+782:         <span class="ruby-keyword kw">end</span>
+783:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

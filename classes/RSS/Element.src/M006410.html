@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 838</span>
+838:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">do_validate</span>=<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">attrs</span>=<span class="ruby-keyword kw">nil</span>)
+839:       <span class="ruby-ivar">@parent</span> = <span class="ruby-keyword kw">nil</span>
+840:       <span class="ruby-ivar">@converter</span> = <span class="ruby-keyword kw">nil</span>
+841:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> (<span class="ruby-identifier">do_validate</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">do_validate</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>))
+842:         <span class="ruby-identifier">do_validate</span>, <span class="ruby-identifier">attrs</span> = <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">do_validate</span>
+843:       <span class="ruby-keyword kw">end</span>
+844:       <span class="ruby-ivar">@do_validate</span> = <span class="ruby-identifier">do_validate</span>
+845:       <span class="ruby-identifier">initialize_variables</span>(<span class="ruby-identifier">attrs</span> <span class="ruby-operator">||</span> {})
+846:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

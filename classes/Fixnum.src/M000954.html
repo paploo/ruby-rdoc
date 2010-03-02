@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt; (Fixnum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   fix &lt; other     =&gt; true or false
+ *
+ * Returns &lt;code&gt;true&lt;/code&gt; if the value of &lt;code&gt;fix&lt;/code&gt; is
+ * less than that of &lt;code&gt;other&lt;/code&gt;.
+ */
+
+static VALUE
+fix_lt(VALUE x, VALUE y)
+{
+    if (FIXNUM_P(y)) {
+        if (FIX2LONG(x) &lt; FIX2LONG(y)) return Qtrue;
+        return Qfalse;
+    }
+    switch (TYPE(y)) {
+      case T_BIGNUM:
+        return FIX2INT(rb_big_cmp(rb_int2big(FIX2LONG(x)), y)) &lt; 0 ? Qtrue : Qfalse;
+      case T_FLOAT:
+        return (double)FIX2LONG(x) &lt; RFLOAT_VALUE(y) ? Qtrue : Qfalse;
+      default:
+        return rb_num_coerce_relop(x, y, '&lt;');
+    }
+}</pre>
+</body>
+</html>

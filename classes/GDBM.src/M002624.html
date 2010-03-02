@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>clear (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      gdbm.clear -&gt; gdbm
+ *
+ * Removes all the key-value pairs within _gdbm_.
+ */
+static VALUE
+fgdbm_clear(VALUE obj)
+{
+    datum key, nextkey;
+    struct dbmdata *dbmp;
+    GDBM_FILE dbm;
+
+    rb_gdbm_modify(obj);
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+
+#if 0
+    while (key = gdbm_firstkey(dbm), key.dptr) {
+        if (gdbm_delete(dbm, key)) {
+            free(key.dptr);
+            rb_raise(rb_eGDBMError, &quot;%s&quot;, gdbm_strerror(gdbm_errno));
+        }
+        free(key.dptr); 
+    }
+#else
+    while (key = gdbm_firstkey(dbm), key.dptr) {
+        for (; key.dptr; key = nextkey) {
+            nextkey = gdbm_nextkey(dbm, key);
+            if (gdbm_delete(dbm, key)) {
+                free(key.dptr);
+                if (nextkey.dptr) free(nextkey.dptr);
+                rb_raise(rb_eGDBMError, &quot;%s&quot;, gdbm_strerror(gdbm_errno));
+            }
+            free(key.dptr);
+        }
+    }
+#endif
+    dbmp-&gt;di_size = 0;
+
+    return obj;
+}</pre>
+</body>
+</html>

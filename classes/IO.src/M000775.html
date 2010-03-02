@@ -2,52 +2,58 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close_on_exec? (IO)</title>
+  <title>read (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close_on_exec?   =&gt; true or false
+ *     IO.read(name, [length [, offset]] )   =&gt; string
+ *     IO.read(name, [length [, offset]], open_args)   =&gt; string
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; will be closed on exec.
+ *  Opens the file, optionally seeks to the given offset, then returns
+ *  &lt;i&gt;length&lt;/i&gt; bytes (defaulting to the rest of the file).
+ *  &lt;code&gt;read&lt;/code&gt; ensures the file is closed before returning.
  *
- *     f = open(&quot;/dev/null&quot;)
- *     f.close_on_exec?                 #=&gt; false
- *     f.close_on_exec = true
- *     f.close_on_exec?                 #=&gt; true
- *     f.close_on_exec = false
- *     f.close_on_exec?                 #=&gt; false
+ *  If the last argument is a hash, it specifies option for internal
+ *  open().  The key would be the following.  open_args: is exclusive
+ *  to others.
+ *
+ *   encoding: string or encoding
+ *
+ *    specifies encoding of the read string.  encoding will be ignored
+ *    if length is specified.
+ *
+ *   mode: string
+ *
+ *    specifies mode argument for open().  it should start with &quot;r&quot;
+ *    otherwise it would cause error.
+ *
+ *   open_args: array of strings
+ *
+ *    specifies arguments for open() as an array.
+ *
+ *     IO.read(&quot;testfile&quot;)           #=&gt; &quot;This is line one\nThis is line two\nThis is line three\nAnd so on...\n&quot;
+ *     IO.read(&quot;testfile&quot;, 20)       #=&gt; &quot;This is line one\nThi&quot;
+ *     IO.read(&quot;testfile&quot;, 20, 10)   #=&gt; &quot;ne one\nThis is line &quot;
  */
 
 static VALUE
-rb_io_close_on_exec_p(VALUE io)
+rb_io_s_read(int argc, VALUE *argv, VALUE io)
 {
-#if defined(HAVE_FCNTL) &amp;&amp; defined(F_GETFD) &amp;&amp; defined(F_SETFD) &amp;&amp; defined(FD_CLOEXEC)
-    rb_io_t *fptr;
-    VALUE write_io;
-    int fd, ret;
+    VALUE offset;
+    struct foreach_arg arg;
 
-    write_io = GetWriteIO(io);
-    if (io != write_io) {
-        GetOpenFile(write_io, fptr);
-        if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-            if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-            if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
-        }
+    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, &amp;offset, NULL);
+    open_key_args(argc, argv, &amp;arg);
+    if (NIL_P(arg.io)) return Qnil;
+    if (!NIL_P(offset)) {
+        rb_io_binmode(arg.io);
+        rb_io_seek(arg.io, offset, SEEK_SET);
+        if (arg.argc == 2) arg.argc = 1;
     }
-
-    GetOpenFile(io, fptr);
-    if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-        if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-        if (!(ret &amp; FD_CLOEXEC)) return Qfalse;
-    }
-    return Qtrue;
-#else
-    rb_notimplement();
-    return Qnil;                /* not reached */
-#endif
+    return rb_ensure(io_s_read, (VALUE)&amp;arg, rb_io_close, arg.io);
 }</pre>
 </body>
 </html>

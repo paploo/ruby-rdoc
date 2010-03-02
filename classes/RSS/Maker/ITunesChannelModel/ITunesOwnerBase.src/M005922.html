@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_feed (RSS::Maker::ITunesChannelModel::ITunesOwnerBase)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/itunes.rb, line 139</span>
+139:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">feed</span>, <span class="ruby-identifier">current</span>)
+140:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:itunes_owner=</span>)
+141:             <span class="ruby-identifier">_not_set_required_variables</span> = <span class="ruby-identifier">not_set_required_variables</span>
+142:             <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">required_variable_names</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">_not_set_required_variables</span>).<span class="ruby-identifier">empty?</span>
+143:               <span class="ruby-keyword kw">return</span>
+144:             <span class="ruby-keyword kw">end</span>
+145: 
+146:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">have_required_values?</span>
+147:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotSetError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;maker.channel.itunes_owner&quot;</span>,
+148:                                     <span class="ruby-identifier">_not_set_required_variables</span>)
+149:             <span class="ruby-keyword kw">end</span>
+150:             <span class="ruby-identifier">current</span>.<span class="ruby-identifier">itunes_owner</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">ITunesOwner</span>.<span class="ruby-identifier">new</span>
+151:             <span class="ruby-identifier">current</span>.<span class="ruby-identifier">itunes_owner</span>.<span class="ruby-identifier">itunes_name</span> = <span class="ruby-ivar">@itunes_name</span>
+152:             <span class="ruby-identifier">current</span>.<span class="ruby-identifier">itunes_owner</span>.<span class="ruby-identifier">itunes_email</span> = <span class="ruby-ivar">@itunes_email</span>
+153:           <span class="ruby-keyword kw">end</span>
+154:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

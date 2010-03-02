@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_headers (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2191</span>
+2191:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_headers</span>(<span class="ruby-identifier">row</span> = <span class="ruby-keyword kw">nil</span>)
+2192:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@headers</span>.<span class="ruby-identifier">nil?</span>                <span class="ruby-comment cmt"># header row</span>
+2193:       <span class="ruby-ivar">@headers</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@use_headers</span>  <span class="ruby-comment cmt"># save headers</span>
+2194:                  <span class="ruby-comment cmt"># Array of headers</span>
+2195:                  <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@use_headers</span>
+2196:                  <span class="ruby-comment cmt"># CSV header String</span>
+2197:                  <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+2198:                    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">parse_line</span>( <span class="ruby-ivar">@use_headers</span>,
+2199:                                           <span class="ruby-identifier">col_sep</span><span class="ruby-operator">:</span>    <span class="ruby-ivar">@col_sep</span>,
+2200:                                           <span class="ruby-identifier">row_sep</span><span class="ruby-operator">:</span>    <span class="ruby-ivar">@row_sep</span>,
+2201:                                           <span class="ruby-identifier">quote_char</span><span class="ruby-operator">:</span> <span class="ruby-ivar">@quote_char</span> )
+2202:                  <span class="ruby-comment cmt"># first row is headers</span>
+2203:                  <span class="ruby-keyword kw">else</span>            <span class="ruby-identifier">row</span>
+2204:                  <span class="ruby-keyword kw">end</span>
+2205:       
+2206:       <span class="ruby-comment cmt"># prepare converted and unconverted copies</span>
+2207:       <span class="ruby-identifier">row</span>      = <span class="ruby-ivar">@headers</span>                       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">nil?</span>
+2208:       <span class="ruby-ivar">@headers</span> = <span class="ruby-identifier">convert_fields</span>(<span class="ruby-ivar">@headers</span>, <span class="ruby-keyword kw">true</span>)
+2209:       
+2210:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@return_headers</span>                                     <span class="ruby-comment cmt"># return headers</span>
+2211:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">Row</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">row</span>, <span class="ruby-keyword kw">true</span>)
+2212:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">not</span> [<span class="ruby-constant">Array</span>, <span class="ruby-constant">String</span>].<span class="ruby-identifier">include?</span> <span class="ruby-ivar">@use_headers</span>.<span class="ruby-identifier">class</span>  <span class="ruby-comment cmt"># skip to field row</span>
+2213:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">shift</span>
+2214:       <span class="ruby-keyword kw">end</span>
+2215:     <span class="ruby-keyword kw">end</span>
+2216: 
+2217:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">Row</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@headers</span>, <span class="ruby-identifier">convert_fields</span>(<span class="ruby-identifier">row</span>))  <span class="ruby-comment cmt"># field row</span>
+2218:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

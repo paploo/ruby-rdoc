@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>allocate (Class)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     class.allocate()   =&gt;   obj
+ *  
+ *  Allocates space for a new object of &lt;i&gt;class&lt;/i&gt;'s class and does not
+ *  call initialize on the new instance. The returned object must be an
+ *  instance of &lt;i&gt;class&lt;/i&gt;.
+ *  
+ *      klass = Class.new do
+ *        def initialize(*args)
+ *          @initialized = true
+ *        end
+ *      
+ *        def initialized?
+ *          @initialized || false
+ *        end
+ *      end
+ *      
+ *      klass.allocate.initialized? #=&gt; false
+ *     
+ */
+
+VALUE
+rb_obj_alloc(VALUE klass)
+{
+    VALUE obj;
+
+    if (RCLASS_SUPER(klass) == 0 &amp;&amp; klass != rb_cBasicObject) {
+        rb_raise(rb_eTypeError, &quot;can't instantiate uninitialized class&quot;);
+    }
+    if (FL_TEST(klass, FL_SINGLETON)) {
+        rb_raise(rb_eTypeError, &quot;can't create instance of singleton class&quot;);
+    }
+    obj = rb_funcall(klass, ID_ALLOCATOR, 0, 0);
+    if (rb_obj_class(obj) != rb_class_real(klass)) {
+        rb_raise(rb_eTypeError, &quot;wrong instance allocation&quot;);
+    }
+    return obj;
+}</pre>
+</body>
+</html>

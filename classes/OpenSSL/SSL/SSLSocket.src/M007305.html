@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (OpenSSL::SSL::SSLSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    SSLSocket.new(io) =&gt; aSSLSocket
+ *    SSLSocket.new(io, ctx) =&gt; aSSLSocket
+ *
+ * === Parameters
+ * * +io+ is a real ruby IO object.  Not an IO like object that responds to read/write.
+ * * +ctx+ is an OpenSSLSSL::SSLContext.
+ *
+ * The OpenSSL::Buffering module provides additional IO methods.
+ *
+ * This method will freeze the SSLContext if one is provided;
+ * however, session management is still allowed in the frozen SSLContext.
+ */
+static VALUE
+ossl_ssl_initialize(int argc, VALUE *argv, VALUE self)
+{
+    VALUE io, ctx;
+
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;io, &amp;ctx) == 1) {
+        ctx = rb_funcall(cSSLContext, rb_intern(&quot;new&quot;), 0);
+    }
+    OSSL_Check_Kind(ctx, cSSLContext);
+    Check_Type(io, T_FILE);
+    ossl_ssl_set_io(self, io);
+    ossl_ssl_set_ctx(self, ctx);
+    ossl_ssl_set_sync_close(self, Qfalse);
+    ossl_sslctx_setup(ctx);
+    rb_call_super(0, 0);
+
+    return self;
+}</pre>
+</body>
+</html>

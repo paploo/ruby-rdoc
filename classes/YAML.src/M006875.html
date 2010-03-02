@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>unescape (YAML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/encoding.rb, line 21</span>
+21:         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">unescape</span>( <span class="ruby-identifier">value</span> )
+22:                 <span class="ruby-identifier">value</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-regexp re">/\\(?:([nevfbart\\])|0?x([0-9a-fA-F]{2})|u([0-9a-fA-F]{4}))/</span> ) {
+23:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$3</span>
+24:                                 [<span class="ruby-value str">&quot;#$3&quot;</span>.<span class="ruby-identifier">hex</span> ].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">'U*'</span>)
+25:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">$2</span>
+26:                                 [<span class="ruby-identifier">$2</span>].<span class="ruby-identifier">pack</span>( <span class="ruby-value str">&quot;H2&quot;</span> ) 
+27:                         <span class="ruby-keyword kw">else</span>
+28:                                 <span class="ruby-constant">UNESCAPES</span>[<span class="ruby-identifier">$1</span>] 
+29:                         <span class="ruby-keyword kw">end</span>
+30:                 }
+31:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

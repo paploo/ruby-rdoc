@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>autoload (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     autoload(module, filename)   =&gt; nil
+ *  
+ *  Registers _filename_ to be loaded (using &lt;code&gt;Kernel::require&lt;/code&gt;)
+ *  the first time that _module_ (which may be a &lt;code&gt;String&lt;/code&gt; or
+ *  a symbol) is accessed.
+ *     
+ *     autoload(:MyModule, &quot;/usr/local/lib/modules/my_module.rb&quot;)
+ */
+
+static VALUE
+rb_f_autoload(VALUE obj, VALUE sym, VALUE file)
+{
+    VALUE klass = rb_vm_cbase();
+    if (NIL_P(klass)) {
+        rb_raise(rb_eTypeError, &quot;Can not set autoload on singleton class&quot;);
+    }
+    return rb_mod_autoload(klass, sym, file);
+}</pre>
+</body>
+</html>

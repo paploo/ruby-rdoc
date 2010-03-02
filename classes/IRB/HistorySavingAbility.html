@@ -82,11 +82,11 @@
 
       <div class="name-list">
 
-        <a href="#M003227">create_finalizer</a>&nbsp;&nbsp;
+        <a href="#M003346">extended</a>&nbsp;&nbsp;
 
-        <a href="#M003228">extended</a>&nbsp;&nbsp;
+        <a href="#M003347">load_history</a>&nbsp;&nbsp;
 
-        <a href="#M003229">load_history</a>&nbsp;&nbsp;
+        <a href="#M003348">save_history</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -117,33 +117,13 @@
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M003227" class="method-detail">
-        <a name="M003227"></a>
+      <div id="method-M003346" class="method-detail">
+        <a name="M003346"></a>
 
         <div class="method-heading">
 
-          <a href="HistorySavingAbility.src/M003227.html" target="Code" class="method-signature"
-            onclick="popupCode('HistorySavingAbility.src/M003227.html');return false;">
-
-          <span class="method-name">create_finalizer</span><span class="method-args">()</span>
-
-          </a>
-
-        </div>
-
-        <div class="method-description">
-
-        </div>
-      </div>
-
-
-      <div id="method-M003228" class="method-detail">
-        <a name="M003228"></a>
-
-        <div class="method-heading">
-
-          <a href="HistorySavingAbility.src/M003228.html" target="Code" class="method-signature"
-            onclick="popupCode('HistorySavingAbility.src/M003228.html');return false;">
+          <a href="HistorySavingAbility.src/M003346.html" target="Code" class="method-signature"
+            onclick="popupCode('HistorySavingAbility.src/M003346.html');return false;">
 
           <span class="method-name">extended</span><span class="method-args">(obj)</span>
 
@@ -153,6 +133,27 @@
 
         <div class="method-description">
 
+          <p>
+def HistorySavingAbility.create_finalizer
+</p>
+<pre>
+  proc do
+  if num = IRB.conf[:SAVE_HISTORY] and (num = num.to_i) &gt; 0
+    if hf = IRB.conf[:HISTORY_FILE]
+      file = File.expand_path(hf)
+    end
+    file = IRB.rc_file(&quot;_history&quot;) unless file
+    open(file, 'w' ) do |f|
+      hist = HISTORY.to_a
+      f.puts(hist[-num..-1] || hist)
+    end
+  end
+  end
+</pre>
+<p>
+end
+</p>
+
         </div>
       </div>
 
@@ -160,15 +161,35 @@
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M003229" class="method-detail">
-        <a name="M003229"></a>
+      <div id="method-M003347" class="method-detail">
+        <a name="M003347"></a>
 
         <div class="method-heading">
 
-          <a href="HistorySavingAbility.src/M003229.html" target="Code" class="method-signature"
-            onclick="popupCode('HistorySavingAbility.src/M003229.html');return false;">
+          <a href="HistorySavingAbility.src/M003347.html" target="Code" class="method-signature"
+            onclick="popupCode('HistorySavingAbility.src/M003347.html');return false;">
 
           <span class="method-name">load_history</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M003348" class="method-detail">
+        <a name="M003348"></a>
+
+        <div class="method-heading">
+
+          <a href="HistorySavingAbility.src/M003348.html" target="Code" class="method-signature"
+            onclick="popupCode('HistorySavingAbility.src/M003348.html');return false;">
+
+          <span class="method-name">save_history</span><span class="method-args">()</span>
 
           </a>
 

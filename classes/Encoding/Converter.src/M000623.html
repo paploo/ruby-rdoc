@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>replacement= (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   ec.replacement = string
+ *
+ * Sets the replacement string.
+ *
+ *  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;us-ascii&quot;, :undef =&gt; :replace)
+ *  ec.replacement = &quot;&lt;undef&gt;&quot;
+ *  p ec.convert(&quot;a \u3042 b&quot;)      #=&gt; &quot;a &lt;undef&gt; b&quot;
+ */
+static VALUE
+econv_set_replacement(VALUE self, VALUE arg)
+{
+    rb_econv_t *ec = check_econv(self);
+    VALUE string = arg;
+    int ret;
+    rb_encoding *enc;
+
+    StringValue(string);
+    enc = rb_enc_get(string);
+
+    ret = rb_econv_set_replacement(ec,
+            (const unsigned char *)RSTRING_PTR(string),
+            RSTRING_LEN(string),
+            rb_enc_name(enc));
+
+    if (ret == -1) {
+        /* xxx: rb_eInvalidByteSequenceError? */
+        rb_raise(rb_eUndefinedConversionError, &quot;replacement character setup failed&quot;);
+    }
+
+    return arg;
+}</pre>
+</body>
+</html>

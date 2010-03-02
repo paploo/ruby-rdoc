@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (IRB::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/context.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">irb</span>, <span class="ruby-identifier">workspace</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">input_method</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">output_method</span> = <span class="ruby-keyword kw">nil</span>)
+22:       <span class="ruby-ivar">@irb</span> = <span class="ruby-identifier">irb</span>
+23:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">workspace</span>
+24:         <span class="ruby-ivar">@workspace</span> = <span class="ruby-identifier">workspace</span>
+25:       <span class="ruby-keyword kw">else</span>
+26:         <span class="ruby-ivar">@workspace</span> = <span class="ruby-constant">WorkSpace</span>.<span class="ruby-identifier">new</span>
+27:       <span class="ruby-keyword kw">end</span>
+28:       <span class="ruby-ivar">@thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span> <span class="ruby-constant">Thread</span>
+29: <span class="ruby-comment cmt">#      @irb_level = 0</span>
+30: 
+31:       <span class="ruby-comment cmt"># copy of default configuration</span>
+32:       <span class="ruby-ivar">@ap_name</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:AP_NAME</span>]
+33:       <span class="ruby-ivar">@rc</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:RC</span>]
+34:       <span class="ruby-ivar">@load_modules</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:LOAD_MODULES</span>]
+35: 
+36:       <span class="ruby-ivar">@use_readline</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:USE_READLINE</span>]
+37:       <span class="ruby-ivar">@inspect_mode</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:INSPECT_MODE</span>]
+38: 
+39:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">math_mode</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:MATH_MODE</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:MATH_MODE</span>]
+40:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">use_tracer</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:USE_TRACER</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:USE_TRACER</span>]
+41:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">use_loader</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:USE_LOADER</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:USE_LOADER</span>]
+42:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">eval_history</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:EVAL_HISTORY</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:EVAL_HISTORY</span>]
+43: 
+44:       <span class="ruby-ivar">@ignore_sigint</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:IGNORE_SIGINT</span>]
+45:       <span class="ruby-ivar">@ignore_eof</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:IGNORE_EOF</span>]
+46: 
+47:       <span class="ruby-ivar">@back_trace_limit</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:BACK_TRACE_LIMIT</span>]
+48:       
+49:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">prompt_mode</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:PROMPT_MODE</span>]
+50: 
+51:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:SINGLE_IRB</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">JobManager</span>)
+52:         <span class="ruby-ivar">@irb_name</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:IRB_NAME</span>]
+53:       <span class="ruby-keyword kw">else</span>
+54:         <span class="ruby-ivar">@irb_name</span> = <span class="ruby-value str">&quot;irb#&quot;</span><span class="ruby-operator">+</span><span class="ruby-constant">IRB</span>.<span class="ruby-constant">JobManager</span>.<span class="ruby-identifier">n_jobs</span>.<span class="ruby-identifier">to_s</span>
+55:       <span class="ruby-keyword kw">end</span>
+56:       <span class="ruby-ivar">@irb_path</span> = <span class="ruby-value str">&quot;(&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@irb_name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;)&quot;</span>
+57: 
+58:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">input_method</span>
+59:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+60:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">use_readline?</span>
+61:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+62:           <span class="ruby-keyword kw">if</span> (<span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">ReadlineInputMethod</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">tty?</span> <span class="ruby-operator">&amp;&amp;</span>
+63:               <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:PROMPT_MODE</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">:INF_RUBY</span>)
+64:             <span class="ruby-ivar">@io</span> = <span class="ruby-constant">ReadlineInputMethod</span>.<span class="ruby-identifier">new</span>
+65:           <span class="ruby-keyword kw">else</span>
+66:             <span class="ruby-ivar">@io</span> = <span class="ruby-constant">StdioInputMethod</span>.<span class="ruby-identifier">new</span>
+67:           <span class="ruby-keyword kw">end</span>
+68:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">false</span>
+69:           <span class="ruby-ivar">@io</span> = <span class="ruby-constant">StdioInputMethod</span>.<span class="ruby-identifier">new</span>
+70:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>
+71:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">ReadlineInputMethod</span>)
+72:             <span class="ruby-ivar">@io</span> = <span class="ruby-constant">ReadlineInputMethod</span>.<span class="ruby-identifier">new</span>
+73:           <span class="ruby-keyword kw">else</span>
+74:             <span class="ruby-ivar">@io</span> = <span class="ruby-constant">StdioInputMethod</span>.<span class="ruby-identifier">new</span>
+75:           <span class="ruby-keyword kw">end</span>
+76:         <span class="ruby-keyword kw">end</span>
+77: 
+78:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+79:         <span class="ruby-ivar">@io</span> = <span class="ruby-constant">FileInputMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">input_method</span>)
+80:         <span class="ruby-ivar">@irb_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">input_method</span>)
+81:         <span class="ruby-ivar">@irb_path</span> = <span class="ruby-identifier">input_method</span>
+82:       <span class="ruby-keyword kw">else</span>
+83:         <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">input_method</span>
+84:       <span class="ruby-keyword kw">end</span>
+85:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">save_history</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:SAVE_HISTORY</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:SAVE_HISTORY</span>]
+86: 
+87:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">output_method</span>
+88:         <span class="ruby-ivar">@output_method</span> = <span class="ruby-identifier">output_method</span>
+89:       <span class="ruby-keyword kw">else</span>
+90:         <span class="ruby-ivar">@output_method</span> = <span class="ruby-constant">StdioOutputMethod</span>.<span class="ruby-identifier">new</span>
+91:       <span class="ruby-keyword kw">end</span>
+92: 
+93:       <span class="ruby-ivar">@verbose</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:VERBOSE</span>] 
+94:       <span class="ruby-ivar">@echo</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:ECHO</span>]
+95:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@echo</span>.<span class="ruby-identifier">nil?</span>
+96:         <span class="ruby-ivar">@echo</span> = <span class="ruby-keyword kw">true</span>
+97:       <span class="ruby-keyword kw">end</span>
+98:       <span class="ruby-ivar">@debug_level</span> = <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-identifier">:DEBUG_LEVEL</span>]
+99:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

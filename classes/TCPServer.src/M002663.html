@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>accept_nonblock (TCPServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      tcpserver.accept_nonblock =&gt; tcpsocket
+ * 
+ * Accepts an incoming connection using accept(2) after
+ * O_NONBLOCK is set for the underlying file descriptor.
+ * It returns an accepted TCPSocket for the incoming connection.
+ * 
+ * === Example
+ *      require 'socket'
+ *      serv = TCPServer.new(2202)
+ *      begin # emulate blocking accept
+ *        sock = serv.accept_nonblock
+ *      rescue Errno::EAGAIN, Errno::EWOULDBLOCK, Errno::ECONNABORTED, Errno::EPROTO, Errno::EINTR
+ *        IO.select([serv])
+ *        retry
+ *      end
+ *      # sock is an accepted socket.
+ * 
+ * Refer to Socket#accept for the exceptions that may be thrown if the call
+ * to TCPServer#accept_nonblock fails. 
+ *
+ * TCPServer#accept_nonblock may raise any error corresponding to accept(2) failure,
+ * including Errno::EWOULDBLOCK.
+ * 
+ * === See
+ * * TCPServer#accept
+ * * Socket#accept
+ */
+static VALUE
+tcp_accept_nonblock(VALUE sock)
+{
+    rb_io_t *fptr;
+    struct sockaddr_storage from;
+    socklen_t fromlen;
+
+    GetOpenFile(sock, fptr);
+    fromlen = sizeof(from);
+    return s_accept_nonblock(rb_cTCPSocket, fptr,
+                             (struct sockaddr *)&amp;from, &amp;fromlen);
+}</pre>
+</body>
+</html>

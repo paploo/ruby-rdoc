@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>do_constants (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 165</span>
+165:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_constants</span>
+166:     <span class="ruby-ivar">@content</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">%r{\Wrb_define_
+167:                    (
+168:                       variable |
+169:                       readonly_variable |
+170:                       const |
+171:                       global_const |
+172:                     )
+173:                \s*\(
+174:                  (?:\s*(\w+),)?
+175:                  \s*&quot;(\w+)&quot;,
+176:                  \s*(.*?)\s*\)\s*;
+177:                  }</span><span class="ruby-identifier">xm</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">type</span>, <span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">definition</span><span class="ruby-operator">|</span>
+178:       <span class="ruby-identifier">var_name</span> = <span class="ruby-value str">&quot;rb_cObject&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">var_name</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">var_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;rb_mKernel&quot;</span>
+179:       <span class="ruby-identifier">handle_constants</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">definition</span>)
+180:     <span class="ruby-keyword kw">end</span>
+181:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

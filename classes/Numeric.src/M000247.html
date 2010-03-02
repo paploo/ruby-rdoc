@@ -2,29 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>magnitude (Numeric)</title>
+  <title>quo (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.abs   =&gt; num or numeric
+ *     num.quo(numeric)    =&gt;   result
  *
- *  Returns the absolute value of &lt;i&gt;num&lt;/i&gt;.
- *
- *     12.abs         #=&gt; 12
- *     (-34.56).abs   #=&gt; 34.56
- *     -34.56.abs     #=&gt; 34.56
+ *  Returns most exact division (rational for integers, float for floats).
  */
 
 static VALUE
-num_abs(VALUE num)
+num_quo(VALUE x, VALUE y)
 {
-    if (RTEST(rb_funcall(num, '&lt;', 1, INT2FIX(0)))) {
-        return rb_funcall(num, rb_intern(&quot;-@&quot;), 0);
-    }
-    return num;
+    return rb_funcall(rb_rational_raw1(x), '/', 1, y);
 }</pre>
 </body>
 </html>

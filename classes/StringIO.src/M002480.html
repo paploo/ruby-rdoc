@@ -2,25 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>length (StringIO)</title>
+  <title>pos (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * call-seq:
- *   strio.size   -&gt; integer
- *
- * Returns the size of the buffer string.
- */
-static VALUE
-strio_size(VALUE self)
-{
-    VALUE string = StringIO(self)-&gt;string;
-    if (NIL_P(string)) {
-        rb_raise(rb_eIOError, &quot;not opened&quot;);
-    }
-    return ULONG2NUM(RSTRING_LEN(string));
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/stringio.rb, line 14</span>
+14:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pos</span>
+15:             <span class="ruby-ivar">@pos</span>
+16:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

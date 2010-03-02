@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_menu_bar (JSON::MainWindow)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File ext/json/lib/json/editor.rb, line 1099</span>
+1099:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_menu_bar</span>
+1100:         <span class="ruby-identifier">menu_bar</span> = <span class="ruby-constant">MenuBar</span>.<span class="ruby-identifier">new</span>
+1101:         <span class="ruby-ivar">@file_menu</span> = <span class="ruby-constant">FileMenu</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@treeview</span>)
+1102:         <span class="ruby-identifier">menu_bar</span>.<span class="ruby-identifier">append</span> <span class="ruby-ivar">@file_menu</span>.<span class="ruby-identifier">create</span>
+1103:         <span class="ruby-ivar">@edit_menu</span> = <span class="ruby-constant">EditMenu</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@treeview</span>)
+1104:         <span class="ruby-identifier">menu_bar</span>.<span class="ruby-identifier">append</span> <span class="ruby-ivar">@edit_menu</span>.<span class="ruby-identifier">create</span>
+1105:         <span class="ruby-ivar">@options_menu</span> = <span class="ruby-constant">OptionsMenu</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@treeview</span>)
+1106:         <span class="ruby-identifier">menu_bar</span>.<span class="ruby-identifier">append</span> <span class="ruby-ivar">@options_menu</span>.<span class="ruby-identifier">create</span>
+1107:         <span class="ruby-identifier">menu_bar</span>
+1108:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

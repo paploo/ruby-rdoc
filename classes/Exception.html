@@ -72,6 +72,16 @@
 
         <br />
 
+
+                <a href="../files/ext/json/lib/json/add/core_rb.html">
+
+                ext/json/lib/json/add/core.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -117,27 +127,31 @@ subclass <tt>Exception</tt> to add additional information.
 
       <div class="name-list">
 
-        <a href="#M000635">==</a>&nbsp;&nbsp;
+        <a href="#M000684">==</a>&nbsp;&nbsp;
 
-        <a href="#M000639">backtrace</a>&nbsp;&nbsp;
+        <a href="#M000688">backtrace</a>&nbsp;&nbsp;
 
-        <a href="#M000632">exception</a>&nbsp;&nbsp;
+        <a href="#M000682">exception</a>&nbsp;&nbsp;
 
-        <a href="#M000633">exception</a>&nbsp;&nbsp;
+        <a href="#M000681">exception</a>&nbsp;&nbsp;
 
-        <a href="#M000638">inspect</a>&nbsp;&nbsp;
+        <a href="#M000687">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M000637">message</a>&nbsp;&nbsp;
+        <a href="#M000692">json_create</a>&nbsp;&nbsp;
 
-        <a href="#M000634">new</a>&nbsp;&nbsp;
+        <a href="#M000686">message</a>&nbsp;&nbsp;
 
-        <a href="#M000640">set_backtrace</a>&nbsp;&nbsp;
+        <a href="#M000683">new</a>&nbsp;&nbsp;
 
-        <a href="#M000636">to_s</a>&nbsp;&nbsp;
+        <a href="#M000689">set_backtrace</a>&nbsp;&nbsp;
 
-        <a href="#M000642">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M000693">to_json</a>&nbsp;&nbsp;
 
-        <a href="#M000641">yaml_new</a>&nbsp;&nbsp;
+        <a href="#M000685">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000691">to_yaml</a>&nbsp;&nbsp;
+
+        <a href="#M000690">yaml_new</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -158,8 +172,8 @@ subclass <tt>Exception</tt> to add additional information.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M000632" class="method-detail">
-        <a name="M000632"></a>
+      <div id="method-M000681" class="method-detail">
+        <a name="M000681"></a>
 
         <div class="method-heading">
 
@@ -180,13 +194,33 @@ the receiver, but with a message equal to <tt>string.to_str</tt>.
       </div>
 
 
-      <div id="method-M000634" class="method-detail">
-        <a name="M000634"></a>
+      <div id="method-M000692" class="method-detail">
+        <a name="M000692"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000634.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000634.html');return false;">
+          <a href="Exception.src/M000692.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000692.html');return false;">
+
+          <span class="method-name">json_create</span><span class="method-args">(object)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000683" class="method-detail">
+        <a name="M000683"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000683.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000683.html');return false;">
 
           <span class="method-name">Exception.new(msg = nil)   =>  exception<br />
 </span>
@@ -206,13 +240,13 @@ passing in a message.
       </div>
 
 
-      <div id="method-M000641" class="method-detail">
-        <a name="M000641"></a>
+      <div id="method-M000690" class="method-detail">
+        <a name="M000690"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000641.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000641.html');return false;">
+          <a href="Exception.src/M000690.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000690.html');return false;">
 
           <span class="method-name">yaml_new</span><span class="method-args">( klass, tag, val )</span>
 
@@ -229,13 +263,13 @@ passing in a message.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000635" class="method-detail">
-        <a name="M000635"></a>
+      <div id="method-M000684" class="method-detail">
+        <a name="M000684"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000635.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000635.html');return false;">
+          <a href="Exception.src/M000684.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000684.html');return false;">
 
           <span class="method-name">exc == obj   => true or false<br />
 </span>
@@ -256,13 +290,13 @@ Equality&#8212;If <em>obj</em> is not an <tt>Exception</tt>, returns
       </div>
 
 
-      <div id="method-M000639" class="method-detail">
-        <a name="M000639"></a>
+      <div id="method-M000688" class="method-detail">
+        <a name="M000688"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000639.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000639.html');return false;">
+          <a href="Exception.src/M000688.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000688.html');return false;">
 
           <span class="method-name">exception.backtrace    => array<br />
 </span>
@@ -306,13 +340,13 @@ array of strings, each containing either ``filename:lineNo: in
       </div>
 
 
-      <div id="method-M000633" class="method-detail">
-        <a name="M000633"></a>
+      <div id="method-M000682" class="method-detail">
+        <a name="M000682"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000633.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000633.html');return false;">
+          <a href="Exception.src/M000682.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000682.html');return false;">
 
           <span class="method-name">exc.exception(string) &rarr; an_exception or exc<br />
 </span>
@@ -333,13 +367,13 @@ the receiver, but with a message equal to <tt>string.to_str</tt>.
       </div>
 
 
-      <div id="method-M000638" class="method-detail">
-        <a name="M000638"></a>
+      <div id="method-M000687" class="method-detail">
+        <a name="M000687"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000638.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000638.html');return false;">
+          <a href="Exception.src/M000687.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000687.html');return false;">
 
           <span class="method-name">exception.inspect   => string<br />
 </span>
@@ -358,13 +392,13 @@ Return this exception&#8217;s class name an message
       </div>
 
 
-      <div id="method-M000637" class="method-detail">
-        <a name="M000637"></a>
+      <div id="method-M000686" class="method-detail">
+        <a name="M000686"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000637.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000637.html');return false;">
+          <a href="Exception.src/M000686.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000686.html');return false;">
 
           <span class="method-name">exception.message   =>  string<br />
 </span>
@@ -385,13 +419,13 @@ method, exceptions are agreeing to be used where Strings are expected.
       </div>
 
 
-      <div id="method-M000640" class="method-detail">
-        <a name="M000640"></a>
+      <div id="method-M000689" class="method-detail">
+        <a name="M000689"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000640.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000640.html');return false;">
+          <a href="Exception.src/M000689.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000689.html');return false;">
 
           <span class="method-name">exc.set_backtrace(array)   =>  array<br />
 </span>
@@ -405,20 +439,40 @@ method, exceptions are agreeing to be used where Strings are expected.
           <p>
 Sets the backtrace information associated with <em>exc</em>. The argument
 must be an array of <tt>String</tt> objects in the format described in
-<tt><a href="Exception.html#M000639">Exception#backtrace</a></tt>.
+<tt><a href="Exception.html#M000688">Exception#backtrace</a></tt>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000636" class="method-detail">
-        <a name="M000636"></a>
+      <div id="method-M000693" class="method-detail">
+        <a name="M000693"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000636.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000636.html');return false;">
+          <a href="Exception.src/M000693.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000693.html');return false;">
+
+          <span class="method-name">to_json</span><span class="method-args">(*args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000685" class="method-detail">
+        <a name="M000685"></a>
+
+        <div class="method-heading">
+
+          <a href="Exception.src/M000685.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000685.html');return false;">
 
           <span class="method-name">exception.to_s   =>  string<br />
 </span>
@@ -438,13 +492,13 @@ message is set).
       </div>
 
 
-      <div id="method-M000642" class="method-detail">
-        <a name="M000642"></a>
+      <div id="method-M000691" class="method-detail">
+        <a name="M000691"></a>
 
         <div class="method-heading">
 
-          <a href="Exception.src/M000642.html" target="Code" class="method-signature"
-            onclick="popupCode('Exception.src/M000642.html');return false;">
+          <a href="Exception.src/M000691.html" target="Code" class="method-signature"
+            onclick="popupCode('Exception.src/M000691.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 

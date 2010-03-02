@@ -2,41 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>xmlschema (Time)</title>
+  <title>getlocal (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 390</span>
-390:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xmlschema</span>(<span class="ruby-identifier">date</span>)
-391:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A\s*
-392:           (-?\d+)-(\d\d)-(\d\d)
-393:           T
-394:           (\d\d):(\d\d):(\d\d)
-395:           (\.\d+)?
-396:           (Z|[+-]\d\d:\d\d)?
-397:           \s*\z/i</span><span class="ruby-identifier">x</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">date</span>
-398:         <span class="ruby-identifier">year</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_i</span>
-399:         <span class="ruby-identifier">mon</span> = <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">to_i</span>
-400:         <span class="ruby-identifier">day</span> = <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">to_i</span>
-401:         <span class="ruby-identifier">hour</span> = <span class="ruby-identifier">$4</span>.<span class="ruby-identifier">to_i</span>
-402:         <span class="ruby-identifier">min</span> = <span class="ruby-identifier">$5</span>.<span class="ruby-identifier">to_i</span>
-403:         <span class="ruby-identifier">sec</span> = <span class="ruby-identifier">$6</span>.<span class="ruby-identifier">to_i</span>
-404:         <span class="ruby-identifier">usec</span> = <span class="ruby-value">0</span>
-405:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$7</span>
-406:           <span class="ruby-identifier">usec</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">$7</span>) <span class="ruby-operator">*</span> <span class="ruby-value">1000000</span>
-407:         <span class="ruby-keyword kw">end</span>
-408:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$8</span>
-409:           <span class="ruby-identifier">zone</span> = <span class="ruby-identifier">$8</span>
-410:           <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span> =
-411:             <span class="ruby-identifier">apply_offset</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">zone_offset</span>(<span class="ruby-identifier">zone</span>))
-412:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">usec</span>)
-413:         <span class="ruby-keyword kw">else</span>
-414:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">local</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">usec</span>)
-415:         <span class="ruby-keyword kw">end</span>
-416:       <span class="ruby-keyword kw">else</span>
-417:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;invalid date: #{date.inspect}&quot;</span>)
-418:       <span class="ruby-keyword kw">end</span>
-419:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     time.getlocal =&gt; new_time
+ *  
+ *  Returns a new &lt;code&gt;new_time&lt;/code&gt; object representing &lt;i&gt;time&lt;/i&gt; in
+ *  local time (using the local time zone in effect for this process).
+ *     
+ *     t = Time.gm(2000,1,1,20,15,1)   #=&gt; 2000-01-01 20:15:01 UTC
+ *     t.gmt?                          #=&gt; true
+ *     l = t.getlocal                  #=&gt; 2000-01-01 14:15:01 -0600
+ *     l.gmt?                          #=&gt; false
+ *     t == l                          #=&gt; true
+ */
+
+static VALUE
+time_getlocaltime(VALUE time)
+{
+    return time_localtime(time_dup(time));
+}</pre>
 </body>
 </html>

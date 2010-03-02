@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>popdir (Shell)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell.rb, line 207</span>
+207:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">popdir</span>
+208:     <span class="ruby-identifier">check_point</span>
+209: 
+210:     <span class="ruby-identifier">notify</span>(<span class="ruby-value str">&quot;popdir&quot;</span>)
+211:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pop</span> = <span class="ruby-ivar">@dir_stack</span>.<span class="ruby-identifier">pop</span>
+212:       <span class="ruby-identifier">chdir</span> <span class="ruby-identifier">pop</span>
+213:       <span class="ruby-identifier">notify</span> <span class="ruby-node">&quot;dir stack: [#{@dir_stack.join ', '}]&quot;</span>
+214:       <span class="ruby-keyword kw">self</span>
+215:     <span class="ruby-keyword kw">else</span>
+216:       <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">DirStackEmpty</span>
+217:     <span class="ruby-keyword kw">end</span>
+218:     <span class="ruby-constant">Void</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+219:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

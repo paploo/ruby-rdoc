@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>_racc_evalact (Racc::Parser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/racc/parser.rb, line 212</span>
+212:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_racc_evalact</span>(<span class="ruby-identifier">act</span>, <span class="ruby-identifier">arg</span>)
+213:       <span class="ruby-identifier">action_table</span>, <span class="ruby-identifier">action_check</span>, <span class="ruby-identifier">action_default</span>, <span class="ruby-identifier">action_pointer</span>,
+214:       <span class="ruby-identifier">goto_table</span>,   <span class="ruby-identifier">goto_check</span>,   <span class="ruby-identifier">goto_default</span>,   <span class="ruby-identifier">goto_pointer</span>,
+215:       <span class="ruby-identifier">nt_base</span>,      <span class="ruby-identifier">reduce_table</span>, <span class="ruby-identifier">token_table</span>,    <span class="ruby-identifier">shift_n</span>,
+216:       <span class="ruby-identifier">reduce_n</span>,     <span class="ruby-identifier">use_result</span>,   <span class="ruby-operator">*</span> = <span class="ruby-identifier">arg</span>
+217:       <span class="ruby-identifier">nerr</span> = <span class="ruby-value">0</span>   <span class="ruby-comment cmt"># tmp</span>
+218: 
+219:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">shift_n</span>
+220:         <span class="ruby-comment cmt">#</span>
+221:         <span class="ruby-comment cmt"># shift</span>
+222:         <span class="ruby-comment cmt">#</span>
+223:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@racc_error_status</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+224:           <span class="ruby-ivar">@racc_error_status</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@racc_t</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>   <span class="ruby-comment cmt"># error token</span>
+225:         <span class="ruby-keyword kw">end</span>
+226:         <span class="ruby-ivar">@racc_vstack</span>.<span class="ruby-identifier">push</span> <span class="ruby-ivar">@racc_val</span>
+227:         <span class="ruby-ivar">@racc_state</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">act</span>
+228:         <span class="ruby-ivar">@racc_read_next</span> = <span class="ruby-keyword kw">true</span>
+229:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@yydebug</span>
+230:           <span class="ruby-ivar">@racc_tstack</span>.<span class="ruby-identifier">push</span> <span class="ruby-ivar">@racc_t</span>
+231:           <span class="ruby-identifier">racc_shift</span> <span class="ruby-ivar">@racc_t</span>, <span class="ruby-ivar">@racc_tstack</span>, <span class="ruby-ivar">@racc_vstack</span>
+232:         <span class="ruby-keyword kw">end</span>
+233: 
+234:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-identifier">reduce_n</span>
+235:         <span class="ruby-comment cmt">#</span>
+236:         <span class="ruby-comment cmt"># reduce</span>
+237:         <span class="ruby-comment cmt">#</span>
+238:         <span class="ruby-identifier">code</span> = <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:racc_jump</span>) {
+239:           <span class="ruby-ivar">@racc_state</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">_racc_do_reduce</span>(<span class="ruby-identifier">arg</span>, <span class="ruby-identifier">act</span>)
+240:           <span class="ruby-keyword kw">false</span>
+241:         }
+242:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">code</span>
+243:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">code</span>
+244:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-comment cmt"># yyerror</span>
+245:             <span class="ruby-ivar">@racc_user_yyerror</span> = <span class="ruby-keyword kw">true</span>   <span class="ruby-comment cmt"># user_yyerror</span>
+246:             <span class="ruby-keyword kw">return</span> <span class="ruby-operator">-</span><span class="ruby-identifier">reduce_n</span>
+247:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span> <span class="ruby-comment cmt"># yyaccept</span>
+248:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">shift_n</span>
+249:           <span class="ruby-keyword kw">else</span>
+250:             <span class="ruby-identifier">raise</span> <span class="ruby-value str">'[Racc Bug] unknown jump code'</span>
+251:           <span class="ruby-keyword kw">end</span>
+252:         <span class="ruby-keyword kw">end</span>
+253: 
+254:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">shift_n</span>
+255:         <span class="ruby-comment cmt">#</span>
+256:         <span class="ruby-comment cmt"># accept</span>
+257:         <span class="ruby-comment cmt">#</span>
+258:         <span class="ruby-identifier">racc_accept</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@yydebug</span>
+259:         <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:racc_end_parse</span>, <span class="ruby-ivar">@racc_vstack</span>[<span class="ruby-value">0</span>]
+260: 
+261:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">act</span> <span class="ruby-operator">==</span> <span class="ruby-operator">-</span><span class="ruby-identifier">reduce_n</span>
+262:         <span class="ruby-comment cmt">#</span>
+263:         <span class="ruby-comment cmt"># error</span>
+264:         <span class="ruby-comment cmt">#</span>
+265:         <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@racc_error_status</span>
+266:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
+267:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">arg</span>[<span class="ruby-value">21</span>]    <span class="ruby-comment cmt"># user_yyerror</span>
+268:             <span class="ruby-identifier">nerr</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+269:             <span class="ruby-identifier">on_error</span> <span class="ruby-ivar">@racc_t</span>, <span class="ruby-ivar">@racc_val</span>, <span class="ruby-ivar">@racc_vstack</span>
+270:           <span class="ruby-keyword kw">end</span>
+271:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span>
+272:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@racc_t</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>   <span class="ruby-comment cmt"># is $</span>
+273:             <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:racc_end_parse</span>, <span class="ruby-keyword kw">nil</span>
+274:           <span class="ruby-keyword kw">end</span>
+275:           <span class="ruby-ivar">@racc_read_next</span> = <span class="ruby-keyword kw">true</span>
+276:         <span class="ruby-keyword kw">end</span>
+277:         <span class="ruby-ivar">@racc_user_yyerror</span> = <span class="ruby-keyword kw">false</span>
+278:         <span class="ruby-ivar">@racc_error_status</span> = <span class="ruby-value">3</span>
+279:         <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+280:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> = <span class="ruby-identifier">action_pointer</span>[<span class="ruby-ivar">@racc_state</span>[<span class="ruby-value">-1</span>]]
+281:             <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>   <span class="ruby-comment cmt"># error token</span>
+282:             <span class="ruby-keyword kw">if</span>  <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">and</span>
+283:                 (<span class="ruby-identifier">act</span> = <span class="ruby-identifier">action_table</span>[<span class="ruby-identifier">i</span>]) <span class="ruby-keyword kw">and</span>
+284:                 <span class="ruby-identifier">action_check</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@racc_state</span>[<span class="ruby-value">-1</span>]
+285:               <span class="ruby-keyword kw">break</span>
+286:             <span class="ruby-keyword kw">end</span>
+287:           <span class="ruby-keyword kw">end</span>
+288:           <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:racc_end_parse</span>, <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@racc_state</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">1</span>
+289:           <span class="ruby-ivar">@racc_state</span>.<span class="ruby-identifier">pop</span>
+290:           <span class="ruby-ivar">@racc_vstack</span>.<span class="ruby-identifier">pop</span>
+291:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@yydebug</span>
+292:             <span class="ruby-ivar">@racc_tstack</span>.<span class="ruby-identifier">pop</span>
+293:             <span class="ruby-identifier">racc_e_pop</span> <span class="ruby-ivar">@racc_state</span>, <span class="ruby-ivar">@racc_tstack</span>, <span class="ruby-ivar">@racc_vstack</span>
+294:           <span class="ruby-keyword kw">end</span>
+295:         <span class="ruby-keyword kw">end</span>
+296:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">act</span>
+297: 
+298:       <span class="ruby-keyword kw">else</span>
+299:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;[Racc Bug] unknown action #{act.inspect}&quot;</span>
+300:       <span class="ruby-keyword kw">end</span>
+301: 
+302:       <span class="ruby-identifier">racc_next_state</span>(<span class="ruby-ivar">@racc_state</span>[<span class="ruby-value">-1</span>], <span class="ruby-ivar">@racc_state</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@yydebug</span>
+303: 
+304:       <span class="ruby-keyword kw">nil</span>
+305:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

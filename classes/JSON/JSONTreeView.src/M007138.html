@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>cell_edited (JSON::JSONTreeView)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/json/lib/json/editor.rb, line 755</span>
+755:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cell_edited</span>(<span class="ruby-identifier">cell</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">value</span>)
+756:         <span class="ruby-identifier">iter</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">get_iter</span>(<span class="ruby-identifier">path</span>)
+757:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">type</span>
+758:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Key'</span>
+759:           <span class="ruby-identifier">unify_key</span>(<span class="ruby-identifier">iter</span>, <span class="ruby-identifier">value</span>)
+760:           <span class="ruby-identifier">toplevel</span>.<span class="ruby-identifier">display_status</span>(<span class="ruby-value str">'Key has been changed.'</span>)
+761:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'FalseClass'</span>
+762:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">downcase!</span>
+763:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span>
+764:             <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">type</span>, <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">content</span> = <span class="ruby-value str">'TrueClass'</span>, <span class="ruby-value str">'true'</span>
+765:           <span class="ruby-keyword kw">end</span>
+766:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'TrueClass'</span>
+767:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">downcase!</span>
+768:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'false'</span>
+769:             <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">type</span>, <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">content</span> = <span class="ruby-value str">'FalseClass'</span>, <span class="ruby-value str">'false'</span>
+770:           <span class="ruby-keyword kw">end</span>
+771:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Numeric'</span>
+772:           <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">content</span> =
+773:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'Infinity'</span>
+774:               <span class="ruby-identifier">value</span>
+775:             <span class="ruby-keyword kw">else</span>
+776:               (<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-value">0</span>).<span class="ruby-identifier">to_s</span>
+777:             <span class="ruby-keyword kw">end</span>
+778:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'String'</span>
+779:           <span class="ruby-identifier">iter</span>.<span class="ruby-identifier">content</span> = <span class="ruby-identifier">value</span>
+780:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Hash'</span>, <span class="ruby-value str">'Array'</span>
+781:           <span class="ruby-keyword kw">return</span>
+782:         <span class="ruby-keyword kw">else</span>
+783:           <span class="ruby-identifier">fail</span> <span class="ruby-node">&quot;Unknown type found in model: #{iter.type}&quot;</span>
+784:         <span class="ruby-keyword kw">end</span>
+785:         <span class="ruby-identifier">window</span>.<span class="ruby-identifier">change</span>
+786:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

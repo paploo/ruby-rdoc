@@ -2,14 +2,20 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_entry (Pathname)</title>
+  <title>ascend (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 997</span>
-997:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_entry</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: p</span>
-998:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">f</span>) }
-999:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 594</span>
+594:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ascend</span>
+595:     <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+596:     <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+597:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+598:       <span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">r</span>
+599:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
+600:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>))
+601:     <span class="ruby-keyword kw">end</span>
+602:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

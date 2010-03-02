@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>lsub (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/imap.rb, line 580</span>
+580:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lsub</span>(<span class="ruby-identifier">refname</span>, <span class="ruby-identifier">mailbox</span>)
+581:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+582:         <span class="ruby-identifier">send_command</span>(<span class="ruby-value str">&quot;LSUB&quot;</span>, <span class="ruby-identifier">refname</span>, <span class="ruby-identifier">mailbox</span>)
+583:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@responses</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;LSUB&quot;</span>)
+584:       <span class="ruby-keyword kw">end</span>
+585:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

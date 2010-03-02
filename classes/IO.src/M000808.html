@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.write(string)    =&gt; integer
+ *
+ *  Writes the given string to &lt;em&gt;ios&lt;/em&gt;. The stream must be opened
+ *  for writing. If the argument is not a string, it will be converted
+ *  to a string using &lt;code&gt;to_s&lt;/code&gt;. Returns the number of bytes
+ *  written.
+ *
+ *     count = $stdout.write( &quot;This is a test\n&quot; )
+ *     puts &quot;That was #{count} bytes of data&quot;
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     This is a test
+ *     That was 15 bytes of data
+ */
+
+static VALUE
+io_write_m(VALUE io, VALUE str)
+{
+    return io_write(io, str, 0);
+}</pre>
+</body>
+</html>

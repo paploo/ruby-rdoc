@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sysverify (OpenSSL::PKey::DSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    dsa.sysverify(digest, sig) -&gt; true | false
+ *
+ */
+static VALUE
+ossl_dsa_verify(VALUE self, VALUE digest, VALUE sig)
+{
+    EVP_PKEY *pkey;
+    int ret;
+
+    GetPKeyDSA(self, pkey);
+    StringValue(digest);
+    StringValue(sig);
+    /* type is ignored (0) */
+    ret = DSA_verify(0, (unsigned char *)RSTRING_PTR(digest), RSTRING_LEN(digest),
+                     (unsigned char *)RSTRING_PTR(sig), RSTRING_LEN(sig), pkey-&gt;pkey.dsa);
+    if (ret &lt; 0) {
+        ossl_raise(eDSAError, NULL);
+    }
+    else if (ret == 1) {
+        return Qtrue;
+    }
+
+    return Qfalse;
+}</pre>
+</body>
+</html>

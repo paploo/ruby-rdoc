@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>params (OpenSSL::PKey::RSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rsa.params -&gt; hash
+ *
+ * Stores all parameters of key to the hash
+ * INSECURE: PRIVATE INFORMATIONS CAN LEAK OUT!!!
+ * Don't use :-)) (I's up to you)
+ */
+static VALUE
+ossl_rsa_get_params(VALUE self)
+{
+    EVP_PKEY *pkey;
+    VALUE hash;
+
+    GetPKeyRSA(self, pkey);
+
+    hash = rb_hash_new();
+
+    rb_hash_aset(hash, rb_str_new2(&quot;n&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;n));
+    rb_hash_aset(hash, rb_str_new2(&quot;e&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;e));
+    rb_hash_aset(hash, rb_str_new2(&quot;d&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;d));
+    rb_hash_aset(hash, rb_str_new2(&quot;p&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;p));
+    rb_hash_aset(hash, rb_str_new2(&quot;q&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;q));
+    rb_hash_aset(hash, rb_str_new2(&quot;dmp1&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;dmp1));
+    rb_hash_aset(hash, rb_str_new2(&quot;dmq1&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;dmq1));
+    rb_hash_aset(hash, rb_str_new2(&quot;iqmp&quot;), ossl_bn_new(pkey-&gt;pkey.rsa-&gt;iqmp));
+    
+    return hash;
+}</pre>
+</body>
+</html>

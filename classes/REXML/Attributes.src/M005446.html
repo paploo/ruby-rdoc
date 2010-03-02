@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>delete (REXML::Attributes)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 1176</span>
+1176:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>( <span class="ruby-identifier">attribute</span> )
+1177:       <span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">nil</span>
+1178:       <span class="ruby-identifier">prefix</span> = <span class="ruby-keyword kw">nil</span>
+1179:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Attribute</span>
+1180:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">name</span>
+1181:         <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">prefix</span>
+1182:       <span class="ruby-keyword kw">else</span>
+1183:         <span class="ruby-identifier">attribute</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">Namespace</span><span class="ruby-operator">::</span><span class="ruby-constant">NAMESPLIT</span>
+1184:         <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+1185:         <span class="ruby-identifier">prefix</span> = <span class="ruby-value str">''</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">prefix</span>
+1186:       <span class="ruby-keyword kw">end</span>
+1187:       <span class="ruby-identifier">old</span> = <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">nil</span>)
+1188:       <span class="ruby-identifier">attr</span> = <span class="ruby-keyword kw">nil</span>
+1189:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">old</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Hash</span> <span class="ruby-comment cmt"># the supplied attribute is one of many</span>
+1190:         <span class="ruby-identifier">attr</span> = <span class="ruby-identifier">old</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">prefix</span>)
+1191:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">old</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+1192:           <span class="ruby-identifier">repl</span> = <span class="ruby-keyword kw">nil</span>
+1193:           <span class="ruby-identifier">old</span>.<span class="ruby-identifier">each_value</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">repl</span> = <span class="ruby-identifier">v</span>}
+1194:           <span class="ruby-identifier">store</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">repl</span>
+1195:         <span class="ruby-keyword kw">end</span>
+1196:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">old</span>.<span class="ruby-identifier">nil?</span>
+1197:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@element</span>
+1198:       <span class="ruby-keyword kw">else</span> <span class="ruby-comment cmt"># the supplied attribute is a top-level one</span>
+1199:         <span class="ruby-identifier">attr</span> = <span class="ruby-identifier">old</span>
+1200:         <span class="ruby-identifier">res</span> = <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">name</span>)
+1201:       <span class="ruby-keyword kw">end</span>
+1202:       <span class="ruby-ivar">@element</span>
+1203:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

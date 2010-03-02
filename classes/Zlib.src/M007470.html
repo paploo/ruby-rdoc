@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>adler32 (Zlib)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq: Zlib.adler32(string, adler)
+ *
+ * Calculates Alder-32 checksum for +string+, and returns updated value of
+ * +adler+. If +string+ is omitted, it returns the Adler-32 initial value. If
+ * +adler+ is omitted, it assumes that the initial value is given to +adler+.
+ *
+ * FIXME: expression.
+ */
+static VALUE
+rb_zlib_adler32(int argc, VALUE *argv, VALUE klass)
+{
+    return do_checksum(argc, argv, adler32);
+}</pre>
+</body>
+</html>

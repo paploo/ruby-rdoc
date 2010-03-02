@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ready? (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   io.ready? -&gt; true, false or nil
+ *
+ * Returns non-nil if input available without blocking, or nil.
+ */
+
+static VALUE
+io_ready_p(VALUE io)
+{
+    rb_io_t *fptr;
+    ioctl_arg n;
+
+    GetOpenFile(io, fptr);
+    rb_io_check_readable(fptr);
+    if (rb_io_read_pending(fptr)) return Qtrue;
+    if (!FIONREAD_POSSIBLE_P(fptr-&gt;fd)) return Qfalse;
+    if (ioctl(fptr-&gt;fd, FIONREAD, &amp;n)) rb_sys_fail(0);
+    if (n &gt; 0) return ioctl_arg2num(n);
+    return Qnil;
+}</pre>
+</body>
+</html>

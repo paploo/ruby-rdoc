@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>build (URI::MailTo)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/mailto.rb, line 88</span>
+ 88:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">args</span>)
+ 89:       <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-identifier">make_components_hash</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">args</span>)
+ 90: 
+ 91:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:to</span>]
+ 92:         <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] = <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:to</span>]
+ 93:       <span class="ruby-keyword kw">else</span>
+ 94:         <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] = <span class="ruby-value str">''</span>
+ 95:       <span class="ruby-keyword kw">end</span>
+ 96: 
+ 97:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>]
+ 98:         <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'?'</span>
+ 99: 
+100:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>].<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>)
+101:           <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>].<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+102:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>)
+103:               <span class="ruby-identifier">x</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-value str">'='</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">to_s</span>
+104:             <span class="ruby-keyword kw">else</span>
+105:               <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_s</span>
+106:             <span class="ruby-keyword kw">end</span>
+107:           }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'&amp;'</span>)
+108: 
+109:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>].<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+110:           <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>].<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+111:             <span class="ruby-identifier">h</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'='</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">v</span>
+112:           }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'&amp;'</span>)
+113: 
+114:         <span class="ruby-keyword kw">else</span>
+115:           <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:opaque</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:headers</span>].<span class="ruby-identifier">to_s</span>
+116:         <span class="ruby-keyword kw">end</span>
+117:       <span class="ruby-keyword kw">end</span>
+118: 
+119:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">tmp</span>)
+120:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

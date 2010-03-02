@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>backtrace (Exception)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     exception.backtrace    =&gt; array
+ *  
+ *  Returns any backtrace associated with the exception. The backtrace
+ *  is an array of strings, each containing either ``filename:lineNo: in
+ *  `method''' or ``filename:lineNo.''
+ *     
+ *     def a
+ *       raise &quot;boom&quot;
+ *     end
+ *     
+ *     def b
+ *       a()
+ *     end
+ *     
+ *     begin
+ *       b()
+ *     rescue =&gt; detail
+ *       print detail.backtrace.join(&quot;\n&quot;)
+ *     end
+ *     
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     prog.rb:2:in `a'
+ *     prog.rb:6:in `b'
+ *     prog.rb:10
+*/
+
+static VALUE
+exc_backtrace(VALUE exc)
+{
+    ID bt;
+
+    CONST_ID(bt, &quot;bt&quot;);
+    return rb_attr_get(exc, bt);
+}</pre>
+</body>
+</html>

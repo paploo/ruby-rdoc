@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>source_encoding (Encoding::InvalidByteSequenceError)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   ecerr.source_encoding              -&gt; encoding
+ *
+ * Returns the source encoding as an encoding object.
+ *
+ * Note that the result may not be equal to the source encoding of
+ * the encoding converter if the conversion has multiple steps.
+ *
+ *  ec = Encoding::Converter.new(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;) # ISO-8859-1 -&gt; UTF-8 -&gt; EUC-JP
+ *  begin
+ *    ec.convert(&quot;\xa0&quot;) # NO-BREAK SPACE, which is available in UTF-8 but not in EUC-JP.
+ *  rescue Encoding::UndefinedConversionError
+ *    p $!.source_encoding              #=&gt; #&lt;Encoding:UTF-8&gt;
+ *    p $!.destination_encoding         #=&gt; #&lt;Encoding:EUC-JP&gt;
+ *    p $!.source_encoding_name         #=&gt; &quot;UTF-8&quot;
+ *    p $!.destination_encoding_name    #=&gt; &quot;EUC-JP&quot;
+ *  end
+ *
+ */
+static VALUE
+ecerr_source_encoding(VALUE self)
+{
+    return rb_attr_get(self, rb_intern(&quot;source_encoding&quot;));
+}</pre>
+</body>
+</html>

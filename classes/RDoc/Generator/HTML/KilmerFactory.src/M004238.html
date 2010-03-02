@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_METHOD_LIST (RDoc::Generator::HTML::KilmerFactory)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html/kilmerfactory.rb, line 107</span>
+107:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_METHOD_LIST</span>
+108:     <span class="ruby-keyword kw">return</span> <span class="ruby-node">%{
+109: &lt;% if values[&quot;diagram&quot;] then %&gt;
+110: &lt;div id=&quot;diagram&quot;&gt;
+111: &lt;table width=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+112: &lt;%= values[&quot;diagram&quot;] %&gt;
+113: &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+114: &lt;/div&gt;
+115: &lt;% end %&gt;
+116: 
+117: &lt;% if values[&quot;description&quot;] then %&gt;
+118: &lt;div class=&quot;description&quot;&gt;&lt;%= values[&quot;description&quot;] %&gt;&lt;/div&gt;
+119: &lt;% end %&gt;
+120: 
+121: &lt;% if values[&quot;requires&quot;] then %&gt;
+122: &lt;table cellpadding=&quot;5&quot; width=&quot;100%&quot;&gt;
+123: &lt;tr&gt;&lt;td class=&quot;tablesubtitle&quot;&gt;Required files&lt;/td&gt;&lt;/tr&gt;
+124: &lt;/table&gt;&lt;br /&gt;
+125: &lt;div class=&quot;name-list&quot;&gt;
+126: &lt;% values[&quot;requires&quot;].each do |requires| %&gt;
+127: &lt;%= href requires[&quot;aref&quot;], requires[&quot;name&quot;] %&gt;
+128: &lt;% end %&gt;&lt;%# values[&quot;requires&quot;] %&gt;
+129: &lt;/div&gt;
+130: &lt;% end %&gt;
+131: 
+132: &lt;% if values[&quot;methods&quot;] then %&gt;
+133: &lt;table cellpadding=&quot;5&quot; width=&quot;100%&quot;&gt;
+134: &lt;tr&gt;&lt;td class=&quot;tablesubtitle&quot;&gt;#{@method_list_heading}&lt;/td&gt;&lt;/tr&gt;
+135: &lt;/table&gt;&lt;br /&gt;
+136: &lt;div class=&quot;name-list&quot;&gt;
+137: &lt;% values[&quot;methods&quot;].each do |methods| %&gt;
+138: &lt;%= href methods[&quot;aref&quot;], methods[&quot;name&quot;] %&gt;,
+139: &lt;% end %&gt;&lt;%# values[&quot;methods&quot;] %&gt;
+140: &lt;/div&gt;
+141: &lt;% end %&gt;
+142: 
+143: &lt;% if values[&quot;includes&quot;] then %&gt;
+144: &lt;div class=&quot;tablesubsubtitle&quot;&gt;Included modules&lt;/div&gt;&lt;br /&gt;
+145: &lt;div class=&quot;name-list&quot;&gt;
+146: &lt;% values[&quot;includes&quot;].each do |includes| %&gt;
+147:     &lt;span class=&quot;method-name&quot;&gt;&lt;%= href includes[&quot;aref&quot;], includes[&quot;name&quot;] %&gt;&lt;/span&gt;
+148: &lt;% end %&gt;&lt;%# values[&quot;includes&quot;] %&gt;
+149: &lt;/div&gt;
+150: &lt;% end %&gt;
+151: 
+152: &lt;% values[&quot;sections&quot;].each do |sections| %&gt;
+153:     &lt;div id=&quot;section&quot;&gt;
+154: &lt;% if sections[&quot;sectitle&quot;] then %&gt;
+155:       &lt;h2 class=&quot;section-title&quot;&gt;&lt;a name=&quot;&lt;%= sections[&quot;secsequence&quot;] %&gt;&quot;&gt;&lt;%= sections[&quot;sectitle&quot;] %&gt;&lt;/a&gt;&lt;/h2&gt;
+156: &lt;% if sections[&quot;seccomment&quot;] then %&gt;
+157:       &lt;div class=&quot;section-comment&quot;&gt;
+158:         &lt;%= sections[&quot;seccomment&quot;] %&gt;
+159:       &lt;/div&gt;
+160: &lt;% end %&gt;
+161: &lt;% end %&gt;
+162: &lt;% if sections[&quot;attributes&quot;] then %&gt;
+163: &lt;table cellpadding=&quot;5&quot; width=&quot;100%&quot;&gt;
+164: &lt;tr&gt;&lt;td class=&quot;tablesubtitle&quot;&gt;#{@attribute_list_heading}&lt;/td&gt;&lt;/tr&gt;
+165: &lt;/table&gt;&lt;br /&gt;
+166: &lt;table cellspacing=&quot;5&quot;&gt;
+167: &lt;% sections[&quot;attributes&quot;].each do |attributes| %&gt;
+168:      &lt;tr valign=&quot;top&quot;&gt;
+169: &lt;% if attributes[&quot;rw&quot;] then %&gt;
+170:        &lt;td align=&quot;center&quot; class=&quot;attr-rw&quot;&gt;&amp;nbsp;[&lt;%= attributes[&quot;rw&quot;] %&gt;]&amp;nbsp;&lt;/td&gt;
+171: &lt;% end %&gt;
+172: &lt;% unless attributes[&quot;rw&quot;] then %&gt;
+173:        &lt;td&gt;&lt;/td&gt;
+174: &lt;% end %&gt;
+175:        &lt;td class=&quot;attr-name&quot;&gt;&lt;%= attributes[&quot;name&quot;] %&gt;&lt;/td&gt;
+176:        &lt;td&gt;&lt;%= attributes[&quot;a_desc&quot;] %&gt;&lt;/td&gt;
+177:      &lt;/tr&gt;
+178: &lt;% end %&gt;&lt;%# sections[&quot;attributes&quot;] %&gt;
+179: &lt;/table&gt;
+180: &lt;% end %&gt;
+181: 
+182: &lt;% if sections[&quot;classlist&quot;] then %&gt;
+183: &lt;table cellpadding=&quot;5&quot; width=&quot;100%&quot;&gt;
+184: &lt;tr&gt;&lt;td class=&quot;tablesubtitle&quot;&gt;#{@class_and_module_list_heading}&lt;/td&gt;&lt;/tr&gt;
+185: &lt;/table&gt;&lt;br /&gt;
+186: &lt;%= sections[&quot;classlist&quot;] %&gt;&lt;br /&gt;
+187: &lt;% end %&gt;
+188: 
+189: &lt;% if sections[&quot;method_list&quot;] then %&gt;
+190: &lt;% sections[&quot;method_list&quot;].each do |method_list| %&gt;
+191: &lt;% if method_list[&quot;methods&quot;] then %&gt;
+192: &lt;table cellpadding=&quot;5&quot; width=&quot;100%&quot;&gt;
+193: &lt;tr&gt;&lt;td class=&quot;tablesubtitle&quot;&gt;&lt;%= method_list[&quot;type&quot;] %&gt; &lt;%= method_list[&quot;category&quot;] %&gt; methods&lt;/td&gt;&lt;/tr&gt;
+194: &lt;/table&gt;
+195: &lt;% method_list[&quot;methods&quot;].each do |methods| %&gt;
+196: &lt;table width=&quot;100%&quot; cellspacing=&quot;0&quot; cellpadding=&quot;5&quot; border=&quot;0&quot;&gt;
+197: &lt;tr&gt;&lt;td class=&quot;methodtitle&quot;&gt;
+198: &lt;a name=&quot;&lt;%= methods[&quot;aref&quot;] %&gt;&quot;&gt;
+199: &lt;% if methods[&quot;callseq&quot;] then %&gt;
+200: &lt;b&gt;&lt;%= methods[&quot;callseq&quot;] %&gt;&lt;/b&gt;
+201: &lt;% end %&gt;
+202: &lt;% unless methods[&quot;callseq&quot;] then %&gt;
+203:  &lt;b&gt;&lt;%= methods[&quot;name&quot;] %&gt;&lt;/b&gt;&lt;%= methods[&quot;params&quot;] %&gt;
+204: &lt;% end %&gt;
+205: &lt;/a&gt;
+206: &lt;% if methods[&quot;codeurl&quot;] then %&gt;
+207: &lt;a href=&quot;&lt;%= methods[&quot;codeurl&quot;] %&gt;&quot; target=&quot;source&quot; class=&quot;srclink&quot;&gt;src&lt;/a&gt;
+208: &lt;% end %&gt;
+209: &lt;/td&gt;&lt;/tr&gt;
+210: &lt;/table&gt;
+211: &lt;% if methods[&quot;m_desc&quot;] then %&gt;
+212: &lt;div class=&quot;description&quot;&gt;
+213: &lt;%= methods[&quot;m_desc&quot;] %&gt;
+214: &lt;/div&gt;
+215: &lt;% end %&gt;
+216: &lt;% if methods[&quot;aka&quot;] then %&gt;
+217: &lt;div class=&quot;aka&quot;&gt;
+218: This method is also aliased as
+219: &lt;% methods[&quot;aka&quot;].each do |aka| %&gt;
+220: &lt;a href=&quot;&lt;%= methods[&quot;aref&quot;] %&gt;&quot;&gt;&lt;%= methods[&quot;name&quot;] %&gt;&lt;/a&gt;
+221: &lt;% end %&gt;&lt;%# methods[&quot;aka&quot;] %&gt;
+222: &lt;/div&gt;
+223: &lt;% end %&gt;
+224: &lt;% if methods[&quot;sourcecode&quot;] then %&gt;
+225: &lt;pre class=&quot;source&quot;&gt;
+226: &lt;%= methods[&quot;sourcecode&quot;] %&gt;
+227: &lt;/pre&gt;
+228: &lt;% end %&gt;
+229: &lt;% end %&gt;&lt;%# method_list[&quot;methods&quot;] %&gt;
+230: &lt;% end %&gt;
+231: &lt;% end %&gt;&lt;%# sections[&quot;method_list&quot;] %&gt;
+232: &lt;% end %&gt;
+233: 
+234: &lt;% end %&gt;&lt;%# values[&quot;sections&quot;] %&gt;
+235: &lt;/div&gt;
+236: }</span>
+237:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

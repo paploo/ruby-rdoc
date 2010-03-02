@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>init_converters (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2091</span>
+2091:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init_converters</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">field_name</span> = <span class="ruby-identifier">:converters</span>)
+2092:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:converters</span>
+2093:       <span class="ruby-ivar">@unconverted_fields</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:unconverted_fields</span>)
+2094:     <span class="ruby-keyword kw">end</span>
+2095: 
+2096:     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{field_name}&quot;</span>, <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>)
+2097:     
+2098:     <span class="ruby-comment cmt"># find the correct method to add the converters</span>
+2099:     <span class="ruby-identifier">convert</span> = <span class="ruby-identifier">method</span>(<span class="ruby-identifier">field_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/ers\Z/</span>, <span class="ruby-value str">&quot;&quot;</span>))
+2100:     
+2101:     <span class="ruby-comment cmt"># load converters</span>
+2102:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">field_name</span>].<span class="ruby-identifier">nil?</span>
+2103:       <span class="ruby-comment cmt"># allow a single converter not wrapped in an Array</span>
+2104:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">field_name</span>].<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+2105:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">field_name</span>] = [<span class="ruby-identifier">options</span>[<span class="ruby-identifier">field_name</span>]]
+2106:       <span class="ruby-keyword kw">end</span>
+2107:       <span class="ruby-comment cmt"># load each converter...</span>
+2108:       <span class="ruby-identifier">options</span>[<span class="ruby-identifier">field_name</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter</span><span class="ruby-operator">|</span>
+2109:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">converter</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Proc</span>  <span class="ruby-comment cmt"># custom code block</span>
+2110:           <span class="ruby-identifier">convert</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">converter</span>)
+2111:         <span class="ruby-keyword kw">else</span>                     <span class="ruby-comment cmt"># by name</span>
+2112:           <span class="ruby-identifier">convert</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">converter</span>)
+2113:         <span class="ruby-keyword kw">end</span>
+2114:       <span class="ruby-keyword kw">end</span>
+2115:     <span class="ruby-keyword kw">end</span>
+2116:     
+2117:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">field_name</span>)
+2118:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

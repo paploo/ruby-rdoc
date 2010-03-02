@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>close_on_exec= (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.close_on_exec = bool    =&gt; true or false
+ *
+ *  Sets a close-on-exec flag.
+ *
+ *     f = open(&quot;/dev/null&quot;)
+ *     f.close_on_exec = true
+ *     system(&quot;cat&quot;, &quot;/proc/self/fd/#{f.fileno}&quot;) # cat: /proc/self/fd/3: No such file or directory
+ *     f.closed?                #=&gt; false
+ */
+
+static VALUE
+rb_io_set_close_on_exec(VALUE io, VALUE arg)
+{
+#if defined(HAVE_FCNTL) &amp;&amp; defined(F_GETFD) &amp;&amp; defined(F_SETFD) &amp;&amp; defined(FD_CLOEXEC)
+    int flag = RTEST(arg) ? FD_CLOEXEC : 0;
+    rb_io_t *fptr;
+    VALUE write_io;
+    int fd, ret;
+
+    write_io = GetWriteIO(io);
+    if (io != write_io) {
+        GetOpenFile(write_io, fptr);
+        if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
+            if ((ret = fcntl(fptr-&gt;fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
+            if ((ret &amp; FD_CLOEXEC) != flag) {
+                ret = (ret &amp; ~FD_CLOEXEC) | flag;
+                ret = fcntl(fd, F_SETFD, ret);
+                if (ret == -1) rb_sys_fail_path(fptr-&gt;pathv);
+            }
+        }
+
+    }
+
+    GetOpenFile(io, fptr);
+    if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
+        if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
+        if ((ret &amp; FD_CLOEXEC) != flag) {
+            ret = (ret &amp; ~FD_CLOEXEC) | flag;
+            ret = fcntl(fd, F_SETFD, ret);
+            if (ret == -1) rb_sys_fail_path(fptr-&gt;pathv);
+        }
+    }
+#else
+    rb_notimplement();
+#endif
+    return Qnil;
+}</pre>
+</body>
+</html>

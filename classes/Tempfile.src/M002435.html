@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>unlink (Tempfile)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/tempfile.rb, line 136</span>
+136:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unlink</span>
+137:     <span class="ruby-comment cmt"># keep this order for thread safeness</span>
+138:     <span class="ruby-keyword kw">begin</span>
+139:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@tmpname</span>)
+140:         <span class="ruby-identifier">closed?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">close</span>
+141:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-ivar">@tmpname</span>)
+142:       <span class="ruby-keyword kw">end</span>
+143:       <span class="ruby-ivar">@@cleanlist</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-ivar">@tmpname</span>)
+144:       <span class="ruby-ivar">@data</span> = <span class="ruby-ivar">@tmpname</span> = <span class="ruby-keyword kw">nil</span>
+145:       <span class="ruby-constant">ObjectSpace</span>.<span class="ruby-identifier">undefine_finalizer</span>(<span class="ruby-keyword kw">self</span>)
+146:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EACCES</span>
+147:       <span class="ruby-comment cmt"># may not be able to unlink on Windows; just ignore</span>
+148:     <span class="ruby-keyword kw">end</span>
+149:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>insert_output (Encoding::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   ec.insert_output(string) -&gt; nil
+ *
+ * Inserts string into the encoding converter.
+ * The string will be converted to the destination encoding and
+ * output on later conversions.
+ *
+ * If the destination encoding is stateful,
+ * string is converted according to the state and the state is updated.
+ *
+ * This method should be used only when a conversion error occurs.
+ *
+ *  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-8859-1&quot;)
+ *  src = &quot;HIRAGANA LETTER A is \u{3042}.&quot;
+ *  dst = &quot;&quot;
+ *  p ec.primitive_convert(src, dst)    #=&gt; :undefined_conversion
+ *  puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;HIRAGANA LETTER A is &quot;, &quot;.&quot;]
+ *  ec.insert_output(&quot;&lt;err&gt;&quot;)
+ *  p ec.primitive_convert(src, dst)    #=&gt; :finished
+ *  puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;HIRAGANA LETTER A is &lt;err&gt;.&quot;, &quot;&quot;]
+ *
+ *  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-2022-jp&quot;)
+ *  src = &quot;\u{306F 3041 3068 2661 3002}&quot; # U+2661 is not representable in iso-2022-jp
+ *  dst = &quot;&quot;
+ *  p ec.primitive_convert(src, dst)    #=&gt; :undefined_conversion
+ *  puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;\e$B$O$!$H&quot;.force_encoding(&quot;ISO-2022-JP&quot;), &quot;\xE3\x80\x82&quot;]
+ *  ec.insert_output &quot;?&quot;                # state change required to output &quot;?&quot;.
+ *  p ec.primitive_convert(src, dst)    #=&gt; :finished
+ *  puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;\e$B$O$!$H\e(B?\e$B!#\e(B&quot;.force_encoding(&quot;ISO-2022-JP&quot;), &quot;&quot;]
+ *
+ */
+static VALUE
+econv_insert_output(VALUE self, VALUE string)
+{
+    const char *insert_enc;
+
+    int ret;
+
+    rb_econv_t *ec = check_econv(self);
+
+    StringValue(string);
+    insert_enc = rb_econv_encoding_to_insert_output(ec);
+    string = rb_str_encode(string, rb_enc_from_encoding(rb_enc_find(insert_enc)), 0, Qnil);
+
+    ret = rb_econv_insert_output(ec, (const unsigned char *)RSTRING_PTR(string), RSTRING_LEN(string), insert_enc);
+    if (ret == -1) {
+        rb_raise(rb_eArgError, &quot;too big string&quot;);
+    }
+
+    return Qnil;
+}</pre>
+</body>
+</html>

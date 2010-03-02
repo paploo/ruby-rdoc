@@ -2,54 +2,42 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>intern (String)</title>
+  <title>chars (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
+ *  Document-method: each_char
  *  call-seq:
- *     str.intern   =&gt; symbol
- *     str.to_sym   =&gt; symbol
+ *     str.each_char {|cstr| block }    =&gt; str
  *  
- *  Returns the &lt;code&gt;Symbol&lt;/code&gt; corresponding to &lt;i&gt;str&lt;/i&gt;, creating the
- *  symbol if it did not previously exist. See &lt;code&gt;Symbol#id2name&lt;/code&gt;.
+ *  Passes each character in &lt;i&gt;str&lt;/i&gt; to the given block.
  *     
- *     &quot;Koala&quot;.intern         #=&gt; :Koala
- *     s = 'cat'.to_sym       #=&gt; :cat
- *     s == :cat              #=&gt; true
- *     s = '@cat'.to_sym      #=&gt; :@cat
- *     s == :@cat             #=&gt; true
- *
- *  This can also be used to create symbols that cannot be represented using the
- *  &lt;code&gt;:xxx&lt;/code&gt; notation.
+ *     &quot;hello&quot;.each_char {|c| print c, ' ' }
  *     
- *     'cat and dog'.to_sym   #=&gt; :&quot;cat and dog&quot;
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *     
+ *     h e l l o 
  */
 
-VALUE
-rb_str_intern(VALUE s)
+static VALUE
+rb_str_each_char(VALUE str)
 {
-    VALUE str = RB_GC_GUARD(s);
-    VALUE sym;
-    ID id, id2;
+    long i, len, n;
+    const char *ptr;
+    rb_encoding *enc;
 
-    id = rb_intern_str(str);
-    sym = ID2SYM(id);
-    id2 = SYM2ID(sym);
-    if (id != id2) {
-        const char *name = rb_id2name(id2);
-
-        if (name) {
-            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (%s given for %s)&quot;,
-                     name, RSTRING_PTR(str));
-        }
-        else {
-            rb_raise(rb_eRuntimeError, &quot;symbol table overflow (symbol %s)&quot;,
-                     RSTRING_PTR(str));
-        }
+    RETURN_ENUMERATOR(str, 0, 0);
+    str = rb_str_new4(str);
+    ptr = RSTRING_PTR(str);
+    len = RSTRING_LEN(str);
+    enc = rb_enc_get(str);
+    for (i = 0; i &lt; len; i += n) {
+        n = rb_enc_mbclen(ptr + i, ptr + len, enc);
+        rb_yield(rb_str_subseq(str, i, n));
     }
-    return sym;
+    return str;
 }</pre>
 </body>
 </html>

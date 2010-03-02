@@ -2,74 +2,50 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>encode (String)</title>
+  <title>slice! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.encode(encoding [, options] )   =&gt; str
- *     str.encode(dst_encoding, src_encoding [, options] )   =&gt; str
- *     str.encode([options])   =&gt; str
- *
- *  The first form returns a copy of &lt;i&gt;str&lt;/i&gt; transcoded
- *  to encoding +encoding+.
- *  The second form returns a copy of &lt;i&gt;str&lt;/i&gt; transcoded
- *  from src_encoding to dst_encoding.
- *  The last form returns a copy of &lt;i&gt;str&lt;/i&gt; transcoded to
- *  &lt;code&gt;Encoding.default_internal&lt;/code&gt;.
- *  By default, the first and second form raise
- *  Encoding::UndefinedConversionError for characters that are
- *  undefined in the destination encoding, and
- *  Encoding::InvalidByteSequenceError for invalid byte sequences
- *  in the source encoding. The last form by default does not raise
- *  exceptions but uses replacement strings.
- *  The &lt;code&gt;options&lt;/code&gt; Hash gives details for conversion.
- *
- *  === options
- *  The hash &lt;code&gt;options&lt;/code&gt; can have the following keys:
- *  :invalid ::
- *    If the value is &lt;code&gt;:replace&lt;/code&gt;, &lt;code&gt;#encode&lt;/code&gt; replaces
- *    invalid byte sequences in &lt;code&gt;str&lt;/code&gt; with the replacement character.
- *    The default is to raise the exception
- *  :undef ::
- *    If the value is &lt;code&gt;:replace&lt;/code&gt;, &lt;code&gt;#encode&lt;/code&gt; replaces
- *    characters which are undefined in the destination encoding with
- *    the replacement character.
- *  :replace ::
- *    Sets the replacement string to the value. The default replacement
- *    string is &quot;\uFFFD&quot; for Unicode encoding forms, and &quot;?&quot; otherwise.
- *  :xml ::
- *    The value must be &lt;code&gt;:text&lt;/code&gt; or &lt;code&gt;:attr&lt;/code&gt;.
- *    If the value is &lt;code&gt;:text&lt;/code&gt; &lt;code&gt;#encode&lt;/code&gt; replaces
- *    undefined characters with their (upper-case hexadecimal) numeric
- *    character references. '&amp;', '&lt;', and '&gt;' are converted to &quot;&amp;amp;&quot;,
- *    &quot;&amp;lt;&quot;, and &quot;&amp;gt;&quot;, respectively.
- *    If the value is &lt;code&gt;:attr&lt;/code&gt;, &lt;code&gt;#encode&lt;/code&gt; also quotes
- *    the replacement result (using '&quot;'), and replaces '&quot;' with &quot;&amp;quot;&quot;.
- *  :cr_newline ::
- *    Replaces LF (&quot;\n&quot;) with CR (&quot;\r&quot;) if value is true.
- *  :crlf_newline ::
- *    Replaces LF (&quot;\n&quot;) with CRLF (&quot;\r\n&quot;) if value is true.
- *  :universal_newline ::
- *    Replaces CRLF (&quot;\r\n&quot;) and CR (&quot;\r&quot;) with LF (&quot;\n&quot;) if value is true.
+ *     str.slice!(fixnum)           =&gt; fixnum or nil
+ *     str.slice!(fixnum, fixnum)   =&gt; new_str or nil
+ *     str.slice!(range)            =&gt; new_str or nil
+ *     str.slice!(regexp)           =&gt; new_str or nil
+ *     str.slice!(other_str)        =&gt; new_str or nil
+ *  
+ *  Deletes the specified portion from &lt;i&gt;str&lt;/i&gt;, and returns the portion
+ *  deleted.
+ *     
+ *     string = &quot;this is a string&quot;
+ *     string.slice!(2)        #=&gt; &quot;i&quot;
+ *     string.slice!(3..6)     #=&gt; &quot; is &quot;
+ *     string.slice!(/s.*t/)   #=&gt; &quot;sa st&quot;
+ *     string.slice!(&quot;r&quot;)      #=&gt; &quot;r&quot;
+ *     string                  #=&gt; &quot;thing&quot;
  */
 
 static VALUE
-str_encode(int argc, VALUE *argv, VALUE str)
+rb_str_slice_bang(int argc, VALUE *argv, VALUE str)
 {
-    VALUE newstr = str;
-    int encidx = str_transcode(argc, argv, &amp;newstr);
+    VALUE result;
+    VALUE buf[3];
+    int i;
 
-    if (encidx &lt; 0) return rb_str_dup(str);
-    if (newstr == str) {
-        newstr = rb_str_dup(str);
+    if (argc &lt; 1 || 2 &lt; argc) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
     }
-    else {
-        RBASIC(newstr)-&gt;klass = rb_obj_class(str);
+    for (i=0; i&lt;argc; i++) {
+        buf[i] = argv[i];
     }
-    return str_encode_associate(newstr, encidx);
+    str_modify_keep_cr(str);
+    buf[i] = rb_str_new(0,0);
+    result = rb_str_aref_m(argc, buf, str);
+    if (!NIL_P(result)) {
+        rb_str_aset_m(argc+1, buf, str);
+    }
+    return result;
 }</pre>
 </body>
 </html>

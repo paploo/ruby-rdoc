@@ -2,25 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>round (Numeric)</title>
+  <title>to_int (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.round([ndigits])    =&gt; integer or float
+ *     num.to_int    =&gt; integer
  *
- *  Rounds &lt;i&gt;num&lt;/i&gt; to a given precision in decimal digits (default 0 digits).
- *  Precision may be negative.  Returns a a floating point number when ndigits
- *  is more than one.  &lt;code&gt;Numeric&lt;/code&gt; implements this by converting itself
- *  to a &lt;code&gt;Float&lt;/code&gt; and invoking &lt;code&gt;Float#round&lt;/code&gt;.
+ *  Invokes the child class's &lt;code&gt;to_i&lt;/code&gt; method to convert
+ *  &lt;i&gt;num&lt;/i&gt; to an integer.
  */
 
 static VALUE
-num_round(int argc, VALUE* argv, VALUE num)
+num_to_int(VALUE num)
 {
-    return flo_round(argc, argv, rb_Float(num));
+    return rb_funcall(num, id_to_i, 0, 0);
 }</pre>
 </body>
 </html>

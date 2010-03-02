@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>start (Coverage)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    Coverage.start  =&gt; nil
+ *
+ * Enables coverage measurement.
+ */
+static VALUE
+rb_coverage_start(VALUE klass)
+{
+    if (!RTEST(rb_get_coverages())) {
+        VALUE coverages = rb_hash_new();
+        RBASIC(coverages)-&gt;klass = 0;
+        rb_set_coverages(coverages);
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

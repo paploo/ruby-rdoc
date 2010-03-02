@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>resume (Fiber)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     fiber.resume(args, ...) -&gt; obj
+ *  
+ *  Resumes the fiber from the point at which the last &lt;code&gt;Fiber.yield&lt;/code&gt;
+ *  was called, or starts running it if it is the first call to 
+ *  &lt;code&gt;resume&lt;/code&gt;. Arguments passed to resume will be the value of
+ *  the &lt;code&gt;Fiber.yield&lt;/code&gt; expression or will be passed as block 
+ *  parameters to the fiber's block if this is the first &lt;code&gt;resume&lt;/code&gt;.
+ *  
+ *  Alternatively, when resume is called it evaluates to the arguments passed
+ *  to the next &lt;code&gt;Fiber.yield&lt;/code&gt; statement inside the fiber's block
+ *  or to the block value if it runs to completion without any
+ *  &lt;code&gt;Fiber.yield&lt;/code&gt;
+ */
+static VALUE
+rb_fiber_m_resume(int argc, VALUE *argv, VALUE fib)
+{
+    return rb_fiber_resume(fib, argc, argv);
+}</pre>
+</body>
+</html>

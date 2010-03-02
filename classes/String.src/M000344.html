@@ -2,30 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>tr_s (String)</title>
+  <title>gsub! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.tr_s(from_str, to_str)   =&gt; new_str
+ *     str.gsub!(pattern, replacement)        =&gt; str or nil
+ *     str.gsub!(pattern) {|match| block }    =&gt; str or nil
  *  
- *  Processes a copy of &lt;i&gt;str&lt;/i&gt; as described under &lt;code&gt;String#tr&lt;/code&gt;,
- *  then removes duplicate characters in regions that were affected by the
- *  translation.
- *     
- *     &quot;hello&quot;.tr_s('l', 'r')     #=&gt; &quot;hero&quot;
- *     &quot;hello&quot;.tr_s('el', '*')    #=&gt; &quot;h*o&quot;
- *     &quot;hello&quot;.tr_s('el', 'hx')   #=&gt; &quot;hhxo&quot;
+ *  Performs the substitutions of &lt;code&gt;String#gsub&lt;/code&gt; in place, returning
+ *  &lt;i&gt;str&lt;/i&gt;, or &lt;code&gt;nil&lt;/code&gt; if no substitutions were performed.
  */
 
 static VALUE
-rb_str_tr_s(VALUE str, VALUE src, VALUE repl)
+rb_str_gsub_bang(int argc, VALUE *argv, VALUE str)
 {
-    str = rb_str_dup(str);
-    tr_trans(str, src, repl, 1);
-    return str;
+    return str_gsub(argc, argv, str, 1);
 }</pre>
 </body>
 </html>

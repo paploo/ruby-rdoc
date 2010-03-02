@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (RDoc::Generator::Class)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 487</span>
+487:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">html_file</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">options</span>)
+488:       <span class="ruby-keyword kw">super</span> <span class="ruby-identifier">context</span>, <span class="ruby-identifier">options</span>
+489: 
+490:       <span class="ruby-ivar">@html_file</span> = <span class="ruby-identifier">html_file</span>
+491:       <span class="ruby-ivar">@html_class</span> = <span class="ruby-keyword kw">self</span>
+492:       <span class="ruby-ivar">@is_module</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">module?</span>
+493:       <span class="ruby-ivar">@values</span>    = {}
+494: 
+495:       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">viewer</span> = <span class="ruby-keyword kw">self</span>
+496: 
+497:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">all_one_file</span>
+498:         <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">full_name</span>
+499:       <span class="ruby-keyword kw">else</span>
+500:         <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">http_url</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">prefix</span>)
+501:       <span class="ruby-keyword kw">end</span>
+502: 
+503:       <span class="ruby-identifier">collect_methods</span>
+504: 
+505:       <span class="ruby-constant">AllReferences</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">self</span>)
+506:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

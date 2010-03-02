@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>accept (DRb::DRbSSLSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/drb/ssl.rb, line 173</span>
+173:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">accept</span>
+174:       <span class="ruby-keyword kw">begin</span>
+175:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+176:         <span class="ruby-identifier">soc</span> = <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">accept</span>
+177:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@acl</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@acl</span>.<span class="ruby-identifier">allow_socket?</span>(<span class="ruby-identifier">soc</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>) 
+178:         <span class="ruby-identifier">soc</span>.<span class="ruby-identifier">close</span>
+179:       <span class="ruby-keyword kw">end</span>
+180:       <span class="ruby-identifier">ssl</span> = <span class="ruby-ivar">@config</span>.<span class="ruby-identifier">accept</span>(<span class="ruby-identifier">soc</span>)
+181:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">ssl</span>, <span class="ruby-ivar">@config</span>, <span class="ruby-keyword kw">true</span>)
+182:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSLError</span>
+183:         <span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;#{__FILE__}:#{__LINE__}: warning: #{$!.message} (#{$!.class})&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:verbose</span>]
+184:         <span class="ruby-keyword kw">retry</span>
+185:       <span class="ruby-keyword kw">end</span>
+186:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

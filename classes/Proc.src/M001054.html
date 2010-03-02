@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>hash (Proc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   prc.hash   =&gt;  integer
+ *
+ * Return hash value corresponding to proc body.
+ */
+
+static VALUE
+proc_hash(VALUE self)
+{
+    int hash;
+    rb_proc_t *proc;
+    GetProcPtr(self, proc);
+    hash = (long)proc-&gt;block.iseq;
+    hash ^= (long)proc-&gt;envval;
+    hash ^= (long)proc-&gt;block.lfp &gt;&gt; 16;
+    return INT2FIX(hash);
+}</pre>
+</body>
+</html>

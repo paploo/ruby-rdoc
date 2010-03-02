@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>do_finish (Net::POP3)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/pop.rb, line 578</span>
+578:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_finish</span>
+579:       <span class="ruby-ivar">@mails</span> = <span class="ruby-keyword kw">nil</span>
+580:       <span class="ruby-ivar">@n_mails</span> = <span class="ruby-keyword kw">nil</span>
+581:       <span class="ruby-ivar">@n_bytes</span> = <span class="ruby-keyword kw">nil</span>
+582:       <span class="ruby-ivar">@command</span>.<span class="ruby-identifier">quit</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@command</span>
+583:     <span class="ruby-keyword kw">ensure</span>
+584:       <span class="ruby-ivar">@started</span> = <span class="ruby-keyword kw">false</span>
+585:       <span class="ruby-ivar">@command</span> = <span class="ruby-keyword kw">nil</span>
+586:       <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@socket</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@socket</span>.<span class="ruby-identifier">closed?</span>
+587:       <span class="ruby-ivar">@socket</span> = <span class="ruby-keyword kw">nil</span>
+588:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

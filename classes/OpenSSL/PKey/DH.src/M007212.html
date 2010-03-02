@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_der (OpenSSL::PKey::DH)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     dh.to_der -&gt; aString
+ *
+ */
+static VALUE
+ossl_dh_to_der(VALUE self)
+{       
+    EVP_PKEY *pkey;
+    unsigned char *p;
+    long len;
+    VALUE str;
+
+    GetPKeyDH(self, pkey);
+    if((len = i2d_DHparams(pkey-&gt;pkey.dh, NULL)) &lt;= 0)
+        ossl_raise(eDHError, NULL);
+    str = rb_str_new(0, len);
+    p = (unsigned char *)RSTRING_PTR(str);
+    if(i2d_DHparams(pkey-&gt;pkey.dh, &amp;p) &lt; 0)
+        ossl_raise(eDHError, NULL);
+    ossl_str_adjust(str, p);
+
+    return str;
+}</pre>
+</body>
+</html>

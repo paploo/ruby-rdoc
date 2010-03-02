@@ -2,23 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>binmode? (IO)</title>
+  <title>putc (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.binmode?    =&gt; true or false
+ *     ios.putc(obj)    =&gt; obj
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;em&gt;ios&lt;/em&gt; is binmode.
+ *  If &lt;i&gt;obj&lt;/i&gt; is &lt;code&gt;Numeric&lt;/code&gt;, write the character whose
+ *  code is &lt;i&gt;obj&lt;/i&gt;, otherwise write the first character of the
+ *  string representation of  &lt;i&gt;obj&lt;/i&gt; to &lt;em&gt;ios&lt;/em&gt;.
+ *
+ *     $stdout.putc &quot;A&quot;
+ *     $stdout.putc 65
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     AA
  */
+
 static VALUE
-rb_io_binmode_p(VALUE io)
+rb_io_putc(VALUE io, VALUE ch)
 {
-    rb_io_t *fptr;
-    GetOpenFile(io, fptr);
-    return fptr-&gt;mode &amp; FMODE_BINMODE ? Qtrue : Qfalse;
+    char c = NUM2CHR(ch);
+
+    rb_io_write(io, rb_str_new(&amp;c, 1));
+    return ch;
 }</pre>
 </body>
 </html>

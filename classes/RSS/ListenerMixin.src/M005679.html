@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>initial_start_RDF (RSS::ListenerMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/1.0.rb, line 438</span>
+438:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initial_start_RDF</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">ns</span>)
+439:       <span class="ruby-identifier">check_ns</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">ns</span>, <span class="ruby-constant">RDF</span><span class="ruby-operator">::</span><span class="ruby-constant">URI</span>, <span class="ruby-keyword kw">false</span>)
+440: 
+441:       <span class="ruby-ivar">@rss</span> = <span class="ruby-constant">RDF</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@version</span>, <span class="ruby-ivar">@encoding</span>, <span class="ruby-ivar">@standalone</span>)
+442:       <span class="ruby-ivar">@rss</span>.<span class="ruby-identifier">do_validate</span> = <span class="ruby-ivar">@do_validate</span>
+443:       <span class="ruby-ivar">@rss</span>.<span class="ruby-identifier">xml_stylesheets</span> = <span class="ruby-ivar">@xml_stylesheets</span>
+444:       <span class="ruby-ivar">@last_element</span> = <span class="ruby-ivar">@rss</span>
+445:       <span class="ruby-identifier">pr</span> = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">text</span>, <span class="ruby-identifier">tags</span><span class="ruby-operator">|</span>
+446:         <span class="ruby-ivar">@rss</span>.<span class="ruby-identifier">validate_for_stream</span>(<span class="ruby-identifier">tags</span>, <span class="ruby-ivar">@ignore_unknown_element</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@do_validate</span>
+447:       <span class="ruby-keyword kw">end</span>
+448:       <span class="ruby-ivar">@proc_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">pr</span>)
+449:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

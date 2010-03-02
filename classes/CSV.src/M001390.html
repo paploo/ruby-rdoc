@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>init_separators (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1952</span>
+1952:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init_separators</span>(<span class="ruby-identifier">options</span>)
+1953:     <span class="ruby-comment cmt"># store the selected separators</span>
+1954:     <span class="ruby-ivar">@col_sep</span>    = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:col_sep</span>).<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-ivar">@encoding</span>)
+1955:     <span class="ruby-ivar">@row_sep</span>    = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:row_sep</span>)  <span class="ruby-comment cmt"># encode after resolving :auto</span>
+1956:     <span class="ruby-ivar">@quote_char</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:quote_char</span>).<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-ivar">@encoding</span>)
+1957: 
+1958:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@quote_char</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-value">1</span>
+1959:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;:quote_char has to be a single character String&quot;</span>
+1960:     <span class="ruby-keyword kw">end</span>
+1961:     
+1962:     <span class="ruby-comment cmt"># </span>
+1963:     <span class="ruby-comment cmt"># automatically discover row separator when requested</span>
+1964:     <span class="ruby-comment cmt"># (not fully encoding safe)</span>
+1965:     <span class="ruby-comment cmt"># </span>
+1966:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@row_sep</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:auto</span>
+1967:       <span class="ruby-keyword kw">if</span> [<span class="ruby-constant">ARGF</span>, <span class="ruby-constant">STDIN</span>, <span class="ruby-constant">STDOUT</span>, <span class="ruby-constant">STDERR</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@io</span>) <span class="ruby-keyword kw">or</span>
+1968:          (<span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">Zlib</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">GzipWriter</span>)
+1969:         <span class="ruby-ivar">@row_sep</span> = <span class="ruby-identifier">$INPUT_RECORD_SEPARATOR</span>
+1970:       <span class="ruby-keyword kw">else</span>
+1971:         <span class="ruby-keyword kw">begin</span>
+1972:           <span class="ruby-identifier">saved_pos</span> = <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">pos</span>  <span class="ruby-comment cmt"># remember where we were</span>
+1973:           <span class="ruby-keyword kw">while</span> <span class="ruby-ivar">@row_sep</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:auto</span>
+1974:             <span class="ruby-comment cmt"># </span>
+1975:             <span class="ruby-comment cmt"># if we run out of data, it's probably a single line </span>
+1976:             <span class="ruby-comment cmt"># (use a sensible default)</span>
+1977:             <span class="ruby-comment cmt"># </span>
+1978:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">eof?</span>
+1979:               <span class="ruby-ivar">@row_sep</span> = <span class="ruby-identifier">$INPUT_RECORD_SEPARATOR</span>
+1980:               <span class="ruby-keyword kw">break</span>
+1981:             <span class="ruby-keyword kw">end</span>
+1982:       
+1983:             <span class="ruby-comment cmt"># read ahead a bit</span>
+1984:             <span class="ruby-identifier">sample</span> =  <span class="ruby-identifier">read_to_char</span>(<span class="ruby-value">1024</span>)
+1985:             <span class="ruby-identifier">sample</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">read_to_char</span>(<span class="ruby-value">1</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sample</span>[<span class="ruby-value">-1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">encode_str</span>(<span class="ruby-value str">&quot;\r&quot;</span>) <span class="ruby-keyword kw">and</span>
+1986:                                          <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">eof?</span>
+1987:             <span class="ruby-comment cmt"># try to find a standard separator</span>
+1988:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sample</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">encode_re</span>(<span class="ruby-value str">&quot;\r\n?|\n&quot;</span>)
+1989:               <span class="ruby-ivar">@row_sep</span> = <span class="ruby-identifier">$&amp;</span>
+1990:               <span class="ruby-keyword kw">break</span>
+1991:             <span class="ruby-keyword kw">end</span>
+1992:           <span class="ruby-keyword kw">end</span>
+1993:           <span class="ruby-comment cmt"># tricky seek() clone to work around GzipReader's lack of seek()</span>
+1994:           <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">rewind</span>
+1995:           <span class="ruby-comment cmt"># reset back to the remembered position</span>
+1996:           <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">saved_pos</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1024</span>  <span class="ruby-comment cmt"># avoid loading a lot of data into memory</span>
+1997:             <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-value">1024</span>)
+1998:             <span class="ruby-identifier">saved_pos</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1024</span>
+1999:           <span class="ruby-keyword kw">end</span>
+2000:           <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">saved_pos</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">saved_pos</span>.<span class="ruby-identifier">nonzero?</span>
+2001:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">IOError</span>  <span class="ruby-comment cmt"># stream not opened for reading</span>
+2002:           <span class="ruby-ivar">@row_sep</span> = <span class="ruby-identifier">$INPUT_RECORD_SEPARATOR</span>
+2003:         <span class="ruby-keyword kw">end</span>
+2004:       <span class="ruby-keyword kw">end</span>
+2005:     <span class="ruby-keyword kw">end</span>
+2006:     <span class="ruby-ivar">@row_sep</span> = <span class="ruby-ivar">@row_sep</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-ivar">@encoding</span>)
+2007:     
+2008:     <span class="ruby-comment cmt"># establish quoting rules</span>
+2009:     <span class="ruby-ivar">@force_quotes</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:force_quotes</span>)
+2010:     <span class="ruby-identifier">do_quote</span>      = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+2011:       <span class="ruby-ivar">@quote_char</span>                                      <span class="ruby-operator">+</span>
+2012:       <span class="ruby-constant">String</span>(<span class="ruby-identifier">field</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-ivar">@quote_char</span>, <span class="ruby-ivar">@quote_char</span> <span class="ruby-operator">*</span> <span class="ruby-value">2</span>) <span class="ruby-operator">+</span>
+2013:       <span class="ruby-ivar">@quote_char</span>
+2014:     <span class="ruby-keyword kw">end</span>
+2015:     <span class="ruby-identifier">quotable_chars</span> = <span class="ruby-identifier">encode_str</span>(<span class="ruby-value str">&quot;\r\n&quot;</span>, <span class="ruby-ivar">@col_sep</span>, <span class="ruby-ivar">@quote_char</span>)
+2016:     <span class="ruby-ivar">@quote</span>         = <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@force_quotes</span>
+2017:       <span class="ruby-identifier">do_quote</span>
+2018:     <span class="ruby-keyword kw">else</span>
+2019:       <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span>
+2020:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">nil?</span>  <span class="ruby-comment cmt"># represent +nil+ fields as empty unquoted fields</span>
+2021:           <span class="ruby-value str">&quot;&quot;</span>
+2022:         <span class="ruby-keyword kw">else</span>
+2023:           <span class="ruby-identifier">field</span> = <span class="ruby-constant">String</span>(<span class="ruby-identifier">field</span>)  <span class="ruby-comment cmt"># Stringify fields</span>
+2024:           <span class="ruby-comment cmt"># represent empty fields as empty quoted fields</span>
+2025:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">or</span>
+2026:              <span class="ruby-identifier">field</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">quotable_chars</span>).<span class="ruby-identifier">nonzero?</span>
+2027:             <span class="ruby-identifier">do_quote</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">field</span>)
+2028:           <span class="ruby-keyword kw">else</span>
+2029:             <span class="ruby-identifier">field</span>  <span class="ruby-comment cmt"># unquoted field</span>
+2030:           <span class="ruby-keyword kw">end</span>
+2031:         <span class="ruby-keyword kw">end</span>
+2032:       <span class="ruby-keyword kw">end</span>
+2033:     <span class="ruby-keyword kw">end</span>
+2034:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

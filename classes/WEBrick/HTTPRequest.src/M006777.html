@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>meta_vars (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 204</span>
+204:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_vars</span>
+205:       <span class="ruby-comment cmt"># This method provides the metavariables defined by the revision 3</span>
+206:       <span class="ruby-comment cmt"># of ``The WWW Common Gateway Interface Version 1.1''.</span>
+207:       <span class="ruby-comment cmt"># (http://Web.Golux.Com/coar/cgi/)</span>
+208: 
+209:       <span class="ruby-identifier">meta</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+210: 
+211:       <span class="ruby-identifier">cl</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Content-Length&quot;</span>]
+212:       <span class="ruby-identifier">ct</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Content-Type&quot;</span>]
+213:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;CONTENT_LENGTH&quot;</span>]    = <span class="ruby-identifier">cl</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cl</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+214:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;CONTENT_TYPE&quot;</span>]      = <span class="ruby-identifier">ct</span>.<span class="ruby-identifier">dup</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ct</span>
+215:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;GATEWAY_INTERFACE&quot;</span>] = <span class="ruby-value str">&quot;CGI/1.1&quot;</span>
+216:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>]         = <span class="ruby-ivar">@path_info</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@path_info</span>.<span class="ruby-identifier">dup</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>
+217:      <span class="ruby-comment cmt">#meta[&quot;PATH_TRANSLATED&quot;]   = nil      # no plan to be provided</span>
+218:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;QUERY_STRING&quot;</span>]      = <span class="ruby-ivar">@query_string</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@query_string</span>.<span class="ruby-identifier">dup</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>
+219:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;REMOTE_ADDR&quot;</span>]       = <span class="ruby-ivar">@peeraddr</span>[<span class="ruby-value">3</span>]
+220:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;REMOTE_HOST&quot;</span>]       = <span class="ruby-ivar">@peeraddr</span>[<span class="ruby-value">2</span>]
+221:      <span class="ruby-comment cmt">#meta[&quot;REMOTE_IDENT&quot;]      = nil      # no plan to be provided</span>
+222:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;REMOTE_USER&quot;</span>]       = <span class="ruby-ivar">@user</span>
+223:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>]    = <span class="ruby-ivar">@request_method</span>.<span class="ruby-identifier">dup</span>
+224:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;REQUEST_URI&quot;</span>]       = <span class="ruby-ivar">@request_uri</span>.<span class="ruby-identifier">to_s</span>
+225:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>]       = <span class="ruby-ivar">@script_name</span>.<span class="ruby-identifier">dup</span>
+226:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;SERVER_NAME&quot;</span>]       = <span class="ruby-ivar">@host</span>
+227:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;SERVER_PORT&quot;</span>]       = <span class="ruby-ivar">@port</span>.<span class="ruby-identifier">to_s</span>
+228:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;SERVER_PROTOCOL&quot;</span>]   = <span class="ruby-value str">&quot;HTTP/&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:HTTPVersion</span>].<span class="ruby-identifier">to_s</span>
+229:       <span class="ruby-identifier">meta</span>[<span class="ruby-value str">&quot;SERVER_SOFTWARE&quot;</span>]   = <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:ServerSoftware</span>].<span class="ruby-identifier">dup</span>
+230: 
+231:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+232:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^content-type$/i</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">key</span>
+233:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^content-length$/i</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">key</span>
+234:         <span class="ruby-identifier">name</span> = <span class="ruby-value str">&quot;HTTP_&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">key</span>
+235:         <span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/-/o</span>, <span class="ruby-value str">&quot;_&quot;</span>)
+236:         <span class="ruby-identifier">name</span>.<span class="ruby-identifier">upcase!</span>
+237:         <span class="ruby-identifier">meta</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">val</span>
+238:       }
+239: 
+240:       <span class="ruby-identifier">meta</span>
+241:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

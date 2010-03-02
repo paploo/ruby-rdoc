@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>old (IRB::IrbLoader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/ext/loader.rb, line 90</span>
+ 90:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">old</span>
+ 91:       <span class="ruby-identifier">back_io</span> = <span class="ruby-ivar">@io</span>
+ 92:       <span class="ruby-identifier">back_path</span> = <span class="ruby-ivar">@irb_path</span>
+ 93:       <span class="ruby-identifier">back_name</span> = <span class="ruby-ivar">@irb_name</span>
+ 94:       <span class="ruby-identifier">back_scanner</span> = <span class="ruby-ivar">@irb</span>.<span class="ruby-identifier">scanner</span>
+ 95:       <span class="ruby-keyword kw">begin</span>
+ 96:         <span class="ruby-ivar">@io</span> = <span class="ruby-constant">FileInputMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>)
+ 97:         <span class="ruby-ivar">@irb_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)
+ 98:         <span class="ruby-ivar">@irb_path</span> = <span class="ruby-identifier">path</span>
+ 99:         <span class="ruby-ivar">@irb</span>.<span class="ruby-identifier">signal_status</span>(<span class="ruby-identifier">:IN_LOAD</span>) <span class="ruby-keyword kw">do</span>
+100:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">back_io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">FileInputMethod</span>)
+101:             <span class="ruby-ivar">@irb</span>.<span class="ruby-identifier">eval_input</span>
+102:           <span class="ruby-keyword kw">else</span>
+103:             <span class="ruby-keyword kw">begin</span>
+104:               <span class="ruby-ivar">@irb</span>.<span class="ruby-identifier">eval_input</span>
+105:             <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadAbort</span>
+106:               <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;load abort!!\n&quot;</span>
+107:             <span class="ruby-keyword kw">end</span>
+108:           <span class="ruby-keyword kw">end</span>
+109:         <span class="ruby-keyword kw">end</span>
+110:       <span class="ruby-keyword kw">ensure</span>
+111:         <span class="ruby-ivar">@io</span> = <span class="ruby-identifier">back_io</span>
+112:         <span class="ruby-ivar">@irb_name</span> = <span class="ruby-identifier">back_name</span>
+113:         <span class="ruby-ivar">@irb_path</span> = <span class="ruby-identifier">back_path</span>
+114:         <span class="ruby-ivar">@irb</span>.<span class="ruby-identifier">scanner</span> = <span class="ruby-identifier">back_scanner</span>
+115:       <span class="ruby-keyword kw">end</span>
+116:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

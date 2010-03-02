@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>dsa_verify_asn1 (OpenSSL::PKey::EC)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     key.dsa_verify(data, sig)   =&gt; true or false
+ *
+ *  See the OpenSSL documentation for ECDSA_verify()
+ */
+static VALUE ossl_ec_key_dsa_verify_asn1(VALUE self, VALUE data, VALUE sig)
+{
+    EC_KEY *ec;
+
+    Require_EC_KEY(self, ec);
+    StringValue(data);
+    StringValue(sig);
+
+    switch (ECDSA_verify(0, (unsigned char *) RSTRING_PTR(data), RSTRING_LEN(data), (unsigned char *) RSTRING_PTR(sig), RSTRING_LEN(sig), ec)) {
+    case 1:     return Qtrue;
+    case 0:     return Qfalse;
+    default:    break;
+    }
+
+    ossl_raise(eECError, &quot;ECDSA_verify&quot;);
+}</pre>
+</body>
+</html>

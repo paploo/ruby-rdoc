@@ -2,35 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>binmode (IO)</title>
+  <title>print (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.binmode    =&gt; ios
+ *     ios.print()             =&gt; nil
+ *     ios.print(obj, ...)     =&gt; nil
  *
- *  Puts &lt;em&gt;ios&lt;/em&gt; into binary mode.
- *  Once a stream is in binary mode, it cannot be reset to nonbinary mode.
+ *  Writes the given object(s) to &lt;em&gt;ios&lt;/em&gt;. The stream must be
+ *  opened for writing. If the output record separator (&lt;code&gt;$\\&lt;/code&gt;)
+ *  is not &lt;code&gt;nil&lt;/code&gt;, it will be appended to the output. If no
+ *  arguments are given, prints &lt;code&gt;$_&lt;/code&gt;. Objects that aren't
+ *  strings will be converted by calling their &lt;code&gt;to_s&lt;/code&gt; method.
+ *  With no argument, prints the contents of the variable &lt;code&gt;$_&lt;/code&gt;.
+ *  Returns &lt;code&gt;nil&lt;/code&gt;.
  *
- *  - newline conversion disabled
- *  - encoding conversion disabled
- *  - content is treated as ASCII-8BIT
+ *     $stdout.print(&quot;This is &quot;, 100, &quot; percent.\n&quot;)
  *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     This is 100 percent.
  */
 
-static VALUE
-rb_io_binmode_m(VALUE io)
+VALUE
+rb_io_print(int argc, VALUE *argv, VALUE out)
 {
-    VALUE write_io;
+    int i;
+    VALUE line;
 
-    rb_io_ascii8bit_binmode(io);
+    /* if no argument given, print `$_' */
+    if (argc == 0) {
+        argc = 1;
+        line = rb_lastline_get();
+        argv = &amp;line;
+    }
+    for (i=0; i&lt;argc; i++) {
+        rb_io_write(out, argv[i]);
+        if (!NIL_P(rb_output_fs)) {
+            rb_io_write(out, rb_output_fs);
+        }
+    }
+    if (argc &gt; 0 &amp;&amp; !NIL_P(rb_output_rs)) {
+        rb_io_write(out, rb_output_rs);
+    }
 
-    write_io = GetWriteIO(io);
-    if (write_io != io)
-        rb_io_ascii8bit_binmode(write_io);
-    return io;
+    return Qnil;
 }</pre>
 </body>
 </html>

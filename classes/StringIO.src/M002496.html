@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>close_write (StringIO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   strio.close_write    -&gt; nil
+ *
+ * Closes the write end of a StringIO.  Will raise an  +IOError+ if the
+ * *strio* is not writeable.
+ */
+static VALUE
+strio_close_write(VALUE self)
+{
+    struct StringIO *ptr = StringIO(self);
+    if (!WRITABLE(ptr)) {
+        rb_raise(rb_eIOError, &quot;closing non-duplex IO for writing&quot;);
+    }
+    ptr-&gt;flags &amp;= ~FMODE_WRITABLE;
+    return Qnil;
+}</pre>
+</body>
+</html>

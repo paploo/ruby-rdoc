@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>fixed_encoding? (Regexp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rxp.fixed_encoding?   =&gt; true or false
+ *
+ *  Returns false if rxp is applicable to
+ *  a string with any ASCII compatible encoding.
+ *  Returns true otherwise.
+ *
+ *      r = /a/
+ *      r.fixed_encoding?                               #=&gt; false
+ *      r =~ &quot;\u{6666} a&quot;                               #=&gt; 2
+ *      r =~ &quot;\xa1\xa2 a&quot;.force_encoding(&quot;euc-jp&quot;)      #=&gt; 2
+ *      r =~ &quot;abc&quot;.force_encoding(&quot;euc-jp&quot;)             #=&gt; 0
+ *
+ *      r = /a/u
+ *      r.fixed_encoding?                               #=&gt; true
+ *      r.encoding                                      #=&gt; #&lt;Encoding:UTF-8&gt;
+ *      r =~ &quot;\u{6666} a&quot;                               #=&gt; 2
+ *      r =~ &quot;\xa1\xa2&quot;.force_encoding(&quot;euc-jp&quot;)        #=&gt; ArgumentError
+ *      r =~ &quot;abc&quot;.force_encoding(&quot;euc-jp&quot;)             #=&gt; 0
+ *
+ *      r = /\u{6666}/
+ *      r.fixed_encoding?                               #=&gt; true
+ *      r.encoding                                      #=&gt; #&lt;Encoding:UTF-8&gt;
+ *      r =~ &quot;\u{6666} a&quot;                               #=&gt; 0
+ *      r =~ &quot;\xa1\xa2&quot;.force_encoding(&quot;euc-jp&quot;)        #=&gt; ArgumentError
+ *      r =~ &quot;abc&quot;.force_encoding(&quot;euc-jp&quot;)             #=&gt; nil
+ */
+
+static VALUE
+rb_reg_fixed_encoding_p(VALUE re)
+{
+    if (FL_TEST(re, KCODE_FIXED))
+        return Qtrue;
+    else
+        return Qfalse;
+}</pre>
+</body>
+</html>

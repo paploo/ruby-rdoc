@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>initialize (Shell::CommandProcessor)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 34</span>
+34:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize</span>
+35: 
+36:       <span class="ruby-identifier">install_builtin_commands</span>
+37: 
+38:       <span class="ruby-comment cmt"># define CommandProccessor#methods to Shell#methods and Filter#methods</span>
+39:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">m</span> <span class="ruby-keyword kw">in</span> <span class="ruby-constant">CommandProcessor</span>.<span class="ruby-identifier">instance_methods</span>(<span class="ruby-keyword kw">false</span>) <span class="ruby-operator">-</span> <span class="ruby-constant">NoDelegateMethods</span>
+40:         <span class="ruby-identifier">add_delegate_command_to_shell</span>(<span class="ruby-identifier">m</span>)
+41:       <span class="ruby-keyword kw">end</span>
+42:       
+43:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">method_added</span>(<span class="ruby-identifier">id</span>)
+44:         <span class="ruby-identifier">add_delegate_command_to_shell</span>(<span class="ruby-identifier">id</span>)
+45:       <span class="ruby-keyword kw">end</span>
+46:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,14 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>opendir (Pathname)</title>
+  <title>children (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/pathname.rb, line 1014</span>
-1014:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">opendir</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: dir</span>
-1015:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-1016:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 701</span>
+701:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children</span>(<span class="ruby-identifier">with_directory</span>=<span class="ruby-keyword kw">true</span>)
+702:     <span class="ruby-identifier">with_directory</span> = <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@path</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span>
+703:     <span class="ruby-identifier">result</span> = []
+704:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+705:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'.'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'..'</span>
+706:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">with_directory</span>
+707:         <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-identifier">e</span>))
+708:       <span class="ruby-keyword kw">else</span>
+709:         <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">e</span>)
+710:       <span class="ruby-keyword kw">end</span>
+711:     }
+712:     <span class="ruby-identifier">result</span>
+713:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

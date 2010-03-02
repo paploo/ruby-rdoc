@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_smime (OpenSSL::PKCS7)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    PKCS7.read_smime(string) =&gt; pkcs7
+ */
+static VALUE
+ossl_pkcs7_s_read_smime(VALUE klass, VALUE arg)
+{
+    BIO *in, *out;
+    PKCS7 *pkcs7;
+    VALUE ret, data;
+
+    in = ossl_obj2bio(arg);
+    out = NULL;
+    pkcs7 = SMIME_read_PKCS7(in, &amp;out);
+    BIO_free(in);
+    if(!pkcs7) ossl_raise(ePKCS7Error, NULL);
+    data = out ? ossl_membio2str(out) : Qnil;
+    WrapPKCS7(cPKCS7, ret, pkcs7);
+    ossl_pkcs7_set_data(ret, data);
+    ossl_pkcs7_set_err_string(ret, Qnil);
+
+    return ret;
+}</pre>
+</body>
+</html>

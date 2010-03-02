@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (Process::Status)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     stat.to_s   =&gt; string
+ *
+ *  Show pid and exit status as a string.
+ */
+
+static VALUE
+pst_to_s(VALUE st)
+{
+    rb_pid_t pid;
+    int status;
+    VALUE str;
+
+    pid = NUM2LONG(pst_pid(st));
+    status = PST2INT(st);
+
+    str = rb_str_buf_new(0);
+    pst_message(str, pid, status);
+    return str;
+}</pre>
+</body>
+</html>

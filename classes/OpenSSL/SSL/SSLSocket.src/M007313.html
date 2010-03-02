@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>peer_cert_chain (OpenSSL::SSL::SSLSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    ssl.peer_cert_chain =&gt; [cert, ...] or nil
+ */
+static VALUE
+ossl_ssl_get_peer_cert_chain(VALUE self)
+{
+    SSL *ssl;
+    STACK_OF(X509) *chain;
+    X509 *cert;
+    VALUE ary;
+    int i, num;
+
+    Data_Get_Struct(self, SSL, ssl);
+    if(!ssl){
+        rb_warning(&quot;SSL session is not started yet.&quot;);
+        return Qnil;
+    }
+    chain = SSL_get_peer_cert_chain(ssl);
+    if(!chain) return Qnil;
+    num = sk_num(chain);
+    ary = rb_ary_new2(num);
+    for (i = 0; i &lt; num; i++){
+        cert = (X509*)sk_value(chain, i);
+        rb_ary_push(ary, ossl_x509_new(cert));
+    }
+
+    return ary;
+}</pre>
+</body>
+</html>

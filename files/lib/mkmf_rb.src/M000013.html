@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 884</span>
-884: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">try_type</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
-885:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_compile</span>(<span class="ruby-value str">&quot;\#{cpp_include(headers)}\n/*top*/\ntypedef \#{type} conftest_type;\nint conftestval[sizeof(conftest_type)?1:-1];\n&quot;</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
-886:     <span class="ruby-identifier">$defs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;-DHAVE_TYPE_%s&quot;</span>, <span class="ruby-identifier">type</span>.<span class="ruby-identifier">tr_cpp</span>))
-887:     <span class="ruby-keyword kw">true</span>
-888:   <span class="ruby-keyword kw">else</span>
-889:     <span class="ruby-keyword kw">false</span>
-890:   <span class="ruby-keyword kw">end</span>
-891: <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/mkmf.rb, line 886</span>
+886: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">try_type</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+887:   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">try_compile</span>(<span class="ruby-value str">&quot;\#{cpp_include(headers)}\n/*top*/\ntypedef \#{type} conftest_type;\nint conftestval[sizeof(conftest_type)?1:-1];\n&quot;</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">b</span>)
+888:     <span class="ruby-identifier">$defs</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;-DHAVE_TYPE_%s&quot;</span>, <span class="ruby-identifier">type</span>.<span class="ruby-identifier">tr_cpp</span>))
+889:     <span class="ruby-keyword kw">true</span>
+890:   <span class="ruby-keyword kw">else</span>
+891:     <span class="ruby-keyword kw">false</span>
+892:   <span class="ruby-keyword kw">end</span>
+893: <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>syswrite (OpenSSL::SSL::SSLSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    ssl.syswrite(string) =&gt; integer
+ */
+static VALUE
+ossl_ssl_write(VALUE self, VALUE str)
+{
+    SSL *ssl;
+    int nwrite = 0;
+    rb_io_t *fptr;
+
+    StringValue(str);
+    Data_Get_Struct(self, SSL, ssl);
+    GetOpenFile(ossl_ssl_get_io(self), fptr);
+
+    if (ssl) {
+        for (;;){
+            nwrite = SSL_write(ssl, RSTRING_PTR(str), RSTRING_LEN(str));
+            switch(ssl_get_error(ssl, nwrite)){
+            case SSL_ERROR_NONE:
+                goto end;
+            case SSL_ERROR_WANT_WRITE:
+                rb_io_wait_writable(FPTR_TO_FD(fptr));
+                continue;
+            case SSL_ERROR_WANT_READ:
+                rb_io_wait_readable(FPTR_TO_FD(fptr));
+                continue;
+            case SSL_ERROR_SYSCALL:
+                if (errno) rb_sys_fail(0);
+            default:
+                ossl_raise(eSSLError, &quot;SSL_write:&quot;);
+            }
+        }
+    }
+    else {
+        ID id_syswrite = rb_intern(&quot;syswrite&quot;);
+        rb_warning(&quot;SSL session is not started yet.&quot;);
+        return rb_funcall(ossl_ssl_get_io(self), id_syswrite, 1, str);
+    }
+
+  end:
+    return INT2NUM(nwrite);
+}</pre>
+</body>
+</html>

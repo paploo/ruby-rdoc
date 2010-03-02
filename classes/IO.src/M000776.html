@@ -2,59 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close_on_exec= (IO)</title>
+  <title>binread (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close_on_exec = bool    =&gt; true or false
+ *     IO.binread(name, [length [, offset]] )   =&gt; string
  *
- *  Sets a close-on-exec flag.
+ *  Opens the file, optionally seeks to the given offset, then returns
+ *  &lt;i&gt;length&lt;/i&gt; bytes (defaulting to the rest of the file).
+ *  &lt;code&gt;read&lt;/code&gt; ensures the file is closed before returning.
+ *  The open mode would be &quot;rb:ASCII-8BIT&quot;.
  *
- *     f = open(&quot;/dev/null&quot;)
- *     f.close_on_exec = true
- *     system(&quot;cat&quot;, &quot;/proc/self/fd/#{f.fileno}&quot;) # cat: /proc/self/fd/3: No such file or directory
- *     f.closed?                #=&gt; false
+ *     IO.binread(&quot;testfile&quot;)           #=&gt; &quot;This is line one\nThis is line two\nThis is line three\nAnd so on...\n&quot;
+ *     IO.binread(&quot;testfile&quot;, 20)       #=&gt; &quot;This is line one\nThi&quot;
+ *     IO.binread(&quot;testfile&quot;, 20, 10)   #=&gt; &quot;ne one\nThis is line &quot;
  */
 
 static VALUE
-rb_io_set_close_on_exec(VALUE io, VALUE arg)
+rb_io_s_binread(int argc, VALUE *argv, VALUE io)
 {
-#if defined(HAVE_FCNTL) &amp;&amp; defined(F_GETFD) &amp;&amp; defined(F_SETFD) &amp;&amp; defined(FD_CLOEXEC)
-    int flag = RTEST(arg) ? FD_CLOEXEC : 0;
-    rb_io_t *fptr;
-    VALUE write_io;
-    int fd, ret;
+    VALUE offset;
+    struct foreach_arg arg;
 
-    write_io = GetWriteIO(io);
-    if (io != write_io) {
-        GetOpenFile(write_io, fptr);
-        if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-            if ((ret = fcntl(fptr-&gt;fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-            if ((ret &amp; FD_CLOEXEC) != flag) {
-                ret = (ret &amp; ~FD_CLOEXEC) | flag;
-                ret = fcntl(fd, F_SETFD, ret);
-                if (ret == -1) rb_sys_fail_path(fptr-&gt;pathv);
-            }
-        }
-
+    rb_scan_args(argc, argv, &quot;12&quot;, NULL, NULL, &amp;offset);
+    FilePathValue(argv[0]);
+    arg.io = rb_io_open(argv[0], rb_str_new_cstr(&quot;rb:ASCII-8BIT&quot;), Qnil, Qnil);
+    if (NIL_P(arg.io)) return Qnil;
+    arg.argv = argv+1;
+    arg.argc = (argc &gt; 1) ? 1 : 0;
+    if (!NIL_P(offset)) {
+        rb_io_seek(arg.io, offset, SEEK_SET);
     }
-
-    GetOpenFile(io, fptr);
-    if (fptr &amp;&amp; 0 &lt;= (fd = fptr-&gt;fd)) {
-        if ((ret = fcntl(fd, F_GETFD)) == -1) rb_sys_fail_path(fptr-&gt;pathv);
-        if ((ret &amp; FD_CLOEXEC) != flag) {
-            ret = (ret &amp; ~FD_CLOEXEC) | flag;
-            ret = fcntl(fd, F_SETFD, ret);
-            if (ret == -1) rb_sys_fail_path(fptr-&gt;pathv);
-        }
-    }
-#else
-    rb_notimplement();
-#endif
-    return Qnil;
+    return rb_ensure(io_s_read, (VALUE)&amp;arg, rb_io_close, arg.io);
 }</pre>
 </body>
 </html>

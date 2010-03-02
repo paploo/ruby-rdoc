@@ -35,7 +35,7 @@ rb_ary_cmp(VALUE ary1, VALUE ary2)
 
     ary2 = to_ary(ary2);
     if (ary1 == ary2) return INT2FIX(0);
-    v = rb_exec_recursive(recursive_cmp, ary1, ary2);
+    v = rb_exec_recursive_paired(recursive_cmp, ary1, ary2, ary2);
     if (v != Qundef) return v;
     len = RARRAY_LEN(ary1) - RARRAY_LEN(ary2);
     if (len == 0) return INT2FIX(0);

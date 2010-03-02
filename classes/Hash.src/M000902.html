@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>has_key? (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     hsh.has_key?(key)    =&gt; true or false
+ *     hsh.include?(key)    =&gt; true or false
+ *     hsh.key?(key)        =&gt; true or false
+ *     hsh.member?(key)     =&gt; true or false
+ *
+ *  Returns &lt;code&gt;true&lt;/code&gt; if the given key is present in &lt;i&gt;hsh&lt;/i&gt;.
+ *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.has_key?(&quot;a&quot;)   #=&gt; true
+ *     h.has_key?(&quot;z&quot;)   #=&gt; false
+ *
+ */
+
+static VALUE
+rb_hash_has_key(VALUE hash, VALUE key)
+{
+    if (!RHASH(hash)-&gt;ntbl)
+        return Qfalse;
+    if (st_lookup(RHASH(hash)-&gt;ntbl, key, 0)) {
+        return Qtrue;
+    }
+    return Qfalse;
+}</pre>
+</body>
+</html>

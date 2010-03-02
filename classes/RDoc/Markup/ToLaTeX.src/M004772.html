@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>convert_special (RDoc::Markup::ToLaTeX)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_latex.rb, line 247</span>
+247:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_special</span>(<span class="ruby-identifier">special</span>)
+248:     <span class="ruby-identifier">handled</span> = <span class="ruby-keyword kw">false</span>
+249:     <span class="ruby-constant">Attribute</span>.<span class="ruby-identifier">each_name_of</span>(<span class="ruby-identifier">special</span>.<span class="ruby-identifier">type</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+250:       <span class="ruby-identifier">method_name</span> = <span class="ruby-node">&quot;handle_special_#{name}&quot;</span>
+251:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">method_name</span>
+252:         <span class="ruby-identifier">special</span>.<span class="ruby-identifier">text</span> = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">method_name</span>, <span class="ruby-identifier">special</span>)
+253:         <span class="ruby-identifier">handled</span> = <span class="ruby-keyword kw">true</span>
+254:       <span class="ruby-keyword kw">end</span>
+255:     <span class="ruby-keyword kw">end</span>
+256:     <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unhandled special: #{special}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">handled</span>
+257:     <span class="ruby-identifier">special</span>.<span class="ruby-identifier">text</span>
+258:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

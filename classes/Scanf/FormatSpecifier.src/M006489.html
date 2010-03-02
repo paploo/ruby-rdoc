@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mid_match? (Scanf::FormatSpecifier)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/scanf.rb, line 477</span>
+477:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mid_match?</span>
+478:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@matched</span>
+479:       <span class="ruby-identifier">cc_no_width</span>    = <span class="ruby-identifier">letter</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'['</span> <span class="ruby-operator">&amp;&amp;</span><span class="ruby-operator">!</span> <span class="ruby-identifier">width</span>
+480:       <span class="ruby-identifier">c_or_cc_width</span>  = (<span class="ruby-identifier">letter</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'c'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">letter</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'['</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">width</span>
+481:       <span class="ruby-identifier">width_left</span>     = <span class="ruby-identifier">c_or_cc_width</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">matched_string</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">width</span>)
+482: 
+483:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">width_left</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">cc_no_width</span>
+484:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

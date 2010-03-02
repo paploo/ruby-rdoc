@@ -2,56 +2,43 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>new (File)</title>
+  <title>umask (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     File.new(filename, mode=&quot;r&quot; [, opt])            =&gt; file
- *     File.new(filename [, mode [, perm]] [, opt])    =&gt; file
- *
- *  Opens the file named by _filename_ according to
- *  _mode_ (default is ``r'') and returns a new
- *  &lt;code&gt;File&lt;/code&gt; object. 
- * 
- *  === Parameters
- *  See the description of class +IO+ for a description of _mode_. 
- *  The file mode may optionally be specified as a +Fixnum+ 
- *  by _or_-ing together the flags (O_RDONLY etc, 
- *  again described under +IO+). 
- *
- *  Optional permission bits may be given in _perm_. 
- *  These mode and permission bits are platform dependent; 
- *  on Unix systems, see &lt;code&gt;open(2)&lt;/code&gt; for details.
- *
- *  Optional _opt_ parameter is same as in &lt;code.IO.open&lt;/code&gt;.
- *
- *  === Examples
- *
- *     f = File.new(&quot;testfile&quot;, &quot;r&quot;)
- *     f = File.new(&quot;newfile&quot;,  &quot;w+&quot;)
- *     f = File.new(&quot;newfile&quot;, File::CREAT|File::TRUNC|File::RDWR, 0644)
+ *     File.umask()          =&gt; integer
+ *     File.umask(integer)   =&gt; integer
+ *  
+ *  Returns the current umask value for this process. If the optional
+ *  argument is given, set the umask to that value and return the
+ *  previous value. Umask values are &lt;em&gt;subtracted&lt;/em&gt; from the
+ *  default permissions, so a umask of &lt;code&gt;0222&lt;/code&gt; would make a
+ *  file read-only for everyone.
+ *     
+ *     File.umask(0006)   #=&gt; 18
+ *     File.umask         #=&gt; 6
  */
 
 static VALUE
-rb_file_initialize(int argc, VALUE *argv, VALUE io)
+rb_file_s_umask(int argc, VALUE *argv)
 {
-    if (RFILE(io)-&gt;fptr) {
-        rb_raise(rb_eRuntimeError, &quot;reinitializing File&quot;);
-    }
-    if (0 &lt; argc &amp;&amp; argc &lt; 3) {
-        VALUE fd = rb_check_convert_type(argv[0], T_FIXNUM, &quot;Fixnum&quot;, &quot;to_int&quot;);
+    int omask = 0;
 
-        if (!NIL_P(fd)) {
-            argv[0] = fd;
-            return rb_io_initialize(argc, argv, io);
-        }
+    rb_secure(2);
+    if (argc == 0) {
+        omask = umask(0);
+        umask(omask);
     }
-    rb_open_file(argc, argv, io);
-
-    return io;
+    else if (argc == 1) {
+        omask = umask(NUM2INT(argv[0]));
+    }
+    else {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments&quot;);
+    }
+    return INT2FIX(omask);
 }</pre>
 </body>
 </html>

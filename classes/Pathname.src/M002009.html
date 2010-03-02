@@ -2,12 +2,21 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>zero? (Pathname)</title>
+  <title>mountpoint? (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 959</span>
-959:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">zero?</span>() <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">zero?</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 497</span>
+497:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mountpoint?</span>
+498:     <span class="ruby-keyword kw">begin</span>
+499:       <span class="ruby-identifier">stat1</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">lstat</span>
+500:       <span class="ruby-identifier">stat2</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">lstat</span>
+501:       <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">||</span>
+502:         <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span>
+503:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+504:       <span class="ruby-keyword kw">false</span>
+505:     <span class="ruby-keyword kw">end</span>
+506:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

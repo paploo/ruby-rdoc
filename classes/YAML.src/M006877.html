@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tag_class (YAML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/tag.rb, line 35</span>
+35:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">tag_class</span>( <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">cls</span> )
+36:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@@tagged_classes</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">tag</span>
+37:             <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;class #{ @@tagged_classes[tag] } held ownership of the #{ tag } tag&quot;</span>
+38:         <span class="ruby-keyword kw">end</span>
+39:         <span class="ruby-ivar">@@tagged_classes</span>[<span class="ruby-identifier">tag</span>] = <span class="ruby-identifier">cls</span>
+40:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

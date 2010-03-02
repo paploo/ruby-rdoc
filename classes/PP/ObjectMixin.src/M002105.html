@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pretty_print (PP::ObjectMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 285</span>
+285:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty_print</span>(<span class="ruby-identifier">q</span>)
+286:       <span class="ruby-identifier">method_method</span> = <span class="ruby-constant">Object</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-identifier">:method</span>).<span class="ruby-identifier">bind</span>(<span class="ruby-keyword kw">self</span>)
+287:       <span class="ruby-keyword kw">begin</span>
+288:         <span class="ruby-identifier">inspect_method</span> = <span class="ruby-identifier">method_method</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">:inspect</span>)
+289:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+290:       <span class="ruby-keyword kw">end</span>
+291:       <span class="ruby-keyword kw">begin</span>
+292:         <span class="ruby-identifier">to_s_method</span> = <span class="ruby-identifier">method_method</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">:to_s</span>)
+293:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span>
+294:       <span class="ruby-keyword kw">end</span>
+295:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">inspect_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\(Kernel\)#/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">inspect_method</span>.<span class="ruby-identifier">inspect</span>
+296:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inspect</span>
+297:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">inspect_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:inspect</span>)
+298:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inspect</span>
+299:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">to_s_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\(Kernel\)#/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">to_s_method</span>.<span class="ruby-identifier">inspect</span> <span class="ruby-operator">&amp;&amp;</span>
+300:             <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">empty?</span>
+301:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>
+302:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">to_s_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:to_s</span>)
+303:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>
+304:       <span class="ruby-keyword kw">else</span>
+305:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp_object</span>(<span class="ruby-keyword kw">self</span>)
+306:       <span class="ruby-keyword kw">end</span>
+307:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

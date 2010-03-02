@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_response (Net::HTTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/http.rb, line 384</span>
+384:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-identifier">uri_or_host</span>, <span class="ruby-identifier">path</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">port</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+385:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>
+386:         <span class="ruby-identifier">host</span> = <span class="ruby-identifier">uri_or_host</span>
+387:         <span class="ruby-identifier">new</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> <span class="ruby-operator">||</span> <span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">default_port</span>).<span class="ruby-identifier">start</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span>
+388:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+389:         }
+390:       <span class="ruby-keyword kw">else</span>
+391:         <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">uri_or_host</span>
+392:         <span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>).<span class="ruby-identifier">start</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span>
+393:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">request_uri</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+394:         }
+395:       <span class="ruby-keyword kw">end</span>
+396:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

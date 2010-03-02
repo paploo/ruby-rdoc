@@ -2,12 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>toutf8 (String)</title>
+  <title>is_binary_data? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File ext/nkf/lib/kconv.rb, line 235</span>
-235:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">toutf8</span>; <span class="ruby-constant">Kconv</span>.<span class="ruby-identifier">toutf8</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 145</span>
+145:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_binary_data?</span>
+146:         ( <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">count</span>( <span class="ruby-value str">&quot;^ -~&quot;</span>, <span class="ruby-value str">&quot;^\r\n&quot;</span> ).<span class="ruby-identifier">fdiv</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span><span class="ruby-value">.3</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">index</span>( <span class="ruby-value str">&quot;\x00&quot;</span> ) ) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">empty?</span>
+147:     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

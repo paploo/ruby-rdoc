@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>on_tags (RDoc::Markup::ToHtml)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_html.rb, line 251</span>
+251:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on_tags</span>(<span class="ruby-identifier">res</span>, <span class="ruby-identifier">item</span>)
+252:     <span class="ruby-identifier">attr_mask</span> = <span class="ruby-identifier">item</span>.<span class="ruby-identifier">turn_on</span>
+253:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_mask</span>.<span class="ruby-identifier">zero?</span>
+254: 
+255:     <span class="ruby-ivar">@attr_tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+256:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attr_mask</span> <span class="ruby-operator">&amp;</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">bit</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+257:         <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">on</span>)
+258:         <span class="ruby-ivar">@in_tt</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tt?</span>(<span class="ruby-identifier">tag</span>)
+259:       <span class="ruby-keyword kw">end</span>
+260:     <span class="ruby-keyword kw">end</span>
+261:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>catch (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     catch([arg]) {|tag| block }  =&gt; obj
+ *
+ *  +catch+ executes its block. If a +throw+ is
+ *  executed, Ruby searches up its stack for a +catch+ block
+ *  with a tag corresponding to the +throw+'s
+ *  _tag_. If found, that block is terminated, and
+ *  +catch+ returns the value given to +throw+. If
+ *  +throw+ is not called, the block terminates normally, and
+ *  the value of +catch+ is the value of the last expression
+ *  evaluated. +catch+ expressions may be nested, and the
+ *  +throw+ call need not be in lexical scope.
+ *
+ *     def routine(n)
+ *       puts n
+ *       throw :done if n &lt;= 0
+ *       routine(n-1)
+ *     end
+ *
+ *
+ *     catch(:done) { routine(3) }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     3
+ *     2
+ *     1
+ *     0
+ *
+ *  when _arg_ is given, +catch+ yields it as is, or when no
+ *  _arg_ is given, +catch+ assigns a new unique object to
+ *  +throw+.  this is usefull for nested +catch+.  _arg_ can
+ *  be an arbitrary object, not only Symbol.
+ *
+ */
+
+static VALUE
+rb_f_catch(int argc, VALUE *argv)
+{
+    VALUE tag;
+    int state;
+    volatile VALUE val = Qnil;          /* OK */
+    rb_thread_t *th = GET_THREAD();
+    rb_control_frame_t *saved_cfp = th-&gt;cfp;
+
+    if (argc == 0) {
+        tag = rb_obj_alloc(rb_cObject);
+    }
+    else {
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;tag);
+    }
+    PUSH_TAG();
+
+    th-&gt;tag-&gt;tag = tag;
+
+    if ((state = EXEC_TAG()) == 0) {
+        val = rb_yield_0(1, &amp;tag);
+    }
+    else if (state == TAG_THROW &amp;&amp; RNODE(th-&gt;errinfo)-&gt;u1.value == tag) {
+        th-&gt;cfp = saved_cfp;
+        val = th-&gt;tag-&gt;retval;
+        th-&gt;errinfo = Qnil;
+        state = 0;
+    }
+    POP_TAG();
+    if (state)
+        JUMP_TAG(state);
+
+    return val;
+}</pre>
+</body>
+</html>

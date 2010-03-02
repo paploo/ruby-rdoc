@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_include (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 2010</span>
+2010:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_include</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">comment</span>)
+2011:     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+2012:       <span class="ruby-identifier">skip_tkspace_comment</span>
+2013: 
+2014:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">get_constant_with_optional_parens</span>
+2015:       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_include</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Include</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">comment</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">empty?</span>
+2016: 
+2017:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">TkCOMMA</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">peek_tk</span>
+2018:       <span class="ruby-identifier">get_tk</span>
+2019:     <span class="ruby-keyword kw">end</span>
+2020:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

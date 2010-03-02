@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gen_main_index (RDoc::Generator::HTML)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html.rb, line 280</span>
+280:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_main_index</span>
+281:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">const_defined?</span> <span class="ruby-identifier">:FRAMELESS</span> <span class="ruby-keyword kw">then</span>
+282:       <span class="ruby-comment cmt">#</span>
+283:       <span class="ruby-comment cmt"># If we're using a template without frames, then just redirect</span>
+284:       <span class="ruby-comment cmt"># to it from index.html.</span>
+285:       <span class="ruby-comment cmt">#</span>
+286:       <span class="ruby-comment cmt"># One alternative to this, expanding the main page's template into</span>
+287:       <span class="ruby-comment cmt"># index.html, is tricky because the relative URLs will be different</span>
+288:       <span class="ruby-comment cmt"># (since index.html is located in at the site's root,</span>
+289:       <span class="ruby-comment cmt"># rather than within a files or a classes subdirectory).</span>
+290:       <span class="ruby-comment cmt">#</span>
+291:       <span class="ruby-identifier">open</span> <span class="ruby-value str">'index.html'</span>, <span class="ruby-value str">'w'</span>  <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+292:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+293:                &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;}</span>)
+294:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot;
+295:                 lang=&quot;en&quot;&gt;}</span>)
+296:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;head&gt;}</span>)
+297:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-node">%{&lt;title&gt;#{CGI.escapeHTML(@options.title)}&lt;/title&gt;}</span>)
+298:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-node">%{&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=#{@main_url}&quot; /&gt;}</span>)
+299:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;/head&gt;}</span>)
+300:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;body&gt;&lt;/body&gt;}</span>)
+301:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-value str">%{&lt;/html&gt;}</span>)
+302:       <span class="ruby-keyword kw">end</span>
+303:     <span class="ruby-keyword kw">else</span>
+304:       <span class="ruby-identifier">main</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatePage</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@template</span><span class="ruby-operator">::</span><span class="ruby-constant">INDEX</span>
+305: 
+306:       <span class="ruby-identifier">open</span> <span class="ruby-value str">'index.html'</span>, <span class="ruby-value str">'w'</span>  <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+307:         <span class="ruby-identifier">style_url</span> = <span class="ruby-identifier">style_url</span> <span class="ruby-value str">''</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">css</span>
+308:         
+309:         <span class="ruby-identifier">classes</span> = <span class="ruby-ivar">@classes</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">value_hash</span> }
+310:         
+311:         <span class="ruby-identifier">values</span> = {
+312:           <span class="ruby-value str">'initial_page'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@main_url</span>,
+313:           <span class="ruby-value str">'style_url'</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">style_url</span>(<span class="ruby-value str">''</span>, <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">css</span>),
+314:           <span class="ruby-value str">'title'</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-ivar">@options</span>.<span class="ruby-identifier">title</span>),
+315:           <span class="ruby-value str">'charset'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">charset</span>,
+316:           <span class="ruby-value str">'classes'</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">classes</span>,
+317:         }
+318:         
+319:         <span class="ruby-identifier">values</span>[<span class="ruby-value str">'inline_source'</span>] = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">inline_source</span>
+320: 
+321:         <span class="ruby-identifier">main</span>.<span class="ruby-identifier">write_html_on</span> <span class="ruby-identifier">f</span>, <span class="ruby-identifier">values</span>
+322:       <span class="ruby-keyword kw">end</span>
+323:     <span class="ruby-keyword kw">end</span>
+324:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

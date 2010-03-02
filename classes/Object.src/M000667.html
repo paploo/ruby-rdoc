@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>instance_of? (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.instance_of?(class)    =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;obj&lt;/i&gt; is an instance of the given
+ *  class. See also &lt;code&gt;Object#kind_of?&lt;/code&gt;.
+ */
+
+VALUE
+rb_obj_is_instance_of(VALUE obj, VALUE c)
+{
+    switch (TYPE(c)) {
+      case T_MODULE:
+      case T_CLASS:
+      case T_ICLASS:
+        break;
+      default:
+        rb_raise(rb_eTypeError, &quot;class or module required&quot;);
+    }
+
+    if (rb_obj_class(obj) == c) return Qtrue;
+    return Qfalse;
+}</pre>
+</body>
+</html>

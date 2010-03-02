@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_text (OpenSSL::PKey::EC::Group)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*  call-seq:
+ *     group.to_text   =&gt; String
+ *
+ *  See the OpenSSL documentation for ECPKParameters_print()
+ */
+static VALUE ossl_ec_group_to_text(VALUE self)
+{
+    EC_GROUP *group;
+    BIO *out;
+    VALUE str;
+
+    Require_EC_GROUP(self, group);
+    if (!(out = BIO_new(BIO_s_mem()))) {
+        ossl_raise(eEC_GROUP, &quot;BIO_new(BIO_s_mem())&quot;);
+    }
+    if (!ECPKParameters_print(out, group, 0)) {
+        BIO_free(out);
+        ossl_raise(eEC_GROUP, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+</body>
+</html>

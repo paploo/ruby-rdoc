@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>send_data (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1130</span>
+1130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_data</span>(<span class="ruby-identifier">data</span>)
+1131:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">data</span>
+1132:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+1133:         <span class="ruby-identifier">put_string</span>(<span class="ruby-value str">&quot;NIL&quot;</span>)
+1134:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+1135:         <span class="ruby-identifier">send_string_data</span>(<span class="ruby-identifier">data</span>)
+1136:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Integer</span>
+1137:         <span class="ruby-identifier">send_number_data</span>(<span class="ruby-identifier">data</span>)
+1138:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+1139:         <span class="ruby-identifier">send_list_data</span>(<span class="ruby-identifier">data</span>)
+1140:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Time</span>
+1141:         <span class="ruby-identifier">send_time_data</span>(<span class="ruby-identifier">data</span>)
+1142:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span>
+1143:         <span class="ruby-identifier">send_symbol_data</span>(<span class="ruby-identifier">data</span>)
+1144:       <span class="ruby-keyword kw">else</span>
+1145:         <span class="ruby-identifier">data</span>.<span class="ruby-identifier">send_data</span>(<span class="ruby-keyword kw">self</span>)
+1146:       <span class="ruby-keyword kw">end</span>
+1147:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

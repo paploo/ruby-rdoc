@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>flush_sessions (OpenSSL::SSL::SSLContext)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ctx.flush_sessions(time | nil) -&gt; self
+ *
+ */
+static VALUE
+ossl_sslctx_flush_sessions(int argc, VALUE *argv, VALUE self)
+{
+    VALUE arg1;
+    SSL_CTX *ctx;
+    time_t tm = 0;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;arg1);
+
+    Data_Get_Struct(self, SSL_CTX, ctx);
+
+    if (NIL_P(arg1)) {
+        tm = time(0);
+    } else if (rb_obj_is_instance_of(arg1, rb_cTime)) {
+        tm = NUM2LONG(rb_funcall(arg1, rb_intern(&quot;to_i&quot;), 0));
+    } else {
+        rb_raise(rb_eArgError, &quot;arg must be Time or nil&quot;);
+    }
+
+    SSL_CTX_flush_sessions(ctx, tm);
+
+    return self;
+}</pre>
+</body>
+</html>

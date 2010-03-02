@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&gt;&gt; (Fixnum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   fix &gt;&gt; count     =&gt; integer
+ *
+ * Shifts _fix_ right _count_ positions (left if _count_ is negative).
+ */
+
+static VALUE
+rb_fix_rshift(VALUE x, VALUE y)
+{
+    long i, val;
+
+    val = FIX2LONG(x);
+    if (!FIXNUM_P(y))
+        return rb_big_rshift(rb_int2big(val), y);
+    i = FIX2LONG(y);
+    if (i == 0) return x;
+    if (i &lt; 0)
+        return fix_lshift(val, (unsigned long)-i);
+    return fix_rshift(val, i);
+}</pre>
+</body>
+</html>

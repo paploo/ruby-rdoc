@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_class_accessor (RSS::Maker::ITunesBaseModel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/itunes.rb, line 7</span>
+ 7:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_class_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+ 8:         <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/-/</span>, <span class="ruby-value str">&quot;_&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^itunes_/</span>, <span class="ruby-value str">''</span>)
+ 9:         <span class="ruby-identifier">full_name</span> = <span class="ruby-node">&quot;#{RSS::ITUNES_PREFIX}_#{name}&quot;</span>
+10:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+11:         <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+12:           <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">def_other_element</span>(<span class="ruby-identifier">full_name</span>)
+13:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_other</span>
+14:           <span class="ruby-identifier">def_yes_other_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">full_name</span>)
+15:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:yes_clean_other</span>
+16:           <span class="ruby-identifier">def_yes_clean_other_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">full_name</span>)
+17:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:csv</span>
+18:           <span class="ruby-identifier">def_csv_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">full_name</span>)
+19:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:element</span>, <span class="ruby-identifier">:attribute</span>
+20:           <span class="ruby-identifier">recommended_attribute_name</span>, = <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+21:           <span class="ruby-identifier">klass_name</span> = <span class="ruby-node">&quot;ITunes#{Utils.to_class_name(name)}&quot;</span>
+22:           <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">def_classed_element</span>(<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">klass_name</span>,
+23:                                     <span class="ruby-identifier">recommended_attribute_name</span>)
+24:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:elements</span>
+25:           <span class="ruby-identifier">plural_name</span>, <span class="ruby-identifier">recommended_attribute_name</span> = <span class="ruby-identifier">args</span>
+26:           <span class="ruby-identifier">plural_name</span> <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{name}s&quot;</span>
+27:           <span class="ruby-identifier">full_plural_name</span> = <span class="ruby-node">&quot;#{RSS::ITUNES_PREFIX}_#{plural_name}&quot;</span>
+28:           <span class="ruby-identifier">klass_name</span> = <span class="ruby-node">&quot;ITunes#{Utils.to_class_name(name)}&quot;</span>
+29:           <span class="ruby-identifier">plural_klass_name</span> = <span class="ruby-node">&quot;ITunes#{Utils.to_class_name(plural_name)}&quot;</span>
+30:           <span class="ruby-identifier">def_elements_class_accessor</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">full_plural_name</span>,
+31:                                       <span class="ruby-identifier">klass_name</span>, <span class="ruby-identifier">plural_klass_name</span>,
+32:                                       <span class="ruby-identifier">recommended_attribute_name</span>)
+33:         <span class="ruby-keyword kw">end</span>
+34:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>service (WEBrick::HTTPProxyServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/webrick/httpproxy.rb, line 43</span>
+43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">service</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+44:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_method</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;CONNECT&quot;</span>
+45:         <span class="ruby-identifier">do_CONNECT</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+46:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">unparsed_uri</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">%r!^http://!</span>
+47:         <span class="ruby-identifier">proxy_service</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+48:       <span class="ruby-keyword kw">else</span>
+49:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+50:       <span class="ruby-keyword kw">end</span>
+51:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mangle_comment (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 620</span>
+620:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>)
+621:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">%r{/\*+}</span>) { <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">length</span> }
+622:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">%r{\*+/}</span>) { <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">length</span> }
+623:     <span class="ruby-identifier">comment</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/^[ \t]*\*/</span><span class="ruby-identifier">m</span>) { <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">length</span> }
+624:     <span class="ruby-identifier">comment</span>
+625:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

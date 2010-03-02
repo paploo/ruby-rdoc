@@ -2,29 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>xmlschema (Time)</title>
+  <title>to_s (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 485</span>
-485:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xmlschema</span>(<span class="ruby-identifier">fraction_digits</span>=<span class="ruby-value">0</span>)
-486:     <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%d-%02d-%02dT%02d:%02d:%02d'</span>,
-487:       <span class="ruby-identifier">year</span>, <span class="ruby-identifier">mon</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>) <span class="ruby-operator">+</span>
-488:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-489:       <span class="ruby-value str">''</span>
-490:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">9</span>
-491:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>)[<span class="ruby-value">0</span>, <span class="ruby-identifier">fraction_digits</span>]
-492:     <span class="ruby-keyword kw">else</span>
-493:       <span class="ruby-value str">'.'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%09d'</span>, <span class="ruby-identifier">nsec</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'0'</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">fraction_digits</span> <span class="ruby-operator">-</span> <span class="ruby-value">9</span>)
-494:     <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span>
-495:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">utc?</span>
-496:       <span class="ruby-value str">'Z'</span>
-497:     <span class="ruby-keyword kw">else</span>
-498:       <span class="ruby-identifier">off</span> = <span class="ruby-identifier">utc_offset</span>
-499:       <span class="ruby-identifier">sign</span> = <span class="ruby-identifier">off</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'-'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'+'</span>
-500:       <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%s%02d:%02d'</span>, <span class="ruby-identifier">sign</span>, <span class="ruby-operator">*</span>(<span class="ruby-identifier">off</span>.<span class="ruby-identifier">abs</span> <span class="ruby-operator">/</span> <span class="ruby-value">60</span>).<span class="ruby-identifier">divmod</span>(<span class="ruby-value">60</span>))
-501:     <span class="ruby-keyword kw">end</span>
-502:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     time.inspect =&gt; string
+ *     time.to_s    =&gt; string
+ *  
+ *  Returns a string representing &lt;i&gt;time&lt;/i&gt;. Equivalent to calling
+ *  &lt;code&gt;Time#strftime&lt;/code&gt; with a format string of
+ *  ``&lt;code&gt;%Y-%m-%d&lt;/code&gt; &lt;code&gt;%H:%M:%S&lt;/code&gt; &lt;code&gt;%z&lt;/code&gt;''
+ *  for a local time and
+ *  ``&lt;code&gt;%Y-%m-%d&lt;/code&gt; &lt;code&gt;%H:%M:%S&lt;/code&gt; &lt;code&gt;UTC&lt;/code&gt;''
+ *  for a UTC time.
+ *     
+ *     Time.now.to_s       #=&gt; &quot;2007-10-05 16:09:51 +0900&quot;
+ *     Time.now.utc.to_s   #=&gt; &quot;2007-10-05 07:09:51 UTC&quot;
+ */
+
+static VALUE
+time_to_s(VALUE time)
+{
+    struct time_object *tobj;
+    char buf[128];
+    int len;
+
+    GetTimeval(time, tobj);
+    if (tobj-&gt;tm_got == 0) {
+        time_get_tm(time, tobj-&gt;gmt);
+    }
+    if (tobj-&gt;gmt == 1) {
+        len = rb_strftime(buf, sizeof(buf), &quot;%Y-%m-%d %H:%M:%S UTC&quot;,
+                          &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
+    }
+    else {
+        len = rb_strftime(buf, sizeof(buf), &quot;%Y-%m-%d %H:%M:%S %z&quot;,
+                          &amp;tobj-&gt;tm, &amp;tobj-&gt;ts, tobj-&gt;gmt);
+    }
+    return rb_str_new(buf, len);
+}</pre>
 </body>
 </html>

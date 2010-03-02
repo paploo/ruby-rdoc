@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>usec (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     time.usec    =&gt; int
+ *     time.tv_usec =&gt; int
+ *  
+ *  Returns just the number of microseconds for &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now        #=&gt; 2007-11-19 08:03:26 -0600
+ *     &quot;%10.6f&quot; % t.to_f   #=&gt; &quot;1195481006.775195&quot;
+ *     t.usec              #=&gt; 775195
+ */
+
+static VALUE
+time_usec(VALUE time)
+{
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    return LONG2NUM(tobj-&gt;ts.tv_nsec/1000);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>** (Float)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *
+ *  flt ** other   =&gt; float
+ *
+ * Raises &lt;code&gt;float&lt;/code&gt; the &lt;code&gt;other&lt;/code&gt; power.
+ */
+
+static VALUE
+flo_pow(VALUE x, VALUE y)
+{
+    switch (TYPE(y)) {
+      case T_FIXNUM:
+        return DBL2NUM(pow(RFLOAT_VALUE(x), (double)FIX2LONG(y)));
+      case T_BIGNUM:
+        return DBL2NUM(pow(RFLOAT_VALUE(x), rb_big2dbl(y)));
+      case T_FLOAT:
+        return DBL2NUM(pow(RFLOAT_VALUE(x), RFLOAT_VALUE(y)));
+      default:
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;**&quot;));
+    }
+}</pre>
+</body>
+</html>

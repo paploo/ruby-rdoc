@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>public_key (OpenSSL::PKey::DSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    dsa.public_key -&gt; aDSA
+ *
+ * Makes new instance DSA PUBLIC_KEY from PRIVATE_KEY
+ */
+static VALUE
+ossl_dsa_to_public_key(VALUE self)
+{
+    EVP_PKEY *pkey;
+    DSA *dsa;
+    VALUE obj;
+        
+    GetPKeyDSA(self, pkey);
+    /* err check performed by dsa_instance */
+    dsa = DSAPublicKey_dup(pkey-&gt;pkey.dsa);
+    obj = dsa_instance(CLASS_OF(self), dsa);
+    if (obj == Qfalse) {
+        DSA_free(dsa);
+        ossl_raise(eDSAError, NULL);
+    }
+    return obj;
+}</pre>
+</body>
+</html>

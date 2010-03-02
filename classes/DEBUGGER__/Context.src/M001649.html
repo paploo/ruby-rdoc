@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_suspend (DEBUGGER__::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/debug.rb, line 83</span>
+83:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_suspend</span>
+84:     <span class="ruby-keyword kw">while</span> <span class="ruby-constant">MUTEX</span>.<span class="ruby-identifier">synchronize</span> {
+85:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@suspend_next</span>
+86:           <span class="ruby-constant">DEBUGGER__</span>.<span class="ruby-identifier">waiting</span>.<span class="ruby-identifier">push</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>
+87:           <span class="ruby-ivar">@suspend_next</span> = <span class="ruby-keyword kw">false</span>
+88:           <span class="ruby-keyword kw">true</span>
+89:         <span class="ruby-keyword kw">end</span>
+90:       }
+91:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,28 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getbyte (String)</title>
+  <title>next! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.getbyte(index)          =&gt; 0 .. 255
- *
- *  returns the &lt;i&gt;index&lt;/i&gt;th byte as an integer.
+ *     str.succ!   =&gt; str
+ *     str.next!   =&gt; str
+ *  
+ *  Equivalent to &lt;code&gt;String#succ&lt;/code&gt;, but modifies the receiver in
+ *  place.
  */
+
 static VALUE
-rb_str_getbyte(VALUE str, VALUE index)
+rb_str_succ_bang(VALUE str)
 {
-    long pos = NUM2LONG(index);
+    rb_str_shared_replace(str, rb_str_succ(str));
 
-    if (pos &lt; 0)
-        pos += RSTRING_LEN(str);
-    if (pos &lt; 0 ||  RSTRING_LEN(str) &lt;= pos)
-        return Qnil;
-
-    return INT2FIX((unsigned char)RSTRING_PTR(str)[pos]);
+    return str;
 }</pre>
 </body>
 </html>

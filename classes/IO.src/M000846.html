@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>soak_up_spaces (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/scanf.rb, line 645</span>
+645:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">soak_up_spaces</span>
+646:     <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
+647:     <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span>
+648:     <span class="ruby-keyword kw">until</span> <span class="ruby-identifier">eof</span> <span class="ruby-operator">||</span><span class="ruby-operator">!</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">||</span> <span class="ruby-regexp re">/\S/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">chr</span>)
+649:       <span class="ruby-identifier">c</span> = <span class="ruby-identifier">getc</span>
+650:     <span class="ruby-keyword kw">end</span>
+651:     <span class="ruby-identifier">ungetc</span>(<span class="ruby-identifier">c</span>) <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">c</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\S/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">chr</span>))
+652:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

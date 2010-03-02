@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sunday? (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     time.sunday? =&gt; true or false
+ *  
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;time&lt;/i&gt; represents Sunday.
+ *     
+ *     t = Time.local(1990, 4, 1)       #=&gt; 1990-04-01 00:00:00 -0600
+ *     t.sunday?                        #=&gt; true
+ */
+
+static VALUE
+time_sunday(VALUE time)
+{
+    wday_p(0);
+}</pre>
+</body>
+</html>

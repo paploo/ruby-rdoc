@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>type (OpenSSL::PKCS7)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    pkcs7.type =&gt; string or nil
+ */
+static VALUE
+ossl_pkcs7_get_type(VALUE self)
+{
+    PKCS7 *p7;
+
+    GetPKCS7(self, p7);
+    if(PKCS7_type_is_signed(p7))
+        return ID2SYM(rb_intern(&quot;signed&quot;));
+    if(PKCS7_type_is_encrypted(p7))
+        return ID2SYM(rb_intern(&quot;encrypted&quot;));
+    if(PKCS7_type_is_enveloped(p7))
+        return ID2SYM(rb_intern(&quot;enveloped&quot;));
+    if(PKCS7_type_is_signedAndEnveloped(p7))
+        return ID2SYM(rb_intern(&quot;signedAndEnveloped&quot;));
+    if(PKCS7_type_is_data(p7))
+        return ID2SYM(rb_intern(&quot;data&quot;));
+    return Qnil;
+}</pre>
+</body>
+</html>

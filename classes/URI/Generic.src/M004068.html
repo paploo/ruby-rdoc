@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_fragment (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/generic.rb, line 565</span>
+565:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_fragment</span>(<span class="ruby-identifier">v</span>)
+566:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">v</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
+567: 
+568:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">''</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">regexp</span>[<span class="ruby-identifier">:FRAGMENT</span>] <span class="ruby-operator">!~</span> <span class="ruby-identifier">v</span>
+569:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidComponentError</span>, 
+570:           <span class="ruby-node">&quot;bad component(expected fragment component): #{v}&quot;</span>
+571:       <span class="ruby-keyword kw">end</span>
+572: 
+573:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+574:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

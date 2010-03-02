@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>convert_heading (RDoc::Markup::ToLaTeX)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/to_latex.rb, line 260</span>
+260:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_heading</span>(<span class="ruby-identifier">level</span>, <span class="ruby-identifier">flow</span>)
+261:     <span class="ruby-identifier">res</span> =
+262:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">level</span>
+263:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value str">&quot;\\chapter{&quot;</span>
+264:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value str">&quot;\\section{&quot;</span>
+265:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value str">&quot;\\subsection{&quot;</span>
+266:       <span class="ruby-keyword kw">when</span> <span class="ruby-value">4</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value str">&quot;\\subsubsection{&quot;</span>
+267:       <span class="ruby-keyword kw">else</span>  <span class="ruby-value str">&quot;\\paragraph{&quot;</span>
+268:       <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span>
+269:       <span class="ruby-identifier">convert_flow</span>(<span class="ruby-identifier">flow</span>) <span class="ruby-operator">+</span>
+270:       <span class="ruby-value str">&quot;}\n&quot;</span>
+271:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

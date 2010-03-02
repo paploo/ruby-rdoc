@@ -2,12 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_time (Time)</title>
+  <title>at (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1769</span>
-1769:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_time</span>() <span class="ruby-identifier">getlocal</span> <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     Time.at(time) =&gt; time
+ *     Time.at(seconds_with_frac) =&gt; time
+ *     Time.at(seconds, microseconds_with_frac) =&gt; time
+ *  
+ *  Creates a new time object with the value given by &lt;i&gt;time&lt;/i&gt;,
+ *  the given number of &lt;i&gt;seconds_with_frac&lt;/i&gt;, or
+ *  &lt;i&gt;seconds&lt;/i&gt; and &lt;i&gt;microseconds_with_frac&lt;/i&gt; from the Epoch.
+ *  &lt;i&gt;seconds_with_frac&lt;/i&gt; and &lt;i&gt;microseconds_with_frac&lt;/i&gt;
+ *  can be Integer, Float, Rational, or other Numeric.
+ *  non-portable feature allows the offset to be negative on some systems.
+ *     
+ *     Time.at(0)            #=&gt; 1969-12-31 18:00:00 -0600
+ *     Time.at(Time.at(0))   #=&gt; 1969-12-31 18:00:00 -0600
+ *     Time.at(946702800)    #=&gt; 1999-12-31 23:00:00 -0600
+ *     Time.at(-284061600)   #=&gt; 1960-12-31 00:00:00 -0600
+ *     Time.at(946684800.2).usec #=&gt; 200000
+ *     Time.at(946684800, 123456.789).nsec #=&gt; 123456789
+ */
+
+static VALUE
+time_s_at(int argc, VALUE *argv, VALUE klass)
+{
+    struct timespec ts;
+    VALUE time, t;
+
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;time, &amp;t) == 2) {
+        ts.tv_sec = NUM2LONG(time);
+        ts.tv_nsec = NUM2LONG(rb_funcall(t, id_mul, 1, INT2FIX(1000)));
+    }
+    else {
+        ts = rb_time_timespec(time);
+    }
+    t = time_new_internal(klass, ts.tv_sec, ts.tv_nsec);
+    if (TYPE(time) == T_DATA &amp;&amp; RDATA(time)-&gt;dfree == time_free) {
+        struct time_object *tobj, *tobj2;
+
+        GetTimeval(time, tobj);
+        GetTimeval(t, tobj2);
+        tobj2-&gt;gmt = tobj-&gt;gmt;
+    }
+    return t;
+}</pre>
 </body>
 </html>

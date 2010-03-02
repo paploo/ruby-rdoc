@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate (OpenSSL::PKey::RSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     RSA.generate(size [, exponent]) -&gt; rsa
+ *
+ *  === Parameters
+ *  * +size+ is an integer representing the desired key size.  Keys smaller than 1024 should be considered insecure.
+ *  * +exponent+ is an odd number normally 3, 17, or 65537.
+ *
+ */
+static VALUE
+ossl_rsa_s_generate(int argc, VALUE *argv, VALUE klass)
+{
+/* why does this method exist?  why can't initialize take an optional exponent? */
+    RSA *rsa;
+    VALUE size, exp;
+    VALUE obj;
+
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;size, &amp;exp);
+
+    rsa = rsa_generate(NUM2INT(size), NIL_P(exp) ? RSA_F4 : NUM2INT(exp)); /* err handled by rsa_instance */
+    obj = rsa_instance(klass, rsa);
+
+    if (obj == Qfalse) {
+        RSA_free(rsa);
+        ossl_raise(eRSAError, NULL);
+    }
+
+    return obj;
+}</pre>
+</body>
+</html>

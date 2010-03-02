@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1218</span>
+1218:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generate</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+1219:     <span class="ruby-comment cmt"># add a default empty String, if none was given</span>
+1220:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
+1221:       <span class="ruby-identifier">io</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>)
+1222:       <span class="ruby-identifier">io</span>.<span class="ruby-identifier">seek</span>(<span class="ruby-value">0</span>, <span class="ruby-constant">IO</span><span class="ruby-operator">::</span><span class="ruby-constant">SEEK_END</span>)
+1223:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">io</span>)
+1224:     <span class="ruby-keyword kw">else</span>
+1225:       <span class="ruby-identifier">encoding</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:encoding</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+1226:       <span class="ruby-identifier">str</span>      = <span class="ruby-value str">&quot;&quot;</span>
+1227:       <span class="ruby-identifier">str</span>.<span class="ruby-identifier">encode!</span>(<span class="ruby-identifier">encoding</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">encoding</span>
+1228:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">str</span>)
+1229:     <span class="ruby-keyword kw">end</span>
+1230:     <span class="ruby-identifier">csv</span> = <span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)  <span class="ruby-comment cmt"># wrap</span>
+1231:     <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">csv</span>         <span class="ruby-comment cmt"># yield for appending</span>
+1232:     <span class="ruby-identifier">csv</span>.<span class="ruby-identifier">string</span>        <span class="ruby-comment cmt"># return final String</span>
+1233:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

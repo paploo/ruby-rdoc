@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>readpartial (Buffering)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/openssl/lib/openssl/buffering.rb, line 77</span>
+ 77:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readpartial</span>(<span class="ruby-identifier">maxlen</span>, <span class="ruby-identifier">buf</span>=<span class="ruby-keyword kw">nil</span>)
+ 78:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">maxlen</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+ 79:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buf</span>
+ 80:         <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">clear</span>
+ 81:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">buf</span>
+ 82:       <span class="ruby-keyword kw">else</span>
+ 83:         <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span>
+ 84:       <span class="ruby-keyword kw">end</span>
+ 85:     <span class="ruby-keyword kw">end</span>
+ 86:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@rbuffer</span>.<span class="ruby-identifier">empty?</span>
+ 87:       <span class="ruby-keyword kw">begin</span>
+ 88:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">sysread</span>(<span class="ruby-identifier">maxlen</span>, <span class="ruby-identifier">buf</span>)
+ 89:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EAGAIN</span>
+ 90:         <span class="ruby-keyword kw">retry</span>
+ 91:       <span class="ruby-keyword kw">end</span>
+ 92:     <span class="ruby-keyword kw">end</span>
+ 93:     <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">consume_rbuff</span>(<span class="ruby-identifier">maxlen</span>)
+ 94:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buf</span>
+ 95:       <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">ret</span>)
+ 96:       <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">buf</span>
+ 97:     <span class="ruby-keyword kw">end</span>
+ 98:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">EOFError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">empty?</span>
+ 99:     <span class="ruby-identifier">ret</span>
+100:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

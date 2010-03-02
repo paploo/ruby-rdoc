@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pretty_print_cycle (PP::ObjectMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 311</span>
+311:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty_print_cycle</span>(<span class="ruby-identifier">q</span>)
+312:       <span class="ruby-identifier">q</span>.<span class="ruby-identifier">object_address_group</span>(<span class="ruby-keyword kw">self</span>) {
+313:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+314:         <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-value str">'...'</span>
+315:       }
+316:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

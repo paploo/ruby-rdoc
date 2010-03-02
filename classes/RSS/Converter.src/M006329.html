@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_uconv_convert_if_can (RSS::Converter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/converter.rb, line 79</span>
+79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_uconv_convert_if_can</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-identifier">to_enc</span>, <span class="ruby-identifier">from_enc</span>, <span class="ruby-identifier">nkf_arg</span>)
+80:       <span class="ruby-keyword kw">begin</span>
+81:         <span class="ruby-identifier">require</span> <span class="ruby-value str">&quot;uconv&quot;</span>
+82:         <span class="ruby-identifier">def_convert</span>(<span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+83:           <span class="ruby-value str">&quot;begin\nUconv.\#{meth}(\#{value})\nrescue Uconv::Error\nraise ConversionError.new(\#{value}, \&quot;\#{to_enc}\&quot;, \&quot;\#{from_enc}\&quot;)\nend\n&quot;</span>
+84:         <span class="ruby-keyword kw">end</span>
+85:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>
+86:         <span class="ruby-identifier">require</span> <span class="ruby-value str">'nkf'</span>
+87:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">NKF</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">:UTF8</span>)
+88:           <span class="ruby-identifier">def_convert</span>(<span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+89:             <span class="ruby-node">&quot;NKF.nkf(#{nkf_arg.dump}, #{value})&quot;</span>
+90:           <span class="ruby-keyword kw">end</span>
+91:         <span class="ruby-keyword kw">else</span>
+92:           <span class="ruby-identifier">def_iconv_convert</span>(<span class="ruby-identifier">to_enc</span>, <span class="ruby-identifier">from_enc</span>, <span class="ruby-value">1</span>)
+93:         <span class="ruby-keyword kw">end</span>
+94:       <span class="ruby-keyword kw">end</span>
+95:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

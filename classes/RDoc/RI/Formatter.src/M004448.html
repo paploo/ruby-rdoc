@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>conv_html (RDoc::RI::Formatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 102</span>
+102:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">conv_html</span>(<span class="ruby-identifier">txt</span>)
+103:     <span class="ruby-identifier">txt</span> = <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&amp;gt;/</span>, <span class="ruby-value str">'&gt;'</span>)
+104:     <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&amp;lt;/</span>, <span class="ruby-value str">'&lt;'</span>)
+105:     <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&amp;quot;/</span>, <span class="ruby-value str">'&quot;'</span>)
+106:     <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/&amp;amp;/</span>, <span class="ruby-value str">'&amp;'</span>)
+107:     <span class="ruby-identifier">txt</span>
+108:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

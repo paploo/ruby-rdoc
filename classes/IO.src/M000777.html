@@ -2,34 +2,48 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close (IO)</title>
+  <title>select (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close   =&gt; nil
+ *     IO.select(read_array
+ *               [, write_array
+ *               [, error_array
+ *               [, timeout]]] ) =&gt;  array  or  nil
  *
- *  Closes &lt;em&gt;ios&lt;/em&gt; and flushes any pending writes to the operating
- *  system. The stream is unavailable for any further data operations;
- *  an &lt;code&gt;IOError&lt;/code&gt; is raised if such an attempt is made. I/O
- *  streams are automatically closed when they are claimed by the
- *  garbage collector.
- *
- *  If &lt;em&gt;ios&lt;/em&gt; is opened by &lt;code&gt;IO.popen&lt;/code&gt;,
- *  &lt;code&gt;close&lt;/code&gt; sets &lt;code&gt;$?&lt;/code&gt;.
+ *  See &lt;code&gt;Kernel#select&lt;/code&gt;.
  */
 
 static VALUE
-rb_io_close_m(VALUE io)
+rb_f_select(int argc, VALUE *argv, VALUE obj)
 {
-    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(io)) {
-        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
+    VALUE timeout;
+    struct select_args args;
+    struct timeval timerec;
+    int i;
+
+    rb_scan_args(argc, argv, &quot;13&quot;, &amp;args.read, &amp;args.write, &amp;args.except, &amp;timeout);
+    if (NIL_P(timeout)) {
+        args.timeout = 0;
     }
-    rb_io_check_closed(RFILE(io)-&gt;fptr);
-    rb_io_close(io);
-    return Qnil;
+    else {
+        timerec = rb_time_interval(timeout);
+        args.timeout = &amp;timerec;
+    }
+
+    for (i = 0; i &lt; sizeof(args.fdsets) / sizeof(args.fdsets[0]); ++i)
+        rb_fd_init(&amp;args.fdsets[i]);
+
+#ifdef HAVE_RB_FD_INIT
+    return rb_ensure(select_call, (VALUE)&amp;args, select_end, (VALUE)&amp;args);
+#else
+    return select_internal(args.read, args.write, args.except,
+                           args.timeout, args.fdsets);
+#endif
+
 }</pre>
 </body>
 </html>

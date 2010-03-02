@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_atom_persons (RSS::Maker::AtomPersons)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/atom.rb, line 9</span>
+ 9:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_atom_persons</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">maker_name</span>, <span class="ruby-identifier">plural</span>=<span class="ruby-keyword kw">nil</span>)
+10:         <span class="ruby-identifier">plural</span> <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{name}s&quot;</span>
+11:         <span class="ruby-identifier">klass_name</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">name</span>)
+12:         <span class="ruby-identifier">plural_klass_name</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">plural</span>)
+13: 
+14:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span>(<span class="ruby-value str">&quot;class \#{plural_klass_name} &lt; \#{plural_klass_name}Base\nclass \#{klass_name} &lt; \#{klass_name}Base\ndef to_feed(feed, current)\n\#{name} = feed.class::\#{klass_name}.new\nset = setup_values(\#{name})\nunless set\nraise NotSetError.new(\#{maker_name.dump},\nnot_set_required_variables)\nend\ncurrent.\#{plural} &lt;&lt; \#{name}\nset_parent(\#{name}, current)\nsetup_other_elements(\#{name})\nend\n\nprivate\ndef required_variable_names\n%w(name)\nend\nend\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+15:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,40 +2,47 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pid (IO)</title>
+  <title>each_line (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.pid    =&gt; fixnum
+ *     ios.each(sep=$/) {|line| block }         =&gt; ios
+ *     ios.each(limit) {|line| block }          =&gt; ios
+ *     ios.each(sep,limit) {|line| block }      =&gt; ios
+ *     ios.each_line(sep=$/) {|line| block }    =&gt; ios
+ *     ios.each_line(limit) {|line| block }     =&gt; ios
+ *     ios.each_line(sep,limit) {|line| block } =&gt; ios
  *
- *  Returns the process ID of a child process associated with
- *  &lt;em&gt;ios&lt;/em&gt;. This will be set by &lt;code&gt;IO.popen&lt;/code&gt;.
+ *  Executes the block for every line in &lt;em&gt;ios&lt;/em&gt;, where lines are
+ *  separated by &lt;i&gt;sep&lt;/i&gt;. &lt;em&gt;ios&lt;/em&gt; must be opened for
+ *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
  *
- *     pipe = IO.popen(&quot;-&quot;)
- *     if pipe
- *       $stderr.puts &quot;In parent, child pid is #{pipe.pid}&quot;
- *     else
- *       $stderr.puts &quot;In child, pid is #{$$}&quot;
- *     end
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.each {|line| puts &quot;#{f.lineno}: #{line}&quot; }
  *
  *  &lt;em&gt;produces:&lt;/em&gt;
  *
- *     In child, pid is 26209
- *     In parent, child pid is 26209
+ *     1: This is line one
+ *     2: This is line two
+ *     3: This is line three
+ *     4: And so on...
  */
 
 static VALUE
-rb_io_pid(VALUE io)
+rb_io_each_line(int argc, VALUE *argv, VALUE io)
 {
-    rb_io_t *fptr;
+    VALUE str, rs;
+    long limit;
 
-    GetOpenFile(io, fptr);
-    if (!fptr-&gt;pid)
-        return Qnil;
-    return PIDT2NUM(fptr-&gt;pid);
+    RETURN_ENUMERATOR(io, argc, argv);
+    prepare_getline_args(argc, argv, &amp;rs, &amp;limit, io);
+    while (!NIL_P(str = rb_io_getline_1(rs, limit, io))) {
+        rb_yield(str);
+    }
+    return io;
 }</pre>
 </body>
 </html>

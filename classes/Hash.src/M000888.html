@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>select (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     hsh.select {|key, value| block}   =&gt; a_hash
+ *
+ *  Returns a new hash consisting of entries which the block returns true.
+ *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300 }
+ *     h.select {|k,v| k &gt; &quot;a&quot;}  #=&gt; {&quot;b&quot; =&gt; 200, &quot;c&quot; =&gt; 300}
+ *     h.select {|k,v| v &lt; 200}  #=&gt; {&quot;a&quot; =&gt; 100}
+ */
+
+VALUE
+rb_hash_select(VALUE hash)
+{
+    VALUE result;
+
+    RETURN_ENUMERATOR(hash, 0, 0);
+    result = rb_hash_new();
+    rb_hash_foreach(hash, select_i, result);
+    return result;
+}</pre>
+</body>
+</html>

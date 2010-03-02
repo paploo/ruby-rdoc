@@ -2,20 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size (File)</title>
+  <title>mtime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    File.size(file_name)   =&gt; integer
- *
- * Returns the size of &lt;code&gt;file_name&lt;/code&gt;.
+ *  call-seq:
+ *     File.mtime(file_name)  =&gt;  time
+ *  
+ *  Returns the modification time for the named file as a Time object.
+ *     
+ *     File.mtime(&quot;testfile&quot;)   #=&gt; Tue Apr 08 12:58:04 CDT 2003
+ *     
  */
 
 static VALUE
-rb_file_s_size(VALUE klass, VALUE fname)
+rb_file_s_mtime(VALUE klass, VALUE fname)
 {
     struct stat st;
 
@@ -23,7 +26,7 @@ rb_file_s_size(VALUE klass, VALUE fname)
         FilePathValue(fname);
         rb_sys_fail(RSTRING_PTR(fname));
     }
-    return OFFT2NUM(st.st_size);
+    return stat_mtime(&amp;st);
 }</pre>
 </body>
 </html>

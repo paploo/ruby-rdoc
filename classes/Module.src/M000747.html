@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>class_variable_set (Module)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.class_variable_set(symbol, obj)    =&gt; obj
+ *  
+ *  Sets the class variable names by &lt;i&gt;symbol&lt;/i&gt; to
+ *  &lt;i&gt;object&lt;/i&gt;.
+ *     
+ *     class Fred
+ *       @@foo = 99
+ *       def foo
+ *         @@foo
+ *       end
+ *     end
+ *     Fred.class_variable_set(:@@foo, 101)     #=&gt; 101
+ *     Fred.new.foo                             #=&gt; 101
+ */
+
+static VALUE
+rb_mod_cvar_set(VALUE obj, VALUE iv, VALUE val)
+{
+    ID id = rb_to_id(iv);
+
+    if (!rb_is_class_id(id)) {
+        rb_name_error(id, &quot;`%s' is not allowed as a class variable name&quot;, rb_id2name(id));
+    }
+    rb_cvar_set(obj, id, val);
+    return val;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>lookup_method (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 545</span>
+545:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">lookup_method</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">klass</span>)
+546:     <span class="ruby-identifier">cache</span> = <span class="ruby-identifier">load_cache_for</span> <span class="ruby-identifier">klass</span>
+547:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">cache</span>
+548: 
+549:     <span class="ruby-identifier">method</span> = <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'.'</span>, <span class="ruby-value str">'#'</span>)]
+550:     <span class="ruby-identifier">method</span> = <span class="ruby-identifier">cache</span>[<span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'.'</span>, <span class="ruby-value str">'::'</span>)] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">method</span>
+551:     <span class="ruby-identifier">method</span>
+552:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>select_methods (RDoc::RI::Driver)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/driver.rb, line 645</span>
+645:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select_methods</span>(<span class="ruby-identifier">pattern</span>)
+646:     <span class="ruby-identifier">methods</span> = []
+647:     <span class="ruby-identifier">class_cache</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
+648:       <span class="ruby-identifier">class_cache</span>[<span class="ruby-identifier">klass</span>][<span class="ruby-value str">&quot;instance_methods&quot;</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span><span class="ruby-identifier">h</span>[<span class="ruby-value str">&quot;name&quot;</span>]}.<span class="ruby-identifier">grep</span>(<span class="ruby-identifier">pattern</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+649:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">load_cache_for</span>(<span class="ruby-identifier">klass</span>)[<span class="ruby-identifier">klass</span><span class="ruby-operator">+</span><span class="ruby-value str">'#'</span><span class="ruby-operator">+</span><span class="ruby-identifier">name</span>]
+650:         <span class="ruby-identifier">methods</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">method</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>
+651:       <span class="ruby-keyword kw">end</span>
+652:       <span class="ruby-identifier">class_cache</span>[<span class="ruby-identifier">klass</span>][<span class="ruby-value str">&quot;class_methods&quot;</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span><span class="ruby-identifier">h</span>[<span class="ruby-value str">&quot;name&quot;</span>]}.<span class="ruby-identifier">grep</span>(<span class="ruby-identifier">pattern</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+653:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">load_cache_for</span>(<span class="ruby-identifier">klass</span>)[<span class="ruby-identifier">klass</span><span class="ruby-operator">+</span><span class="ruby-value str">'::'</span><span class="ruby-operator">+</span><span class="ruby-identifier">name</span>]
+654:         <span class="ruby-identifier">methods</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">method</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>
+655:       <span class="ruby-keyword kw">end</span>
+656:     <span class="ruby-keyword kw">end</span>
+657:     <span class="ruby-identifier">methods</span>
+658:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (OpenSSL::BN)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    BN.new =&gt; aBN
+ *    BN.new(bn) =&gt; aBN
+ *    BN.new(string) =&gt; aBN
+ *    BN.new(string, 0 | 2 | 10 | 16) =&gt; aBN
+ */
+static VALUE
+ossl_bn_initialize(int argc, VALUE *argv, VALUE self)
+{
+    BIGNUM *bn;
+    VALUE str, bs;
+    int base = 10;
+
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;str, &amp;bs) == 2) {
+        base = NUM2INT(bs);
+    }
+    StringValue(str);
+    GetBN(self, bn);
+    if (RTEST(rb_obj_is_kind_of(str, cBN))) {
+        BIGNUM *other;
+
+        GetBN(str, other); /* Safe - we checked kind_of? above */
+        if (!BN_copy(bn, other)) {
+            ossl_raise(eBNError, NULL);
+        }
+        return self;
+    }
+
+    switch (base) {
+    case 0:
+        if (!BN_mpi2bn((unsigned char *)RSTRING_PTR(str), RSTRING_LEN(str), bn)) {
+            ossl_raise(eBNError, NULL);
+        }
+        break;
+    case 2:
+        if (!BN_bin2bn((unsigned char *)RSTRING_PTR(str), RSTRING_LEN(str), bn)) {
+            ossl_raise(eBNError, NULL);
+        }
+        break;
+    case 10:
+        if (!BN_dec2bn(&amp;bn, RSTRING_PTR(str))) {
+            ossl_raise(eBNError, NULL);
+        }
+        break;
+    case 16:
+        if (!BN_hex2bn(&amp;bn, RSTRING_PTR(str))) {
+            ossl_raise(eBNError, NULL);
+        }
+        break;
+    default:
+        ossl_raise(rb_eArgError, &quot;invalid radix %d&quot;, base);
+    }
+    return self;
+}</pre>
+</body>
+</html>

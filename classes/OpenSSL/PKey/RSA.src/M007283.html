@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>export (OpenSSL::PKey::RSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rsa.to_pem([cipher, pass]) -&gt; aString
+ *
+ *  === Parameters
+ *  * +cipher+ is a Cipher object.
+ *  * +pass+ is a string.
+ *
+ *  === Examples
+ *  * rsa.to_pem -&gt; aString
+ *  * rsa.to_pem(cipher, pass) -&gt; aString
+ */
+static VALUE
+ossl_rsa_export(int argc, VALUE *argv, VALUE self)
+{
+    EVP_PKEY *pkey;
+    BIO *out;
+    const EVP_CIPHER *ciph = NULL;
+    char *passwd = NULL;
+    VALUE cipher, pass, str;
+
+    GetPKeyRSA(self, pkey);
+
+    rb_scan_args(argc, argv, &quot;02&quot;, &amp;cipher, &amp;pass);
+
+    if (!NIL_P(cipher)) {
+        ciph = GetCipherPtr(cipher);
+        if (!NIL_P(pass)) {
+            passwd = StringValuePtr(pass);
+        }
+    }
+    if (!(out = BIO_new(BIO_s_mem()))) {
+        ossl_raise(eRSAError, NULL);
+    }
+    if (RSA_HAS_PRIVATE(pkey-&gt;pkey.rsa)) {
+        if (!PEM_write_bio_RSAPrivateKey(out, pkey-&gt;pkey.rsa, ciph,
+                                         NULL, 0, ossl_pem_passwd_cb, passwd)) {
+            BIO_free(out);
+            ossl_raise(eRSAError, NULL);
+        }
+    } else {
+        if (!PEM_write_bio_RSAPublicKey(out, pkey-&gt;pkey.rsa)) {
+            BIO_free(out);
+            ossl_raise(eRSAError, NULL);
+        }
+    }
+    str = ossl_membio2str(out);
+    
+    return str;
+}</pre>
+</body>
+</html>

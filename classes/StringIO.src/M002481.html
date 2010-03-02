@@ -2,32 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>truncate (StringIO)</title>
+  <title>eof (StringIO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>/*
- * call-seq:
- *   strio.truncate(integer)    -&gt; 0
- *
- * Truncates the buffer string to at most _integer_ bytes. The *strio*
- * must be opened for writing.
- */
-static VALUE
-strio_truncate(VALUE self, VALUE len)
-{
-    VALUE string = writable(StringIO(self))-&gt;string;
-    long l = NUM2LONG(len);
-    long plen = RSTRING_LEN(string);
-    if (l &lt; 0) {
-        error_inval(&quot;negative legnth&quot;);
-    }
-    rb_str_resize(string, l);
-    if (plen &lt; l) {
-        MEMZERO(RSTRING_PTR(string) + plen, char, l - plen);
-    }
-    return len;
-}</pre>
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/stringio.rb, line 17</span>
+17:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eof</span>
+18:             <span class="ruby-ivar">@eof</span>
+19:         <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

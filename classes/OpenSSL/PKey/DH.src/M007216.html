@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>compute_key (OpenSSL::PKey::DH)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     dh.compute_key(pub_bn) -&gt; aString
+ *
+ *  === Parameters
+ *  * +pub_bn+ is a OpenSSL::BN.
+ *
+ *  Returns aString containing a shared secret computed from the other parties public value.
+ *
+ *  See DH_compute_key() for further information.
+ *
+ */
+static VALUE
+ossl_dh_compute_key(VALUE self, VALUE pub)
+{
+    DH *dh;
+    EVP_PKEY *pkey;
+    BIGNUM *pub_key;
+    VALUE str;
+    int len;
+
+    GetPKeyDH(self, pkey);
+    dh = pkey-&gt;pkey.dh;
+    pub_key = GetBNPtr(pub);
+    len = DH_size(dh);
+    str = rb_str_new(0, len);
+    if ((len = DH_compute_key((unsigned char *)RSTRING_PTR(str), pub_key, dh)) &lt; 0) {
+        ossl_raise(eDHError, NULL);
+    }
+    rb_str_set_len(str, len);
+
+    return str;
+}</pre>
+</body>
+</html>

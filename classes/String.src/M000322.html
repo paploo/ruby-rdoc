@@ -2,33 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>include? (String)</title>
+  <title>reverse! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.include? other_str   =&gt; true or false
+ *     str.reverse!   =&gt; str
  *  
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; contains the given string or
- *  character.
- *     
- *     &quot;hello&quot;.include? &quot;lo&quot;   #=&gt; true
- *     &quot;hello&quot;.include? &quot;ol&quot;   #=&gt; false
- *     &quot;hello&quot;.include? ?h     #=&gt; true
+ *  Reverses &lt;i&gt;str&lt;/i&gt; in place.
  */
 
 static VALUE
-rb_str_include(VALUE str, VALUE arg)
+rb_str_reverse_bang(VALUE str)
 {
-    long i;
+    if (RSTRING_LEN(str) &gt; 1) {
+        if (single_byte_optimizable(str)) {
+            char *s, *e, c;
 
-    StringValue(arg);
-    i = rb_str_index(str, arg, 0);
-
-    if (i == -1) return Qfalse;
-    return Qtrue;
+            str_modify_keep_cr(str);
+            s = RSTRING_PTR(str);
+            e = RSTRING_END(str) - 1;
+            while (s &lt; e) {
+                c = *s;
+                *s++ = *e;
+                *e-- = c;
+            }
+        }
+        else {
+            rb_str_shared_replace(str, rb_str_reverse(str));
+        }
+    }
+    return str;
 }</pre>
 </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write_attribute_text (RDoc::RI::HtmlFormatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 446</span>
+446:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_attribute_text</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">line</span>)
+447:     <span class="ruby-identifier">curr_attr</span> = <span class="ruby-value">0</span>
+448:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">achar</span><span class="ruby-operator">|</span>
+449:       <span class="ruby-identifier">attr</span> = <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">attr</span>
+450:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">attr</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">curr_attr</span>
+451:         <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">curr_attr</span>, <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">attr</span>)
+452:         <span class="ruby-identifier">curr_attr</span> = <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">attr</span>
+453:       <span class="ruby-keyword kw">end</span>
+454:       <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">print</span>(<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">achar</span>.<span class="ruby-identifier">char</span>))
+455:     <span class="ruby-keyword kw">end</span>
+456:     <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">curr_attr</span>, <span class="ruby-value">0</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">curr_attr</span>.<span class="ruby-identifier">zero?</span>
+457:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

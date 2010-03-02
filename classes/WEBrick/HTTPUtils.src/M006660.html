@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mime_type (WEBrick::HTTPUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httputils.rb, line 110</span>
+110:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mime_type</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-identifier">mime_tab</span>)
+111:       <span class="ruby-identifier">suffix1</span> = (<span class="ruby-regexp re">/\.(\w+)$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">downcase</span>)
+112:       <span class="ruby-identifier">suffix2</span> = (<span class="ruby-regexp re">/\.(\w+)\.[\w\-]+$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">filename</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">downcase</span>)
+113:       <span class="ruby-identifier">mime_tab</span>[<span class="ruby-identifier">suffix1</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">mime_tab</span>[<span class="ruby-identifier">suffix2</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;application/octet-stream&quot;</span>
+114:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

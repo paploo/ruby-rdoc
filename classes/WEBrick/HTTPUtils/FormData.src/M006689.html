@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&lt;&lt; (WEBrick::HTTPUtils::FormData)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httputils.rb, line 235</span>
+235:       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-identifier">str</span>)
+236:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@header</span>
+237:           <span class="ruby-keyword kw">super</span>
+238:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">==</span> <span class="ruby-constant">CRLF</span>
+239:           <span class="ruby-ivar">@header</span> = <span class="ruby-constant">HTTPUtils</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse_header</span>(<span class="ruby-ivar">@raw_header</span>.<span class="ruby-identifier">join</span>)
+240:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cd</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'content-disposition'</span>]
+241:             <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\s+name=&quot;(.*?)&quot;/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">cd</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">$1</span> <span class="ruby-keyword kw">end</span>
+242:             <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\s+filename=&quot;(.*?)&quot;/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">cd</span> <span class="ruby-keyword kw">then</span> <span class="ruby-ivar">@filename</span> = <span class="ruby-identifier">$1</span> <span class="ruby-keyword kw">end</span>
+243:           <span class="ruby-keyword kw">end</span>
+244:         <span class="ruby-keyword kw">else</span>
+245:           <span class="ruby-ivar">@raw_header</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
+246:         <span class="ruby-keyword kw">end</span>
+247:         <span class="ruby-keyword kw">self</span>
+248:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

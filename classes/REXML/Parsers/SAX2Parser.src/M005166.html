@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>listen (REXML::Parsers::SAX2Parser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rexml/parsers/sax2parser.rb, line 58</span>
+58:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">listen</span>( <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blok</span> )
+59:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Symbol</span>
+60:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+61:             <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@procs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">match</span>, <span class="ruby-identifier">blok</span>] }
+62:           <span class="ruby-keyword kw">else</span>
+63:             <span class="ruby-identifier">add</span>( [<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">blok</span>] )
+64:           <span class="ruby-keyword kw">end</span>
+65:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+66:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+67:             <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>( [<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">match</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>]] ) }
+68:           <span class="ruby-keyword kw">else</span>
+69:             <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>( [ <span class="ruby-identifier">:start_element</span>, <span class="ruby-identifier">match</span>, <span class="ruby-identifier">blok</span> ] ) }
+70:           <span class="ruby-keyword kw">end</span>
+71:         <span class="ruby-keyword kw">else</span>
+72:           <span class="ruby-identifier">add</span>([<span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]])
+73:         <span class="ruby-keyword kw">end</span>
+74:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

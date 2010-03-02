@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>markup (RDoc::Generator::MarkUp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 59</span>
+59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">markup</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">remove_para</span> = <span class="ruby-keyword kw">false</span>)
+60:       <span class="ruby-keyword kw">return</span> <span class="ruby-value str">''</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">str</span>
+61: 
+62:       <span class="ruby-comment cmt"># Convert leading comment markers to spaces, but only if all non-blank</span>
+63:       <span class="ruby-comment cmt"># lines have them</span>
+64:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(?&gt;\s*)[^\#]/</span> <span class="ruby-keyword kw">then</span>
+65:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">str</span>
+66:       <span class="ruby-keyword kw">else</span>
+67:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^\s*(#+)/</span>) { <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">tr</span> <span class="ruby-value str">'#'</span>, <span class="ruby-value str">' '</span> }
+68:       <span class="ruby-keyword kw">end</span>
+69: 
+70:       <span class="ruby-identifier">res</span> = <span class="ruby-identifier">formatter</span>.<span class="ruby-identifier">convert</span> <span class="ruby-identifier">content</span>
+71: 
+72:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">remove_para</span> <span class="ruby-keyword kw">then</span>
+73:         <span class="ruby-identifier">res</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/^&lt;p&gt;/</span>, <span class="ruby-value str">''</span>)
+74:         <span class="ruby-identifier">res</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/&lt;\/p&gt;$/</span>, <span class="ruby-value str">''</span>)
+75:       <span class="ruby-keyword kw">end</span>
+76: 
+77:       <span class="ruby-identifier">res</span>
+78:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

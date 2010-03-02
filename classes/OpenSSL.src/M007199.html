@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>debug= (OpenSSL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   OpenSSL.debug = boolean -&gt; boolean
+ *
+ * Turns on or off CRYPTO_MEM_CHECK.
+ * Also shows some debugging message on stderr.
+ */
+static VALUE
+ossl_debug_set(VALUE self, VALUE val)
+{
+    VALUE old = dOSSL;
+    dOSSL = val;
+        
+    if (old != dOSSL) {
+        if (dOSSL == Qtrue) {
+            CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ON);
+            fprintf(stderr, &quot;OSSL_DEBUG: IS NOW ON!\n&quot;);
+        } else if (old == Qtrue) {
+            CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_OFF);
+            fprintf(stderr, &quot;OSSL_DEBUG: IS NOW OFF!\n&quot;);
+        }
+    }
+    return val;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ask_save (JSON::MainWindow)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File ext/json/lib/json/editor.rb, line 1141</span>
+1141:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ask_save</span>
+1142:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Editor</span>.<span class="ruby-identifier">question_dialog</span>(<span class="ruby-keyword kw">self</span>,
+1143:           <span class="ruby-value str">&quot;Unsaved changes to JSON model. Save?&quot;</span>)
+1144:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@filename</span>
+1145:             <span class="ruby-identifier">file_save</span>
+1146:           <span class="ruby-keyword kw">else</span>
+1147:             <span class="ruby-identifier">file_save_as</span>
+1148:           <span class="ruby-keyword kw">end</span>
+1149:         <span class="ruby-keyword kw">end</span>
+1150:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

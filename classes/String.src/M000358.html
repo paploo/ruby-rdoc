@@ -2,50 +2,92 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>slice! (String)</title>
+  <title>squeeze! (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.slice!(fixnum)           =&gt; fixnum or nil
- *     str.slice!(fixnum, fixnum)   =&gt; new_str or nil
- *     str.slice!(range)            =&gt; new_str or nil
- *     str.slice!(regexp)           =&gt; new_str or nil
- *     str.slice!(other_str)        =&gt; new_str or nil
+ *     str.squeeze!([other_str]*)   =&gt; str or nil
  *  
- *  Deletes the specified portion from &lt;i&gt;str&lt;/i&gt;, and returns the portion
- *  deleted.
- *     
- *     string = &quot;this is a string&quot;
- *     string.slice!(2)        #=&gt; &quot;i&quot;
- *     string.slice!(3..6)     #=&gt; &quot; is &quot;
- *     string.slice!(/s.*t/)   #=&gt; &quot;sa st&quot;
- *     string.slice!(&quot;r&quot;)      #=&gt; &quot;r&quot;
- *     string                  #=&gt; &quot;thing&quot;
+ *  Squeezes &lt;i&gt;str&lt;/i&gt; in place, returning either &lt;i&gt;str&lt;/i&gt;, or
+ *  &lt;code&gt;nil&lt;/code&gt; if no changes were made.
  */
 
 static VALUE
-rb_str_slice_bang(int argc, VALUE *argv, VALUE str)
+rb_str_squeeze_bang(int argc, VALUE *argv, VALUE str)
 {
-    VALUE result;
-    VALUE buf[3];
+    char squeez[256];
+    rb_encoding *enc = 0;
+    VALUE del = 0, nodel = 0;
+    char *s, *send, *t;
+    int save, modify = 0;
     int i;
+    int ascompat, singlebyte = single_byte_optimizable(str);
 
-    if (argc &lt; 1 || 2 &lt; argc) {
-        rb_raise(rb_eArgError, &quot;wrong number of arguments (%d for 1)&quot;, argc);
+    if (argc == 0) {
+        enc = STR_ENC_GET(str);
     }
-    for (i=0; i&lt;argc; i++) {
-        buf[i] = argv[i];
+    else {
+        for (i=0; i&lt;argc; i++) {
+            VALUE s = argv[i];
+
+            StringValue(s);
+            enc = rb_enc_check(str, s);
+            if (singlebyte &amp;&amp; !single_byte_optimizable(s))
+                singlebyte = 0;
+            tr_setup_table(s, squeez, i==0, &amp;del, &amp;nodel, enc);
+        }
     }
+
     str_modify_keep_cr(str);
-    buf[i] = rb_str_new(0,0);
-    result = rb_str_aref_m(argc, buf, str);
-    if (!NIL_P(result)) {
-        rb_str_aset_m(argc+1, buf, str);
+    s = t = RSTRING_PTR(str);
+    if (!s || RSTRING_LEN(str) == 0) return Qnil;
+    send = RSTRING_END(str);
+    save = -1;
+    ascompat = rb_enc_asciicompat(enc);
+
+    if (singlebyte) {
+        while (s &lt; send) {
+            unsigned int c = *(unsigned char*)s++;
+            if (c != save || (argc &gt; 0 &amp;&amp; !squeez[c])) {
+                *t++ = save = c;
+            }
+        }
+    } else {
+        while (s &lt; send) {
+            unsigned int c;
+            int clen;
+
+            if (ascompat &amp;&amp; (c = *(unsigned char*)s) &lt; 0x80) {
+                if (c != save || (argc &gt; 0 &amp;&amp; !squeez[c])) {
+                    *t++ = save = c;
+                }
+                s++;
+            }
+            else {
+                c = rb_enc_codepoint(s, send, enc);
+                clen = rb_enc_codelen(c, enc);
+
+                if (c != save || (argc &gt; 0 &amp;&amp; !tr_find(c, squeez, del, nodel))) {
+                    if (t != s) rb_enc_mbcput(c, t, enc);
+                    save = c;
+                    t += clen;
+                }
+                s += clen;
+            }
+        }
     }
-    return result;
+
+    *t = '\0';
+    if (t - RSTRING_PTR(str) != RSTRING_LEN(str)) {
+        STR_SET_LEN(str, t - RSTRING_PTR(str));
+        modify = 1;
+    }
+
+    if (modify) return str;
+    return Qnil;
 }</pre>
 </body>
 </html>

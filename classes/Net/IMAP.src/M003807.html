@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/imap.rb, line 913</span>
+913:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port_or_options</span> = {},
+914:                    <span class="ruby-identifier">usessl</span> = <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">certs</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">verify</span> = <span class="ruby-keyword kw">true</span>)
+915:       <span class="ruby-keyword kw">super</span>()
+916:       <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">host</span>
+917:       <span class="ruby-keyword kw">begin</span>
+918:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">port_or_options</span>.<span class="ruby-identifier">to_hash</span>
+919:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+920:         <span class="ruby-comment cmt"># for backward compatibility</span>
+921:         <span class="ruby-identifier">options</span> = {}
+922:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:port</span>] = <span class="ruby-identifier">port_or_options</span>
+923:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">usessl</span>
+924:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ssl</span>] = <span class="ruby-identifier">create_ssl_params</span>(<span class="ruby-identifier">certs</span>, <span class="ruby-identifier">verify</span>)
+925:         <span class="ruby-keyword kw">end</span>
+926:       <span class="ruby-keyword kw">end</span>
+927:       <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:port</span>] <span class="ruby-operator">||</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ssl</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">SSL_PORT</span> <span class="ruby-operator">:</span> <span class="ruby-constant">PORT</span>)
+928:       <span class="ruby-ivar">@tag_prefix</span> = <span class="ruby-value str">&quot;RUBY&quot;</span>
+929:       <span class="ruby-ivar">@tagno</span> = <span class="ruby-value">0</span>
+930:       <span class="ruby-ivar">@parser</span> = <span class="ruby-constant">ResponseParser</span>.<span class="ruby-identifier">new</span>
+931:       <span class="ruby-ivar">@sock</span> = <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">open</span>(<span class="ruby-ivar">@host</span>, <span class="ruby-ivar">@port</span>)
+932:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ssl</span>]
+933:         <span class="ruby-identifier">start_tls_session</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:ssl</span>])
+934:         <span class="ruby-ivar">@usessl</span> = <span class="ruby-keyword kw">true</span>
+935:       <span class="ruby-keyword kw">else</span>
+936:         <span class="ruby-ivar">@usessl</span> = <span class="ruby-keyword kw">false</span>
+937:       <span class="ruby-keyword kw">end</span>
+938:       <span class="ruby-ivar">@responses</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>([].<span class="ruby-identifier">freeze</span>)
+939:       <span class="ruby-ivar">@tagged_responses</span> = {}
+940:       <span class="ruby-ivar">@response_handlers</span> = []
+941:       <span class="ruby-ivar">@tagged_response_arrival</span> = <span class="ruby-identifier">new_cond</span>
+942:       <span class="ruby-ivar">@continuation_request_arrival</span> = <span class="ruby-identifier">new_cond</span>
+943:       <span class="ruby-ivar">@logout_command_tag</span> = <span class="ruby-keyword kw">nil</span>
+944:       <span class="ruby-ivar">@debug_output_bol</span> = <span class="ruby-keyword kw">true</span>
+945:       <span class="ruby-ivar">@exception</span> = <span class="ruby-keyword kw">nil</span>
+946: 
+947:       <span class="ruby-ivar">@greeting</span> = <span class="ruby-identifier">get_response</span>
+948:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@greeting</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;BYE&quot;</span>
+949:         <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">close</span>
+950:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ByeResponseError</span>, <span class="ruby-ivar">@greeting</span>.<span class="ruby-identifier">raw_data</span>
+951:       <span class="ruby-keyword kw">end</span>
+952: 
+953:       <span class="ruby-ivar">@client_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>
+954:       <span class="ruby-ivar">@receiver_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">start</span> {
+955:         <span class="ruby-identifier">receive_responses</span>
+956:       }
+957:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

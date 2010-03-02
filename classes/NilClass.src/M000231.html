@@ -2,22 +2,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>nil? (NilClass)</title>
+  <title>inspect (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call_seq:
- *   nil.nil?               =&gt; true
+ *  call-seq:
+ *    nil.inspect  =&gt; &quot;nil&quot;
  *
- * Only the object &lt;i&gt;nil&lt;/i&gt; responds &lt;code&gt;true&lt;/code&gt; to &lt;code&gt;nil?&lt;/code&gt;.
+ *  Always returns the string &quot;nil&quot;.
  */
 
 static VALUE
-rb_true(VALUE obj)
+nil_inspect(VALUE obj)
 {
-    return Qtrue;
+    return rb_usascii_str_new2(&quot;nil&quot;);
 }</pre>
 </body>
 </html>

@@ -2,32 +2,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>inspect (IO)</title>
+  <title>each_byte (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   ios.inspect   =&gt; string
+ *  call-seq:
+ *     ios.each_byte {|byte| block }  =&gt; ios
  *
- * Return a string describing this IO object.
+ *  Calls the given block once for each byte (0..255) in &lt;em&gt;ios&lt;/em&gt;,
+ *  passing the byte as an argument. The stream must be opened for
+ *  reading or an &lt;code&gt;IOError&lt;/code&gt; will be raised.
+ *
+ *     f = File.new(&quot;testfile&quot;)
+ *     checksum = 0
+ *     f.each_byte {|x| checksum ^= x }   #=&gt; #&lt;File:testfile&gt;
+ *     checksum                           #=&gt; 12
  */
 
 static VALUE
-rb_io_inspect(VALUE obj)
+rb_io_each_byte(VALUE io)
 {
     rb_io_t *fptr;
-    const char *cname;
-    const char *st = &quot;&quot;;
+    char *p, *e;
 
-    fptr = RFILE(rb_io_taint_check(obj))-&gt;fptr;
-    if (!fptr || NIL_P(fptr-&gt;pathv)) return rb_any_to_s(obj);
-    cname = rb_obj_classname(obj);
-    if (fptr-&gt;fd &lt; 0) {
-        st = &quot; (closed)&quot;;
+    RETURN_ENUMERATOR(io, 0, 0);
+    GetOpenFile(io, fptr);
+
+    for (;;) {
+        p = fptr-&gt;rbuf+fptr-&gt;rbuf_off;
+        e = p + fptr-&gt;rbuf_len;
+        while (p &lt; e) {
+            fptr-&gt;rbuf_off++;
+            fptr-&gt;rbuf_len--;
+            rb_yield(INT2FIX(*p &amp; 0xff));
+            p++;
+    errno = 0;
+        }
+        rb_io_check_readable(fptr);
+        READ_CHECK(fptr);
+        if (io_fillbuf(fptr) &lt; 0) {
+            break;
+        }
     }
-    return rb_sprintf(&quot;#&lt;%s:%s%s&gt;&quot;, cname, RSTRING_PTR(fptr-&gt;pathv), st);
+    return io;
 }</pre>
 </body>
 </html>

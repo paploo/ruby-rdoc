@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>atom_validate (RSS::Atom::Feed::Entry::Content)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/atom.rb, line 490</span>
+490:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">atom_validate</span>(<span class="ruby-identifier">ignore_unknown_element</span>, <span class="ruby-identifier">tags</span>, <span class="ruby-identifier">uri</span>)
+491:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">out_of_line?</span>
+492:               <span class="ruby-identifier">raise</span> <span class="ruby-constant">MissingAttributeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-value str">&quot;type&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@type</span>.<span class="ruby-identifier">nil?</span>
+493:               <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">content</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">empty?</span>)
+494:                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotAvailableValueError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-identifier">content</span>)
+495:               <span class="ruby-keyword kw">end</span>
+496:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">inline_xhtml?</span>
+497:               <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">nil?</span>
+498:                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">MissingTagError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;div&quot;</span>, <span class="ruby-identifier">tag_name</span>)
+499:               <span class="ruby-keyword kw">end</span>
+500:               <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;div&quot;</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">uri</span> <span class="ruby-operator">==</span> <span class="ruby-constant">XHTML_URI</span>
+501:                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotExpectedTagError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">name</span>, <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">tag_name</span>)
+502:               <span class="ruby-keyword kw">end</span>
+503:             <span class="ruby-keyword kw">end</span>
+504:           <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

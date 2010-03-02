@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>normalized_file_list (RDoc::RDoc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/rdoc.rb, line 146</span>
+146:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">normalized_file_list</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">relative_files</span>, <span class="ruby-identifier">force_doc</span> = <span class="ruby-keyword kw">false</span>,
+147:                              <span class="ruby-identifier">exclude_pattern</span> = <span class="ruby-keyword kw">nil</span>)
+148:       <span class="ruby-identifier">file_list</span> = []
+149: 
+150:       <span class="ruby-identifier">relative_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">rel_file_name</span><span class="ruby-operator">|</span>
+151:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exclude_pattern</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">exclude_pattern</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">rel_file_name</span>
+152:         <span class="ruby-identifier">stat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">rel_file_name</span>)
+153:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span> = <span class="ruby-identifier">stat</span>.<span class="ruby-identifier">ftype</span>
+154:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;file&quot;</span>
+155:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@last_created</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">stat</span>.<span class="ruby-identifier">mtime</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@last_created</span>
+156: 
+157:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force_doc</span> <span class="ruby-keyword kw">or</span> <span class="ruby-operator">::</span><span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Parser</span>.<span class="ruby-identifier">can_parse</span>(<span class="ruby-identifier">rel_file_name</span>) <span class="ruby-keyword kw">then</span>
+158:             <span class="ruby-identifier">file_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">rel_file_name</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\.\//</span>, <span class="ruby-value str">''</span>)
+159:           <span class="ruby-keyword kw">end</span>
+160:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;directory&quot;</span>
+161:           <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rel_file_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;CVS&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">rel_file_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;.svn&quot;</span>
+162:           <span class="ruby-identifier">dot_doc</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">rel_file_name</span>, <span class="ruby-constant">DOT_DOC_FILENAME</span>)
+163:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span>(<span class="ruby-identifier">dot_doc</span>)
+164:             <span class="ruby-identifier">file_list</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">parse_dot_doc_file</span>(<span class="ruby-identifier">rel_file_name</span>, <span class="ruby-identifier">dot_doc</span>, <span class="ruby-identifier">options</span>))
+165:           <span class="ruby-keyword kw">else</span>
+166:             <span class="ruby-identifier">file_list</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">list_files_in_directory</span>(<span class="ruby-identifier">rel_file_name</span>, <span class="ruby-identifier">options</span>))
+167:           <span class="ruby-keyword kw">end</span>
+168:         <span class="ruby-keyword kw">else</span>
+169:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-node">&quot;I can't deal with a #{type} #{rel_file_name}&quot;</span>
+170:         <span class="ruby-keyword kw">end</span>
+171:       <span class="ruby-keyword kw">end</span>
+172: 
+173:       <span class="ruby-identifier">file_list</span>
+174:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

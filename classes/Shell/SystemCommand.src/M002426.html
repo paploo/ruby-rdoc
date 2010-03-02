@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>start_export (Shell::SystemCommand)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/shell/system-command.rb, line 109</span>
+109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_export</span>
+110:       <span class="ruby-identifier">notify</span> <span class="ruby-value str">&quot;job(%id) start exp-pipe.&quot;</span>, <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">debug?</span>
+111:       <span class="ruby-identifier">_eop</span> = <span class="ruby-keyword kw">true</span>
+112:       <span class="ruby-identifier">th</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">start</span>{
+113:         <span class="ruby-keyword kw">begin</span>
+114:           <span class="ruby-ivar">@input</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span>
+115:             <span class="ruby-constant">ProcessController</span><span class="ruby-operator">::</span><span class="ruby-identifier">block_output_synchronize</span> <span class="ruby-keyword kw">do</span>
+116:               <span class="ruby-ivar">@pipe_out</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">l</span>
+117:             <span class="ruby-keyword kw">end</span>
+118:           <span class="ruby-keyword kw">end</span>
+119:           <span class="ruby-identifier">_eop</span> = <span class="ruby-keyword kw">false</span>
+120:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EIO</span>
+121:           <span class="ruby-identifier">_eop</span> = <span class="ruby-keyword kw">false</span>
+122:         <span class="ruby-keyword kw">ensure</span>
+123:           <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">ProcessController</span><span class="ruby-operator">::</span><span class="ruby-constant">USING_AT_EXIT_WHEN_PROCESS_EXIT</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">_eop</span>
+124:             <span class="ruby-identifier">notify</span>(<span class="ruby-value str">&quot;shell: warn: Process finishing...&quot;</span>,
+125:                    <span class="ruby-value str">&quot;wait for Job(%id) to finish pipe exporting.&quot;</span>,
+126:                    <span class="ruby-value str">&quot;You can use Shell#transact or Shell#check_point for more safe execution.&quot;</span>)
+127:             <span class="ruby-keyword kw">redo</span>
+128:           <span class="ruby-keyword kw">end</span>
+129:           <span class="ruby-identifier">notify</span> <span class="ruby-value str">&quot;job(%id) close exp-pipe.&quot;</span>, <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">debug?</span>
+130:           <span class="ruby-ivar">@pipe_out</span>.<span class="ruby-identifier">close</span>
+131:         <span class="ruby-keyword kw">end</span>
+132:       }
+133:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>build (URI::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/ftp.rb, line 78</span>
+ 78:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">args</span>)
+ 79: 
+ 80:       <span class="ruby-comment cmt"># Fix the incoming path to be generic URL syntax</span>
+ 81:       <span class="ruby-comment cmt"># FTP path  -&gt;  URL path</span>
+ 82:       <span class="ruby-comment cmt"># foo/bar       /foo/bar</span>
+ 83:       <span class="ruby-comment cmt"># /foo/bar      /%2Ffoo/bar</span>
+ 84:       <span class="ruby-comment cmt">#</span>
+ 85:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>)
+ 86:         <span class="ruby-identifier">args</span>[<span class="ruby-value">3</span>] = <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">3</span>].<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\//</span>, <span class="ruby-value str">'%2F'</span>)
+ 87:       <span class="ruby-keyword kw">else</span>
+ 88:         <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:path</span>] = <span class="ruby-value str">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:path</span>].<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\//</span>, <span class="ruby-value str">'%2F'</span>)
+ 89:       <span class="ruby-keyword kw">end</span>
+ 90: 
+ 91:       <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-identifier">make_components_hash</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">args</span>)
+ 92: 
+ 93:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:typecode</span>]
+ 94:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:typecode</span>].<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+ 95:           <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:typecode</span>] = <span class="ruby-constant">TYPECODE_PREFIX</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:typecode</span>] 
+ 96:         <span class="ruby-keyword kw">end</span>
+ 97:         <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:path</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tmp</span>[<span class="ruby-identifier">:typecode</span>]
+ 98:       <span class="ruby-keyword kw">end</span>
+ 99: 
+100:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">tmp</span>)
+101:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

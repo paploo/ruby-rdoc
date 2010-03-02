@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>PI (BigMath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/bigdecimal/lib/bigdecimal/math.rb, line 180</span>
+180:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">PI</span>(<span class="ruby-identifier">prec</span>)
+181:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Zero or negative argument for PI&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prec</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+182:     <span class="ruby-identifier">n</span>      = <span class="ruby-identifier">prec</span> <span class="ruby-operator">+</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+183:     <span class="ruby-identifier">zero</span>   = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;0&quot;</span>)
+184:     <span class="ruby-identifier">one</span>    = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;1&quot;</span>)
+185:     <span class="ruby-identifier">two</span>    = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;2&quot;</span>)
+186: 
+187:     <span class="ruby-identifier">m25</span>    = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;-0.04&quot;</span>)
+188:     <span class="ruby-identifier">m57121</span> = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;-57121&quot;</span>)
+189: 
+190:     <span class="ruby-identifier">pi</span>     = <span class="ruby-identifier">zero</span>
+191: 
+192:     <span class="ruby-identifier">d</span> = <span class="ruby-identifier">one</span>
+193:     <span class="ruby-identifier">k</span> = <span class="ruby-identifier">one</span>
+194:     <span class="ruby-identifier">w</span> = <span class="ruby-identifier">one</span>
+195:     <span class="ruby-identifier">t</span> = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;-80&quot;</span>)
+196:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">&amp;&amp;</span> ((<span class="ruby-identifier">m</span> = <span class="ruby-identifier">n</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">pi</span>.<span class="ruby-identifier">exponent</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">exponent</span>).<span class="ruby-identifier">abs</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+197:       <span class="ruby-identifier">m</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+198:       <span class="ruby-identifier">t</span>   = <span class="ruby-identifier">t</span><span class="ruby-operator">*</span><span class="ruby-identifier">m25</span>
+199:       <span class="ruby-identifier">d</span>   = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">div</span>(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">m</span>)
+200:       <span class="ruby-identifier">k</span>   = <span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-identifier">two</span>
+201:       <span class="ruby-identifier">pi</span>  = <span class="ruby-identifier">pi</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>
+202:     <span class="ruby-keyword kw">end</span>
+203: 
+204:     <span class="ruby-identifier">d</span> = <span class="ruby-identifier">one</span>
+205:     <span class="ruby-identifier">k</span> = <span class="ruby-identifier">one</span>
+206:     <span class="ruby-identifier">w</span> = <span class="ruby-identifier">one</span>
+207:     <span class="ruby-identifier">t</span> = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;956&quot;</span>)
+208:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">&amp;&amp;</span> ((<span class="ruby-identifier">m</span> = <span class="ruby-identifier">n</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">pi</span>.<span class="ruby-identifier">exponent</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">exponent</span>).<span class="ruby-identifier">abs</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+209:       <span class="ruby-identifier">m</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+210:       <span class="ruby-identifier">t</span>   = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">div</span>(<span class="ruby-identifier">m57121</span>,<span class="ruby-identifier">n</span>)
+211:       <span class="ruby-identifier">d</span>   = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">div</span>(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">m</span>)
+212:       <span class="ruby-identifier">pi</span>  = <span class="ruby-identifier">pi</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>
+213:       <span class="ruby-identifier">k</span>   = <span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-identifier">two</span>
+214:     <span class="ruby-keyword kw">end</span>
+215:     <span class="ruby-identifier">pi</span>
+216:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

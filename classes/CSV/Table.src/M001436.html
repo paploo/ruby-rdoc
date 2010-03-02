@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>[]= (CSV::Table)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/csv.rb, line 667</span>
+667:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">index_or_header</span>, <span class="ruby-identifier">value</span>)
+668:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:row</span> <span class="ruby-keyword kw">or</span>  <span class="ruby-comment cmt"># by index</span>
+669:          (<span class="ruby-ivar">@mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:col_or_row</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">index_or_header</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Integer</span>)
+670:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+671:           <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-constant">Row</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">headers</span>, <span class="ruby-identifier">value</span>)
+672:         <span class="ruby-keyword kw">else</span>
+673:           <span class="ruby-ivar">@table</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-identifier">value</span>
+674:         <span class="ruby-keyword kw">end</span>
+675:       <span class="ruby-keyword kw">else</span>                 <span class="ruby-comment cmt"># set column</span>
+676:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>  <span class="ruby-comment cmt"># multiple values</span>
+677:           <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+678:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">header_row?</span>
+679:               <span class="ruby-identifier">row</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-identifier">index_or_header</span>
+680:             <span class="ruby-keyword kw">else</span>
+681:               <span class="ruby-identifier">row</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">i</span>]
+682:             <span class="ruby-keyword kw">end</span>
+683:           <span class="ruby-keyword kw">end</span>
+684:         <span class="ruby-keyword kw">else</span>                  <span class="ruby-comment cmt"># repeated value</span>
+685:           <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+686:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">header_row?</span>
+687:               <span class="ruby-identifier">row</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-identifier">index_or_header</span>
+688:             <span class="ruby-keyword kw">else</span>
+689:               <span class="ruby-identifier">row</span>[<span class="ruby-identifier">index_or_header</span>] = <span class="ruby-identifier">value</span>
+690:             <span class="ruby-keyword kw">end</span>
+691:           <span class="ruby-keyword kw">end</span>
+692:         <span class="ruby-keyword kw">end</span>
+693:       <span class="ruby-keyword kw">end</span>
+694:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

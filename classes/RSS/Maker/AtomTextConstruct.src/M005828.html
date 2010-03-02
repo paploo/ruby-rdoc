@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_atom_text_construct (RSS::Maker::AtomTextConstruct)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/atom.rb, line 42</span>
+42:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_atom_text_construct</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">maker_name</span>, <span class="ruby-identifier">klass_name</span>=<span class="ruby-keyword kw">nil</span>,
+43:                                     <span class="ruby-identifier">atom_klass_name</span>=<span class="ruby-keyword kw">nil</span>)
+44:           <span class="ruby-identifier">klass_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">name</span>)
+45:           <span class="ruby-identifier">atom_klass_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">name</span>)
+46: 
+47:           <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span>(<span class="ruby-value str">&quot;class \#{klass_name} &lt; \#{klass_name}Base\ninclude \#{self.name}\ndef to_feed(feed, current)\n\#{name} = current.class::\#{atom_klass_name}.new\nif setup_values(\#{name})\ncurrent.\#{name} = \#{name}\nset_parent(\#{name}, current)\nsetup_other_elements(feed)\nelsif variable_is_set?\nraise NotSetError.new(\#{maker_name.dump},\nnot_set_required_variables)\nend\nend\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+48:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

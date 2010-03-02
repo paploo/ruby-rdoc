@@ -2,29 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>upcase (String)</title>
+  <title>setbyte (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.upcase   =&gt; new_str
- *  
- *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with all lowercase letters replaced with their
- *  uppercase counterparts. The operation is locale insensitive---only
- *  characters ``a'' to ``z'' are affected.
- *  Note: case replacement is effective only in ASCII region.
- *     
- *     &quot;hEllO&quot;.upcase   #=&gt; &quot;HELLO&quot;
+ *     str.setbyte(index, int) =&gt; int
+ *
+ *  modifies the &lt;i&gt;index&lt;/i&gt;th byte as &lt;i&gt;int&lt;/i&gt;.
  */
-
 static VALUE
-rb_str_upcase(VALUE str)
+rb_str_setbyte(VALUE str, VALUE index, VALUE value)
 {
-    str = rb_str_dup(str);
-    rb_str_upcase_bang(str);
-    return str;
+    long pos = NUM2LONG(index);
+    int byte = NUM2INT(value);
+
+    rb_str_modify(str);
+
+    if (pos &lt; -RSTRING_LEN(str) || RSTRING_LEN(str) &lt;= pos)
+        rb_raise(rb_eIndexError, &quot;index %ld out of string&quot;, pos);
+    if (pos &lt; 0)
+        pos += RSTRING_LEN(str);
+
+    RSTRING_PTR(str)[pos] = byte;
+
+    return value;
 }</pre>
 </body>
 </html>

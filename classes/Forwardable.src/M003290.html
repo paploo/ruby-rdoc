@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_instance_delegator (Forwardable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/forwardable.rb, line 178</span>
+178:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_instance_delegator</span>(<span class="ruby-identifier">accessor</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">ali</span> = <span class="ruby-identifier">method</span>)
+179:     <span class="ruby-identifier">line_no</span> = <span class="ruby-keyword kw">__LINE__</span>; <span class="ruby-identifier">str</span> = <span class="ruby-node">%{
+180:       def #{ali}(*args, &amp;block)
+181:         begin
+182:           #{accessor}.__send__(:#{method}, *args, &amp;block)
+183:         rescue Exception
+184:           $@.delete_if{|s| %r&quot;#{Regexp.quote(__FILE__)}&quot;o =~ s} unless Forwardable::debug
+185:           ::Kernel::raise
+186:         end
+187:       end
+188:     }</span>
+189:     <span class="ruby-comment cmt"># If it's not a class or module, it's an instance</span>
+190:     <span class="ruby-keyword kw">begin</span>
+191:       <span class="ruby-identifier">module_eval</span>(<span class="ruby-identifier">str</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-identifier">line_no</span>)
+192:     <span class="ruby-keyword kw">rescue</span>
+193:       <span class="ruby-identifier">instance_eval</span>(<span class="ruby-identifier">str</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-identifier">line_no</span>)
+194:     <span class="ruby-keyword kw">end</span>
+195: 
+196:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

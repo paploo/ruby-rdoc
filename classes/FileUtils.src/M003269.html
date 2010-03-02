@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>chown (FileUtils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/fileutils.rb, line 921</span>
+921:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chown</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">group</span>, <span class="ruby-identifier">list</span>, <span class="ruby-identifier">options</span> = {})
+922:     <span class="ruby-identifier">fu_check_options</span> <span class="ruby-identifier">options</span>, <span class="ruby-constant">OPT_TABLE</span>[<span class="ruby-value str">'chown'</span>]
+923:     <span class="ruby-identifier">list</span> = <span class="ruby-identifier">fu_list</span>(<span class="ruby-identifier">list</span>)
+924:     <span class="ruby-identifier">fu_output_message</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'chown %s%s'</span>,
+925:                               [<span class="ruby-identifier">user</span>,<span class="ruby-identifier">group</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">' '</span>,
+926:                               <span class="ruby-identifier">list</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' '</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:verbose</span>]
+927:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:noop</span>]
+928:     <span class="ruby-identifier">uid</span> = <span class="ruby-identifier">fu_get_uid</span>(<span class="ruby-identifier">user</span>)
+929:     <span class="ruby-identifier">gid</span> = <span class="ruby-identifier">fu_get_gid</span>(<span class="ruby-identifier">group</span>)
+930:     <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+931:       <span class="ruby-constant">Entry_</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">chown</span> <span class="ruby-identifier">uid</span>, <span class="ruby-identifier">gid</span>
+932:     <span class="ruby-keyword kw">end</span>
+933:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inject (REXML::Elements)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 917</span>
+917:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inject</span>( <span class="ruby-identifier">xpath</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">initial</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+918:       <span class="ruby-identifier">first</span> = <span class="ruby-keyword kw">true</span>
+919:       <span class="ruby-constant">XPath</span><span class="ruby-operator">::</span><span class="ruby-identifier">each</span>( <span class="ruby-ivar">@element</span>, <span class="ruby-identifier">xpath</span> ) {<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+920:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">e</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Element</span>)
+921:           <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">initial</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>)
+922:             <span class="ruby-identifier">initial</span> = <span class="ruby-identifier">e</span>
+923:             <span class="ruby-identifier">first</span> = <span class="ruby-keyword kw">false</span>
+924:           <span class="ruby-keyword kw">else</span>
+925:             <span class="ruby-identifier">initial</span> = <span class="ruby-keyword kw">yield</span>( <span class="ruby-identifier">initial</span>, <span class="ruby-identifier">e</span> ) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Element</span>
+926:           <span class="ruby-keyword kw">end</span>
+927:         <span class="ruby-keyword kw">end</span>
+928:       }
+929:       <span class="ruby-identifier">initial</span>
+930:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

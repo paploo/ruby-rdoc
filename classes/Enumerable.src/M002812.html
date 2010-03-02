@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>first (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.first      -&gt; obj or nil
+ *     enum.first(n)   -&gt; an_array
+ *
+ *  Returns the first element, or the first +n+ elements, of the enumerable.
+ *  If the enumerable is empty, the first form returns &lt;code&gt;nil&lt;/code&gt;, and the
+ *  second form returns an empty array.
+ *
+ */
+
+static VALUE
+enum_first(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE n, params[2];
+
+    if (argc == 0) {
+        params[0] = params[1] = Qnil;
+    }
+    else {
+        long len;
+
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;n);
+        len = NUM2LONG(n);
+        if (len == 0) return rb_ary_new2(0);
+        params[0] = len;
+        params[1] = rb_ary_new2(len);
+    }
+    rb_block_call(obj, id_each, 0, 0, first_i, (VALUE)params);
+
+    return params[1];
+}</pre>
+</body>
+</html>

@@ -2,25 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>setuid? (File)</title>
+  <title>symlink (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   File.setuid?(file_name)   =&gt;  true or false
- *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file has the setuid bit set.
+ *  call-seq:
+ *     File.symlink(old_name, new_name)   =&gt; 0
+ *  
+ *  Creates a symbolic link called &lt;i&gt;new_name&lt;/i&gt; for the existing file
+ *  &lt;i&gt;old_name&lt;/i&gt;. Raises a &lt;code&gt;NotImplemented&lt;/code&gt; exception on
+ *  platforms that do not support symbolic links.
+ *     
+ *     File.symlink(&quot;testfile&quot;, &quot;link2test&quot;)   #=&gt; 0
+ *     
  */
 
 static VALUE
-rb_file_suid_p(VALUE obj, VALUE fname)
+rb_file_s_symlink(VALUE klass, VALUE from, VALUE to)
 {
-#ifdef S_ISUID
-    return check3rdbyte(fname, S_ISUID);
+#ifdef HAVE_SYMLINK
+    rb_secure(2);
+    FilePathValue(from);
+    FilePathValue(to);
+
+    if (symlink(StringValueCStr(from), StringValueCStr(to)) &lt; 0) {
+        sys_fail2(from, to);
+    }
+    return INT2FIX(0);
 #else
-    return Qfalse;
+    rb_notimplement();
+    return Qnil;                /* not reached */
 #endif
 }</pre>
 </body>

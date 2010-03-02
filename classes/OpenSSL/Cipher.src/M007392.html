@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>key_len= (OpenSSL::Cipher)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     cipher.key_length = integer -&gt; integer
+ *
+ *  Sets the key length of the cipher.  If the cipher is a fixed length cipher then attempting to set the key
+ *  length to any value other than the fixed value is an error.
+ *
+ *  Under normal circumstances you do not need to call this method (and probably shouldn't).
+ *
+ *  See EVP_CIPHER_CTX_set_key_length for further information.
+ */
+static VALUE
+ossl_cipher_set_key_length(VALUE self, VALUE key_length)
+{
+    int len = NUM2INT(key_length);
+    EVP_CIPHER_CTX *ctx;
+ 
+    GetCipher(self, ctx);
+    if (EVP_CIPHER_CTX_set_key_length(ctx, len) != 1)
+        ossl_raise(eCipherError, NULL);
+
+    return key_length;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>string_value (REXML::Functions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/functions.rb, line 132</span>
+132:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">string_value</span>( <span class="ruby-identifier">o</span> )
+133:       <span class="ruby-identifier">rv</span> = <span class="ruby-value str">&quot;&quot;</span>
+134:       <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+135:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:text</span>
+136:           <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span>
+137:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:element</span>
+138:           <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">string_value</span>( <span class="ruby-identifier">e</span> )
+139:         <span class="ruby-keyword kw">end</span>
+140:       }
+141:       <span class="ruby-identifier">rv</span>
+142:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>putbinaryfile (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 602</span>
+602:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">putbinaryfile</span>(<span class="ruby-identifier">localfile</span>, <span class="ruby-identifier">remotefile</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">localfile</span>),
+603:                       <span class="ruby-identifier">blocksize</span> = <span class="ruby-constant">DEFAULT_BLOCKSIZE</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: data</span>
+604:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@resume</span>
+605:         <span class="ruby-keyword kw">begin</span>
+606:           <span class="ruby-identifier">rest_offset</span> = <span class="ruby-identifier">size</span>(<span class="ruby-identifier">remotefile</span>)
+607:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">FTPPermError</span>
+608:           <span class="ruby-identifier">rest_offset</span> = <span class="ruby-keyword kw">nil</span>
+609:         <span class="ruby-keyword kw">end</span>
+610:       <span class="ruby-keyword kw">else</span>
+611:         <span class="ruby-identifier">rest_offset</span> = <span class="ruby-keyword kw">nil</span>
+612:       <span class="ruby-keyword kw">end</span>
+613:       <span class="ruby-identifier">f</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">localfile</span>)
+614:       <span class="ruby-keyword kw">begin</span>
+615:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">binmode</span>
+616:         <span class="ruby-identifier">storbinary</span>(<span class="ruby-value str">&quot;STOR &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">remotefile</span>, <span class="ruby-identifier">f</span>, <span class="ruby-identifier">blocksize</span>, <span class="ruby-identifier">rest_offset</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+617:       <span class="ruby-keyword kw">ensure</span>
+618:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span>
+619:       <span class="ruby-keyword kw">end</span>
+620:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

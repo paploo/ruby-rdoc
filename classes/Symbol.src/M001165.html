@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>== (Symbol)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     sym == obj   =&gt; true or false
+ *  
+ *  Equality---If &lt;i&gt;sym&lt;/i&gt; and &lt;i&gt;obj&lt;/i&gt; are exactly the same
+ *  symbol, returns &lt;code&gt;true&lt;/code&gt;. 
+ */
+
+static VALUE
+sym_equal(VALUE sym1, VALUE sym2)
+{
+    if (sym1 == sym2) return Qtrue;
+    return Qfalse;
+}</pre>
+</body>
+</html>

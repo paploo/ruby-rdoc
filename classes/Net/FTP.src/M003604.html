@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>binary= (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 143</span>
+143:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">binary=</span>(<span class="ruby-identifier">newmode</span>)
+144:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newmode</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@binary</span>
+145:         <span class="ruby-ivar">@binary</span> = <span class="ruby-identifier">newmode</span>
+146:         <span class="ruby-ivar">@binary</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">voidcmd</span>(<span class="ruby-value str">&quot;TYPE I&quot;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">voidcmd</span>(<span class="ruby-value str">&quot;TYPE A&quot;</span>)
+147:       <span class="ruby-keyword kw">end</span>
+148:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

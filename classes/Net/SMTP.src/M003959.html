@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>cram_secret (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 797</span>
+797:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cram_secret</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">mask</span>)
+798:       <span class="ruby-identifier">secret</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-identifier">secret</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">secret</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">CRAM_BUFSIZE</span>
+799:       <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">secret</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-constant">CRAM_BUFSIZE</span>, <span class="ruby-value str">&quot;\0&quot;</span>)
+800:       <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">buf</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+801:         <span class="ruby-identifier">buf</span>[<span class="ruby-identifier">i</span>] = (<span class="ruby-identifier">buf</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">ord</span> <span class="ruby-operator">^</span> <span class="ruby-identifier">mask</span>).<span class="ruby-identifier">chr</span>
+802:       <span class="ruby-keyword kw">end</span>
+803:       <span class="ruby-identifier">buf</span>
+804:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -70,7 +70,7 @@
             <td><strong>Parent:</strong></td>
             <td>
 
-                <a href="Kernel.html#M002640">
+                <a href="Kernel.html#M002747">
 
                 Integer
 
@@ -140,37 +140,39 @@ themselves.
 
         <a href="#M000214">==</a>&nbsp;&nbsp;
 
+        <a href="#M000215">===</a>&nbsp;&nbsp;
+
         <a href="#M000211">&gt;&gt;</a>&nbsp;&nbsp;
 
         <a href="#M000212">[]</a>&nbsp;&nbsp;
 
         <a href="#M000208">^</a>&nbsp;&nbsp;
 
-        <a href="#M000218">abs</a>&nbsp;&nbsp;
+        <a href="#M000219">abs</a>&nbsp;&nbsp;
 
         <a href="#M000194">coerce</a>&nbsp;&nbsp;
 
         <a href="#M000201">divmod</a>&nbsp;&nbsp;
 
-        <a href="#M000215">eql?</a>&nbsp;&nbsp;
+        <a href="#M000216">eql?</a>&nbsp;&nbsp;
 
-        <a href="#M000222">even?</a>&nbsp;&nbsp;
+        <a href="#M000223">even?</a>&nbsp;&nbsp;
 
         <a href="#M000204">fdiv</a>&nbsp;&nbsp;
 
-        <a href="#M000216">hash</a>&nbsp;&nbsp;
+        <a href="#M000217">hash</a>&nbsp;&nbsp;
 
-        <a href="#M000219">magnitude</a>&nbsp;&nbsp;
+        <a href="#M000220">magnitude</a>&nbsp;&nbsp;
 
         <a href="#M000202">modulo</a>&nbsp;&nbsp;
 
-        <a href="#M000221">odd?</a>&nbsp;&nbsp;
+        <a href="#M000222">odd?</a>&nbsp;&nbsp;
 
         <a href="#M000203">remainder</a>&nbsp;&nbsp;
 
-        <a href="#M000220">size</a>&nbsp;&nbsp;
+        <a href="#M000221">size</a>&nbsp;&nbsp;
 
-        <a href="#M000217">to_f</a>&nbsp;&nbsp;
+        <a href="#M000218">to_f</a>&nbsp;&nbsp;
 
         <a href="#M000193">to_s</a>&nbsp;&nbsp;
 
@@ -217,7 +219,7 @@ big.modulo(other)   => Numeric<br />
 
           <p>
 Returns big modulo other. See <a
-href="Numeric.html#M000243">Numeric.divmod</a> for more information.
+href="Numeric.html#M000250">Numeric.divmod</a> for more information.
 </p>
 
         </div>
@@ -481,7 +483,38 @@ for the tests in <tt>Comparable</tt>.
           <p>
 Returns <tt>true</tt> only if <em>obj</em> has the same value as
 <em>big</em>. Contrast this with <tt><a
-href="Bignum.html#M000215">Bignum#eql?</a></tt>, which requires
+href="Bignum.html#M000216">Bignum#eql?</a></tt>, which requires
+<em>obj</em> to be a <tt>Bignum</tt>.
+</p>
+<pre>
+   68719476736 == 68719476736.0   #=&gt; true
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000215" class="method-detail">
+        <a name="M000215"></a>
+
+        <div class="method-heading">
+
+          <a href="Bignum.src/M000215.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000215.html');return false;">
+
+          <span class="method-name">big == obj  => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> only if <em>obj</em> has the same value as
+<em>big</em>. Contrast this with <tt><a
+href="Bignum.html#M000216">Bignum#eql?</a></tt>, which requires
 <em>obj</em> to be a <tt>Bignum</tt>.
 </p>
 <pre>
@@ -582,13 +615,13 @@ Performs bitwise +exclusive or+ between <em>big</em> and <em>numeric</em>.
       </div>
 
 
-      <div id="method-M000218" class="method-detail">
-        <a name="M000218"></a>
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000218.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000218.html');return false;">
+          <a href="Bignum.src/M000219.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000219.html');return false;">
 
           <span class="method-name">big.abs &rarr; aBignum<br />
 </span>
@@ -652,20 +685,20 @@ MISSING: documentation
         <div class="method-description">
 
           <p>
-See <tt><a href="Numeric.html#M000243">Numeric#divmod</a></tt>.
+See <tt><a href="Numeric.html#M000250">Numeric#divmod</a></tt>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000215" class="method-detail">
-        <a name="M000215"></a>
+      <div id="method-M000216" class="method-detail">
+        <a name="M000216"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000215.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000215.html');return false;">
+          <a href="Bignum.src/M000216.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000216.html');return false;">
 
           <span class="method-name">big.eql?(obj)   => true or false<br />
 </span>
@@ -689,13 +722,13 @@ performs type conversions.
       </div>
 
 
-      <div id="method-M000222" class="method-detail">
-        <a name="M000222"></a>
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000222.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000222.html');return false;">
+          <a href="Bignum.src/M000223.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000223.html');return false;">
 
           <span class="method-name">big.even? &rarr; true or false<br />
 </span>
@@ -744,13 +777,13 @@ Returns the floating point result of dividing <em>big</em> by
       </div>
 
 
-      <div id="method-M000216" class="method-detail">
-        <a name="M000216"></a>
+      <div id="method-M000217" class="method-detail">
+        <a name="M000217"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000216.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000216.html');return false;">
+          <a href="Bignum.src/M000217.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000217.html');return false;">
 
           <span class="method-name">big.hash   => fixnum<br />
 </span>
@@ -769,13 +802,13 @@ Compute a hash based on the value of <em>big</em>.
       </div>
 
 
-      <div id="method-M000219" class="method-detail">
-        <a name="M000219"></a>
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000219.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000219.html');return false;">
+          <a href="Bignum.src/M000220.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000220.html');return false;">
 
           <span class="method-name">big.abs &rarr; aBignum<br />
 </span>
@@ -817,20 +850,20 @@ big.modulo(other)   => Numeric<br />
 
           <p>
 Returns big modulo other. See <a
-href="Numeric.html#M000243">Numeric.divmod</a> for more information.
+href="Numeric.html#M000250">Numeric.divmod</a> for more information.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000221" class="method-detail">
-        <a name="M000221"></a>
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000221.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000221.html');return false;">
+          <a href="Bignum.src/M000222.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000222.html');return false;">
 
           <span class="method-name">big.odd? &rarr; true or false<br />
 </span>
@@ -878,13 +911,13 @@ Returns the remainder after dividing <em>big</em> by <em>numeric</em>.
       </div>
 
 
-      <div id="method-M000220" class="method-detail">
-        <a name="M000220"></a>
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000220.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000220.html');return false;">
+          <a href="Bignum.src/M000221.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000221.html');return false;">
 
           <span class="method-name">big.size &rarr; integer<br />
 </span>
@@ -908,13 +941,13 @@ Returns the number of bytes in the machine representation of <em>big</em>.
       </div>
 
 
-      <div id="method-M000217" class="method-detail">
-        <a name="M000217"></a>
+      <div id="method-M000218" class="method-detail">
+        <a name="M000218"></a>
 
         <div class="method-heading">
 
-          <a href="Bignum.src/M000217.html" target="Code" class="method-signature"
-            onclick="popupCode('Bignum.src/M000217.html');return false;">
+          <a href="Bignum.src/M000218.html" target="Code" class="method-signature"
+            onclick="popupCode('Bignum.src/M000218.html');return false;">
 
           <span class="method-name">big.to_f &rarr; float<br />
 </span>

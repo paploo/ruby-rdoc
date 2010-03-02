@@ -127,37 +127,37 @@ of string.
 
       <div class="name-list">
 
-        <a href="#M000561">asciicompat_encoding</a>&nbsp;&nbsp;
+        <a href="#M000608">asciicompat_encoding</a>&nbsp;&nbsp;
 
-        <a href="#M000569">convert</a>&nbsp;&nbsp;
+        <a href="#M000616">convert</a>&nbsp;&nbsp;
 
-        <a href="#M000565">convpath</a>&nbsp;&nbsp;
+        <a href="#M000612">convpath</a>&nbsp;&nbsp;
 
-        <a href="#M000567">destination_encoding</a>&nbsp;&nbsp;
+        <a href="#M000614">destination_encoding</a>&nbsp;&nbsp;
 
-        <a href="#M000570">finish</a>&nbsp;&nbsp;
+        <a href="#M000617">finish</a>&nbsp;&nbsp;
 
-        <a href="#M000572">insert_output</a>&nbsp;&nbsp;
+        <a href="#M000619">insert_output</a>&nbsp;&nbsp;
 
-        <a href="#M000564">inspect</a>&nbsp;&nbsp;
+        <a href="#M000611">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M000574">last_error</a>&nbsp;&nbsp;
+        <a href="#M000621">last_error</a>&nbsp;&nbsp;
 
-        <a href="#M000563">new</a>&nbsp;&nbsp;
+        <a href="#M000610">new</a>&nbsp;&nbsp;
 
-        <a href="#M000568">primitive_convert</a>&nbsp;&nbsp;
+        <a href="#M000615">primitive_convert</a>&nbsp;&nbsp;
 
-        <a href="#M000571">primitive_errinfo</a>&nbsp;&nbsp;
+        <a href="#M000618">primitive_errinfo</a>&nbsp;&nbsp;
 
-        <a href="#M000573">putback</a>&nbsp;&nbsp;
+        <a href="#M000620">putback</a>&nbsp;&nbsp;
 
-        <a href="#M000575">replacement</a>&nbsp;&nbsp;
+        <a href="#M000622">replacement</a>&nbsp;&nbsp;
 
-        <a href="#M000576">replacement=</a>&nbsp;&nbsp;
+        <a href="#M000623">replacement=</a>&nbsp;&nbsp;
 
-        <a href="#M000562">search_convpath</a>&nbsp;&nbsp;
+        <a href="#M000609">search_convpath</a>&nbsp;&nbsp;
 
-        <a href="#M000566">source_encoding</a>&nbsp;&nbsp;
+        <a href="#M000613">source_encoding</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -279,13 +279,13 @@ of string.
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M000561" class="method-detail">
-        <a name="M000561"></a>
+      <div id="method-M000608" class="method-detail">
+        <a name="M000608"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000561.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000561.html');return false;">
+          <a href="Converter.src/M000608.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000608.html');return false;">
 
           <span class="method-name">Encoding::Converter.asciicompat_encoding(string) => encoding or nil<br />
 Encoding::Converter.asciicompat_encoding(encoding) => encoding or nil<br />
@@ -319,13 +319,13 @@ converting between the two encodings.
       </div>
 
 
-      <div id="method-M000563" class="method-detail">
-        <a name="M000563"></a>
+      <div id="method-M000610" class="method-detail">
+        <a name="M000610"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000563.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000563.html');return false;">
+          <a href="Converter.src/M000610.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000610.html');return false;">
 
           <span class="method-name">Encoding::Converter.new(source_encoding, destination_encoding)<br />
 Encoding::Converter.new(source_encoding, destination_encoding, opt)<br />
@@ -365,12 +365,12 @@ possible options elements:
     Encoding::Converter::XML_ATTR_QUOTE_DECORATOR
 </pre>
 <p>
-<a href="Converter.html#M000563">Encoding::Converter.new</a> creates an
+<a href="Converter.html#M000610">Encoding::Converter.new</a> creates an
 instance of <a href="Converter.html">Encoding::Converter</a>.
 </p>
 <p>
 Source_encoding and <a
-href="Converter.html#M000567">destination_encoding</a> should be a string
+href="Converter.html#M000614">destination_encoding</a> should be a string
 or <a href="../Encoding.html">Encoding</a> object.
 </p>
 <p>
@@ -388,7 +388,7 @@ convpath should be an array. convpath may contain
 </li>
 </ul>
 <p>
-<a href="Converter.html#M000563">Encoding::Converter.new</a> optionally
+<a href="Converter.html#M000610">Encoding::Converter.new</a> optionally
 takes an option. The option should be a hash or an integer. The option hash
 can contain :invalid => nil, etc. The option integer should be logical-or
 of constants such as Encoding::Converter::INVALID_REPLACE, etc.
@@ -401,12 +401,12 @@ of constants such as Encoding::Converter::INVALID_REPLACE, etc.
 
 </dd>
 <dt>:undef => nil</dt><dd>Raise an error if a character in <a
-href="Converter.html#M000566">source_encoding</a> is not defined in
+href="Converter.html#M000613">source_encoding</a> is not defined in
 destination_encoding. This is a default behavior.
 
 </dd>
 <dt>:undef => :replace</dt><dd>Replace undefined character in <a
-href="Converter.html#M000567">destination_encoding</a> with replacement
+href="Converter.html#M000614">destination_encoding</a> with replacement
 string.
 
 </dd>
@@ -437,7 +437,7 @@ a HTML 4.0 PCDATA.
 
 </li>
 <li>undefined characters in <a
-href="Converter.html#M000567">destination_encoding</a> -> hexadecimal
+href="Converter.html#M000614">destination_encoding</a> -> hexadecimal
 CharRef such as &amp;xHH;
 
 </li>
@@ -461,7 +461,7 @@ attribute value.
 
 </li>
 <li>undefined characters in <a
-href="Converter.html#M000567">destination_encoding</a> -> hexadecimal
+href="Converter.html#M000614">destination_encoding</a> -> hexadecimal
 CharRef such as &amp;xHH;
 
 </li>
@@ -497,13 +497,13 @@ Examples:
       </div>
 
 
-      <div id="method-M000562" class="method-detail">
-        <a name="M000562"></a>
+      <div id="method-M000609" class="method-detail">
+        <a name="M000609"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000562.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000562.html');return false;">
+          <a href="Converter.src/M000609.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000609.html');return false;">
 
           <span class="method-name">Encoding::Converter.search_convpath(source_encoding, destination_encoding)         &rarr; ary<br />
 Encoding::Converter.search_convpath(source_encoding, destination_encoding, opt)    &rarr; ary<br />
@@ -541,13 +541,13 @@ Returns a conversion path.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000569" class="method-detail">
-        <a name="M000569"></a>
+      <div id="method-M000616" class="method-detail">
+        <a name="M000616"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000569.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000569.html');return false;">
+          <a href="Converter.src/M000616.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000616.html');return false;">
 
           <span class="method-name">ec.convert(source_string) &rarr; destination_string<br />
 </span>
@@ -586,23 +586,23 @@ If a conversion error occur, <a
 href="UndefinedConversionError.html">Encoding::UndefinedConversionError</a>
 or <a
 href="InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a>
-is raised. <a href="Converter.html#M000569">Encoding::Converter#convert</a>
+is raised. <a href="Converter.html#M000616">Encoding::Converter#convert</a>
 doesn&#8217;t supply methods to recover or restart from these exceptions.
 When you want to handle these conversion errors, use <a
-href="Converter.html#M000568">Encoding::Converter#primitive_convert</a>.
+href="Converter.html#M000615">Encoding::Converter#primitive_convert</a>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000565" class="method-detail">
-        <a name="M000565"></a>
+      <div id="method-M000612" class="method-detail">
+        <a name="M000612"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000565.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000565.html');return false;">
+          <a href="Converter.src/M000612.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000612.html');return false;">
 
           <span class="method-name">ec.convpath        &rarr; ary<br />
 </span>
@@ -640,13 +640,13 @@ newline converter from LF to CRLF.
       </div>
 
 
-      <div id="method-M000567" class="method-detail">
-        <a name="M000567"></a>
+      <div id="method-M000614" class="method-detail">
+        <a name="M000614"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000567.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000567.html');return false;">
+          <a href="Converter.src/M000614.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000614.html');return false;">
 
           <span class="method-name">ec.destination_encoding &rarr; encoding<br />
 </span>
@@ -666,13 +666,13 @@ href="../Encoding.html">Encoding</a> object.
       </div>
 
 
-      <div id="method-M000570" class="method-detail">
-        <a name="M000570"></a>
+      <div id="method-M000617" class="method-detail">
+        <a name="M000617"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000570.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000570.html');return false;">
+          <a href="Converter.src/M000617.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000617.html');return false;">
 
           <span class="method-name">ec.finish &rarr; string<br />
 </span>
@@ -696,13 +696,13 @@ Finishes the converter. It returns the last part of the converted string.
       </div>
 
 
-      <div id="method-M000572" class="method-detail">
-        <a name="M000572"></a>
+      <div id="method-M000619" class="method-detail">
+        <a name="M000619"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000572.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000572.html');return false;">
+          <a href="Converter.src/M000619.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000619.html');return false;">
 
           <span class="method-name">ec.insert_output(string) &rarr; nil<br />
 </span>
@@ -748,13 +748,13 @@ This method should be used only when a conversion error occurs.
       </div>
 
 
-      <div id="method-M000564" class="method-detail">
-        <a name="M000564"></a>
+      <div id="method-M000611" class="method-detail">
+        <a name="M000611"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000564.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000564.html');return false;">
+          <a href="Converter.src/M000611.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000611.html');return false;">
 
           <span class="method-name">ec.inspect         &rarr; string<br />
 </span>
@@ -777,13 +777,13 @@ Returns a printable version of <em>ec</em>
       </div>
 
 
-      <div id="method-M000574" class="method-detail">
-        <a name="M000574"></a>
+      <div id="method-M000621" class="method-detail">
+        <a name="M000621"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000574.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000574.html');return false;">
+          <a href="Converter.src/M000621.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000621.html');return false;">
 
           <span class="method-name">ec.last_error &rarr; exception or nil<br />
 </span>
@@ -803,9 +803,9 @@ last conversion did not produce an error.
 href="InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a>
 and <a
 href="UndefinedConversionError.html">Encoding::UndefinedConversionError</a>
-for <a href="Converter.html#M000569">Encoding::Converter#convert</a> and
+for <a href="Converter.html#M000616">Encoding::Converter#convert</a> and
 :invalid_byte_sequence, :incomplete_input and :undefined_conversion for <a
-href="Converter.html#M000568">Encoding::Converter#primitive_convert</a>.
+href="Converter.html#M000615">Encoding::Converter#primitive_convert</a>.
 </p>
 <pre>
  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-8859-1&quot;)
@@ -819,13 +819,13 @@ href="Converter.html#M000568">Encoding::Converter#primitive_convert</a>.
       </div>
 
 
-      <div id="method-M000568" class="method-detail">
-        <a name="M000568"></a>
+      <div id="method-M000615" class="method-detail">
+        <a name="M000615"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000568.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000568.html');return false;">
+          <a href="Converter.src/M000615.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000615.html');return false;">
 
           <span class="method-name">ec.primitive_convert(source_buffer, destination_buffer) &rarr; symbol<br />
 ec.primitive_convert(source_buffer, destination_buffer, destination_byteoffset) &rarr; symbol<br />
@@ -863,7 +863,7 @@ possible results:
    :finished
 </pre>
 <p>
-<a href="Converter.html#M000568">primitive_convert</a> converts
+<a href="Converter.html#M000615">primitive_convert</a> converts
 source_buffer into destination_buffer.
 </p>
 <p>
@@ -885,7 +885,7 @@ opt should be nil, a hash or an integer. nil means no flags. If it is
 omitted, nil is assumed.
 </p>
 <p>
-<a href="Converter.html#M000568">primitive_convert</a> converts the content
+<a href="Converter.html#M000615">primitive_convert</a> converts the content
 of source_buffer from beginning and store the result into
 destination_buffer.
 </p>
@@ -901,12 +901,12 @@ actually produced number of bytes. Also destination_buffer&#8217;s encoding
 is set to destination_encoding.
 </p>
 <p>
-<a href="Converter.html#M000568">primitive_convert</a> drops the converted
+<a href="Converter.html#M000615">primitive_convert</a> drops the converted
 part of source_buffer. the dropped part is converted in destination_buffer
 or buffered in <a href="Converter.html">Encoding::Converter</a> object.
 </p>
 <p>
-<a href="Converter.html#M000568">primitive_convert</a> stops conversion
+<a href="Converter.html#M000615">primitive_convert</a> stops conversion
 when one of following condition met.
 </p>
 <ul>
@@ -941,17 +941,17 @@ example:
 </p>
 <pre>
   ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;)
-  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, 100)
+  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, nil, 100)
   p [ret, src, dst] #=&gt; [:finished, &quot;&quot;, &quot;\x00p\x00i&quot;]
 
   ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;)
-  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, 1)
+  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, nil, 1)
   p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;i&quot;, &quot;\x00&quot;]
-  ret = ec.primitive_convert(src, dst=&quot;&quot;, 1)
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
   p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;&quot;, &quot;p&quot;]
-  ret = ec.primitive_convert(src, dst=&quot;&quot;, 1)
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
   p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;&quot;, &quot;\x00&quot;]
-  ret = ec.primitive_convert(src, dst=&quot;&quot;, 1)
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
   p [ret, src, dst] #=&gt; [:finished, &quot;&quot;, &quot;i&quot;]
 </pre>
 
@@ -959,13 +959,13 @@ example:
       </div>
 
 
-      <div id="method-M000571" class="method-detail">
-        <a name="M000571"></a>
+      <div id="method-M000618" class="method-detail">
+        <a name="M000618"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000571.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000571.html');return false;">
+          <a href="Converter.src/M000618.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000618.html');return false;">
 
           <span class="method-name">ec.primitive_errinfo &rarr; array<br />
 </span>
@@ -977,7 +977,7 @@ example:
         <div class="method-description">
 
           <p>
-<a href="Converter.html#M000571">primitive_errinfo</a> returns important
+<a href="Converter.html#M000618">primitive_errinfo</a> returns important
 information regarding the last error as a 5-element array:
 </p>
 <pre>
@@ -1059,13 +1059,13 @@ Example:
       </div>
 
 
-      <div id="method-M000573" class="method-detail">
-        <a name="M000573"></a>
+      <div id="method-M000620" class="method-detail">
+        <a name="M000620"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000573.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000573.html');return false;">
+          <a href="Converter.src/M000620.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000620.html');return false;">
 
           <span class="method-name">putback</span><span class="method-args">(...)</span>
 
@@ -1090,9 +1090,9 @@ The bytes are caused by invalid_byte_sequence error. When
 invalid_byte_sequence error, some bytes are discarded and some bytes are
 buffered to be converted later. The latter bytes can be put back. It can be
 observed by <a
-href="InvalidByteSequenceError.html#M000559">Encoding::InvalidByteSequenceError#readagain_bytes</a>
+href="InvalidByteSequenceError.html#M000606">Encoding::InvalidByteSequenceError#readagain_bytes</a>
 and <a
-href="Converter.html#M000571">Encoding::Converter#primitive_errinfo</a>.
+href="Converter.html#M000618">Encoding::Converter#primitive_errinfo</a>.
 </p>
 <pre>
   ec = Encoding::Converter.new(&quot;utf-16le&quot;, &quot;iso-8859-1&quot;)
@@ -1108,13 +1108,13 @@ href="Converter.html#M000571">Encoding::Converter#primitive_errinfo</a>.
       </div>
 
 
-      <div id="method-M000575" class="method-detail">
-        <a name="M000575"></a>
+      <div id="method-M000622" class="method-detail">
+        <a name="M000622"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000575.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000575.html');return false;">
+          <a href="Converter.src/M000622.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000622.html');return false;">
 
           <span class="method-name">ec.replacement &rarr; string<br />
 </span>
@@ -1140,13 +1140,13 @@ Returns the replacement string.
       </div>
 
 
-      <div id="method-M000576" class="method-detail">
-        <a name="M000576"></a>
+      <div id="method-M000623" class="method-detail">
+        <a name="M000623"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000576.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000576.html');return false;">
+          <a href="Converter.src/M000623.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000623.html');return false;">
 
           <span class="method-name">ec.replacement = string<br />
 </span>
@@ -1170,13 +1170,13 @@ Sets the replacement string.
       </div>
 
 
-      <div id="method-M000566" class="method-detail">
-        <a name="M000566"></a>
+      <div id="method-M000613" class="method-detail">
+        <a name="M000613"></a>
 
         <div class="method-heading">
 
-          <a href="Converter.src/M000566.html" target="Code" class="method-signature"
-            onclick="popupCode('Converter.src/M000566.html');return false;">
+          <a href="Converter.src/M000613.html" target="Code" class="method-signature"
+            onclick="popupCode('Converter.src/M000613.html');return false;">
 
           <span class="method-name">ec.source_encoding &rarr; encoding<br />
 </span>

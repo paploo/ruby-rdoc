@@ -2,19 +2,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>now (Date)</title>
+  <title>weeknum1 (Date)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1805</span>
-1805:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">now</span>(<span class="ruby-identifier">sg</span>=<span class="ruby-constant">ITALY</span>)
-1806:     <span class="ruby-identifier">t</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-1807:     <span class="ruby-identifier">jd</span> = <span class="ruby-identifier">civil_to_jd</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">mon</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">mday</span>, <span class="ruby-identifier">sg</span>)
-1808:     <span class="ruby-identifier">fr</span> = <span class="ruby-identifier">time_to_day_fraction</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">hour</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">min</span>, [<span class="ruby-identifier">t</span>.<span class="ruby-identifier">sec</span>, <span class="ruby-value">59</span>].<span class="ruby-identifier">min</span>) <span class="ruby-operator">+</span>
-1809:       <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">nsec</span>, <span class="ruby-value">86400_000_000_000</span>)
-1810:     <span class="ruby-identifier">of</span> = <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">utc_offset</span>, <span class="ruby-value">86400</span>)
-1811:     <span class="ruby-identifier">new!</span>(<span class="ruby-identifier">jd_to_ajd</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-identifier">fr</span>, <span class="ruby-identifier">of</span>), <span class="ruby-identifier">of</span>, <span class="ruby-identifier">sg</span>)
-1812:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1177</span>
+1177:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">weeknum1</span>() <span class="ruby-identifier">jd_to_weeknum</span>(<span class="ruby-identifier">jd</span>, <span class="ruby-value">1</span>, <span class="ruby-ivar">@sg</span>) <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

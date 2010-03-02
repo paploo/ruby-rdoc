@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ctlmethods (Iconv)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Document-method: ctlmethods
+ * call-seq: Iconv.ctlmethods =&gt; array
+ *
+ * Returns available iconvctl() method list.
+ */
+static VALUE
+iconv_s_ctlmethods(VALUE klass)
+{
+    VALUE ary = rb_ary_new();
+#ifdef ICONV_TRIVIALP
+    rb_ary_push(ary, ID2SYM(rb_intern(&quot;trivial?&quot;)));
+#endif
+#ifdef ICONV_GET_TRANSLITERATE
+    rb_ary_push(ary, ID2SYM(rb_intern(&quot;transliterate?&quot;)));
+#endif
+#ifdef ICONV_SET_TRANSLITERATE
+    rb_ary_push(ary, ID2SYM(rb_intern(&quot;transliterate=&quot;)));
+#endif
+#ifdef ICONV_GET_DISCARD_ILSEQ
+    rb_ary_push(ary, ID2SYM(rb_intern(&quot;discard_ilseq?&quot;)));
+#endif
+#ifdef ICONV_SET_DISCARD_ILSEQ
+    rb_ary_push(ary, ID2SYM(rb_intern(&quot;discard_ilseq=&quot;)));
+#endif
+    return ary;
+}</pre>
+</body>
+</html>

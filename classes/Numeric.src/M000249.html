@@ -2,23 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>real? (Numeric)</title>
+  <title>div (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.real? -&gt; true or false
+ *     num.div(numeric)    =&gt; integer
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;num&lt;/i&gt; is a &lt;code&gt;Real&lt;/code&gt;
- *  (i.e. non &lt;code&gt;Complex&lt;/code&gt;).
+ *  Uses &lt;code&gt;/&lt;/code&gt; to perform division, then converts the result to
+ *  an integer. &lt;code&gt;Numeric&lt;/code&gt; does not define the &lt;code&gt;/&lt;/code&gt;
+ *  operator; this is left to subclasses.
  */
 
 static VALUE
-num_real_p(VALUE num)
+num_div(VALUE x, VALUE y)
 {
-    return Qtrue;
+    if (rb_equal(INT2FIX(0), y)) rb_num_zerodiv();
+    return num_floor(rb_funcall(x, '/', 1, y));
 }</pre>
 </body>
 </html>

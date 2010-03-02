@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>key (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      gdbm.key(value) -&gt; key
+ *
+ * Returns the _key_ for a given _value_. If several keys may map to the
+ * same value, the key that is found first will be returned.
+ */
+static VALUE
+fgdbm_key(VALUE obj, VALUE valstr)
+{
+    struct dbmdata *dbmp;
+    GDBM_FILE dbm;
+    VALUE keystr, valstr2;
+
+    StringValue(valstr);
+    GetDBM2(obj, dbmp, dbm);
+    for (keystr = rb_gdbm_firstkey(dbm); RTEST(keystr);
+         keystr = rb_gdbm_nextkey(dbm, keystr)) {
+
+        valstr2 = rb_gdbm_fetch2(dbm, keystr);
+        if (!NIL_P(valstr2) &amp;&amp;
+            RSTRING_LEN(valstr) == RSTRING_LEN(valstr2) &amp;&amp;
+            memcmp(RSTRING_PTR(valstr), RSTRING_PTR(valstr2),
+                   RSTRING_LEN(valstr)) == 0) {
+            return keystr;
+        }
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

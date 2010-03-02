@@ -2,58 +2,41 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>wait (IO)</title>
+  <title>fsync (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   io.wait          -&gt; IO, true, false or nil
- *   io.wait(timeout) -&gt; IO, true, false or nil
+ *  call-seq:
+ *     ios.fsync   =&gt; 0 or nil
  *
- * Waits until input is available or times out and returns self or nil when
- * EOF is reached.
+ *  Immediately writes all buffered data in &lt;em&gt;ios&lt;/em&gt; to disk.
+ *  Returns &lt;code&gt;nil&lt;/code&gt; if the underlying operating system does not
+ *  support &lt;em&gt;fsync(2)&lt;/em&gt;. Note that &lt;code&gt;fsync&lt;/code&gt; differs from
+ *  using &lt;code&gt;IO#sync=&lt;/code&gt;. The latter ensures that data is flushed
+ *  from Ruby's buffers, but doesn't not guarantee that the underlying
+ *  operating system actually writes it to disk.
  */
 
 static VALUE
-io_wait(int argc, VALUE *argv, VALUE io)
+rb_io_fsync(VALUE io)
 {
+#ifdef HAVE_FSYNC
     rb_io_t *fptr;
-    struct wait_readable_arg arg;
-    int fd, i;
-    ioctl_arg n;
-    VALUE timeout;
-    struct timeval timerec;
 
+    io = GetWriteIO(io);
     GetOpenFile(io, fptr);
-    rb_io_check_readable(fptr);
-    rb_scan_args(argc, argv, &quot;01&quot;, &amp;timeout);
-    if (NIL_P(timeout)) {
-        arg.timeout = 0;
-    }
-    else {
-        timerec = rb_time_interval(timeout);
-        arg.timeout = &amp;timerec;
-    }
 
-    if (rb_io_read_pending(fptr)) return Qtrue;
-    if (!FIONREAD_POSSIBLE_P(fptr-&gt;fd)) return Qfalse;
-    fd = fptr-&gt;fd;
-    rb_fd_init(&amp;arg.fds);
-    rb_fd_set(fd, &amp;arg.fds);
-#ifdef HAVE_RB_FD_INIT
-    i = (int)rb_ensure(wait_readable, (VALUE)&amp;arg,
-                       (VALUE (*)_((VALUE)))rb_fd_term, (VALUE)&amp;arg.fds);
-#else
-    i = rb_thread_select(fd + 1, rb_fd_ptr(&amp;arg.fds), NULL, NULL, arg.timeout);
-#endif
-    if (i &lt; 0)
+    if (io_fflush(fptr) &lt; 0)
         rb_sys_fail(0);
-    rb_io_check_closed(fptr);
-    if (ioctl(fptr-&gt;fd, FIONREAD, &amp;n)) rb_sys_fail(0);
-    if (n &gt; 0) return io;
-    return Qnil;
+    if (fsync(fptr-&gt;fd) &lt; 0)
+        rb_sys_fail_path(fptr-&gt;pathv);
+    return INT2FIX(0);
+#else
+    rb_notimplement();
+    return Qnil;                /* not reached */
+#endif
 }</pre>
 </body>
 </html>

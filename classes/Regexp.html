@@ -72,6 +72,16 @@
 
         <br />
 
+
+                <a href="../files/ext/json/lib/json/add/core_rb.html">
+
+                ext/json/lib/json/add/core.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -117,55 +127,59 @@ against strings. Regexps are created using the <tt>/.../</tt> and
 
       <div class="name-list">
 
-        <a href="#M001071">==</a>&nbsp;&nbsp;
+        <a href="#M001125">==</a>&nbsp;&nbsp;
 
-        <a href="#M001073">===</a>&nbsp;&nbsp;
+        <a href="#M001127">===</a>&nbsp;&nbsp;
 
-        <a href="#M001072">=~</a>&nbsp;&nbsp;
+        <a href="#M001126">=~</a>&nbsp;&nbsp;
 
-        <a href="#M001079">casefold?</a>&nbsp;&nbsp;
+        <a href="#M001133">casefold?</a>&nbsp;&nbsp;
 
-        <a href="#M001062">compile</a>&nbsp;&nbsp;
+        <a href="#M001116">compile</a>&nbsp;&nbsp;
 
-        <a href="#M001081">encoding</a>&nbsp;&nbsp;
+        <a href="#M001135">encoding</a>&nbsp;&nbsp;
 
-        <a href="#M001070">eql?</a>&nbsp;&nbsp;
+        <a href="#M001124">eql?</a>&nbsp;&nbsp;
 
-        <a href="#M001064">escape</a>&nbsp;&nbsp;
+        <a href="#M001118">escape</a>&nbsp;&nbsp;
 
-        <a href="#M001082">fixed_encoding?</a>&nbsp;&nbsp;
+        <a href="#M001136">fixed_encoding?</a>&nbsp;&nbsp;
 
-        <a href="#M001069">hash</a>&nbsp;&nbsp;
+        <a href="#M001123">hash</a>&nbsp;&nbsp;
 
-        <a href="#M001077">inspect</a>&nbsp;&nbsp;
+        <a href="#M001131">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M001066">last_match</a>&nbsp;&nbsp;
+        <a href="#M001141">json_create</a>&nbsp;&nbsp;
 
-        <a href="#M001075">match</a>&nbsp;&nbsp;
+        <a href="#M001120">last_match</a>&nbsp;&nbsp;
 
-        <a href="#M001084">named_captures</a>&nbsp;&nbsp;
+        <a href="#M001129">match</a>&nbsp;&nbsp;
 
-        <a href="#M001083">names</a>&nbsp;&nbsp;
+        <a href="#M001138">named_captures</a>&nbsp;&nbsp;
 
-        <a href="#M001068">new</a>&nbsp;&nbsp;
+        <a href="#M001137">names</a>&nbsp;&nbsp;
 
-        <a href="#M001080">options</a>&nbsp;&nbsp;
+        <a href="#M001122">new</a>&nbsp;&nbsp;
 
-        <a href="#M001063">quote</a>&nbsp;&nbsp;
+        <a href="#M001134">options</a>&nbsp;&nbsp;
 
-        <a href="#M001078">source</a>&nbsp;&nbsp;
+        <a href="#M001117">quote</a>&nbsp;&nbsp;
 
-        <a href="#M001076">to_s</a>&nbsp;&nbsp;
+        <a href="#M001132">source</a>&nbsp;&nbsp;
 
-        <a href="#M001086">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M001142">to_json</a>&nbsp;&nbsp;
 
-        <a href="#M001067">try_convert</a>&nbsp;&nbsp;
+        <a href="#M001130">to_s</a>&nbsp;&nbsp;
 
-        <a href="#M001065">union</a>&nbsp;&nbsp;
+        <a href="#M001140">to_yaml</a>&nbsp;&nbsp;
 
-        <a href="#M001085">yaml_new</a>&nbsp;&nbsp;
+        <a href="#M001121">try_convert</a>&nbsp;&nbsp;
 
-        <a href="#M001074">~</a>&nbsp;&nbsp;
+        <a href="#M001119">union</a>&nbsp;&nbsp;
+
+        <a href="#M001139">yaml_new</a>&nbsp;&nbsp;
+
+        <a href="#M001128">~</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -217,8 +231,8 @@ against strings. Regexps are created using the <tt>/.../</tt> and
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M001062" class="method-detail">
-        <a name="M001062"></a>
+      <div id="method-M001116" class="method-detail">
+        <a name="M001116"></a>
 
         <div class="method-heading">
 
@@ -229,20 +243,20 @@ against strings. Regexps are created using the <tt>/.../</tt> and
         <div class="method-description">
 
           <p>
-Synonym for <tt><a href="Regexp.html#M001068">Regexp.new</a></tt>
+Synonym for <tt><a href="Regexp.html#M001122">Regexp.new</a></tt>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M001064" class="method-detail">
-        <a name="M001064"></a>
+      <div id="method-M001118" class="method-detail">
+        <a name="M001118"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001064.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001064.html');return false;">
+          <a href="Regexp.src/M001118.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001118.html');return false;">
 
           <span class="method-name">Regexp.escape(str)   => string<br />
 Regexp.quote(str)    => string<br />
@@ -258,8 +272,8 @@ Regexp.quote(str)    => string<br />
 Escapes any characters that would have special meaning in a regular
 expression. Returns a new escaped string, or self if no characters are
 escaped. For any string, <tt><a
-href="Regexp.html#M001068">Regexp.new</a>(<a
-href="Regexp.html#M001064">Regexp.escape</a>(<em>str</em>))=~<em>str</em></tt>
+href="Regexp.html#M001122">Regexp.new</a>(<a
+href="Regexp.html#M001118">Regexp.escape</a>(<em>str</em>))=~<em>str</em></tt>
 will be true.
 </p>
 <pre>
@@ -270,13 +284,33 @@ will be true.
       </div>
 
 
-      <div id="method-M001066" class="method-detail">
-        <a name="M001066"></a>
+      <div id="method-M001141" class="method-detail">
+        <a name="M001141"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001066.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001066.html');return false;">
+          <a href="Regexp.src/M001141.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001141.html');return false;">
+
+          <span class="method-name">json_create</span><span class="method-args">(object)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001120" class="method-detail">
+        <a name="M001120"></a>
+
+        <div class="method-heading">
+
+          <a href="Regexp.src/M001120.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001120.html');return false;">
 
           <span class="method-name">Regexp.last_match           => matchdata<br />
 Regexp.last_match(n)        => str<br />
@@ -312,13 +346,13 @@ reference a named capture.
       </div>
 
 
-      <div id="method-M001068" class="method-detail">
-        <a name="M001068"></a>
+      <div id="method-M001122" class="method-detail">
+        <a name="M001122"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001068.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001068.html');return false;">
+          <a href="Regexp.src/M001122.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001122.html');return false;">
 
           <span class="method-name">Regexp.new(string [, options])                => regexp<br />
 Regexp.new(regexp)                            => regexp<br />
@@ -353,13 +387,13 @@ will be case insensitive.
       </div>
 
 
-      <div id="method-M001063" class="method-detail">
-        <a name="M001063"></a>
+      <div id="method-M001117" class="method-detail">
+        <a name="M001117"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001063.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001063.html');return false;">
+          <a href="Regexp.src/M001117.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001117.html');return false;">
 
           <span class="method-name">Regexp.escape(str)   => string<br />
 Regexp.quote(str)    => string<br />
@@ -375,8 +409,8 @@ Regexp.quote(str)    => string<br />
 Escapes any characters that would have special meaning in a regular
 expression. Returns a new escaped string, or self if no characters are
 escaped. For any string, <tt><a
-href="Regexp.html#M001068">Regexp.new</a>(<a
-href="Regexp.html#M001064">Regexp.escape</a>(<em>str</em>))=~<em>str</em></tt>
+href="Regexp.html#M001122">Regexp.new</a>(<a
+href="Regexp.html#M001118">Regexp.escape</a>(<em>str</em>))=~<em>str</em></tt>
 will be true.
 </p>
 <pre>
@@ -387,13 +421,13 @@ will be true.
       </div>
 
 
-      <div id="method-M001067" class="method-detail">
-        <a name="M001067"></a>
+      <div id="method-M001121" class="method-detail">
+        <a name="M001121"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001067.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001067.html');return false;">
+          <a href="Regexp.src/M001121.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001121.html');return false;">
 
           <span class="method-name">Regexp.try_convert(obj) &rarr; re or nil<br />
 </span>
@@ -423,13 +457,13 @@ converted for any reason.
       </div>
 
 
-      <div id="method-M001065" class="method-detail">
-        <a name="M001065"></a>
+      <div id="method-M001119" class="method-detail">
+        <a name="M001119"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001065.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001065.html');return false;">
+          <a href="Regexp.src/M001119.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001119.html');return false;">
 
           <span class="method-name">Regexp.union(pat1, pat2, ...)            => new_regexp<br />
 Regexp.union(pats_ary)                   => new_regexp<br />
@@ -461,13 +495,13 @@ options will be preserved, or Strings. If no patterns are given, returns
       </div>
 
 
-      <div id="method-M001085" class="method-detail">
-        <a name="M001085"></a>
+      <div id="method-M001139" class="method-detail">
+        <a name="M001139"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001085.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001085.html');return false;">
+          <a href="Regexp.src/M001139.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001139.html');return false;">
 
           <span class="method-name">yaml_new</span><span class="method-args">( klass, tag, val )</span>
 
@@ -484,13 +518,13 @@ options will be preserved, or Strings. If no patterns are given, returns
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M001071" class="method-detail">
-        <a name="M001071"></a>
+      <div id="method-M001125" class="method-detail">
+        <a name="M001125"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001071.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001071.html');return false;">
+          <a href="Regexp.src/M001125.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001125.html');return false;">
 
           <span class="method-name">rxp == other_rxp      => true or false<br />
 rxp.eql?(other_rxp)   => true or false<br />
@@ -518,13 +552,13 @@ the same.
       </div>
 
 
-      <div id="method-M001073" class="method-detail">
-        <a name="M001073"></a>
+      <div id="method-M001127" class="method-detail">
+        <a name="M001127"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001073.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001073.html');return false;">
+          <a href="Regexp.src/M001127.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001127.html');return false;">
 
           <span class="method-name">rxp === str   => true or false<br />
 </span>
@@ -557,13 +591,13 @@ Case Equality&#8212;Synonym for <tt>Regexp#=~</tt> used in case statements.
       </div>
 
 
-      <div id="method-M001072" class="method-detail">
-        <a name="M001072"></a>
+      <div id="method-M001126" class="method-detail">
+        <a name="M001126"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001072.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001072.html');return false;">
+          <a href="Regexp.src/M001126.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001126.html');return false;">
 
           <span class="method-name">rxp =~ str    => integer or nil<br />
 </span>
@@ -632,13 +666,13 @@ The assignment is not occur if the regexp is placed at right hand side.
       </div>
 
 
-      <div id="method-M001079" class="method-detail">
-        <a name="M001079"></a>
+      <div id="method-M001133" class="method-detail">
+        <a name="M001133"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001079.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001079.html');return false;">
+          <a href="Regexp.src/M001133.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001133.html');return false;">
 
           <span class="method-name">rxp.casefold?   => true or false<br />
 </span>
@@ -662,13 +696,13 @@ Returns the value of the case-insensitive flag.
       </div>
 
 
-      <div id="method-M001081" class="method-detail">
-        <a name="M001081"></a>
+      <div id="method-M001135" class="method-detail">
+        <a name="M001135"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001081.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001081.html');return false;">
+          <a href="Regexp.src/M001135.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001135.html');return false;">
 
           <span class="method-name">obj.encoding   => encoding<br />
 </span>
@@ -688,13 +722,13 @@ encoding of obj.
       </div>
 
 
-      <div id="method-M001070" class="method-detail">
-        <a name="M001070"></a>
+      <div id="method-M001124" class="method-detail">
+        <a name="M001124"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001070.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001070.html');return false;">
+          <a href="Regexp.src/M001124.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001124.html');return false;">
 
           <span class="method-name">rxp == other_rxp      => true or false<br />
 rxp.eql?(other_rxp)   => true or false<br />
@@ -722,13 +756,13 @@ the same.
       </div>
 
 
-      <div id="method-M001082" class="method-detail">
-        <a name="M001082"></a>
+      <div id="method-M001136" class="method-detail">
+        <a name="M001136"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001082.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001082.html');return false;">
+          <a href="Regexp.src/M001136.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001136.html');return false;">
 
           <span class="method-name">rxp.fixed_encoding?   => true or false<br />
 </span>
@@ -769,13 +803,13 @@ encoding. Returns true otherwise.
       </div>
 
 
-      <div id="method-M001069" class="method-detail">
-        <a name="M001069"></a>
+      <div id="method-M001123" class="method-detail">
+        <a name="M001123"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001069.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001069.html');return false;">
+          <a href="Regexp.src/M001123.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001123.html');return false;">
 
           <span class="method-name">rxp.hash   => fixnum<br />
 </span>
@@ -794,13 +828,13 @@ Produce a hash based on the text and options of this regular expression.
       </div>
 
 
-      <div id="method-M001077" class="method-detail">
-        <a name="M001077"></a>
+      <div id="method-M001131" class="method-detail">
+        <a name="M001131"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001077.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001077.html');return false;">
+          <a href="Regexp.src/M001131.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001131.html');return false;">
 
           <span class="method-name">rxp.inspect   => string<br />
 </span>
@@ -813,9 +847,9 @@ Produce a hash based on the text and options of this regular expression.
 
           <p>
 Produce a nicely formatted string-version of <em>rxp</em>. Perhaps
-surprisingly, <tt><a href="Regexp.html#M001077">inspect</a></tt> actually
+surprisingly, <tt><a href="Regexp.html#M001131">inspect</a></tt> actually
 produces the more natural version of the string than <tt><a
-href="Regexp.html#M001076">to_s</a></tt>.
+href="Regexp.html#M001130">to_s</a></tt>.
 </p>
 <pre>
      /ab+c/ix.inspect        #=&gt; &quot;/ab+c/ix&quot;
@@ -825,13 +859,13 @@ href="Regexp.html#M001076">to_s</a></tt>.
       </div>
 
 
-      <div id="method-M001075" class="method-detail">
-        <a name="M001075"></a>
+      <div id="method-M001129" class="method-detail">
+        <a name="M001129"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001075.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001075.html');return false;">
+          <a href="Regexp.src/M001129.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001129.html');return false;">
 
           <span class="method-name">rxp.match(str)       => matchdata or nil<br />
 rxp.match(str,pos)   => matchdata or nil<br />
@@ -877,13 +911,13 @@ The return value is a value from block execution in this case.
       </div>
 
 
-      <div id="method-M001084" class="method-detail">
-        <a name="M001084"></a>
+      <div id="method-M001138" class="method-detail">
+        <a name="M001138"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001084.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001084.html');return false;">
+          <a href="Regexp.src/M001138.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001138.html');return false;">
 
           <span class="method-name">rxp.named_captures  => hash<br />
 </span>
@@ -921,13 +955,13 @@ If there are no named captures, an empty hash is returned.
       </div>
 
 
-      <div id="method-M001083" class="method-detail">
-        <a name="M001083"></a>
+      <div id="method-M001137" class="method-detail">
+        <a name="M001137"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001083.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001083.html');return false;">
+          <a href="Regexp.src/M001137.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001137.html');return false;">
 
           <span class="method-name">rxp.names   => [name1, name2, ...]<br />
 </span>
@@ -956,13 +990,13 @@ Returns a list of names of captures as an array of strings.
       </div>
 
 
-      <div id="method-M001080" class="method-detail">
-        <a name="M001080"></a>
+      <div id="method-M001134" class="method-detail">
+        <a name="M001134"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001080.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001080.html');return false;">
+          <a href="Regexp.src/M001134.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001134.html');return false;">
 
           <span class="method-name">rxp.options   => fixnum<br />
 </span>
@@ -998,13 +1032,13 @@ are ignored if the options are passed to <tt>Regexp::new</tt>.
       </div>
 
 
-      <div id="method-M001078" class="method-detail">
-        <a name="M001078"></a>
+      <div id="method-M001132" class="method-detail">
+        <a name="M001132"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001078.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001078.html');return false;">
+          <a href="Regexp.src/M001132.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001132.html');return false;">
 
           <span class="method-name">rxp.source   => str<br />
 </span>
@@ -1032,13 +1066,33 @@ Note that escape sequences are retained as is.
       </div>
 
 
-      <div id="method-M001076" class="method-detail">
-        <a name="M001076"></a>
+      <div id="method-M001142" class="method-detail">
+        <a name="M001142"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001076.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001076.html');return false;">
+          <a href="Regexp.src/M001142.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001142.html');return false;">
+
+          <span class="method-name">to_json</span><span class="method-args">(*)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001130" class="method-detail">
+        <a name="M001130"></a>
+
+        <div class="method-heading">
+
+          <a href="Regexp.src/M001130.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001130.html');return false;">
 
           <span class="method-name">rxp.to_s   => str<br />
 </span>
@@ -1055,7 +1109,7 @@ the <tt>(?opts:source)</tt> notation. This string can be fed back in to
 <tt>Regexp::new</tt> to a regular expression with the same semantics as the
 original. (However, <tt>Regexp#==</tt> may not return true when comparing
 the two, as the source of the regular expression itself may differ, as the
-example shows). <tt><a href="Regexp.html#M001077">Regexp#inspect</a></tt>
+example shows). <tt><a href="Regexp.html#M001131">Regexp#inspect</a></tt>
 produces a generally more readable version of <em>rxp</em>.
 </p>
 <pre>
@@ -1071,13 +1125,13 @@ produces a generally more readable version of <em>rxp</em>.
       </div>
 
 
-      <div id="method-M001086" class="method-detail">
-        <a name="M001086"></a>
+      <div id="method-M001140" class="method-detail">
+        <a name="M001140"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001086.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001086.html');return false;">
+          <a href="Regexp.src/M001140.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001140.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 
@@ -1091,13 +1145,13 @@ produces a generally more readable version of <em>rxp</em>.
       </div>
 
 
-      <div id="method-M001074" class="method-detail">
-        <a name="M001074"></a>
+      <div id="method-M001128" class="method-detail">
+        <a name="M001128"></a>
 
         <div class="method-heading">
 
-          <a href="Regexp.src/M001074.html" target="Code" class="method-signature"
-            onclick="popupCode('Regexp.src/M001074.html');return false;">
+          <a href="Regexp.src/M001128.html" target="Code" class="method-signature"
+            onclick="popupCode('Regexp.src/M001128.html');return false;">
 
           <span class="method-name">~ rxp   => integer or nil<br />
 </span>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>run (WEBrick::HTTPServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/webrick/httpserver.rb, line 43</span>
+43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">sock</span>)
+44:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span> 
+45:         <span class="ruby-identifier">res</span> = <span class="ruby-constant">HTTPResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@config</span>)
+46:         <span class="ruby-identifier">req</span> = <span class="ruby-constant">HTTPRequest</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@config</span>)
+47:         <span class="ruby-identifier">server</span> = <span class="ruby-keyword kw">self</span>
+48:         <span class="ruby-keyword kw">begin</span>
+49:           <span class="ruby-identifier">timeout</span> = <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:RequestTimeout</span>]
+50:           <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">timeout</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+51:             <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">IO</span>.<span class="ruby-identifier">select</span>([<span class="ruby-identifier">sock</span>], <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-value">0</span><span class="ruby-value">.5</span>)
+52:             <span class="ruby-identifier">timeout</span> = <span class="ruby-value">0</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">:Running</span>
+53:             <span class="ruby-identifier">timeout</span> <span class="ruby-operator">-=</span> <span class="ruby-value">0</span><span class="ruby-value">.5</span>
+54:           <span class="ruby-keyword kw">end</span>
+55:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">EOFError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">timeout</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+56:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">EOFError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sock</span>.<span class="ruby-identifier">eof?</span>
+57:           <span class="ruby-identifier">req</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">sock</span>)
+58:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">request_method</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_method</span>
+59:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">request_uri</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_uri</span>
+60:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">request_http_version</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">http_version</span>
+61:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">keep_alive</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">keep_alive?</span>
+62:           <span class="ruby-identifier">server</span> = <span class="ruby-identifier">lookup_server</span>(<span class="ruby-identifier">req</span>) <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>
+63:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span> = <span class="ruby-identifier">server</span>[<span class="ruby-identifier">:RequestCallback</span>]
+64:             <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+65:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">callback</span> = <span class="ruby-identifier">server</span>[<span class="ruby-identifier">:RequestHandler</span>]
+66:             <span class="ruby-identifier">msg</span> = <span class="ruby-value str">&quot;:RequestHandler is deprecated, please use :RequestCallback&quot;</span>
+67:             <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-identifier">msg</span>)
+68:             <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+69:           <span class="ruby-keyword kw">end</span>
+70:           <span class="ruby-identifier">server</span>.<span class="ruby-identifier">service</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+71:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">EOFError</span>, <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestTimeout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+72:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">set_error</span>(<span class="ruby-identifier">ex</span>)
+73:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+74:           <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>)
+75:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">set_error</span>(<span class="ruby-identifier">ex</span>)
+76:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">Status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+77:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">code</span>
+78:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">StandardError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+79:           <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-identifier">ex</span>)
+80:           <span class="ruby-identifier">res</span>.<span class="ruby-identifier">set_error</span>(<span class="ruby-identifier">ex</span>, <span class="ruby-keyword kw">true</span>)
+81:         <span class="ruby-keyword kw">ensure</span>
+82:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_line</span>
+83:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">keep_alive?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">keep_alive?</span>
+84:               <span class="ruby-identifier">req</span>.<span class="ruby-identifier">fixup</span>()
+85:             <span class="ruby-keyword kw">end</span>
+86:             <span class="ruby-identifier">res</span>.<span class="ruby-identifier">send_response</span>(<span class="ruby-identifier">sock</span>)
+87:             <span class="ruby-identifier">server</span>.<span class="ruby-identifier">access_log</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+88:           <span class="ruby-keyword kw">end</span>
+89:         <span class="ruby-keyword kw">end</span>
+90:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@http_version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value str">&quot;1.1&quot;</span>
+91:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">keep_alive?</span>
+92:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">keep_alive?</span>
+93:       <span class="ruby-keyword kw">end</span>
+94:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

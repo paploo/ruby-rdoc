@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_visibility (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1308</span>
+1308:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_visibility</span>(<span class="ruby-identifier">container</span>, <span class="ruby-identifier">subname</span>, <span class="ruby-identifier">visibility_info</span>)
+1309:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">subname</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">visibility_info</span>
+1310:     <span class="ruby-identifier">visibility_info</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">info</span><span class="ruby-operator">|</span>
+1311:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">info</span>[<span class="ruby-value str">&quot;name&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">subname</span> <span class="ruby-operator">||</span>
+1312:           <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">ignore_case</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">info</span>[<span class="ruby-value str">&quot;name&quot;</span>].<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">subname</span>.<span class="ruby-identifier">upcase</span>
+1313:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">info</span>[<span class="ruby-value str">&quot;parent&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">name</span>
+1314:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">info</span>[<span class="ruby-value str">&quot;visibility&quot;</span>]
+1315:         <span class="ruby-keyword kw">end</span>
+1316:       <span class="ruby-keyword kw">end</span>
+1317:     }
+1318:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+1319:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

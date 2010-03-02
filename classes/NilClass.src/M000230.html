@@ -2,26 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>^ (NilClass)</title>
+  <title>to_a (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
+ * Document-method: to_a
+ *
  *  call-seq:
- *     false ^ obj    =&gt; true or false
- *     nil   ^ obj    =&gt; true or false
+ *     nil.to_a    =&gt; []
  *  
- *  Exclusive Or---If &lt;i&gt;obj&lt;/i&gt; is &lt;code&gt;nil&lt;/code&gt; or
- *  &lt;code&gt;false&lt;/code&gt;, returns &lt;code&gt;false&lt;/code&gt;; otherwise, returns
- *  &lt;code&gt;true&lt;/code&gt;.
+ *  Always returns an empty array.
  *     
+ *     nil.to_a   #=&gt; []
  */
 
 static VALUE
-false_xor(VALUE obj, VALUE obj2)
+nil_to_a(VALUE obj)
 {
-    return RTEST(obj2)?Qtrue:Qfalse;
+    return rb_ary_new2(0);
 }</pre>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>succ (Prime::Generator23)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 335</span>
+335:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">succ</span>
+336:       <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+337:         <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@step</span>)
+338:           <span class="ruby-ivar">@prime</span> <span class="ruby-operator">+=</span> <span class="ruby-ivar">@step</span>
+339:           <span class="ruby-ivar">@step</span> = <span class="ruby-value">6</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@step</span>
+340:         <span class="ruby-keyword kw">else</span>
+341:           <span class="ruby-keyword kw">case</span> <span class="ruby-ivar">@prime</span>
+342:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>; <span class="ruby-ivar">@prime</span> = <span class="ruby-value">2</span>
+343:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>; <span class="ruby-ivar">@prime</span> = <span class="ruby-value">3</span>
+344:           <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span>; <span class="ruby-ivar">@prime</span> = <span class="ruby-value">5</span>; <span class="ruby-ivar">@step</span> = <span class="ruby-value">2</span>
+345:           <span class="ruby-keyword kw">end</span>
+346:         <span class="ruby-keyword kw">end</span>
+347:         <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@prime</span>
+348:       <span class="ruby-keyword kw">end</span>
+349:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

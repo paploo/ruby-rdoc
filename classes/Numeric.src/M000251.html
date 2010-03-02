@@ -2,25 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>zero? (Numeric)</title>
+  <title>modulo (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.zero?    =&gt; true or false
+ *     num.modulo(numeric)    =&gt; result
  *
- *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;num&lt;/i&gt; has a zero value.
+ *  Equivalent to
+ *  &lt;i&gt;num&lt;/i&gt;.&lt;code&gt;divmod(&lt;/code&gt;&lt;i&gt;aNumeric&lt;/i&gt;&lt;code&gt;)[1]&lt;/code&gt;.
  */
 
 static VALUE
-num_zero_p(VALUE num)
+num_modulo(VALUE x, VALUE y)
 {
-    if (rb_equal(num, INT2FIX(0))) {
-        return Qtrue;
-    }
-    return Qfalse;
+    return rb_funcall(x, '%', 1, y);
 }</pre>
 </body>
 </html>

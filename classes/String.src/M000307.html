@@ -2,34 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>hex (String)</title>
+  <title>downcase (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.hex   =&gt; integer
+ *     str.downcase   =&gt; new_str
  *  
- *  Treats leading characters from &lt;i&gt;str&lt;/i&gt; as a string of hexadecimal digits
- *  (with an optional sign and an optional &lt;code&gt;0x&lt;/code&gt;) and returns the
- *  corresponding number. Zero is returned on error.
+ *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with all uppercase letters replaced with their
+ *  lowercase counterparts. The operation is locale insensitive---only
+ *  characters ``A'' to ``Z'' are affected.
+ *  Note: case replacement is effective only in ASCII region.
  *     
- *     &quot;0x0a&quot;.hex     #=&gt; 10
- *     &quot;-1234&quot;.hex    #=&gt; -4660
- *     &quot;0&quot;.hex        #=&gt; 0
- *     &quot;wombat&quot;.hex   #=&gt; 0
+ *     &quot;hEllO&quot;.downcase   #=&gt; &quot;hello&quot;
  */
 
 static VALUE
-rb_str_hex(VALUE str)
+rb_str_downcase(VALUE str)
 {
-    rb_encoding *enc = rb_enc_get(str);
-
-    if (!rb_enc_asciicompat(enc)) {
-        rb_raise(rb_eEncCompatError, &quot;ASCII incompatible encoding: %s&quot;, rb_enc_name(enc));
-    }
-    return rb_str_to_inum(str, 16, Qfalse);
+    str = rb_str_dup(str);
+    rb_str_downcase_bang(str);
+    return str;
 }</pre>
 </body>
 </html>

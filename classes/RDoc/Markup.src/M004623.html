@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>handled_labeled_list (RDoc::Markup)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup.rb, line 265</span>
+265:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handled_labeled_list</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">level</span>, <span class="ruby-identifier">margin</span>, <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">prefix</span>)
+266:     <span class="ruby-identifier">prefix_length</span> = <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>
+267:     <span class="ruby-identifier">text</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">text</span>
+268:     <span class="ruby-identifier">flag</span> = <span class="ruby-keyword kw">nil</span>
+269: 
+270:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">prefix</span>
+271:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\[/</span> <span class="ruby-keyword kw">then</span>
+272:       <span class="ruby-identifier">flag</span> = <span class="ruby-identifier">:LABELED</span>
+273:       <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">prefix</span>[<span class="ruby-value">1</span>, <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>]
+274:     <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/:$/</span> <span class="ruby-keyword kw">then</span>
+275:       <span class="ruby-identifier">flag</span> = <span class="ruby-identifier">:NOTE</span>
+276:       <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">chop!</span>
+277:     <span class="ruby-keyword kw">else</span>
+278:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid List Type: #{self.inspect}&quot;</span>
+279:     <span class="ruby-keyword kw">end</span>
+280: 
+281:     <span class="ruby-comment cmt"># body is on the next line</span>
+282:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">offset</span> <span class="ruby-keyword kw">then</span>
+283:       <span class="ruby-identifier">original_line</span> = <span class="ruby-identifier">line</span>
+284:       <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">next</span>
+285:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">line</span>
+286:       <span class="ruby-identifier">text</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">text</span>
+287: 
+288:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">margin</span>
+289:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">!=</span> <span class="ruby-constant">SPACE</span>
+290:           <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">unget</span>
+291:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+292:         <span class="ruby-keyword kw">end</span>
+293:       <span class="ruby-keyword kw">end</span>
+294: 
+295:       <span class="ruby-identifier">i</span> = <span class="ruby-identifier">margin</span>
+296:       <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">text</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">==</span> <span class="ruby-constant">SPACE</span>
+297: 
+298:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">length</span> <span class="ruby-keyword kw">then</span>
+299:         <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">unget</span>
+300:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+301:       <span class="ruby-keyword kw">else</span>
+302:         <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">i</span>
+303:         <span class="ruby-identifier">prefix_length</span> = <span class="ruby-value">0</span>
+304: 
+305:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span>[<span class="ruby-identifier">offset</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] <span class="ruby-operator">=~</span> <span class="ruby-constant">SIMPLE_LIST_RE</span> <span class="ruby-keyword kw">then</span>
+306:           <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">unget</span>
+307:           <span class="ruby-identifier">line</span> = <span class="ruby-identifier">original_line</span>
+308:           <span class="ruby-identifier">line</span>.<span class="ruby-identifier">text</span> = <span class="ruby-value str">''</span>
+309:         <span class="ruby-keyword kw">else</span>
+310:           <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">original_line</span>
+311:         <span class="ruby-keyword kw">end</span>
+312:       <span class="ruby-keyword kw">end</span>
+313:     <span class="ruby-keyword kw">end</span>
+314: 
+315:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:LIST</span>, <span class="ruby-identifier">level</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">flag</span>
+316:     <span class="ruby-identifier">text</span>[<span class="ruby-identifier">margin</span>, <span class="ruby-identifier">prefix_length</span>] = <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">prefix_length</span>
+317:     <span class="ruby-identifier">assign_types_to_lines</span>(<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">level</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+318:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+319:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

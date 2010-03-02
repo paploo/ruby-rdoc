@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gettextfile (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 565</span>
+565:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gettextfile</span>(<span class="ruby-identifier">remotefile</span>, <span class="ruby-identifier">localfile</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">remotefile</span>)) <span class="ruby-comment cmt"># :yield: line</span>
+566:       <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+567:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">localfile</span>
+568:         <span class="ruby-identifier">f</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">localfile</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+569:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">block_given?</span>
+570:         <span class="ruby-identifier">result</span> = <span class="ruby-value str">&quot;&quot;</span>
+571:       <span class="ruby-keyword kw">end</span>
+572:       <span class="ruby-keyword kw">begin</span>
+573:         <span class="ruby-identifier">retrlines</span>(<span class="ruby-value str">&quot;RETR &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">remotefile</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+574:           <span class="ruby-identifier">f</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">line</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">localfile</span>
+575:           <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">line</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+576:           <span class="ruby-identifier">result</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">line</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>
+577:         <span class="ruby-keyword kw">end</span>
+578:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>
+579:       <span class="ruby-keyword kw">ensure</span>
+580:         <span class="ruby-identifier">f</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">localfile</span>
+581:       <span class="ruby-keyword kw">end</span>
+582:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

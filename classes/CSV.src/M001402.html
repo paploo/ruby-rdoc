@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>raw_encoding (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2286</span>
+2286:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">raw_encoding</span>
+2287:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:internal_encoding</span>
+2288:       <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">internal_encoding</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">external_encoding</span>
+2289:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">StringIO</span>
+2290:       <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">string</span>.<span class="ruby-identifier">encoding</span>
+2291:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:encoding</span>
+2292:       <span class="ruby-ivar">@io</span>.<span class="ruby-identifier">encoding</span>
+2293:     <span class="ruby-keyword kw">else</span>
+2294:       <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">ASCII_8BIT</span>
+2295:     <span class="ruby-keyword kw">end</span>
+2296:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

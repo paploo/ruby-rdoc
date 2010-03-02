@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>run_config (Shell::CommandProcessor)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shell/command-processor.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">run_config</span>
+52:       <span class="ruby-keyword kw">begin</span>
+53:         <span class="ruby-identifier">load</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-value str">&quot;~/.rb_shell&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">&quot;HOME&quot;</span>)
+54:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>, <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+55:       <span class="ruby-keyword kw">rescue</span>
+56:         <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;load error: #{rc}\n&quot;</span>
+57:         <span class="ruby-identifier">print</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">class</span>, <span class="ruby-value str">&quot;: &quot;</span>, <span class="ruby-identifier">$!</span>, <span class="ruby-value str">&quot;\n&quot;</span>
+58:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">err</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">$@</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">$@</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">2</span>]
+59:           <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;\t&quot;</span>, <span class="ruby-identifier">err</span>, <span class="ruby-value str">&quot;\n&quot;</span>
+60:         <span class="ruby-keyword kw">end</span>
+61:       <span class="ruby-keyword kw">end</span>
+62:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

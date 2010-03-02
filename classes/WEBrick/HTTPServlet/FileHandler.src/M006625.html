@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>exec_handler (WEBrick::HTTPServlet::FileHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpservlet/filehandler.rb, line 230</span>
+230:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exec_handler</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+231:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">NotFound</span>, <span class="ruby-node">&quot;`#{req.path}' not found&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@root</span>
+232:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set_filename</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+233:           <span class="ruby-identifier">handler</span> = <span class="ruby-identifier">get_handler</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+234:           <span class="ruby-identifier">call_callback</span>(<span class="ruby-identifier">:HandlerCallback</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+235:           <span class="ruby-identifier">h</span> = <span class="ruby-identifier">handler</span>.<span class="ruby-identifier">get_instance</span>(<span class="ruby-ivar">@config</span>, <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span>)
+236:           <span class="ruby-identifier">h</span>.<span class="ruby-identifier">service</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+237:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+238:         <span class="ruby-keyword kw">end</span>
+239:         <span class="ruby-identifier">call_callback</span>(<span class="ruby-identifier">:HandlerCallback</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+240:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+241:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

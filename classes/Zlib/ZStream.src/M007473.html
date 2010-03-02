@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>avail_out (Zlib::ZStream)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Returns number of bytes of free spaces in output buffer.  Because the free
+ * space is allocated automatically, this method returns 0 normally.
+ */
+static VALUE
+rb_zstream_avail_out(VALUE obj)
+{
+    struct zstream *z;
+    Data_Get_Struct(obj, struct zstream, z);
+    return rb_uint2inum(z-&gt;stream.avail_out);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>all_waits (ThreadsWait)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/thwait.rb, line 151</span>
+151:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_waits</span>
+152:     <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@threads</span>.<span class="ruby-identifier">empty?</span>
+153:       <span class="ruby-identifier">th</span> = <span class="ruby-identifier">next_wait</span>
+154:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">th</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+155:     <span class="ruby-keyword kw">end</span>
+156:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

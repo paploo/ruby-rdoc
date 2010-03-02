@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>&gt; (Shell::Filter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shell/filter.rb, line 52</span>
+52:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">to</span>)
+53:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">to</span>
+54:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+55:         <span class="ruby-identifier">dst</span> = <span class="ruby-ivar">@shell</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">to</span>, <span class="ruby-value str">&quot;w&quot;</span>)
+56:         <span class="ruby-keyword kw">begin</span>
+57:           <span class="ruby-identifier">each</span>(){<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dst</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">l</span>}
+58:         <span class="ruby-keyword kw">ensure</span>
+59:           <span class="ruby-identifier">dst</span>.<span class="ruby-identifier">close</span>
+60:         <span class="ruby-keyword kw">end</span>
+61:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">IO</span>
+62:         <span class="ruby-identifier">each</span>(){<span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-identifier">to</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">l</span>}
+63:       <span class="ruby-keyword kw">else</span>
+64:         <span class="ruby-constant">Shell</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">Error</span><span class="ruby-operator">::</span><span class="ruby-constant">CantApplyMethod</span>, <span class="ruby-value str">&quot;&gt;&quot;</span>, <span class="ruby-identifier">to</span>.<span class="ruby-identifier">class</span>
+65:       <span class="ruby-keyword kw">end</span>
+66:       <span class="ruby-keyword kw">self</span>
+67:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

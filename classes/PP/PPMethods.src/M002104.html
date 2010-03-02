@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pp_hash (PP::PPMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/pp.rb, line 248</span>
+248:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pp_hash</span>(<span class="ruby-identifier">obj</span>)
+249:       <span class="ruby-identifier">group</span>(<span class="ruby-value">1</span>, <span class="ruby-value str">'{'</span>, <span class="ruby-value str">'}'</span>) {
+250:         <span class="ruby-identifier">seplist</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">:each_pair</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+251:           <span class="ruby-identifier">group</span> {
+252:             <span class="ruby-identifier">pp</span> <span class="ruby-identifier">k</span>
+253:             <span class="ruby-identifier">text</span> <span class="ruby-value str">'=&gt;'</span>
+254:             <span class="ruby-identifier">group</span>(<span class="ruby-value">1</span>) {
+255:               <span class="ruby-identifier">breakable</span> <span class="ruby-value str">''</span>
+256:               <span class="ruby-identifier">pp</span> <span class="ruby-identifier">v</span>
+257:             }
+258:           }
+259:         }
+260:       }
+261:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

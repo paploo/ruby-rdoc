@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>request (Net::HTTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 1092</span>
+1092:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">body</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)  <span class="ruby-comment cmt"># :yield: +response+</span>
+1093:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">started?</span>
+1094:         <span class="ruby-identifier">start</span> {
+1095:           <span class="ruby-identifier">req</span>[<span class="ruby-value str">'connection'</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'close'</span>
+1096:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">body</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1097:         }
+1098:       <span class="ruby-keyword kw">end</span>
+1099:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">proxy_user</span>()
+1100:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">proxy_basic_auth</span> <span class="ruby-identifier">proxy_user</span>(), <span class="ruby-identifier">proxy_pass</span>() <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">use_ssl?</span>
+1101:       <span class="ruby-keyword kw">end</span>
+1102:       <span class="ruby-identifier">req</span>.<span class="ruby-identifier">set_body_internal</span> <span class="ruby-identifier">body</span>
+1103:       <span class="ruby-identifier">res</span> = <span class="ruby-identifier">transport_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1104:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sspi_auth?</span>(<span class="ruby-identifier">res</span>)
+1105:         <span class="ruby-identifier">sspi_auth</span>(<span class="ruby-identifier">req</span>)
+1106:         <span class="ruby-identifier">res</span> = <span class="ruby-identifier">transport_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1107:       <span class="ruby-keyword kw">end</span>
+1108:       <span class="ruby-identifier">res</span>
+1109:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

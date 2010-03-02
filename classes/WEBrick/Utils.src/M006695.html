@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>create_self_signed_cert (WEBrick::Utils)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/webrick/ssl.rb, line 39</span>
+39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_self_signed_cert</span>(<span class="ruby-identifier">bits</span>, <span class="ruby-identifier">cn</span>, <span class="ruby-identifier">comment</span>)
+40:       <span class="ruby-identifier">rsa</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">bits</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">p</span>, <span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+41:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">p</span>
+42:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>; <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">putc</span> <span class="ruby-value str">&quot;.&quot;</span>  <span class="ruby-comment cmt"># BN_generate_prime</span>
+43:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>; <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">putc</span> <span class="ruby-value str">&quot;+&quot;</span>  <span class="ruby-comment cmt"># BN_generate_prime</span>
+44:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>; <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">putc</span> <span class="ruby-value str">&quot;*&quot;</span>  <span class="ruby-comment cmt"># searching good prime,  </span>
+45:                                   <span class="ruby-comment cmt"># n = #of try,</span>
+46:                                   <span class="ruby-comment cmt"># but also data from BN_generate_prime</span>
+47:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">3</span>; <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">putc</span> <span class="ruby-value str">&quot;\n&quot;</span> <span class="ruby-comment cmt"># found good prime, n==0 - p, n==1 - q,</span>
+48:                                   <span class="ruby-comment cmt"># but also data from BN_generate_prime</span>
+49:         <span class="ruby-keyword kw">else</span>;   <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">putc</span> <span class="ruby-value str">&quot;*&quot;</span>  <span class="ruby-comment cmt"># BN_generate_prime</span>
+50:         <span class="ruby-keyword kw">end</span>
+51:       }
+52:       <span class="ruby-identifier">cert</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>
+53:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">version</span> = <span class="ruby-value">3</span>
+54:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">serial</span> = <span class="ruby-value">0</span>
+55:       <span class="ruby-identifier">name</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cn</span>)
+56:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">subject</span> = <span class="ruby-identifier">name</span>
+57:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">issuer</span> = <span class="ruby-identifier">name</span>
+58:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">not_before</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+59:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">not_after</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> (<span class="ruby-value">365</span><span class="ruby-operator">*</span><span class="ruby-value">24</span><span class="ruby-operator">*</span><span class="ruby-value">60</span><span class="ruby-operator">*</span><span class="ruby-value">60</span>)
+60:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">public_key</span> = <span class="ruby-identifier">rsa</span>.<span class="ruby-identifier">public_key</span>
+61: 
+62:       <span class="ruby-identifier">ef</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionFactory</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">cert</span>)
+63:       <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">issuer_certificate</span> = <span class="ruby-identifier">cert</span>
+64:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">extensions</span> = [
+65:         <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;basicConstraints&quot;</span>,<span class="ruby-value str">&quot;CA:FALSE&quot;</span>),
+66:         <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;keyUsage&quot;</span>, <span class="ruby-value str">&quot;keyEncipherment&quot;</span>),
+67:         <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;subjectKeyIdentifier&quot;</span>, <span class="ruby-value str">&quot;hash&quot;</span>),
+68:         <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;extendedKeyUsage&quot;</span>, <span class="ruby-value str">&quot;serverAuth&quot;</span>),
+69:         <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;nsComment&quot;</span>, <span class="ruby-identifier">comment</span>),
+70:       ]
+71:       <span class="ruby-identifier">aki</span> = <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-value str">&quot;authorityKeyIdentifier&quot;</span>,
+72:                                 <span class="ruby-value str">&quot;keyid:always,issuer:always&quot;</span>)
+73:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">add_extension</span>(<span class="ruby-identifier">aki</span>)
+74:       <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">sign</span>(<span class="ruby-identifier">rsa</span>, <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">new</span>)
+75: 
+76:       <span class="ruby-keyword kw">return</span> [ <span class="ruby-identifier">cert</span>, <span class="ruby-identifier">rsa</span> ]
+77:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

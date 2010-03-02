@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_alias (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1816</span>
+1816:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_alias</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">single</span>, <span class="ruby-identifier">tk</span>, <span class="ruby-identifier">comment</span>)
+1817:     <span class="ruby-identifier">skip_tkspace</span>
+1818:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkLPAREN</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">peek_tk</span> <span class="ruby-keyword kw">then</span>
+1819:       <span class="ruby-identifier">get_tk</span>
+1820:       <span class="ruby-identifier">skip_tkspace</span>
+1821:     <span class="ruby-keyword kw">end</span>
+1822:     <span class="ruby-identifier">new_name</span> = <span class="ruby-identifier">get_symbol_or_name</span>
+1823:     <span class="ruby-ivar">@scanner</span>.<span class="ruby-identifier">instance_eval</span>{<span class="ruby-ivar">@lex_state</span> = <span class="ruby-constant">EXPR_FNAME</span>}
+1824:     <span class="ruby-identifier">skip_tkspace</span>
+1825:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkCOMMA</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">peek_tk</span> <span class="ruby-keyword kw">then</span>
+1826:       <span class="ruby-identifier">get_tk</span>
+1827:       <span class="ruby-identifier">skip_tkspace</span>
+1828:     <span class="ruby-keyword kw">end</span>
+1829:     <span class="ruby-identifier">old_name</span> = <span class="ruby-identifier">get_symbol_or_name</span>
+1830: 
+1831:     <span class="ruby-identifier">al</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Alias</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">get_tkread</span>, <span class="ruby-identifier">old_name</span>, <span class="ruby-identifier">new_name</span>, <span class="ruby-identifier">comment</span>
+1832:     <span class="ruby-identifier">read_documentation_modifiers</span> <span class="ruby-identifier">al</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">ATTR_MODIFIERS</span>
+1833:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">al</span>.<span class="ruby-identifier">document_self</span>
+1834:       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">add_alias</span>(<span class="ruby-identifier">al</span>)
+1835:     <span class="ruby-keyword kw">end</span>
+1836:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

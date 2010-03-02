@@ -2,42 +2,76 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>each_char (String)</title>
+  <title>count (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: each_char
  *  call-seq:
- *     str.each_char {|cstr| block }    =&gt; str
+ *     str.count([other_str]+)   =&gt; fixnum
  *  
- *  Passes each character in &lt;i&gt;str&lt;/i&gt; to the given block.
+ *  Each &lt;i&gt;other_str&lt;/i&gt; parameter defines a set of characters to count.  The
+ *  intersection of these sets defines the characters to count in
+ *  &lt;i&gt;str&lt;/i&gt;. Any &lt;i&gt;other_str&lt;/i&gt; that starts with a caret (^) is
+ *  negated. The sequence c1--c2 means all characters between c1 and c2.
  *     
- *     &quot;hello&quot;.each_char {|c| print c, ' ' }
- *     
- *  &lt;em&gt;produces:&lt;/em&gt;
- *     
- *     h e l l o 
+ *     a = &quot;hello world&quot;
+ *     a.count &quot;lo&quot;            #=&gt; 5
+ *     a.count &quot;lo&quot;, &quot;o&quot;       #=&gt; 2
+ *     a.count &quot;hello&quot;, &quot;^l&quot;   #=&gt; 4
+ *     a.count &quot;ej-m&quot;          #=&gt; 4
  */
 
 static VALUE
-rb_str_each_char(VALUE str)
+rb_str_count(int argc, VALUE *argv, VALUE str)
 {
-    int i, len, n;
-    const char *ptr;
-    rb_encoding *enc;
+    char table[256];
+    rb_encoding *enc = 0;
+    VALUE del = 0, nodel = 0;
+    char *s, *send;
+    int i;
+    int ascompat;
 
-    RETURN_ENUMERATOR(str, 0, 0);
-    str = rb_str_new4(str);
-    ptr = RSTRING_PTR(str);
-    len = RSTRING_LEN(str);
-    enc = rb_enc_get(str);
-    for (i = 0; i &lt; len; i += n) {
-        n = rb_enc_mbclen(ptr + i, ptr + len, enc);
-        rb_yield(rb_str_subseq(str, i, n));
+    if (argc &lt; 1) {
+        rb_raise(rb_eArgError, &quot;wrong number of arguments&quot;);
     }
-    return str;
+    for (i=0; i&lt;argc; i++) {
+        VALUE s = argv[i];
+
+        StringValue(s);
+        enc = rb_enc_check(str, s);
+        tr_setup_table(s, table, i==0, &amp;del, &amp;nodel, enc);
+    }
+
+    s = RSTRING_PTR(str);
+    if (!s || RSTRING_LEN(str) == 0) return INT2FIX(0);
+    send = RSTRING_END(str);
+    i = 0;
+    ascompat = rb_enc_asciicompat(enc);
+
+    while (s &lt; send) {
+        unsigned int c;
+        int clen;
+
+        if (ascompat &amp;&amp; (c = *(unsigned char*)s) &lt; 0x80) {
+            clen = 1;
+            if (table[c]) {
+                i++;
+            }
+            s++;
+        }
+        else {
+            c = rb_enc_codepoint(s, send, enc);
+            clen = rb_enc_codelen(c, enc);
+            if (tr_find(c, table, del, nodel)) {
+                i++;
+            }
+            s += clen;
+        }
+    }
+
+    return INT2NUM(i);
 }</pre>
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      GDBM.new(filename, mode = 0666, flags = nil)
+ *
+ * Creates a new GDBM instance by opening a gdbm file named _filename_.
+ * If the file does not exist, a new file with file mode _mode_ will be
+ * created. _flags_ may be one of the following:
+ * * *READER*  - open as a reader
+ * * *WRITER*  - open as a writer
+ * * *WRCREAT* - open as a writer; if the database does not exist, create a new one
+ * * *NEWDB*   - open as a writer; overwrite any existing databases
+ *
+ * The values *WRITER*, *WRCREAT* and *NEWDB* may be combined with the following
+ * values by bitwise or:
+ * * *SYNC*    - cause all database operations to be synchronized to the disk
+ * * *NOLOCK*  - do not lock the database file
+ *
+ * If no _flags_ are specified, the GDBM object will try to open the database
+ * file as a writer and will create it if it does not already exist
+ * (cf. flag &lt;tt&gt;WRCREAT&lt;/tt&gt;). If this fails (for instance, if another process
+ * has already opened the database as a reader), it will try to open the
+ * database file as a reader (cf. flag &lt;tt&gt;READER&lt;/tt&gt;).
+ */
+static VALUE
+fgdbm_initialize(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE file, vmode, vflags;
+    GDBM_FILE dbm;
+    struct dbmdata *dbmp;
+    int mode, flags = 0;
+
+    if (rb_scan_args(argc, argv, &quot;12&quot;, &amp;file, &amp;vmode, &amp;vflags) == 1) {
+        mode = 0666;            /* default value */
+    }
+    else if (NIL_P(vmode)) {
+        mode = -1;              /* return nil if DB does not exist */
+    }
+    else {
+        mode = NUM2INT(vmode);
+    }
+
+    if (!NIL_P(vflags))
+        flags = NUM2INT(vflags);
+
+    SafeStringValue(file);
+
+    if (flags &amp; RUBY_GDBM_RW_BIT) {
+        flags &amp;= ~RUBY_GDBM_RW_BIT;
+        dbm = gdbm_open(RSTRING_PTR(file), MY_BLOCK_SIZE, 
+                        flags, mode, MY_FATAL_FUNC);
+    }
+    else {
+        dbm = 0;
+        if (mode &gt;= 0)
+            dbm = gdbm_open(RSTRING_PTR(file), MY_BLOCK_SIZE, 
+                            GDBM_WRCREAT|flags, mode, MY_FATAL_FUNC);
+        if (!dbm)
+            dbm = gdbm_open(RSTRING_PTR(file), MY_BLOCK_SIZE, 
+                            GDBM_WRITER|flags, 0, MY_FATAL_FUNC);
+        if (!dbm)
+            dbm = gdbm_open(RSTRING_PTR(file), MY_BLOCK_SIZE, 
+                            GDBM_READER|flags, 0, MY_FATAL_FUNC);
+    }
+
+    if (!dbm) {
+        if (mode == -1) return Qnil;
+
+        if (gdbm_errno == GDBM_FILE_OPEN_ERROR ||
+            gdbm_errno == GDBM_CANT_BE_READER ||
+            gdbm_errno == GDBM_CANT_BE_WRITER)
+            rb_sys_fail(RSTRING_PTR(file));
+        else
+            rb_raise(rb_eGDBMError, &quot;%s&quot;, gdbm_strerror(gdbm_errno));
+    }
+
+    dbmp = ALLOC(struct dbmdata);
+    free_dbm(DATA_PTR(obj));
+    DATA_PTR(obj) = dbmp;
+    dbmp-&gt;di_dbm = dbm;
+    dbmp-&gt;di_size = -1;
+
+    return obj;
+}</pre>
+</body>
+</html>

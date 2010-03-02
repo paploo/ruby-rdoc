@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tag (RSS::RootElementMixin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 1306</span>
+1306:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag</span>(<span class="ruby-identifier">indent</span>, <span class="ruby-identifier">attrs</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1307:       <span class="ruby-identifier">rv</span> = <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">indent</span>, <span class="ruby-identifier">ns_declarations</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">attrs</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+1308:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rv</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">empty?</span>
+1309:       <span class="ruby-node">&quot;#{xmldecl}#{xml_stylesheet_pi}#{rv}&quot;</span>
+1310:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

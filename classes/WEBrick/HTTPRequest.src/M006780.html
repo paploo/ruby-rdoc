@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_uri (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 276</span>
+276:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_uri</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">scheme</span>=<span class="ruby-value str">&quot;http&quot;</span>)
+277:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:Escape8bitURI</span>]
+278:         <span class="ruby-identifier">str</span> = <span class="ruby-constant">HTTPUtils</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape8bit</span>(<span class="ruby-identifier">str</span>)
+279:       <span class="ruby-keyword kw">end</span>
+280:       <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse</span>(<span class="ruby-identifier">str</span>)
+281:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">uri</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">absolute?</span>
+282:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@forwarded_host</span>
+283:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-ivar">@forwarded_host</span>, <span class="ruby-ivar">@forwarded_port</span>
+284:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;host&quot;</span>]
+285:         <span class="ruby-identifier">pattern</span> = <span class="ruby-node">/\A(#{URI::REGEXP::PATTERN::HOST})(?::(\d+))?\z/n</span>
+286:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-operator">*</span><span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'host'</span>].<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">pattern</span>)[<span class="ruby-value">0</span>]
+287:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@addr</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+288:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-ivar">@addr</span>[<span class="ruby-value">2</span>], <span class="ruby-ivar">@addr</span>[<span class="ruby-value">1</span>]
+289:       <span class="ruby-keyword kw">else</span>
+290:         <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:ServerName</span>], <span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:Port</span>]
+291:       <span class="ruby-keyword kw">end</span>
+292:       <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">scheme</span> = <span class="ruby-ivar">@forwarded_proto</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">scheme</span>
+293:       <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span> = <span class="ruby-identifier">host</span>
+294:       <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span> = <span class="ruby-identifier">port</span> <span class="ruby-value">? </span><span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+295:       <span class="ruby-keyword kw">return</span> <span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">to_s</span>)
+296:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

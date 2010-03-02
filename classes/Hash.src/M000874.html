@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>key (Hash)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     hsh.key(value)    =&gt; key
+ *
+ *  Returns the key for a given value. If not found, returns &lt;code&gt;nil&lt;/code&gt;.
+ *
+ *     h = { &quot;a&quot; =&gt; 100, &quot;b&quot; =&gt; 200 }
+ *     h.key(200)   #=&gt; &quot;b&quot;
+ *     h.key(999)   #=&gt; nil
+ *
+ */
+
+static VALUE
+rb_hash_key(VALUE hash, VALUE value)
+{
+    VALUE args[2];
+
+    args[0] = value;
+    args[1] = Qnil;
+
+    rb_hash_foreach(hash, key_i, (st_data_t)args);
+
+    return args[1];
+}</pre>
+</body>
+</html>

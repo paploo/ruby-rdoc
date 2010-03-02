@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>handle_constants (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 514</span>
+514:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_constants</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">definition</span>)
+515:     <span class="ruby-comment cmt">#@stats.num_constants += 1</span>
+516:     <span class="ruby-identifier">class_name</span> = <span class="ruby-ivar">@known_classes</span>[<span class="ruby-identifier">var_name</span>]
+517: 
+518:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">class_name</span>
+519: 
+520:     <span class="ruby-identifier">class_obj</span>  = <span class="ruby-identifier">find_class</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">class_name</span>)
+521: 
+522:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">class_obj</span>
+523:       <span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;Enclosing class/module '#{const_name}' for not known&quot;</span>)
+524:       <span class="ruby-keyword kw">return</span>
+525:     <span class="ruby-keyword kw">end</span>
+526: 
+527:     <span class="ruby-identifier">comment</span> = <span class="ruby-identifier">find_const_comment</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">const_name</span>)
+528: 
+529:     <span class="ruby-comment cmt"># In the case of rb_define_const, the definition and comment are in</span>
+530:     <span class="ruby-comment cmt"># &quot;/* definition: comment */&quot; form.  The literal ':' and '\' characters</span>
+531:     <span class="ruby-comment cmt"># can be escaped with a backslash.</span>
+532:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">type</span>.<span class="ruby-identifier">downcase</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'const'</span> <span class="ruby-keyword kw">then</span>
+533:        <span class="ruby-identifier">elements</span> = <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>).<span class="ruby-identifier">split</span>(<span class="ruby-value str">':'</span>)
+534:        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">elements</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">elements</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span>
+535:           <span class="ruby-identifier">con</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Constant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">definition</span>,
+536:                                    <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>))
+537:        <span class="ruby-keyword kw">else</span>
+538:           <span class="ruby-identifier">new_definition</span> = <span class="ruby-identifier">elements</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-2</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">':'</span>)
+539:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_definition</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span> <span class="ruby-comment cmt"># Default to literal C definition</span>
+540:              <span class="ruby-identifier">new_definition</span> = <span class="ruby-identifier">definition</span>
+541:           <span class="ruby-keyword kw">else</span>
+542:              <span class="ruby-identifier">new_definition</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;\:&quot;</span>, <span class="ruby-value str">&quot;:&quot;</span>)
+543:              <span class="ruby-identifier">new_definition</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">&quot;\\&quot;</span>, <span class="ruby-value str">'\\'</span>)
+544:           <span class="ruby-keyword kw">end</span>
+545:           <span class="ruby-identifier">new_definition</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp re">/\A(\s+)/</span>, <span class="ruby-value str">''</span>)
+546:           <span class="ruby-identifier">new_comment</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-identifier">elements</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{$1}#{elements.last.lstrip}&quot;</span>
+547:           <span class="ruby-identifier">con</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Constant</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">new_definition</span>,
+548:                                    <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">new_comment</span>))
+549:        <span class="ruby-keyword kw">end</span>
+550:     <span class="ruby-keyword kw">else</span>
+551:        <span class="ruby-identifier">con</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Constant</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">const_name</span>, <span class="ruby-identifier">definition</span>, <span class="ruby-identifier">mangle_comment</span>(<span class="ruby-identifier">comment</span>)
+552:     <span class="ruby-keyword kw">end</span>
+553: 
+554:     <span class="ruby-identifier">class_obj</span>.<span class="ruby-identifier">add_constant</span>(<span class="ruby-identifier">con</span>)
+555:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

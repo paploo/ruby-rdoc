@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>each_value (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      gdbm.each_value { |value| block } -&gt; gdbm
+ *
+ * Executes _block_ for each key in the database, passing the corresponding
+ * _value_ as a parameter.
+ */
+static VALUE
+fgdbm_each_value(VALUE obj)
+{
+    struct dbmdata *dbmp;
+    GDBM_FILE dbm;
+    VALUE keystr;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (keystr = rb_gdbm_firstkey(dbm); RTEST(keystr);
+         keystr = rb_gdbm_nextkey(dbm, keystr)) {
+
+        rb_yield(rb_gdbm_fetch2(dbm, keystr));
+        GetDBM2(obj, dbmp, dbm);
+    }
+    return obj;
+}</pre>
+</body>
+</html>

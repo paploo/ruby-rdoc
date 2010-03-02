@@ -2,17 +2,54 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>parse (Time)</title>
+  <title>new (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 257</span>
-257:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">date</span>, <span class="ruby-identifier">now</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">now</span>)
-258:       <span class="ruby-identifier">d</span> = <span class="ruby-constant">Date</span>.<span class="ruby-identifier">_parse</span>(<span class="ruby-identifier">date</span>, <span class="ruby-keyword kw">false</span>)
-259:       <span class="ruby-identifier">year</span> = <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:year</span>]
-260:       <span class="ruby-identifier">year</span> = <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">year</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">year</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">block_given?</span>
-261:       <span class="ruby-identifier">make_time</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:mon</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:mday</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:hour</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:min</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:sec</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:sec_fraction</span>], <span class="ruby-identifier">d</span>[<span class="ruby-identifier">:zone</span>], <span class="ruby-identifier">now</span>)
-262:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     Time.new -&gt; time
+ *  
+ *  Returns a &lt;code&gt;Time&lt;/code&gt; object initialized to the current system
+ *  time. &lt;b&gt;Note:&lt;/b&gt; The object created will be created using the
+ *  resolution available on your system clock, and so may include
+ *  fractional seconds.
+ *     
+ *     a = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
+ *     b = Time.new      #=&gt; 2007-11-19 07:50:02 -0600
+ *     a == b            #=&gt; false
+ *     &quot;%.6f&quot; % a.to_f   #=&gt; &quot;1195480202.282373&quot;
+ *     &quot;%.6f&quot; % b.to_f   #=&gt; &quot;1195480202.283415&quot;
+ *     
+ */
+
+static VALUE
+time_init(VALUE time)
+{
+    struct time_object *tobj;
+
+    time_modify(time);
+    GetTimeval(time, tobj);
+    tobj-&gt;tm_got=0;
+    tobj-&gt;ts.tv_sec = 0;
+    tobj-&gt;ts.tv_nsec = 0;
+#ifdef HAVE_CLOCK_GETTIME
+    if (clock_gettime(CLOCK_REALTIME, &amp;tobj-&gt;ts) == -1) {
+        rb_sys_fail(&quot;clock_gettime&quot;);
+    }
+#else
+    {
+        struct timeval tv; 
+        if (gettimeofday(&amp;tv, 0) &lt; 0) {
+            rb_sys_fail(&quot;gettimeofday&quot;);
+        }
+        tobj-&gt;ts.tv_sec = tv.tv_sec;
+        tobj-&gt;ts.tv_nsec = tv.tv_usec * 1000;
+    }
+#endif
+
+    return time;
+}</pre>
 </body>
 </html>

@@ -2,39 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>reverse! (String)</title>
+  <title>oct (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.reverse!   =&gt; str
+ *     str.oct   =&gt; integer
  *  
- *  Reverses &lt;i&gt;str&lt;/i&gt; in place.
+ *  Treats leading characters of &lt;i&gt;str&lt;/i&gt; as a string of octal digits (with an
+ *  optional sign) and returns the corresponding number.  Returns 0 if the
+ *  conversion fails.
+ *     
+ *     &quot;123&quot;.oct       #=&gt; 83
+ *     &quot;-377&quot;.oct      #=&gt; -255
+ *     &quot;bad&quot;.oct       #=&gt; 0
+ *     &quot;0377bad&quot;.oct   #=&gt; 255
  */
 
 static VALUE
-rb_str_reverse_bang(VALUE str)
+rb_str_oct(VALUE str)
 {
-    if (RSTRING_LEN(str) &gt; 1) {
-        if (single_byte_optimizable(str)) {
-            char *s, *e, c;
+    rb_encoding *enc = rb_enc_get(str);
 
-            str_modify_keep_cr(str);
-            s = RSTRING_PTR(str);
-            e = RSTRING_END(str) - 1;
-            while (s &lt; e) {
-                c = *s;
-                *s++ = *e;
-                *e-- = c;
-            }
-        }
-        else {
-            rb_str_shared_replace(str, rb_str_reverse(str));
-        }
+    if (!rb_enc_asciicompat(enc)) {
+        rb_raise(rb_eEncCompatError, &quot;ASCII incompatible encoding: %s&quot;, rb_enc_name(enc));
     }
-    return str;
+    return rb_str_to_inum(str, -8, Qfalse);
 }</pre>
 </body>
 </html>

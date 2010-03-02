@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sign (OpenSSL::PKCS7)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    PKCS7.sign(cert, key, data, [, certs [, flags]]) =&gt; pkcs7
+ */
+static VALUE
+ossl_pkcs7_s_sign(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE cert, key, data, certs, flags;
+    X509 *x509;
+    EVP_PKEY *pkey;
+    BIO *in;
+    STACK_OF(X509) *x509s;
+    int flg, status = 0;
+    PKCS7 *pkcs7;
+    VALUE ret;
+
+    rb_scan_args(argc, argv, &quot;32&quot;, &amp;cert, &amp;key, &amp;data, &amp;certs, &amp;flags);
+    x509 = GetX509CertPtr(cert); /* NO NEED TO DUP */
+    pkey = GetPrivPKeyPtr(key); /* NO NEED TO DUP */
+    flg = NIL_P(flags) ? 0 : NUM2INT(flags);
+    in = ossl_obj2bio(data);
+    if(NIL_P(certs)) x509s = NULL;
+    else{
+        x509s = ossl_protect_x509_ary2sk(certs, &amp;status);
+        if(status){
+            BIO_free(in);
+            rb_jump_tag(status);
+        }
+    }
+    if(!(pkcs7 = PKCS7_sign(x509, pkey, x509s, in, flg))){
+        BIO_free(in);
+        sk_X509_pop_free(x509s, X509_free);
+        ossl_raise(ePKCS7Error, NULL);
+    }
+    WrapPKCS7(cPKCS7, ret, pkcs7);
+    ossl_pkcs7_set_data(ret, data);
+    ossl_pkcs7_set_err_string(ret, Qnil);
+    BIO_free(in);
+    sk_X509_pop_free(x509s, X509_free);
+
+    return ret;
+}</pre>
+</body>
+</html>

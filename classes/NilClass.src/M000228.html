@@ -2,25 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&amp; (NilClass)</title>
+  <title>to_f (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     false &amp; obj   =&gt; false
- *     nil &amp; obj     =&gt; false
+ *     nil.to_f    =&gt; 0.0
  *  
- *  And---Returns &lt;code&gt;false&lt;/code&gt;. &lt;i&gt;obj&lt;/i&gt; is always
- *  evaluated as it is the argument to a method call---there is no
- *  short-circuit evaluation in this case.
+ *  Always returns zero.
+ *     
+ *     nil.to_f   #=&gt; 0.0
  */
 
 static VALUE
-false_and(VALUE obj, VALUE obj2)
+nil_to_f(VALUE obj)
 {
-    return Qfalse;
+    return DBL2NUM(0.0);
 }</pre>
 </body>
 </html>

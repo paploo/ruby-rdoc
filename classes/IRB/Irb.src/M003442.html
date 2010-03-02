@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>eval_input (IRB::Irb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb.rb, line 109</span>
+109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">eval_input</span>
+110:       <span class="ruby-ivar">@scanner</span>.<span class="ruby-identifier">set_prompt</span> <span class="ruby-keyword kw">do</span>
+111:         <span class="ruby-operator">|</span><span class="ruby-identifier">ltype</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">continue</span>, <span class="ruby-identifier">line_no</span><span class="ruby-operator">|</span>
+112:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ltype</span>
+113:           <span class="ruby-identifier">f</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompt_s</span>
+114:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">continue</span>
+115:           <span class="ruby-identifier">f</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompt_c</span>
+116:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+117:           <span class="ruby-identifier">f</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompt_n</span>
+118:         <span class="ruby-keyword kw">else</span>
+119:           <span class="ruby-identifier">f</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompt_i</span>
+120:         <span class="ruby-keyword kw">end</span>
+121:         <span class="ruby-identifier">f</span> = <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">f</span>
+122:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompting?</span>
+123:           <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">prompt</span> = <span class="ruby-identifier">p</span> = <span class="ruby-identifier">prompt</span>(<span class="ruby-identifier">f</span>, <span class="ruby-identifier">ltype</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">line_no</span>)
+124:         <span class="ruby-keyword kw">else</span>
+125:           <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">prompt</span> = <span class="ruby-identifier">p</span> = <span class="ruby-value str">&quot;&quot;</span>
+126:         <span class="ruby-keyword kw">end</span>
+127:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">auto_indent_mode</span>
+128:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">ltype</span>
+129:             <span class="ruby-identifier">ind</span> = <span class="ruby-identifier">prompt</span>(<span class="ruby-ivar">@context</span>.<span class="ruby-identifier">prompt_i</span>, <span class="ruby-identifier">ltype</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">line_no</span>)[<span class="ruby-regexp re">/.*\z/</span>].<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span>
+130:               <span class="ruby-identifier">indent</span> <span class="ruby-operator">*</span> <span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">size</span>
+131:             <span class="ruby-identifier">ind</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">continue</span>
+132:             <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">prompt</span> = <span class="ruby-identifier">p</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">ind</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ind</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+133:           <span class="ruby-keyword kw">end</span>
+134:         <span class="ruby-keyword kw">end</span>
+135:       <span class="ruby-keyword kw">end</span>
+136:        
+137:       <span class="ruby-ivar">@scanner</span>.<span class="ruby-identifier">set_input</span>(<span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>) <span class="ruby-keyword kw">do</span>
+138:         <span class="ruby-identifier">signal_status</span>(<span class="ruby-identifier">:IN_INPUT</span>) <span class="ruby-keyword kw">do</span>
+139:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">l</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">gets</span>
+140:             <span class="ruby-identifier">print</span> <span class="ruby-identifier">l</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">verbose?</span>
+141:           <span class="ruby-keyword kw">else</span>
+142:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">ignore_eof?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">io</span>.<span class="ruby-identifier">readable_atfer_eof?</span>
+143:               <span class="ruby-identifier">l</span> = <span class="ruby-value str">&quot;\n&quot;</span>
+144:               <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">verbose?</span>
+145:                 <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;Use \&quot;exit\&quot; to leave %s\n&quot;</span>, <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">ap_name</span>
+146:               <span class="ruby-keyword kw">end</span>
+147:             <span class="ruby-keyword kw">end</span>
+148:           <span class="ruby-keyword kw">end</span>
+149:           <span class="ruby-identifier">l</span>
+150:         <span class="ruby-keyword kw">end</span>
+151:       <span class="ruby-keyword kw">end</span>
+152: 
+153:       <span class="ruby-ivar">@scanner</span>.<span class="ruby-identifier">each_top_level_statement</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">line_no</span><span class="ruby-operator">|</span>
+154:         <span class="ruby-identifier">signal_status</span>(<span class="ruby-identifier">:IN_EVAL</span>) <span class="ruby-keyword kw">do</span>
+155:           <span class="ruby-keyword kw">begin</span>
+156:             <span class="ruby-identifier">line</span>.<span class="ruby-identifier">untaint</span>
+157:             <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">evaluate</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">line_no</span>)
+158:             <span class="ruby-identifier">output_value</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">echo?</span>
+159:             <span class="ruby-identifier">exc</span> = <span class="ruby-keyword kw">nil</span>
+160:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Interrupt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exc</span>
+161:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SystemExit</span>, <span class="ruby-constant">SignalException</span>
+162:             <span class="ruby-identifier">raise</span>
+163:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exc</span>
+164:           <span class="ruby-keyword kw">end</span>
+165:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exc</span>
+166:             <span class="ruby-identifier">print</span> <span class="ruby-identifier">exc</span>.<span class="ruby-identifier">class</span>, <span class="ruby-value str">&quot;: &quot;</span>, <span class="ruby-identifier">exc</span>, <span class="ruby-value str">&quot;\n&quot;</span>
+167:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">exc</span>.<span class="ruby-identifier">backtrace</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/irb(2)?(\/.*|-.*|\.rb)?:/</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">exc</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp re">/^IRB/</span> <span class="ruby-operator">&amp;&amp;</span>
+168:                 <span class="ruby-operator">!</span>(<span class="ruby-constant">SyntaxError</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">exc</span>)
+169:               <span class="ruby-identifier">irb_bug</span> = <span class="ruby-keyword kw">true</span> 
+170:             <span class="ruby-keyword kw">else</span>
+171:               <span class="ruby-identifier">irb_bug</span> = <span class="ruby-keyword kw">false</span>
+172:             <span class="ruby-keyword kw">end</span>
+173: 
+174:             <span class="ruby-identifier">messages</span> = []
+175:             <span class="ruby-identifier">lasts</span> = []
+176:             <span class="ruby-identifier">levels</span> = <span class="ruby-value">0</span>
+177:             <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">m</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">exc</span>.<span class="ruby-identifier">backtrace</span>
+178:               <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">workspace</span>.<span class="ruby-identifier">filter_backtrace</span>(<span class="ruby-identifier">m</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">irb_bug</span>
+179:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>
+180:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">messages</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">back_trace_limit</span>
+181:                   <span class="ruby-identifier">messages</span>.<span class="ruby-identifier">push</span> <span class="ruby-value str">&quot;\tfrom &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">m</span>
+182:                 <span class="ruby-keyword kw">else</span>
+183:                   <span class="ruby-identifier">lasts</span>.<span class="ruby-identifier">push</span> <span class="ruby-value str">&quot;\tfrom &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">m</span>
+184:                   <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">lasts</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">back_trace_limit</span>
+185:                     <span class="ruby-identifier">lasts</span>.<span class="ruby-identifier">shift</span> 
+186:                     <span class="ruby-identifier">levels</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+187:                   <span class="ruby-keyword kw">end</span>
+188:                 <span class="ruby-keyword kw">end</span>
+189:               <span class="ruby-keyword kw">end</span>
+190:             <span class="ruby-keyword kw">end</span>
+191:             <span class="ruby-identifier">print</span> <span class="ruby-identifier">messages</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>), <span class="ruby-value str">&quot;\n&quot;</span>
+192:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">lasts</span>.<span class="ruby-identifier">empty?</span>
+193:               <span class="ruby-identifier">printf</span> <span class="ruby-value str">&quot;... %d levels...\n&quot;</span>, <span class="ruby-identifier">levels</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">levels</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+194:               <span class="ruby-identifier">print</span> <span class="ruby-identifier">lasts</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+195:             <span class="ruby-keyword kw">end</span>
+196:             <span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;Maybe IRB bug!!\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">irb_bug</span>
+197:           <span class="ruby-keyword kw">end</span>
+198:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$SAFE</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>
+199:             <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;Error: irb does not work for $SAFE level higher than 2&quot;</span>
+200:           <span class="ruby-keyword kw">end</span>
+201:         <span class="ruby-keyword kw">end</span>
+202:       <span class="ruby-keyword kw">end</span>
+203:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

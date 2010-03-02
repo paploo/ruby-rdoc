@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pid (Process::Status)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     stat.pid   =&gt; fixnum
+ *
+ *  Returns the process ID that this status object represents.
+ *
+ *     fork { exit }   #=&gt; 26569
+ *     Process.wait    #=&gt; 26569
+ *     $?.pid          #=&gt; 26569
+ */
+
+static VALUE
+pst_pid(VALUE st)
+{
+    return rb_attr_get(st, rb_intern(&quot;pid&quot;));
+}</pre>
+</body>
+</html>

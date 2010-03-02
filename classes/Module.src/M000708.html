@@ -2,32 +2,40 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>protected (Module)</title>
+  <title>nesting (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     protected                =&gt; self
- *     protected(symbol, ...)   =&gt; self
+ *     Module.nesting    =&gt; array
  *
- *  With no arguments, sets the default visibility for subsequently
- *  defined methods to protected. With arguments, sets the named methods
- *  to have protected visibility.
+ *  Returns the list of +Modules+ nested at the point of call.
+ *
+ *     module M1
+ *       module M2
+ *         $a = Module.nesting
+ *       end
+ *     end
+ *     $a           #=&gt; [M1::M2, M1]
+ *     $a[0].name   #=&gt; &quot;M1::M2&quot;
  */
 
 static VALUE
-rb_mod_protected(int argc, VALUE *argv, VALUE module)
+rb_mod_nesting(void)
 {
-    secure_visibility(module);
-    if (argc == 0) {
-        SCOPE_SET(NOEX_PROTECTED);
+    VALUE ary = rb_ary_new();
+    const NODE *cref = rb_vm_cref();
+
+    while (cref &amp;&amp; cref-&gt;nd_next) {
+        VALUE klass = cref-&gt;nd_clss;
+        if (!NIL_P(klass)) {
+            rb_ary_push(ary, klass);
+        }
+        cref = cref-&gt;nd_next;
     }
-    else {
-        set_method_visibility(module, argc, argv, NOEX_PROTECTED);
-    }
-    return module;
+    return ary;
 }</pre>
 </body>
 </html>

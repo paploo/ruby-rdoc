@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>regist_server (DRb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 1757</span>
+1757:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">regist_server</span>(<span class="ruby-identifier">server</span>)
+1758:     <span class="ruby-ivar">@server</span>[<span class="ruby-identifier">server</span>.<span class="ruby-identifier">uri</span>] = <span class="ruby-identifier">server</span>
+1759:     <span class="ruby-identifier">mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+1760:       <span class="ruby-ivar">@primary_server</span> = <span class="ruby-identifier">server</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@primary_server</span>
+1761:     <span class="ruby-keyword kw">end</span>
+1762:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

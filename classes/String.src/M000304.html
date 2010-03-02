@@ -2,69 +2,104 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>downcase! (String)</title>
+  <title>inspect (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     str.downcase!   =&gt; str or nil
- *  
- *  Downcases the contents of &lt;i&gt;str&lt;/i&gt;, returning &lt;code&gt;nil&lt;/code&gt; if no
- *  changes were made.
- *  Note: case replacement is effective only in ASCII region.
+ * call-seq:
+ *   str.inspect   =&gt; string
+ *
+ * Returns a printable version of _str_, surrounded by quote marks,
+ * with special characters escaped.
+ *
+ *    str = &quot;hello&quot;
+ *    str[3] = &quot;\b&quot;
+ *    str.inspect       #=&gt; &quot;\&quot;hel\\bo\&quot;&quot;
  */
 
-static VALUE
-rb_str_downcase_bang(VALUE str)
+VALUE
+rb_str_inspect(VALUE str)
 {
-    rb_encoding *enc;
-    char *s, *send;
-    int modify = 0;
+    rb_encoding *enc = STR_ENC_GET(str);
+    char *p, *pend;
+    VALUE result = rb_str_buf_new(0);
 
-    str_modify_keep_cr(str);
-    enc = STR_ENC_GET(str);
-    rb_str_check_dummy_enc(enc);
-    s = RSTRING_PTR(str); send = RSTRING_END(str);
-    if (single_byte_optimizable(str)) {
-        while (s &lt; send) {
-            unsigned int c = *(unsigned char*)s;
+    if (!rb_enc_asciicompat(enc)) enc = rb_usascii_encoding();
+    rb_enc_associate(result, enc);
+    str_cat_char(result, '&quot;', enc);
+    p = RSTRING_PTR(str); pend = RSTRING_END(str);
+    while (p &lt; pend) {
+        unsigned int c, cc;
+        int n;
 
-            if (rb_enc_isascii(c, enc) &amp;&amp; 'A' &lt;= c &amp;&amp; c &lt;= 'Z') {
-                *s = 'a' + (c - 'A');
-                modify = 1;
+        n = rb_enc_precise_mbclen(p, pend, enc);
+        if (!MBCLEN_CHARFOUND_P(n)) {
+            p++;
+            n = 1;
+            goto escape_codepoint;
+        }
+        n = MBCLEN_CHARFOUND_LEN(n);
+
+        c = rb_enc_codepoint(p, pend, enc);
+        n = rb_enc_codelen(c, enc);
+
+        p += n;
+        if (c == '&quot;'|| c == '\\' ||
+            (c == '#' &amp;&amp;
+             p &lt; pend &amp;&amp;
+             MBCLEN_CHARFOUND_P(rb_enc_precise_mbclen(p,pend,enc)) &amp;&amp;
+             (cc = rb_enc_codepoint(p,pend,enc),
+              (cc == '$' || cc == '@' || cc == '{')))) {
+            prefix_escape(result, c, enc);
+        }
+        else if (c == '\n') {
+            prefix_escape(result, 'n', enc);
+        }
+        else if (c == '\r') {
+            prefix_escape(result, 'r', enc);
+        }
+        else if (c == '\t') {
+            prefix_escape(result, 't', enc);
+        }
+        else if (c == '\f') {
+            prefix_escape(result, 'f', enc);
+        }
+        else if (c == '\013') {
+            prefix_escape(result, 'v', enc);
+        }
+        else if (c == '\010') {
+            prefix_escape(result, 'b', enc);
+        }
+        else if (c == '\007') {
+            prefix_escape(result, 'a', enc);
+        }
+        else if (c == 033) {
+            prefix_escape(result, 'e', enc);
+        }
+        else if (rb_enc_isprint(c, enc)) {
+            rb_enc_str_buf_cat(result, p-n, n, enc);
+        }
+        else {
+            char buf[5];
+            char *s;
+            char *q;
+
+          escape_codepoint:
+            for (q = p-n; q &lt; p; q++) {
+                s = buf;
+                sprintf(buf, &quot;\\x%02X&quot;, *q &amp; 0377);
+                while (*s) {
+                    str_cat_char(result, *s++, enc);
+                }
             }
-            s++;
         }
     }
-    else {
-        int ascompat = rb_enc_asciicompat(enc);
+    str_cat_char(result, '&quot;', enc);
 
-        while (s &lt; send) {
-            unsigned int c;
-
-            if (ascompat &amp;&amp; (c = *(unsigned char*)s) &lt; 0x80) {
-                if (rb_enc_isascii(c, enc) &amp;&amp; 'A' &lt;= c &amp;&amp; c &lt;= 'Z') {
-                    *s = 'a' + (c - 'A');
-                    modify = 1;
-                }
-                s++;
-            }
-            else {
-                c = rb_enc_codepoint(s, send, enc);
-                if (rb_enc_isupper(c, enc)) {
-                    /* assuming toupper returns codepoint with same size */
-                    rb_enc_mbcput(rb_enc_tolower(c, enc), s, enc);
-                    modify = 1;
-                }
-                s += rb_enc_codelen(c, enc);
-            }
-        }
-    }
-
-    if (modify) return str;
-    return Qnil;
+    OBJ_INFECT(result, str);
+    return result;
 }</pre>
 </body>
 </html>

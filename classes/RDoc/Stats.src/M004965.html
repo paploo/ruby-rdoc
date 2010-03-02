@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (RDoc::Stats)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/stats.rb, line 13</span>
+13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">verbosity</span> = <span class="ruby-value">1</span>)
+14:     <span class="ruby-ivar">@num_classes</span> = <span class="ruby-value">0</span>
+15:     <span class="ruby-ivar">@num_files</span>   = <span class="ruby-value">0</span>
+16:     <span class="ruby-ivar">@num_methods</span> = <span class="ruby-value">0</span>
+17:     <span class="ruby-ivar">@num_modules</span> = <span class="ruby-value">0</span>
+18: 
+19:     <span class="ruby-ivar">@start</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+20: 
+21:     <span class="ruby-ivar">@display</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">verbosity</span>
+22:                <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">then</span> <span class="ruby-constant">Quiet</span>.<span class="ruby-identifier">new</span>
+23:                <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">then</span> <span class="ruby-constant">Normal</span>.<span class="ruby-identifier">new</span>
+24:                <span class="ruby-keyword kw">else</span>        <span class="ruby-constant">Verbose</span>.<span class="ruby-identifier">new</span>
+25:                <span class="ruby-keyword kw">end</span>
+26:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

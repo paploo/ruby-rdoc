@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tap (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.tap{|x|...}    =&gt; obj
+ *  
+ *  Yields &lt;code&gt;x&lt;/code&gt; to the block, and then returns &lt;code&gt;x&lt;/code&gt;.
+ *  The primary purpose of this method is to &quot;tap into&quot; a method chain,
+ *  in order to perform operations on intermediate results within the chain.
+ *
+ *      (1..10)                .tap {|x| puts &quot;original: #{x.inspect}&quot;}
+ *        .to_a                .tap {|x| puts &quot;array: #{x.inspect}&quot;}
+ *        .select {|x| x%2==0} .tap {|x| puts &quot;evens: #{x.inspect}&quot;}
+ *        .map { |x| x*x }     .tap {|x| puts &quot;squares: #{x.inspect}&quot;}
+ *
+ */
+
+VALUE
+rb_obj_tap(VALUE obj)
+{
+    rb_yield(obj);
+    return obj;
+}</pre>
+</body>
+</html>

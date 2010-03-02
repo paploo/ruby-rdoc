@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>abbrev (Abbrev)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/abbrev.rb, line 44</span>
+44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">abbrev</span>(<span class="ruby-identifier">words</span>, <span class="ruby-identifier">pattern</span> = <span class="ruby-keyword kw">nil</span>)
+45:     <span class="ruby-identifier">table</span> = {}
+46:     <span class="ruby-identifier">seen</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+47: 
+48:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+49:       <span class="ruby-identifier">pattern</span> = <span class="ruby-node">/^#{Regexp.quote(pattern)}/</span>     <span class="ruby-comment cmt"># regard as a prefix</span>
+50:     <span class="ruby-keyword kw">end</span>
+51: 
+52:     <span class="ruby-identifier">words</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>
+53:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">abbrev</span> = <span class="ruby-identifier">word</span>).<span class="ruby-identifier">empty?</span>
+54:       <span class="ruby-keyword kw">while</span> (<span class="ruby-identifier">len</span> = <span class="ruby-identifier">abbrev</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-regexp re">/[\w\W]\z/</span>)) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+55:         <span class="ruby-identifier">abbrev</span> = <span class="ruby-identifier">word</span>[<span class="ruby-value">0</span>,<span class="ruby-identifier">len</span>]
+56: 
+57:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">abbrev</span>
+58: 
+59:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">abbrev</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+60:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+61:           <span class="ruby-identifier">table</span>[<span class="ruby-identifier">abbrev</span>] = <span class="ruby-identifier">word</span>
+62:         <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+63:           <span class="ruby-identifier">table</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">abbrev</span>)
+64:         <span class="ruby-keyword kw">else</span>
+65:           <span class="ruby-keyword kw">break</span>
+66:         <span class="ruby-keyword kw">end</span>
+67:       <span class="ruby-keyword kw">end</span>
+68:     <span class="ruby-keyword kw">end</span>
+69: 
+70:     <span class="ruby-identifier">words</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>
+71:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">word</span>
+72: 
+73:       <span class="ruby-identifier">table</span>[<span class="ruby-identifier">word</span>] = <span class="ruby-identifier">word</span>
+74:     <span class="ruby-keyword kw">end</span>
+75: 
+76:     <span class="ruby-identifier">table</span>
+77:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

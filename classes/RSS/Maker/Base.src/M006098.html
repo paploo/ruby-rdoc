@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>def_array_element (RSS::Maker::Base)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 40</span>
+40:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">def_array_element</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">plural</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">klass_name</span>=<span class="ruby-keyword kw">nil</span>)
+41:           <span class="ruby-identifier">include</span> <span class="ruby-constant">Enumerable</span>
+42:           <span class="ruby-identifier">extend</span> <span class="ruby-constant">Forwardable</span>
+43: 
+44:           <span class="ruby-identifier">plural</span> <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;#{name}s&quot;</span>
+45:           <span class="ruby-identifier">klass_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">to_class_name</span>(<span class="ruby-identifier">name</span>)
+46:           <span class="ruby-identifier">def_delegators</span>(<span class="ruby-node">&quot;@#{plural}&quot;</span>, <span class="ruby-identifier">:&lt;&lt;</span>, <span class="ruby-identifier">:[]</span>, <span class="ruby-identifier">:[]=</span>, <span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:last</span>)
+47:           <span class="ruby-identifier">def_delegators</span>(<span class="ruby-node">&quot;@#{plural}&quot;</span>, <span class="ruby-identifier">:push</span>, <span class="ruby-identifier">:pop</span>, <span class="ruby-identifier">:shift</span>, <span class="ruby-identifier">:unshift</span>)
+48:           <span class="ruby-identifier">def_delegators</span>(<span class="ruby-node">&quot;@#{plural}&quot;</span>, <span class="ruby-identifier">:each</span>, <span class="ruby-identifier">:size</span>, <span class="ruby-identifier">:empty?</span>, <span class="ruby-identifier">:clear</span>)
+49: 
+50:           <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">plural</span>) {[]}
+51: 
+52:           <span class="ruby-identifier">module_eval</span>(<span class="ruby-value str">&quot;def new_\#{name}\n\#{name} = self.class::\#{klass_name}.new(@maker)\n@\#{plural} &lt;&lt; \#{name}\nif block_given?\nyield \#{name}\nelse\n\#{name}\nend\nend\nalias new_child new_\#{name}\n\ndef to_feed(*args)\n@\#{plural}.each do |\#{name}|\n\#{name}.to_feed(*args)\nend\nend\n\ndef replace(elements)\n@\#{plural}.replace(elements.to_a)\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+53:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

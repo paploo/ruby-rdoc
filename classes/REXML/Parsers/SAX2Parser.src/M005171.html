@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_listeners (REXML::Parsers::SAX2Parser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/sax2parser.rb, line 217</span>
+217:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_listeners</span>( <span class="ruby-identifier">symbol</span>, <span class="ruby-identifier">name</span> )
+218:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+219:         <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">find_all</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span>, <span class="ruby-identifier">match</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+220:           (
+221:             (<span class="ruby-identifier">sym</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">symbol</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sym</span>) <span class="ruby-keyword kw">and</span> 
+222:             ((<span class="ruby-identifier">name</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">match</span>.<span class="ruby-identifier">nil?</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">match</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> (
+223:               (<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">match</span>) <span class="ruby-keyword kw">or</span>
+224:               (<span class="ruby-identifier">match</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Regexp</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">match</span>)
+225:               )
+226:             )
+227:           )
+228:         <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>[<span class="ruby-value">-1</span>]}
+229:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

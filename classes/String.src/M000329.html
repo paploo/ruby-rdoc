@@ -2,48 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sub (String)</title>
+  <title>include? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.sub(pattern, replacement)         =&gt; new_str
- *     str.sub(pattern) {|match| block }     =&gt; new_str
+ *     str.include? other_str   =&gt; true or false
  *  
- *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with the &lt;em&gt;first&lt;/em&gt; occurrence of
- *  &lt;i&gt;pattern&lt;/i&gt; replaced with either &lt;i&gt;replacement&lt;/i&gt; or the value of the
- *  block. The &lt;i&gt;pattern&lt;/i&gt; will typically be a &lt;code&gt;Regexp&lt;/code&gt;; if it is
- *  a &lt;code&gt;String&lt;/code&gt; then no regular expression metacharacters will be
- *  interpreted (that is &lt;code&gt;/\d/&lt;/code&gt; will match a digit, but
- *  &lt;code&gt;'\d'&lt;/code&gt; will match a backslash followed by a 'd').
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; contains the given string or
+ *  character.
  *     
- *  If the method call specifies &lt;i&gt;replacement&lt;/i&gt;, special variables such as
- *  &lt;code&gt;$&amp;&lt;/code&gt; will not be useful, as substitution into the string occurs
- *  before the pattern match starts. However, the sequences &lt;code&gt;\1&lt;/code&gt;,
- *  &lt;code&gt;\2&lt;/code&gt;, &lt;code&gt;\k&lt;group_name&gt;&lt;/code&gt;, etc., may be used.
- *     
- *  In the block form, the current match string is passed in as a parameter, and
- *  variables such as &lt;code&gt;$1&lt;/code&gt;, &lt;code&gt;$2&lt;/code&gt;, &lt;code&gt;$`&lt;/code&gt;,
- *  &lt;code&gt;$&amp;&lt;/code&gt;, and &lt;code&gt;$'&lt;/code&gt; will be set appropriately. The value
- *  returned by the block will be substituted for the match on each call.
- *     
- *  The result inherits any tainting in the original string or any supplied
- *  replacement string.
- *     
- *     &quot;hello&quot;.sub(/[aeiou]/, '*')                  #=&gt; &quot;h*llo&quot;
- *     &quot;hello&quot;.sub(/([aeiou])/, '&lt;\1&gt;')             #=&gt; &quot;h&lt;e&gt;llo&quot;
- *     &quot;hello&quot;.sub(/./) {|s| s[0].ord.to_s + ' ' }  #=&gt; &quot;104 ello&quot;
- *     &quot;hello&quot;.sub(/(?&lt;foo&gt;[aeiou])/, '*\k&lt;foo&gt;*')  #=&gt; &quot;h*e*llo&quot;
+ *     &quot;hello&quot;.include? &quot;lo&quot;   #=&gt; true
+ *     &quot;hello&quot;.include? &quot;ol&quot;   #=&gt; false
+ *     &quot;hello&quot;.include? ?h     #=&gt; true
  */
 
 static VALUE
-rb_str_sub(int argc, VALUE *argv, VALUE str)
+rb_str_include(VALUE str, VALUE arg)
 {
-    str = rb_str_dup(str);
-    rb_str_sub_bang(argc, argv, str);
-    return str;
+    long i;
+
+    StringValue(arg);
+    i = rb_str_index(str, arg, 0);
+
+    if (i == -1) return Qfalse;
+    return Qtrue;
 }</pre>
 </body>
 </html>

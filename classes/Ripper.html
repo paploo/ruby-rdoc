@@ -62,6 +62,56 @@
 
         <br />
 
+
+                <a href="../files/ext/ripper/ripper_c.html">
+
+                ext/ripper/ripper.c
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/ext/ripper/lib/ripper/core_rb.html">
+
+                ext/ripper/lib/ripper/core.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/ext/ripper/lib/ripper/filter_rb.html">
+
+                ext/ripper/lib/ripper/filter.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/ext/ripper/lib/ripper/lexer_rb.html">
+
+                ext/ripper/lib/ripper/lexer.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../files/ext/ripper/lib/ripper/sexp_rb.html">
+
+                ext/ripper/lib/ripper/sexp.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -102,21 +152,55 @@
 
       <div class="name-list">
 
-        <a href="#M000990">column</a>&nbsp;&nbsp;
+        <a href="#M001021">column</a>&nbsp;&nbsp;
 
-        <a href="#M000993">encoding</a>&nbsp;&nbsp;
+        <a href="#M001013">column</a>&nbsp;&nbsp;
 
-        <a href="#M000992">end_seen?</a>&nbsp;&nbsp;
+        <a href="#M001030">compile_error</a>&nbsp;&nbsp;
 
-        <a href="#M000991">lineno</a>&nbsp;&nbsp;
+        <a href="#M001024">encoding</a>&nbsp;&nbsp;
 
-        <a href="#M000988">new</a>&nbsp;&nbsp;
+        <a href="#M001016">encoding</a>&nbsp;&nbsp;
 
-        <a href="#M000989">parse</a>&nbsp;&nbsp;
+        <a href="#M001015">end_seen?</a>&nbsp;&nbsp;
 
-        <a href="#M000994">yydebug</a>&nbsp;&nbsp;
+        <a href="#M001023">end_seen?</a>&nbsp;&nbsp;
 
-        <a href="#M000995">yydebug=</a>&nbsp;&nbsp;
+        <a href="#M001032">lex</a>&nbsp;&nbsp;
+
+        <a href="#M001022">lineno</a>&nbsp;&nbsp;
+
+        <a href="#M001014">lineno</a>&nbsp;&nbsp;
+
+        <a href="#M001011">new</a>&nbsp;&nbsp;
+
+        <a href="#M001019">new</a>&nbsp;&nbsp;
+
+        <a href="#M001020">parse</a>&nbsp;&nbsp;
+
+        <a href="#M001012">parse</a>&nbsp;&nbsp;
+
+        <a href="#M001027">parse</a>&nbsp;&nbsp;
+
+        <a href="#M001034">sexp</a>&nbsp;&nbsp;
+
+        <a href="#M001035">sexp_raw</a>&nbsp;&nbsp;
+
+        <a href="#M001033">slice</a>&nbsp;&nbsp;
+
+        <a href="#M001031">tokenize</a>&nbsp;&nbsp;
+
+        <a href="#M001028">warn</a>&nbsp;&nbsp;
+
+        <a href="#M001029">warning</a>&nbsp;&nbsp;
+
+        <a href="#M001017">yydebug</a>&nbsp;&nbsp;
+
+        <a href="#M001025">yydebug</a>&nbsp;&nbsp;
+
+        <a href="#M001026">yydebug=</a>&nbsp;&nbsp;
+
+        <a href="#M001018">yydebug=</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -126,6 +210,13 @@
     <!-- if includes -->
 
     <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Ripper/Filter.html" class="link">Ripper::Filter</a><br />
+
+    </div>
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
@@ -137,6 +228,52 @@
           <td class="context-item-name">Version</td>
           <td>=</td>
           <td class="context-item-value">rb_usascii_str_new2(RIPPER_VERSION)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Version</td>
+          <td>=</td>
+          <td class="context-item-value">rb_usascii_str_new2(RIPPER_VERSION)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PARSER_EVENTS</td>
+          <td>=</td>
+          <td class="context-item-value">PARSER_EVENT_TABLE.keys</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This array contains name of parser events.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SCANNER_EVENTS</td>
+          <td>=</td>
+          <td class="context-item-value">SCANNER_EVENT_TABLE.keys</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This array contains name of scanner events.
+
+</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EVENTS</td>
+          <td>=</td>
+          <td class="context-item-value">PARSER_EVENTS + SCANNER_EVENTS</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+This array contains name of all ripper events.
+
+</td>
 
         </tr>
 
@@ -154,13 +291,55 @@
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M000988" class="method-detail">
-        <a name="M000988"></a>
+      <div id="method-M001032" class="method-detail">
+        <a name="M001032"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000988.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000988.html');return false;">
+          <a href="Ripper.src/M001032.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001032.html');return false;">
+
+          <span class="method-name">lex</span><span class="method-args">(src, filename = '-', lineno = 1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Tokenizes Ruby program and returns an <a href="Array.html">Array</a> of <a
+href="Array.html">Array</a>, which is formatted like [[lineno, column],
+type, token].
+</p>
+<pre>
+  require 'ripper'
+  require 'pp'
+
+  p Ripper.lex(&quot;def m(a) nil end&quot;)
+    #=&gt; [[[1,  0], :on_kw,     &quot;def&quot;],
+         [[1,  3], :on_sp,     &quot; &quot;  ],
+         [[1,  4], :on_ident,  &quot;m&quot;  ],
+         [[1,  5], :on_lparen, &quot;(&quot;  ],
+         [[1,  6], :on_ident,  &quot;a&quot;  ],
+         [[1,  7], :on_rparen, &quot;)&quot;  ],
+         [[1,  8], :on_sp,     &quot; &quot;  ],
+         [[1,  9], :on_kw,     &quot;nil&quot;],
+         [[1, 12], :on_sp,     &quot; &quot;  ],
+         [[1, 13], :on_kw,     &quot;end&quot;]]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001011" class="method-detail">
+        <a name="M001011"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001011.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001011.html');return false;">
 
           <span class="method-name">Ripper.new(src, filename="(ripper)", lineno=1) &rarr; ripper<br />
 </span>
@@ -178,8 +357,188 @@ href="Object.html">Object</a> which has gets method.
 </p>
 <p>
 This method does not starts parsing. See also <a
-href="Ripper.html#M000989">Ripper#parse</a> and <a
-href="Ripper.html#M000989">Ripper.parse</a>.
+href="Ripper.html#M001012">Ripper#parse</a> and <a
+href="Ripper.html#M001012">Ripper.parse</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001019" class="method-detail">
+        <a name="M001019"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001019.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001019.html');return false;">
+
+          <span class="method-name">Ripper.new(src, filename="(ripper)", lineno=1) &rarr; ripper<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Create a new <a href="Ripper.html">Ripper</a> object. <em>src</em> must be
+a <a href="String.html">String</a>, an <a href="IO.html">IO</a>, or an <a
+href="Object.html">Object</a> which has gets method.
+</p>
+<p>
+This method does not starts parsing. See also <a
+href="Ripper.html#M001012">Ripper#parse</a> and <a
+href="Ripper.html#M001012">Ripper.parse</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001027" class="method-detail">
+        <a name="M001027"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001027.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001027.html');return false;">
+
+          <span class="method-name">parse</span><span class="method-args">(src, filename = '(ripper)', lineno = 1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Parses Ruby program read from <em>src</em>. <em>src</em> must be a <a
+href="String.html">String</a> or a <a href="IO.html">IO</a> or a object
+which has gets method.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001034" class="method-detail">
+        <a name="M001034"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001034.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001034.html');return false;">
+
+          <span class="method-name">sexp</span><span class="method-args">(src, filename = '-', lineno = 1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+[EXPERIMENTAL] Parses <tt>src</tt> and create S-exp tree. This method is
+for mainly developper use.
+</p>
+<pre>
+  require 'ripper'
+  require 'pp
+
+  pp Ripper.sexp(&quot;def m(a) nil end&quot;)
+    #=&gt; [:program,
+         [:stmts_add,
+          [:stmts_new],
+          [:def,
+           [:@ident, &quot;m&quot;, [1, 4]],
+           [:paren, [:params, [[:@ident, &quot;a&quot;, [1, 6]]], nil, nil, nil]],
+           [:bodystmt,
+            [:stmts_add, [:stmts_new], [:var_ref, [:@kw, &quot;nil&quot;, [1, 9]]]],
+            nil,
+            nil,
+            nil]]]]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001035" class="method-detail">
+        <a name="M001035"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001035.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001035.html');return false;">
+
+          <span class="method-name">sexp_raw</span><span class="method-args">(src, filename = '-', lineno = 1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001033" class="method-detail">
+        <a name="M001033"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001033.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001033.html');return false;">
+
+          <span class="method-name">slice</span><span class="method-args">(src, pattern, n = 0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+[EXPERIMENTAL] Parses <tt>src</tt> and return a string which was matched to
+<tt>pattern</tt>. <tt>pattern</tt> should be described as <a
+href="Regexp.html">Regexp</a>.
+</p>
+<pre>
+  require 'ripper'
+
+  p Ripper.slice('def m(a) nil end', 'ident')                   #=&gt; &quot;m&quot;
+  p Ripper.slice('def m(a) nil end', '[ident lparen rparen]+')  #=&gt; &quot;m(a)&quot;
+  p Ripper.slice(&quot;&lt;&lt;EOS\nstring\nEOS&quot;,
+                 'heredoc_beg nl $(tstring_content*) heredoc_end', 1)
+      #=&gt; &quot;string\n&quot;
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001031" class="method-detail">
+        <a name="M001031"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001031.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001031.html');return false;">
+
+          <span class="method-name">tokenize</span><span class="method-args">(src, filename = '-', lineno = 1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Tokenizes Ruby program and returns an <a href="Array.html">Array</a> of <a
+href="String.html">String</a>.
 </p>
 
         </div>
@@ -189,13 +548,13 @@ href="Ripper.html#M000989">Ripper.parse</a>.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000990" class="method-detail">
-        <a name="M000990"></a>
+      <div id="method-M001021" class="method-detail">
+        <a name="M001021"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000990.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000990.html');return false;">
+          <a href="Ripper.src/M001021.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001021.html');return false;">
 
           <span class="method-name">ripper#column   &rarr; Integer<br />
 </span>
@@ -214,13 +573,38 @@ Return column number of current parsing line. This number starts from 0.
       </div>
 
 
-      <div id="method-M000993" class="method-detail">
-        <a name="M000993"></a>
+      <div id="method-M001013" class="method-detail">
+        <a name="M001013"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000993.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000993.html');return false;">
+          <a href="Ripper.src/M001013.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001013.html');return false;">
+
+          <span class="method-name">ripper#column   &rarr; Integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return column number of current parsing line. This number starts from 0.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001024" class="method-detail">
+        <a name="M001024"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001024.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001024.html');return false;">
 
           <span class="method-name">ripper#encoding   &rarr; encoding<br />
 </span>
@@ -239,13 +623,38 @@ Return encoding of the source.
       </div>
 
 
-      <div id="method-M000992" class="method-detail">
-        <a name="M000992"></a>
+      <div id="method-M001016" class="method-detail">
+        <a name="M001016"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000992.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000992.html');return false;">
+          <a href="Ripper.src/M001016.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001016.html');return false;">
+
+          <span class="method-name">ripper#encoding   &rarr; encoding<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return encoding of the source.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001015" class="method-detail">
+        <a name="M001015"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001015.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001015.html');return false;">
 
           <span class="method-name">ripper#end_seen?   &rarr; Boolean<br />
 </span>
@@ -264,13 +673,38 @@ Return if parsed source ended by +__END__+. This number starts from 1.
       </div>
 
 
-      <div id="method-M000991" class="method-detail">
-        <a name="M000991"></a>
+      <div id="method-M001023" class="method-detail">
+        <a name="M001023"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000991.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000991.html');return false;">
+          <a href="Ripper.src/M001023.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001023.html');return false;">
+
+          <span class="method-name">ripper#end_seen?   &rarr; Boolean<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return if parsed source ended by +__END__+. This number starts from 1.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001022" class="method-detail">
+        <a name="M001022"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001022.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001022.html');return false;">
 
           <span class="method-name">ripper#lineno   &rarr; Integer<br />
 </span>
@@ -289,13 +723,38 @@ Return line number of current parsing line. This number starts from 1.
       </div>
 
 
-      <div id="method-M000989" class="method-detail">
-        <a name="M000989"></a>
+      <div id="method-M001014" class="method-detail">
+        <a name="M001014"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000989.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000989.html');return false;">
+          <a href="Ripper.src/M001014.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001014.html');return false;">
+
+          <span class="method-name">ripper#lineno   &rarr; Integer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return line number of current parsing line. This number starts from 1.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001020" class="method-detail">
+        <a name="M001020"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001020.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001020.html');return false;">
 
           <span class="method-name">ripper#parse<br />
 </span>
@@ -314,13 +773,38 @@ Start parsing and returns the value of the root action.
       </div>
 
 
-      <div id="method-M000994" class="method-detail">
-        <a name="M000994"></a>
+      <div id="method-M001012" class="method-detail">
+        <a name="M001012"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000994.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000994.html');return false;">
+          <a href="Ripper.src/M001012.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001012.html');return false;">
+
+          <span class="method-name">ripper#parse<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Start parsing and returns the value of the root action.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001017" class="method-detail">
+        <a name="M001017"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001017.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001017.html');return false;">
 
           <span class="method-name">ripper.yydebug   &rarr; true or false<br />
 </span>
@@ -339,13 +823,38 @@ Get yydebug.
       </div>
 
 
-      <div id="method-M000995" class="method-detail">
-        <a name="M000995"></a>
+      <div id="method-M001025" class="method-detail">
+        <a name="M001025"></a>
 
         <div class="method-heading">
 
-          <a href="Ripper.src/M000995.html" target="Code" class="method-signature"
-            onclick="popupCode('Ripper.src/M000995.html');return false;">
+          <a href="Ripper.src/M001025.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001025.html');return false;">
+
+          <span class="method-name">ripper.yydebug   &rarr; true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Get yydebug.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001026" class="method-detail">
+        <a name="M001026"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001026.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001026.html');return false;">
 
           <span class="method-name">ripper.yydebug = flag<br />
 </span>
@@ -358,6 +867,108 @@ Get yydebug.
 
           <p>
 <a href="Set.html">Set</a> yydebug.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001018" class="method-detail">
+        <a name="M001018"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001018.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001018.html');return false;">
+
+          <span class="method-name">ripper.yydebug = flag<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+<a href="Set.html">Set</a> yydebug.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+
+      <div id="method-M001030" class="method-detail">
+        <a name="M001030"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001030.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001030.html');return false;">
+
+          <span class="method-name">compile_error</span><span class="method-args">(msg)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is called when the parser found syntax error.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001028" class="method-detail">
+        <a name="M001028"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001028.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001028.html');return false;">
+
+          <span class="method-name">warn</span><span class="method-args">(fmt, *args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is called when weak warning is produced by the parser.
+<em>fmt</em> and <em>args</em> is printf style.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M001029" class="method-detail">
+        <a name="M001029"></a>
+
+        <div class="method-heading">
+
+          <a href="Ripper.src/M001029.html" target="Code" class="method-signature"
+            onclick="popupCode('Ripper.src/M001029.html');return false;">
+
+          <span class="method-name">warning</span><span class="method-args">(fmt, *args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+This method is called when strong warning is produced by the parser.
+<em>fmt</em> and <em>args</em> is printf style.
 </p>
 
         </div>

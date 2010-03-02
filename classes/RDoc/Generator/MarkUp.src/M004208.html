@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>style_url (RDoc::Generator::MarkUp)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 85</span>
+85:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">style_url</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">css_name</span>=<span class="ruby-keyword kw">nil</span>)
+86: <span class="ruby-comment cmt">#      $stderr.puts &quot;style_url( #{path.inspect}, #{css_name.inspect} )&quot;</span>
+87:       <span class="ruby-identifier">css_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">CSS_NAME</span>
+88:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">%r{^(https?:/)?/}</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">css_name</span>
+89:         <span class="ruby-identifier">css_name</span>
+90:       <span class="ruby-keyword kw">else</span>
+91:         <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">ToHtml</span>.<span class="ruby-identifier">gen_relative_url</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">css_name</span>
+92:       <span class="ruby-keyword kw">end</span>
+93:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>httpdate (Time)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/time.rb, line 463</span>
+463:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">httpdate</span>
+464:     <span class="ruby-identifier">t</span> = <span class="ruby-identifier">dup</span>.<span class="ruby-identifier">utc</span>
+465:     <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">'%s, %02d %s %d %02d:%02d:%02d GMT'</span>,
+466:       <span class="ruby-constant">RFC2822_DAY_NAME</span>[<span class="ruby-identifier">t</span>.<span class="ruby-identifier">wday</span>],
+467:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">day</span>, <span class="ruby-constant">RFC2822_MONTH_NAME</span>[<span class="ruby-identifier">t</span>.<span class="ruby-identifier">mon</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>], <span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span>,
+468:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">hour</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">min</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">sec</span>)
+469:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

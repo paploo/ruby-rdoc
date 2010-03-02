@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>format_datetime (Logger::Formatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/logger.rb, line 468</span>
+468:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format_datetime</span>(<span class="ruby-identifier">time</span>)
+469:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@datetime_format</span>.<span class="ruby-identifier">nil?</span>
+470:         <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%Y-%m-%dT%H:%M:%S.&quot;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;%06d &quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">time</span>.<span class="ruby-identifier">usec</span>
+471:       <span class="ruby-keyword kw">else</span>
+472:         <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-ivar">@datetime_format</span>)
+473:       <span class="ruby-keyword kw">end</span>
+474:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

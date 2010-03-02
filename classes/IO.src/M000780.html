@@ -2,64 +2,65 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>close_write (IO)</title>
+  <title>copy_stream (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.close_write   =&gt; nil
+ *     IO.copy_stream(src, dst)
+ *     IO.copy_stream(src, dst, copy_length)
+ *     IO.copy_stream(src, dst, copy_length, src_offset)
  *
- *  Closes the write end of a duplex I/O stream (i.e., one that contains
- *  both a read and a write stream, such as a pipe). Will raise an
- *  &lt;code&gt;IOError&lt;/code&gt; if the stream is not duplexed.
+ *  IO.copy_stream copies &lt;i&gt;src&lt;/i&gt; to &lt;i&gt;dst&lt;/i&gt;.
+ *  &lt;i&gt;src&lt;/i&gt; and &lt;i&gt;dst&lt;/i&gt; is either a filename or an IO.
  *
- *     f = IO.popen(&quot;/bin/sh&quot;,&quot;r+&quot;)
- *     f.close_write
- *     f.print &quot;nowhere&quot;
+ *  This method returns the number of bytes copied.
  *
- *  &lt;em&gt;produces:&lt;/em&gt;
+ *  If optional arguments are not given,
+ *  the start position of the copy is
+ *  the beginning of the filename or
+ *  the current file offset of the IO.
+ *  The end position of the copy is the end of file.
  *
- *     prog.rb:3:in `write': not opened for writing (IOError)
- *      from prog.rb:3:in `print'
- *      from prog.rb:3
+ *  If &lt;i&gt;copy_length&lt;/i&gt; is given,
+ *  No more than &lt;i&gt;copy_length&lt;/i&gt; bytes are copied.
+ *
+ *  If &lt;i&gt;src_offset&lt;/i&gt; is given,
+ *  it specifies the start position of the copy.
+ *
+ *  When &lt;i&gt;src_offset&lt;/i&gt; is specified and
+ *  &lt;i&gt;src&lt;/i&gt; is an IO,
+ *  IO.copy_stream doesn't move the current file offset.
+ *
  */
-
 static VALUE
-rb_io_close_write(VALUE io)
+rb_io_s_copy_stream(int argc, VALUE *argv, VALUE io)
 {
-    rb_io_t *fptr;
-    VALUE write_io;
+    VALUE src, dst, length, src_offset;
+    struct copy_stream_struct st;
 
-    if (rb_safe_level() &gt;= 4 &amp;&amp; !OBJ_UNTRUSTED(io)) {
-        rb_raise(rb_eSecurityError, &quot;Insecure: can't close&quot;);
-    }
-    write_io = GetWriteIO(io);
-    GetOpenFile(write_io, fptr);
-    if (is_socket(fptr-&gt;fd, fptr-&gt;pathv)) {
-#ifndef SHUT_WR
-# define SHUT_WR 1
-#endif
-        if (shutdown(fptr-&gt;fd, SHUT_WR) &lt; 0)
-            rb_sys_fail_path(fptr-&gt;pathv);
-        fptr-&gt;mode &amp;= ~FMODE_WRITABLE;
-        if (!(fptr-&gt;mode &amp; FMODE_READABLE))
-            return rb_io_close(write_io);
-        return Qnil;
-    }
+    MEMZERO(&amp;st, struct copy_stream_struct, 1);
 
-    if (fptr-&gt;mode &amp; FMODE_READABLE) {
-        rb_raise(rb_eIOError, &quot;closing non-duplex IO for writing&quot;);
-    }
+    rb_scan_args(argc, argv, &quot;22&quot;, &amp;src, &amp;dst, &amp;length, &amp;src_offset);
 
-    rb_io_close(write_io);
-    if (io != write_io) {
-        GetOpenFile(io, fptr);
-        fptr-&gt;tied_io_for_writing = 0;
-        fptr-&gt;mode &amp;= ~FMODE_DUPLEX;
-    }
-    return Qnil;
+    st.src = src;
+    st.dst = dst;
+
+    if (NIL_P(length))
+        st.copy_length = (off_t)-1;
+    else
+        st.copy_length = NUM2OFFT(length);
+
+    if (NIL_P(src_offset))
+        st.src_offset = (off_t)-1;
+    else
+        st.src_offset = NUM2OFFT(src_offset);
+
+    rb_ensure(copy_stream_body, (VALUE)&amp;st, copy_stream_finalize, (VALUE)&amp;st);
+
+    return OFFT2NUM(st.total);
 }</pre>
 </body>
 </html>

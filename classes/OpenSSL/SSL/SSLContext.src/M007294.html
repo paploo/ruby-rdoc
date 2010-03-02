@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ciphers (OpenSSL::SSL::SSLContext)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    ctx.ciphers =&gt; [[name, version, bits, alg_bits], ...]
+ */
+static VALUE
+ossl_sslctx_get_ciphers(VALUE self)
+{
+    SSL_CTX *ctx;
+    STACK_OF(SSL_CIPHER) *ciphers;
+    SSL_CIPHER *cipher;
+    VALUE ary;
+    int i, num;
+
+    Data_Get_Struct(self, SSL_CTX, ctx);
+    if(!ctx){
+        rb_warning(&quot;SSL_CTX is not initialized.&quot;);
+        return Qnil;
+    }
+    ciphers = ctx-&gt;cipher_list;
+
+    if (!ciphers)
+        return rb_ary_new();
+
+    num = sk_num((STACK*)ciphers);
+    ary = rb_ary_new2(num);
+    for(i = 0; i &lt; num; i++){
+        cipher = (SSL_CIPHER*)sk_value((STACK*)ciphers, i);
+        rb_ary_push(ary, ossl_ssl_cipher_to_ary(cipher));
+    }
+    return ary;
+}</pre>
+</body>
+</html>

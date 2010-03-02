@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>jacobian (Jacobian)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File ext/bigdecimal/lib/bigdecimal/jacobian.rb, line 74</span>
+74:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">jacobian</span>(<span class="ruby-identifier">f</span>,<span class="ruby-identifier">fx</span>,<span class="ruby-identifier">x</span>)
+75:     <span class="ruby-identifier">n</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">size</span>
+76:     <span class="ruby-identifier">dfdx</span> = <span class="ruby-constant">Array</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-identifier">n</span><span class="ruby-operator">*</span><span class="ruby-identifier">n</span>)
+77:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">n</span> <span class="ruby-keyword kw">do</span>
+78:       <span class="ruby-identifier">df</span> = <span class="ruby-identifier">dfdxi</span>(<span class="ruby-identifier">f</span>,<span class="ruby-identifier">fx</span>,<span class="ruby-identifier">x</span>,<span class="ruby-identifier">i</span>)
+79:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">j</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">n</span> <span class="ruby-keyword kw">do</span>
+80:          <span class="ruby-identifier">dfdx</span>[<span class="ruby-identifier">j</span><span class="ruby-operator">*</span><span class="ruby-identifier">n</span><span class="ruby-operator">+</span><span class="ruby-identifier">i</span>] = <span class="ruby-identifier">df</span>[<span class="ruby-identifier">j</span>]
+81:       <span class="ruby-keyword kw">end</span>
+82:     <span class="ruby-keyword kw">end</span>
+83:     <span class="ruby-identifier">dfdx</span>
+84:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

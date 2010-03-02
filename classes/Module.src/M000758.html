@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>public (Module)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     public                 =&gt; self
+ *     public(symbol, ...)    =&gt; self
+ *
+ *  With no arguments, sets the default visibility for subsequently
+ *  defined methods to public. With arguments, sets the named methods to
+ *  have public visibility.
+ */
+
+static VALUE
+rb_mod_public(int argc, VALUE *argv, VALUE module)
+{
+    secure_visibility(module);
+    if (argc == 0) {
+        SCOPE_SET(NOEX_PUBLIC);
+    }
+    else {
+        set_method_visibility(module, argc, argv, NOEX_PUBLIC);
+    }
+    return module;
+}</pre>
+</body>
+</html>

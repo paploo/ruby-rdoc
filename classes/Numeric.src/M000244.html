@@ -2,23 +2,27 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>modulo (Numeric)</title>
+  <title>-@ (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.modulo(numeric)    =&gt; result
+ *     -num    =&gt; numeric
  *
- *  Equivalent to
- *  &lt;i&gt;num&lt;/i&gt;.&lt;code&gt;divmod(&lt;/code&gt;&lt;i&gt;aNumeric&lt;/i&gt;&lt;code&gt;)[1]&lt;/code&gt;.
+ *  Unary Minus---Returns the receiver's value, negated.
  */
 
 static VALUE
-num_modulo(VALUE x, VALUE y)
+num_uminus(VALUE num)
 {
-    return rb_funcall(x, '%', 1, y);
+    VALUE zero;
+
+    zero = INT2FIX(0);
+    do_coerce(&amp;zero, &amp;num, Qtrue);
+
+    return rb_funcall(zero, '-', 1, num);
 }</pre>
 </body>
 </html>

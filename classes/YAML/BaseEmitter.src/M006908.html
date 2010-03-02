@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>node_text (YAML::BaseEmitter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/baseemitter.rb, line 34</span>
+34:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">node_text</span>( <span class="ruby-identifier">value</span>, <span class="ruby-identifier">block</span> = <span class="ruby-keyword kw">nil</span> )
+35:       <span class="ruby-ivar">@seq_map</span> = <span class="ruby-keyword kw">false</span>
+36:       <span class="ruby-identifier">valx</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">dup</span>
+37:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
+38:         <span class="ruby-identifier">block</span> =
+39:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>(<span class="ruby-identifier">:UseBlock</span>)
+40:             <span class="ruby-value str">'|'</span>
+41:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">options</span>(<span class="ruby-identifier">:UseFold</span>) <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\n[ \t]/</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/#{YAML::ESCAPE_CHAR}/</span>
+42:             <span class="ruby-value str">'|'</span>
+43:           <span class="ruby-keyword kw">else</span>
+44:             <span class="ruby-value str">'&gt;'</span>
+45:           <span class="ruby-keyword kw">end</span> 
+46:         <span class="ruby-identifier">indt</span> = <span class="ruby-identifier">$&amp;</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\d+/</span>
+47:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(\A\n*[ \t#]|^---\s+)/</span>
+48:           <span class="ruby-identifier">indt</span> = <span class="ruby-identifier">options</span>(<span class="ruby-identifier">:Indent</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">indt</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+49:           <span class="ruby-identifier">block</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">indt</span>.<span class="ruby-identifier">to_s</span>
+50:         <span class="ruby-keyword kw">end</span>
+51: 
+52:         <span class="ruby-identifier">block</span> <span class="ruby-operator">+=</span>
+53:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\n\Z\n/</span>
+54:             <span class="ruby-value str">&quot;+&quot;</span>
+55:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\Z\n/</span>
+56:             <span class="ruby-value str">&quot;&quot;</span>
+57:           <span class="ruby-keyword kw">else</span>
+58:             <span class="ruby-value str">&quot;-&quot;</span>
+59:           <span class="ruby-keyword kw">end</span>
+60:       <span class="ruby-keyword kw">end</span>
+61:       <span class="ruby-identifier">block</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;\n&quot;</span>
+62:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?&quot;</span>
+63:         <span class="ruby-identifier">esc_skip</span> = ( <span class="ruby-value str">&quot;\t\n&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">valx</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^[ \t]/</span> ) <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+64:         <span class="ruby-identifier">valx</span> = <span class="ruby-identifier">fold</span>( <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>( <span class="ruby-identifier">valx</span>, <span class="ruby-identifier">esc_skip</span> ) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\&quot;&quot;</span> ).<span class="ruby-identifier">chomp</span>
+65:         <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'&quot;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">indent_text</span>( <span class="ruby-identifier">valx</span>, <span class="ruby-identifier">indt</span>, <span class="ruby-keyword kw">false</span> )
+66:       <span class="ruby-keyword kw">else</span>
+67:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?&gt;</span> 
+68:           <span class="ruby-identifier">valx</span> = <span class="ruby-identifier">fold</span>( <span class="ruby-identifier">valx</span> ) 
+69:         <span class="ruby-keyword kw">end</span>
+70:         <span class="ruby-comment cmt">#p [block, indt]</span>
+71:         <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">block</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">indent_text</span>( <span class="ruby-identifier">valx</span>, <span class="ruby-identifier">indt</span> )
+72:       <span class="ruby-keyword kw">end</span>
+73:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

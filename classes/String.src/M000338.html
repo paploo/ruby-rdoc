@@ -2,32 +2,35 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chop! (String)</title>
+  <title>chop (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.chop!   =&gt; str or nil
+ *     str.chop   =&gt; new_str
  *  
- *  Processes &lt;i&gt;str&lt;/i&gt; as for &lt;code&gt;String#chop&lt;/code&gt;, returning &lt;i&gt;str&lt;/i&gt;,
- *  or &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; is the empty string.  See also
- *  &lt;code&gt;String#chomp!&lt;/code&gt;.
+ *  Returns a new &lt;code&gt;String&lt;/code&gt; with the last character removed.  If the
+ *  string ends with &lt;code&gt;\r\n&lt;/code&gt;, both characters are removed. Applying
+ *  &lt;code&gt;chop&lt;/code&gt; to an empty string returns an empty
+ *  string. &lt;code&gt;String#chomp&lt;/code&gt; is often a safer alternative, as it leaves
+ *  the string unchanged if it doesn't end in a record separator.
+ *     
+ *     &quot;string\r\n&quot;.chop   #=&gt; &quot;string&quot;
+ *     &quot;string\n\r&quot;.chop   #=&gt; &quot;string\n&quot;
+ *     &quot;string\n&quot;.chop     #=&gt; &quot;string&quot;
+ *     &quot;string&quot;.chop       #=&gt; &quot;strin&quot;
+ *     &quot;x&quot;.chop.chop       #=&gt; &quot;&quot;
  */
 
 static VALUE
-rb_str_chop_bang(VALUE str)
+rb_str_chop(VALUE str)
 {
-    if (RSTRING_LEN(str) &gt; 0) {
-        long len;
-        rb_str_modify(str);
-        len = chopped_length(str);
-        STR_SET_LEN(str, len);
-        RSTRING_PTR(str)[len] = '\0';
-        return str;
-    }
-    return Qnil;
+    VALUE str2 = rb_str_new5(str, RSTRING_PTR(str), chopped_length(str));
+    rb_enc_cr_str_copy_for_substr(str2, str);
+    OBJ_INFECT(str2, str);
+    return str2;
 }</pre>
 </body>
 </html>

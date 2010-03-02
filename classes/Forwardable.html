@@ -78,8 +78,8 @@
       <p>
 The <a href="Forwardable.html">Forwardable</a> module provides delegation
 of specified methods to a designated object, using the methods <a
-href="Forwardable.html#M003181">def_delegator</a> and <a
-href="Forwardable.html#M003180">def_delegators</a>.
+href="Forwardable.html#M003293">def_delegator</a> and <a
+href="Forwardable.html#M003292">def_delegators</a>.
 </p>
 <p>
 For example, say you have a class RecordCollection which contains an array
@@ -120,15 +120,17 @@ Also see the example at forwardable.rb.
 
       <div class="name-list">
 
-        <a href="#M003181">def_delegator</a>&nbsp;&nbsp;
+        <a href="#M003293">def_delegator</a>&nbsp;&nbsp;
 
-        <a href="#M003180">def_delegators</a>&nbsp;&nbsp;
+        <a href="#M003292">def_delegators</a>&nbsp;&nbsp;
 
-        <a href="#M003179">def_instance_delegator</a>&nbsp;&nbsp;
+        <a href="#M003290">def_instance_delegator</a>&nbsp;&nbsp;
 
-        <a href="#M003178">def_instance_delegators</a>&nbsp;&nbsp;
+        <a href="#M003289">def_instance_delegators</a>&nbsp;&nbsp;
 
-        <a href="#M003177">delegate</a>&nbsp;&nbsp;
+        <a href="#M003291">delegate</a>&nbsp;&nbsp;
+
+        <a href="#M003288">instance_delegate</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -148,7 +150,7 @@ Also see the example at forwardable.rb.
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">FORWARDABLE_VERSION</td>
           <td>=</td>
-          <td class="context-item-value">&quot;1.0.0&quot;</td>
+          <td class="context-item-value">&quot;1.1.0&quot;</td>
 
         </tr>
 
@@ -158,6 +160,24 @@ Also see the example at forwardable.rb.
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">debug</td>
+
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
 
     <!-- if method_list -->
 
@@ -166,8 +186,8 @@ Also see the example at forwardable.rb.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M003181" class="method-detail">
-        <a name="M003181"></a>
+      <div id="method-M003293" class="method-detail">
+        <a name="M003293"></a>
 
         <div class="method-heading">
 
@@ -178,15 +198,15 @@ Also see the example at forwardable.rb.
         <div class="method-description">
 
           <p>
-Alias for <a href="Forwardable.html#M003179">def_instance_delegator</a>
+Alias for <a href="Forwardable.html#M003290">def_instance_delegator</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003180" class="method-detail">
-        <a name="M003180"></a>
+      <div id="method-M003292" class="method-detail">
+        <a name="M003292"></a>
 
         <div class="method-heading">
 
@@ -197,20 +217,20 @@ Alias for <a href="Forwardable.html#M003179">def_instance_delegator</a>
         <div class="method-description">
 
           <p>
-Alias for <a href="Forwardable.html#M003178">def_instance_delegators</a>
+Alias for <a href="Forwardable.html#M003289">def_instance_delegators</a>
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M003179" class="method-detail">
-        <a name="M003179"></a>
+      <div id="method-M003290" class="method-detail">
+        <a name="M003290"></a>
 
         <div class="method-heading">
 
-          <a href="Forwardable.src/M003179.html" target="Code" class="method-signature"
-            onclick="popupCode('Forwardable.src/M003179.html');return false;">
+          <a href="Forwardable.src/M003290.html" target="Code" class="method-signature"
+            onclick="popupCode('Forwardable.src/M003290.html');return false;">
 
           <span class="method-name">def_instance_delegator</span><span class="method-args">(accessor, method, ali = method)</span>
 
@@ -220,23 +240,17 @@ Alias for <a href="Forwardable.html#M003178">def_instance_delegators</a>
 
         <div class="method-description">
 
-          <p>
-Defines a method <em>method</em> which delegates to <em>obj</em> (i.e. it
-calls the method of the same name in <em>obj</em>). If <em>new_name</em> is
-provided, it is used as the name for the delegate method.
-</p>
-
         </div>
       </div>
 
 
-      <div id="method-M003178" class="method-detail">
-        <a name="M003178"></a>
+      <div id="method-M003289" class="method-detail">
+        <a name="M003289"></a>
 
         <div class="method-heading">
 
-          <a href="Forwardable.src/M003178.html" target="Code" class="method-signature"
-            onclick="popupCode('Forwardable.src/M003178.html');return false;">
+          <a href="Forwardable.src/M003289.html" target="Code" class="method-signature"
+            onclick="popupCode('Forwardable.src/M003289.html');return false;">
 
           <span class="method-name">def_instance_delegators</span><span class="method-args">(accessor, *methods)</span>
 
@@ -263,13 +277,32 @@ effect:
       </div>
 
 
-      <div id="method-M003177" class="method-detail">
-        <a name="M003177"></a>
+      <div id="method-M003291" class="method-detail">
+        <a name="M003291"></a>
 
         <div class="method-heading">
 
-          <a href="Forwardable.src/M003177.html" target="Code" class="method-signature"
-            onclick="popupCode('Forwardable.src/M003177.html');return false;">
+          <span class="method-name">delegate</span><span class="method-args">(hash)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Forwardable.html#M003288">instance_delegate</a>
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M003288" class="method-detail">
+        <a name="M003288"></a>
+
+        <div class="method-heading">
+
+          <a href="Forwardable.src/M003288.html" target="Code" class="method-signature"
+            onclick="popupCode('Forwardable.src/M003288.html');return false;">
 
           <span class="method-name">delegate method => accessor<br />
 delegate [method, method, ...] => accessor<br />

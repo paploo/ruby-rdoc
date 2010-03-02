@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_generator (OpenSSL::PKey::EC::Group)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*  call-seq:
+ *     group.set_generator(generator, order, cofactor)   =&gt; self
+ *
+ *  See the OpenSSL documentation for EC_GROUP_set_generator()
+ */
+static VALUE ossl_ec_group_set_generator(VALUE self, VALUE generator, VALUE order, VALUE cofactor)
+{
+    EC_GROUP *group = NULL;
+    const EC_POINT *point;
+    const BIGNUM *o, *co;
+
+    Require_EC_GROUP(self, group);
+    SafeRequire_EC_POINT(generator, point);
+    o = GetBNPtr(order);
+    co = GetBNPtr(cofactor);
+
+    if (EC_GROUP_set_generator(group, point, o, co) != 1)
+        ossl_raise(eEC_GROUP, &quot;EC_GROUP_set_generator&quot;);
+
+    return self;
+}</pre>
+</body>
+</html>

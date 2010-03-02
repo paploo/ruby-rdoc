@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>final (OpenSSL::Cipher)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     cipher.final -&gt; aString
+ *
+ *  Returns the remaining data held in the cipher object.  Further calls to update() or final() will return garbage.
+ *
+ *  See EVP_CipherFinal_ex for further information.
+ */
+static VALUE 
+ossl_cipher_final(VALUE self)
+{
+    EVP_CIPHER_CTX *ctx;
+    int out_len;
+    VALUE str;
+
+    GetCipher(self, ctx);
+    str = rb_str_new(0, EVP_CIPHER_CTX_block_size(ctx));
+    if (!EVP_CipherFinal_ex(ctx, (unsigned char *)RSTRING_PTR(str), &amp;out_len))
+        ossl_raise(eCipherError, NULL);
+    assert(out_len &lt;= RSTRING_LEN(str));
+    rb_str_set_len(str, out_len);
+
+    return str;
+}</pre>
+</body>
+</html>

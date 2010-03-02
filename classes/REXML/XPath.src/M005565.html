@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>first (REXML::XPath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rexml/xpath.rb, line 27</span>
+27:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">XPath</span><span class="ruby-operator">::</span><span class="ruby-identifier">first</span> <span class="ruby-identifier">element</span>, <span class="ruby-identifier">path</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">namespaces</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">variables</span>={}
+28:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;The namespaces argument, if supplied, must be a hash object.&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">namespaces</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">namespaces</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+29:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;The variables argument, if supplied, must be a hash object.&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">variables</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+30:       <span class="ruby-identifier">parser</span> = <span class="ruby-constant">XPathParser</span>.<span class="ruby-identifier">new</span>
+31:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">namespaces</span> = <span class="ruby-identifier">namespaces</span>
+32:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">variables</span> = <span class="ruby-identifier">variables</span>
+33:       <span class="ruby-identifier">path</span> = <span class="ruby-value str">&quot;*&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>
+34:       <span class="ruby-identifier">element</span> = [<span class="ruby-identifier">element</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+35:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">element</span>).<span class="ruby-identifier">flatten</span>[<span class="ruby-value">0</span>]
+36:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>isjis (Kconv)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/nkf/lib/kconv.rb, line 173</span>
+173:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">isjis</span>(<span class="ruby-identifier">str</span>)
+174:     <span class="ruby-regexp re">/\A [\t\n\r\x20-\x7E]*
+175:       (?:
+176:         (?:\x1b \x28 I      [\x21-\x7E]*
+177:           |\x1b \x28 J      [\x21-\x7E]*
+178:           |\x1b \x24 @      (?:[\x21-\x7E]{2})*
+179:           |\x1b \x24 B      (?:[\x21-\x7E]{2})*
+180:           |\x1b \x24 \x28 D (?:[\x21-\x7E]{2})*
+181:         )*
+182:         \x1b \x28 B [\t\n\r\x20-\x7E]*
+183:       )*
+184:      \z/n</span><span class="ruby-identifier">ox</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-value str">'BINARY'</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+185:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

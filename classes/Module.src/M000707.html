@@ -2,30 +2,28 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>public (Module)</title>
+  <title>include (Module)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     public                 =&gt; self
- *     public(symbol, ...)    =&gt; self
+ *     include(module, ...)    =&gt; self
  *
- *  With no arguments, sets the default visibility for subsequently
- *  defined methods to public. With arguments, sets the named methods to
- *  have public visibility.
+ *  Invokes &lt;code&gt;Module.append_features&lt;/code&gt; on each parameter in turn.
  */
 
 static VALUE
-rb_mod_public(int argc, VALUE *argv, VALUE module)
+rb_mod_include(int argc, VALUE *argv, VALUE module)
 {
-    secure_visibility(module);
-    if (argc == 0) {
-        SCOPE_SET(NOEX_PUBLIC);
-    }
-    else {
-        set_method_visibility(module, argc, argv, NOEX_PUBLIC);
+    int i;
+
+    for (i = 0; i &lt; argc; i++)
+        Check_Type(argv[i], T_MODULE);
+    while (argc--) {
+        rb_funcall(argv[argc], rb_intern(&quot;append_features&quot;), 1, module);
+        rb_funcall(argv[argc], rb_intern(&quot;included&quot;), 1, module);
     }
     return module;
 }</pre>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>assign_types_to_lines (RDoc::Markup)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup.rb, line 157</span>
+157:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assign_types_to_lines</span>(<span class="ruby-identifier">margin</span> = <span class="ruby-value">0</span>, <span class="ruby-identifier">level</span> = <span class="ruby-value">0</span>)
+158:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">next</span>
+159:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-keyword kw">then</span>
+160:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:BLANK</span>, <span class="ruby-identifier">level</span>
+161:         <span class="ruby-keyword kw">next</span>
+162:       <span class="ruby-keyword kw">end</span>
+163: 
+164:       <span class="ruby-comment cmt"># if a line contains non-blanks before the margin, then it must belong</span>
+165:       <span class="ruby-comment cmt"># to an outer level</span>
+166: 
+167:       <span class="ruby-identifier">text</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">text</span>
+168: 
+169:       <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">margin</span>
+170:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">!=</span> <span class="ruby-constant">SPACE</span>
+171:           <span class="ruby-ivar">@lines</span>.<span class="ruby-identifier">unget</span>
+172:           <span class="ruby-keyword kw">return</span>
+173:         <span class="ruby-keyword kw">end</span>
+174:       <span class="ruby-keyword kw">end</span>
+175: 
+176:       <span class="ruby-identifier">active_line</span> = <span class="ruby-identifier">text</span>[<span class="ruby-identifier">margin</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+177: 
+178:       <span class="ruby-comment cmt"># Rules (horizontal lines) look like</span>
+179:       <span class="ruby-comment cmt">#</span>
+180:       <span class="ruby-comment cmt">#  ---   (three or more hyphens)</span>
+181:       <span class="ruby-comment cmt">#</span>
+182:       <span class="ruby-comment cmt"># The more hyphens, the thicker the rule</span>
+183:       <span class="ruby-comment cmt">#</span>
+184: 
+185:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^(---+)\s*$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">active_line</span>
+186:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:RULE</span>, <span class="ruby-identifier">level</span>, <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>
+187:         <span class="ruby-keyword kw">next</span>
+188:       <span class="ruby-keyword kw">end</span>
+189: 
+190:       <span class="ruby-comment cmt"># Then look for list entries.  First the ones that have to have</span>
+191:       <span class="ruby-comment cmt"># text following them (* xxx, - xxx, and dd. xxx)</span>
+192: 
+193:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">SIMPLE_LIST_RE</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">active_line</span>
+194:         <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">margin</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">length</span>
+195:         <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">$2</span>
+196:         <span class="ruby-identifier">prefix_length</span> = <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>
+197: 
+198:         <span class="ruby-identifier">flag</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">prefix</span>
+199:                <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;*&quot;</span>,<span class="ruby-value str">&quot;-&quot;</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:BULLET</span>
+200:                <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^\d/</span>   <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:NUMBER</span>
+201:                <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^[A-Z]/</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:UPPERALPHA</span>
+202:                <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^[a-z]/</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:LOWERALPHA</span>
+203:                <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid List Type: #{self.inspect}&quot;</span>
+204:                <span class="ruby-keyword kw">end</span>
+205: 
+206:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:LIST</span>, <span class="ruby-identifier">level</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">flag</span>
+207:         <span class="ruby-identifier">text</span>[<span class="ruby-identifier">margin</span>, <span class="ruby-identifier">prefix_length</span>] = <span class="ruby-value str">&quot; &quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">prefix_length</span>
+208:         <span class="ruby-identifier">assign_types_to_lines</span>(<span class="ruby-identifier">offset</span>, <span class="ruby-identifier">level</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+209:         <span class="ruby-keyword kw">next</span>
+210:       <span class="ruby-keyword kw">end</span>
+211: 
+212:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">LABEL_LIST_RE</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">active_line</span>
+213:         <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">margin</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">length</span>
+214:         <span class="ruby-identifier">prefix</span> = <span class="ruby-identifier">$2</span>
+215:         <span class="ruby-identifier">prefix_length</span> = <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">length</span>
+216: 
+217:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">handled_labeled_list</span>(<span class="ruby-identifier">line</span>, <span class="ruby-identifier">level</span>, <span class="ruby-identifier">margin</span>, <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">prefix</span>)
+218:       <span class="ruby-keyword kw">end</span>
+219: 
+220:       <span class="ruby-comment cmt"># Headings look like</span>
+221:       <span class="ruby-comment cmt"># = Main heading</span>
+222:       <span class="ruby-comment cmt"># == Second level</span>
+223:       <span class="ruby-comment cmt"># === Third</span>
+224:       <span class="ruby-comment cmt">#</span>
+225:       <span class="ruby-comment cmt"># Headings reset the level to 0</span>
+226: 
+227:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">active_line</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?=</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">active_line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^(=+)\s*(.*)/</span>
+228:         <span class="ruby-identifier">prefix_length</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">length</span>
+229:         <span class="ruby-identifier">prefix_length</span> = <span class="ruby-value">6</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prefix_length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">6</span>
+230:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:HEADING</span>, <span class="ruby-value">0</span>, <span class="ruby-identifier">prefix_length</span>
+231:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_leading</span>(<span class="ruby-identifier">margin</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">prefix_length</span>)
+232:         <span class="ruby-keyword kw">next</span>
+233:       <span class="ruby-keyword kw">end</span>
+234: 
+235:       <span class="ruby-comment cmt"># If the character's a space, then we have verbatim text,</span>
+236:       <span class="ruby-comment cmt"># otherwise</span>
+237: 
+238:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">active_line</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-constant">SPACE</span>
+239:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">strip_leading</span>(<span class="ruby-identifier">margin</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">margin</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+240:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:VERBATIM</span>, <span class="ruby-identifier">level</span>
+241:       <span class="ruby-keyword kw">else</span>
+242:         <span class="ruby-identifier">line</span>.<span class="ruby-identifier">stamp</span> <span class="ruby-identifier">:PARAGRAPH</span>, <span class="ruby-identifier">level</span>
+243:       <span class="ruby-keyword kw">end</span>
+244:     <span class="ruby-keyword kw">end</span>
+245:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>setup_items (RSS::Maker::RSS10::Channel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/1.0.rb, line 49</span>
+49:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_items</span>(<span class="ruby-identifier">rss</span>)
+50:           <span class="ruby-identifier">items</span> = <span class="ruby-constant">RDF</span><span class="ruby-operator">::</span><span class="ruby-constant">Channel</span><span class="ruby-operator">::</span><span class="ruby-constant">Items</span>.<span class="ruby-identifier">new</span>
+51:           <span class="ruby-identifier">seq</span> = <span class="ruby-identifier">items</span>.<span class="ruby-constant">Seq</span>
+52:           <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">items</span>, <span class="ruby-identifier">seq</span>)
+53:           <span class="ruby-identifier">target_items</span> = <span class="ruby-ivar">@maker</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">normalize</span>
+54:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotSetError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;maker&quot;</span>, [<span class="ruby-value str">&quot;items&quot;</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">target_items</span>.<span class="ruby-identifier">empty?</span>
+55:           <span class="ruby-identifier">target_items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+56:             <span class="ruby-identifier">li</span> = <span class="ruby-constant">RDF</span><span class="ruby-operator">::</span><span class="ruby-constant">Channel</span><span class="ruby-operator">::</span><span class="ruby-constant">Items</span><span class="ruby-operator">::</span><span class="ruby-constant">Seq</span><span class="ruby-operator">::</span><span class="ruby-constant">Li</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">link</span>)
+57:             <span class="ruby-identifier">seq</span>.<span class="ruby-identifier">lis</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">li</span>
+58:             <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">li</span>, <span class="ruby-identifier">seq</span>)
+59:           <span class="ruby-keyword kw">end</span>
+60:           <span class="ruby-identifier">rss</span>.<span class="ruby-identifier">channel</span>.<span class="ruby-identifier">items</span> = <span class="ruby-identifier">items</span>
+61:           <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">rss</span>.<span class="ruby-identifier">channel</span>, <span class="ruby-identifier">items</span>)
+62:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

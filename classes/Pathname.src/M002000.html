@@ -2,12 +2,18 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>setuid? (Pathname)</title>
+  <title>cleanpath (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 932</span>
-932:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setuid?</span>() <span class="ruby-constant">FileTest</span>.<span class="ruby-identifier">setuid?</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 338</span>
+338:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanpath</span>(<span class="ruby-identifier">consider_symlink</span>=<span class="ruby-keyword kw">false</span>)
+339:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">consider_symlink</span>
+340:       <span class="ruby-identifier">cleanpath_conservative</span>
+341:     <span class="ruby-keyword kw">else</span>
+342:       <span class="ruby-identifier">cleanpath_aggressive</span>
+343:     <span class="ruby-keyword kw">end</span>
+344:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

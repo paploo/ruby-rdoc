@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>display_params (RDoc::RI::DefaultDisplay)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/display.rb, line 306</span>
+306:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_params</span>(<span class="ruby-identifier">method</span>)
+307:     <span class="ruby-identifier">params</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>
+308: 
+309:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;(&quot;</span> <span class="ruby-keyword kw">then</span>
+310:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">is_singleton</span>
+311:         <span class="ruby-identifier">params</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">params</span>
+312:       <span class="ruby-keyword kw">else</span>
+313:         <span class="ruby-identifier">params</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">params</span>
+314:       <span class="ruby-keyword kw">end</span>
+315:     <span class="ruby-keyword kw">end</span>
+316: 
+317:     <span class="ruby-identifier">params</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/\n/</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+318:       <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">wrap</span> <span class="ruby-identifier">param</span>
+319:       <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">break_to_newline</span>
+320:     <span class="ruby-keyword kw">end</span>
+321: 
+322:     <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">blankline</span>
+323:     <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-node">&quot;From #{method.source_path}&quot;</span>)
+324:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

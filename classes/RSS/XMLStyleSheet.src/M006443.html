@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>alternate= (RSS::XMLStyleSheet)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/xml-stylesheet.rb, line 79</span>
+79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alternate=</span>(<span class="ruby-identifier">value</span>)
+80:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-regexp re">/\A(?:yes|no)\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">value</span>
+81:         <span class="ruby-ivar">@alternate</span> = <span class="ruby-identifier">value</span>
+82:       <span class="ruby-keyword kw">else</span>
+83:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@do_validate</span>
+84:           <span class="ruby-identifier">args</span> = [<span class="ruby-value str">&quot;?xml-stylesheet?&quot;</span>, <span class="ruby-node">%Q[alternate=&quot;#{value}&quot;]</span>]
+85:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotAvailableValueError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+86:         <span class="ruby-keyword kw">end</span>
+87:       <span class="ruby-keyword kw">end</span>
+88:       <span class="ruby-ivar">@alternate</span>
+89:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

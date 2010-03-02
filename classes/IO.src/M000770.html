@@ -2,41 +2,49 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>rewind (IO)</title>
+  <title>sysopen (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.rewind    =&gt; 0
+ *     IO.sysopen(path, [mode, [perm]])  =&gt; fixnum
  *
- *  Positions &lt;em&gt;ios&lt;/em&gt; to the beginning of input, resetting
- *  &lt;code&gt;lineno&lt;/code&gt; to zero.
+ *  Opens the given path, returning the underlying file descriptor as a
+ *  &lt;code&gt;Fixnum&lt;/code&gt;.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     f.readline   #=&gt; &quot;This is line one\n&quot;
- *     f.rewind     #=&gt; 0
- *     f.lineno     #=&gt; 0
- *     f.readline   #=&gt; &quot;This is line one\n&quot;
+ *     IO.sysopen(&quot;testfile&quot;)   #=&gt; 3
+ *
  */
 
 static VALUE
-rb_io_rewind(VALUE io)
+rb_io_s_sysopen(int argc, VALUE *argv)
 {
-    rb_io_t *fptr;
+    VALUE fname, vmode, vperm;
+    VALUE intmode;
+    int oflags, fd;
+    mode_t perm;
+    char *path;
 
-    GetOpenFile(io, fptr);
-    if (io_seek(fptr, 0L, 0) &lt; 0) rb_sys_fail_path(fptr-&gt;pathv);
-    if (io == ARGF.current_file) {
-        ARGF.gets_lineno -= fptr-&gt;lineno;
-    }
-    fptr-&gt;lineno = 0;
-    if (fptr-&gt;readconv) {
-        clear_readconv(fptr);
-    }
+    rb_scan_args(argc, argv, &quot;12&quot;, &amp;fname, &amp;vmode, &amp;vperm);
+    FilePathValue(fname);
 
-    return INT2FIX(0);
+    if (NIL_P(vmode))
+        oflags = O_RDONLY;
+    else if (!NIL_P(intmode = rb_check_to_integer(vmode, &quot;to_int&quot;)))
+        oflags = NUM2INT(intmode);
+    else {
+        SafeStringValue(vmode);
+        oflags = rb_io_modestr_oflags(StringValueCStr(vmode));
+    }
+    if (NIL_P(vperm)) perm = 0666;
+    else              perm = NUM2UINT(vperm);
+
+    RB_GC_GUARD(fname) = rb_str_new4(fname);
+    path = RSTRING_PTR(fname);
+    fd = rb_sysopen(path, oflags, perm);
+    return INT2NUM(fd);
 }</pre>
 </body>
 </html>

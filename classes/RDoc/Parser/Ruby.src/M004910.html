@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_constant_with_optional_parens (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 1638</span>
+1638:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_constant_with_optional_parens</span>
+1639:     <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">false</span>)
+1640:     <span class="ruby-identifier">nest</span> = <span class="ruby-value">0</span>
+1641:     <span class="ruby-keyword kw">while</span> <span class="ruby-constant">TkLPAREN</span> <span class="ruby-operator">===</span> (<span class="ruby-identifier">tk</span> = <span class="ruby-identifier">peek_tk</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-constant">TkfLPAREN</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span> <span class="ruby-keyword kw">do</span>
+1642:       <span class="ruby-identifier">get_tk</span>
+1643:       <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">true</span>)
+1644:       <span class="ruby-identifier">nest</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+1645:     <span class="ruby-keyword kw">end</span>
+1646: 
+1647:     <span class="ruby-identifier">name</span> = <span class="ruby-identifier">get_constant</span>
+1648: 
+1649:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">nest</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+1650:       <span class="ruby-identifier">skip_tkspace</span>(<span class="ruby-keyword kw">true</span>)
+1651:       <span class="ruby-identifier">tk</span> = <span class="ruby-identifier">get_tk</span>
+1652:       <span class="ruby-identifier">nest</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">TkRPAREN</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">tk</span>
+1653:     <span class="ruby-keyword kw">end</span>
+1654:     <span class="ruby-identifier">name</span>
+1655:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

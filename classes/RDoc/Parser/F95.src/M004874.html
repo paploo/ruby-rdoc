@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_comments (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1154</span>
+1154:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_comments</span> <span class="ruby-identifier">text</span>
+1155:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">text</span>
+1156:     <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">text</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+1157:     <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">reverse!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">COMMENTS_ARE_UPPER</span>
+1158:     <span class="ruby-identifier">comment_block</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+1159:     <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+1160:       <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*?\w/</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*?$/</span>
+1161:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">COMMENTS_ARE_UPPER</span>
+1162:         <span class="ruby-identifier">comment_block</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\s*?!\s?/</span>,<span class="ruby-value str">&quot;&quot;</span>)
+1163:       <span class="ruby-keyword kw">else</span>
+1164:         <span class="ruby-identifier">comment_block</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\s*?!\s?/</span>,<span class="ruby-value str">&quot;&quot;</span>)
+1165:       <span class="ruby-keyword kw">end</span>
+1166:     <span class="ruby-keyword kw">end</span>
+1167:     <span class="ruby-identifier">nice_lines</span> = <span class="ruby-identifier">comment_block</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">split</span> <span class="ruby-value str">&quot;\n\s*?\n&quot;</span>
+1168:     <span class="ruby-identifier">nice_lines</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+1169:     <span class="ruby-identifier">nice_lines</span>.<span class="ruby-identifier">shift</span>
+1170:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

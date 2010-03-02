@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rcptto (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 838</span>
+838:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rcptto</span>(<span class="ruby-identifier">to_addr</span>)
+839:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$SAFE</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+840:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">SecurityError</span>, <span class="ruby-value str">'tainted to_addr'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">to_addr</span>.<span class="ruby-identifier">tainted?</span>
+841:       <span class="ruby-keyword kw">end</span>
+842:       <span class="ruby-identifier">getok</span>(<span class="ruby-node">&quot;RCPT TO:&lt;#{to_addr}&gt;&quot;</span>)
+843:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

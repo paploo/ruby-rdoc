@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>format (RDoc::Markup::ToTexInfo)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rdoc/markup/to_texinfo.rb, line 56</span>
+56:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">text</span>)
+57:     <span class="ruby-identifier">text</span>.<span class="ruby-identifier">txt</span>.
+58:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/@/</span>, <span class="ruby-value str">&quot;@@&quot;</span>).
+59:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\{/</span>, <span class="ruby-value str">&quot;@{&quot;</span>).
+60:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\}/</span>, <span class="ruby-value str">&quot;@}&quot;</span>).
+61:       <span class="ruby-comment cmt"># gsub(/,/, &quot;@,&quot;). # technically only required in cross-refs</span>
+62:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\+([\w]+)\+/</span>, <span class="ruby-value str">&quot;@code{\\1}&quot;</span>).
+63:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\&lt;tt\&gt;([^&lt;]+)\&lt;\/tt\&gt;/</span>, <span class="ruby-value str">&quot;@code{\\1}&quot;</span>).
+64:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\*([\w]+)\*/</span>, <span class="ruby-value str">&quot;@strong{\\1}&quot;</span>).
+65:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\&lt;b\&gt;([^&lt;]+)\&lt;\/b\&gt;/</span>, <span class="ruby-value str">&quot;@strong{\\1}&quot;</span>).
+66:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/_([\w]+)_/</span>, <span class="ruby-value str">&quot;@emph{\\1}&quot;</span>).
+67:       <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\&lt;em\&gt;([^&lt;]+)\&lt;\/em\&gt;/</span>, <span class="ruby-value str">&quot;@emph{\\1}&quot;</span>)
+68:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

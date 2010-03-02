@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>next_to (Prime::EratosthenesSieve)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/prime.rb, line 418</span>
+418:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_to</span>(<span class="ruby-identifier">n</span>)
+419:       <span class="ruby-identifier">n</span> = (<span class="ruby-identifier">n</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>).<span class="ruby-identifier">div</span>(<span class="ruby-value">2</span>)<span class="ruby-operator">*</span><span class="ruby-value">2</span><span class="ruby-operator">+</span><span class="ruby-value">3</span> <span class="ruby-comment cmt"># the next odd number of given n</span>
+420:       <span class="ruby-identifier">i</span>,<span class="ruby-identifier">j</span> = <span class="ruby-identifier">n</span>.<span class="ruby-identifier">divmod</span>(<span class="ruby-value">32</span>)
+421:       <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+422:         <span class="ruby-identifier">extend_table</span> <span class="ruby-keyword kw">until</span> <span class="ruby-ivar">@table</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">i</span>
+423:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@table</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">zero?</span>
+424:           (<span class="ruby-identifier">j</span><span class="ruby-operator">...</span><span class="ruby-value">32</span>).<span class="ruby-identifier">step</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+425:             <span class="ruby-keyword kw">return</span> <span class="ruby-value">32</span><span class="ruby-operator">*</span><span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-identifier">k</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@table</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>.<span class="ruby-identifier">div</span>(<span class="ruby-value">2</span>)].<span class="ruby-identifier">zero?</span>
+426:           <span class="ruby-keyword kw">end</span>
+427:         <span class="ruby-keyword kw">end</span>
+428:         <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>; <span class="ruby-identifier">j</span> = <span class="ruby-value">1</span>
+429:       <span class="ruby-keyword kw">end</span>
+430:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

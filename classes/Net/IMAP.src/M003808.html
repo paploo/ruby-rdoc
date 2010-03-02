@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>receive_responses (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 959</span>
+ 959:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">receive_responses</span>
+ 960:       <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">true</span>
+ 961:         <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+ 962:           <span class="ruby-ivar">@exception</span> = <span class="ruby-keyword kw">nil</span>
+ 963:         <span class="ruby-keyword kw">end</span>
+ 964:         <span class="ruby-keyword kw">begin</span>
+ 965:           <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">get_response</span>
+ 966:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+ 967:           <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+ 968:             <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">close</span>
+ 969:             <span class="ruby-ivar">@exception</span> = <span class="ruby-identifier">e</span>
+ 970:           <span class="ruby-keyword kw">end</span>
+ 971:           <span class="ruby-keyword kw">break</span>
+ 972:         <span class="ruby-keyword kw">end</span>
+ 973:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">resp</span>
+ 974:           <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+ 975:             <span class="ruby-ivar">@exception</span> = <span class="ruby-constant">EOFError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;end of file reached&quot;</span>)
+ 976:           <span class="ruby-keyword kw">end</span>
+ 977:           <span class="ruby-keyword kw">break</span>
+ 978:         <span class="ruby-keyword kw">end</span>
+ 979:         <span class="ruby-keyword kw">begin</span>
+ 980:           <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+ 981:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">resp</span>
+ 982:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TaggedResponse</span>
+ 983:               <span class="ruby-ivar">@tagged_responses</span>[<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">tag</span>] = <span class="ruby-identifier">resp</span>
+ 984:               <span class="ruby-ivar">@tagged_response_arrival</span>.<span class="ruby-identifier">broadcast</span>
+ 985:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">tag</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@logout_command_tag</span>
+ 986:                 <span class="ruby-keyword kw">return</span>
+ 987:               <span class="ruby-keyword kw">end</span>
+ 988:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">UntaggedResponse</span>
+ 989:               <span class="ruby-identifier">record_response</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">data</span>)
+ 990:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">data</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">ResponseText</span>) <span class="ruby-operator">&amp;&amp;</span>
+ 991:                   (<span class="ruby-identifier">code</span> = <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">data</span>.<span class="ruby-identifier">code</span>)
+ 992:                 <span class="ruby-identifier">record_response</span>(<span class="ruby-identifier">code</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">code</span>.<span class="ruby-identifier">data</span>)
+ 993:               <span class="ruby-keyword kw">end</span>
+ 994:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;BYE&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@logout_command_tag</span>.<span class="ruby-identifier">nil?</span>
+ 995:                 <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">close</span>
+ 996:                 <span class="ruby-ivar">@exception</span> = <span class="ruby-constant">ByeResponseError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">resp</span>.<span class="ruby-identifier">raw_data</span>)
+ 997:                 <span class="ruby-keyword kw">break</span>
+ 998:               <span class="ruby-keyword kw">end</span>
+ 999:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">ContinuationRequest</span>
+1000:               <span class="ruby-ivar">@continuation_request_arrival</span>.<span class="ruby-identifier">signal</span>
+1001:             <span class="ruby-keyword kw">end</span>
+1002:             <span class="ruby-ivar">@response_handlers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">handler</span><span class="ruby-operator">|</span>
+1003:               <span class="ruby-identifier">handler</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">resp</span>)
+1004:             <span class="ruby-keyword kw">end</span>
+1005:           <span class="ruby-keyword kw">end</span>
+1006:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+1007:           <span class="ruby-ivar">@exception</span> = <span class="ruby-identifier">e</span>
+1008:           <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+1009:             <span class="ruby-ivar">@tagged_response_arrival</span>.<span class="ruby-identifier">broadcast</span>
+1010:             <span class="ruby-ivar">@continuation_request_arrival</span>.<span class="ruby-identifier">broadcast</span>
+1011:           <span class="ruby-keyword kw">end</span>
+1012:         <span class="ruby-keyword kw">end</span>
+1013:       <span class="ruby-keyword kw">end</span>
+1014:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+1015:         <span class="ruby-ivar">@tagged_response_arrival</span>.<span class="ruby-identifier">broadcast</span>
+1016:         <span class="ruby-ivar">@continuation_request_arrival</span>.<span class="ruby-identifier">broadcast</span>
+1017:       <span class="ruby-keyword kw">end</span>
+1018:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

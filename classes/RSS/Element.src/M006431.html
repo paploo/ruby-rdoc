@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>_tags (RSS::Element)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rss/rss.rb, line 1058</span>
+1058:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_tags</span>
+1059:       <span class="ruby-identifier">rv</span> = []
+1060:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">models</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">occurs</span>, <span class="ruby-identifier">getter</span>, <span class="ruby-identifier">plural</span><span class="ruby-operator">|</span>
+1061:         <span class="ruby-identifier">value</span> = <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">getter</span>)
+1062:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>
+1063:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">plural</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+1064:           <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">concat</span>([[<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">name</span>]] <span class="ruby-operator">*</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span>)
+1065:         <span class="ruby-keyword kw">else</span>
+1066:           <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">name</span>]
+1067:         <span class="ruby-keyword kw">end</span>
+1068:       <span class="ruby-keyword kw">end</span>
+1069:       <span class="ruby-identifier">rv</span>
+1070:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

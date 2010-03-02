@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>foreach (Dir)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Dir.foreach( dirname ) {| filename | block }  =&gt; nil
+ *
+ *  Calls the block once for each entry in the named directory, passing
+ *  the filename of each entry as a parameter to the block.
+ *
+ *     Dir.foreach(&quot;testdir&quot;) {|x| puts &quot;Got #{x}&quot; }
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     Got .
+ *     Got ..
+ *     Got config.h
+ *     Got main.rb
+ *
+ */
+static VALUE
+dir_foreach(int argc, VALUE *argv, VALUE io)
+{
+    VALUE dir;
+
+    RETURN_ENUMERATOR(io, argc, argv);
+    dir = dir_open_dir(argc, argv);
+    rb_ensure(dir_each, dir, dir_close, dir);
+    return Qnil;
+}</pre>
+</body>
+</html>

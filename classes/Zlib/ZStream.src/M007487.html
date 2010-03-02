@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>finish (Zlib::ZStream)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Finishes the stream and flushes output buffer. See Zlib::Deflate#finish and
+ * Zlib::Inflate#finish for details of this behavior.
+ */
+static VALUE
+rb_zstream_finish(VALUE obj)
+{
+    struct zstream *z = get_zstream(obj);
+    VALUE dst;
+
+    zstream_run(z, (Bytef*)&quot;&quot;, 0, Z_FINISH);
+    dst = zstream_detach_buffer(z);
+
+    OBJ_INFECT(dst, obj);
+    return dst;
+}</pre>
+</body>
+</html>

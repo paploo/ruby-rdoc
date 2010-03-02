@@ -2,16 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_yaml (NilClass)</title>
+  <title>&amp; (NilClass)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 440</span>
-440:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
-441:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
-442:             <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">:plain</span> )
-443:         <span class="ruby-keyword kw">end</span>
-444:         <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     false &amp; obj   =&gt; false
+ *     nil &amp; obj     =&gt; false
+ *  
+ *  And---Returns &lt;code&gt;false&lt;/code&gt;. &lt;i&gt;obj&lt;/i&gt; is always
+ *  evaluated as it is the argument to a method call---there is no
+ *  short-circuit evaluation in this case.
+ */
+
+static VALUE
+false_and(VALUE obj, VALUE obj2)
+{
+    return Qfalse;
+}</pre>
 </body>
 </html>

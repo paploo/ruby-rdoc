@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenSSL::PKCS7 [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenSSL::PKCS7</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/ext/openssl/ossl_c.html">
+
+                ext/openssl/ossl.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+INIT
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007412">encrypt</a>&nbsp;&nbsp;
+
+        <a href="#M007413">new</a>&nbsp;&nbsp;
+
+        <a href="#M007409">read_smime</a>&nbsp;&nbsp;
+
+        <a href="#M007411">sign</a>&nbsp;&nbsp;
+
+        <a href="#M007415">type</a>&nbsp;&nbsp;
+
+        <a href="#M007414">type=</a>&nbsp;&nbsp;
+
+        <a href="#M007410">write_smime</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="PKCS7/PKCS7Error.html" class="link">OpenSSL::PKCS7::PKCS7Error</a><br />
+Class <a href="PKCS7/RecipientInfo.html" class="link">OpenSSL::PKCS7::RecipientInfo</a><br />
+Class <a href="PKCS7/SignerInfo.html" class="link">OpenSSL::PKCS7::SignerInfo</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">Signer</td>
+          <td>=</td>
+          <td class="context-item-value">cPKCS7Signer</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+      <table summary="aliases">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">add_data</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">data=</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">to_pem</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">to_s</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M007412" class="method-detail">
+        <a name="M007412"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007412.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007412.html');return false;">
+
+          <span class="method-name">encrypt</span><span class="method-args">(...)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   PKCS7.encrypt(certs, data, [, cipher [, flags]]) =&gt; pkcs7
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007413" class="method-detail">
+        <a name="M007413"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007413.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007413.html');return false;">
+
+          <span class="method-name">PKCS7.new => pkcs7<br />
+PKCS7.new(string) => pkcs7<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Many methods in this class aren&#8217;t documented.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007409" class="method-detail">
+        <a name="M007409"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007409.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007409.html');return false;">
+
+          <span class="method-name">read_smime</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   PKCS7.read_smime(string) =&gt; pkcs7
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007411" class="method-detail">
+        <a name="M007411"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007411.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007411.html');return false;">
+
+          <span class="method-name">sign</span><span class="method-args">(...)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   PKCS7.sign(cert, key, data, [, certs [, flags]]) =&gt; pkcs7
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007410" class="method-detail">
+        <a name="M007410"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007410.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007410.html');return false;">
+
+          <span class="method-name">write_smime</span><span class="method-args">(...)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   PKCS7.write_smime(pkcs7 [, data [, flags]]) =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007415" class="method-detail">
+        <a name="M007415"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007415.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007415.html');return false;">
+
+          <span class="method-name">type</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   pkcs7.type =&gt; string or nil
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007414" class="method-detail">
+        <a name="M007414"></a>
+
+        <div class="method-heading">
+
+          <a href="PKCS7.src/M007414.html" target="Code" class="method-signature"
+            onclick="popupCode('PKCS7.src/M007414.html');return false;">
+
+          <span class="method-name">type=</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   pkcs7.type = type =&gt; type
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

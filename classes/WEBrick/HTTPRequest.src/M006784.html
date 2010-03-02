@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>_read_data (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 349</span>
+349:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_read_data</span>(<span class="ruby-identifier">io</span>, <span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arg</span>)
+350:       <span class="ruby-keyword kw">begin</span>
+351:         <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@config</span>[<span class="ruby-identifier">:RequestTimeout</span>]){
+352:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arg</span>)
+353:         }
+354:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ECONNRESET</span>
+355:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+356:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">TimeoutError</span>
+357:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestTimeout</span>
+358:       <span class="ruby-keyword kw">end</span>
+359:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (Struct)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ */
+
+static VALUE
+rb_struct_initialize_m(int argc, VALUE *argv, VALUE self)
+{
+    VALUE klass = rb_obj_class(self);
+    long n;
+
+    rb_struct_modify(self);
+    n = num_members(klass);
+    if (n &lt; argc) {
+        rb_raise(rb_eArgError, &quot;struct size differs&quot;);
+    }
+    MEMCPY(RSTRUCT_PTR(self), argv, VALUE, argc);
+    if (n &gt; argc) {
+        rb_mem_clear(RSTRUCT_PTR(self)+argc, n-argc);
+    }
+    return Qnil;
+}</pre>
+</body>
+</html>

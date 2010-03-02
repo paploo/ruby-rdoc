@@ -2,27 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>floor (Numeric)</title>
+  <title>abs (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.floor    =&gt; integer
+ *     num.abs   =&gt; num or numeric
  *
- *  Returns the largest integer less than or equal to &lt;i&gt;num&lt;/i&gt;.
- *  &lt;code&gt;Numeric&lt;/code&gt; implements this by converting &lt;i&gt;anInteger&lt;/i&gt;
- *  to a &lt;code&gt;Float&lt;/code&gt; and invoking &lt;code&gt;Float#floor&lt;/code&gt;.
+ *  Returns the absolute value of &lt;i&gt;num&lt;/i&gt;.
  *
- *     1.floor      #=&gt; 1
- *     (-1).floor   #=&gt; -1
+ *     12.abs         #=&gt; 12
+ *     (-34.56).abs   #=&gt; 34.56
+ *     -34.56.abs     #=&gt; 34.56
  */
 
 static VALUE
-num_floor(VALUE num)
+num_abs(VALUE num)
 {
-    return flo_floor(rb_Float(num));
+    if (RTEST(rb_funcall(num, '&lt;', 1, INT2FIX(0)))) {
+        return rb_funcall(num, rb_intern(&quot;-@&quot;), 0);
+    }
+    return num;
 }</pre>
 </body>
 </html>

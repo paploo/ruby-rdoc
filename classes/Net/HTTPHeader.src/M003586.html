@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>content_type (Net::HTTPHeader)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/http.rb, line 1459</span>
+1459:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_type</span>
+1460:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">main_type</span>()
+1461:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sub_type</span>()
+1462:       <span class="ruby-keyword kw">then</span> <span class="ruby-node">&quot;#{main_type()}/#{sub_type()}&quot;</span>
+1463:       <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">main_type</span>()
+1464:       <span class="ruby-keyword kw">end</span>
+1465:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

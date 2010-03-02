@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_insecure_method (DRb::DRbServer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 1470</span>
+1470:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_insecure_method</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">msg_id</span>)
+1471:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Proc</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">obj</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">msg_id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:__drb_yield</span>
+1472:       <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;#{any_to_s(msg_id)} is not a symbol&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Symbol</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">msg_id</span>.<span class="ruby-identifier">class</span>
+1473:       <span class="ruby-identifier">raise</span>(<span class="ruby-constant">SecurityError</span>, <span class="ruby-node">&quot;insecure method `#{msg_id}'&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">insecure_method?</span>(<span class="ruby-identifier">msg_id</span>)
+1474:       
+1475:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">private_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">msg_id</span>)
+1476:         <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">any_to_s</span>(<span class="ruby-identifier">obj</span>)
+1477:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoMethodError</span>, <span class="ruby-node">&quot;private method `#{msg_id}' called for #{desc}&quot;</span>
+1478:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">protected_methods</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">msg_id</span>)
+1479:         <span class="ruby-identifier">desc</span> = <span class="ruby-identifier">any_to_s</span>(<span class="ruby-identifier">obj</span>)
+1480:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoMethodError</span>, <span class="ruby-node">&quot;protected method `#{msg_id}' called for #{desc}&quot;</span>
+1481:       <span class="ruby-keyword kw">else</span>
+1482:         <span class="ruby-keyword kw">true</span>
+1483:       <span class="ruby-keyword kw">end</span>
+1484:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

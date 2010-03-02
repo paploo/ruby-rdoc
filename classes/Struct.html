@@ -82,6 +82,16 @@
 
         <br />
 
+
+                <a href="../files/ext/json/lib/json/add/core_rb.html">
+
+                ext/json/lib/json/add/core.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -136,53 +146,57 @@ symbol, which is either a quoted string or a <tt>Symbol</tt> (such as
 
       <div class="name-list">
 
-        <a href="#M001121">==</a>&nbsp;&nbsp;
+        <a href="#M001179">==</a>&nbsp;&nbsp;
 
-        <a href="#M001132">[]</a>&nbsp;&nbsp;
+        <a href="#M001190">[]</a>&nbsp;&nbsp;
 
-        <a href="#M001133">[]=</a>&nbsp;&nbsp;
+        <a href="#M001191">[]=</a>&nbsp;&nbsp;
 
-        <a href="#M001130">each</a>&nbsp;&nbsp;
+        <a href="#M001188">each</a>&nbsp;&nbsp;
 
-        <a href="#M001131">each_pair</a>&nbsp;&nbsp;
+        <a href="#M001189">each_pair</a>&nbsp;&nbsp;
 
-        <a href="#M001122">eql?</a>&nbsp;&nbsp;
+        <a href="#M001180">eql?</a>&nbsp;&nbsp;
 
-        <a href="#M001123">hash</a>&nbsp;&nbsp;
+        <a href="#M001181">hash</a>&nbsp;&nbsp;
 
-        <a href="#M001125">inspect</a>&nbsp;&nbsp;
+        <a href="#M001183">inspect</a>&nbsp;&nbsp;
 
-        <a href="#M001129">length</a>&nbsp;&nbsp;
+        <a href="#M001201">json_create</a>&nbsp;&nbsp;
 
-        <a href="#M001136">members</a>&nbsp;&nbsp;
+        <a href="#M001187">length</a>&nbsp;&nbsp;
 
-        <a href="#M001119">new</a>&nbsp;&nbsp;
+        <a href="#M001194">members</a>&nbsp;&nbsp;
 
-        <a href="#M001120">new</a>&nbsp;&nbsp;
+        <a href="#M001177">new</a>&nbsp;&nbsp;
 
-        <a href="#M001137">pretty_print</a>&nbsp;&nbsp;
+        <a href="#M001178">new</a>&nbsp;&nbsp;
 
-        <a href="#M001138">pretty_print_cycle</a>&nbsp;&nbsp;
+        <a href="#M001195">pretty_print</a>&nbsp;&nbsp;
 
-        <a href="#M001134">select</a>&nbsp;&nbsp;
+        <a href="#M001196">pretty_print_cycle</a>&nbsp;&nbsp;
 
-        <a href="#M001128">size</a>&nbsp;&nbsp;
+        <a href="#M001192">select</a>&nbsp;&nbsp;
 
-        <a href="#M001126">to_a</a>&nbsp;&nbsp;
+        <a href="#M001186">size</a>&nbsp;&nbsp;
 
-        <a href="#M001124">to_s</a>&nbsp;&nbsp;
+        <a href="#M001184">to_a</a>&nbsp;&nbsp;
 
-        <a href="#M001142">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M001202">to_json</a>&nbsp;&nbsp;
 
-        <a href="#M001127">values</a>&nbsp;&nbsp;
+        <a href="#M001182">to_s</a>&nbsp;&nbsp;
 
-        <a href="#M001135">values_at</a>&nbsp;&nbsp;
+        <a href="#M001200">to_yaml</a>&nbsp;&nbsp;
 
-        <a href="#M001141">yaml_new</a>&nbsp;&nbsp;
+        <a href="#M001185">values</a>&nbsp;&nbsp;
 
-        <a href="#M001139">yaml_tag_class_name</a>&nbsp;&nbsp;
+        <a href="#M001193">values_at</a>&nbsp;&nbsp;
 
-        <a href="#M001140">yaml_tag_read_class</a>&nbsp;&nbsp;
+        <a href="#M001199">yaml_new</a>&nbsp;&nbsp;
+
+        <a href="#M001197">yaml_tag_class_name</a>&nbsp;&nbsp;
+
+        <a href="#M001198">yaml_tag_read_class</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -213,13 +227,33 @@ symbol, which is either a quoted string or a <tt>Symbol</tt> (such as
       <h3 class="section-bar">Public Class methods</h3>
 
 
-      <div id="method-M001119" class="method-detail">
-        <a name="M001119"></a>
+      <div id="method-M001201" class="method-detail">
+        <a name="M001201"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001119.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001119.html');return false;">
+          <a href="Struct.src/M001201.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001201.html');return false;">
+
+          <span class="method-name">json_create</span><span class="method-args">(object)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001177" class="method-detail">
+        <a name="M001177"></a>
+
+        <div class="method-heading">
+
+          <a href="Struct.src/M001177.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001177.html');return false;">
 
           <span class="method-name">Struct.new( [aString] [, aSym]+> )    => StructClass<br />
 StructClass.new(arg, ...)             => obj<br />
@@ -245,8 +279,8 @@ the class the name of the constant.
 <tt>Struct::new</tt> returns a new <tt>Class</tt> object, which can then be
 used to create specific instances of the new structure. The number of
 actual parameters must be less than or equal to the number of attributes
-defined for this class; unset parameters default to nil{}. Passing too many
-parameters will raise an E{ArgumentError}.
+defined for this class; unset parameters default to <tt>nil</tt>. Passing
+too many parameters will raise an <tt>ArgumentError</tt>.
 </p>
 <p>
 The remaining methods listed in this section (class and instance) are
@@ -266,13 +300,13 @@ defined for this generated class.
       </div>
 
 
-      <div id="method-M001120" class="method-detail">
-        <a name="M001120"></a>
+      <div id="method-M001178" class="method-detail">
+        <a name="M001178"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001120.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001120.html');return false;">
+          <a href="Struct.src/M001178.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001178.html');return false;">
 
           <span class="method-name">new</span><span class="method-args">(...)</span>
 
@@ -286,13 +320,13 @@ defined for this generated class.
       </div>
 
 
-      <div id="method-M001141" class="method-detail">
-        <a name="M001141"></a>
+      <div id="method-M001199" class="method-detail">
+        <a name="M001199"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001141.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001141.html');return false;">
+          <a href="Struct.src/M001199.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001199.html');return false;">
 
           <span class="method-name">yaml_new</span><span class="method-args">( klass, tag, val )</span>
 
@@ -306,13 +340,13 @@ defined for this generated class.
       </div>
 
 
-      <div id="method-M001139" class="method-detail">
-        <a name="M001139"></a>
+      <div id="method-M001197" class="method-detail">
+        <a name="M001197"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001139.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001139.html');return false;">
+          <a href="Struct.src/M001197.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001197.html');return false;">
 
           <span class="method-name">yaml_tag_class_name</span><span class="method-args">()</span>
 
@@ -326,13 +360,13 @@ defined for this generated class.
       </div>
 
 
-      <div id="method-M001140" class="method-detail">
-        <a name="M001140"></a>
+      <div id="method-M001198" class="method-detail">
+        <a name="M001198"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001140.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001140.html');return false;">
+          <a href="Struct.src/M001198.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001198.html');return false;">
 
           <span class="method-name">yaml_tag_read_class</span><span class="method-args">( name )</span>
 
@@ -349,13 +383,13 @@ defined for this generated class.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M001121" class="method-detail">
-        <a name="M001121"></a>
+      <div id="method-M001179" class="method-detail">
+        <a name="M001179"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001121.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001121.html');return false;">
+          <a href="Struct.src/M001179.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001179.html');return false;">
 
           <span class="method-name">struct == other_struct     => true or false<br />
 </span>
@@ -385,13 +419,13 @@ equal (according to <tt>Object#==</tt>).
       </div>
 
 
-      <div id="method-M001132" class="method-detail">
-        <a name="M001132"></a>
+      <div id="method-M001190" class="method-detail">
+        <a name="M001190"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001132.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001132.html');return false;">
+          <a href="Struct.src/M001190.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001190.html');return false;">
 
           <span class="method-name">struct[symbol]    => anObject<br />
 struct[fixnum]    => anObject <br />
@@ -422,13 +456,13 @@ by <em>symbol</em>, or indexed (0..length-1) by <em>fixnum</em>. Will raise
       </div>
 
 
-      <div id="method-M001133" class="method-detail">
-        <a name="M001133"></a>
+      <div id="method-M001191" class="method-detail">
+        <a name="M001191"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001133.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001133.html');return false;">
+          <a href="Struct.src/M001191.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001191.html');return false;">
 
           <span class="method-name">struct[symbol] = obj    => obj<br />
 struct[fixnum] = obj    => obj<br />
@@ -461,13 +495,13 @@ Will raise a <tt>NameError</tt> if the named variable does not exist, or an
       </div>
 
 
-      <div id="method-M001130" class="method-detail">
-        <a name="M001130"></a>
+      <div id="method-M001188" class="method-detail">
+        <a name="M001188"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001130.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001130.html');return false;">
+          <a href="Struct.src/M001188.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001188.html');return false;">
 
           <span class="method-name">struct.each {|obj| block }  => struct<br />
 </span>
@@ -500,13 +534,13 @@ a parameter.
       </div>
 
 
-      <div id="method-M001131" class="method-detail">
-        <a name="M001131"></a>
+      <div id="method-M001189" class="method-detail">
+        <a name="M001189"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001131.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001131.html');return false;">
+          <a href="Struct.src/M001189.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001189.html');return false;">
 
           <span class="method-name">struct.each_pair {|sym, obj| block }     => struct<br />
 </span>
@@ -539,13 +573,13 @@ a symbol) and the value as parameters.
       </div>
 
 
-      <div id="method-M001122" class="method-detail">
-        <a name="M001122"></a>
+      <div id="method-M001180" class="method-detail">
+        <a name="M001180"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001122.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001122.html');return false;">
+          <a href="Struct.src/M001180.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001180.html');return false;">
 
           <span class="method-name">eql?</span><span class="method-args">(p1)</span>
 
@@ -570,13 +604,13 @@ fields are equal (using <tt>eql?</tt>).
       </div>
 
 
-      <div id="method-M001123" class="method-detail">
-        <a name="M001123"></a>
+      <div id="method-M001181" class="method-detail">
+        <a name="M001181"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001123.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001123.html');return false;">
+          <a href="Struct.src/M001181.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001181.html');return false;">
 
           <span class="method-name">struct.hash   => fixnum<br />
 </span>
@@ -595,13 +629,13 @@ Return a hash value based on this struct&#8217;s contents.
       </div>
 
 
-      <div id="method-M001125" class="method-detail">
-        <a name="M001125"></a>
+      <div id="method-M001183" class="method-detail">
+        <a name="M001183"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001125.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001125.html');return false;">
+          <a href="Struct.src/M001183.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001183.html');return false;">
 
           <span class="method-name">struct.to_s      => string<br />
 struct.inspect   => string<br />
@@ -621,13 +655,13 @@ Describe the contents of this struct in a string.
       </div>
 
 
-      <div id="method-M001129" class="method-detail">
-        <a name="M001129"></a>
+      <div id="method-M001187" class="method-detail">
+        <a name="M001187"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001129.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001129.html');return false;">
+          <a href="Struct.src/M001187.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001187.html');return false;">
 
           <span class="method-name">struct.length    => fixnum<br />
 struct.size      => fixnum<br />
@@ -652,13 +686,13 @@ Returns the number of instance variables.
       </div>
 
 
-      <div id="method-M001136" class="method-detail">
-        <a name="M001136"></a>
+      <div id="method-M001194" class="method-detail">
+        <a name="M001194"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001136.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001136.html');return false;">
+          <a href="Struct.src/M001194.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001194.html');return false;">
 
           <span class="method-name">struct.members    => array<br />
 </span>
@@ -683,13 +717,13 @@ variables.
       </div>
 
 
-      <div id="method-M001137" class="method-detail">
-        <a name="M001137"></a>
+      <div id="method-M001195" class="method-detail">
+        <a name="M001195"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001137.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001137.html');return false;">
+          <a href="Struct.src/M001195.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001195.html');return false;">
 
           <span class="method-name">pretty_print</span><span class="method-args">(q)</span>
 
@@ -703,13 +737,13 @@ variables.
       </div>
 
 
-      <div id="method-M001138" class="method-detail">
-        <a name="M001138"></a>
+      <div id="method-M001196" class="method-detail">
+        <a name="M001196"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001138.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001138.html');return false;">
+          <a href="Struct.src/M001196.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001196.html');return false;">
 
           <span class="method-name">pretty_print_cycle</span><span class="method-args">(q)</span>
 
@@ -723,13 +757,13 @@ variables.
       </div>
 
 
-      <div id="method-M001134" class="method-detail">
-        <a name="M001134"></a>
+      <div id="method-M001192" class="method-detail">
+        <a name="M001192"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001134.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001134.html');return false;">
+          <a href="Struct.src/M001192.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001192.html');return false;">
 
           <span class="method-name">struct.select {|i| block }    => array<br />
 </span>
@@ -744,7 +778,7 @@ variables.
 Invokes the block passing in successive elements from <em>struct</em>,
 returning an array containing those elements for which the block returns a
 true value (equivalent to <tt><a
-href="Enumerable.html#M002694">Enumerable#select</a></tt>).
+href="Enumerable.html#M002804">Enumerable#select</a></tt>).
 </p>
 <pre>
    Lots = Struct.new(:a, :b, :c, :d, :e, :f)
@@ -756,13 +790,13 @@ href="Enumerable.html#M002694">Enumerable#select</a></tt>).
       </div>
 
 
-      <div id="method-M001128" class="method-detail">
-        <a name="M001128"></a>
+      <div id="method-M001186" class="method-detail">
+        <a name="M001186"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001128.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001128.html');return false;">
+          <a href="Struct.src/M001186.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001186.html');return false;">
 
           <span class="method-name">struct.length    => fixnum<br />
 struct.size      => fixnum<br />
@@ -787,13 +821,13 @@ Returns the number of instance variables.
       </div>
 
 
-      <div id="method-M001126" class="method-detail">
-        <a name="M001126"></a>
+      <div id="method-M001184" class="method-detail">
+        <a name="M001184"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001126.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001126.html');return false;">
+          <a href="Struct.src/M001184.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001184.html');return false;">
 
           <span class="method-name">struct.to_a     => array<br />
 struct.values   => array<br />
@@ -818,13 +852,33 @@ Returns the values for this instance as an array.
       </div>
 
 
-      <div id="method-M001124" class="method-detail">
-        <a name="M001124"></a>
+      <div id="method-M001202" class="method-detail">
+        <a name="M001202"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001124.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001124.html');return false;">
+          <a href="Struct.src/M001202.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001202.html');return false;">
+
+          <span class="method-name">to_json</span><span class="method-args">(*args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M001182" class="method-detail">
+        <a name="M001182"></a>
+
+        <div class="method-heading">
+
+          <a href="Struct.src/M001182.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001182.html');return false;">
 
           <span class="method-name">struct.to_s      => string<br />
 struct.inspect   => string<br />
@@ -844,13 +898,13 @@ Describe the contents of this struct in a string.
       </div>
 
 
-      <div id="method-M001142" class="method-detail">
-        <a name="M001142"></a>
+      <div id="method-M001200" class="method-detail">
+        <a name="M001200"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001142.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001142.html');return false;">
+          <a href="Struct.src/M001200.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001200.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 
@@ -864,13 +918,13 @@ Describe the contents of this struct in a string.
       </div>
 
 
-      <div id="method-M001127" class="method-detail">
-        <a name="M001127"></a>
+      <div id="method-M001185" class="method-detail">
+        <a name="M001185"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001127.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001127.html');return false;">
+          <a href="Struct.src/M001185.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001185.html');return false;">
 
           <span class="method-name">struct.to_a     => array<br />
 struct.values   => array<br />
@@ -895,13 +949,13 @@ Returns the values for this instance as an array.
       </div>
 
 
-      <div id="method-M001135" class="method-detail">
-        <a name="M001135"></a>
+      <div id="method-M001193" class="method-detail">
+        <a name="M001193"></a>
 
         <div class="method-heading">
 
-          <a href="Struct.src/M001135.html" target="Code" class="method-signature"
-            onclick="popupCode('Struct.src/M001135.html');return false;">
+          <a href="Struct.src/M001193.html" target="Code" class="method-signature"
+            onclick="popupCode('Struct.src/M001193.html');return false;">
 
           <span class="method-name">struct.values_at(selector,... )  => an_array<br />
 </span>

@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>superclass= (RDoc::ClassModule)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 766</span>
+766:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">superclass=</span>(<span class="ruby-identifier">superclass</span>)
+767:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoMethodError</span>, <span class="ruby-node">&quot;#{full_name} is a module&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">module?</span>
+768: 
+769:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@superclass</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-ivar">@superclass</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'Object'</span> <span class="ruby-keyword kw">then</span>
+770:         <span class="ruby-ivar">@superclass</span> = <span class="ruby-identifier">superclass</span> 
+771:       <span class="ruby-keyword kw">end</span>
+772:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

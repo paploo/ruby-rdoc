@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>one? (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.one? [{|obj| block }]   =&gt; true or false
+ *
+ *  Passes each element of the collection to the given block. The method
+ *  returns &lt;code&gt;true&lt;/code&gt; if the block returns &lt;code&gt;true&lt;/code&gt;
+ *  exactly once. If the block is not given, &lt;code&gt;one?&lt;/code&gt; will return
+ *  &lt;code&gt;true&lt;/code&gt; only if exactly one of the collection members is
+ *  true.
+ *
+ *     %w{ant bear cat}.one? {|word| word.length == 4}   #=&gt; true
+ *     %w{ant bear cat}.one? {|word| word.length &gt; 4}    #=&gt; false
+ *     %w{ant bear cat}.one? {|word| word.length &lt; 4}    #=&gt; false
+ *     [ nil, true, 99 ].one?                            #=&gt; false
+ *     [ nil, true, false ].one?                         #=&gt; true
+ *
+ */
+
+static VALUE
+enum_one(VALUE obj)
+{
+    VALUE result = Qundef;
+
+    rb_block_call(obj, id_each, 0, 0, rb_block_given_p() ? one_iter_i : one_i, (VALUE)&amp;result);
+    if (result == Qundef) return Qfalse;
+    return result;
+}</pre>
+</body>
+</html>

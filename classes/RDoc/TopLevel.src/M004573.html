@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_class_named (RDoc::TopLevel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/code_objects.rb, line 659</span>
+659:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_class_named</span>(<span class="ruby-identifier">name</span>)
+660:      <span class="ruby-ivar">@@all_classes</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+661:         <span class="ruby-identifier">res</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">find_class_named</span>(<span class="ruby-identifier">name</span>) 
+662:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">res</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">res</span>
+663:       <span class="ruby-keyword kw">end</span>
+664:       <span class="ruby-keyword kw">nil</span>
+665:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

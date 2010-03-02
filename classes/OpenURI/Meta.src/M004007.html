@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>charset (OpenURI::Meta)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/open-uri.rb, line 495</span>
+495:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">charset</span>
+496:       <span class="ruby-identifier">type</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">parameters</span> = <span class="ruby-identifier">content_type_parse</span>
+497:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pair</span> = <span class="ruby-identifier">parameters</span>.<span class="ruby-identifier">assoc</span>(<span class="ruby-value str">'charset'</span>)
+498:         <span class="ruby-identifier">pair</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">downcase</span>
+499:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">block_given?</span>
+500:         <span class="ruby-keyword kw">yield</span>
+501:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">%r{\Atext/}</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">&amp;&amp;</span>
+502:             <span class="ruby-ivar">@base_uri</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-regexp re">/\Ahttp\z/i</span> <span class="ruby-operator">=~</span> <span class="ruby-ivar">@base_uri</span>.<span class="ruby-identifier">scheme</span>
+503:         <span class="ruby-value str">&quot;iso-8859-1&quot;</span> <span class="ruby-comment cmt"># RFC2616 3.7.1</span>
+504:       <span class="ruby-keyword kw">else</span>
+505:         <span class="ruby-keyword kw">nil</span>
+506:       <span class="ruby-keyword kw">end</span>
+507:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

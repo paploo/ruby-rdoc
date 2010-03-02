@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>tell (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.pos     =&gt; integer
+ *     ios.tell    =&gt; integer
+ *
+ *  Returns the current offset (in bytes) of &lt;em&gt;ios&lt;/em&gt;.
+ *
+ *     f = File.new(&quot;testfile&quot;)
+ *     f.pos    #=&gt; 0
+ *     f.gets   #=&gt; &quot;This is line one\n&quot;
+ *     f.pos    #=&gt; 17
+ */
+
+static VALUE
+rb_io_tell(VALUE io)
+{
+    rb_io_t *fptr;
+    off_t pos;
+
+    GetOpenFile(io, fptr);
+    pos = io_tell(fptr);
+    if (pos &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
+    return OFFT2NUM(pos);
+}</pre>
+</body>
+</html>

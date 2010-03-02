@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mailfrom (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 824</span>
+824:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mailfrom</span>(<span class="ruby-identifier">from_addr</span>)
+825:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$SAFE</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+826:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">SecurityError</span>, <span class="ruby-value str">'tainted from_addr'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">from_addr</span>.<span class="ruby-identifier">tainted?</span>
+827:       <span class="ruby-keyword kw">end</span>
+828:       <span class="ruby-identifier">getok</span>(<span class="ruby-node">&quot;MAIL FROM:&lt;#{from_addr}&gt;&quot;</span>)
+829:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

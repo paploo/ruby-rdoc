@@ -2,27 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>zone_offset (Time)</title>
+  <title>to_i (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>    <span class="ruby-comment cmt"># File lib/time.rb, line 69</span>
-69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">zone_offset</span>(<span class="ruby-identifier">zone</span>, <span class="ruby-identifier">year</span>=<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>)
-70:       <span class="ruby-identifier">off</span> = <span class="ruby-keyword kw">nil</span>
-71:       <span class="ruby-identifier">zone</span> = <span class="ruby-identifier">zone</span>.<span class="ruby-identifier">upcase</span>
-72:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/\A([+-])(\d\d):?(\d\d)\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">zone</span>
-73:         <span class="ruby-identifier">off</span> = (<span class="ruby-identifier">$1</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'-'</span> <span class="ruby-operator">?</span> <span class="ruby-value">-1</span> <span class="ruby-operator">:</span> <span class="ruby-value">1</span>) <span class="ruby-operator">*</span> (<span class="ruby-identifier">$2</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$3</span>.<span class="ruby-identifier">to_i</span>) <span class="ruby-operator">*</span> <span class="ruby-value">60</span>
-74:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-regexp re">/\A[+-]\d\d\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">zone</span>
-75:         <span class="ruby-identifier">off</span> = <span class="ruby-identifier">zone</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-value">3600</span>
-76:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-constant">ZoneOffset</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">zone</span>)
-77:         <span class="ruby-identifier">off</span> = <span class="ruby-constant">ZoneOffset</span>[<span class="ruby-identifier">zone</span>] <span class="ruby-operator">*</span> <span class="ruby-value">3600</span>
-78:       <span class="ruby-keyword kw">elsif</span> ((<span class="ruby-identifier">t</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">local</span>(<span class="ruby-identifier">year</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>)).<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">zone</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">false</span>)
-79:         <span class="ruby-identifier">off</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">utc_offset</span>
-80:       <span class="ruby-keyword kw">elsif</span> ((<span class="ruby-identifier">t</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">local</span>(<span class="ruby-identifier">year</span>, <span class="ruby-value">7</span>, <span class="ruby-value">1</span>)).<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">upcase</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">zone</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">false</span>)
-81:         <span class="ruby-identifier">off</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">utc_offset</span>
-82:       <span class="ruby-keyword kw">end</span>
-83:       <span class="ruby-identifier">off</span>
-84:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     time.to_i   =&gt; int
+ *     time.tv_sec =&gt; int
+ *  
+ *  Returns the value of &lt;i&gt;time&lt;/i&gt; as an integer number of seconds
+ *  since the Epoch.
+ *     
+ *     t = Time.now
+ *     &quot;%10.5f&quot; % t.to_f   #=&gt; &quot;1049896564.17839&quot;
+ *     t.to_i              #=&gt; 1049896564
+ */
+
+static VALUE
+time_to_i(VALUE time)
+{
+    struct time_object *tobj;
+
+    GetTimeval(time, tobj);
+    return LONG2NUM(tobj-&gt;ts.tv_sec);
+}</pre>
 </body>
 </html>

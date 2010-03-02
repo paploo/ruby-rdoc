@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (OpenSSL::PKey::DSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *    DSA.new([size | string [, pass]) -&gt; dsa
+ *
+ *  === Parameters
+ *  * +size+ is an integer representing the desired key size.
+ *  * +string+ contains a DER or PEM encoded key.
+ *  * +pass+ is a string that contains a optional password.
+ *
+ *  === Examples
+ *  * DSA.new -&gt; dsa
+ *  * DSA.new(1024) -&gt; dsa
+ *  * DSA.new(File.read('dsa.pem')) -&gt; dsa
+ *  * DSA.new(File.read('dsa.pem'), 'mypassword') -&gt; dsa
+ *
+ */
+static VALUE
+ossl_dsa_initialize(int argc, VALUE *argv, VALUE self)
+{
+    EVP_PKEY *pkey;
+    DSA *dsa;
+    BIO *in;
+    char *passwd = NULL;
+    VALUE arg, pass;
+        
+    GetPKey(self, pkey);
+    if(rb_scan_args(argc, argv, &quot;02&quot;, &amp;arg, &amp;pass) == 0) {
+        dsa = DSA_new();
+    }
+    else if (FIXNUM_P(arg)) {
+        if (!(dsa = dsa_generate(FIX2INT(arg)))) {
+            ossl_raise(eDSAError, NULL);
+        }
+    }
+    else {
+        if (!NIL_P(pass)) passwd = StringValuePtr(pass);
+        arg = ossl_to_der_if_possible(arg);
+        in = ossl_obj2bio(arg);
+        dsa = PEM_read_bio_DSAPrivateKey(in, NULL, ossl_pem_passwd_cb, passwd);
+        if (!dsa) {
+            (void)BIO_reset(in);
+            dsa = PEM_read_bio_DSAPublicKey(in, NULL, NULL, NULL);
+        }
+        if (!dsa) {
+            (void)BIO_reset(in);
+            dsa = PEM_read_bio_DSA_PUBKEY(in, NULL, NULL, NULL);
+        }
+        if (!dsa) {
+            (void)BIO_reset(in);
+            dsa = d2i_DSAPrivateKey_bio(in, NULL);
+        }
+        if (!dsa) {
+            (void)BIO_reset(in);
+            dsa = d2i_DSA_PUBKEY_bio(in, NULL);
+        }
+        BIO_free(in);
+        if (!dsa) ossl_raise(eDSAError, &quot;Neither PUB key nor PRIV key:&quot;);
+    }
+    if (!EVP_PKEY_assign_DSA(pkey, dsa)) {
+        DSA_free(dsa);
+        ossl_raise(eDSAError, NULL);
+    }
+
+    return self;
+}</pre>
+</body>
+</html>

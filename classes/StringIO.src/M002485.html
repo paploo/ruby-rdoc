@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>seek (StringIO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/yaml/stringio.rb, line 38</span>
+38:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seek</span>(<span class="ruby-identifier">offset</span>,<span class="ruby-identifier">whence</span>)
+39:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">whence</span>
+40:             <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
+41:                 <span class="ruby-ivar">@pos</span>=<span class="ruby-identifier">offset</span>
+42:             <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+43:                 <span class="ruby-ivar">@pos</span><span class="ruby-operator">+=</span><span class="ruby-identifier">offset</span>
+44:             <span class="ruby-keyword kw">when</span> <span class="ruby-value">2</span>
+45:                 <span class="ruby-ivar">@pos</span>=<span class="ruby-ivar">@string</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">+</span><span class="ruby-identifier">offset</span>
+46:             <span class="ruby-keyword kw">end</span>
+47:             <span class="ruby-ivar">@eof</span>=(<span class="ruby-ivar">@pos</span><span class="ruby-operator">&gt;=</span><span class="ruby-ivar">@string</span>.<span class="ruby-identifier">size</span>)
+48:             <span class="ruby-value">0</span>
+49:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (OpenSSL::X509::Name)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    name.to_s =&gt; string
+ *    name.to_s(integer) =&gt; string
+ */
+static VALUE
+ossl_x509name_to_s(int argc, VALUE *argv, VALUE self)
+{
+    X509_NAME *name;
+    VALUE flag, str;
+    BIO *out;
+    unsigned long iflag;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;flag);
+    if (NIL_P(flag))
+        return ossl_x509name_to_s_old(self);
+    else iflag = NUM2ULONG(flag);
+    if (!(out = BIO_new(BIO_s_mem())))
+        ossl_raise(eX509NameError, NULL);
+    GetX509Name(self, name);
+    if (!X509_NAME_print_ex(out, name, 0, iflag)){
+        BIO_free(out);
+        ossl_raise(eX509NameError, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>flow (RDoc::Markup::AttributeManager)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/markup/attribute_manager.rb, line 174</span>
+174:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flow</span>(<span class="ruby-identifier">str</span>)
+175:     <span class="ruby-ivar">@str</span> = <span class="ruby-identifier">str</span>
+176: 
+177:     <span class="ruby-identifier">mask_protected_sequences</span>
+178: 
+179:     <span class="ruby-ivar">@attrs</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">AttrSpan</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@str</span>.<span class="ruby-identifier">length</span>
+180: 
+181:     <span class="ruby-identifier">convert_attrs</span>(<span class="ruby-ivar">@str</span>, <span class="ruby-ivar">@attrs</span>)
+182:     <span class="ruby-identifier">convert_html</span>(<span class="ruby-ivar">@str</span>, <span class="ruby-ivar">@attrs</span>)
+183:     <span class="ruby-identifier">convert_specials</span>(<span class="ruby-identifier">str</span>, <span class="ruby-ivar">@attrs</span>)
+184: 
+185:     <span class="ruby-identifier">unmask_protected_sequences</span>
+186: 
+187:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">split_into_flow</span>
+188:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

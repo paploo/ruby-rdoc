@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gets (IO)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     ios.gets(sep=$/)     =&gt; string or nil
+ *     ios.gets(limit)      =&gt; string or nil
+ *     ios.gets(sep, limit) =&gt; string or nil
+ *
+ *  Reads the next ``line'' from the I/O stream; lines are separated by
+ *  &lt;i&gt;sep&lt;/i&gt;. A separator of &lt;code&gt;nil&lt;/code&gt; reads the entire
+ *  contents, and a zero-length separator reads the input a paragraph at
+ *  a time (two successive newlines in the input separate paragraphs).
+ *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt;
+ *  will be raised. The line read in will be returned and also assigned
+ *  to &lt;code&gt;$_&lt;/code&gt;. Returns &lt;code&gt;nil&lt;/code&gt; if called at end of
+ *  file.  If the first argument is an integer, or optional second
+ *  argument is given, the returning string would not be longer than the
+ *  given value in bytes.
+ *
+ *     File.new(&quot;testfile&quot;).gets   #=&gt; &quot;This is line one\n&quot;
+ *     $_                          #=&gt; &quot;This is line one\n&quot;
+ */
+
+static VALUE
+rb_io_gets_m(int argc, VALUE *argv, VALUE io)
+{
+    VALUE str;
+
+    str = rb_io_getline(argc, argv, io);
+    rb_lastline_set(str);
+
+    return str;
+}</pre>
+</body>
+</html>

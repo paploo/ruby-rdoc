@@ -2,26 +2,26 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>strip! (String)</title>
+  <title>strip (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.strip!   =&gt; str or nil
+ *     str.strip   =&gt; new_str
  *  
- *  Removes leading and trailing whitespace from &lt;i&gt;str&lt;/i&gt;. Returns
- *  &lt;code&gt;nil&lt;/code&gt; if &lt;i&gt;str&lt;/i&gt; was not altered.
+ *  Returns a copy of &lt;i&gt;str&lt;/i&gt; with leading and trailing whitespace removed.
+ *     
+ *     &quot;    hello    &quot;.strip   #=&gt; &quot;hello&quot;
+ *     &quot;\tgoodbye\r\n&quot;.strip   #=&gt; &quot;goodbye&quot;
  */
 
 static VALUE
-rb_str_strip_bang(VALUE str)
+rb_str_strip(VALUE str)
 {
-    VALUE l = rb_str_lstrip_bang(str);
-    VALUE r = rb_str_rstrip_bang(str);
-
-    if (NIL_P(l) &amp;&amp; NIL_P(r)) return Qnil;
+    str = rb_str_dup(str);
+    rb_str_strip_bang(str);
     return str;
 }</pre>
 </body>

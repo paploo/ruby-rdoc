@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>readlines (Buffering)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/openssl/lib/openssl/buffering.rb, line 127</span>
+127:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">eol</span>=<span class="ruby-identifier">$/</span>)
+128:     <span class="ruby-identifier">ary</span> = []
+129:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">gets</span>(<span class="ruby-identifier">eol</span>)
+130:       <span class="ruby-identifier">ary</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">line</span>
+131:     <span class="ruby-keyword kw">end</span>
+132:     <span class="ruby-identifier">ary</span>
+133:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_bn (OpenSSL::PKey::EC::Point)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     point.to_bn   =&gt; OpenSSL::BN
+ *
+ *  See the OpenSSL documentation for EC_POINT_point2bn()
+ */
+static VALUE ossl_ec_point_to_bn(VALUE self)
+{
+    EC_POINT *point;
+    VALUE bn_obj;
+    VALUE group_v = rb_iv_get(self, &quot;@group&quot;);
+    const EC_GROUP *group;
+    point_conversion_form_t form;
+    BIGNUM *bn;
+
+    Require_EC_POINT(self, point);
+    SafeRequire_EC_GROUP(group_v, group);
+
+    form = EC_GROUP_get_point_conversion_form(group);
+
+    bn_obj = rb_obj_alloc(cBN);
+    bn = GetBNPtr(bn_obj);
+
+    if (EC_POINT_point2bn(group, point, form, bn, ossl_bn_ctx) == NULL)
+        ossl_raise(eEC_POINT, &quot;EC_POINT_point2bn&quot;);
+
+    return bn_obj;
+}</pre>
+</body>
+</html>

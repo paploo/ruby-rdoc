@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>prompt (IRB::Irb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb.rb, line 277</span>
+277:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prompt</span>(<span class="ruby-identifier">prompt</span>, <span class="ruby-identifier">ltype</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">line_no</span>)
+278:       <span class="ruby-identifier">p</span> = <span class="ruby-identifier">prompt</span>.<span class="ruby-identifier">dup</span>
+279:       <span class="ruby-identifier">p</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/%([0-9]+)?([a-zA-Z])/</span>) <span class="ruby-keyword kw">do</span>
+280:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">$2</span>
+281:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;N&quot;</span>
+282:           <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">irb_name</span>
+283:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;m&quot;</span>
+284:           <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">main</span>.<span class="ruby-identifier">to_s</span>
+285:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;M&quot;</span>
+286:           <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">main</span>.<span class="ruby-identifier">inspect</span>
+287:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;l&quot;</span>
+288:           <span class="ruby-identifier">ltype</span>
+289:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;i&quot;</span>
+290:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span> 
+291:             <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;%&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;d&quot;</span>, <span class="ruby-identifier">indent</span>)
+292:           <span class="ruby-keyword kw">else</span>
+293:             <span class="ruby-identifier">indent</span>.<span class="ruby-identifier">to_s</span>
+294:           <span class="ruby-keyword kw">end</span>
+295:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;n&quot;</span>
+296:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$1</span> 
+297:             <span class="ruby-identifier">format</span>(<span class="ruby-value str">&quot;%&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$1</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;d&quot;</span>, <span class="ruby-identifier">line_no</span>)
+298:           <span class="ruby-keyword kw">else</span>
+299:             <span class="ruby-identifier">line_no</span>.<span class="ruby-identifier">to_s</span>
+300:           <span class="ruby-keyword kw">end</span>
+301:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;%&quot;</span>
+302:           <span class="ruby-value str">&quot;%&quot;</span>
+303:         <span class="ruby-keyword kw">end</span>
+304:       <span class="ruby-keyword kw">end</span>
+305:       <span class="ruby-identifier">p</span>
+306:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

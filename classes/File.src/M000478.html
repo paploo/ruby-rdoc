@@ -2,30 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>grpowned? (File)</title>
+  <title>utime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  * call-seq:
- *    File.grpowned?(file_name)   =&gt; true or false
+ *  File.utime(atime, mtime, file_name,...)   =&gt;  integer
  *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file exists and the
- * effective group id of the calling process is the owner of
- * the file. Returns &lt;code&gt;false&lt;/code&gt; on Windows.
+ * Sets the access and modification times of each
+ * named file to the first two arguments. Returns
+ * the number of file names in the argument list.
  */
 
 static VALUE
-rb_file_grpowned_p(VALUE obj, VALUE fname)
+rb_file_s_utime(int argc, VALUE *argv)
 {
-#ifndef _WIN32
-    struct stat st;
+    VALUE atime, mtime, rest;
+    struct timespec tss[2], *tsp = NULL;
+    long n;
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (group_member(st.st_gid)) return Qtrue;
-#endif
-    return Qfalse;
+    rb_secure(2);
+    rb_scan_args(argc, argv, &quot;2*&quot;, &amp;atime, &amp;mtime, &amp;rest);
+
+    if (!NIL_P(atime) || !NIL_P(mtime)) {
+        tsp = tss;
+        tsp[0] = rb_time_timespec(atime);
+        tsp[1] = rb_time_timespec(mtime);
+    }
+
+    n = apply2files(utime_internal, rest, tsp);
+    return LONG2FIX(n);
 }</pre>
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>syncmode= (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *     gdbm.syncmode = boolean -&gt; boolean
+ *
+ * Turns the database's synchronization mode on or off. If the synchronization
+ * mode is turned on, the database's in-memory state will be synchronized to
+ * disk after every database modification operation. If the synchronization
+ * mode is turned off, GDBM does not wait for writes to be flushed to the disk
+ * before continuing.
+ *
+ * This option is only available for gdbm &gt;= 1.8 where syncmode is turned off
+ * by default. See also: #fastmode=
+ */
+static VALUE
+fgdbm_set_syncmode(VALUE obj, VALUE val)
+{
+#if !defined(GDBM_SYNCMODE)
+    fgdbm_set_fastmode(obj, RTEST(val) ? Qfalse : Qtrue);
+    return val;
+#else
+    struct dbmdata *dbmp;
+    GDBM_FILE dbm;
+    int optval;
+
+    GetDBM2(obj, dbmp, dbm);
+    optval = 0;
+    if (RTEST(val))
+        optval = 1;
+
+    if (gdbm_setopt(dbm, GDBM_FASTMODE, &amp;optval, sizeof(optval)) == -1) {
+        rb_raise(rb_eGDBMError, &quot;%s&quot;, gdbm_strerror(gdbm_errno));
+    }
+    return val;
+#endif
+}</pre>
+</body>
+</html>

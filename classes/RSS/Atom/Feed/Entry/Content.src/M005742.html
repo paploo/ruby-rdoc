@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>xml (RSS::Atom::Feed::Entry::Content)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/atom.rb, line 468</span>
+468:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">xml</span>
+469:             <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@xml</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">inline_xhtml?</span>
+470:             <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@xml</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">nil?</span>
+471:             <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>) <span class="ruby-keyword kw">and</span>
+472:                 [<span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">name</span>, <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">uri</span>] <span class="ruby-operator">==</span> [<span class="ruby-value str">&quot;div&quot;</span>, <span class="ruby-constant">XHTML_URI</span>]
+473:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@xml</span>
+474:             <span class="ruby-keyword kw">end</span>
+475: 
+476:             <span class="ruby-identifier">children</span> = <span class="ruby-ivar">@xml</span>
+477:             <span class="ruby-identifier">children</span> = [<span class="ruby-identifier">children</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">children</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+478:             <span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;div&quot;</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-constant">XHTML_URI</span>,
+479:                              {<span class="ruby-value str">&quot;xmlns&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">XHTML_URI</span>}, <span class="ruby-identifier">children</span>)
+480:           <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

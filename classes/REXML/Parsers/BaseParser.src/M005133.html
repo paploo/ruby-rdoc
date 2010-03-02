@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>normalize (REXML::Parsers::BaseParser)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/parsers/baseparser.rb, line 465</span>
+465:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">normalize</span>( <span class="ruby-identifier">input</span>, <span class="ruby-identifier">entities</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword kw">nil</span> )
+466:         <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">clone</span>
+467:         <span class="ruby-comment cmt"># Doing it like this rather than in a loop improves the speed</span>
+468:         <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-constant">EREFERENCE</span>, <span class="ruby-value str">'&amp;amp;'</span> )
+469:         <span class="ruby-identifier">entities</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+470:           <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">value</span>, <span class="ruby-node">&quot;&amp;#{key};&quot;</span> ) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">entity_filter</span> <span class="ruby-keyword kw">and</span> 
+471:                                       <span class="ruby-identifier">entity_filter</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">entity</span>)
+472:         <span class="ruby-keyword kw">end</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entities</span>
+473:         <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-constant">EREFERENCE</span>, <span class="ruby-value str">'&amp;amp;'</span> )
+474:         <span class="ruby-constant">DEFAULT_ENTITIES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+475:           <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">value</span>[<span class="ruby-value">3</span>], <span class="ruby-identifier">value</span>[<span class="ruby-value">1</span>] )
+476:         <span class="ruby-keyword kw">end</span>
+477:         <span class="ruby-identifier">copy</span>
+478:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

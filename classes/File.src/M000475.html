@@ -2,27 +2,31 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>size? (File)</title>
+  <title>atime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    File.size?(file_name)   =&gt; Integer or nil
- *
- * Returns +nil+ if +file_name+ doesn't exist or has zero size, the size of the
- * file otherwise.
+ *  call-seq:
+ *     File.atime(file_name)  =&gt;  time
+ *  
+ *  Returns the last access time for the named file as a Time object).
+ *     
+ *     File.atime(&quot;testfile&quot;)   #=&gt; Wed Apr 09 08:51:48 CDT 2003
+ *     
  */
 
 static VALUE
-rb_file_size_p(VALUE obj, VALUE fname)
+rb_file_s_atime(VALUE klass, VALUE fname)
 {
     struct stat st;
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qnil;
-    if (st.st_size == 0) return Qnil;
-    return OFFT2NUM(st.st_size);
+    if (rb_stat(fname, &amp;st) &lt; 0) {
+        FilePathValue(fname);
+        rb_sys_fail(RSTRING_PTR(fname));
+    }
+    return stat_atime(&amp;st);
 }</pre>
 </body>
 </html>

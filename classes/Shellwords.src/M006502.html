@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>shellescape (Shellwords)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/shellwords.rb, line 72</span>
+72:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shellescape</span>(<span class="ruby-identifier">str</span>)
+73:     <span class="ruby-comment cmt"># An empty argument will be skipped, so return empty quotes.</span>
+74:     <span class="ruby-keyword kw">return</span> <span class="ruby-value str">&quot;''&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">empty?</span>
+75: 
+76:     <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">dup</span>
+77: 
+78:     <span class="ruby-comment cmt"># Process as a single byte sequence because not all shell</span>
+79:     <span class="ruby-comment cmt"># implementations are multibyte aware.</span>
+80:     <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/([^A-Za-z0-9_\-.,:\/@\n])/n</span>, <span class="ruby-value str">&quot;\\\\\\1&quot;</span>)
+81: 
+82:     <span class="ruby-comment cmt"># A LF cannot be escaped with a backslash because a backslash + LF</span>
+83:     <span class="ruby-comment cmt"># combo is regarded as line continuation and simply ignored.</span>
+84:     <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp re">/\n/</span>, <span class="ruby-value str">&quot;'\n'&quot;</span>)
+85: 
+86:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">str</span>
+87:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

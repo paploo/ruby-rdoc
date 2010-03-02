@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>sysread (OpenSSL::SSL::SSLSocket)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    ssl.sysread(length) =&gt; string
+ *    ssl.sysread(length, buffer) =&gt; buffer
+ *
+ * === Parameters
+ * * +length+ is a positive integer.
+ * * +buffer+ is a string used to store the result.
+ */
+static VALUE
+ossl_ssl_read(int argc, VALUE *argv, VALUE self)
+{
+    SSL *ssl;
+    int ilen, nread = 0;
+    VALUE len, str;
+    rb_io_t *fptr;
+
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;len, &amp;str);
+    ilen = NUM2INT(len);
+    if(NIL_P(str)) str = rb_str_new(0, ilen);
+    else{
+        StringValue(str);
+        rb_str_modify(str);
+        rb_str_resize(str, ilen);
+    }
+    if(ilen == 0) return str;
+
+    Data_Get_Struct(self, SSL, ssl);
+    GetOpenFile(ossl_ssl_get_io(self), fptr);
+    if (ssl) {
+        if(SSL_pending(ssl) &lt;= 0)
+            rb_thread_wait_fd(FPTR_TO_FD(fptr));
+        for (;;){
+            nread = SSL_read(ssl, RSTRING_PTR(str), RSTRING_LEN(str));
+            switch(ssl_get_error(ssl, nread)){
+            case SSL_ERROR_NONE:
+                goto end;
+            case SSL_ERROR_ZERO_RETURN:
+                rb_eof_error();
+            case SSL_ERROR_WANT_WRITE:
+                rb_io_wait_writable(FPTR_TO_FD(fptr));
+                continue;
+            case SSL_ERROR_WANT_READ:
+                rb_io_wait_readable(FPTR_TO_FD(fptr));
+                continue;
+            case SSL_ERROR_SYSCALL:
+                if(ERR_peek_error() == 0 &amp;&amp; nread == 0) rb_eof_error();
+                rb_sys_fail(0);
+            default:
+                ossl_raise(eSSLError, &quot;SSL_read:&quot;);
+            }
+        }
+    }
+    else {
+        ID id_sysread = rb_intern(&quot;sysread&quot;);
+        rb_warning(&quot;SSL session is not started yet.&quot;);
+        return rb_funcall(ossl_ssl_get_io(self), id_sysread, 2, len, str);
+    }
+
+  end:
+    rb_str_set_len(str, nread);
+    OBJ_TAINT(str);
+
+    return str;
+}</pre>
+</body>
+</html>

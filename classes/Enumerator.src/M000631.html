@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rewind (Enumerator)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   e.rewind   =&gt; e
+ *
+ * Rewinds the enumeration sequence by the next method.
+ *
+ * If the enclosed object responds to a &quot;rewind&quot; method, it is called.
+ */
+
+static VALUE
+enumerator_rewind(VALUE obj)
+{
+    struct enumerator *e = enumerator_ptr(obj);
+
+    if (rb_respond_to(e-&gt;obj, id_rewind))
+        rb_funcall(e-&gt;obj, id_rewind, 0);
+
+    e-&gt;fib = 0;
+    e-&gt;dst = Qnil;
+    e-&gt;no_next = Qfalse;
+    return obj;
+}</pre>
+</body>
+</html>

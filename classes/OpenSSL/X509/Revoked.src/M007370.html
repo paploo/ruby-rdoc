@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>extensions= (OpenSSL::X509::Revoked)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Sets X509_EXTENSIONs
+ */
+static VALUE 
+ossl_x509revoked_set_extensions(VALUE self, VALUE ary)
+{
+    X509_REVOKED *rev;
+    X509_EXTENSION *ext;
+    int i;
+    VALUE item;
+
+    Check_Type(ary, T_ARRAY);
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        OSSL_Check_Kind(RARRAY_PTR(ary)[i], cX509Ext);
+    }
+    GetX509Rev(self, rev);
+    sk_X509_EXTENSION_pop_free(rev-&gt;extensions, X509_EXTENSION_free);
+    rev-&gt;extensions = NULL;
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        item = RARRAY_PTR(ary)[i];
+        ext = DupX509ExtPtr(item);
+        if(!X509_REVOKED_add_ext(rev, ext, -1)) {
+            ossl_raise(eX509RevError, NULL);
+        }
+    }
+
+    return ary;
+}</pre>
+</body>
+</html>

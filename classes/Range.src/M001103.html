@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>inspect (Range)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   rng.inspect  =&gt; string
+ *
+ * Convert this range object to a printable form (using 
+ * &lt;code&gt;inspect&lt;/code&gt; to convert the start and end
+ * objects).
+ */
+
+
+static VALUE
+range_inspect(VALUE range)
+{
+    return rb_exec_recursive(inspect_range, range, 0);
+}</pre>
+</body>
+</html>

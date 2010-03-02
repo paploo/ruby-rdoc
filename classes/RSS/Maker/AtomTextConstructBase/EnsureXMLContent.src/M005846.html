@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>set_xhtml_uri_as_default_uri (RSS::Maker::AtomTextConstructBase::EnsureXMLContent)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/base.rb, line 338</span>
+338:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_xhtml_uri_as_default_uri</span>(<span class="ruby-identifier">children</span>)
+339:           <span class="ruby-identifier">children</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+340:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>) <span class="ruby-keyword kw">and</span>
+341:                 <span class="ruby-identifier">child</span>.<span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">nil?</span>
+342:               <span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">::</span><span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">Atom</span><span class="ruby-operator">::</span><span class="ruby-constant">XHTML_URI</span>,
+343:                                     <span class="ruby-identifier">child</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">dup</span>,
+344:                                     <span class="ruby-identifier">set_xhtml_uri_as_default_uri</span>(<span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>))
+345:             <span class="ruby-keyword kw">else</span>
+346:               <span class="ruby-identifier">child</span>
+347:             <span class="ruby-keyword kw">end</span>
+348:           <span class="ruby-keyword kw">end</span>
+349:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

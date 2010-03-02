@@ -2,47 +2,57 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sysseek (IO)</title>
+  <title>puts (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.sysseek(offset, whence=SEEK_SET)   =&gt; integer
+ *     ios.puts(obj, ...)    =&gt; nil
  *
- *  Seeks to a given &lt;i&gt;offset&lt;/i&gt; in the stream according to the value
- *  of &lt;i&gt;whence&lt;/i&gt; (see &lt;code&gt;IO#seek&lt;/code&gt; for values of
- *  &lt;i&gt;whence&lt;/i&gt;). Returns the new offset into the file.
+ *  Writes the given objects to &lt;em&gt;ios&lt;/em&gt; as with
+ *  &lt;code&gt;IO#print&lt;/code&gt;. Writes a record separator (typically a
+ *  newline) after any that do not already end with a newline sequence.
+ *  If called with an array argument, writes each element on a new line.
+ *  If called without arguments, outputs a single record separator.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     f.sysseek(-13, IO::SEEK_END)   #=&gt; 53
- *     f.sysread(10)                  #=&gt; &quot;And so on.&quot;
+ *     $stdout.puts(&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;test&quot;)
+ *
+ *  &lt;em&gt;produces:&lt;/em&gt;
+ *
+ *     this
+ *     is
+ *     a
+ *     test
  */
 
-static VALUE
-rb_io_sysseek(int argc, VALUE *argv, VALUE io)
+VALUE
+rb_io_puts(int argc, VALUE *argv, VALUE out)
 {
-    VALUE offset, ptrname;
-    int whence = SEEK_SET;
-    rb_io_t *fptr;
-    off_t pos;
+    int i;
+    VALUE line;
 
-    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;offset, &amp;ptrname) == 2) {
-        whence = NUM2INT(ptrname);
+    /* if no argument given, print newline. */
+    if (argc == 0) {
+        rb_io_write(out, rb_default_rs);
+        return Qnil;
     }
-    pos = NUM2OFFT(offset);
-    GetOpenFile(io, fptr);
-    if ((fptr-&gt;mode &amp; FMODE_READABLE) &amp;&amp; READ_DATA_BUFFERED(fptr)) {
-        rb_raise(rb_eIOError, &quot;sysseek for buffered IO&quot;);
+    for (i=0; i&lt;argc; i++) {
+        line = rb_check_array_type(argv[i]);
+        if (!NIL_P(line)) {
+            rb_exec_recursive(io_puts_ary, line, out);
+            continue;
+        }
+        line = rb_obj_as_string(argv[i]);
+        rb_io_write(out, line);
+        if (RSTRING_LEN(line) == 0 ||
+            RSTRING_PTR(line)[RSTRING_LEN(line)-1] != '\n') {
+            rb_io_write(out, rb_default_rs);
+        }
     }
-    if ((fptr-&gt;mode &amp; FMODE_WRITABLE) &amp;&amp; fptr-&gt;wbuf_len) {
-        rb_warn(&quot;sysseek for buffered IO&quot;);
-    }
-    pos = lseek(fptr-&gt;fd, pos, whence);
-    if (pos == -1) rb_sys_fail_path(fptr-&gt;pathv);
 
-    return OFFT2NUM(pos);
+    return Qnil;
 }</pre>
 </body>
 </html>

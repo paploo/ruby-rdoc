@@ -2,24 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>&lt;=&gt; (Numeric)</title>
+  <title>arg (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  call-seq:
- *     num &lt;=&gt; other -&gt; 0 or nil
+ * call-seq:
+ *    num.arg    -&gt;  0 or float
+ *    num.angle  -&gt;  0 or float
+ *    num.phase  -&gt;  0 or float
  *
- *  Returns zero if &lt;i&gt;num&lt;/i&gt; equals &lt;i&gt;other&lt;/i&gt;, &lt;code&gt;nil&lt;/code&gt;
- *  otherwise.
+ * Returns 0 if the value is positive, pi otherwise.
  */
-
 static VALUE
-num_cmp(VALUE x, VALUE y)
+numeric_arg(VALUE self)
 {
-    if (x == y) return INT2FIX(0);
-    return Qnil;
+    if (f_positive_p(self))
+        return INT2FIX(0);
+    return rb_const_get(rb_mMath, id_PI);
 }</pre>
 </body>
 </html>

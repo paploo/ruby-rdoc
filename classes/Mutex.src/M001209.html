@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>try_lock (Mutex)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    mutex.try_lock  =&gt; true or false
+ *
+ * Attempts to obtain the lock and returns immediately. Returns +true+ if the
+ * lock was granted.
+ */
+VALUE
+rb_mutex_trylock(VALUE self)
+{
+    mutex_t *mutex;
+    VALUE locked = Qfalse;
+    GetMutexPtr(self, mutex);
+
+    native_mutex_lock(&amp;mutex-&gt;lock);
+    if (mutex-&gt;th == 0) {
+        mutex-&gt;th = GET_THREAD();
+        locked = Qtrue;
+
+        mutex_locked(GET_THREAD(), self);
+    }
+    native_mutex_unlock(&amp;mutex-&gt;lock);
+
+    return locked;
+}</pre>
+</body>
+</html>

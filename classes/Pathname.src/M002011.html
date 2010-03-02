@@ -2,12 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>getwd (Pathname)</title>
+  <title>absolute? (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 974</span>
-974:   <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">getwd</span>() <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">getwd</span>) <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 521</span>
+521:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">absolute?</span>
+522:     <span class="ruby-operator">!</span><span class="ruby-identifier">relative?</span>
+523:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

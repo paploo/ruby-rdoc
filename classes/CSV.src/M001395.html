@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>convert_fields (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2163</span>
+2163:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">convert_fields</span>(<span class="ruby-identifier">fields</span>, <span class="ruby-identifier">headers</span> = <span class="ruby-keyword kw">false</span>)
+2164:     <span class="ruby-comment cmt"># see if we are converting headers or fields</span>
+2165:     <span class="ruby-identifier">converters</span> = <span class="ruby-identifier">headers</span> <span class="ruby-value">? </span><span class="ruby-ivar">@header_converters</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@converters</span>
+2166:     
+2167:     <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">map</span>.<span class="ruby-identifier">with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+2168:       <span class="ruby-identifier">converters</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter</span><span class="ruby-operator">|</span>
+2169:         <span class="ruby-identifier">field</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">converter</span>.<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>  <span class="ruby-comment cmt"># straight field converter</span>
+2170:           <span class="ruby-identifier">converter</span>[<span class="ruby-identifier">field</span>]
+2171:         <span class="ruby-keyword kw">else</span>                             <span class="ruby-comment cmt"># FieldInfo converter</span>
+2172:           <span class="ruby-identifier">header</span> = <span class="ruby-ivar">@use_headers</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span> <span class="ruby-value">? </span><span class="ruby-ivar">@headers</span>[<span class="ruby-identifier">index</span>] <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+2173:           <span class="ruby-identifier">converter</span>[<span class="ruby-identifier">field</span>, <span class="ruby-constant">FieldInfo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">lineno</span>, <span class="ruby-identifier">header</span>)]
+2174:         <span class="ruby-keyword kw">end</span>
+2175:         <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">field</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>  <span class="ruby-comment cmt"># short-curcuit pipeline for speed</span>
+2176:       <span class="ruby-keyword kw">end</span>
+2177:       <span class="ruby-identifier">field</span>  <span class="ruby-comment cmt"># final state of each field, converted or original</span>
+2178:     <span class="ruby-keyword kw">end</span>
+2179:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

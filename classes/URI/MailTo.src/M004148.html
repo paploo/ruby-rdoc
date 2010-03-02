@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_s (URI::MailTo)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/mailto.rb, line 212</span>
+212:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+213:       <span class="ruby-ivar">@scheme</span> <span class="ruby-operator">+</span> <span class="ruby-value str">':'</span> <span class="ruby-operator">+</span> 
+214:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@to</span> 
+215:           <span class="ruby-ivar">@to</span>
+216:         <span class="ruby-keyword kw">else</span>
+217:           <span class="ruby-value str">''</span>
+218:         <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span> 
+219:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@headers</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+220:           <span class="ruby-value str">'?'</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@headers</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'='</span>)}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'&amp;'</span>)
+221:         <span class="ruby-keyword kw">else</span>
+222:           <span class="ruby-value str">''</span>
+223:         <span class="ruby-keyword kw">end</span> <span class="ruby-operator">+</span>
+224:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fragment</span>
+225:           <span class="ruby-value str">'#'</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@fragment</span>
+226:         <span class="ruby-keyword kw">else</span>
+227:           <span class="ruby-value str">''</span>
+228:         <span class="ruby-keyword kw">end</span>
+229:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

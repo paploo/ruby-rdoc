@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>encrypt (OpenSSL::PKCS7)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    PKCS7.encrypt(certs, data, [, cipher [, flags]]) =&gt; pkcs7
+ */
+static VALUE
+ossl_pkcs7_s_encrypt(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE certs, data, cipher, flags;
+    STACK_OF(X509) *x509s;
+    BIO *in;
+    const EVP_CIPHER *ciph;
+    int flg, status = 0;
+    VALUE ret;
+    PKCS7 *p7;
+
+    rb_scan_args(argc, argv, &quot;22&quot;, &amp;certs, &amp;data, &amp;cipher, &amp;flags);
+    if(NIL_P(cipher)){
+#if !defined(OPENSSL_NO_RC2)
+        ciph = EVP_rc2_40_cbc();
+#elif !defined(OPENSSL_NO_DES)
+        ciph = EVP_des_ede3_cbc();
+#elif !defined(OPENSSL_NO_RC2)
+        ciph = EVP_rc2_40_cbc();
+#elif !defined(OPENSSL_NO_AES)
+        ciph = EVP_EVP_aes_128_cbc();
+#else
+        ossl_raise(ePKCS7Error, &quot;Must specify cipher&quot;);
+#endif
+
+    }
+    else ciph = GetCipherPtr(cipher); /* NO NEED TO DUP */
+    flg = NIL_P(flags) ? 0 : NUM2INT(flags);
+    in = ossl_obj2bio(data);
+    x509s = ossl_protect_x509_ary2sk(certs, &amp;status);
+    if(status){
+        BIO_free(in);
+        rb_jump_tag(status);
+    }
+    if(!(p7 = PKCS7_encrypt(x509s, in, (EVP_CIPHER*)ciph, flg))){
+        BIO_free(in);
+        sk_X509_pop_free(x509s, X509_free);
+        ossl_raise(ePKCS7Error, NULL);
+    }
+    BIO_free(in);
+    WrapPKCS7(cPKCS7, ret, p7);
+    ossl_pkcs7_set_data(ret, data);
+    sk_X509_pop_free(x509s, X509_free);
+
+    return ret;
+}</pre>
+</body>
+</html>

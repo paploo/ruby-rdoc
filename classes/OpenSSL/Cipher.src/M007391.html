@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>key= (OpenSSL::Cipher)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     cipher.key = string -&gt; string
+ *
+ *  Sets the cipher key.
+ *
+ *  Only call this method after calling cipher.encrypt or cipher.decrypt.
+ */
+static VALUE
+ossl_cipher_set_key(VALUE self, VALUE key)
+{
+    EVP_CIPHER_CTX *ctx;
+
+    StringValue(key);
+    GetCipher(self, ctx);
+
+    if (RSTRING_LEN(key) &lt; EVP_CIPHER_CTX_key_length(ctx))
+        ossl_raise(eCipherError, &quot;key length too short&quot;);
+
+    if (EVP_CipherInit_ex(ctx, NULL, NULL, (unsigned char *)RSTRING_PTR(key), NULL, -1) != 1)
+        ossl_raise(eCipherError, NULL);
+
+    return key;
+}</pre>
+</body>
+</html>

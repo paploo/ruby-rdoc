@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>index (REXML::Elements)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/element.rb, line 818</span>
+818:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span> <span class="ruby-identifier">element</span>
+819:       <span class="ruby-identifier">rv</span> = <span class="ruby-value">0</span>
+820:       <span class="ruby-identifier">found</span> = <span class="ruby-ivar">@element</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> 
+821:         <span class="ruby-identifier">child</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Element</span> <span class="ruby-keyword kw">and</span>
+822:         (<span class="ruby-identifier">rv</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">and</span>
+823:         <span class="ruby-identifier">child</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">element</span>
+824:       <span class="ruby-keyword kw">end</span>
+825:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">rv</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">found</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">element</span>
+826:       <span class="ruby-keyword kw">return</span> <span class="ruby-value">-1</span>
+827:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

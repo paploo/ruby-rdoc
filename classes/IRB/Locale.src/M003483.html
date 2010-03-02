@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (IRB::Locale)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/irb/locale.rb, line 31</span>
+31:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">locale</span> = <span class="ruby-keyword kw">nil</span>)
+32:       <span class="ruby-ivar">@lang</span> = <span class="ruby-ivar">@territory</span> = <span class="ruby-ivar">@encoding_name</span> = <span class="ruby-ivar">@modifier</span> = <span class="ruby-keyword kw">nil</span>
+33:       <span class="ruby-ivar">@locale</span> = <span class="ruby-identifier">locale</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;IRB_LANG&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;LC_MESSAGES&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;LC_ALL&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-value str">&quot;LANG&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;C&quot;</span> 
+34:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> = <span class="ruby-constant">LOCALE_NAME_RE</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@locale</span>)
+35:         <span class="ruby-ivar">@lang</span>, <span class="ruby-ivar">@territory</span>, <span class="ruby-ivar">@encoding_name</span>, <span class="ruby-ivar">@modifier</span> = <span class="ruby-identifier">m</span>[<span class="ruby-identifier">:language</span>], <span class="ruby-identifier">m</span>[<span class="ruby-identifier">:territory</span>], <span class="ruby-identifier">m</span>[<span class="ruby-identifier">:codeset</span>], <span class="ruby-identifier">m</span>[<span class="ruby-identifier">:modifier</span>]
+36: 
+37:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@encoding_name</span>
+38:           <span class="ruby-keyword kw">begin</span> <span class="ruby-identifier">load</span> <span class="ruby-value str">'irb/encoding_aliases.rb'</span>; <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span>; <span class="ruby-keyword kw">end</span>
+39:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@encoding</span> = <span class="ruby-ivar">@@legacy_encoding_alias_map</span>[<span class="ruby-ivar">@encoding_name</span>]
+40:             <span class="ruby-identifier">warn</span> <span class="ruby-value str">&quot;%s is obsolete. use %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-node">&quot;#{@lang}_#{@territory}.#{@encoding_name}&quot;</span>, <span class="ruby-node">&quot;#{@lang}_#{@territory}.#{@encoding.name}&quot;</span>]
+41:           <span class="ruby-keyword kw">end</span>
+42:           <span class="ruby-ivar">@encoding</span> = <span class="ruby-constant">Encoding</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@encoding_name</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-keyword kw">nil</span>
+43:         <span class="ruby-keyword kw">end</span>
+44:       <span class="ruby-keyword kw">end</span>
+45:       <span class="ruby-ivar">@encoding</span> <span class="ruby-operator">||=</span> (<span class="ruby-constant">Encoding</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value str">'locale'</span>) <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">ASCII_8BIT</span>)
+46:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

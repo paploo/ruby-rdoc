@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>storlines (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 499</span>
+499:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">storlines</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">file</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: line</span>
+500:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+501:         <span class="ruby-identifier">with_binary</span>(<span class="ruby-keyword kw">false</span>) <span class="ruby-keyword kw">do</span>
+502:           <span class="ruby-identifier">conn</span> = <span class="ruby-identifier">transfercmd</span>(<span class="ruby-identifier">cmd</span>)
+503:           <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+504:             <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">gets</span>
+505:             <span class="ruby-keyword kw">break</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buf</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+506:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">buf</span>[<span class="ruby-value">-2</span>, <span class="ruby-value">2</span>] <span class="ruby-operator">!=</span> <span class="ruby-constant">CRLF</span>
+507:               <span class="ruby-identifier">buf</span> = <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">chomp</span> <span class="ruby-operator">+</span> <span class="ruby-constant">CRLF</span>
+508:             <span class="ruby-keyword kw">end</span>
+509:             <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">buf</span>)
+510:             <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">buf</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+511:           <span class="ruby-keyword kw">end</span>
+512:           <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">close</span>
+513:           <span class="ruby-identifier">voidresp</span>
+514:         <span class="ruby-keyword kw">end</span>
+515:       <span class="ruby-keyword kw">end</span>
+516:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>
+517:       <span class="ruby-comment cmt"># EPIPE, in this case, means that the data connection was unexpectedly</span>
+518:       <span class="ruby-comment cmt"># terminated.  Rather than just raising EPIPE to the caller, check the</span>
+519:       <span class="ruby-comment cmt"># response on the control connection.  If getresp doesn't raise a more</span>
+520:       <span class="ruby-comment cmt"># appropriate exception, re-raise the original exception.</span>
+521:       <span class="ruby-identifier">getresp</span>
+522:       <span class="ruby-identifier">raise</span>
+523:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

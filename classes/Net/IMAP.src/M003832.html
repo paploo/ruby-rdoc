@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>start_tls_session (Net::IMAP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/net/imap.rb, line 1301</span>
+1301:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_tls_session</span>(<span class="ruby-identifier">params</span> = {})
+1302:       <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+1303:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;SSL extension not installed&quot;</span>
+1304:       <span class="ruby-keyword kw">end</span>
+1305:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSL</span><span class="ruby-operator">::</span><span class="ruby-constant">SSLSocket</span>)
+1306:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-value str">&quot;already using SSL&quot;</span>
+1307:       <span class="ruby-keyword kw">end</span>
+1308:       <span class="ruby-keyword kw">begin</span>
+1309:         <span class="ruby-identifier">params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">to_hash</span>
+1310:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NoMethodError</span>
+1311:         <span class="ruby-identifier">params</span> = {}
+1312:       <span class="ruby-keyword kw">end</span>
+1313:       <span class="ruby-identifier">context</span> = <span class="ruby-constant">SSLContext</span>.<span class="ruby-identifier">new</span>
+1314:       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">set_params</span>(<span class="ruby-identifier">params</span>)
+1315:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">VerifyCallbackProc</span>)
+1316:         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">verify_callback</span> = <span class="ruby-constant">VerifyCallbackProc</span> 
+1317:       <span class="ruby-keyword kw">end</span>
+1318:       <span class="ruby-ivar">@sock</span> = <span class="ruby-constant">SSLSocket</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@sock</span>, <span class="ruby-identifier">context</span>)
+1319:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">sync_close</span> = <span class="ruby-keyword kw">true</span>
+1320:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">connect</span>
+1321:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">context</span>.<span class="ruby-identifier">verify_mode</span> <span class="ruby-operator">!=</span> <span class="ruby-constant">VERIFY_NONE</span>
+1322:         <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">post_connection_check</span>(<span class="ruby-ivar">@host</span>)
+1323:       <span class="ruby-keyword kw">end</span>
+1324:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>configure_value (JSON::JSONTreeView)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/json/lib/json/editor.rb, line 788</span>
+788:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">configure_value</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">type</span>)
+789:         <span class="ruby-identifier">value</span>.<span class="ruby-identifier">editable</span> = <span class="ruby-keyword kw">false</span>
+790:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+791:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Array'</span>, <span class="ruby-value str">'Hash'</span>
+792:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">text</span> = <span class="ruby-value str">''</span>
+793:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'TrueClass'</span>
+794:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">text</span> = <span class="ruby-value str">'true'</span>
+795:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'FalseClass'</span>
+796:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">text</span> = <span class="ruby-value str">'false'</span>
+797:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'NilClass'</span>
+798:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">text</span> = <span class="ruby-value str">'null'</span>
+799:         <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Numeric'</span>, <span class="ruby-value str">'String'</span>
+800:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">text</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">''</span>
+801:           <span class="ruby-identifier">value</span>.<span class="ruby-identifier">editable</span> = <span class="ruby-keyword kw">true</span>
+802:         <span class="ruby-keyword kw">else</span>
+803:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;unknown type '#{type}' encountered&quot;</span>
+804:         <span class="ruby-keyword kw">end</span>
+805:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

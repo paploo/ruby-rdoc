@@ -2,16 +2,14 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>mkpath (Pathname)</title>
+  <title>each_line (Pathname)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>      <span class="ruby-comment cmt"># File lib/pathname.rb, line 1045</span>
-1045:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkpath</span>
-1046:     <span class="ruby-identifier">require</span> <span class="ruby-value str">'fileutils'</span>
-1047:     <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkpath</span>(<span class="ruby-ivar">@path</span>)
-1048:     <span class="ruby-keyword kw">nil</span>
-1049:   <span class="ruby-keyword kw">end</span></pre>
+  <pre>     <span class="ruby-comment cmt"># File lib/pathname.rb, line 770</span>
+770:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_line</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment cmt"># :yield: line</span>
+771:     <span class="ruby-constant">IO</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+772:   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

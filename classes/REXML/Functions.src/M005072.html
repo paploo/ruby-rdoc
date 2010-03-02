@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>normalize_space (REXML::Functions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/functions.rb, line 218</span>
+218:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-identifier">normalize_space</span>( <span class="ruby-identifier">string</span>=<span class="ruby-keyword kw">nil</span> )
+219:       <span class="ruby-identifier">string</span> = <span class="ruby-identifier">string</span>(<span class="ruby-ivar">@@context</span>[<span class="ruby-identifier">:node</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">nil?</span>
+220:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+221:         <span class="ruby-identifier">string</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\s+/</span><span class="ruby-identifier">um</span>, <span class="ruby-value str">' '</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">string</span>}
+222:       <span class="ruby-keyword kw">else</span>
+223:         <span class="ruby-identifier">string</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\s+/</span><span class="ruby-identifier">um</span>, <span class="ruby-value str">' '</span>)
+224:       <span class="ruby-keyword kw">end</span>
+225:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

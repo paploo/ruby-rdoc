@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>store (GDBM)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *      gdbm[key]= value -&gt; value
+ *      gdbm.store(key, value) -&gt; value
+ *
+ * Associates the value _value_ with the specified _key_.
+ */
+static VALUE
+fgdbm_store(VALUE obj, VALUE keystr, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    GDBM_FILE dbm;
+
+    rb_gdbm_modify(obj);
+    StringValue(keystr);
+    StringValue(valstr);
+
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = RSTRING_LEN(keystr);
+
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+    if (gdbm_store(dbm, key, val, GDBM_REPLACE)) {
+        if (errno == EPERM) rb_sys_fail(0);
+        rb_raise(rb_eGDBMError, &quot;%s&quot;, gdbm_strerror(gdbm_errno));
+    }
+
+    return valstr;
+}</pre>
+</body>
+</html>

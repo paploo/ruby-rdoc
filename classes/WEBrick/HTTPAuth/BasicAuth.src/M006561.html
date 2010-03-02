@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>make_passwd (WEBrick::HTTPAuth::BasicAuth)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/webrick/httpauth/basicauth.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">make_passwd</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">pass</span>)
+22:         <span class="ruby-identifier">pass</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+23:         <span class="ruby-identifier">pass</span>.<span class="ruby-identifier">crypt</span>(<span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-identifier">random_string</span>(<span class="ruby-value">2</span>))
+24:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

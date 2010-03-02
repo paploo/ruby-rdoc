@@ -2,26 +2,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>sticky? (File)</title>
+  <title>unlink (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   File.sticky?(file_name)   =&gt;  true or false
- *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file has the sticky bit set.
+ *  call-seq:
+ *     File.delete(file_name, ...)  =&gt; integer
+ *     File.unlink(file_name, ...)  =&gt; integer
+ *  
+ *  Deletes the named files, returning the number of names
+ *  passed as arguments. Raises an exception on any error.
+ *  See also &lt;code&gt;Dir::rmdir&lt;/code&gt;.
  */
 
 static VALUE
-rb_file_sticky_p(VALUE obj, VALUE fname)
+rb_file_s_unlink(VALUE klass, VALUE args)
 {
-#ifdef S_ISVTX
-    return check3rdbyte(fname, S_ISVTX);
-#else
-    return Qnil;
-#endif
+    long n;
+
+    rb_secure(2);
+    n = apply2files(unlink_internal, args, 0);
+    return LONG2FIX(n);
 }</pre>
 </body>
 </html>

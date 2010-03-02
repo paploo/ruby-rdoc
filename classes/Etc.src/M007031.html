@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>getpwnam (Etc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Returns the /etc/passwd information for the user with specified login name.
+ *
+ * The information is returned as a Struct::Passwd; see getpwent above for
+ * details.
+ *
+ * e.g.  * Etc.getpwnam('root') -&gt; #&lt;struct Struct::Passwd name=&quot;root&quot;,
+ * passwd=&quot;x&quot;, uid=0, gid=0, gecos=&quot;root&quot;,dir=&quot;/root&quot;, shell=&quot;/bin/bash&quot;&gt;
+ */
+static VALUE
+etc_getpwnam(VALUE obj, VALUE nam)
+{
+#ifdef HAVE_GETPWENT
+    struct passwd *pwd;
+
+    SafeStringValue(nam);
+    pwd = getpwnam(RSTRING_PTR(nam));
+    if (pwd == 0) rb_raise(rb_eArgError, &quot;can't find user for %s&quot;, RSTRING_PTR(nam));
+    return setup_passwd(pwd);
+#else 
+    return Qnil;
+#endif
+}</pre>
+</body>
+</html>

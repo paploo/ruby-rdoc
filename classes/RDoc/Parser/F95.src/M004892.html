@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>definition_info (RDoc::Parser::F95)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/f95.rb, line 1708</span>
+1708:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">definition_info</span>(<span class="ruby-identifier">text</span>)
+1709:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">text</span>
+1710:     <span class="ruby-identifier">lines</span> = <span class="ruby-node">&quot;#{text}&quot;</span>
+1711:     <span class="ruby-identifier">defs</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+1712:     <span class="ruby-identifier">comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+1713:     <span class="ruby-identifier">trailing_comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+1714:     <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">false</span>
+1715:     <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+1716:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^\s*?!\s?(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1717:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">COMMENTS_ARE_UPPER</span>
+1718:           <span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">remove_header_marker</span>(<span class="ruby-identifier">$1</span>)
+1719:           <span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+1720:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">defs</span>[<span class="ruby-value">-1</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">under_comment_valid</span>
+1721:           <span class="ruby-identifier">defs</span>[<span class="ruby-value">-1</span>].<span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+1722:           <span class="ruby-identifier">defs</span>[<span class="ruby-value">-1</span>].<span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">remove_header_marker</span>(<span class="ruby-identifier">$1</span>)
+1723:         <span class="ruby-keyword kw">end</span>
+1724:         <span class="ruby-keyword kw">next</span>
+1725:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-regexp re">/^\s*?$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+1726:         <span class="ruby-identifier">comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+1727:         <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">false</span>
+1728:         <span class="ruby-keyword kw">next</span>
+1729:       <span class="ruby-keyword kw">end</span>
+1730:       <span class="ruby-identifier">type</span> = <span class="ruby-value str">&quot;&quot;</span>
+1731:       <span class="ruby-identifier">characters</span> = <span class="ruby-value str">&quot;&quot;</span>
+1732:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\s*?
+1733:                   (
+1734:                       character\s*?(\([\w\s\=\(\)\*]+?\))?[\s\,]*
+1735:                     | type\s*?\([\w\s]+?\)[\s\,]*
+1736:                     | integer\s*?(\([\w\s\=\(\)\*]+?\))?[\s\,]*
+1737:                     | real\s*?(\([\w\s\=\(\)\*]+?\))?[\s\,]*
+1738:                     | double\s+precision[\s\,]*
+1739:                     | logical\s*?(\([\w\s\=\(\)\*]+?\))?[\s\,]*
+1740:                     | complex\s*?(\([\w\s\=\(\)\*]+?\))?[\s\,]*
+1741:                   )
+1742:                   (.*?::)?
+1743:                   (.+)$
+1744:                  /i</span><span class="ruby-identifier">x</span>
+1745:         <span class="ruby-identifier">characters</span> = <span class="ruby-identifier">$8</span>
+1746:         <span class="ruby-identifier">type</span> = <span class="ruby-identifier">$1</span>
+1747:         <span class="ruby-identifier">type</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">$7</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/::/</span>, <span class="ruby-value str">''</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/^\s*?\,/</span>, <span class="ruby-value str">''</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$7</span>
+1748:       <span class="ruby-keyword kw">else</span>
+1749:         <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">false</span>
+1750:         <span class="ruby-keyword kw">next</span>
+1751:       <span class="ruby-keyword kw">end</span>
+1752:       <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">bracket</span> = <span class="ruby-value">0</span>
+1753:       <span class="ruby-identifier">iniflag</span> = <span class="ruby-keyword kw">false</span>; <span class="ruby-identifier">commentflag</span> = <span class="ruby-keyword kw">false</span>
+1754:       <span class="ruby-identifier">varname</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">arraysuffix</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">inivalue</span> = <span class="ruby-value str">&quot;&quot;</span>
+1755:       <span class="ruby-identifier">start_pos</span> = <span class="ruby-identifier">defs</span>.<span class="ruby-identifier">size</span>
+1756:       <span class="ruby-identifier">characters</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">char</span><span class="ruby-operator">|</span>
+1757:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">squote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">dquote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">bracket</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">iniflag</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">commentflag</span>)
+1758:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1759:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;!&quot;</span> ; <span class="ruby-identifier">commentflag</span> = <span class="ruby-keyword kw">true</span>
+1760:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;(&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>       ; <span class="ruby-identifier">arraysuffix</span> = <span class="ruby-identifier">char</span>
+1761:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">true</span>
+1762:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">true</span>
+1763:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;=&quot;</span> ; <span class="ruby-identifier">iniflag</span> = <span class="ruby-keyword kw">true</span>     ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1764:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;,&quot;</span>
+1765:             <span class="ruby-identifier">defs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Fortran95Definition</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">varname</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">inivalue</span>, <span class="ruby-identifier">arraysuffix</span>, <span class="ruby-identifier">comment</span>)
+1766:             <span class="ruby-identifier">varname</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">arraysuffix</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">inivalue</span> = <span class="ruby-value str">&quot;&quot;</span>
+1767:             <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">true</span>
+1768:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot; &quot;</span> ; <span class="ruby-keyword kw">next</span>
+1769:           <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">varname</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1770:           <span class="ruby-keyword kw">end</span>
+1771:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">commentflag</span>
+1772:           <span class="ruby-identifier">comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">remove_header_marker</span>(<span class="ruby-identifier">char</span>)
+1773:           <span class="ruby-identifier">trailing_comment</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">remove_header_marker</span>(<span class="ruby-identifier">char</span>)
+1774:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">iniflag</span>
+1775:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dquote</span>
+1776:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1777:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span> ; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1778:             <span class="ruby-keyword kw">else</span>      ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1779:             <span class="ruby-keyword kw">end</span>
+1780:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">squote</span>
+1781:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1782:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span> ; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1783:             <span class="ruby-keyword kw">else</span>      ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1784:             <span class="ruby-keyword kw">end</span>
+1785:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">bracket</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+1786:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1787:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;(&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1788:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;)&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1789:             <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1790:             <span class="ruby-keyword kw">end</span>
+1791:           <span class="ruby-keyword kw">else</span>
+1792:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1793:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;,&quot;</span>
+1794:               <span class="ruby-identifier">defs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Fortran95Definition</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">varname</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">inivalue</span>, <span class="ruby-identifier">arraysuffix</span>, <span class="ruby-identifier">comment</span>)
+1795:               <span class="ruby-identifier">varname</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">arraysuffix</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">inivalue</span> = <span class="ruby-value str">&quot;&quot;</span>
+1796:               <span class="ruby-identifier">iniflag</span> = <span class="ruby-keyword kw">false</span>
+1797:               <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">true</span>
+1798:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;(&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1799:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">true</span>  ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1800:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">true</span>  ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1801:             <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;!&quot;</span> ; <span class="ruby-identifier">commentflag</span> = <span class="ruby-keyword kw">true</span>
+1802:             <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1803:             <span class="ruby-keyword kw">end</span>
+1804:           <span class="ruby-keyword kw">end</span>
+1805:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">squote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">dquote</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">bracket</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+1806:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1807:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;(&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> ; <span class="ruby-identifier">arraysuffix</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1808:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;)&quot;</span> ; <span class="ruby-identifier">bracket</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span> ; <span class="ruby-identifier">arraysuffix</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1809:           <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">arraysuffix</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1810:           <span class="ruby-keyword kw">end</span>
+1811:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">squote</span>
+1812:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1813:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\'&quot;</span>; <span class="ruby-identifier">squote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1814:           <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1815:           <span class="ruby-keyword kw">end</span>
+1816:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">dquote</span>
+1817:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">char</span>
+1818:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">&quot;\&quot;&quot;</span>; <span class="ruby-identifier">dquote</span> = <span class="ruby-keyword kw">false</span> ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1819:           <span class="ruby-keyword kw">else</span>     ; <span class="ruby-identifier">inivalue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">char</span>
+1820:           <span class="ruby-keyword kw">end</span>
+1821:         <span class="ruby-keyword kw">end</span>
+1822:       }
+1823:       <span class="ruby-identifier">defs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Fortran95Definition</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">varname</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">inivalue</span>, <span class="ruby-identifier">arraysuffix</span>, <span class="ruby-identifier">comment</span>)
+1824:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trailing_comment</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^:nodoc:/</span>
+1825:         <span class="ruby-identifier">defs</span>[<span class="ruby-identifier">start_pos</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">collect!</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">defitem</span><span class="ruby-operator">|</span>
+1826:           <span class="ruby-identifier">defitem</span>.<span class="ruby-identifier">nodoc</span> = <span class="ruby-keyword kw">true</span>
+1827:         }
+1828:       <span class="ruby-keyword kw">end</span>
+1829:       <span class="ruby-identifier">varname</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">arraysuffix</span> = <span class="ruby-value str">&quot;&quot;</span> ; <span class="ruby-identifier">inivalue</span> = <span class="ruby-value str">&quot;&quot;</span>
+1830:       <span class="ruby-identifier">comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+1831:       <span class="ruby-identifier">under_comment_valid</span> = <span class="ruby-keyword kw">true</span>
+1832:       <span class="ruby-identifier">trailing_comment</span> = <span class="ruby-value str">&quot;&quot;</span>
+1833:     }
+1834:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">defs</span>
+1835:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

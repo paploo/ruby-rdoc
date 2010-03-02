@@ -2,28 +2,33 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>owned? (File)</title>
+  <title>ctime (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *    File.owned?(file_name)   =&gt; true or false
- *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file exists and the
- * effective used id of the calling process is the owner of
- * the file.
+ *  call-seq:
+ *     File.ctime(file_name)  =&gt; time
+ *  
+ *  Returns the change time for the named file (the time at which
+ *  directory information about the file was changed, not the file
+ *  itself).
+ *     
+ *     File.ctime(&quot;testfile&quot;)   #=&gt; Wed Apr 09 08:53:13 CDT 2003
+ *     
  */
 
 static VALUE
-rb_file_owned_p(VALUE obj, VALUE fname)
+rb_file_s_ctime(VALUE klass, VALUE fname)
 {
     struct stat st;
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (st.st_uid == geteuid()) return Qtrue;
-    return Qfalse;
+    if (rb_stat(fname, &amp;st) &lt; 0) {
+        FilePathValue(fname);
+        rb_sys_fail(RSTRING_PTR(fname));
+    }
+    return stat_ctime(&amp;st);
 }</pre>
 </body>
 </html>

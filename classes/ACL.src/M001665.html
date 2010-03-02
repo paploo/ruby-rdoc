@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>install_list (ACL)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/drb/acl.rb, line 113</span>
+113:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">install_list</span>(<span class="ruby-identifier">list</span>)
+114:     <span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+115:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span>
+116:       <span class="ruby-identifier">permission</span>, <span class="ruby-identifier">domain</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-identifier">i</span>,<span class="ruby-value">2</span>)
+117:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">permission</span>.<span class="ruby-identifier">downcase</span>
+118:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'allow'</span>
+119:         <span class="ruby-ivar">@allow</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">domain</span>)
+120:       <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'deny'</span>
+121:         <span class="ruby-ivar">@deny</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">domain</span>)
+122:       <span class="ruby-keyword kw">else</span>
+123:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid ACL entry #{list.to_s}&quot;</span>
+124:       <span class="ruby-keyword kw">end</span>
+125:       <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">2</span>
+126:     <span class="ruby-keyword kw">end</span>
+127:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

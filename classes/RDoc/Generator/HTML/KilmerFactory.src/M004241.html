@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>get_CLASS_PAGE (RDoc::Generator::HTML::KilmerFactory)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator/html/kilmerfactory.rb, line 290</span>
+290: <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_CLASS_PAGE</span>
+291:   <span class="ruby-keyword kw">return</span> <span class="ruby-value str">%{
+292: &lt;table width=&quot;100%&quot; border=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+293:  &lt;tr class=&quot;title-row&quot;&gt;
+294:  &lt;td class=&quot;big-title-font&quot;&gt;
+295:    &lt;%= values[&quot;classmod&quot;] %&gt;&lt;br /&gt;&lt;%= values[&quot;full_name&quot;] %&gt;
+296:  &lt;/td&gt;
+297:  &lt;td align=&quot;right&quot;&gt;
+298:    &lt;table cellspacing=&quot;0&quot; cellpadding=&quot;2&quot;&gt;
+299:      &lt;tr valign=&quot;top&quot;&gt;
+300:       &lt;td class=&quot;small-title-font&quot;&gt;In:&lt;/td&gt;
+301:       &lt;td class=&quot;small-title-font&quot;&gt;
+302: &lt;% values[&quot;infiles&quot;].each do |infiles| %&gt;
+303: &lt;%= href infiles[&quot;full_path_url&quot;], infiles[&quot;full_path&quot;] %&gt;
+304: &lt;% if infiles[&quot;cvsurl&quot;] then %&gt;
+305: &amp;nbsp;(&lt;a href=&quot;&lt;%= infiles[&quot;cvsurl&quot;] %&gt;&quot;&gt;&lt;acronym title=&quot;Concurrent Versioning System&quot;&gt;CVS&lt;/acronym&gt;&lt;/a&gt;)
+306: &lt;% end %&gt;
+307: &lt;% end %&gt;&lt;%# values[&quot;infiles&quot;] %&gt;
+308:       &lt;/td&gt;
+309:      &lt;/tr&gt;
+310: &lt;% if values[&quot;parent&quot;] then %&gt;
+311:      &lt;tr&gt;
+312:       &lt;td class=&quot;small-title-font&quot;&gt;Parent:&lt;/td&gt;
+313:       &lt;td class=&quot;small-title-font&quot;&gt;
+314: &lt;% if values[&quot;par_url&quot;] then %&gt;
+315:         &lt;a href=&quot;&lt;%= values[&quot;par_url&quot;] %&gt;&quot; class=&quot;cyan&quot;&gt;
+316: &lt;% end %&gt;
+317: &lt;%= values[&quot;parent&quot;] %&gt;
+318: &lt;% if values[&quot;par_url&quot;] then %&gt;
+319:          &lt;/a&gt;
+320: &lt;% end %&gt;
+321:       &lt;/td&gt;
+322:      &lt;/tr&gt;
+323: &lt;% end %&gt;
+324:    &lt;/table&gt;
+325:   &lt;/td&gt;
+326:   &lt;/tr&gt;
+327: &lt;/table&gt;&lt;br /&gt;
+328: }</span>
+329: <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

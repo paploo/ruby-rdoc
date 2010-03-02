@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>list_known_classes (RDoc::RI::DefaultDisplay)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/display.rb, line 329</span>
+329:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list_known_classes</span>(<span class="ruby-identifier">classes</span>)
+330:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">empty?</span>
+331:       <span class="ruby-identifier">warn_no_database</span>
+332:     <span class="ruby-keyword kw">else</span>
+333:       <span class="ruby-identifier">page</span> <span class="ruby-keyword kw">do</span>
+334:         <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">draw_line</span> <span class="ruby-value str">&quot;Known classes and modules&quot;</span>
+335:         <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">blankline</span>
+336: 
+337:         <span class="ruby-ivar">@formatter</span>.<span class="ruby-identifier">wrap</span> <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">', '</span>)
+338:       <span class="ruby-keyword kw">end</span>
+339:     <span class="ruby-keyword kw">end</span>
+340:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

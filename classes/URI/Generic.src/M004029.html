@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>build (URI::Generic)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/uri/generic.rb, line 107</span>
+107:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">args</span>)
+108:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">&amp;&amp;</span>
+109:           <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">Generic</span><span class="ruby-operator">::</span><span class="ruby-constant">COMPONENT</span>.<span class="ruby-identifier">size</span>
+110:         <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">args</span>
+111:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
+112:         <span class="ruby-identifier">tmp</span> = <span class="ruby-operator">::</span><span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">Generic</span><span class="ruby-operator">::</span><span class="ruby-constant">COMPONENT</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+113:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">c</span>)
+114:             <span class="ruby-identifier">args</span>[<span class="ruby-identifier">c</span>]
+115:           <span class="ruby-keyword kw">else</span>
+116:             <span class="ruby-keyword kw">nil</span>
+117:           <span class="ruby-keyword kw">end</span>
+118:         <span class="ruby-keyword kw">end</span>
+119:       <span class="ruby-keyword kw">else</span>
+120:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, 
+121:         <span class="ruby-node">&quot;expected Array of or Hash of components of #{self.class} (#{self.class.component.join(', ')})&quot;</span>
+122:       <span class="ruby-keyword kw">end</span>
+123: 
+124:       <span class="ruby-identifier">tmp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">DEFAULT_PARSER</span>
+125:       <span class="ruby-identifier">tmp</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">true</span>
+126:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">tmp</span>)
+127:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

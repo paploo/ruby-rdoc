@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>login (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 390</span>
+390:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login</span>(<span class="ruby-identifier">user</span> = <span class="ruby-value str">&quot;anonymous&quot;</span>, <span class="ruby-identifier">passwd</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">acct</span> = <span class="ruby-keyword kw">nil</span>)
+391:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;anonymous&quot;</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">passwd</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+392:         <span class="ruby-identifier">passwd</span> = <span class="ruby-identifier">getaddress</span>
+393:       <span class="ruby-keyword kw">end</span>
+394:       
+395:       <span class="ruby-identifier">resp</span> = <span class="ruby-value str">&quot;&quot;</span>
+396:       <span class="ruby-identifier">synchronize</span> <span class="ruby-keyword kw">do</span>
+397:         <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">sendcmd</span>(<span class="ruby-value str">'USER '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">user</span>)
+398:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?3</span>
+399:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPReplyError</span>, <span class="ruby-identifier">resp</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">passwd</span>.<span class="ruby-identifier">nil?</span>
+400:           <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">sendcmd</span>(<span class="ruby-value str">'PASS '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">passwd</span>)
+401:         <span class="ruby-keyword kw">end</span>
+402:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?3</span>
+403:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPReplyError</span>, <span class="ruby-identifier">resp</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">acct</span>.<span class="ruby-identifier">nil?</span>
+404:           <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">sendcmd</span>(<span class="ruby-value str">'ACCT '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">acct</span>)
+405:         <span class="ruby-keyword kw">end</span>
+406:       <span class="ruby-keyword kw">end</span>
+407:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">?2</span>
+408:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPReplyError</span>, <span class="ruby-identifier">resp</span>
+409:       <span class="ruby-keyword kw">end</span>
+410:       <span class="ruby-ivar">@welcome</span> = <span class="ruby-identifier">resp</span>
+411:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">binary</span> = <span class="ruby-keyword kw">true</span>
+412:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

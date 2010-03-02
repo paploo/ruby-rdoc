@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gets (IRB::ReadlineInputMethod)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/irb/input-method.rb, line 112</span>
+112:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gets</span>
+113:         <span class="ruby-constant">Readline</span>.<span class="ruby-identifier">input</span> = <span class="ruby-ivar">@stdin</span>
+114:         <span class="ruby-constant">Readline</span>.<span class="ruby-identifier">output</span> = <span class="ruby-ivar">@stdout</span>
+115:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">l</span> = <span class="ruby-identifier">readline</span>(<span class="ruby-ivar">@prompt</span>, <span class="ruby-keyword kw">false</span>)
+116:           <span class="ruby-constant">HISTORY</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">l</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">l</span>.<span class="ruby-identifier">empty?</span>
+117:           <span class="ruby-ivar">@line</span>[<span class="ruby-ivar">@line_no</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>] = <span class="ruby-identifier">l</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;\n&quot;</span>
+118:         <span class="ruby-keyword kw">else</span>
+119:           <span class="ruby-ivar">@eof</span> = <span class="ruby-keyword kw">true</span>
+120:           <span class="ruby-identifier">l</span>
+121:         <span class="ruby-keyword kw">end</span>
+122:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

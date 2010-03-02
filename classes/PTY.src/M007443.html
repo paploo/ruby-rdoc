@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>spawn (PTY)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   PTY.spawn(command...) {|r, w, pid| ... }   =&gt; nil
+ *   PTY.spawn(command...)                      =&gt; r, w, pid
+ *   PTY.getpty(command...) {|r, w, pid| ... }  =&gt; nil
+ *   PTY.getpty(command...)                     =&gt; r, w, pid
+ *
+ * spawns the specified command on a newly allocated pty.
+ *
+ * The command's controlling tty is set to the slave device of the pty.
+ * Also its standard input/output/error is redirected to the slave device.
+ *
+ * PTY.spawn returns two IO objects and PID.
+ * PID is the process ID of the command.
+ * The two IO objects are connected to the master device of the pty.
+ * The first IO object is opened as read mode and
+ * The second is opened as write mode.
+ *
+ * If a block is given, two IO objects and PID is yielded.
+ *
+ */
+static VALUE
+pty_getpty(int argc, VALUE *argv, VALUE self)
+{
+    VALUE res;
+    struct pty_info info;
+    struct pty_info thinfo;
+    rb_io_t *wfptr,*rfptr;
+    VALUE rport = rb_obj_alloc(rb_cFile);
+    VALUE wport = rb_obj_alloc(rb_cFile);
+    char SlaveName[DEVICELEN];
+
+    MakeOpenFile(rport, rfptr);
+    MakeOpenFile(wport, wfptr);
+
+    establishShell(argc, argv, &amp;info, SlaveName);
+
+    rfptr-&gt;mode = rb_io_mode_flags(&quot;r&quot;);
+    rfptr-&gt;fd = info.fd;
+    rfptr-&gt;pathv = rb_obj_freeze(rb_str_new_cstr(SlaveName));
+
+    wfptr-&gt;mode = rb_io_mode_flags(&quot;w&quot;) | FMODE_SYNC;
+    wfptr-&gt;fd = dup(info.fd);
+    if (wfptr-&gt;fd == -1)
+        rb_sys_fail(&quot;dup()&quot;);
+    wfptr-&gt;pathv = rfptr-&gt;pathv;
+
+    res = rb_ary_new2(3);
+    rb_ary_store(res,0,(VALUE)rport);
+    rb_ary_store(res,1,(VALUE)wport);
+    rb_ary_store(res,2,PIDT2NUM(info.child_pid));
+
+    thinfo.thread = rb_thread_create(pty_syswait, (void*)&amp;info);
+    thinfo.child_pid = info.child_pid;
+    rb_thread_schedule();
+
+    if (rb_block_given_p()) {
+        rb_ensure(rb_yield, res, pty_finalize_syswait, (VALUE)&amp;thinfo);
+        return Qnil;
+    }
+    return res;
+}</pre>
+</body>
+</html>

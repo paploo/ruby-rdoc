@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (OpenSSL::X509::Store)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    X509::Store.new =&gt; store
+ *
+ */
+static VALUE
+ossl_x509store_initialize(int argc, VALUE *argv, VALUE self)
+{
+    X509_STORE *store;
+
+/* BUG: This method takes any number of arguments but appears to ignore them. */
+    GetX509Store(self, store);
+    X509_STORE_set_verify_cb_func(store, ossl_verify_cb);
+    ossl_x509store_set_vfy_cb(self, Qnil);
+
+#if (OPENSSL_VERSION_NUMBER &lt; 0x00907000L)
+    rb_iv_set(self, &quot;@flags&quot;, INT2NUM(0));
+    rb_iv_set(self, &quot;@purpose&quot;, INT2NUM(0));
+    rb_iv_set(self, &quot;@trust&quot;, INT2NUM(0));
+#endif
+
+    /* last verification status */
+    rb_iv_set(self, &quot;@error&quot;, Qnil);
+    rb_iv_set(self, &quot;@error_string&quot;, Qnil);
+    rb_iv_set(self, &quot;@chain&quot;, Qnil);
+    rb_iv_set(self, &quot;@time&quot;, Qnil);
+
+    return self;
+}</pre>
+</body>
+</html>

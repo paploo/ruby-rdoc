@@ -2,57 +2,44 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eof (IO)</title>
+  <title>foreach (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.eof     =&gt; true or false
- *     ios.eof?    =&gt; true or false
+ *     IO.foreach(name, sep=$/ [, open_args]) {|line| block }     =&gt; nil
+ *     IO.foreach(name, limit [, open_args]) {|line| block }      =&gt; nil
+ *     IO.foreach(name, sep, limit [, open_args]) {|line| block } =&gt; nil
  *
- *  Returns true if &lt;em&gt;ios&lt;/em&gt; is at end of file that means
- *  there are no more data to read.
- *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt; will be
- *  raised.
+ *  Executes the block for every line in the named I/O port, where lines
+ *  are separated by &lt;em&gt;sep&lt;/em&gt;.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     dummy = f.readlines
- *     f.eof   #=&gt; true
+ *     IO.foreach(&quot;testfile&quot;) {|x| print &quot;GOT &quot;, x }
  *
- *  If &lt;em&gt;ios&lt;/em&gt; is a stream such as pipe or socket, &lt;code&gt;IO#eof?&lt;/code&gt;
- *  blocks until the other end sends some data or closes it.
+ *  &lt;em&gt;produces:&lt;/em&gt;
  *
- *     r, w = IO.pipe
- *     Thread.new { sleep 1; w.close }
- *     r.eof?  #=&gt; true after 1 second blocking
+ *     GOT This is line one
+ *     GOT This is line two
+ *     GOT This is line three
+ *     GOT And so on...
  *
- *     r, w = IO.pipe
- *     Thread.new { sleep 1; w.puts &quot;a&quot; }
- *     r.eof?  #=&gt; false after 1 second blocking
+ *  If the last argument is a hash, it's the keyword argument to open.
+ *  See &lt;code&gt;IO.read&lt;/code&gt; for detail.
  *
- *     r, w = IO.pipe
- *     r.eof?  # blocks forever
- *
- *  Note that &lt;code&gt;IO#eof?&lt;/code&gt; reads data to a input buffer.
- *  So &lt;code&gt;IO#sysread&lt;/code&gt; doesn't work with &lt;code&gt;IO#eof?&lt;/code&gt;.
  */
 
-VALUE
-rb_io_eof(VALUE io)
+static VALUE
+rb_io_s_foreach(int argc, VALUE *argv, VALUE self)
 {
-    rb_io_t *fptr;
+    struct foreach_arg arg;
 
-    GetOpenFile(io, fptr);
-    rb_io_check_readable(fptr);
-
-    if (READ_DATA_PENDING(fptr)) return Qfalse;
-    READ_CHECK(fptr);
-    if (io_fillbuf(fptr) &lt; 0) {
-        return Qtrue;
-    }
-    return Qfalse;
+    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, NULL, NULL);
+    RETURN_ENUMERATOR(self, argc, argv);
+    open_key_args(argc, argv, &amp;arg);
+    if (NIL_P(arg.io)) return Qnil;
+    return rb_ensure(io_s_foreach, (VALUE)&amp;arg, rb_io_close, arg.io);
 }</pre>
 </body>
 </html>

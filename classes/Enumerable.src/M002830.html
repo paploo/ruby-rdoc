@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>drop (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.drop(n)               =&gt; array
+ *
+ *  Drops first n elements from &lt;i&gt;enum&lt;/i&gt;, and returns rest elements
+ *  in an array.
+ *
+ *     a = [1, 2, 3, 4, 5, 0]
+ *     a.drop(3)             # =&gt; [4, 5, 0]
+ *
+ */
+
+static VALUE
+enum_drop(VALUE obj, VALUE n)
+{
+    VALUE args[2];
+    long len = NUM2LONG(n);
+
+    if (len &lt; 0) {
+        rb_raise(rb_eArgError, &quot;attempt to drop negative size&quot;);
+    }
+
+    args[1] = len;
+    args[0] = rb_ary_new();
+    rb_block_call(obj, id_each, 0, 0, drop_i, (VALUE)args);
+    return args[0];
+}</pre>
+</body>
+</html>

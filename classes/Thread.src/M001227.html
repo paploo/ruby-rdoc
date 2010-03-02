@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>terminate (Thread)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     thr.exit        =&gt; thr or nil
+ *     thr.kill        =&gt; thr or nil
+ *     thr.terminate   =&gt; thr or nil
+ *
+ *  Terminates &lt;i&gt;thr&lt;/i&gt; and schedules another thread to be run. If this thread
+ *  is already marked to be killed, &lt;code&gt;exit&lt;/code&gt; returns the
+ *  &lt;code&gt;Thread&lt;/code&gt;. If this is the main thread, or the last thread, exits
+ *  the process.
+ */
+
+VALUE
+rb_thread_kill(VALUE thread)
+{
+    rb_thread_t *th;
+
+    GetThreadPtr(thread, th);
+
+    if (th != GET_THREAD() &amp;&amp; th-&gt;safe_level &lt; 4) {
+        rb_secure(4);
+    }
+    if (th-&gt;status == THREAD_TO_KILL || th-&gt;status == THREAD_KILLED) {
+        return thread;
+    }
+    if (th == th-&gt;vm-&gt;main_thread) {
+        rb_exit(EXIT_SUCCESS);
+    }
+
+    thread_debug(&quot;rb_thread_kill: %p (%p)\n&quot;, (void *)th, (void *)th-&gt;thread_id);
+
+    rb_thread_interrupt(th);
+    th-&gt;thrown_errinfo = eKillSignal;
+    th-&gt;status = THREAD_TO_KILL;
+
+    return thread;
+}</pre>
+</body>
+</html>

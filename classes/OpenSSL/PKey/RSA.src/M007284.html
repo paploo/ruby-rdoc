@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_der (OpenSSL::PKey::RSA)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rsa.to_der -&gt; aString
+ *
+ */
+static VALUE
+ossl_rsa_to_der(VALUE self)
+{
+    EVP_PKEY *pkey;
+    int (*i2d_func)_((const RSA*, unsigned char**));
+    unsigned char *p;
+    long len;
+    VALUE str;
+
+    GetPKeyRSA(self, pkey);
+    if(RSA_HAS_PRIVATE(pkey-&gt;pkey.rsa))
+        i2d_func = i2d_RSAPrivateKey;
+    else
+        i2d_func = i2d_RSAPublicKey;
+    if((len = i2d_func(pkey-&gt;pkey.rsa, NULL)) &lt;= 0)
+        ossl_raise(eRSAError, NULL);
+    str = rb_str_new(0, len);
+    p = (unsigned char *)RSTRING_PTR(str);
+    if(i2d_func(pkey-&gt;pkey.rsa, &amp;p) &lt; 0)
+        ossl_raise(eRSAError, NULL);
+    ossl_str_adjust(str, p);
+
+    return str;
+}</pre>
+</body>
+</html>

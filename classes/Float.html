@@ -53,6 +53,16 @@
             <td>
 
 
+                <a href="../files/complex_c.html">
+
+                complex.c
+
+                </a>
+
+
+        <br />
+
+
                 <a href="../files/numeric_c.html">
 
                 numeric.c
@@ -92,6 +102,16 @@
 
         <br />
 
+
+                <a href="../files/ext/bigdecimal/lib/bigdecimal/util_rb.html">
+
+                ext/bigdecimal/lib/bigdecimal/util.rb
+
+                </a>
+
+
+        <br />
+
             </td>
         </tr>
 
@@ -119,10 +139,26 @@
 
     <div id="description">
       <p>
-<tt>Float</tt> objects represent real numbers using the native
-architecture&#8217;s double-precision floating point representation.
+<a href="BigDecimal.html">BigDecimal</a> utility library.
 </p>
-
+<p>
+To use these functions, require &#8216;bigdecimal/util&#8216;
+</p>
+<p>
+The following methods are provided to convert other types to BigDecimals:
+</p>
+<pre>
+  String#to_d -&gt; BigDecimal
+  Float#to_d -&gt; BigDecimal
+  Rational#to_d -&gt; BigDecimal
+</pre>
+<p>
+The following method is provided to convert BigDecimals to other types:
+</p>
+<pre>
+  BigDecimal#to_r -&gt; Rational
+</pre>
+<hr size="10"></hr>
     </div>
 
    </div>
@@ -133,73 +169,83 @@ architecture&#8217;s double-precision floating point representation.
 
       <div class="name-list">
 
-        <a href="#M000937">%</a>&nbsp;&nbsp;
+        <a href="#M000406">%</a>&nbsp;&nbsp;
 
-        <a href="#M000935">*</a>&nbsp;&nbsp;
+        <a href="#M000404">*</a>&nbsp;&nbsp;
 
-        <a href="#M000940">**</a>&nbsp;&nbsp;
+        <a href="#M000409">**</a>&nbsp;&nbsp;
 
-        <a href="#M000933">+</a>&nbsp;&nbsp;
+        <a href="#M000402">+</a>&nbsp;&nbsp;
 
-        <a href="#M000934">-</a>&nbsp;&nbsp;
+        <a href="#M000403">-</a>&nbsp;&nbsp;
 
-        <a href="#M000932">-@</a>&nbsp;&nbsp;
+        <a href="#M000401">-@</a>&nbsp;&nbsp;
 
-        <a href="#M000936">/</a>&nbsp;&nbsp;
+        <a href="#M000405">/</a>&nbsp;&nbsp;
 
-        <a href="#M000945">&lt;</a>&nbsp;&nbsp;
+        <a href="#M000415">&lt;</a>&nbsp;&nbsp;
 
-        <a href="#M000946">&lt;=</a>&nbsp;&nbsp;
+        <a href="#M000416">&lt;=</a>&nbsp;&nbsp;
 
-        <a href="#M000942">&lt;=&gt;</a>&nbsp;&nbsp;
+        <a href="#M000412">&lt;=&gt;</a>&nbsp;&nbsp;
 
-        <a href="#M000941">==</a>&nbsp;&nbsp;
+        <a href="#M000410">==</a>&nbsp;&nbsp;
 
-        <a href="#M000943">&gt;</a>&nbsp;&nbsp;
+        <a href="#M000411">===</a>&nbsp;&nbsp;
 
-        <a href="#M000944">&gt;=</a>&nbsp;&nbsp;
+        <a href="#M000413">&gt;</a>&nbsp;&nbsp;
 
-        <a href="#M000950">abs</a>&nbsp;&nbsp;
+        <a href="#M000414">&gt;=</a>&nbsp;&nbsp;
 
-        <a href="#M000956">ceil</a>&nbsp;&nbsp;
+        <a href="#M000420">abs</a>&nbsp;&nbsp;
 
-        <a href="#M000931">coerce</a>&nbsp;&nbsp;
+        <a href="#M000397">angle</a>&nbsp;&nbsp;
 
-        <a href="#M000962">dclone</a>&nbsp;&nbsp;
+        <a href="#M000396">arg</a>&nbsp;&nbsp;
 
-        <a href="#M000939">divmod</a>&nbsp;&nbsp;
+        <a href="#M000426">ceil</a>&nbsp;&nbsp;
 
-        <a href="#M000947">eql?</a>&nbsp;&nbsp;
+        <a href="#M000400">coerce</a>&nbsp;&nbsp;
 
-        <a href="#M000961">finite?</a>&nbsp;&nbsp;
+        <a href="#M000432">dclone</a>&nbsp;&nbsp;
 
-        <a href="#M000955">floor</a>&nbsp;&nbsp;
+        <a href="#M000408">divmod</a>&nbsp;&nbsp;
 
-        <a href="#M000948">hash</a>&nbsp;&nbsp;
+        <a href="#M000417">eql?</a>&nbsp;&nbsp;
 
-        <a href="#M000960">infinite?</a>&nbsp;&nbsp;
+        <a href="#M000431">finite?</a>&nbsp;&nbsp;
 
-        <a href="#M000951">magnitude</a>&nbsp;&nbsp;
+        <a href="#M000425">floor</a>&nbsp;&nbsp;
 
-        <a href="#M000938">modulo</a>&nbsp;&nbsp;
+        <a href="#M000418">hash</a>&nbsp;&nbsp;
 
-        <a href="#M000959">nan?</a>&nbsp;&nbsp;
+        <a href="#M000430">infinite?</a>&nbsp;&nbsp;
 
-        <a href="#M000957">round</a>&nbsp;&nbsp;
+        <a href="#M000421">magnitude</a>&nbsp;&nbsp;
 
-        <a href="#M000949">to_f</a>&nbsp;&nbsp;
+        <a href="#M000407">modulo</a>&nbsp;&nbsp;
 
-        <a href="#M000953">to_i</a>&nbsp;&nbsp;
+        <a href="#M000429">nan?</a>&nbsp;&nbsp;
 
-        <a href="#M000954">to_int</a>&nbsp;&nbsp;
+        <a href="#M000398">phase</a>&nbsp;&nbsp;
 
-        <a href="#M000930">to_s</a>&nbsp;&nbsp;
+        <a href="#M000427">round</a>&nbsp;&nbsp;
 
-        <a href="#M000963">to_yaml</a>&nbsp;&nbsp;
+        <a href="#M000434">to_d</a>&nbsp;&nbsp;
 
-        <a href="#M000958">truncate</a>&nbsp;&nbsp;
+        <a href="#M000419">to_f</a>&nbsp;&nbsp;
 
-        <a href="#M000952">zero?</a>&nbsp;&nbsp;
+        <a href="#M000423">to_i</a>&nbsp;&nbsp;
+
+        <a href="#M000424">to_int</a>&nbsp;&nbsp;
+
+        <a href="#M000399">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000433">to_yaml</a>&nbsp;&nbsp;
+
+        <a href="#M000428">truncate</a>&nbsp;&nbsp;
+
+        <a href="#M000422">zero?</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -307,13 +353,13 @@ architecture&#8217;s double-precision floating point representation.
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000937" class="method-detail">
-        <a name="M000937"></a>
+      <div id="method-M000406" class="method-detail">
+        <a name="M000406"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000937.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000937.html');return false;">
+          <a href="Float.src/M000406.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000406.html');return false;">
 
           <span class="method-name">flt % other         => float<br />
 flt.modulo(other)   => float<br />
@@ -337,13 +383,13 @@ Return the modulo after division of <tt>flt</tt> by <tt>other</tt>.
       </div>
 
 
-      <div id="method-M000935" class="method-detail">
-        <a name="M000935"></a>
+      <div id="method-M000404" class="method-detail">
+        <a name="M000404"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000935.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000935.html');return false;">
+          <a href="Float.src/M000404.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000404.html');return false;">
 
           <span class="method-name">float * other   => float<br />
 </span>
@@ -363,13 +409,13 @@ Returns a new float which is the product of <tt>float</tt> and
       </div>
 
 
-      <div id="method-M000940" class="method-detail">
-        <a name="M000940"></a>
+      <div id="method-M000409" class="method-detail">
+        <a name="M000409"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000940.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000940.html');return false;">
+          <a href="Float.src/M000409.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000409.html');return false;">
 
           <span class="method-name"><br />
 </span>
@@ -391,13 +437,13 @@ Raises <tt>float</tt> the <tt>other</tt> power.
       </div>
 
 
-      <div id="method-M000933" class="method-detail">
-        <a name="M000933"></a>
+      <div id="method-M000402" class="method-detail">
+        <a name="M000402"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000933.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000933.html');return false;">
+          <a href="Float.src/M000402.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000402.html');return false;">
 
           <span class="method-name">float + other   => float<br />
 </span>
@@ -416,13 +462,13 @@ Returns a new float which is the sum of <tt>float</tt> and <tt>other</tt>.
       </div>
 
 
-      <div id="method-M000934" class="method-detail">
-        <a name="M000934"></a>
+      <div id="method-M000403" class="method-detail">
+        <a name="M000403"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000934.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000934.html');return false;">
+          <a href="Float.src/M000403.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000403.html');return false;">
 
           <span class="method-name">float + other   => float<br />
 </span>
@@ -442,13 +488,13 @@ Returns a new float which is the difference of <tt>float</tt> and
       </div>
 
 
-      <div id="method-M000932" class="method-detail">
-        <a name="M000932"></a>
+      <div id="method-M000401" class="method-detail">
+        <a name="M000401"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000932.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000932.html');return false;">
+          <a href="Float.src/M000401.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000401.html');return false;">
 
           <span class="method-name">-float   => float<br />
 </span>
@@ -467,13 +513,13 @@ Returns float, negated.
       </div>
 
 
-      <div id="method-M000936" class="method-detail">
-        <a name="M000936"></a>
+      <div id="method-M000405" class="method-detail">
+        <a name="M000405"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000936.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000936.html');return false;">
+          <a href="Float.src/M000405.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000405.html');return false;">
 
           <span class="method-name">float / other   => float<br />
 </span>
@@ -493,13 +539,13 @@ Returns a new float which is the result of dividing <tt>float</tt> by
       </div>
 
 
-      <div id="method-M000945" class="method-detail">
-        <a name="M000945"></a>
+      <div id="method-M000415" class="method-detail">
+        <a name="M000415"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000945.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000945.html');return false;">
+          <a href="Float.src/M000415.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000415.html');return false;">
 
           <span class="method-name">flt < other    =>  true or false<br />
 </span>
@@ -518,13 +564,13 @@ Returns a new float which is the result of dividing <tt>float</tt> by
       </div>
 
 
-      <div id="method-M000946" class="method-detail">
-        <a name="M000946"></a>
+      <div id="method-M000416" class="method-detail">
+        <a name="M000416"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000946.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000946.html');return false;">
+          <a href="Float.src/M000416.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000416.html');return false;">
 
           <span class="method-name">flt <= other    =>  true or false<br />
 </span>
@@ -543,13 +589,13 @@ Returns a new float which is the result of dividing <tt>float</tt> by
       </div>
 
 
-      <div id="method-M000942" class="method-detail">
-        <a name="M000942"></a>
+      <div id="method-M000412" class="method-detail">
+        <a name="M000412"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000942.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000942.html');return false;">
+          <a href="Float.src/M000412.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000412.html');return false;">
 
           <span class="method-name">flt <=> numeric   => -1, 0, +1<br />
 </span>
@@ -570,13 +616,13 @@ to, or greater than <em>numeric</em>. This is the basis for the tests in
       </div>
 
 
-      <div id="method-M000941" class="method-detail">
-        <a name="M000941"></a>
+      <div id="method-M000410" class="method-detail">
+        <a name="M000410"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000941.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000941.html');return false;">
+          <a href="Float.src/M000410.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000410.html');return false;">
 
           <span class="method-name">flt == obj   => true or false<br />
 </span>
@@ -590,7 +636,7 @@ to, or greater than <em>numeric</em>. This is the basis for the tests in
           <p>
 Returns <tt>true</tt> only if <em>obj</em> has the same value as
 <em>flt</em>. Contrast this with <tt><a
-href="Float.html#M000947">Float#eql?</a></tt>, which requires <em>obj</em>
+href="Float.html#M000417">Float#eql?</a></tt>, which requires <em>obj</em>
 to be a <tt>Float</tt>.
 </p>
 <pre>
@@ -601,13 +647,44 @@ to be a <tt>Float</tt>.
       </div>
 
 
-      <div id="method-M000943" class="method-detail">
-        <a name="M000943"></a>
+      <div id="method-M000411" class="method-detail">
+        <a name="M000411"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000943.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000943.html');return false;">
+          <a href="Float.src/M000411.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000411.html');return false;">
+
+          <span class="method-name">flt == obj   => true or false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns <tt>true</tt> only if <em>obj</em> has the same value as
+<em>flt</em>. Contrast this with <tt><a
+href="Float.html#M000417">Float#eql?</a></tt>, which requires <em>obj</em>
+to be a <tt>Float</tt>.
+</p>
+<pre>
+   1.0 == 1   #=&gt; true
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000413" class="method-detail">
+        <a name="M000413"></a>
+
+        <div class="method-heading">
+
+          <a href="Float.src/M000413.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000413.html');return false;">
 
           <span class="method-name">flt > other    =>  true or false<br />
 </span>
@@ -626,13 +703,13 @@ to be a <tt>Float</tt>.
       </div>
 
 
-      <div id="method-M000944" class="method-detail">
-        <a name="M000944"></a>
+      <div id="method-M000414" class="method-detail">
+        <a name="M000414"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000944.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000944.html');return false;">
+          <a href="Float.src/M000414.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000414.html');return false;">
 
           <span class="method-name">flt >= other    =>  true or false<br />
 </span>
@@ -651,13 +728,13 @@ to be a <tt>Float</tt>.
       </div>
 
 
-      <div id="method-M000950" class="method-detail">
-        <a name="M000950"></a>
+      <div id="method-M000420" class="method-detail">
+        <a name="M000420"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000950.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000950.html');return false;">
+          <a href="Float.src/M000420.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000420.html');return false;">
 
           <span class="method-name">flt.abs    => float<br />
 </span>
@@ -680,13 +757,67 @@ Returns the absolute value of <em>flt</em>.
       </div>
 
 
-      <div id="method-M000956" class="method-detail">
-        <a name="M000956"></a>
+      <div id="method-M000397" class="method-detail">
+        <a name="M000397"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000956.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000956.html');return false;">
+          <a href="Float.src/M000397.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000397.html');return false;">
+
+          <span class="method-name">flo.arg    &rarr;  0 or float<br />
+flo.angle  &rarr;  0 or float<br />
+flo.phase  &rarr;  0 or float<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns 0 if the value is positive, pi otherwise.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000396" class="method-detail">
+        <a name="M000396"></a>
+
+        <div class="method-heading">
+
+          <a href="Float.src/M000396.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000396.html');return false;">
+
+          <span class="method-name">flo.arg    &rarr;  0 or float<br />
+flo.angle  &rarr;  0 or float<br />
+flo.phase  &rarr;  0 or float<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns 0 if the value is positive, pi otherwise.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000426" class="method-detail">
+        <a name="M000426"></a>
+
+        <div class="method-heading">
+
+          <a href="Float.src/M000426.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000426.html');return false;">
 
           <span class="method-name">flt.ceil    => integer<br />
 </span>
@@ -712,13 +843,13 @@ Returns the smallest <tt>Integer</tt> greater than or equal to
       </div>
 
 
-      <div id="method-M000931" class="method-detail">
-        <a name="M000931"></a>
+      <div id="method-M000400" class="method-detail">
+        <a name="M000400"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000931.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000931.html');return false;">
+          <a href="Float.src/M000400.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000400.html');return false;">
 
           <span class="method-name">coerce</span><span class="method-args">(p1)</span>
 
@@ -736,13 +867,13 @@ MISSING: documentation
       </div>
 
 
-      <div id="method-M000962" class="method-detail">
-        <a name="M000962"></a>
+      <div id="method-M000432" class="method-detail">
+        <a name="M000432"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000962.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000962.html');return false;">
+          <a href="Float.src/M000432.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000432.html');return false;">
 
           <span class="method-name">dclone</span><span class="method-args">()</span>
 
@@ -756,13 +887,13 @@ MISSING: documentation
       </div>
 
 
-      <div id="method-M000939" class="method-detail">
-        <a name="M000939"></a>
+      <div id="method-M000408" class="method-detail">
+        <a name="M000408"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000939.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000939.html');return false;">
+          <a href="Float.src/M000408.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000408.html');return false;">
 
           <span class="method-name">flt.divmod(numeric)    => array<br />
 </span>
@@ -774,20 +905,20 @@ MISSING: documentation
         <div class="method-description">
 
           <p>
-See <tt><a href="Numeric.html#M000243">Numeric#divmod</a></tt>.
+See <tt><a href="Numeric.html#M000250">Numeric#divmod</a></tt>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M000947" class="method-detail">
-        <a name="M000947"></a>
+      <div id="method-M000417" class="method-detail">
+        <a name="M000417"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000947.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000947.html');return false;">
+          <a href="Float.src/M000417.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000417.html');return false;">
 
           <span class="method-name">flt.eql?(obj)   => true or false<br />
 </span>
@@ -811,13 +942,13 @@ performs type conversions.
       </div>
 
 
-      <div id="method-M000961" class="method-detail">
-        <a name="M000961"></a>
+      <div id="method-M000431" class="method-detail">
+        <a name="M000431"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000961.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000961.html');return false;">
+          <a href="Float.src/M000431.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000431.html');return false;">
 
           <span class="method-name">flt.finite? &rarr; true or false<br />
 </span>
@@ -837,13 +968,13 @@ Returns <tt>true</tt> if <em>flt</em> is a valid IEEE floating point number
       </div>
 
 
-      <div id="method-M000955" class="method-detail">
-        <a name="M000955"></a>
+      <div id="method-M000425" class="method-detail">
+        <a name="M000425"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000955.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000955.html');return false;">
+          <a href="Float.src/M000425.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000425.html');return false;">
 
           <span class="method-name">flt.floor   => integer<br />
 </span>
@@ -868,13 +999,13 @@ Returns the largest integer less than or equal to <em>flt</em>.
       </div>
 
 
-      <div id="method-M000948" class="method-detail">
-        <a name="M000948"></a>
+      <div id="method-M000418" class="method-detail">
+        <a name="M000418"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000948.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000948.html');return false;">
+          <a href="Float.src/M000418.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000418.html');return false;">
 
           <span class="method-name">flt.hash   => integer<br />
 </span>
@@ -893,13 +1024,13 @@ Returns a hash code for this float.
       </div>
 
 
-      <div id="method-M000960" class="method-detail">
-        <a name="M000960"></a>
+      <div id="method-M000430" class="method-detail">
+        <a name="M000430"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000960.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000960.html');return false;">
+          <a href="Float.src/M000430.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000430.html');return false;">
 
           <span class="method-name">flt.infinite? &rarr; nil, -1, +1<br />
 </span>
@@ -924,13 +1055,13 @@ finite, -infinity, or +infinity.
       </div>
 
 
-      <div id="method-M000951" class="method-detail">
-        <a name="M000951"></a>
+      <div id="method-M000421" class="method-detail">
+        <a name="M000421"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000951.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000951.html');return false;">
+          <a href="Float.src/M000421.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000421.html');return false;">
 
           <span class="method-name">flt.abs    => float<br />
 </span>
@@ -953,13 +1084,13 @@ Returns the absolute value of <em>flt</em>.
       </div>
 
 
-      <div id="method-M000938" class="method-detail">
-        <a name="M000938"></a>
+      <div id="method-M000407" class="method-detail">
+        <a name="M000407"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000938.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000938.html');return false;">
+          <a href="Float.src/M000407.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000407.html');return false;">
 
           <span class="method-name">flt % other         => float<br />
 flt.modulo(other)   => float<br />
@@ -983,13 +1114,13 @@ Return the modulo after division of <tt>flt</tt> by <tt>other</tt>.
       </div>
 
 
-      <div id="method-M000959" class="method-detail">
-        <a name="M000959"></a>
+      <div id="method-M000429" class="method-detail">
+        <a name="M000429"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000959.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000959.html');return false;">
+          <a href="Float.src/M000429.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000429.html');return false;">
 
           <span class="method-name">flt.nan? &rarr; true or false<br />
 </span>
@@ -1015,13 +1146,40 @@ number.
       </div>
 
 
-      <div id="method-M000957" class="method-detail">
-        <a name="M000957"></a>
+      <div id="method-M000398" class="method-detail">
+        <a name="M000398"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000957.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000957.html');return false;">
+          <a href="Float.src/M000398.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000398.html');return false;">
+
+          <span class="method-name">flo.arg    &rarr;  0 or float<br />
+flo.angle  &rarr;  0 or float<br />
+flo.phase  &rarr;  0 or float<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns 0 if the value is positive, pi otherwise.
+</p>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000427" class="method-detail">
+        <a name="M000427"></a>
+
+        <div class="method-heading">
+
+          <a href="Float.src/M000427.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000427.html');return false;">
 
           <span class="method-name">flt.round([ndigits])   => integer or float<br />
 </span>
@@ -1046,13 +1204,33 @@ ndigits is more than one.
       </div>
 
 
-      <div id="method-M000949" class="method-detail">
-        <a name="M000949"></a>
+      <div id="method-M000434" class="method-detail">
+        <a name="M000434"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000949.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000949.html');return false;">
+          <a href="Float.src/M000434.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000434.html');return false;">
+
+          <span class="method-name">to_d</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M000419" class="method-detail">
+        <a name="M000419"></a>
+
+        <div class="method-heading">
+
+          <a href="Float.src/M000419.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000419.html');return false;">
 
           <span class="method-name">flt.to_f   => flt<br />
 </span>
@@ -1071,13 +1249,13 @@ As <tt>flt</tt> is already a float, returns <em>self</em>.
       </div>
 
 
-      <div id="method-M000953" class="method-detail">
-        <a name="M000953"></a>
+      <div id="method-M000423" class="method-detail">
+        <a name="M000423"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000953.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000953.html');return false;">
+          <a href="Float.src/M000423.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000423.html');return false;">
 
           <span class="method-name">flt.to_i       => integer<br />
 flt.to_int     => integer<br />
@@ -1098,13 +1276,13 @@ Returns <em>flt</em> truncated to an <tt>Integer</tt>.
       </div>
 
 
-      <div id="method-M000954" class="method-detail">
-        <a name="M000954"></a>
+      <div id="method-M000424" class="method-detail">
+        <a name="M000424"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000954.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000954.html');return false;">
+          <a href="Float.src/M000424.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000424.html');return false;">
 
           <span class="method-name">flt.to_i       => integer<br />
 flt.to_int     => integer<br />
@@ -1125,13 +1303,13 @@ Returns <em>flt</em> truncated to an <tt>Integer</tt>.
       </div>
 
 
-      <div id="method-M000930" class="method-detail">
-        <a name="M000930"></a>
+      <div id="method-M000399" class="method-detail">
+        <a name="M000399"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000930.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000930.html');return false;">
+          <a href="Float.src/M000399.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000399.html');return false;">
 
           <span class="method-name">flt.to_s    => string<br />
 </span>
@@ -1153,13 +1331,13 @@ exponential form of the number, the call may return
       </div>
 
 
-      <div id="method-M000963" class="method-detail">
-        <a name="M000963"></a>
+      <div id="method-M000433" class="method-detail">
+        <a name="M000433"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000963.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000963.html');return false;">
+          <a href="Float.src/M000433.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000433.html');return false;">
 
           <span class="method-name">to_yaml</span><span class="method-args">( opts = {} )</span>
 
@@ -1173,13 +1351,13 @@ exponential form of the number, the call may return
       </div>
 
 
-      <div id="method-M000958" class="method-detail">
-        <a name="M000958"></a>
+      <div id="method-M000428" class="method-detail">
+        <a name="M000428"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000958.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000958.html');return false;">
+          <a href="Float.src/M000428.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000428.html');return false;">
 
           <span class="method-name">flt.to_i       => integer<br />
 flt.to_int     => integer<br />
@@ -1200,13 +1378,13 @@ Returns <em>flt</em> truncated to an <tt>Integer</tt>.
       </div>
 
 
-      <div id="method-M000952" class="method-detail">
-        <a name="M000952"></a>
+      <div id="method-M000422" class="method-detail">
+        <a name="M000422"></a>
 
         <div class="method-heading">
 
-          <a href="Float.src/M000952.html" target="Code" class="method-signature"
-            onclick="popupCode('Float.src/M000952.html');return false;">
+          <a href="Float.src/M000422.html" target="Code" class="method-signature"
+            onclick="popupCode('Float.src/M000422.html');return false;">
 
           <span class="method-name">flt.zero? &rarr; true or false<br />
 </span>

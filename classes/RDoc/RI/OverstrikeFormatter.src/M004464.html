@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>write_attribute_text (RDoc::RI::OverstrikeFormatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 352</span>
+352:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_attribute_text</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">line</span>)
+353:     <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">prefix</span>
+354: 
+355:     <span class="ruby-identifier">line</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">achar</span><span class="ruby-operator">|</span>
+356:       <span class="ruby-identifier">attr</span> = <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">attr</span>
+357:       <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">print</span> <span class="ruby-value str">&quot;_&quot;</span>, <span class="ruby-constant">BS</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">attr</span> <span class="ruby-operator">&amp;</span> (<span class="ruby-constant">ITALIC</span> <span class="ruby-operator">+</span> <span class="ruby-constant">CODE</span>)) <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+358:       <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">char</span>, <span class="ruby-constant">BS</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">attr</span> <span class="ruby-operator">&amp;</span> <span class="ruby-constant">BOLD</span>) <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
+359:       <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">achar</span>.<span class="ruby-identifier">char</span>
+360:     <span class="ruby-keyword kw">end</span>
+361: 
+362:     <span class="ruby-ivar">@output</span>.<span class="ruby-identifier">puts</span>
+363:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

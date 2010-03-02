@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>- (Date)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/date.rb, line 1352</span>
+1352:   <span class="ruby-keyword kw">def</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">x</span>)
+1353:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">x</span>
+1354:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>; <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new!</span>(<span class="ruby-ivar">@ajd</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">x</span>, <span class="ruby-ivar">@of</span>, <span class="ruby-ivar">@sg</span>)
+1355:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Date</span>;    <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@ajd</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">ajd</span>
+1356:     <span class="ruby-keyword kw">end</span>
+1357:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-value str">'expected numeric or date'</span>
+1358:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

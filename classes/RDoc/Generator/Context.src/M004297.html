@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>build_constants_summary_list (RDoc::Generator::Context)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 247</span>
+247:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_constants_summary_list</span>(<span class="ruby-identifier">section</span>)
+248:       <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">co</span><span class="ruby-operator">|</span>
+249:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">co</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section</span>
+250: 
+251:         <span class="ruby-identifier">res</span> = {
+252:           <span class="ruby-value str">'name'</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">co</span>.<span class="ruby-identifier">name</span>,
+253:           <span class="ruby-value str">'value'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">co</span>.<span class="ruby-identifier">value</span>)
+254:         }
+255: 
+256:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">co</span>.<span class="ruby-identifier">comment</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">co</span>.<span class="ruby-identifier">comment</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">then</span>
+257:           <span class="ruby-identifier">res</span>[<span class="ruby-value str">'desc'</span>] = <span class="ruby-identifier">markup</span> <span class="ruby-identifier">co</span>.<span class="ruby-identifier">comment</span>, <span class="ruby-keyword kw">true</span>
+258:         <span class="ruby-keyword kw">end</span>
+259: 
+260:         <span class="ruby-identifier">res</span>
+261:       <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">compact</span>
+262:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,44 +2,46 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>to_yaml (Time)</title>
+  <title>- (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 312</span>
-312:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_yaml</span>( <span class="ruby-identifier">opts</span> = {} )
-313:                 <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-identifier">quick_emit</span>( <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">opts</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">out</span><span class="ruby-operator">|</span>
-314:             <span class="ruby-identifier">tz</span> = <span class="ruby-value str">&quot;Z&quot;</span>
-315:             <span class="ruby-comment cmt"># from the tidy Tobias Peters &lt;t-peters@gmx.de&gt; Thanks!</span>
-316:             <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utc?</span>
-317:                 <span class="ruby-identifier">utc_same_instant</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">utc</span>
-318:                 <span class="ruby-identifier">utc_same_writing</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">year</span>,<span class="ruby-identifier">month</span>,<span class="ruby-identifier">day</span>,<span class="ruby-identifier">hour</span>,<span class="ruby-identifier">min</span>,<span class="ruby-identifier">sec</span>,<span class="ruby-identifier">usec</span>)
-319:                 <span class="ruby-identifier">difference_to_utc</span> = <span class="ruby-identifier">utc_same_writing</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">utc_same_instant</span>
-320:                 <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">difference_to_utc</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>) 
-321:                     <span class="ruby-identifier">difference_sign</span> = <span class="ruby-value str">'-'</span>
-322:                     <span class="ruby-identifier">absolute_difference</span> = <span class="ruby-operator">-</span><span class="ruby-identifier">difference_to_utc</span>
-323:                 <span class="ruby-keyword kw">else</span>
-324:                     <span class="ruby-identifier">difference_sign</span> = <span class="ruby-value str">'+'</span>
-325:                     <span class="ruby-identifier">absolute_difference</span> = <span class="ruby-identifier">difference_to_utc</span>
-326:                 <span class="ruby-keyword kw">end</span>
-327:                 <span class="ruby-identifier">difference_minutes</span> = (<span class="ruby-identifier">absolute_difference</span><span class="ruby-operator">/</span><span class="ruby-value">60</span>).<span class="ruby-identifier">round</span>
-328:                 <span class="ruby-identifier">tz</span> = <span class="ruby-value str">&quot;%s%02d:%02d&quot;</span> <span class="ruby-operator">%</span> [ <span class="ruby-identifier">difference_sign</span>, <span class="ruby-identifier">difference_minutes</span> <span class="ruby-operator">/</span> <span class="ruby-value">60</span>, <span class="ruby-identifier">difference_minutes</span> <span class="ruby-operator">%</span> <span class="ruby-value">60</span>]
-329:             <span class="ruby-keyword kw">end</span>
-330:             <span class="ruby-identifier">standard</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">strftime</span>( <span class="ruby-value str">&quot;%Y-%m-%d %H:%M:%S&quot;</span> )
-331:             <span class="ruby-identifier">standard</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot;.%06d&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">usec</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">usec</span>.<span class="ruby-identifier">nonzero?</span>
-332:             <span class="ruby-identifier">standard</span> <span class="ruby-operator">+=</span> <span class="ruby-value str">&quot; %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">tz</span>]
-333:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">empty?</span>
-334:                 <span class="ruby-identifier">out</span>.<span class="ruby-identifier">scalar</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-identifier">standard</span>, <span class="ruby-identifier">:plain</span> )
-335:             <span class="ruby-keyword kw">else</span>
-336:                 <span class="ruby-identifier">out</span>.<span class="ruby-identifier">map</span>( <span class="ruby-identifier">taguri</span>, <span class="ruby-identifier">to_yaml_style</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">map</span><span class="ruby-operator">|</span>
-337:                     <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-value str">'at'</span>, <span class="ruby-identifier">standard</span> )
-338:                     <span class="ruby-identifier">to_yaml_properties</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
-339:                         <span class="ruby-identifier">map</span>.<span class="ruby-identifier">add</span>( <span class="ruby-identifier">m</span>, <span class="ruby-identifier">instance_variable_get</span>( <span class="ruby-identifier">m</span> ) )
-340:                     <span class="ruby-keyword kw">end</span>
-341:                 <span class="ruby-keyword kw">end</span>
-342:             <span class="ruby-keyword kw">end</span>
-343:         <span class="ruby-keyword kw">end</span>
-344:         <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     time - other_time =&gt; float
+ *     time - numeric    =&gt; time
+ *  
+ *  Difference---Returns a new time that represents the difference
+ *  between two times, or subtracts the given number of seconds in
+ *  &lt;i&gt;numeric&lt;/i&gt; from &lt;i&gt;time&lt;/i&gt;.
+ *     
+ *     t = Time.now       #=&gt; 2007-11-19 08:23:10 -0600
+ *     t2 = t + 2592000   #=&gt; 2007-12-19 08:23:10 -0600
+ *     t2 - t             #=&gt; 2592000.0
+ *     t2 - 2592000       #=&gt; 2007-11-19 08:23:10 -0600
+ */
+
+static VALUE
+time_minus(VALUE time1, VALUE time2)
+{
+    struct time_object *tobj;
+
+    GetTimeval(time1, tobj);
+    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
+        struct time_object *tobj2;
+        double f;
+
+        GetTimeval(time2, tobj2);
+        if (tobj-&gt;ts.tv_sec &lt; tobj2-&gt;ts.tv_sec)
+            f = -(double)(unsigned_time_t)(tobj2-&gt;ts.tv_sec - tobj-&gt;ts.tv_sec);
+        else
+            f = (double)(unsigned_time_t)(tobj-&gt;ts.tv_sec - tobj2-&gt;ts.tv_sec);
+        f += ((double)tobj-&gt;ts.tv_nsec - (double)tobj2-&gt;ts.tv_nsec)*1e-9;
+
+        return DBL2NUM(f);
+    }
+    return time_add(tobj, time2, -1);
+}</pre>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_text (OpenSSL::X509::Certificate)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *    cert.to_text =&gt; string
+ */
+static VALUE
+ossl_x509_to_text(VALUE self)
+{
+    X509 *x509;
+    BIO *out;
+    VALUE str;
+        
+    GetX509(self, x509);
+
+    out = BIO_new(BIO_s_mem());
+    if (!out) ossl_raise(eX509CertError, NULL);
+
+    if (!X509_print(out, x509)) {
+        BIO_free(out);
+        ossl_raise(eX509CertError, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+</body>
+</html>

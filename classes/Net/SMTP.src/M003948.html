@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>open_message_stream (Net::SMTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/smtp.rb, line 705</span>
+705:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">open_message_stream</span>(<span class="ruby-identifier">from_addr</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">to_addrs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)   <span class="ruby-comment cmt"># :yield: stream</span>
+706:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-value str">'closed session'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@socket</span>
+707:       <span class="ruby-identifier">mailfrom</span> <span class="ruby-identifier">from_addr</span>
+708:       <span class="ruby-identifier">rcptto_list</span> <span class="ruby-identifier">to_addrs</span>
+709:       <span class="ruby-identifier">data</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+710:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

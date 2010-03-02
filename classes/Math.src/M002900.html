@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>atanh (Math)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Math.atanh(x)    =&gt; float
+ *  
+ *  Computes the inverse hyperbolic tangent of &lt;i&gt;x&lt;/i&gt;.
+ */
+
+static VALUE
+math_atanh(VALUE obj, VALUE x)
+{
+    double d0, d;
+
+    Need_Float(x);
+    errno = 0;
+    d0 = RFLOAT_VALUE(x);
+    d = atanh(d0);
+    domain_check(d0, d, &quot;atanh&quot;);
+    infinity_check(x, d, &quot;atanh&quot;);
+    return DBL2NUM(d);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_feed (RSS::Maker::RSS09::Channel::SkipDays)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>    <span class="ruby-comment cmt"># File lib/rss/maker/0.9.rb, line 71</span>
+71:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">rss</span>, <span class="ruby-identifier">channel</span>)
+72:             <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@days</span>.<span class="ruby-identifier">empty?</span>
+73:               <span class="ruby-identifier">skipDays</span> = <span class="ruby-constant">Rss</span><span class="ruby-operator">::</span><span class="ruby-constant">Channel</span><span class="ruby-operator">::</span><span class="ruby-constant">SkipDays</span>.<span class="ruby-identifier">new</span>
+74:               <span class="ruby-identifier">channel</span>.<span class="ruby-identifier">skipDays</span> = <span class="ruby-identifier">skipDays</span>
+75:               <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">skipDays</span>, <span class="ruby-identifier">channel</span>)
+76:               <span class="ruby-ivar">@days</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">day</span><span class="ruby-operator">|</span>
+77:                 <span class="ruby-identifier">day</span>.<span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">rss</span>, <span class="ruby-identifier">skipDays</span>.<span class="ruby-identifier">days</span>)
+78:               <span class="ruby-keyword kw">end</span>
+79:             <span class="ruby-keyword kw">end</span>
+80:           <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: OpenSSL::SSL::SSLSocket [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">OpenSSL::SSL::SSLSocket</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/ext/openssl/ossl_ssl_c.html">
+
+                ext/openssl/ossl_ssl.c
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../../Object.html">
+
+                Object
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+class <a href="SSLSocket.html">SSLSocket</a>
+</p>
+<pre>
+    The following attributes are available but don't show up in rdoc.
+    * io, context, sync_close
+</pre>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M007307">accept</a>&nbsp;&nbsp;
+
+        <a href="#M007311">cert</a>&nbsp;&nbsp;
+
+        <a href="#M007314">cipher</a>&nbsp;&nbsp;
+
+        <a href="#M007306">connect</a>&nbsp;&nbsp;
+
+        <a href="#M007305">new</a>&nbsp;&nbsp;
+
+        <a href="#M007312">peer_cert</a>&nbsp;&nbsp;
+
+        <a href="#M007313">peer_cert_chain</a>&nbsp;&nbsp;
+
+        <a href="#M007316">pending</a>&nbsp;&nbsp;
+
+        <a href="#M007318">session=</a>&nbsp;&nbsp;
+
+        <a href="#M007317">session_reused?</a>&nbsp;&nbsp;
+
+        <a href="#M007315">state</a>&nbsp;&nbsp;
+
+        <a href="#M007310">sysclose</a>&nbsp;&nbsp;
+
+        <a href="#M007308">sysread</a>&nbsp;&nbsp;
+
+        <a href="#M007309">syswrite</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+      <table summary="aliases">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">io</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">to_io</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M007305" class="method-detail">
+        <a name="M007305"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007305.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007305.html');return false;">
+
+          <span class="method-name">SSLSocket.new(io) => aSSLSocket<br />
+SSLSocket.new(io, ctx) => aSSLSocket<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h3>Parameters</h3>
+<ul>
+<li><tt>io</tt> is a real ruby <a href="../../IO.html">IO</a> object. Not an <a
+href="../../IO.html">IO</a> like object that responds to read/write.
+
+</li>
+<li><tt>ctx</tt> is an OpenSSLSSL::SSLContext.
+
+</li>
+</ul>
+<p>
+The <a href="../../Buffering.html">OpenSSL::Buffering</a> module provides
+additional <a href="../../IO.html">IO</a> methods.
+</p>
+<p>
+This method will freeze the <a href="SSLContext.html">SSLContext</a> if one
+is provided; however, session management is still allowed in the frozen <a
+href="SSLContext.html">SSLContext</a>.
+</p>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M007307" class="method-detail">
+        <a name="M007307"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007307.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007307.html');return false;">
+
+          <span class="method-name">accept</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.accept =&gt; self
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007311" class="method-detail">
+        <a name="M007311"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007311.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007311.html');return false;">
+
+          <span class="method-name">cert</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.cert =&gt; cert or nil
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007314" class="method-detail">
+        <a name="M007314"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007314.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007314.html');return false;">
+
+          <span class="method-name">cipher</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.cipher =&gt; [name, version, bits, alg_bits]
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007306" class="method-detail">
+        <a name="M007306"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007306.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007306.html');return false;">
+
+          <span class="method-name">connect</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.connect =&gt; self
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007312" class="method-detail">
+        <a name="M007312"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007312.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007312.html');return false;">
+
+          <span class="method-name">peer_cert</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.peer_cert =&gt; cert or nil
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007313" class="method-detail">
+        <a name="M007313"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007313.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007313.html');return false;">
+
+          <span class="method-name">peer_cert_chain</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.peer_cert_chain =&gt; [cert, ...] or nil
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007316" class="method-detail">
+        <a name="M007316"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007316.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007316.html');return false;">
+
+          <span class="method-name">pending</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.pending =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007318" class="method-detail">
+        <a name="M007318"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007318.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007318.html');return false;">
+
+          <span class="method-name">ssl.session = session &rarr; session<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007317" class="method-detail">
+        <a name="M007317"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007317.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007317.html');return false;">
+
+          <span class="method-name">ssl.session_reused? &rarr; true | false<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+        </div>
+      </div>
+
+
+      <div id="method-M007315" class="method-detail">
+        <a name="M007315"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007315.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007315.html');return false;">
+
+          <span class="method-name">state</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.state =&gt; string
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007310" class="method-detail">
+        <a name="M007310"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007310.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007310.html');return false;">
+
+          <span class="method-name">sysclose</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.sysclose =&gt; nil
+</pre>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007308" class="method-detail">
+        <a name="M007308"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007308.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007308.html');return false;">
+
+          <span class="method-name">ssl.sysread(length) => string<br />
+ssl.sysread(length, buffer) => buffer<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <h3>Parameters</h3>
+<ul>
+<li><tt>length</tt> is a positive integer.
+
+</li>
+<li><tt>buffer</tt> is a string used to store the result.
+
+</li>
+</ul>
+
+        </div>
+      </div>
+
+
+      <div id="method-M007309" class="method-detail">
+        <a name="M007309"></a>
+
+        <div class="method-heading">
+
+          <a href="SSLSocket.src/M007309.html" target="Code" class="method-signature"
+            onclick="popupCode('SSLSocket.src/M007309.html');return false;">
+
+          <span class="method-name">syswrite</span><span class="method-args">(p1)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+call-seq:
+</p>
+<pre>
+   ssl.syswrite(string) =&gt; integer
+</pre>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

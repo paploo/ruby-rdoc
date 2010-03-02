@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>as_href (RDoc::Generator::Method)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/generator.rb, line 867</span>
+867:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_href</span>(<span class="ruby-identifier">from_path</span>)
+868:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">all_one_file</span>
+869:         <span class="ruby-value str">&quot;#&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">path</span>
+870:       <span class="ruby-keyword kw">else</span>
+871:         <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">ToHtml</span>.<span class="ruby-identifier">gen_relative_url</span> <span class="ruby-identifier">from_path</span>, <span class="ruby-identifier">path</span>
+872:       <span class="ruby-keyword kw">end</span>
+873:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -2,33 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pipe? (File)</title>
+  <title>chmod (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   File.pipe?(file_name)   =&gt;  true or false
- *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a pipe.
+ *  call-seq:
+ *     File.chmod(mode_int, file_name, ... ) -&gt; integer
+ *  
+ *  Changes permission bits on the named file(s) to the bit pattern
+ *  represented by &lt;i&gt;mode_int&lt;/i&gt;. Actual effects are operating system
+ *  dependent (see the beginning of this section). On Unix systems, see
+ *  &lt;code&gt;chmod(2)&lt;/code&gt; for details. Returns the number of files
+ *  processed.
+ *     
+ *     File.chmod(0644, &quot;testfile&quot;, &quot;out&quot;)   #=&gt; 2
  */
 
 static VALUE
-rb_file_pipe_p(VALUE obj, VALUE fname)
+rb_file_s_chmod(int argc, VALUE *argv)
 {
-#ifdef S_IFIFO
-#  ifndef S_ISFIFO
-#    define S_ISFIFO(m) ((m &amp; S_IFMT) == S_IFIFO)
-#  endif
+    VALUE vmode;
+    VALUE rest;
+    int mode;
+    long n;
 
-    struct stat st;
+    rb_secure(2);
+    rb_scan_args(argc, argv, &quot;1*&quot;, &amp;vmode, &amp;rest);
+    mode = NUM2INT(vmode);
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (S_ISFIFO(st.st_mode)) return Qtrue;
-
-#endif
-    return Qfalse;
+    n = apply2files(chmod_internal, rest, &amp;mode);
+    return LONG2FIX(n);
 }</pre>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>=== (Fixnum)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   fix == other
+ *
+ * Return &lt;code&gt;true&lt;/code&gt; if &lt;code&gt;fix&lt;/code&gt; equals &lt;code&gt;other&lt;/code&gt;
+ * numerically.
+ *
+ *   1 == 2      #=&gt; false
+ *   1 == 1.0    #=&gt; true
+ */
+
+static VALUE
+fix_equal(VALUE x, VALUE y)
+{
+    if (x == y) return Qtrue;
+    if (FIXNUM_P(y)) return Qfalse;
+    switch (TYPE(y)) {
+      case T_BIGNUM:
+        return rb_big_eq(y, x);
+      case T_FLOAT:
+        return (double)FIX2LONG(x) == RFLOAT_VALUE(y) ? Qtrue : Qfalse;
+      default:
+        return num_equal(x, y);
+    }
+}</pre>
+</body>
+</html>

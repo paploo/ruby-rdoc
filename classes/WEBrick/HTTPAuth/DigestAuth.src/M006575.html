@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_uri (WEBrick::HTTPAuth::DigestAuth)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httpauth/digestauth.rb, line 319</span>
+319:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_uri</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">auth_req</span>)
+320:         <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">auth_req</span>[<span class="ruby-value str">'uri'</span>]
+321:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">uri</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_uri</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">uri</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">unparsed_uri</span> <span class="ruby-operator">&amp;&amp;</span>
+322:            (<span class="ruby-ivar">@internet_explorer_hack</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">uri</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path</span>)
+323:           <span class="ruby-identifier">error</span>(<span class="ruby-value str">'%s: uri unmatch. &quot;%s&quot; for &quot;%s&quot;'</span>, <span class="ruby-identifier">auth_req</span>[<span class="ruby-value str">'username'</span>], 
+324:                 <span class="ruby-identifier">auth_req</span>[<span class="ruby-value str">'uri'</span>], <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_uri</span>.<span class="ruby-identifier">to_s</span>)
+325:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+326:         <span class="ruby-keyword kw">end</span>
+327:         <span class="ruby-keyword kw">true</span>
+328:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse228 (Net::FTP)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/net/ftp.rb, line 898</span>
+898:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse228</span>(<span class="ruby-identifier">resp</span>)
+899:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">resp</span>[<span class="ruby-value">0</span>, <span class="ruby-value">3</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;228&quot;</span>
+900:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPReplyError</span>, <span class="ruby-identifier">resp</span>
+901:       <span class="ruby-keyword kw">end</span>
+902:       <span class="ruby-identifier">left</span> = <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;(&quot;</span>)
+903:       <span class="ruby-identifier">right</span> = <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;)&quot;</span>)
+904:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">left</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span>
+905:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+906:       <span class="ruby-keyword kw">end</span>
+907:       <span class="ruby-identifier">numbers</span> = <span class="ruby-identifier">resp</span>[<span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;,&quot;</span>)
+908:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;4&quot;</span>
+909:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">numbers</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-value">9</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;4&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">2</span> <span class="ruby-operator">+</span> <span class="ruby-value">4</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;2&quot;</span>
+910:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+911:         <span class="ruby-keyword kw">end</span>
+912:         <span class="ruby-identifier">host</span> = <span class="ruby-identifier">numbers</span>[<span class="ruby-value">2</span>, <span class="ruby-value">4</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;.&quot;</span>)
+913:         <span class="ruby-identifier">port</span> = (<span class="ruby-identifier">numbers</span>[<span class="ruby-value">7</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">8</span>].<span class="ruby-identifier">to_i</span>
+914:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;6&quot;</span>
+915:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">numbers</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">!=</span> <span class="ruby-value">21</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;16&quot;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">2</span> <span class="ruby-operator">+</span> <span class="ruby-value">16</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;2&quot;</span>
+916:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">FTPProtoError</span>, <span class="ruby-identifier">resp</span>
+917:         <span class="ruby-keyword kw">end</span>
+918:         <span class="ruby-identifier">v6</span> = [<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>]
+919:         <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">in</span> <span class="ruby-value">0</span> <span class="ruby-operator">..</span> <span class="ruby-value">7</span>
+920:           <span class="ruby-identifier">v6</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">sprintf</span>(<span class="ruby-value str">&quot;%02x%02x&quot;</span>, <span class="ruby-identifier">numbers</span>[(<span class="ruby-identifier">i</span> <span class="ruby-operator">*</span> <span class="ruby-value">2</span>) <span class="ruby-operator">+</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">to_i</span>,
+921:                           <span class="ruby-identifier">numbers</span>[(<span class="ruby-identifier">i</span> <span class="ruby-operator">*</span> <span class="ruby-value">2</span>) <span class="ruby-operator">+</span> <span class="ruby-value">3</span>].<span class="ruby-identifier">to_i</span>)
+922:         <span class="ruby-keyword kw">end</span>
+923:         <span class="ruby-identifier">host</span> = <span class="ruby-identifier">v6</span>[<span class="ruby-value">0</span>, <span class="ruby-value">8</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;:&quot;</span>)
+924:         <span class="ruby-identifier">port</span> = (<span class="ruby-identifier">numbers</span>[<span class="ruby-value">19</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">8</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">numbers</span>[<span class="ruby-value">20</span>].<span class="ruby-identifier">to_i</span>
+925:       <span class="ruby-keyword kw">end</span> 
+926:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>
+927:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

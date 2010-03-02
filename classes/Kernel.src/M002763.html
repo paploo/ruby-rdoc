@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>rand (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     rand(max=0)    =&gt; number
+ *  
+ *  Converts &lt;i&gt;max&lt;/i&gt; to an integer using max1 =
+ *  max&lt;code&gt;.to_i.abs&lt;/code&gt;. If the result is zero, returns a
+ *  pseudorandom floating point number greater than or equal to 0.0 and
+ *  less than 1.0. Otherwise, returns a pseudorandom integer greater
+ *  than or equal to zero and less than max1. &lt;code&gt;Kernel::srand&lt;/code&gt;
+ *  may be used to ensure repeatable sequences of random numbers between
+ *  different runs of the program. Ruby currently uses a modified
+ *  Mersenne Twister with a period of 2**19937-1.
+ *     
+ *     srand 1234                 #=&gt; 0
+ *     [ rand,  rand ]            #=&gt; [0.191519450163469, 0.49766366626136]
+ *     [ rand(10), rand(1000) ]   #=&gt; [6, 817]
+ *     srand 1234                 #=&gt; 1234
+ *     [ rand,  rand ]            #=&gt; [0.191519450163469, 0.49766366626136]
+ */
+
+static VALUE
+rb_f_rand(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE vmax;
+    long val, max;
+    struct MT *mt = &amp;default_mt.mt;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;vmax);
+    if (!genrand_initialized(mt)) {
+        rand_init(mt, random_seed());
+    }
+    switch (TYPE(vmax)) {
+      case T_FLOAT:
+        if (RFLOAT_VALUE(vmax) &lt;= LONG_MAX &amp;&amp; RFLOAT_VALUE(vmax) &gt;= LONG_MIN) {
+            max = (long)RFLOAT_VALUE(vmax);
+            break;
+        }
+        if (RFLOAT_VALUE(vmax) &lt; 0)
+            vmax = rb_dbl2big(-RFLOAT_VALUE(vmax));
+        else
+            vmax = rb_dbl2big(RFLOAT_VALUE(vmax));
+        /* fall through */
+      case T_BIGNUM:
+      bignum:
+        {
+            struct RBignum *limit = (struct RBignum *)vmax;
+            if (!RBIGNUM_SIGN(limit)) {
+                limit = (struct RBignum *)rb_big_clone(vmax);
+                RBIGNUM_SET_SIGN(limit, 1);
+            }
+            limit = (struct RBignum *)rb_big_minus((VALUE)limit, INT2FIX(1));
+            if (FIXNUM_P((VALUE)limit)) {
+                if (FIX2LONG((VALUE)limit) == -1)
+                    return DBL2NUM(genrand_real(mt));
+                return LONG2NUM(limited_rand(mt, FIX2LONG((VALUE)limit)));
+            }
+            return limited_big_rand(mt, limit);
+        }
+      case T_NIL:
+        max = 0;
+        break;
+      default:
+        vmax = rb_Integer(vmax);
+        if (TYPE(vmax) == T_BIGNUM) goto bignum;
+      case T_FIXNUM:
+        max = FIX2LONG(vmax);
+        break;
+    }
+
+    if (max == 0) {
+        return DBL2NUM(genrand_real(mt));
+    }
+    if (max &lt; 0) max = -max;
+    val = limited_rand(mt, max-1);
+    return LONG2NUM(val);
+}</pre>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>putc (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     putc(int)   =&gt; int
+ *
+ *  Equivalent to:
+ *
+ *    $stdout.putc(int)
+ */
+
+static VALUE
+rb_f_putc(VALUE recv, VALUE ch)
+{
+    if (recv == rb_stdout) {
+        return rb_io_putc(recv, ch);
+    }
+    return rb_funcall2(rb_stdout, rb_intern(&quot;putc&quot;), 1, &amp;ch);
+}</pre>
+</body>
+</html>

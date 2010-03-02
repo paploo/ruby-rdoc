@@ -41,8 +41,8 @@ rb_big_lshift(VALUE x, VALUE y)
         y = rb_to_int(y);
     }
 
-    if (neg) return big_rshift(x, shift);
-    return big_lshift(x, shift);
+    x = neg ? big_rshift(x, shift) : big_lshift(x, shift);
+    return bignorm(x);
 }</pre>
 </body>
 </html>

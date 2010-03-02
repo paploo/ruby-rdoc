@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>generate_key (OpenSSL::PKey::EC)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     key.generate_key   =&gt; self
+ *
+ *  See the OpenSSL documentation for EC_KEY_generate_key()
+ */
+static VALUE ossl_ec_key_generate_key(VALUE self)
+{
+    EC_KEY *ec;
+
+    Require_EC_KEY(self, ec);
+
+    if (EC_KEY_generate_key(ec) != 1)
+        ossl_raise(eECError, &quot;EC_KEY_generate_key&quot;);
+
+    return self;
+}</pre>
+</body>
+</html>

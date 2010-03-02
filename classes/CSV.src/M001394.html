@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>add_converter (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 2140</span>
+2140:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_converter</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">const</span>, <span class="ruby-identifier">name</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">converter</span>)
+2141:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">nil?</span>  <span class="ruby-comment cmt"># custom converter</span>
+2142:       <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{var_name}&quot;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">converter</span>
+2143:     <span class="ruby-keyword kw">else</span>          <span class="ruby-comment cmt"># named converter</span>
+2144:       <span class="ruby-identifier">combo</span> = <span class="ruby-identifier">const</span>[<span class="ruby-identifier">name</span>]
+2145:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">combo</span>
+2146:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>  <span class="ruby-comment cmt"># combo converter</span>
+2147:         <span class="ruby-identifier">combo</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">converter_name</span><span class="ruby-operator">|</span>
+2148:           <span class="ruby-identifier">add_converter</span>(<span class="ruby-identifier">var_name</span>, <span class="ruby-identifier">const</span>, <span class="ruby-identifier">converter_name</span>)
+2149:         <span class="ruby-keyword kw">end</span>
+2150:       <span class="ruby-keyword kw">else</span>        <span class="ruby-comment cmt"># individual named converter</span>
+2151:         <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{var_name}&quot;</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">combo</span>
+2152:       <span class="ruby-keyword kw">end</span>
+2153:     <span class="ruby-keyword kw">end</span>
+2154:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

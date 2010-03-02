@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>eql? (Proc)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *   prc == other_proc   =&gt;  true or false
+ *
+ * Return &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;prc&lt;/i&gt; is the same object as
+ * &lt;i&gt;other_proc&lt;/i&gt;, or if they are both procs with the same body.
+ */
+
+static VALUE
+proc_eq(VALUE self, VALUE other)
+{
+    if (self == other) {
+        return Qtrue;
+    }
+    else {
+        if (TYPE(other)          == T_DATA &amp;&amp;
+            RDATA(other)-&gt;dmark  == proc_mark) {
+            rb_proc_t *p1, *p2;
+            GetProcPtr(self, p1);
+            GetProcPtr(other, p2);
+            if (p1-&gt;envval == p2-&gt;envval &amp;&amp;
+                p1-&gt;block.iseq-&gt;iseq_size == p2-&gt;block.iseq-&gt;iseq_size &amp;&amp;
+                p1-&gt;block.iseq-&gt;local_size == p2-&gt;block.iseq-&gt;local_size &amp;&amp;
+                MEMCMP(p1-&gt;block.iseq-&gt;iseq, p2-&gt;block.iseq-&gt;iseq, VALUE,
+                       p1-&gt;block.iseq-&gt;iseq_size) == 0) {
+                return Qtrue;
+            }
+        }
+    }
+    return Qfalse;
+}</pre>
+</body>
+</html>

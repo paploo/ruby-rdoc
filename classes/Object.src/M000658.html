@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>singleton_methods (Object)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     obj.singleton_methods(all=true)    =&gt; array
+ *  
+ *  Returns an array of the names of singleton methods for &lt;i&gt;obj&lt;/i&gt;.
+ *  If the optional &lt;i&gt;all&lt;/i&gt; parameter is true, the list will include
+ *  methods in modules included in &lt;i&gt;obj&lt;/i&gt;.
+ *     
+ *     module Other
+ *       def three() end
+ *     end
+ *     
+ *     class Single
+ *       def Single.four() end
+ *     end
+ *     
+ *     a = Single.new
+ *     
+ *     def a.one()
+ *     end
+ *     
+ *     class &lt;&lt; a
+ *       include Other
+ *       def two()
+ *       end
+ *     end
+ *     
+ *     Single.singleton_methods    #=&gt; [:four]
+ *     a.singleton_methods(false)  #=&gt; [:two, :one]
+ *     a.singleton_methods         #=&gt; [:two, :one, :three]
+ */
+
+VALUE
+rb_obj_singleton_methods(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE recur, ary, klass;
+    st_table *list;
+
+    if (argc == 0) {
+	recur = Qtrue;
+    }
+    else {
+	rb_scan_args(argc, argv, &quot;01&quot;, &amp;recur);
+    }
+    klass = CLASS_OF(obj);
+    list = st_init_numtable();
+    if (klass &amp;&amp; FL_TEST(klass, FL_SINGLETON)) {
+	st_foreach(RCLASS_M_TBL(klass), method_entry, (st_data_t)list);
+	klass = RCLASS_SUPER(klass);
+    }
+    if (RTEST(recur)) {
+	while (klass &amp;&amp; (FL_TEST(klass, FL_SINGLETON) || TYPE(klass) == T_ICLASS)) {
+	    st_foreach(RCLASS_M_TBL(klass), method_entry, (st_data_t)list);
+	    klass = RCLASS_SUPER(klass);
+	}
+    }
+    ary = rb_ary_new();
+    st_foreach(list, ins_methods_i, ary);
+    st_free_table(list);
+
+    return ary;
+}</pre>
+</body>
+</html>

@@ -2,36 +2,51 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>open (File)</title>
+  <title>rename (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- *  Document-method: IO::open
- *
  *  call-seq:
- *     IO.open(fd, mode_string=&quot;r&quot; [, opt] )               =&gt; io
- *     IO.open(fd, mode_string=&quot;r&quot; [, opt] ) {|io| block } =&gt; obj
- *
- *  With no associated block, &lt;code&gt;open&lt;/code&gt; is a synonym for
- *  &lt;code&gt;IO.new&lt;/code&gt;. If the optional code block is given, it will
- *  be passed &lt;i&gt;io&lt;/i&gt; as an argument, and the IO object will
- *  automatically be closed when the block terminates. In this instance,
- *  &lt;code&gt;IO.open&lt;/code&gt; returns the value of the block.
- *
+ *     File.rename(old_name, new_name)   =&gt; 0
+ *  
+ *  Renames the given file to the new name. Raises a
+ *  &lt;code&gt;SystemCallError&lt;/code&gt; if the file cannot be renamed.
+ *     
+ *     File.rename(&quot;afile&quot;, &quot;afile.bak&quot;)   #=&gt; 0
  */
 
 static VALUE
-rb_io_s_open(int argc, VALUE *argv, VALUE klass)
+rb_file_s_rename(VALUE klass, VALUE from, VALUE to)
 {
-    VALUE io = rb_class_new_instance(argc, argv, klass);
+    const char *src, *dst;
 
-    if (rb_block_given_p()) {
-        return rb_ensure(rb_yield, io, io_close, io);
+    rb_secure(2);
+    FilePathValue(from);
+    FilePathValue(to);
+    src = StringValueCStr(from);
+    dst = StringValueCStr(to);
+#if defined __CYGWIN__
+    errno = 0;
+#endif
+    if (rename(src, dst) &lt; 0) {
+#if defined DOSISH &amp;&amp; !defined _WIN32
+        switch (errno) {
+          case EEXIST:
+#if defined (__EMX__)
+          case EACCES:
+#endif
+            if (chmod(dst, 0666) == 0 &amp;&amp;
+                unlink(dst) == 0 &amp;&amp;
+                rename(src, dst) == 0)
+                return INT2FIX(0);
+        }
+#endif
+        sys_fail2(from, to);
     }
 
-    return io;
+    return INT2FIX(0);
 }</pre>
 </body>
 </html>

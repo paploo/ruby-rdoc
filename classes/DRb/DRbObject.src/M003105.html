@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>respond_to? (DRb::DRbObject)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/drb/drb.rb, line 1067</span>
+1067:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">msg_id</span>, <span class="ruby-identifier">priv</span>=<span class="ruby-keyword kw">false</span>)
+1068:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">msg_id</span>
+1069:       <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:_dump</span>
+1070:         <span class="ruby-keyword kw">true</span>
+1071:       <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:marshal_dump</span>
+1072:         <span class="ruby-keyword kw">false</span>
+1073:       <span class="ruby-keyword kw">else</span>
+1074:         <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">:respond_to?</span>, <span class="ruby-identifier">msg_id</span>, <span class="ruby-identifier">priv</span>)
+1075:       <span class="ruby-keyword kw">end</span>
+1076:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

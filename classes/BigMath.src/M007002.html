@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>exp (BigMath)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/bigdecimal/lib/bigdecimal/math.rb, line 132</span>
+132:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exp</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">prec</span>)
+133:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Zero or negative precision for exp&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prec</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+134:     <span class="ruby-keyword kw">return</span> <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;NaN&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">infinite?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">nan?</span>
+135:     <span class="ruby-identifier">n</span>    = <span class="ruby-identifier">prec</span> <span class="ruby-operator">+</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+136:     <span class="ruby-identifier">one</span>  = <span class="ruby-constant">BigDecimal</span>(<span class="ruby-value str">&quot;1&quot;</span>)
+137:     <span class="ruby-identifier">x1</span> = <span class="ruby-identifier">one</span>
+138:     <span class="ruby-identifier">y</span>  = <span class="ruby-identifier">one</span>
+139:     <span class="ruby-identifier">d</span>  = <span class="ruby-identifier">y</span>
+140:     <span class="ruby-identifier">z</span>  = <span class="ruby-identifier">one</span>
+141:     <span class="ruby-identifier">i</span>  = <span class="ruby-value">0</span>
+142:     <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">nonzero?</span> <span class="ruby-operator">&amp;&amp;</span> ((<span class="ruby-identifier">m</span> = <span class="ruby-identifier">n</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">y</span>.<span class="ruby-identifier">exponent</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">exponent</span>).<span class="ruby-identifier">abs</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>)
+143:       <span class="ruby-identifier">m</span> = <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">BigDecimal</span>.<span class="ruby-identifier">double_fig</span>
+144:       <span class="ruby-identifier">x1</span>  = <span class="ruby-identifier">x1</span>.<span class="ruby-identifier">mult</span>(<span class="ruby-identifier">x</span>,<span class="ruby-identifier">n</span>)
+145:       <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+146:       <span class="ruby-identifier">z</span> <span class="ruby-operator">*=</span> <span class="ruby-identifier">i</span>
+147:       <span class="ruby-identifier">d</span>  = <span class="ruby-identifier">x1</span>.<span class="ruby-identifier">div</span>(<span class="ruby-identifier">z</span>,<span class="ruby-identifier">m</span>)
+148:       <span class="ruby-identifier">y</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">d</span>
+149:     <span class="ruby-keyword kw">end</span>
+150:     <span class="ruby-identifier">y</span>
+151:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

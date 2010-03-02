@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parse_visibility (RDoc::Parser::Ruby)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/rdoc/parser/ruby.rb, line 2543</span>
+2543:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_visibility</span>(<span class="ruby-identifier">container</span>, <span class="ruby-identifier">single</span>, <span class="ruby-identifier">tk</span>)
+2544:     <span class="ruby-identifier">singleton</span> = (<span class="ruby-identifier">single</span> <span class="ruby-operator">==</span> <span class="ruby-constant">SINGLE</span>)
+2545: 
+2546:     <span class="ruby-identifier">vis_type</span> = <span class="ruby-identifier">tk</span>.<span class="ruby-identifier">name</span>
+2547: 
+2548:     <span class="ruby-identifier">vis</span> = <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">vis_type</span>
+2549:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'private'</span>   <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:private</span>
+2550:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'protected'</span> <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:protected</span>
+2551:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'public'</span>    <span class="ruby-keyword kw">then</span> <span class="ruby-identifier">:public</span>
+2552:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'private_class_method'</span> <span class="ruby-keyword kw">then</span>
+2553:             <span class="ruby-identifier">singleton</span> = <span class="ruby-keyword kw">true</span>
+2554:             <span class="ruby-identifier">:private</span>
+2555:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'public_class_method'</span> <span class="ruby-keyword kw">then</span>
+2556:             <span class="ruby-identifier">singleton</span> = <span class="ruby-keyword kw">true</span>
+2557:             <span class="ruby-identifier">:public</span>
+2558:           <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'module_function'</span> <span class="ruby-keyword kw">then</span>
+2559:             <span class="ruby-identifier">singleton</span> = <span class="ruby-keyword kw">true</span>
+2560:             <span class="ruby-identifier">:public</span>
+2561:           <span class="ruby-keyword kw">else</span>
+2562:             <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid visibility: #{tk.name}&quot;</span>
+2563:           <span class="ruby-keyword kw">end</span>
+2564: 
+2565:     <span class="ruby-identifier">skip_tkspace_comment</span> <span class="ruby-keyword kw">false</span>
+2566: 
+2567:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">peek_tk</span>
+2568:       <span class="ruby-comment cmt"># Ryan Davis suggested the extension to ignore modifiers, because he</span>
+2569:       <span class="ruby-comment cmt"># often writes</span>
+2570:       <span class="ruby-comment cmt">#</span>
+2571:       <span class="ruby-comment cmt">#   protected unless $TESTING</span>
+2572:       <span class="ruby-comment cmt">#</span>
+2573:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">TkNL</span>, <span class="ruby-constant">TkUNLESS_MOD</span>, <span class="ruby-constant">TkIF_MOD</span>, <span class="ruby-constant">TkSEMICOLON</span> <span class="ruby-keyword kw">then</span>
+2574:       <span class="ruby-identifier">container</span>.<span class="ruby-identifier">ongoing_visibility</span> = <span class="ruby-identifier">vis</span>
+2575:     <span class="ruby-keyword kw">else</span>
+2576:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">vis_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'module_function'</span> <span class="ruby-keyword kw">then</span>
+2577:         <span class="ruby-identifier">args</span> = <span class="ruby-identifier">parse_symbol_arg</span>
+2578:         <span class="ruby-identifier">container</span>.<span class="ruby-identifier">set_visibility_for</span> <span class="ruby-identifier">args</span>, <span class="ruby-identifier">:private</span>, <span class="ruby-keyword kw">false</span>
+2579: 
+2580:         <span class="ruby-identifier">module_functions</span> = []
+2581: 
+2582:         <span class="ruby-identifier">container</span>.<span class="ruby-identifier">methods_matching</span> <span class="ruby-identifier">args</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+2583:           <span class="ruby-identifier">s_m</span> = <span class="ruby-identifier">m</span>.<span class="ruby-identifier">dup</span>
+2584:           <span class="ruby-identifier">s_m</span>.<span class="ruby-identifier">singleton</span> = <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">AnyMethod</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">s_m</span>
+2585:           <span class="ruby-identifier">s_m</span>.<span class="ruby-identifier">visibility</span> = <span class="ruby-identifier">:public</span>
+2586:           <span class="ruby-identifier">module_functions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">s_m</span>
+2587:         <span class="ruby-keyword kw">end</span>
+2588: 
+2589:         <span class="ruby-identifier">module_functions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s_m</span><span class="ruby-operator">|</span>
+2590:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">s_m</span>
+2591:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">AnyMethod</span> <span class="ruby-keyword kw">then</span>
+2592:             <span class="ruby-identifier">container</span>.<span class="ruby-identifier">add_method</span> <span class="ruby-identifier">s_m</span>
+2593:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Attr</span> <span class="ruby-keyword kw">then</span>
+2594:             <span class="ruby-identifier">container</span>.<span class="ruby-identifier">add_attribute</span> <span class="ruby-identifier">s_m</span>
+2595:           <span class="ruby-keyword kw">end</span>
+2596:         <span class="ruby-keyword kw">end</span>
+2597:       <span class="ruby-keyword kw">else</span>
+2598:         <span class="ruby-identifier">args</span> = <span class="ruby-identifier">parse_symbol_arg</span>
+2599:         <span class="ruby-identifier">container</span>.<span class="ruby-identifier">set_visibility_for</span> <span class="ruby-identifier">args</span>, <span class="ruby-identifier">vis</span>, <span class="ruby-identifier">singleton</span>
+2600:       <span class="ruby-keyword kw">end</span>
+2601:     <span class="ruby-keyword kw">end</span>
+2602:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

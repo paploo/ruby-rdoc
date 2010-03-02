@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>new (OpenSSL::PKey::DH)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     DH.new([size [, generator] | string]) -&gt; dh
+ *
+ *  === Parameters
+ *  * +size+ is an integer representing the desired key size.  Keys smaller than 1024 should be considered insecure.
+ *  * +generator+ is a small number &gt; 1, typically 2 or 5.
+ *  * +string+ contains the DER or PEM encoded key.
+ *
+ *  === Examples
+ *  * DH.new -&gt; dh
+ *  * DH.new(1024) -&gt; dh
+ *  * DH.new(1024, 5) -&gt; dh
+ *  * DH.new(File.read('key.pem')) -&gt; dh
+ */
+static VALUE
+ossl_dh_initialize(int argc, VALUE *argv, VALUE self)
+{
+    EVP_PKEY *pkey;
+    DH *dh;
+    int g = 2;
+    BIO *in;
+    VALUE arg, gen;
+
+    GetPKey(self, pkey);
+    if(rb_scan_args(argc, argv, &quot;02&quot;, &amp;arg, &amp;gen) == 0) {
+      dh = DH_new();
+    }
+    else if (FIXNUM_P(arg)) {
+        if (!NIL_P(gen)) {
+            g = NUM2INT(gen);
+        }
+        if (!(dh = dh_generate(FIX2INT(arg), g))) {
+            ossl_raise(eDHError, NULL);
+        }
+    }
+    else {
+        arg = ossl_to_der_if_possible(arg);
+        in = ossl_obj2bio(arg);
+        dh = PEM_read_bio_DHparams(in, NULL, NULL, NULL);
+        if (!dh){
+            (void)BIO_reset(in);
+            dh = d2i_DHparams_bio(in, NULL);
+        }
+        BIO_free(in);
+        if (!dh) ossl_raise(eDHError, NULL);
+    }
+    if (!EVP_PKEY_assign_DH(pkey, dh)) {
+        DH_free(dh);
+        ossl_raise(eDHError, NULL);
+    }
+    return self;
+}</pre>
+</body>
+</html>

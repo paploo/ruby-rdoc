@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>read_chunk_size (WEBrick::HTTPRequest)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/webrick/httprequest.rb, line 322</span>
+322:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read_chunk_size</span>(<span class="ruby-identifier">socket</span>)
+323:       <span class="ruby-identifier">line</span> = <span class="ruby-identifier">read_line</span>(<span class="ruby-identifier">socket</span>)
+324:       <span class="ruby-keyword kw">if</span> <span class="ruby-regexp re">/^([0-9a-fA-F]+)(?:;(\S+))?/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+325:         <span class="ruby-identifier">chunk_size</span> = <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">hex</span>
+326:         <span class="ruby-identifier">chunk_ext</span> = <span class="ruby-identifier">$2</span>
+327:         [ <span class="ruby-identifier">chunk_size</span>, <span class="ruby-identifier">chunk_ext</span> ]
+328:       <span class="ruby-keyword kw">else</span>
+329:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">BadRequest</span>, <span class="ruby-node">&quot;bad chunk `#{line}'.&quot;</span>
+330:       <span class="ruby-keyword kw">end</span>
+331:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>find_class (RDoc::Parser::C)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/parser/c.rb, line 326</span>
+326:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_class</span>(<span class="ruby-identifier">raw_name</span>, <span class="ruby-identifier">name</span>)
+327:     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">raw_name</span>]
+328:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">raw_name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^rb_m/</span>
+329:         <span class="ruby-identifier">container</span> = <span class="ruby-ivar">@top_level</span>.<span class="ruby-identifier">add_module</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalModule</span>, <span class="ruby-identifier">name</span>
+330:       <span class="ruby-keyword kw">else</span>
+331:         <span class="ruby-identifier">container</span> = <span class="ruby-ivar">@top_level</span>.<span class="ruby-identifier">add_class</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">NormalClass</span>, <span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">nil</span>
+332:       <span class="ruby-keyword kw">end</span>
+333: 
+334:       <span class="ruby-identifier">container</span>.<span class="ruby-identifier">record_location</span> <span class="ruby-ivar">@top_level</span>
+335:       <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">raw_name</span>] = <span class="ruby-identifier">container</span>
+336:     <span class="ruby-keyword kw">end</span>
+337:     <span class="ruby-ivar">@classes</span>[<span class="ruby-identifier">raw_name</span>]
+338:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

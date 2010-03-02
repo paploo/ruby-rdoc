@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>group_by (Enumerable)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     enum.group_by {| obj | block }  =&gt; a_hash
+ *
+ *  Returns a hash, which keys are evaluated result from the
+ *  block, and values are arrays of elements in &lt;i&gt;enum&lt;/i&gt;
+ *  corresponding to the key.
+ *
+ *     (1..6).group_by {|i| i%3}   #=&gt; {0=&gt;[3, 6], 1=&gt;[1, 4], 2=&gt;[2, 5]}
+ *
+ */
+
+static VALUE
+enum_group_by(VALUE obj)
+{
+    VALUE hash;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    hash = rb_hash_new();
+    rb_block_call(obj, id_each, 0, 0, group_by_i, hash);
+    OBJ_INFECT(hash, obj);
+
+    return hash;
+}</pre>
+</body>
+</html>

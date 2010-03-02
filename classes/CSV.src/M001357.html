@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>filter (CSV)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>      <span class="ruby-comment cmt"># File lib/csv.rb, line 1150</span>
+1150:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">filter</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+1151:     <span class="ruby-comment cmt"># parse options for input, output, or both</span>
+1152:     <span class="ruby-identifier">in_options</span>, <span class="ruby-identifier">out_options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>, {<span class="ruby-identifier">row_sep</span><span class="ruby-operator">:</span> <span class="ruby-identifier">$INPUT_RECORD_SEPARATOR</span>}
+1153:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>
+1154:       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+1155:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>
+1156:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/\Ain(?:put)?_(.+)\Z/</span>
+1157:           <span class="ruby-identifier">in_options</span>[<span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">value</span>
+1158:         <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/\Aout(?:put)?_(.+)\Z/</span>
+1159:           <span class="ruby-identifier">out_options</span>[<span class="ruby-identifier">$1</span>.<span class="ruby-identifier">to_sym</span>] = <span class="ruby-identifier">value</span>
+1160:         <span class="ruby-keyword kw">else</span>
+1161:           <span class="ruby-identifier">in_options</span>[<span class="ruby-identifier">key</span>]  = <span class="ruby-identifier">value</span>
+1162:           <span class="ruby-identifier">out_options</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+1163:         <span class="ruby-keyword kw">end</span>
+1164:       <span class="ruby-keyword kw">end</span>
+1165:     <span class="ruby-keyword kw">end</span>
+1166:     <span class="ruby-comment cmt"># build input and output wrappers</span>
+1167:     <span class="ruby-identifier">input</span>  = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ARGF</span>,    <span class="ruby-identifier">in_options</span>)
+1168:     <span class="ruby-identifier">output</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">$stdout</span>, <span class="ruby-identifier">out_options</span>)
+1169:     
+1170:     <span class="ruby-comment cmt"># read, yield, write</span>
+1171:     <span class="ruby-identifier">input</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+1172:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">row</span>
+1173:       <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">row</span>
+1174:     <span class="ruby-keyword kw">end</span>
+1175:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

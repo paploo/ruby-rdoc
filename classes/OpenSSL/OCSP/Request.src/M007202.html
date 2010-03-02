@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>check_nonce (OpenSSL::OCSP::Request)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/* Check nonce validity in a request and response.
+ * Return value reflects result:
+ *  1: nonces present and equal.
+ *  2: nonces both absent.
+ *  3: nonce present in response only.
+ *  0: nonces both present and not equal.
+ * -1: nonce in request only.
+ *
+ *  For most responders clients can check return &gt; 0.
+ *  If responder doesn't handle nonces return != 0 may be
+ *  necessary. return == 0 is always an error.
+ */
+static VALUE
+ossl_ocspreq_check_nonce(VALUE self, VALUE basic_resp)
+{
+    OCSP_REQUEST *req;
+    OCSP_BASICRESP *bs;
+    int res;
+
+    GetOCSPReq(self, req);
+    SafeGetOCSPBasicRes(basic_resp, bs);
+    res = OCSP_check_nonce(req, bs);
+
+    return INT2NUM(res);
+}</pre>
+</body>
+</html>

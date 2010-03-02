@@ -2,57 +2,38 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>eof? (IO)</title>
+  <title>readlines (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.eof     =&gt; true or false
- *     ios.eof?    =&gt; true or false
+ *     IO.readlines(name, sep=$/ [, open_args])     =&gt; array
+ *     IO.readlines(name, limit [, open_args])      =&gt; array
+ *     IO.readlines(name, sep, limit [, open_args]) =&gt; array
  *
- *  Returns true if &lt;em&gt;ios&lt;/em&gt; is at end of file that means
- *  there are no more data to read.
- *  The stream must be opened for reading or an &lt;code&gt;IOError&lt;/code&gt; will be
- *  raised.
+ *  Reads the entire file specified by &lt;i&gt;name&lt;/i&gt; as individual
+ *  lines, and returns those lines in an array. Lines are separated by
+ *  &lt;i&gt;sep&lt;/i&gt;.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     dummy = f.readlines
- *     f.eof   #=&gt; true
+ *     a = IO.readlines(&quot;testfile&quot;)
+ *     a[0]   #=&gt; &quot;This is line one\n&quot;
  *
- *  If &lt;em&gt;ios&lt;/em&gt; is a stream such as pipe or socket, &lt;code&gt;IO#eof?&lt;/code&gt;
- *  blocks until the other end sends some data or closes it.
+ *  If the last argument is a hash, it's the keyword argument to open.
+ *  See &lt;code&gt;IO.read&lt;/code&gt; for detail.
  *
- *     r, w = IO.pipe
- *     Thread.new { sleep 1; w.close }
- *     r.eof?  #=&gt; true after 1 second blocking
- *
- *     r, w = IO.pipe
- *     Thread.new { sleep 1; w.puts &quot;a&quot; }
- *     r.eof?  #=&gt; false after 1 second blocking
- *
- *     r, w = IO.pipe
- *     r.eof?  # blocks forever
- *
- *  Note that &lt;code&gt;IO#eof?&lt;/code&gt; reads data to a input buffer.
- *  So &lt;code&gt;IO#sysread&lt;/code&gt; doesn't work with &lt;code&gt;IO#eof?&lt;/code&gt;.
  */
 
-VALUE
-rb_io_eof(VALUE io)
+static VALUE
+rb_io_s_readlines(int argc, VALUE *argv, VALUE io)
 {
-    rb_io_t *fptr;
+    struct foreach_arg arg;
 
-    GetOpenFile(io, fptr);
-    rb_io_check_readable(fptr);
-
-    if (READ_DATA_PENDING(fptr)) return Qfalse;
-    READ_CHECK(fptr);
-    if (io_fillbuf(fptr) &lt; 0) {
-        return Qtrue;
-    }
-    return Qfalse;
+    rb_scan_args(argc, argv, &quot;13&quot;, NULL, NULL, NULL, NULL);
+    open_key_args(argc, argv, &amp;arg);
+    if (NIL_P(arg.io)) return Qnil;
+    return rb_ensure(io_s_readlines, (VALUE)&amp;arg, rb_io_close, arg.io);
 }</pre>
 </body>
 </html>

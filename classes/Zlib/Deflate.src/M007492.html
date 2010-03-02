@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>initialize_copy (Zlib::Deflate)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * Duplicates the deflate stream.
+ */
+static VALUE
+rb_deflate_init_copy(VALUE self, VALUE orig)
+{
+    struct zstream *z1, *z2;
+    int err;
+
+    Data_Get_Struct(self, struct zstream, z1);
+    z2 = get_zstream(orig);
+
+    err = deflateCopy(&amp;z1-&gt;stream, &amp;z2-&gt;stream);
+    if (err != Z_OK) {
+        raise_zlib_error(err, 0);
+    }
+    z1-&gt;input = NIL_P(z2-&gt;input) ? Qnil : rb_str_dup(z2-&gt;input);
+    z1-&gt;buf   = NIL_P(z2-&gt;buf)   ? Qnil : rb_str_dup(z2-&gt;buf);
+    z1-&gt;buf_filled = z2-&gt;buf_filled;
+    z1-&gt;flags = z2-&gt;flags;
+
+    return self;
+}</pre>
+</body>
+</html>

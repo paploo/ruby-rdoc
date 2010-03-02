@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>make_expires (Rinda::TupleEntry)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rinda/tuplespace.rb, line 97</span>
+ 97:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_expires</span>(<span class="ruby-identifier">sec</span>=<span class="ruby-keyword kw">nil</span>)
+ 98:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">sec</span>
+ 99:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+100:         <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sec</span>
+101:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">true</span>
+102:         <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value">1</span>)
+103:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+104:         <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value">2</span><span class="ruby-operator">**</span><span class="ruby-value">31</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+105:       <span class="ruby-keyword kw">end</span>
+106:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

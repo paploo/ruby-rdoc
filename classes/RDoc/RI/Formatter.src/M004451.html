@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>display_flow_item (RDoc::RI::Formatter)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rdoc/ri/formatter.rb, line 166</span>
+166:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_flow_item</span>(<span class="ruby-identifier">item</span>, <span class="ruby-identifier">prefix</span> = <span class="ruby-ivar">@indent</span>)
+167:     <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">item</span>
+168:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">P</span>, <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">LI</span>
+169:       <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">conv_html</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">body</span>), <span class="ruby-identifier">prefix</span>)
+170:       <span class="ruby-identifier">blankline</span>
+171: 
+172:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">LIST</span>
+173:       <span class="ruby-identifier">display_list</span>(<span class="ruby-identifier">item</span>)
+174: 
+175:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">VERB</span>
+176:       <span class="ruby-identifier">display_verbatim_flow_item</span>(<span class="ruby-identifier">item</span>, <span class="ruby-ivar">@indent</span>)
+177: 
+178:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">H</span>
+179:       <span class="ruby-identifier">display_heading</span>(<span class="ruby-identifier">conv_html</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">text</span>), <span class="ruby-identifier">item</span>.<span class="ruby-identifier">level</span>, <span class="ruby-ivar">@indent</span>)
+180: 
+181:     <span class="ruby-keyword kw">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">Flow</span><span class="ruby-operator">::</span><span class="ruby-constant">RULE</span>
+182:       <span class="ruby-identifier">draw_line</span>
+183: 
+184:     <span class="ruby-keyword kw">else</span>
+185:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>, <span class="ruby-node">&quot;Unknown flow element: #{item.class}&quot;</span>
+186:     <span class="ruby-keyword kw">end</span>
+187:   <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

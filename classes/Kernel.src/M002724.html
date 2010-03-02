@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>__callee__ (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     __method__         =&gt; symbol
+ *     __callee__         =&gt; symbol
+ *
+ *  Returns the name of the current method as a Symbol.
+ *  If called outside of a method, it returns &lt;code&gt;nil&lt;/code&gt;.
+ *
+ */
+
+static VALUE
+rb_f_method_name(void)
+{
+    ID fname = rb_frame_caller(); /* need *caller* ID */
+
+    if (fname) {
+        return ID2SYM(fname);
+    }
+    else {
+        return Qnil;
+    }
+}</pre>
+</body>
+</html>

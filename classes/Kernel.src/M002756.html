@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>exit! (Kernel)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     Process.exit!(fixnum=-1)
+ *
+ *  Exits the process immediately. No exit handlers are
+ *  run. &lt;em&gt;fixnum&lt;/em&gt; is returned to the underlying system as the
+ *  exit status.
+ *
+ *     Process.exit!(0)
+ */
+
+static VALUE
+rb_f_exit_bang(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE status;
+    int istatus;
+
+    rb_secure(4);
+    if (argc &gt; 0 &amp;&amp; rb_scan_args(argc, argv, &quot;01&quot;, &amp;status) == 1) {
+        switch (status) {
+          case Qtrue:
+            istatus = EXIT_SUCCESS;
+            break;
+          case Qfalse:
+            istatus = EXIT_FAILURE;
+            break;
+          default:
+            istatus = NUM2INT(status);
+            break;
+        }
+    }
+    else {
+        istatus = EXIT_FAILURE;
+    }
+    _exit(istatus);
+
+    return Qnil;                /* not reached */
+}</pre>
+</body>
+</html>

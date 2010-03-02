@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>digest_length (Digest::Instance)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ * call-seq:
+ *     digest_obj.digest_length -&gt; integer
+ *
+ * Returns the length of the hash value of the digest.
+ *
+ * This method should be overridden by each implementation subclass.
+ * If not, digest_obj.digest().length() is returned.
+ */
+static VALUE
+rb_digest_instance_digest_length(VALUE self)
+{
+    /* subclasses really should redefine this method */
+    VALUE digest = rb_digest_instance_digest(0, 0, self);
+
+    /* never blindly assume that #digest() returns a string */
+    StringValue(digest);
+    return INT2NUM(RSTRING_LEN(digest));
+}</pre>
+</body>
+</html>

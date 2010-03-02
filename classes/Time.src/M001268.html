@@ -2,20 +2,32 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>yaml_new (Time)</title>
+  <title>+ (Time)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre>     <span class="ruby-comment cmt"># File lib/yaml/rubytypes.rb, line 303</span>
-303:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">yaml_new</span>( <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">val</span> )
-304:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">val</span>
-305:             <span class="ruby-identifier">t</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-value str">'at'</span> )
-306:             <span class="ruby-identifier">val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">instance_variable_set</span>( <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span> ) }
-307:             <span class="ruby-identifier">t</span>
-308:         <span class="ruby-keyword kw">else</span>
-309:             <span class="ruby-identifier">raise</span> <span class="ruby-constant">YAML</span><span class="ruby-operator">::</span><span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;Invalid Time: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">inspect</span>
-310:         <span class="ruby-keyword kw">end</span>
-311:     <span class="ruby-keyword kw">end</span></pre>
+  <pre>/*
+ *  call-seq:
+ *     time + numeric =&gt; time
+ *  
+ *  Addition---Adds some number of seconds (possibly fractional) to
+ *  &lt;i&gt;time&lt;/i&gt; and returns that value as a new time.
+ *     
+ *     t = Time.now         #=&gt; 2007-11-19 08:22:21 -0600
+ *     t + (60 * 60 * 24)   #=&gt; 2007-11-20 08:22:21 -0600
+ */
+
+static VALUE
+time_plus(VALUE time1, VALUE time2)
+{
+    struct time_object *tobj;
+    GetTimeval(time1, tobj);
+
+    if (TYPE(time2) == T_DATA &amp;&amp; RDATA(time2)-&gt;dfree == time_free) {
+        rb_raise(rb_eTypeError, &quot;time + time?&quot;);
+    }
+    return time_add(tobj, time2, 1);
+}</pre>
 </body>
 </html>

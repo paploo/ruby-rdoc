@@ -2,35 +2,39 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>chop (String)</title>
+  <title>end_with? (String)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     str.chop   =&gt; new_str
+ *     str.end_with?([suffix]+)   =&gt; true or false
  *  
- *  Returns a new &lt;code&gt;String&lt;/code&gt; with the last character removed.  If the
- *  string ends with &lt;code&gt;\r\n&lt;/code&gt;, both characters are removed. Applying
- *  &lt;code&gt;chop&lt;/code&gt; to an empty string returns an empty
- *  string. &lt;code&gt;String#chomp&lt;/code&gt; is often a safer alternative, as it leaves
- *  the string unchanged if it doesn't end in a record separator.
- *     
- *     &quot;string\r\n&quot;.chop   #=&gt; &quot;string&quot;
- *     &quot;string\n\r&quot;.chop   #=&gt; &quot;string\n&quot;
- *     &quot;string\n&quot;.chop     #=&gt; &quot;string&quot;
- *     &quot;string&quot;.chop       #=&gt; &quot;strin&quot;
- *     &quot;x&quot;.chop.chop       #=&gt; &quot;&quot;
+ *  Returns true if &lt;i&gt;str&lt;/i&gt; ends with the suffix given.
  */
 
 static VALUE
-rb_str_chop(VALUE str)
+rb_str_end_with(int argc, VALUE *argv, VALUE str)
 {
-    VALUE str2 = rb_str_new5(str, RSTRING_PTR(str), chopped_length(str));
-    rb_enc_cr_str_copy_for_substr(str2, str);
-    OBJ_INFECT(str2, str);
-    return str2;
+    int i;
+    char *p, *s, *e;
+    rb_encoding *enc;
+
+    for (i=0; i&lt;argc; i++) {
+        VALUE tmp = rb_check_string_type(argv[i]);
+        if (NIL_P(tmp)) continue;
+        enc = rb_enc_check(str, tmp);
+        if (RSTRING_LEN(str) &lt; RSTRING_LEN(tmp)) continue;
+        p = RSTRING_PTR(str);
+        e = p + RSTRING_LEN(str);
+        s = e - RSTRING_LEN(tmp);
+        if (rb_enc_left_char_head(p, s, e, enc) != s)
+            continue;
+        if (memcmp(s, RSTRING_PTR(tmp), RSTRING_LEN(tmp)) == 0)
+            return Qtrue;
+    }
+    return Qfalse;
 }</pre>
 </body>
 </html>

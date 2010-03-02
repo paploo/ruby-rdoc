@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>public_key (OpenSSL::PKey::DH)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     dh.public_key -&gt; aDH
+ *
+ *  Makes new instance DH PUBLIC_KEY from PRIVATE_KEY
+ */
+static VALUE
+ossl_dh_to_public_key(VALUE self)
+{
+    EVP_PKEY *pkey;
+    DH *dh;
+    VALUE obj;
+        
+    GetPKeyDH(self, pkey);
+    dh = DHparams_dup(pkey-&gt;pkey.dh); /* err check perfomed by dh_instance */
+    obj = dh_instance(CLASS_OF(self), dh);
+    if (obj == Qfalse) {
+        DH_free(dh);
+        ossl_raise(eDHError, NULL);
+    }
+
+    return obj;
+}</pre>
+</body>
+</html>

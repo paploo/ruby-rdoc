@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>to_feed (RSS::Maker::RSS10::Textinput)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rss/maker/1.0.rb, line 408</span>
+408:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_feed</span>(<span class="ruby-identifier">rss</span>)
+409:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>
+410:             <span class="ruby-identifier">textinput</span> = <span class="ruby-constant">RDF</span><span class="ruby-operator">::</span><span class="ruby-constant">Textinput</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@link</span>)
+411:             <span class="ruby-identifier">set</span> = <span class="ruby-identifier">setup_values</span>(<span class="ruby-identifier">textinput</span>)
+412:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">set</span>
+413:               <span class="ruby-identifier">rss</span>.<span class="ruby-identifier">textinput</span> = <span class="ruby-identifier">textinput</span>
+414:               <span class="ruby-identifier">set_parent</span>(<span class="ruby-identifier">textinput</span>, <span class="ruby-identifier">rss</span>)
+415:               <span class="ruby-identifier">setup_other_elements</span>(<span class="ruby-identifier">rss</span>, <span class="ruby-identifier">textinput</span>)
+416:             <span class="ruby-keyword kw">end</span>
+417:           <span class="ruby-keyword kw">end</span>
+418:         <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

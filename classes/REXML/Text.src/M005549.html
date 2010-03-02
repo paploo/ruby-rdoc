@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>normalize (REXML::Text)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File lib/rexml/text.rb, line 360</span>
+360:     <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">normalize</span>( <span class="ruby-identifier">input</span>, <span class="ruby-identifier">doctype</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword kw">nil</span> )
+361:       <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">to_s</span>
+362:       <span class="ruby-comment cmt"># Doing it like this rather than in a loop improves the speed</span>
+363:       <span class="ruby-comment cmt">#copy = copy.gsub( EREFERENCE, '&amp;amp;' )</span>
+364:       <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-value str">&quot;&amp;&quot;</span>, <span class="ruby-value str">&quot;&amp;amp;&quot;</span> )
+365:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">doctype</span>
+366:         <span class="ruby-comment cmt"># Replace all ampersands that aren't part of an entity</span>
+367:         <span class="ruby-identifier">doctype</span>.<span class="ruby-identifier">entities</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entity</span><span class="ruby-operator">|</span>
+368:           <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-identifier">entity</span>.<span class="ruby-identifier">value</span>, 
+369:             <span class="ruby-node">&quot;&amp;#{entity.name};&quot;</span> ) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entity</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword kw">and</span> 
+370:               <span class="ruby-keyword kw">not</span>( <span class="ruby-identifier">entity_filter</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">entity_filter</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">entity</span>) )
+371:         <span class="ruby-keyword kw">end</span>
+372:       <span class="ruby-keyword kw">else</span>
+373:         <span class="ruby-comment cmt"># Replace all ampersands that aren't part of an entity</span>
+374:         <span class="ruby-constant">DocType</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_ENTITIES</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entity</span><span class="ruby-operator">|</span>
+375:           <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-identifier">entity</span>.<span class="ruby-identifier">value</span>, <span class="ruby-node">&quot;&amp;#{entity.name};&quot;</span> )
+376:         <span class="ruby-keyword kw">end</span>
+377:       <span class="ruby-keyword kw">end</span>
+378:       <span class="ruby-identifier">copy</span>
+379:     <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

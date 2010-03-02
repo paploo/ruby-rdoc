@@ -2,34 +2,25 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>pos (IO)</title>
+  <title>for_fd (IO)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     ios.pos     =&gt; integer
- *     ios.tell    =&gt; integer
+ *     IO.for_fd(fd, mode [, opt])    =&gt; io
  *
- *  Returns the current offset (in bytes) of &lt;em&gt;ios&lt;/em&gt;.
+ *  Synonym for &lt;code&gt;IO.new&lt;/code&gt;.
  *
- *     f = File.new(&quot;testfile&quot;)
- *     f.pos    #=&gt; 0
- *     f.gets   #=&gt; &quot;This is line one\n&quot;
- *     f.pos    #=&gt; 17
  */
 
 static VALUE
-rb_io_tell(VALUE io)
+rb_io_s_for_fd(int argc, VALUE *argv, VALUE klass)
 {
-    rb_io_t *fptr;
-    off_t pos;
-
-    GetOpenFile(io, fptr);
-    pos = io_tell(fptr);
-    if (pos &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
-    return OFFT2NUM(pos);
+    VALUE io = rb_obj_alloc(klass);
+    rb_io_initialize(argc, argv, io);
+    return io;
 }</pre>
 </body>
 </html>

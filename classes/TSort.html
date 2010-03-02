@@ -85,15 +85,15 @@ object which can be interpreted as a directed graph.
 </p>
 <p>
 <a href="TSort.html">TSort</a> requires two methods to interpret an object
-as a graph, <a href="TSort.html#M006424">tsort_each_node</a> and
+as a graph, <a href="TSort.html#M006544">tsort_each_node</a> and
 tsort_each_child.
 </p>
 <ul>
-<li><a href="TSort.html#M006424">tsort_each_node</a> is used to iterate for all
+<li><a href="TSort.html#M006544">tsort_each_node</a> is used to iterate for all
 nodes over a graph.
 
 </li>
-<li><a href="TSort.html#M006425">tsort_each_child</a> is used to iterate for
+<li><a href="TSort.html#M006545">tsort_each_child</a> is used to iterate for
 child nodes of a given node.
 
 </li>
@@ -108,11 +108,11 @@ The following example demonstrates how to mix the <a
 href="TSort.html">TSort</a> module into an existing class (in this case, <a
 href="Hash.html">Hash</a>). Here, we&#8217;re treating each key in the hash
 as a node in the graph, and so we simply alias the required <a
-href="TSort.html#M006424">tsort_each_node</a> method to Hash&#8217;s
+href="TSort.html#M006544">tsort_each_node</a> method to Hash&#8217;s
 each_key method. For each key in the hash, the associated value is an array
 of the node&#8217;s child nodes. This choice in turn leads to our
 implementation of the required <a
-href="TSort.html#M006425">tsort_each_child</a> method, which fetches the
+href="TSort.html#M006545">tsort_each_child</a> method, which fetches the
 array of child nodes and then iterates over that array using the
 user-supplied block.
 </p>
@@ -223,19 +223,19 @@ Tarjan&#8217;s algorithm for strongly connected components. Although
 
       <div class="name-list">
 
-        <a href="#M006422">each_strongly_connected_component</a>&nbsp;&nbsp;
+        <a href="#M006542">each_strongly_connected_component</a>&nbsp;&nbsp;
 
-        <a href="#M006423">each_strongly_connected_component_from</a>&nbsp;&nbsp;
+        <a href="#M006543">each_strongly_connected_component_from</a>&nbsp;&nbsp;
 
-        <a href="#M006421">strongly_connected_components</a>&nbsp;&nbsp;
+        <a href="#M006541">strongly_connected_components</a>&nbsp;&nbsp;
 
-        <a href="#M006419">tsort</a>&nbsp;&nbsp;
+        <a href="#M006539">tsort</a>&nbsp;&nbsp;
 
-        <a href="#M006420">tsort_each</a>&nbsp;&nbsp;
+        <a href="#M006540">tsort_each</a>&nbsp;&nbsp;
 
-        <a href="#M006425">tsort_each_child</a>&nbsp;&nbsp;
+        <a href="#M006545">tsort_each_child</a>&nbsp;&nbsp;
 
-        <a href="#M006424">tsort_each_node</a>&nbsp;&nbsp;
+        <a href="#M006544">tsort_each_node</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -263,13 +263,13 @@ Tarjan&#8217;s algorithm for strongly connected components. Although
       <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M006422" class="method-detail">
-        <a name="M006422"></a>
+      <div id="method-M006542" class="method-detail">
+        <a name="M006542"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006422.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006422.html');return false;">
+          <a href="TSort.src/M006542.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006542.html');return false;">
 
           <span class="method-name">each_strongly_connected_component</span><span class="method-args">( {|nodes| ...}</span>
 
@@ -281,15 +281,15 @@ Tarjan&#8217;s algorithm for strongly connected components. Although
 
           <p>
 The iterator version of the <a
-href="TSort.html#M006421">strongly_connected_components</a> method.
+href="TSort.html#M006541">strongly_connected_components</a> method.
 <tt><em>obj</em>.<a
-href="TSort.html#M006422">each_strongly_connected_component</a></tt> is
+href="TSort.html#M006542">each_strongly_connected_component</a></tt> is
 similar to <tt><em>obj</em>.strongly_connected_components.each</tt>, but
 modification of <em>obj</em> during the iteration may lead to unexpected
 results.
 </p>
 <p>
-<a href="TSort.html#M006422">each_strongly_connected_component</a> returns
+<a href="TSort.html#M006542">each_strongly_connected_component</a> returns
 <tt>nil</tt>.
 </p>
 
@@ -297,13 +297,13 @@ results.
       </div>
 
 
-      <div id="method-M006423" class="method-detail">
-        <a name="M006423"></a>
+      <div id="method-M006543" class="method-detail">
+        <a name="M006543"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006423.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006423.html');return false;">
+          <a href="TSort.src/M006543.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006543.html');return false;">
 
           <span class="method-name">each_strongly_connected_component_from</span><span class="method-args">(node, id_map={}, stack=[]) {|nodes| ...}</span>
 
@@ -321,21 +321,21 @@ Iterates over strongly connected component in the subgraph reachable from
 Return value is unspecified.
 </p>
 <p>
-<a href="TSort.html#M006423">each_strongly_connected_component_from</a>
-doesn&#8217;t call <a href="TSort.html#M006424">tsort_each_node</a>.
+<a href="TSort.html#M006543">each_strongly_connected_component_from</a>
+doesn&#8217;t call <a href="TSort.html#M006544">tsort_each_node</a>.
 </p>
 
         </div>
       </div>
 
 
-      <div id="method-M006421" class="method-detail">
-        <a name="M006421"></a>
+      <div id="method-M006541" class="method-detail">
+        <a name="M006541"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006421.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006421.html');return false;">
+          <a href="TSort.src/M006541.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006541.html');return false;">
 
           <span class="method-name">strongly_connected_components</span><span class="method-args">()</span>
 
@@ -355,13 +355,13 @@ represents a strongly connected component.
       </div>
 
 
-      <div id="method-M006419" class="method-detail">
-        <a name="M006419"></a>
+      <div id="method-M006539" class="method-detail">
+        <a name="M006539"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006419.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006419.html');return false;">
+          <a href="TSort.src/M006539.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006539.html');return false;">
 
           <span class="method-name">tsort</span><span class="method-args">()</span>
 
@@ -385,13 +385,13 @@ raised.
       </div>
 
 
-      <div id="method-M006420" class="method-detail">
-        <a name="M006420"></a>
+      <div id="method-M006540" class="method-detail">
+        <a name="M006540"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006420.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006420.html');return false;">
+          <a href="TSort.src/M006540.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006540.html');return false;">
 
           <span class="method-name">tsort_each</span><span class="method-args">( {|node| ...}</span>
 
@@ -402,13 +402,13 @@ raised.
         <div class="method-description">
 
           <p>
-The iterator version of the <a href="TSort.html#M006419">tsort</a> method.
-<tt><em>obj</em>.<a href="TSort.html#M006420">tsort_each</a></tt> is
+The iterator version of the <a href="TSort.html#M006539">tsort</a> method.
+<tt><em>obj</em>.<a href="TSort.html#M006540">tsort_each</a></tt> is
 similar to <tt><em>obj</em>.tsort.each</tt>, but modification of
 <em>obj</em> during the iteration may lead to unexpected results.
 </p>
 <p>
-<a href="TSort.html#M006420">tsort_each</a> returns <tt>nil</tt>. If there
+<a href="TSort.html#M006540">tsort_each</a> returns <tt>nil</tt>. If there
 is a cycle, <a href="TSort/Cyclic.html">TSort::Cyclic</a> is raised.
 </p>
 
@@ -416,13 +416,13 @@ is a cycle, <a href="TSort/Cyclic.html">TSort::Cyclic</a> is raised.
       </div>
 
 
-      <div id="method-M006425" class="method-detail">
-        <a name="M006425"></a>
+      <div id="method-M006545" class="method-detail">
+        <a name="M006545"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006425.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006425.html');return false;">
+          <a href="TSort.src/M006545.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006545.html');return false;">
 
           <span class="method-name">tsort_each_child</span><span class="method-args">(node) {|child| ...}</span>
 
@@ -436,7 +436,7 @@ is a cycle, <a href="TSort/Cyclic.html">TSort::Cyclic</a> is raised.
 Should be implemented by a extended class.
 </p>
 <p>
-<a href="TSort.html#M006425">tsort_each_child</a> is used to iterate for
+<a href="TSort.html#M006545">tsort_each_child</a> is used to iterate for
 child nodes of <em>node</em>.
 </p>
 
@@ -444,13 +444,13 @@ child nodes of <em>node</em>.
       </div>
 
 
-      <div id="method-M006424" class="method-detail">
-        <a name="M006424"></a>
+      <div id="method-M006544" class="method-detail">
+        <a name="M006544"></a>
 
         <div class="method-heading">
 
-          <a href="TSort.src/M006424.html" target="Code" class="method-signature"
-            onclick="popupCode('TSort.src/M006424.html');return false;">
+          <a href="TSort.src/M006544.html" target="Code" class="method-signature"
+            onclick="popupCode('TSort.src/M006544.html');return false;">
 
           <span class="method-name">tsort_each_node</span><span class="method-args">( {|node| ...}</span>
 
@@ -464,7 +464,7 @@ child nodes of <em>node</em>.
 Should be implemented by a extended class.
 </p>
 <p>
-<a href="TSort.html#M006424">tsort_each_node</a> is used to iterate for all
+<a href="TSort.html#M006544">tsort_each_node</a> is used to iterate for all
 nodes over a graph.
 </p>
 

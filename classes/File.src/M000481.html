@@ -2,43 +2,34 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>socket? (File)</title>
+  <title>lchmod (File)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
- * call-seq:
- *   File.socket?(file_name)   =&gt;  true or false
- *
- * Returns &lt;code&gt;true&lt;/code&gt; if the named file is a socket.
+ *  call-seq:
+ *     File.lchmod(mode_int, file_name, ...)  =&gt; integer
+ *  
+ *  Equivalent to &lt;code&gt;File::chmod&lt;/code&gt;, but does not follow symbolic
+ *  links (so it will change the permissions associated with the link,
+ *  not the file referenced by the link). Often not available.
+ *     
  */
 
 static VALUE
-rb_file_socket_p(VALUE obj, VALUE fname)
+rb_file_s_lchmod(int argc, VALUE *argv)
 {
-#ifndef S_ISSOCK
-#  ifdef _S_ISSOCK
-#    define S_ISSOCK(m) _S_ISSOCK(m)
-#  else
-#    ifdef _S_IFSOCK
-#      define S_ISSOCK(m) ((m &amp; S_IFMT) == _S_IFSOCK)
-#    else
-#      ifdef S_IFSOCK
-#        define S_ISSOCK(m) ((m &amp; S_IFMT) == S_IFSOCK)
-#      endif
-#    endif
-#  endif
-#endif
+    VALUE vmode;
+    VALUE rest;
+    long mode, n;
 
-#ifdef S_ISSOCK
-    struct stat st;
+    rb_secure(2);
+    rb_scan_args(argc, argv, &quot;1*&quot;, &amp;vmode, &amp;rest);
+    mode = NUM2INT(vmode);
 
-    if (rb_stat(fname, &amp;st) &lt; 0) return Qfalse;
-    if (S_ISSOCK(st.st_mode)) return Qtrue;
-
-#endif
-    return Qfalse;
+    n = apply2files(lchmod_internal, rest, (void *)(long)mode);
+    return LONG2FIX(n);
 }</pre>
 </body>
 </html>

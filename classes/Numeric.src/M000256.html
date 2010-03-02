@@ -2,24 +2,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>truncate (Numeric)</title>
+  <title>real? (Numeric)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
   <pre>/*
  *  call-seq:
- *     num.truncate    =&gt; integer
+ *     num.real? -&gt; true or false
  *
- *  Returns &lt;i&gt;num&lt;/i&gt; truncated to an integer. &lt;code&gt;Numeric&lt;/code&gt;
- *  implements this by converting its value to a float and invoking
- *  &lt;code&gt;Float#truncate&lt;/code&gt;.
+ *  Returns &lt;code&gt;true&lt;/code&gt; if &lt;i&gt;num&lt;/i&gt; is a &lt;code&gt;Real&lt;/code&gt;
+ *  (i.e. non &lt;code&gt;Complex&lt;/code&gt;).
  */
 
 static VALUE
-num_truncate(VALUE num)
+num_real_p(VALUE num)
 {
-    return flo_truncate(rb_Float(num));
+    return Qtrue;
 }</pre>
 </body>
 </html>

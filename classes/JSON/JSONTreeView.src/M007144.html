@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ask_for_order (JSON::JSONTreeView)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>     <span class="ruby-comment cmt"># File ext/json/lib/json/editor.rb, line 964</span>
+964:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ask_for_order</span>
+965:         <span class="ruby-identifier">dialog</span> = <span class="ruby-constant">Dialog</span>.<span class="ruby-identifier">new</span>(
+966:           <span class="ruby-value str">&quot;Give an order criterium for 'x'.&quot;</span>,
+967:           <span class="ruby-keyword kw">nil</span>, <span class="ruby-keyword kw">nil</span>,
+968:           [ <span class="ruby-constant">Stock</span><span class="ruby-operator">::</span><span class="ruby-constant">OK</span>, <span class="ruby-constant">Dialog</span><span class="ruby-operator">::</span><span class="ruby-constant">RESPONSE_ACCEPT</span> ],
+969:           [ <span class="ruby-constant">Stock</span><span class="ruby-operator">::</span><span class="ruby-constant">CANCEL</span>, <span class="ruby-constant">Dialog</span><span class="ruby-operator">::</span><span class="ruby-constant">RESPONSE_REJECT</span> ]
+970:         )
+971:         <span class="ruby-identifier">hbox</span> = <span class="ruby-constant">HBox</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">false</span>, <span class="ruby-value">5</span>)
+972: 
+973:         <span class="ruby-identifier">hbox</span>.<span class="ruby-identifier">pack_start</span>(<span class="ruby-constant">Label</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Order:&quot;</span>), <span class="ruby-keyword kw">false</span>)
+974:         <span class="ruby-identifier">hbox</span>.<span class="ruby-identifier">pack_start</span>(<span class="ruby-identifier">order_input</span> = <span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>)
+975:         <span class="ruby-identifier">order_input</span>.<span class="ruby-identifier">text</span> = <span class="ruby-ivar">@order</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'x'</span>
+976:         <span class="ruby-identifier">order_input</span>.<span class="ruby-identifier">width_chars</span> = <span class="ruby-value">60</span>
+977: 
+978:         <span class="ruby-identifier">hbox</span>.<span class="ruby-identifier">pack_start</span>(<span class="ruby-identifier">reverse_checkbox</span> = <span class="ruby-constant">CheckButton</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Reverse'</span>), <span class="ruby-keyword kw">false</span>)
+979: 
+980:         <span class="ruby-identifier">dialog</span>.<span class="ruby-identifier">vbox</span>.<span class="ruby-identifier">pack_start</span>(<span class="ruby-identifier">hbox</span>, <span class="ruby-keyword kw">false</span>)
+981: 
+982:         <span class="ruby-identifier">dialog</span>.<span class="ruby-identifier">signal_connect</span>(<span class="ruby-identifier">:'key-press-event'</span>, <span class="ruby-operator">&amp;</span><span class="ruby-constant">DEFAULT_DIALOG_KEY_PRESS_HANDLER</span>)
+983:         <span class="ruby-identifier">dialog</span>.<span class="ruby-identifier">show_all</span>
+984:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">focus</span> = <span class="ruby-identifier">dialog</span>
+985:         <span class="ruby-identifier">dialog</span>.<span class="ruby-identifier">run</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> 
+986:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Dialog</span><span class="ruby-operator">::</span><span class="ruby-constant">RESPONSE_ACCEPT</span>
+987:             <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@order</span> = <span class="ruby-identifier">order_input</span>.<span class="ruby-identifier">text</span>, <span class="ruby-identifier">reverse_checkbox</span>.<span class="ruby-identifier">active?</span>
+988:           <span class="ruby-keyword kw">end</span>
+989:         <span class="ruby-keyword kw">end</span>
+990:         <span class="ruby-keyword kw">return</span>
+991:       <span class="ruby-keyword kw">ensure</span>
+992:         <span class="ruby-identifier">dialog</span>.<span class="ruby-identifier">destroy</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dialog</span>
+993:       <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

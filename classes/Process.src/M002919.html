@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>abort (Process)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre>/*
+ *  call-seq:
+ *     abort
+ *     Kernel::abort
+ *     Process::abort
+ *  
+ *  Terminate execution immediately, effectively by calling
+ *  &lt;code&gt;Kernel.exit(1)&lt;/code&gt;. If _msg_ is given, it is written
+ *  to STDERR prior to terminating.
+ */
+
+VALUE
+rb_f_abort(int argc, VALUE *argv)
+{
+    extern void ruby_error_print(void);
+
+    rb_secure(4);
+    if (argc == 0) {
+        if (!NIL_P(GET_THREAD()-&gt;errinfo)) {
+            ruby_error_print();
+        }
+        rb_exit(EXIT_FAILURE);
+    }
+    else {
+        VALUE args[2];
+
+        rb_scan_args(argc, argv, &quot;1&quot;, &amp;args[1]);
+        StringValue(argv[0]);
+        rb_io_puts(argc, argv, rb_stderr);
+        args[0] = INT2NUM(EXIT_FAILURE);
+        rb_exc_raise(rb_class_new_instance(2, args, rb_eSystemExit));
+    }
+    return Qnil;                /* not reached */
+}</pre>
+</body>
+</html>
