@@ -1,0 +1,4312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Class: Encoding::Converter</title>
+
+	<link rel="stylesheet" href="../rdoc.css" type="text/css" media="screen" />
+
+	<script src="../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+	<div id="metadata">
+		<div id="home-metadata">
+			<div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#classes">Classes</a>
+          <a href="../index.html#methods">Methods</a>
+        </h3>
+			</div>
+		</div>
+
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="../encoding_c.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="encoding.c">encoding.c</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+			<div id="parent-class-section" class="section">
+				<h3 class="section-header">Parent</h3>
+				
+				<p class="link"><a href="../Data.html">Data</a></p>
+				
+			</div>
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#method-c-asciicompat_encoding">::asciicompat_encoding</a></li>
+					
+					<li><a href="#method-c-new">::new</a></li>
+					
+					<li><a href="#method-c-search_convpath">::search_convpath</a></li>
+					
+					<li><a href="#method-i-convert">#convert</a></li>
+					
+					<li><a href="#method-i-convpath">#convpath</a></li>
+					
+					<li><a href="#method-i-destination_encoding">#destination_encoding</a></li>
+					
+					<li><a href="#method-i-finish">#finish</a></li>
+					
+					<li><a href="#method-i-insert_output">#insert_output</a></li>
+					
+					<li><a href="#method-i-inspect">#inspect</a></li>
+					
+					<li><a href="#method-i-last_error">#last_error</a></li>
+					
+					<li><a href="#method-i-primitive_convert">#primitive_convert</a></li>
+					
+					<li><a href="#method-i-primitive_errinfo">#primitive_errinfo</a></li>
+					
+					<li><a href="#method-i-putback">#putback</a></li>
+					
+					<li><a href="#method-i-replacement">#replacement</a></li>
+					
+					<li><a href="#method-i-replacement%3D">#replacement=</a></li>
+					
+					<li><a href="#method-i-source_encoding">#source_encoding</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="../doc/re_rdoc.html">re.rdoc</a></li>
+				
+					<li class="file"><a href="../lib/README.html">README</a></li>
+				
+					<li class="file"><a href="../lib/irb/lc/help-message.html">help-message</a></li>
+				
+					<li class="file"><a href="../lib/xmlrpc/README_rdoc.html">README.rdoc</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="../images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="../RSS.html">RSS</a></li>
+				
+					<li><a href="../RSS/Atom.html">RSS::Atom</a></li>
+				
+					<li><a href="../RSS/Atom/CommonModel.html">RSS::Atom::CommonModel</a></li>
+				
+					<li><a href="../RSS/Atom/ContentModel.html">RSS::Atom::ContentModel</a></li>
+				
+					<li><a href="../RSS/Atom/ContentModel/ClassMethods.html">RSS::Atom::ContentModel::ClassMethods</a></li>
+				
+					<li><a href="../RSS/Atom/DateConstruct.html">RSS::Atom::DateConstruct</a></li>
+				
+					<li><a href="../RSS/Atom/DuplicateLinkChecker.html">RSS::Atom::DuplicateLinkChecker</a></li>
+				
+					<li><a href="../RSS/Atom/Entry.html">RSS::Atom::Entry</a></li>
+				
+					<li><a href="../RSS/Atom/Feed.html">RSS::Atom::Feed</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Author.html">RSS::Atom::Feed::Author</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Category.html">RSS::Atom::Feed::Category</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Contributor.html">RSS::Atom::Feed::Contributor</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Entry.html">RSS::Atom::Feed::Entry</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Entry/Content.html">RSS::Atom::Feed::Entry::Content</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Entry/Published.html">RSS::Atom::Feed::Entry::Published</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Entry/Source.html">RSS::Atom::Feed::Entry::Source</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Entry/Summary.html">RSS::Atom::Feed::Entry::Summary</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Generator.html">RSS::Atom::Feed::Generator</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Icon.html">RSS::Atom::Feed::Icon</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Id.html">RSS::Atom::Feed::Id</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Link.html">RSS::Atom::Feed::Link</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Logo.html">RSS::Atom::Feed::Logo</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Rights.html">RSS::Atom::Feed::Rights</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Subtitle.html">RSS::Atom::Feed::Subtitle</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Title.html">RSS::Atom::Feed::Title</a></li>
+				
+					<li><a href="../RSS/Atom/Feed/Updated.html">RSS::Atom::Feed::Updated</a></li>
+				
+					<li><a href="../RSS/Atom/PersonConstruct.html">RSS::Atom::PersonConstruct</a></li>
+				
+					<li><a href="../RSS/Atom/PersonConstruct/Email.html">RSS::Atom::PersonConstruct::Email</a></li>
+				
+					<li><a href="../RSS/Atom/PersonConstruct/Name.html">RSS::Atom::PersonConstruct::Name</a></li>
+				
+					<li><a href="../RSS/Atom/PersonConstruct/Uri.html">RSS::Atom::PersonConstruct::Uri</a></li>
+				
+					<li><a href="../RSS/Atom/TextConstruct.html">RSS::Atom::TextConstruct</a></li>
+				
+					<li><a href="../RSS/Atom/URIContentModel.html">RSS::Atom::URIContentModel</a></li>
+				
+					<li><a href="../RSS/BaseDublinCoreModel.html">RSS::BaseDublinCoreModel</a></li>
+				
+					<li><a href="../RSS/BaseListener.html">RSS::BaseListener</a></li>
+				
+					<li><a href="../RSS/BaseModel.html">RSS::BaseModel</a></li>
+				
+					<li><a href="../RSS/BaseParser.html">RSS::BaseParser</a></li>
+				
+					<li><a href="../RSS/BaseTrackBackModel.html">RSS::BaseTrackBackModel</a></li>
+				
+					<li><a href="../RSS/ContentModel.html">RSS::ContentModel</a></li>
+				
+					<li><a href="../RSS/ConversionError.html">RSS::ConversionError</a></li>
+				
+					<li><a href="../RSS/Converter.html">RSS::Converter</a></li>
+				
+					<li><a href="../RSS/DublinCoreModel.html">RSS::DublinCoreModel</a></li>
+				
+					<li><a href="../RSS/DublinCoreModel.html">RSS::DublinCoreModel</a></li>
+				
+					<li><a href="../RSS/Element.html">RSS::Element</a></li>
+				
+					<li><a href="../RSS/Error.html">RSS::Error</a></li>
+				
+					<li><a href="../RSS/ITunesBaseModel.html">RSS::ITunesBaseModel</a></li>
+				
+					<li><a href="../RSS/ITunesChannelModel.html">RSS::ITunesChannelModel</a></li>
+				
+					<li><a href="../RSS/ITunesChannelModel/ITunesCategory.html">RSS::ITunesChannelModel::ITunesCategory</a></li>
+				
+					<li><a href="../RSS/ITunesChannelModel/ITunesImage.html">RSS::ITunesChannelModel::ITunesImage</a></li>
+				
+					<li><a href="../RSS/ITunesChannelModel/ITunesOwner.html">RSS::ITunesChannelModel::ITunesOwner</a></li>
+				
+					<li><a href="../RSS/ITunesItemModel.html">RSS::ITunesItemModel</a></li>
+				
+					<li><a href="../RSS/ITunesItemModel/ITunesDuration.html">RSS::ITunesItemModel::ITunesDuration</a></li>
+				
+					<li><a href="../RSS/ITunesModelUtils.html">RSS::ITunesModelUtils</a></li>
+				
+					<li><a href="../RSS/ImageFaviconModel.html">RSS::ImageFaviconModel</a></li>
+				
+					<li><a href="../RSS/ImageFaviconModel/ImageFavicon.html">RSS::ImageFaviconModel::ImageFavicon</a></li>
+				
+					<li><a href="../RSS/ImageItemModel.html">RSS::ImageItemModel</a></li>
+				
+					<li><a href="../RSS/ImageItemModel/ImageItem.html">RSS::ImageItemModel::ImageItem</a></li>
+				
+					<li><a href="../RSS/ImageModelUtils.html">RSS::ImageModelUtils</a></li>
+				
+					<li><a href="../RSS/InvalidRSSError.html">RSS::InvalidRSSError</a></li>
+				
+					<li><a href="../RSS/ListenerMixin.html">RSS::ListenerMixin</a></li>
+				
+					<li><a href="../RSS/Maker.html">RSS::Maker</a></li>
+				
+					<li><a href="../RSS/Maker/Atom.html">RSS::Maker::Atom</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry.html">RSS::Maker::Atom::Entry</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel.html">RSS::Maker::Atom::Entry::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/Cloud.html">RSS::Maker::Atom::Entry::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/Description.html">RSS::Maker::Atom::Entry::Channel::Description</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/Generator.html">RSS::Maker::Atom::Entry::Channel::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/SkipDays.html">RSS::Maker::Atom::Entry::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/SkipDays/Day.html">RSS::Maker::Atom::Entry::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/SkipHours.html">RSS::Maker::Atom::Entry::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Channel/SkipHours/Hour.html">RSS::Maker::Atom::Entry::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Image.html">RSS::Maker::Atom::Entry::Image</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Items.html">RSS::Maker::Atom::Entry::Items</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Items/Item.html">RSS::Maker::Atom::Entry::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Entry/Textinput.html">RSS::Maker::Atom::Entry::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed.html">RSS::Maker::Atom::Feed</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel.html">RSS::Maker::Atom::Feed::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Categories.html">RSS::Maker::Atom::Feed::Channel::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Categories/Category.html">RSS::Maker::Atom::Feed::Channel::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Cloud.html">RSS::Maker::Atom::Feed::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Generator.html">RSS::Maker::Atom::Feed::Channel::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Links.html">RSS::Maker::Atom::Feed::Channel::Links</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/Links/Link.html">RSS::Maker::Atom::Feed::Channel::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/SkipDays.html">RSS::Maker::Atom::Feed::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/SkipDays/Day.html">RSS::Maker::Atom::Feed::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/SkipHours.html">RSS::Maker::Atom::Feed::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Channel/SkipHours/Hour.html">RSS::Maker::Atom::Feed::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Image.html">RSS::Maker::Atom::Feed::Image</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Image/logo.html">RSS::Maker::Atom::Feed::Image::logo</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items.html">RSS::Maker::Atom::Feed::Items</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item.html">RSS::Maker::Atom::Feed::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Categories.html">RSS::Maker::Atom::Feed::Items::Item::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Categories/Category.html">RSS::Maker::Atom::Feed::Items::Item::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Content.html">RSS::Maker::Atom::Feed::Items::Item::Content</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Enclosure.html">RSS::Maker::Atom::Feed::Items::Item::Enclosure</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Guid.html">RSS::Maker::Atom::Feed::Items::Item::Guid</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Links.html">RSS::Maker::Atom::Feed::Items::Item::Links</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Links/Link.html">RSS::Maker::Atom::Feed::Items::Item::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source.html">RSS::Maker::Atom::Feed::Items::Item::Source</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Categories.html">RSS::Maker::Atom::Feed::Items::Item::Source::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Categories/Category.html">RSS::Maker::Atom::Feed::Items::Item::Source::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Generator.html">RSS::Maker::Atom::Feed::Items::Item::Source::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Icon.html">RSS::Maker::Atom::Feed::Items::Item::Source::Icon</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Icon/icon.html">RSS::Maker::Atom::Feed::Items::Item::Source::Icon::icon</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Links.html">RSS::Maker::Atom::Feed::Items::Item::Source::Links</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Links/Link.html">RSS::Maker::Atom::Feed::Items::Item::Source::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Items/Item/Source/Logo.html">RSS::Maker::Atom::Feed::Items::Item::Source::Logo</a></li>
+				
+					<li><a href="../RSS/Maker/Atom/Feed/Textinput.html">RSS::Maker::Atom::Feed::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/AtomCategory.html">RSS::Maker::AtomCategory</a></li>
+				
+					<li><a href="../RSS/Maker/AtomGenerator.html">RSS::Maker::AtomGenerator</a></li>
+				
+					<li><a href="../RSS/Maker/AtomLink.html">RSS::Maker::AtomLink</a></li>
+				
+					<li><a href="../RSS/Maker/AtomLogo.html">RSS::Maker::AtomLogo</a></li>
+				
+					<li><a href="../RSS/Maker/AtomLogo/logo.html">RSS::Maker::AtomLogo::logo</a></li>
+				
+					<li><a href="../RSS/Maker/AtomPersonConstructBase.html">RSS::Maker::AtomPersonConstructBase</a></li>
+				
+					<li><a href="../RSS/Maker/AtomPersons.html">RSS::Maker::AtomPersons</a></li>
+				
+					<li><a href="../RSS/Maker/AtomTextConstruct.html">RSS::Maker::AtomTextConstruct</a></li>
+				
+					<li><a href="../RSS/Maker/AtomTextConstructBase.html">RSS::Maker::AtomTextConstructBase</a></li>
+				
+					<li><a href="../RSS/Maker/AtomTextConstructBase/EnsureXMLContent.html">RSS::Maker::AtomTextConstructBase::EnsureXMLContent</a></li>
+				
+					<li><a href="../RSS/Maker/Base.html">RSS::Maker::Base</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase.html">RSS::Maker::ChannelBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/AuthorsBase.html">RSS::Maker::ChannelBase::AuthorsBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/AuthorsBase/AuthorBase.html">RSS::Maker::ChannelBase::AuthorsBase::AuthorBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/CategoriesBase.html">RSS::Maker::ChannelBase::CategoriesBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/CategoriesBase/CategoryBase.html">RSS::Maker::ChannelBase::CategoriesBase::CategoryBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/CloudBase.html">RSS::Maker::ChannelBase::CloudBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ContributorsBase.html">RSS::Maker::ChannelBase::ContributorsBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ContributorsBase/ContributorBase.html">RSS::Maker::ChannelBase::ContributorsBase::ContributorBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/CopyrightBase.html">RSS::Maker::ChannelBase::CopyrightBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/DescriptionBase.html">RSS::Maker::ChannelBase::DescriptionBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/GeneratorBase.html">RSS::Maker::ChannelBase::GeneratorBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ITunesCategories.html">RSS::Maker::ChannelBase::ITunesCategories</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ITunesCategories/ITunesCategory.html">RSS::Maker::ChannelBase::ITunesCategories::ITunesCategory</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ITunesImage.html">RSS::Maker::ChannelBase::ITunesImage</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/ITunesOwner.html">RSS::Maker::ChannelBase::ITunesOwner</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/LinksBase.html">RSS::Maker::ChannelBase::LinksBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/LinksBase/LinkBase.html">RSS::Maker::ChannelBase::LinksBase::LinkBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/SkipDaysBase.html">RSS::Maker::ChannelBase::SkipDaysBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/SkipDaysBase/DayBase.html">RSS::Maker::ChannelBase::SkipDaysBase::DayBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/SkipHoursBase.html">RSS::Maker::ChannelBase::SkipHoursBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/SkipHoursBase/HourBase.html">RSS::Maker::ChannelBase::SkipHoursBase::HourBase</a></li>
+				
+					<li><a href="../RSS/Maker/ChannelBase/TitleBase.html">RSS::Maker::ChannelBase::TitleBase</a></li>
+				
+					<li><a href="../RSS/Maker/ContentModel.html">RSS::Maker::ContentModel</a></li>
+				
+					<li><a href="../RSS/Maker/DublinCoreModel.html">RSS::Maker::DublinCoreModel</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesBaseModel.html">RSS::Maker::ITunesBaseModel</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesChannelModel.html">RSS::Maker::ITunesChannelModel</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesChannelModel/ITunesCategoriesBase.html">RSS::Maker::ITunesChannelModel::ITunesCategoriesBase</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesChannelModel/ITunesCategoriesBase/ITunesCategoryBase.html">RSS::Maker::ITunesChannelModel::ITunesCategoriesBase::ITunesCategoryBase</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesChannelModel/ITunesImageBase.html">RSS::Maker::ITunesChannelModel::ITunesImageBase</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesChannelModel/ITunesOwnerBase.html">RSS::Maker::ITunesChannelModel::ITunesOwnerBase</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesItemModel.html">RSS::Maker::ITunesItemModel</a></li>
+				
+					<li><a href="../RSS/Maker/ITunesItemModel/ITunesDurationBase.html">RSS::Maker::ITunesItemModel::ITunesDurationBase</a></li>
+				
+					<li><a href="../RSS/Maker/ImageBase.html">RSS::Maker::ImageBase</a></li>
+				
+					<li><a href="../RSS/Maker/ImageFaviconModel.html">RSS::Maker::ImageFaviconModel</a></li>
+				
+					<li><a href="../RSS/Maker/ImageFaviconModel/ImageFaviconBase.html">RSS::Maker::ImageFaviconModel::ImageFaviconBase</a></li>
+				
+					<li><a href="../RSS/Maker/ImageItemModel.html">RSS::Maker::ImageItemModel</a></li>
+				
+					<li><a href="../RSS/Maker/ImageItemModel/ImageItemBase.html">RSS::Maker::ImageItemModel::ImageItemBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase.html">RSS::Maker::ItemsBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase.html">RSS::Maker::ItemsBase::ItemBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/ContentBase.html">RSS::Maker::ItemsBase::ItemBase::ContentBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/DescriptionBase.html">RSS::Maker::ItemsBase::ItemBase::DescriptionBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/EnclosureBase.html">RSS::Maker::ItemsBase::ItemBase::EnclosureBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/GuidBase.html">RSS::Maker::ItemsBase::ItemBase::GuidBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/ITunesDuration.html">RSS::Maker::ItemsBase::ItemBase::ITunesDuration</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/RightsBase.html">RSS::Maker::ItemsBase::ItemBase::RightsBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase/IconBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase::IconBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase/LogoBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase::LogoBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase/RightsBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase::RightsBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase/SubtitleBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase::SubtitleBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/SourceBase/TitleBase.html">RSS::Maker::ItemsBase::ItemBase::SourceBase::TitleBase</a></li>
+				
+					<li><a href="../RSS/Maker/ItemsBase/ItemBase/TitleBase.html">RSS::Maker::ItemsBase::ItemBase::TitleBase</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09.html">RSS::Maker::RSS09</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091.html">RSS::Maker::RSS091</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091/Channel.html">RSS::Maker::RSS091::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091/Image.html">RSS::Maker::RSS091::Image</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091/Items.html">RSS::Maker::RSS091::Items</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091/Items/Item.html">RSS::Maker::RSS091::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/RSS091/Textinput.html">RSS::Maker::RSS091::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092.html">RSS::Maker::RSS092</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092/Channel.html">RSS::Maker::RSS092::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092/Image.html">RSS::Maker::RSS092::Image</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092/Items.html">RSS::Maker::RSS092::Items</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092/Items/Item.html">RSS::Maker::RSS092::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/RSS092/Textinput.html">RSS::Maker::RSS092::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel.html">RSS::Maker::RSS09::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Authors.html">RSS::Maker::RSS09::Channel::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Authors/Author.html">RSS::Maker::RSS09::Channel::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Categories.html">RSS::Maker::RSS09::Channel::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Categories/Category.html">RSS::Maker::RSS09::Channel::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Cloud.html">RSS::Maker::RSS09::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Contributors.html">RSS::Maker::RSS09::Channel::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Contributors/Contributor.html">RSS::Maker::RSS09::Channel::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Copyright.html">RSS::Maker::RSS09::Channel::Copyright</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Description.html">RSS::Maker::RSS09::Channel::Description</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Generator.html">RSS::Maker::RSS09::Channel::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Links.html">RSS::Maker::RSS09::Channel::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Links/Link.html">RSS::Maker::RSS09::Channel::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/SkipDays.html">RSS::Maker::RSS09::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/SkipDays/Day.html">RSS::Maker::RSS09::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/SkipHours.html">RSS::Maker::RSS09::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/SkipHours/Hour.html">RSS::Maker::RSS09::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Channel/Title.html">RSS::Maker::RSS09::Channel::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Image.html">RSS::Maker::RSS09::Image</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items.html">RSS::Maker::RSS09::Items</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item.html">RSS::Maker::RSS09::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Authors.html">RSS::Maker::RSS09::Items::Item::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Authors/Author.html">RSS::Maker::RSS09::Items::Item::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Categories.html">RSS::Maker::RSS09::Items::Item::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Categories/Category.html">RSS::Maker::RSS09::Items::Item::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Content.html">RSS::Maker::RSS09::Items::Item::Content</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Contributors.html">RSS::Maker::RSS09::Items::Item::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Contributors/Contributor.html">RSS::Maker::RSS09::Items::Item::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Description.html">RSS::Maker::RSS09::Items::Item::Description</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Enclosure.html">RSS::Maker::RSS09::Items::Item::Enclosure</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Guid.html">RSS::Maker::RSS09::Items::Item::Guid</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Links.html">RSS::Maker::RSS09::Items::Item::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Links/Link.html">RSS::Maker::RSS09::Items::Item::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Rights.html">RSS::Maker::RSS09::Items::Item::Rights</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source.html">RSS::Maker::RSS09::Items::Item::Source</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Authors.html">RSS::Maker::RSS09::Items::Item::Source::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Authors/Author.html">RSS::Maker::RSS09::Items::Item::Source::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Categories.html">RSS::Maker::RSS09::Items::Item::Source::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Categories/Category.html">RSS::Maker::RSS09::Items::Item::Source::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Contributors.html">RSS::Maker::RSS09::Items::Item::Source::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Contributors/Contributor.html">RSS::Maker::RSS09::Items::Item::Source::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Generator.html">RSS::Maker::RSS09::Items::Item::Source::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Icon.html">RSS::Maker::RSS09::Items::Item::Source::Icon</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Links.html">RSS::Maker::RSS09::Items::Item::Source::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Links/Link.html">RSS::Maker::RSS09::Items::Item::Source::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Logo.html">RSS::Maker::RSS09::Items::Item::Source::Logo</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Rights.html">RSS::Maker::RSS09::Items::Item::Source::Rights</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Subtitle.html">RSS::Maker::RSS09::Items::Item::Source::Subtitle</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Source/Title.html">RSS::Maker::RSS09::Items::Item::Source::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Items/Item/Title.html">RSS::Maker::RSS09::Items::Item::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS09/Textinput.html">RSS::Maker::RSS09::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10.html">RSS::Maker::RSS10</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel.html">RSS::Maker::RSS10::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Authors.html">RSS::Maker::RSS10::Channel::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Authors/Author.html">RSS::Maker::RSS10::Channel::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Categories.html">RSS::Maker::RSS10::Channel::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Categories/Category.html">RSS::Maker::RSS10::Channel::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Cloud.html">RSS::Maker::RSS10::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Contributors.html">RSS::Maker::RSS10::Channel::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Contributors/Contributor.html">RSS::Maker::RSS10::Channel::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Copyright.html">RSS::Maker::RSS10::Channel::Copyright</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Description.html">RSS::Maker::RSS10::Channel::Description</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Generator.html">RSS::Maker::RSS10::Channel::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Links.html">RSS::Maker::RSS10::Channel::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Links/Link.html">RSS::Maker::RSS10::Channel::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/SkipDays.html">RSS::Maker::RSS10::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/SkipDays/Day.html">RSS::Maker::RSS10::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/SkipHours.html">RSS::Maker::RSS10::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/SkipHours/Hour.html">RSS::Maker::RSS10::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Channel/Title.html">RSS::Maker::RSS10::Channel::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Image.html">RSS::Maker::RSS10::Image</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items.html">RSS::Maker::RSS10::Items</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item.html">RSS::Maker::RSS10::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Authors.html">RSS::Maker::RSS10::Items::Item::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Authors/Author.html">RSS::Maker::RSS10::Items::Item::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Categories.html">RSS::Maker::RSS10::Items::Item::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Categories/Category.html">RSS::Maker::RSS10::Items::Item::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Content.html">RSS::Maker::RSS10::Items::Item::Content</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Contributors.html">RSS::Maker::RSS10::Items::Item::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Contributors/Contributor.html">RSS::Maker::RSS10::Items::Item::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Description.html">RSS::Maker::RSS10::Items::Item::Description</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Enclosure.html">RSS::Maker::RSS10::Items::Item::Enclosure</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Guid.html">RSS::Maker::RSS10::Items::Item::Guid</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Links.html">RSS::Maker::RSS10::Items::Item::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Links/Link.html">RSS::Maker::RSS10::Items::Item::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Rights.html">RSS::Maker::RSS10::Items::Item::Rights</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source.html">RSS::Maker::RSS10::Items::Item::Source</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Authors.html">RSS::Maker::RSS10::Items::Item::Source::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Authors/Author.html">RSS::Maker::RSS10::Items::Item::Source::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Categories.html">RSS::Maker::RSS10::Items::Item::Source::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Categories/Category.html">RSS::Maker::RSS10::Items::Item::Source::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Contributors.html">RSS::Maker::RSS10::Items::Item::Source::Contributors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Contributors/Contributor.html">RSS::Maker::RSS10::Items::Item::Source::Contributors::Contributor</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Generator.html">RSS::Maker::RSS10::Items::Item::Source::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Icon.html">RSS::Maker::RSS10::Items::Item::Source::Icon</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Links.html">RSS::Maker::RSS10::Items::Item::Source::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Links/Link.html">RSS::Maker::RSS10::Items::Item::Source::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Logo.html">RSS::Maker::RSS10::Items::Item::Source::Logo</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Rights.html">RSS::Maker::RSS10::Items::Item::Source::Rights</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Subtitle.html">RSS::Maker::RSS10::Items::Item::Source::Subtitle</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Source/Title.html">RSS::Maker::RSS10::Items::Item::Source::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Items/Item/Title.html">RSS::Maker::RSS10::Items::Item::Title</a></li>
+				
+					<li><a href="../RSS/Maker/RSS10/Textinput.html">RSS::Maker::RSS10::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20.html">RSS::Maker::RSS20</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel.html">RSS::Maker::RSS20::Channel</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/Categories.html">RSS::Maker::RSS20::Channel::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/Categories/Category.html">RSS::Maker::RSS20::Channel::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/Cloud.html">RSS::Maker::RSS20::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/Generator.html">RSS::Maker::RSS20::Channel::Generator</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/SkipDays.html">RSS::Maker::RSS20::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/SkipDays/Day.html">RSS::Maker::RSS20::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/SkipHours.html">RSS::Maker::RSS20::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Channel/SkipHours/Hour.html">RSS::Maker::RSS20::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Image.html">RSS::Maker::RSS20::Image</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items.html">RSS::Maker::RSS20::Items</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item.html">RSS::Maker::RSS20::Items::Item</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Authors.html">RSS::Maker::RSS20::Items::Item::Authors</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Authors/Author.html">RSS::Maker::RSS20::Items::Item::Authors::Author</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Categories.html">RSS::Maker::RSS20::Items::Item::Categories</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Categories/Category.html">RSS::Maker::RSS20::Items::Item::Categories::Category</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Enclosure.html">RSS::Maker::RSS20::Items::Item::Enclosure</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Guid.html">RSS::Maker::RSS20::Items::Item::Guid</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Source.html">RSS::Maker::RSS20::Items::Item::Source</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Source/Links.html">RSS::Maker::RSS20::Items::Item::Source::Links</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Items/Item/Source/Links/Link.html">RSS::Maker::RSS20::Items::Item::Source::Links::Link</a></li>
+				
+					<li><a href="../RSS/Maker/RSS20/Textinput.html">RSS::Maker::RSS20::Textinput</a></li>
+				
+					<li><a href="../RSS/Maker/RSSBase.html">RSS::Maker::RSSBase</a></li>
+				
+					<li><a href="../RSS/Maker/SetupDefaultDate.html">RSS::Maker::SetupDefaultDate</a></li>
+				
+					<li><a href="../RSS/Maker/SetupDefaultLanguage.html">RSS::Maker::SetupDefaultLanguage</a></li>
+				
+					<li><a href="../RSS/Maker/SlashModel.html">RSS::Maker::SlashModel</a></li>
+				
+					<li><a href="../RSS/Maker/SyndicationModel.html">RSS::Maker::SyndicationModel</a></li>
+				
+					<li><a href="../RSS/Maker/TaxonomyTopicModel.html">RSS::Maker::TaxonomyTopicModel</a></li>
+				
+					<li><a href="../RSS/Maker/TaxonomyTopicModel/TaxonomyTopicsBase.html">RSS::Maker::TaxonomyTopicModel::TaxonomyTopicsBase</a></li>
+				
+					<li><a href="../RSS/Maker/TaxonomyTopicModel/TaxonomyTopicsBase/TaxonomyTopicBase.html">RSS::Maker::TaxonomyTopicModel::TaxonomyTopicsBase::TaxonomyTopicBase</a></li>
+				
+					<li><a href="../RSS/Maker/TaxonomyTopicsModel.html">RSS::Maker::TaxonomyTopicsModel</a></li>
+				
+					<li><a href="../RSS/Maker/TaxonomyTopicsModel/TaxonomyTopicsBase.html">RSS::Maker::TaxonomyTopicsModel::TaxonomyTopicsBase</a></li>
+				
+					<li><a href="../RSS/Maker/TextinputBase.html">RSS::Maker::TextinputBase</a></li>
+				
+					<li><a href="../RSS/Maker/TrackBackModel.html">RSS::Maker::TrackBackModel</a></li>
+				
+					<li><a href="../RSS/Maker/TrackBackModel/TrackBackAboutsBase.html">RSS::Maker::TrackBackModel::TrackBackAboutsBase</a></li>
+				
+					<li><a href="../RSS/Maker/TrackBackModel/TrackBackAboutsBase/TrackBackAboutBase.html">RSS::Maker::TrackBackModel::TrackBackAboutsBase::TrackBackAboutBase</a></li>
+				
+					<li><a href="../RSS/Maker/XMLStyleSheets.html">RSS::Maker::XMLStyleSheets</a></li>
+				
+					<li><a href="../RSS/Maker/XMLStyleSheets/XMLStyleSheet.html">RSS::Maker::XMLStyleSheets::XMLStyleSheet</a></li>
+				
+					<li><a href="../RSS/MissingAttributeError.html">RSS::MissingAttributeError</a></li>
+				
+					<li><a href="../RSS/MissingTagError.html">RSS::MissingTagError</a></li>
+				
+					<li><a href="../RSS/NSError.html">RSS::NSError</a></li>
+				
+					<li><a href="../RSS/NotAvailableValueError.html">RSS::NotAvailableValueError</a></li>
+				
+					<li><a href="../RSS/NotExpectedTagError.html">RSS::NotExpectedTagError</a></li>
+				
+					<li><a href="../RSS/NotExpectedTagError.html">RSS::NotExpectedTagError</a></li>
+				
+					<li><a href="../RSS/NotSetError.html">RSS::NotSetError</a></li>
+				
+					<li><a href="../RSS/NotValidXMLParser.html">RSS::NotValidXMLParser</a></li>
+				
+					<li><a href="../RSS/NotWellFormedError.html">RSS::NotWellFormedError</a></li>
+				
+					<li><a href="../RSS/OverlappedPrefixError.html">RSS::OverlappedPrefixError</a></li>
+				
+					<li><a href="../RSS/Parser.html">RSS::Parser</a></li>
+				
+					<li><a href="../RSS/RDF.html">RSS::RDF</a></li>
+				
+					<li><a href="../RSS/RDF/Bag.html">RSS::RDF::Bag</a></li>
+				
+					<li><a href="../RSS/RDF/Bag.html">RSS::RDF::Bag</a></li>
+				
+					<li><a href="../RSS/RDF/Channel.html">RSS::RDF::Channel</a></li>
+				
+					<li><a href="../RSS/RDF/Channel/Image.html">RSS::RDF::Channel::Image</a></li>
+				
+					<li><a href="../RSS/RDF/Channel/Items.html">RSS::RDF::Channel::Items</a></li>
+				
+					<li><a href="../RSS/RDF/Channel/Textinput.html">RSS::RDF::Channel::Textinput</a></li>
+				
+					<li><a href="../RSS/RDF/Image.html">RSS::RDF::Image</a></li>
+				
+					<li><a href="../RSS/RDF/Item.html">RSS::RDF::Item</a></li>
+				
+					<li><a href="../RSS/RDF/Li.html">RSS::RDF::Li</a></li>
+				
+					<li><a href="../RSS/RDF/Li.html">RSS::RDF::Li</a></li>
+				
+					<li><a href="../RSS/RDF/Li.html">RSS::RDF::Li</a></li>
+				
+					<li><a href="../RSS/RDF/Seq.html">RSS::RDF::Seq</a></li>
+				
+					<li><a href="../RSS/RDF/Seq.html">RSS::RDF::Seq</a></li>
+				
+					<li><a href="../RSS/RDF/Textinput.html">RSS::RDF::Textinput</a></li>
+				
+					<li><a href="../RSS/REXMLLikeXMLParser.html">RSS::REXMLLikeXMLParser</a></li>
+				
+					<li><a href="../RSS/REXMLListener.html">RSS::REXMLListener</a></li>
+				
+					<li><a href="../RSS/REXMLParser.html">RSS::REXMLParser</a></li>
+				
+					<li><a href="../RSS/RSS09.html">RSS::RSS09</a></li>
+				
+					<li><a href="../RSS/RSS10.html">RSS::RSS10</a></li>
+				
+					<li><a href="../RSS/RootElementMixin.html">RSS::RootElementMixin</a></li>
+				
+					<li><a href="../RSS/Rss.html">RSS::Rss</a></li>
+				
+					<li><a href="../RSS/Rss/Channel.html">RSS::Rss::Channel</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Cloud.html">RSS::Rss::Channel::Cloud</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Image.html">RSS::Rss::Channel::Image</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Item.html">RSS::Rss::Channel::Item</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Item/Category.html">RSS::Rss::Channel::Item::Category</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Item/Enclosure.html">RSS::Rss::Channel::Item::Enclosure</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Item/Guid.html">RSS::Rss::Channel::Item::Guid</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/Item/Source.html">RSS::Rss::Channel::Item::Source</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/SkipDays.html">RSS::Rss::Channel::SkipDays</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/SkipDays/Day.html">RSS::Rss::Channel::SkipDays::Day</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/SkipHours.html">RSS::Rss::Channel::SkipHours</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/SkipHours/Hour.html">RSS::Rss::Channel::SkipHours::Hour</a></li>
+				
+					<li><a href="../RSS/Rss/Channel/TextInput.html">RSS::Rss::Channel::TextInput</a></li>
+				
+					<li><a href="../RSS/SetupMaker.html">RSS::SetupMaker</a></li>
+				
+					<li><a href="../RSS/SlashModel.html">RSS::SlashModel</a></li>
+				
+					<li><a href="../RSS/SyndicationModel.html">RSS::SyndicationModel</a></li>
+				
+					<li><a href="../RSS/TaxonomyTopicModel.html">RSS::TaxonomyTopicModel</a></li>
+				
+					<li><a href="../RSS/TaxonomyTopicModel/TaxonomyTopic.html">RSS::TaxonomyTopicModel::TaxonomyTopic</a></li>
+				
+					<li><a href="../RSS/TaxonomyTopicsModel.html">RSS::TaxonomyTopicsModel</a></li>
+				
+					<li><a href="../RSS/TaxonomyTopicsModel/TaxonomyTopics.html">RSS::TaxonomyTopicsModel::TaxonomyTopics</a></li>
+				
+					<li><a href="../RSS/TooMuchTagError.html">RSS::TooMuchTagError</a></li>
+				
+					<li><a href="../RSS/TrackBackModel10.html">RSS::TrackBackModel10</a></li>
+				
+					<li><a href="../RSS/TrackBackModel10/TrackBackAbout.html">RSS::TrackBackModel10::TrackBackAbout</a></li>
+				
+					<li><a href="../RSS/TrackBackModel10/TrackBackPing.html">RSS::TrackBackModel10::TrackBackPing</a></li>
+				
+					<li><a href="../RSS/TrackBackModel20.html">RSS::TrackBackModel20</a></li>
+				
+					<li><a href="../RSS/TrackBackModel20/TrackBackAbout.html">RSS::TrackBackModel20::TrackBackAbout</a></li>
+				
+					<li><a href="../RSS/TrackBackModel20/TrackBackPing.html">RSS::TrackBackModel20::TrackBackPing</a></li>
+				
+					<li><a href="../RSS/TrackBackUtils.html">RSS::TrackBackUtils</a></li>
+				
+					<li><a href="../RSS/UnknownConversionMethodError.html">RSS::UnknownConversionMethodError</a></li>
+				
+					<li><a href="../RSS/UnknownConversionMethodError.html">RSS::UnknownConversionMethodError</a></li>
+				
+					<li><a href="../RSS/UnknownTagError.html">RSS::UnknownTagError</a></li>
+				
+					<li><a href="../RSS/UnsupportedMakerVersionError.html">RSS::UnsupportedMakerVersionError</a></li>
+				
+					<li><a href="../RSS/Utils.html">RSS::Utils</a></li>
+				
+					<li><a href="../RSS/Utils/CSV.html">RSS::Utils::CSV</a></li>
+				
+					<li><a href="../RSS/Utils/InheritedReader.html">RSS::Utils::InheritedReader</a></li>
+				
+					<li><a href="../RSS/Utils/YesCleanOther.html">RSS::Utils::YesCleanOther</a></li>
+				
+					<li><a href="../RSS/Utils/YesOther.html">RSS::Utils::YesOther</a></li>
+				
+					<li><a href="../RSS/XML.html">RSS::XML</a></li>
+				
+					<li><a href="../RSS/XML/Element.html">RSS::XML::Element</a></li>
+				
+					<li><a href="../RSS/XMLParserListener.html">RSS::XMLParserListener</a></li>
+				
+					<li><a href="../RSS/XMLParserNotFound.html">RSS::XMLParserNotFound</a></li>
+				
+					<li><a href="../RSS/XMLParserParser.html">RSS::XMLParserParser</a></li>
+				
+					<li><a href="../RSS/XMLScanListener.html">RSS::XMLScanListener</a></li>
+				
+					<li><a href="../RSS/XMLScanParser.html">RSS::XMLScanParser</a></li>
+				
+					<li><a href="../RSS/XMLStyleSheet.html">RSS::XMLStyleSheet</a></li>
+				
+					<li><a href="../RSS/XMLStyleSheetMixin.html">RSS::XMLStyleSheetMixin</a></li>
+				
+					<li><a href="../OpenSSL.html">OpenSSL</a></li>
+				
+					<li><a href="../OpenSSL/ASN1.html">OpenSSL::ASN1</a></li>
+				
+					<li><a href="../OpenSSL/ASN1/ASN1Data.html">OpenSSL::ASN1::ASN1Data</a></li>
+				
+					<li><a href="../OpenSSL/ASN1/ASN1Error.html">OpenSSL::ASN1::ASN1Error</a></li>
+				
+					<li><a href="../OpenSSL/ASN1/Constructive.html">OpenSSL::ASN1::Constructive</a></li>
+				
+					<li><a href="../OpenSSL/ASN1/Primitive.html">OpenSSL::ASN1::Primitive</a></li>
+				
+					<li><a href="../OpenSSL/BN.html">OpenSSL::BN</a></li>
+				
+					<li><a href="../OpenSSL/BNError.html">OpenSSL::BNError</a></li>
+				
+					<li><a href="../OpenSSL/Buffering.html">OpenSSL::Buffering</a></li>
+				
+					<li><a href="../OpenSSL/Cipher.html">OpenSSL::Cipher</a></li>
+				
+					<li><a href="../OpenSSL/Cipher/CipherError.html">OpenSSL::Cipher::CipherError</a></li>
+				
+					<li><a href="../OpenSSL/Config.html">OpenSSL::Config</a></li>
+				
+					<li><a href="../OpenSSL/ConfigError.html">OpenSSL::ConfigError</a></li>
+				
+					<li><a href="../OpenSSL/Engine.html">OpenSSL::Engine</a></li>
+				
+					<li><a href="../OpenSSL/Engine/EngineError.html">OpenSSL::Engine::EngineError</a></li>
+				
+					<li><a href="../OpenSSL/HMAC.html">OpenSSL::HMAC</a></li>
+				
+					<li><a href="../OpenSSL/HMACError.html">OpenSSL::HMACError</a></li>
+				
+					<li><a href="../OpenSSL/Netscape.html">OpenSSL::Netscape</a></li>
+				
+					<li><a href="../OpenSSL/Netscape/SPKI.html">OpenSSL::Netscape::SPKI</a></li>
+				
+					<li><a href="../OpenSSL/Netscape/SPKIError.html">OpenSSL::Netscape::SPKIError</a></li>
+				
+					<li><a href="../OpenSSL/OCSP.html">OpenSSL::OCSP</a></li>
+				
+					<li><a href="../OpenSSL/OCSP/BasicResponse.html">OpenSSL::OCSP::BasicResponse</a></li>
+				
+					<li><a href="../OpenSSL/OCSP/CertificateId.html">OpenSSL::OCSP::CertificateId</a></li>
+				
+					<li><a href="../OpenSSL/OCSP/OCSPError.html">OpenSSL::OCSP::OCSPError</a></li>
+				
+					<li><a href="../OpenSSL/OCSP/Request.html">OpenSSL::OCSP::Request</a></li>
+				
+					<li><a href="../OpenSSL/OCSP/Response.html">OpenSSL::OCSP::Response</a></li>
+				
+					<li><a href="../OpenSSL/OpenSSLError.html">OpenSSL::OpenSSLError</a></li>
+				
+					<li><a href="../OpenSSL/PKCS12.html">OpenSSL::PKCS12</a></li>
+				
+					<li><a href="../OpenSSL/PKCS12/PKCS12Error.html">OpenSSL::PKCS12::PKCS12Error</a></li>
+				
+					<li><a href="../OpenSSL/PKCS5.html">OpenSSL::PKCS5</a></li>
+				
+					<li><a href="../OpenSSL/PKCS5/PKCS5Error.html">OpenSSL::PKCS5::PKCS5Error</a></li>
+				
+					<li><a href="../OpenSSL/PKCS7.html">OpenSSL::PKCS7</a></li>
+				
+					<li><a href="../OpenSSL/PKCS7/PKCS7Error.html">OpenSSL::PKCS7::PKCS7Error</a></li>
+				
+					<li><a href="../OpenSSL/PKCS7/RecipientInfo.html">OpenSSL::PKCS7::RecipientInfo</a></li>
+				
+					<li><a href="../OpenSSL/PKCS7/SignerInfo.html">OpenSSL::PKCS7::SignerInfo</a></li>
+				
+					<li><a href="../OpenSSL/PKey.html">OpenSSL::PKey</a></li>
+				
+					<li><a href="../OpenSSL/PKey/DH.html">OpenSSL::PKey::DH</a></li>
+				
+					<li><a href="../OpenSSL/PKey/DHError.html">OpenSSL::PKey::DHError</a></li>
+				
+					<li><a href="../OpenSSL/PKey/DSA.html">OpenSSL::PKey::DSA</a></li>
+				
+					<li><a href="../OpenSSL/PKey/DSAError.html">OpenSSL::PKey::DSAError</a></li>
+				
+					<li><a href="../OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a></li>
+				
+					<li><a href="../OpenSSL/PKey/EC/Group.html">OpenSSL::PKey::EC::Group</a></li>
+				
+					<li><a href="../OpenSSL/PKey/EC/Group/Error.html">OpenSSL::PKey::EC::Group::Error</a></li>
+				
+					<li><a href="../OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a></li>
+				
+					<li><a href="../OpenSSL/PKey/EC/Point/Error.html">OpenSSL::PKey::EC::Point::Error</a></li>
+				
+					<li><a href="../OpenSSL/PKey/ECError.html">OpenSSL::PKey::ECError</a></li>
+				
+					<li><a href="../OpenSSL/PKey/PKey.html">OpenSSL::PKey::PKey</a></li>
+				
+					<li><a href="../OpenSSL/PKey/PKeyError.html">OpenSSL::PKey::PKeyError</a></li>
+				
+					<li><a href="../OpenSSL/PKey/RSA.html">OpenSSL::PKey::RSA</a></li>
+				
+					<li><a href="../OpenSSL/PKey/RSAError.html">OpenSSL::PKey::RSAError</a></li>
+				
+					<li><a href="../OpenSSL/Random.html">OpenSSL::Random</a></li>
+				
+					<li><a href="../OpenSSL/Random/RandomError.html">OpenSSL::Random::RandomError</a></li>
+				
+					<li><a href="../OpenSSL/SSL.html">OpenSSL::SSL</a></li>
+				
+					<li><a href="../OpenSSL/SSL/SSLContext.html">OpenSSL::SSL::SSLContext</a></li>
+				
+					<li><a href="../OpenSSL/SSL/SSLError.html">OpenSSL::SSL::SSLError</a></li>
+				
+					<li><a href="../OpenSSL/SSL/SSLSocket.html">OpenSSL::SSL::SSLSocket</a></li>
+				
+					<li><a href="../OpenSSL/SSL/Session.html">OpenSSL::SSL::Session</a></li>
+				
+					<li><a href="../OpenSSL/SSL/Session/SessionError.html">OpenSSL::SSL::Session::SessionError</a></li>
+				
+					<li><a href="../OpenSSL/X509.html">OpenSSL::X509</a></li>
+				
+					<li><a href="../OpenSSL/X509/Attribute.html">OpenSSL::X509::Attribute</a></li>
+				
+					<li><a href="../OpenSSL/X509/AttributeError.html">OpenSSL::X509::AttributeError</a></li>
+				
+					<li><a href="../OpenSSL/X509/CRL.html">OpenSSL::X509::CRL</a></li>
+				
+					<li><a href="../OpenSSL/X509/CRLError.html">OpenSSL::X509::CRLError</a></li>
+				
+					<li><a href="../OpenSSL/X509/Certificate.html">OpenSSL::X509::Certificate</a></li>
+				
+					<li><a href="../OpenSSL/X509/CertificateError.html">OpenSSL::X509::CertificateError</a></li>
+				
+					<li><a href="../OpenSSL/X509/Extension.html">OpenSSL::X509::Extension</a></li>
+				
+					<li><a href="../OpenSSL/X509/ExtensionError.html">OpenSSL::X509::ExtensionError</a></li>
+				
+					<li><a href="../OpenSSL/X509/ExtensionFactory.html">OpenSSL::X509::ExtensionFactory</a></li>
+				
+					<li><a href="../OpenSSL/X509/Name.html">OpenSSL::X509::Name</a></li>
+				
+					<li><a href="../OpenSSL/X509/NameError.html">OpenSSL::X509::NameError</a></li>
+				
+					<li><a href="../OpenSSL/X509/Request.html">OpenSSL::X509::Request</a></li>
+				
+					<li><a href="../OpenSSL/X509/RequestError.html">OpenSSL::X509::RequestError</a></li>
+				
+					<li><a href="../OpenSSL/X509/Revoked.html">OpenSSL::X509::Revoked</a></li>
+				
+					<li><a href="../OpenSSL/X509/RevokedError.html">OpenSSL::X509::RevokedError</a></li>
+				
+					<li><a href="../OpenSSL/X509/Store.html">OpenSSL::X509::Store</a></li>
+				
+					<li><a href="../OpenSSL/X509/StoreContext.html">OpenSSL::X509::StoreContext</a></li>
+				
+					<li><a href="../OpenSSL/X509/StoreError.html">OpenSSL::X509::StoreError</a></li>
+				
+					<li><a href="../REXML.html">REXML</a></li>
+				
+					<li><a href="../REXML/AttlistDecl.html">REXML::AttlistDecl</a></li>
+				
+					<li><a href="../REXML/Attribute.html">REXML::Attribute</a></li>
+				
+					<li><a href="../REXML/Attributes.html">REXML::Attributes</a></li>
+				
+					<li><a href="../REXML/CData.html">REXML::CData</a></li>
+				
+					<li><a href="../REXML/Child.html">REXML::Child</a></li>
+				
+					<li><a href="../REXML/Comment.html">REXML::Comment</a></li>
+				
+					<li><a href="../REXML/DTD.html">REXML::DTD</a></li>
+				
+					<li><a href="../REXML/DTD/AttlistDecl.html">REXML::DTD::AttlistDecl</a></li>
+				
+					<li><a href="../REXML/DTD/ElementDecl.html">REXML::DTD::ElementDecl</a></li>
+				
+					<li><a href="../REXML/DTD/EntityDecl.html">REXML::DTD::EntityDecl</a></li>
+				
+					<li><a href="../REXML/DTD/NotationDecl.html">REXML::DTD::NotationDecl</a></li>
+				
+					<li><a href="../REXML/DTD/Parser.html">REXML::DTD::Parser</a></li>
+				
+					<li><a href="../REXML/Declaration.html">REXML::Declaration</a></li>
+				
+					<li><a href="../REXML/DocType.html">REXML::DocType</a></li>
+				
+					<li><a href="../REXML/Document.html">REXML::Document</a></li>
+				
+					<li><a href="../REXML/Element.html">REXML::Element</a></li>
+				
+					<li><a href="../REXML/ElementDecl.html">REXML::ElementDecl</a></li>
+				
+					<li><a href="../REXML/Elements.html">REXML::Elements</a></li>
+				
+					<li><a href="../REXML/Encoding.html">REXML::Encoding</a></li>
+				
+					<li><a href="../REXML/Encoding/o.html">REXML::Encoding::o</a></li>
+				
+					<li><a href="../REXML/Encoding/obj.html">REXML::Encoding::obj</a></li>
+				
+					<li><a href="../REXML/Entity.html">REXML::Entity</a></li>
+				
+					<li><a href="../REXML/EntityConst.html">REXML::EntityConst</a></li>
+				
+					<li><a href="../REXML/ExternalEntity.html">REXML::ExternalEntity</a></li>
+				
+					<li><a href="../REXML/Formatters.html">REXML::Formatters</a></li>
+				
+					<li><a href="../REXML/Formatters/Default.html">REXML::Formatters::Default</a></li>
+				
+					<li><a href="../REXML/Formatters/Pretty.html">REXML::Formatters::Pretty</a></li>
+				
+					<li><a href="../REXML/Formatters/Transitive.html">REXML::Formatters::Transitive</a></li>
+				
+					<li><a href="../REXML/Functions.html">REXML::Functions</a></li>
+				
+					<li><a href="../REXML/IOSource.html">REXML::IOSource</a></li>
+				
+					<li><a href="../REXML/Instruction.html">REXML::Instruction</a></li>
+				
+					<li><a href="../REXML/Light.html">REXML::Light</a></li>
+				
+					<li><a href="../REXML/Light/Node.html">REXML::Light::Node</a></li>
+				
+					<li><a href="../REXML/Namespace.html">REXML::Namespace</a></li>
+				
+					<li><a href="../REXML/Node.html">REXML::Node</a></li>
+				
+					<li><a href="../REXML/NotationDecl.html">REXML::NotationDecl</a></li>
+				
+					<li><a href="../REXML/Output.html">REXML::Output</a></li>
+				
+					<li><a href="../REXML/Parent.html">REXML::Parent</a></li>
+				
+					<li><a href="../REXML/ParseException.html">REXML::ParseException</a></li>
+				
+					<li><a href="../REXML/Parsers.html">REXML::Parsers</a></li>
+				
+					<li><a href="../REXML/Parsers/BaseParser.html">REXML::Parsers::BaseParser</a></li>
+				
+					<li><a href="../REXML/Parsers/LightParser.html">REXML::Parsers::LightParser</a></li>
+				
+					<li><a href="../REXML/Parsers/PullEvent.html">REXML::Parsers::PullEvent</a></li>
+				
+					<li><a href="../REXML/Parsers/PullParser.html">REXML::Parsers::PullParser</a></li>
+				
+					<li><a href="../REXML/Parsers/SAX2Parser.html">REXML::Parsers::SAX2Parser</a></li>
+				
+					<li><a href="../REXML/Parsers/StreamParser.html">REXML::Parsers::StreamParser</a></li>
+				
+					<li><a href="../REXML/Parsers/TreeParser.html">REXML::Parsers::TreeParser</a></li>
+				
+					<li><a href="../REXML/Parsers/UltraLightParser.html">REXML::Parsers::UltraLightParser</a></li>
+				
+					<li><a href="../REXML/Parsers/XPathParser.html">REXML::Parsers::XPathParser</a></li>
+				
+					<li><a href="../REXML/QuickPath.html">REXML::QuickPath</a></li>
+				
+					<li><a href="../REXML/SAX2Listener.html">REXML::SAX2Listener</a></li>
+				
+					<li><a href="../REXML/Source.html">REXML::Source</a></li>
+				
+					<li><a href="../REXML/SourceFactory.html">REXML::SourceFactory</a></li>
+				
+					<li><a href="../REXML/StreamListener.html">REXML::StreamListener</a></li>
+				
+					<li><a href="../REXML/SyncEnumerator.html">REXML::SyncEnumerator</a></li>
+				
+					<li><a href="../REXML/Text.html">REXML::Text</a></li>
+				
+					<li><a href="../REXML/UndefinedNamespaceException.html">REXML::UndefinedNamespaceException</a></li>
+				
+					<li><a href="../REXML/Validation.html">REXML::Validation</a></li>
+				
+					<li><a href="../REXML/Validation/Choice.html">REXML::Validation::Choice</a></li>
+				
+					<li><a href="../REXML/Validation/Event.html">REXML::Validation::Event</a></li>
+				
+					<li><a href="../REXML/Validation/Interleave.html">REXML::Validation::Interleave</a></li>
+				
+					<li><a href="../REXML/Validation/OneOrMore.html">REXML::Validation::OneOrMore</a></li>
+				
+					<li><a href="../REXML/Validation/Optional.html">REXML::Validation::Optional</a></li>
+				
+					<li><a href="../REXML/Validation/Ref.html">REXML::Validation::Ref</a></li>
+				
+					<li><a href="../REXML/Validation/RelaxNG.html">REXML::Validation::RelaxNG</a></li>
+				
+					<li><a href="../REXML/Validation/Sequence.html">REXML::Validation::Sequence</a></li>
+				
+					<li><a href="../REXML/Validation/State.html">REXML::Validation::State</a></li>
+				
+					<li><a href="../REXML/Validation/ValidationException.html">REXML::Validation::ValidationException</a></li>
+				
+					<li><a href="../REXML/Validation/Validator.html">REXML::Validation::Validator</a></li>
+				
+					<li><a href="../REXML/Validation/ZeroOrMore.html">REXML::Validation::ZeroOrMore</a></li>
+				
+					<li><a href="../REXML/XMLDecl.html">REXML::XMLDecl</a></li>
+				
+					<li><a href="../REXML/XMLTokens.html">REXML::XMLTokens</a></li>
+				
+					<li><a href="../REXML/XPath.html">REXML::XPath</a></li>
+				
+					<li><a href="../REXML/XPathParser.html">REXML::XPathParser</a></li>
+				
+					<li><a href="../Net.html">Net</a></li>
+				
+					<li><a href="../Net/APOP.html">Net::APOP</a></li>
+				
+					<li><a href="../Net/APOP.html">Net::APOP</a></li>
+				
+					<li><a href="../Net/FTP.html">Net::FTP</a></li>
+				
+					<li><a href="../Net/HTTP.html">Net::HTTP</a></li>
+				
+					<li><a href="../Net/HTTP.html">Net::HTTP</a></li>
+				
+					<li><a href="../Net/HTTP/Copy.html">Net::HTTP::Copy</a></li>
+				
+					<li><a href="../Net/HTTP/Delete.html">Net::HTTP::Delete</a></li>
+				
+					<li><a href="../Net/HTTP/Get.html">Net::HTTP::Get</a></li>
+				
+					<li><a href="../Net/HTTP/Head.html">Net::HTTP::Head</a></li>
+				
+					<li><a href="../Net/HTTP/Lock.html">Net::HTTP::Lock</a></li>
+				
+					<li><a href="../Net/HTTP/Mkcol.html">Net::HTTP::Mkcol</a></li>
+				
+					<li><a href="../Net/HTTP/Move.html">Net::HTTP::Move</a></li>
+				
+					<li><a href="../Net/HTTP/Options.html">Net::HTTP::Options</a></li>
+				
+					<li><a href="../Net/HTTP/Post.html">Net::HTTP::Post</a></li>
+				
+					<li><a href="../Net/HTTP/Propfind.html">Net::HTTP::Propfind</a></li>
+				
+					<li><a href="../Net/HTTP/Proppatch.html">Net::HTTP::Proppatch</a></li>
+				
+					<li><a href="../Net/HTTP/Put.html">Net::HTTP::Put</a></li>
+				
+					<li><a href="../Net/HTTP/Trace.html">Net::HTTP::Trace</a></li>
+				
+					<li><a href="../Net/HTTP/Unlock.html">Net::HTTP::Unlock</a></li>
+				
+					<li><a href="../Net/HTTPError.html">Net::HTTPError</a></li>
+				
+					<li><a href="../Net/HTTPExceptions.html">Net::HTTPExceptions</a></li>
+				
+					<li><a href="../Net/HTTPFatalError.html">Net::HTTPFatalError</a></li>
+				
+					<li><a href="../Net/HTTPGenericRequest.html">Net::HTTPGenericRequest</a></li>
+				
+					<li><a href="../Net/HTTPHeader.html">Net::HTTPHeader</a></li>
+				
+					<li><a href="../Net/HTTPRequest.html">Net::HTTPRequest</a></li>
+				
+					<li><a href="../Net/HTTPResponse.html">Net::HTTPResponse</a></li>
+				
+					<li><a href="../Net/HTTPResponse/res.html">Net::HTTPResponse::res</a></li>
+				
+					<li><a href="../Net/HTTPRetriableError.html">Net::HTTPRetriableError</a></li>
+				
+					<li><a href="../Net/HTTPServerException.html">Net::HTTPServerException</a></li>
+				
+					<li><a href="../Net/IMAP.html">Net::IMAP</a></li>
+				
+					<li><a href="../Net/IMAP/BadResponseError.html">Net::IMAP::BadResponseError</a></li>
+				
+					<li><a href="../Net/IMAP/BodyTypeBasic.html">Net::IMAP::BodyTypeBasic</a></li>
+				
+					<li><a href="../Net/IMAP/BodyTypeMessage.html">Net::IMAP::BodyTypeMessage</a></li>
+				
+					<li><a href="../Net/IMAP/BodyTypeMultipart.html">Net::IMAP::BodyTypeMultipart</a></li>
+				
+					<li><a href="../Net/IMAP/BodyTypeText.html">Net::IMAP::BodyTypeText</a></li>
+				
+					<li><a href="../Net/IMAP/ByeResponseError.html">Net::IMAP::ByeResponseError</a></li>
+				
+					<li><a href="../Net/IMAP/CramMD5Authenticator.html">Net::IMAP::CramMD5Authenticator</a></li>
+				
+					<li><a href="../Net/IMAP/DataFormatError.html">Net::IMAP::DataFormatError</a></li>
+				
+					<li><a href="../Net/IMAP/DigestMD5Authenticator.html">Net::IMAP::DigestMD5Authenticator</a></li>
+				
+					<li><a href="../Net/IMAP/Error.html">Net::IMAP::Error</a></li>
+				
+					<li><a href="../Net/IMAP/FlagCountError.html">Net::IMAP::FlagCountError</a></li>
+				
+					<li><a href="../Net/IMAP/LoginAuthenticator.html">Net::IMAP::LoginAuthenticator</a></li>
+				
+					<li><a href="../Net/IMAP/NoResponseError.html">Net::IMAP::NoResponseError</a></li>
+				
+					<li><a href="../Net/IMAP/PlainAuthenticator.html">Net::IMAP::PlainAuthenticator</a></li>
+				
+					<li><a href="../Net/IMAP/ResponseError.html">Net::IMAP::ResponseError</a></li>
+				
+					<li><a href="../Net/IMAP/ResponseParseError.html">Net::IMAP::ResponseParseError</a></li>
+				
+					<li><a href="../Net/POP3.html">Net::POP3</a></li>
+				
+					<li><a href="../Net/POP3.html">Net::POP3</a></li>
+				
+					<li><a href="../Net/POP3.html">Net::POP3</a></li>
+				
+					<li><a href="../Net/POP3.html">Net::POP3</a></li>
+				
+					<li><a href="../Net/POPAuthenticationError.html">Net::POPAuthenticationError</a></li>
+				
+					<li><a href="../Net/POPBadResponse.html">Net::POPBadResponse</a></li>
+				
+					<li><a href="../Net/POPError.html">Net::POPError</a></li>
+				
+					<li><a href="../Net/POPMail.html">Net::POPMail</a></li>
+				
+					<li><a href="../Net/SMTP.html">Net::SMTP</a></li>
+				
+					<li><a href="../Net/SMTP.html">Net::SMTP</a></li>
+				
+					<li><a href="../Net/SMTP/Response.html">Net::SMTP::Response</a></li>
+				
+					<li><a href="../Net/SMTPAuthenticationError.html">Net::SMTPAuthenticationError</a></li>
+				
+					<li><a href="../Net/SMTPError.html">Net::SMTPError</a></li>
+				
+					<li><a href="../Net/SMTPFatalError.html">Net::SMTPFatalError</a></li>
+				
+					<li><a href="../Net/SMTPServerBusy.html">Net::SMTPServerBusy</a></li>
+				
+					<li><a href="../Net/SMTPSyntaxError.html">Net::SMTPSyntaxError</a></li>
+				
+					<li><a href="../Net/SMTPUnknownError.html">Net::SMTPUnknownError</a></li>
+				
+					<li><a href="../Net/SMTPUnsupportedCommand.html">Net::SMTPUnsupportedCommand</a></li>
+				
+					<li><a href="../Net/Telnet.html">Net::Telnet</a></li>
+				
+					<li><a href="../RDoc.html">RDoc</a></li>
+				
+					<li><a href="../RDoc/Alias.html">RDoc::Alias</a></li>
+				
+					<li><a href="../RDoc/AnonClass.html">RDoc::AnonClass</a></li>
+				
+					<li><a href="../RDoc/AnyMethod.html">RDoc::AnyMethod</a></li>
+				
+					<li><a href="../RDoc/Attr.html">RDoc::Attr</a></li>
+				
+					<li><a href="../RDoc/ClassModule.html">RDoc::ClassModule</a></li>
+				
+					<li><a href="../RDoc/CodeObject.html">RDoc::CodeObject</a></li>
+				
+					<li><a href="../RDoc/Constant.html">RDoc::Constant</a></li>
+				
+					<li><a href="../RDoc/Context.html">RDoc::Context</a></li>
+				
+					<li><a href="../RDoc/Context/Section.html">RDoc::Context::Section</a></li>
+				
+					<li><a href="../RDoc/Error.html">RDoc::Error</a></li>
+				
+					<li><a href="../RDoc/Generator.html">RDoc::Generator</a></li>
+				
+					<li><a href="../RDoc/Generator/Darkfish.html">RDoc::Generator::Darkfish</a></li>
+				
+					<li><a href="../RDoc/Generator/Markup.html">RDoc::Generator::Markup</a></li>
+				
+					<li><a href="../RDoc/Generator/RI.html">RDoc::Generator::RI</a></li>
+				
+					<li><a href="../RDoc/GhostMethod.html">RDoc::GhostMethod</a></li>
+				
+					<li><a href="../RDoc/Include.html">RDoc::Include</a></li>
+				
+					<li><a href="../RDoc/Markup.html">RDoc::Markup</a></li>
+				
+					<li><a href="../RDoc/Markup/AttrChanger.html">RDoc::Markup::AttrChanger</a></li>
+				
+					<li><a href="../RDoc/Markup/AttrSpan.html">RDoc::Markup::AttrSpan</a></li>
+				
+					<li><a href="../RDoc/Markup/Attribute.html">RDoc::Markup::Attribute</a></li>
+				
+					<li><a href="../RDoc/Markup/AttributeManager.html">RDoc::Markup::AttributeManager</a></li>
+				
+					<li><a href="../RDoc/Markup/BlankLine.html">RDoc::Markup::BlankLine</a></li>
+				
+					<li><a href="../RDoc/Markup/Document.html">RDoc::Markup::Document</a></li>
+				
+					<li><a href="../RDoc/Markup/Formatter.html">RDoc::Markup::Formatter</a></li>
+				
+					<li><a href="../RDoc/Markup/FormatterTestCase.html">RDoc::Markup::FormatterTestCase</a></li>
+				
+					<li><a href="../RDoc/Markup/Heading.html">RDoc::Markup::Heading</a></li>
+				
+					<li><a href="../RDoc/Markup/List.html">RDoc::Markup::List</a></li>
+				
+					<li><a href="../RDoc/Markup/ListItem.html">RDoc::Markup::ListItem</a></li>
+				
+					<li><a href="../RDoc/Markup/Paragraph.html">RDoc::Markup::Paragraph</a></li>
+				
+					<li><a href="../RDoc/Markup/Parser.html">RDoc::Markup::Parser</a></li>
+				
+					<li><a href="../RDoc/Markup/Parser/Error.html">RDoc::Markup::Parser::Error</a></li>
+				
+					<li><a href="../RDoc/Markup/Parser/ParseError.html">RDoc::Markup::Parser::ParseError</a></li>
+				
+					<li><a href="../RDoc/Markup/PreProcess.html">RDoc::Markup::PreProcess</a></li>
+				
+					<li><a href="../RDoc/Markup/Raw.html">RDoc::Markup::Raw</a></li>
+				
+					<li><a href="../RDoc/Markup/Rule.html">RDoc::Markup::Rule</a></li>
+				
+					<li><a href="../RDoc/Markup/Special.html">RDoc::Markup::Special</a></li>
+				
+					<li><a href="../RDoc/Markup/ToAnsi.html">RDoc::Markup::ToAnsi</a></li>
+				
+					<li><a href="../RDoc/Markup/ToBs.html">RDoc::Markup::ToBs</a></li>
+				
+					<li><a href="../RDoc/Markup/ToHtml.html">RDoc::Markup::ToHtml</a></li>
+				
+					<li><a href="../RDoc/Markup/ToHtmlCrossref.html">RDoc::Markup::ToHtmlCrossref</a></li>
+				
+					<li><a href="../RDoc/Markup/ToRdoc.html">RDoc::Markup::ToRdoc</a></li>
+				
+					<li><a href="../RDoc/Markup/ToTest.html">RDoc::Markup::ToTest</a></li>
+				
+					<li><a href="../RDoc/Markup/Verbatim.html">RDoc::Markup::Verbatim</a></li>
+				
+					<li><a href="../RDoc/MetaMethod.html">RDoc::MetaMethod</a></li>
+				
+					<li><a href="../RDoc/NormalClass.html">RDoc::NormalClass</a></li>
+				
+					<li><a href="../RDoc/NormalModule.html">RDoc::NormalModule</a></li>
+				
+					<li><a href="../RDoc/Options.html">RDoc::Options</a></li>
+				
+					<li><a href="../RDoc/Parser.html">RDoc::Parser</a></li>
+				
+					<li><a href="../RDoc/Parser/C.html">RDoc::Parser::C</a></li>
+				
+					<li><a href="../RDoc/Parser/PerlPOD.html">RDoc::Parser::PerlPOD</a></li>
+				
+					<li><a href="../RDoc/Parser/Ruby.html">RDoc::Parser::Ruby</a></li>
+				
+					<li><a href="../RDoc/Parser/RubyTools.html">RDoc::Parser::RubyTools</a></li>
+				
+					<li><a href="../RDoc/Parser/Simple.html">RDoc::Parser::Simple</a></li>
+				
+					<li><a href="../RDoc/RDoc.html">RDoc::RDoc</a></li>
+				
+					<li><a href="../RDoc/RI.html">RDoc::RI</a></li>
+				
+					<li><a href="../RDoc/RI/Driver.html">RDoc::RI::Driver</a></li>
+				
+					<li><a href="../RDoc/RI/Driver/Error.html">RDoc::RI::Driver::Error</a></li>
+				
+					<li><a href="../RDoc/RI/Driver/NotFoundError.html">RDoc::RI::Driver::NotFoundError</a></li>
+				
+					<li><a href="../RDoc/RI/Error.html">RDoc::RI::Error</a></li>
+				
+					<li><a href="../RDoc/RI/Paths.html">RDoc::RI::Paths</a></li>
+				
+					<li><a href="../RDoc/RI/Store.html">RDoc::RI::Store</a></li>
+				
+					<li><a href="../RDoc/Require.html">RDoc::Require</a></li>
+				
+					<li><a href="../RDoc/RubyLex.html">RDoc::RubyLex</a></li>
+				
+					<li><a href="../RDoc/RubyToken.html">RDoc::RubyToken</a></li>
+				
+					<li><a href="../RDoc/SingleClass.html">RDoc::SingleClass</a></li>
+				
+					<li><a href="../RDoc/Stats.html">RDoc::Stats</a></li>
+				
+					<li><a href="../RDoc/Stats/Normal.html">RDoc::Stats::Normal</a></li>
+				
+					<li><a href="../RDoc/Stats/Quiet.html">RDoc::Stats::Quiet</a></li>
+				
+					<li><a href="../RDoc/Stats/Verbose.html">RDoc::Stats::Verbose</a></li>
+				
+					<li><a href="../RDoc/Text.html">RDoc::Text</a></li>
+				
+					<li><a href="../RDoc/TokenStream.html">RDoc::TokenStream</a></li>
+				
+					<li><a href="../RDoc/TopLevel.html">RDoc::TopLevel</a></li>
+				
+					<li><a href="../WEBrick.html">WEBrick</a></li>
+				
+					<li><a href="../WEBrick/AccessLog.html">WEBrick::AccessLog</a></li>
+				
+					<li><a href="../WEBrick/AccessLog/AccessLogError.html">WEBrick::AccessLog::AccessLogError</a></li>
+				
+					<li><a href="../WEBrick/BasicLog.html">WEBrick::BasicLog</a></li>
+				
+					<li><a href="../WEBrick/CGI.html">WEBrick::CGI</a></li>
+				
+					<li><a href="../WEBrick/CGI/Socket.html">WEBrick::CGI::Socket</a></li>
+				
+					<li><a href="../WEBrick/Config.html">WEBrick::Config</a></li>
+				
+					<li><a href="../WEBrick/Cookie.html">WEBrick::Cookie</a></li>
+				
+					<li><a href="../WEBrick/Daemon.html">WEBrick::Daemon</a></li>
+				
+					<li><a href="../WEBrick/FakeProxyURI.html">WEBrick::FakeProxyURI</a></li>
+				
+					<li><a href="../WEBrick/GenericServer.html">WEBrick::GenericServer</a></li>
+				
+					<li><a href="../WEBrick/HTMLUtils.html">WEBrick::HTMLUtils</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth.html">WEBrick::HTTPAuth</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/Authenticator.html">WEBrick::HTTPAuth::Authenticator</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/BasicAuth.html">WEBrick::HTTPAuth::BasicAuth</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/DigestAuth.html">WEBrick::HTTPAuth::DigestAuth</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/Htdigest.html">WEBrick::HTTPAuth::Htdigest</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/Htgroup.html">WEBrick::HTTPAuth::Htgroup</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/Htpasswd.html">WEBrick::HTTPAuth::Htpasswd</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/ProxyAuthenticator.html">WEBrick::HTTPAuth::ProxyAuthenticator</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/ProxyBasicAuth.html">WEBrick::HTTPAuth::ProxyBasicAuth</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/ProxyDigestAuth.html">WEBrick::HTTPAuth::ProxyDigestAuth</a></li>
+				
+					<li><a href="../WEBrick/HTTPAuth/UserDB.html">WEBrick::HTTPAuth::UserDB</a></li>
+				
+					<li><a href="../WEBrick/HTTPProxyServer.html">WEBrick::HTTPProxyServer</a></li>
+				
+					<li><a href="../WEBrick/HTTPRequest.html">WEBrick::HTTPRequest</a></li>
+				
+					<li><a href="../WEBrick/HTTPResponse.html">WEBrick::HTTPResponse</a></li>
+				
+					<li><a href="../WEBrick/HTTPServer.html">WEBrick::HTTPServer</a></li>
+				
+					<li><a href="../WEBrick/HTTPServer/MountTable.html">WEBrick::HTTPServer::MountTable</a></li>
+				
+					<li><a href="../WEBrick/HTTPServerError.html">WEBrick::HTTPServerError</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet.html">WEBrick::HTTPServlet</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/AbstractServlet.html">WEBrick::HTTPServlet::AbstractServlet</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/CGIHandler.html">WEBrick::HTTPServlet::CGIHandler</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/DefaultFileHandler.html">WEBrick::HTTPServlet::DefaultFileHandler</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/ERBHandler.html">WEBrick::HTTPServlet::ERBHandler</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/FileHandler.html">WEBrick::HTTPServlet::FileHandler</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/HTTPServletError.html">WEBrick::HTTPServlet::HTTPServletError</a></li>
+				
+					<li><a href="../WEBrick/HTTPServlet/ProcHandler.html">WEBrick::HTTPServlet::ProcHandler</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus.html">WEBrick::HTTPStatus</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/ClientError.html">WEBrick::HTTPStatus::ClientError</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/EOFError.html">WEBrick::HTTPStatus::EOFError</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/Error.html">WEBrick::HTTPStatus::Error</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/Info.html">WEBrick::HTTPStatus::Info</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/Redirect.html">WEBrick::HTTPStatus::Redirect</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/ServerError.html">WEBrick::HTTPStatus::ServerError</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/Status.html">WEBrick::HTTPStatus::Status</a></li>
+				
+					<li><a href="../WEBrick/HTTPStatus/Success.html">WEBrick::HTTPStatus::Success</a></li>
+				
+					<li><a href="../WEBrick/HTTPUtils.html">WEBrick::HTTPUtils</a></li>
+				
+					<li><a href="../WEBrick/HTTPUtils/FormData.html">WEBrick::HTTPUtils::FormData</a></li>
+				
+					<li><a href="../WEBrick/HTTPVersion.html">WEBrick::HTTPVersion</a></li>
+				
+					<li><a href="../WEBrick/Log.html">WEBrick::Log</a></li>
+				
+					<li><a href="../WEBrick/NullReader.html">WEBrick::NullReader</a></li>
+				
+					<li><a href="../WEBrick/ServerError.html">WEBrick::ServerError</a></li>
+				
+					<li><a href="../WEBrick/SimpleServer.html">WEBrick::SimpleServer</a></li>
+				
+					<li><a href="../WEBrick/Utils.html">WEBrick::Utils</a></li>
+				
+					<li><a href="../WEBrick/Utils/TimeoutHandler.html">WEBrick::Utils::TimeoutHandler</a></li>
+				
+					<li><a href="../IRB.html">IRB</a></li>
+				
+					<li><a href="../IRB/(MagicFile = Object.new).html">IRB::(MagicFile = Object.new)</a></li>
+				
+					<li><a href="../IRB/Abort.html">IRB::Abort</a></li>
+				
+					<li><a href="../IRB/Context.html">IRB::Context</a></li>
+				
+					<li><a href="../IRB/Context/@io;.html">IRB::Context::@io;</a></li>
+				
+					<li><a href="../IRB/Context/@workspace.main;.html">IRB::Context::@workspace.main;</a></li>
+				
+					<li><a href="../IRB/Context/main;.html">IRB::Context::main;</a></li>
+				
+					<li><a href="../IRB/ContextExtender.html">IRB::ContextExtender</a></li>
+				
+					<li><a href="../IRB/ContextExtender.html">IRB::ContextExtender</a></li>
+				
+					<li><a href="../IRB/ExtendCommand.html">IRB::ExtendCommand</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/ChangeWorkspace.html">IRB::ExtendCommand::ChangeWorkspace</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/CurrentWorkingWorkspace.html">IRB::ExtendCommand::CurrentWorkingWorkspace</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Foreground.html">IRB::ExtendCommand::Foreground</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Fork.html">IRB::ExtendCommand::Fork</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Help.html">IRB::ExtendCommand::Help</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/IrbCommand.html">IRB::ExtendCommand::IrbCommand</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Jobs.html">IRB::ExtendCommand::Jobs</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Kill.html">IRB::ExtendCommand::Kill</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Load.html">IRB::ExtendCommand::Load</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Nop.html">IRB::ExtendCommand::Nop</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/PopWorkspace.html">IRB::ExtendCommand::PopWorkspace</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/PushWorkspace.html">IRB::ExtendCommand::PushWorkspace</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Require.html">IRB::ExtendCommand::Require</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Source.html">IRB::ExtendCommand::Source</a></li>
+				
+					<li><a href="../IRB/ExtendCommand/Workspaces.html">IRB::ExtendCommand::Workspaces</a></li>
+				
+					<li><a href="../IRB/ExtendCommandBundle.html">IRB::ExtendCommandBundle</a></li>
+				
+					<li><a href="../IRB/ExtendCommandBundle.html">IRB::ExtendCommandBundle</a></li>
+				
+					<li><a href="../IRB/ExtendCommandBundle/obj;.html">IRB::ExtendCommandBundle::obj;</a></li>
+				
+					<li><a href="../IRB/FileInputMethod.html">IRB::FileInputMethod</a></li>
+				
+					<li><a href="../IRB/Frame.html">IRB::Frame</a></li>
+				
+					<li><a href="../IRB/History.html">IRB::History</a></li>
+				
+					<li><a href="../IRB/HistorySavingAbility.html">IRB::HistorySavingAbility</a></li>
+				
+					<li><a href="../IRB/INSPECTORS.html">IRB::INSPECTORS</a></li>
+				
+					<li><a href="../IRB/InputCompletor.html">IRB::InputCompletor</a></li>
+				
+					<li><a href="../IRB/InputMethod.html">IRB::InputMethod</a></li>
+				
+					<li><a href="../IRB/Inspector.html">IRB::Inspector</a></li>
+				
+					<li><a href="../IRB/Irb.html">IRB::Irb</a></li>
+				
+					<li><a href="../IRB/IrbLoader.html">IRB::IrbLoader</a></li>
+				
+					<li><a href="../IRB/JobManager.html">IRB::JobManager</a></li>
+				
+					<li><a href="../IRB/LoadAbort.html">IRB::LoadAbort</a></li>
+				
+					<li><a href="../IRB/Locale.html">IRB::Locale</a></li>
+				
+					<li><a href="../IRB/MethodExtender.html">IRB::MethodExtender</a></li>
+				
+					<li><a href="../IRB/Notifier.html">IRB::Notifier</a></li>
+				
+					<li><a href="../IRB/Notifier/AbstractNotifier.html">IRB::Notifier::AbstractNotifier</a></li>
+				
+					<li><a href="../IRB/Notifier/CompositeNotifier.html">IRB::Notifier::CompositeNotifier</a></li>
+				
+					<li><a href="../IRB/Notifier/LeveledNotifier.html">IRB::Notifier::LeveledNotifier</a></li>
+				
+					<li><a href="../IRB/Notifier/NoMsgNotifier.html">IRB::Notifier::NoMsgNotifier</a></li>
+				
+					<li><a href="../IRB/OutputMethod.html">IRB::OutputMethod</a></li>
+				
+					<li><a href="../IRB/ReadlineInputMethod.html">IRB::ReadlineInputMethod</a></li>
+				
+					<li><a href="../IRB/SLex.html">IRB::SLex</a></li>
+				
+					<li><a href="../IRB/SLex/Node.html">IRB::SLex::Node</a></li>
+				
+					<li><a href="../IRB/StdioInputMethod.html">IRB::StdioInputMethod</a></li>
+				
+					<li><a href="../IRB/StdioOutputMethod.html">IRB::StdioOutputMethod</a></li>
+				
+					<li><a href="../IRB/WorkSpace.html">IRB::WorkSpace</a></li>
+				
+					<li><a href="../Resolv.html">Resolv</a></li>
+				
+					<li><a href="../Resolv/DNS.html">Resolv::DNS</a></li>
+				
+					<li><a href="../Resolv/DNS/Config/NXDomain.html">Resolv::DNS::Config::NXDomain</a></li>
+				
+					<li><a href="../Resolv/DNS/Config/OtherResolvError.html">Resolv::DNS::Config::OtherResolvError</a></li>
+				
+					<li><a href="../Resolv/DNS/DecodeError.html">Resolv::DNS::DecodeError</a></li>
+				
+					<li><a href="../Resolv/DNS/EncodeError.html">Resolv::DNS::EncodeError</a></li>
+				
+					<li><a href="../Resolv/DNS/Name.html">Resolv::DNS::Name</a></li>
+				
+					<li><a href="../Resolv/DNS/Query.html">Resolv::DNS::Query</a></li>
+				
+					<li><a href="../Resolv/DNS/Requester/RequestError.html">Resolv::DNS::Requester::RequestError</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource.html">Resolv::DNS::Resource</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/ANY.html">Resolv::DNS::Resource::ANY</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/CNAME.html">Resolv::DNS::Resource::CNAME</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/DomainName.html">Resolv::DNS::Resource::DomainName</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/Generic.html">Resolv::DNS::Resource::Generic</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/HINFO.html">Resolv::DNS::Resource::HINFO</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/IN.html">Resolv::DNS::Resource::IN</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/IN/A.html">Resolv::DNS::Resource::IN::A</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/IN/AAAA.html">Resolv::DNS::Resource::IN::AAAA</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/IN/SRV.html">Resolv::DNS::Resource::IN::SRV</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/IN/WKS.html">Resolv::DNS::Resource::IN::WKS</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/MINFO.html">Resolv::DNS::Resource::MINFO</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/MX.html">Resolv::DNS::Resource::MX</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/NS.html">Resolv::DNS::Resource::NS</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/PTR.html">Resolv::DNS::Resource::PTR</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/SOA.html">Resolv::DNS::Resource::SOA</a></li>
+				
+					<li><a href="../Resolv/DNS/Resource/TXT.html">Resolv::DNS::Resource::TXT</a></li>
+				
+					<li><a href="../Resolv/Hosts.html">Resolv::Hosts</a></li>
+				
+					<li><a href="../Resolv/IPv4.html">Resolv::IPv4</a></li>
+				
+					<li><a href="../Resolv/IPv6.html">Resolv::IPv6</a></li>
+				
+					<li><a href="../Resolv/ResolvError.html">Resolv::ResolvError</a></li>
+				
+					<li><a href="../Resolv/ResolvTimeout.html">Resolv::ResolvTimeout</a></li>
+				
+					<li><a href="../DRb.html">DRb</a></li>
+				
+					<li><a href="../DRb/DRbArray.html">DRb::DRbArray</a></li>
+				
+					<li><a href="../DRb/DRbBadScheme.html">DRb::DRbBadScheme</a></li>
+				
+					<li><a href="../DRb/DRbBadURI.html">DRb::DRbBadURI</a></li>
+				
+					<li><a href="../DRb/DRbConn.html">DRb::DRbConn</a></li>
+				
+					<li><a href="../DRb/DRbConnError.html">DRb::DRbConnError</a></li>
+				
+					<li><a href="../DRb/DRbError.html">DRb::DRbError</a></li>
+				
+					<li><a href="../DRb/DRbIdConv.html">DRb::DRbIdConv</a></li>
+				
+					<li><a href="../DRb/DRbIdConv.html">DRb::DRbIdConv</a></li>
+				
+					<li><a href="../DRb/DRbMessage.html">DRb::DRbMessage</a></li>
+				
+					<li><a href="../DRb/DRbObject.html">DRb::DRbObject</a></li>
+				
+					<li><a href="../DRb/DRbObject.html">DRb::DRbObject</a></li>
+				
+					<li><a href="../DRb/DRbObservable.html">DRb::DRbObservable</a></li>
+				
+					<li><a href="../DRb/DRbProtocol.html">DRb::DRbProtocol</a></li>
+				
+					<li><a href="../DRb/DRbRemoteError.html">DRb::DRbRemoteError</a></li>
+				
+					<li><a href="../DRb/DRbSSLSocket.html">DRb::DRbSSLSocket</a></li>
+				
+					<li><a href="../DRb/DRbSSLSocket/SSLConfig.html">DRb::DRbSSLSocket::SSLConfig</a></li>
+				
+					<li><a href="../DRb/DRbServer.html">DRb::DRbServer</a></li>
+				
+					<li><a href="../DRb/DRbServer/InvokeMethod18Mixin.html">DRb::DRbServer::InvokeMethod18Mixin</a></li>
+				
+					<li><a href="../DRb/DRbServerNotFound.html">DRb::DRbServerNotFound</a></li>
+				
+					<li><a href="../DRb/DRbTCPSocket.html">DRb::DRbTCPSocket</a></li>
+				
+					<li><a href="../DRb/DRbUNIXSocket.html">DRb::DRbUNIXSocket</a></li>
+				
+					<li><a href="../DRb/DRbUndumped.html">DRb::DRbUndumped</a></li>
+				
+					<li><a href="../DRb/DRbUndumped.html">DRb::DRbUndumped</a></li>
+				
+					<li><a href="../DRb/DRbUnknown.html">DRb::DRbUnknown</a></li>
+				
+					<li><a href="../DRb/DRbUnknownError.html">DRb::DRbUnknownError</a></li>
+				
+					<li><a href="../DRb/ExtServ.html">DRb::ExtServ</a></li>
+				
+					<li><a href="../DRb/ExtServManager.html">DRb::ExtServManager</a></li>
+				
+					<li><a href="../DRb/GW.html">DRb::GW</a></li>
+				
+					<li><a href="../DRb/GWIdConv.html">DRb::GWIdConv</a></li>
+				
+					<li><a href="../DRb/TimerIdConv.html">DRb::TimerIdConv</a></li>
+				
+					<li><a href="../DRb/TimerIdConv/TimerHolder2.html">DRb::TimerIdConv::TimerHolder2</a></li>
+				
+					<li><a href="../DRb/TimerIdConv/TimerHolder2/InvalidIndexError.html">DRb::TimerIdConv::TimerHolder2::InvalidIndexError</a></li>
+				
+					<li><a href="../Rinda.html">Rinda</a></li>
+				
+					<li><a href="../Rinda/DRbObjectTemplate.html">Rinda::DRbObjectTemplate</a></li>
+				
+					<li><a href="../Rinda/InvalidHashTupleKey.html">Rinda::InvalidHashTupleKey</a></li>
+				
+					<li><a href="../Rinda/NotifyTemplateEntry.html">Rinda::NotifyTemplateEntry</a></li>
+				
+					<li><a href="../Rinda/RequestCanceledError.html">Rinda::RequestCanceledError</a></li>
+				
+					<li><a href="../Rinda/RequestExpiredError.html">Rinda::RequestExpiredError</a></li>
+				
+					<li><a href="../Rinda/RindaError.html">Rinda::RindaError</a></li>
+				
+					<li><a href="../Rinda/RingFinger.html">Rinda::RingFinger</a></li>
+				
+					<li><a href="../Rinda/RingProvider.html">Rinda::RingProvider</a></li>
+				
+					<li><a href="../Rinda/RingServer.html">Rinda::RingServer</a></li>
+				
+					<li><a href="../Rinda/SimpleRenewer.html">Rinda::SimpleRenewer</a></li>
+				
+					<li><a href="../Rinda/Template.html">Rinda::Template</a></li>
+				
+					<li><a href="../Rinda/TemplateEntry.html">Rinda::TemplateEntry</a></li>
+				
+					<li><a href="../Rinda/Tuple.html">Rinda::Tuple</a></li>
+				
+					<li><a href="../Rinda/TupleBag.html">Rinda::TupleBag</a></li>
+				
+					<li><a href="../Rinda/TupleBag/TupleBin.html">Rinda::TupleBag::TupleBin</a></li>
+				
+					<li><a href="../Rinda/TupleEntry.html">Rinda::TupleEntry</a></li>
+				
+					<li><a href="../Rinda/TupleSpace.html">Rinda::TupleSpace</a></li>
+				
+					<li><a href="../Rinda/TupleSpaceProxy.html">Rinda::TupleSpaceProxy</a></li>
+				
+					<li><a href="../Rinda/WaitTemplateEntry.html">Rinda::WaitTemplateEntry</a></li>
+				
+					<li><a href="../OptionParser.html">OptionParser</a></li>
+				
+					<li><a href="../OptionParser/Acceptables.html">OptionParser::Acceptables</a></li>
+				
+					<li><a href="../OptionParser/AmbiguousArgument.html">OptionParser::AmbiguousArgument</a></li>
+				
+					<li><a href="../OptionParser/AmbiguousOption.html">OptionParser::AmbiguousOption</a></li>
+				
+					<li><a href="../OptionParser/Arguable.html">OptionParser::Arguable</a></li>
+				
+					<li><a href="../OptionParser/CompletingHash.html">OptionParser::CompletingHash</a></li>
+				
+					<li><a href="../OptionParser/Completion.html">OptionParser::Completion</a></li>
+				
+					<li><a href="../OptionParser/InvalidArgument.html">OptionParser::InvalidArgument</a></li>
+				
+					<li><a href="../OptionParser/InvalidOption.html">OptionParser::InvalidOption</a></li>
+				
+					<li><a href="../OptionParser/List.html">OptionParser::List</a></li>
+				
+					<li><a href="../OptionParser/MissingArgument.html">OptionParser::MissingArgument</a></li>
+				
+					<li><a href="../OptionParser/NeedlessArgument.html">OptionParser::NeedlessArgument</a></li>
+				
+					<li><a href="../OptionParser/OptionMap.html">OptionParser::OptionMap</a></li>
+				
+					<li><a href="../OptionParser/ParseError.html">OptionParser::ParseError</a></li>
+				
+					<li><a href="../OptionParser/Switch.html">OptionParser::Switch</a></li>
+				
+					<li><a href="../OptionParser/Switch/NoArgument.html">OptionParser::Switch::NoArgument</a></li>
+				
+					<li><a href="../OptionParser/Switch/OptionalArgument.html">OptionParser::Switch::OptionalArgument</a></li>
+				
+					<li><a href="../OptionParser/Switch/PlacedArgument.html">OptionParser::Switch::PlacedArgument</a></li>
+				
+					<li><a href="../OptionParser/Switch/RequiredArgument.html">OptionParser::Switch::RequiredArgument</a></li>
+				
+					<li><a href="../Zlib.html">Zlib</a></li>
+				
+					<li><a href="../Zlib/BufError.html">Zlib::BufError</a></li>
+				
+					<li><a href="../Zlib/DataError.html">Zlib::DataError</a></li>
+				
+					<li><a href="../Zlib/Deflate.html">Zlib::Deflate</a></li>
+				
+					<li><a href="../Zlib/Error.html">Zlib::Error</a></li>
+				
+					<li><a href="../Zlib/GzipFile.html">Zlib::GzipFile</a></li>
+				
+					<li><a href="../Zlib/GzipFile/CRCError.html">Zlib::GzipFile::CRCError</a></li>
+				
+					<li><a href="../Zlib/GzipFile/Error.html">Zlib::GzipFile::Error</a></li>
+				
+					<li><a href="../Zlib/GzipFile/LengthError.html">Zlib::GzipFile::LengthError</a></li>
+				
+					<li><a href="../Zlib/GzipFile/NoFooter.html">Zlib::GzipFile::NoFooter</a></li>
+				
+					<li><a href="../Zlib/GzipReader.html">Zlib::GzipReader</a></li>
+				
+					<li><a href="../Zlib/GzipWriter.html">Zlib::GzipWriter</a></li>
+				
+					<li><a href="../Zlib/Inflate.html">Zlib::Inflate</a></li>
+				
+					<li><a href="../Zlib/MemError.html">Zlib::MemError</a></li>
+				
+					<li><a href="../Zlib/NeedDict.html">Zlib::NeedDict</a></li>
+				
+					<li><a href="../Zlib/StreamEnd.html">Zlib::StreamEnd</a></li>
+				
+					<li><a href="../Zlib/StreamError.html">Zlib::StreamError</a></li>
+				
+					<li><a href="../Zlib/VersionError.html">Zlib::VersionError</a></li>
+				
+					<li><a href="../Zlib/ZStream.html">Zlib::ZStream</a></li>
+				
+					<li><a href="../JSON.html">JSON</a></li>
+				
+					<li><a href="../JSON/Editor.html">JSON::Editor</a></li>
+				
+					<li><a href="../JSON/Editor/EditMenu.html">JSON::Editor::EditMenu</a></li>
+				
+					<li><a href="../JSON/Editor/FileMenu.html">JSON::Editor::FileMenu</a></li>
+				
+					<li><a href="../JSON/Editor/Gtk.html">JSON::Editor::Gtk</a></li>
+				
+					<li><a href="../JSON/Editor/Gtk/TreeIter.html">JSON::Editor::Gtk::TreeIter</a></li>
+				
+					<li><a href="../JSON/Editor/JSONTreeView.html">JSON::Editor::JSONTreeView</a></li>
+				
+					<li><a href="../JSON/Editor/MainWindow.html">JSON::Editor::MainWindow</a></li>
+				
+					<li><a href="../JSON/Editor/MenuExtension.html">JSON::Editor::MenuExtension</a></li>
+				
+					<li><a href="../JSON/Editor/OptionsMenu.html">JSON::Editor::OptionsMenu</a></li>
+				
+					<li><a href="../JSON/Editor/PopUpMenu.html">JSON::Editor::PopUpMenu</a></li>
+				
+					<li><a href="../JSON/Ext.html">JSON::Ext</a></li>
+				
+					<li><a href="../JSON/GeneratorError.html">JSON::GeneratorError</a></li>
+				
+					<li><a href="../JSON/GeneratorError.html">JSON::GeneratorError</a></li>
+				
+					<li><a href="../JSON/JSONError.html">JSON::JSONError</a></li>
+				
+					<li><a href="../JSON/MissingUnicodeSupport.html">JSON::MissingUnicodeSupport</a></li>
+				
+					<li><a href="../JSON/NestingError.html">JSON::NestingError</a></li>
+				
+					<li><a href="../JSON/ParserError.html">JSON::ParserError</a></li>
+				
+					<li><a href="../URI.html">URI</a></li>
+				
+					<li><a href="../URI/BadURIError.html">URI::BadURIError</a></li>
+				
+					<li><a href="../URI/Error.html">URI::Error</a></li>
+				
+					<li><a href="../URI/Escape.html">URI::Escape</a></li>
+				
+					<li><a href="../URI/FTP.html">URI::FTP</a></li>
+				
+					<li><a href="../URI/Generic.html">URI::Generic</a></li>
+				
+					<li><a href="../URI/HTTP.html">URI::HTTP</a></li>
+				
+					<li><a href="../URI/HTTPS.html">URI::HTTPS</a></li>
+				
+					<li><a href="../URI/InvalidComponentError.html">URI::InvalidComponentError</a></li>
+				
+					<li><a href="../URI/InvalidURIError.html">URI::InvalidURIError</a></li>
+				
+					<li><a href="../URI/LDAP.html">URI::LDAP</a></li>
+				
+					<li><a href="../URI/MailTo.html">URI::MailTo</a></li>
+				
+					<li><a href="../URI/Parser.html">URI::Parser</a></li>
+				
+					<li><a href="../URI/REGEXP.html">URI::REGEXP</a></li>
+				
+					<li><a href="../URI/REGEXP/PATTERN.html">URI::REGEXP::PATTERN</a></li>
+				
+					<li><a href="../Shell.html">Shell</a></li>
+				
+					<li><a href="../Shell/AppendFile.html">Shell::AppendFile</a></li>
+				
+					<li><a href="../Shell/AppendIO.html">Shell::AppendIO</a></li>
+				
+					<li><a href="../Shell/BuiltInCommand.html">Shell::BuiltInCommand</a></li>
+				
+					<li><a href="../Shell/Cat.html">Shell::Cat</a></li>
+				
+					<li><a href="../Shell/CommandProcessor.html">Shell::CommandProcessor</a></li>
+				
+					<li><a href="../Shell/Concat.html">Shell::Concat</a></li>
+				
+					<li><a href="../Shell/Echo.html">Shell::Echo</a></li>
+				
+					<li><a href="../Shell/Error.html">Shell::Error</a></li>
+				
+					<li><a href="../Shell/Filter.html">Shell::Filter</a></li>
+				
+					<li><a href="../Shell/Glob.html">Shell::Glob</a></li>
+				
+					<li><a href="../Shell/ProcessController.html">Shell::ProcessController</a></li>
+				
+					<li><a href="../Shell/SystemCommand.html">Shell::SystemCommand</a></li>
+				
+					<li><a href="../Shell/Tee.html">Shell::Tee</a></li>
+				
+					<li><a href="../Shell/Void.html">Shell::Void</a></li>
+				
+					<li><a href="../ERB.html">ERB</a></li>
+				
+					<li><a href="../ERB/DefMethod.html">ERB::DefMethod</a></li>
+				
+					<li><a href="../ERB/Util.html">ERB::Util</a></li>
+				
+					<li><a href="../Ripper.html">Ripper</a></li>
+				
+					<li><a href="../Ripper/Filter.html">Ripper::Filter</a></li>
+				
+					<li><a href="../Ripper/TokenPattern/CompileError.html">Ripper::TokenPattern::CompileError</a></li>
+				
+					<li><a href="../Ripper/TokenPattern/Error.html">Ripper::TokenPattern::Error</a></li>
+				
+					<li><a href="../Ripper/TokenPattern/MatchData.html">Ripper::TokenPattern::MatchData</a></li>
+				
+					<li><a href="../Ripper/TokenPattern/MatchError.html">Ripper::TokenPattern::MatchError</a></li>
+				
+					<li><a href="../RubyToken.html">RubyToken</a></li>
+				
+					<li><a href="../RubyToken/TkError.html">RubyToken::TkError</a></li>
+				
+					<li><a href="../RubyToken/TkId.html">RubyToken::TkId</a></li>
+				
+					<li><a href="../RubyToken/TkNode.html">RubyToken::TkNode</a></li>
+				
+					<li><a href="../RubyToken/TkOPASGN.html">RubyToken::TkOPASGN</a></li>
+				
+					<li><a href="../RubyToken/TkOp.html">RubyToken::TkOp</a></li>
+				
+					<li><a href="../RubyToken/TkUnknownChar.html">RubyToken::TkUnknownChar</a></li>
+				
+					<li><a href="../RubyToken/TkVal.html">RubyToken::TkVal</a></li>
+				
+					<li><a href="../RubyToken/Token.html">RubyToken::Token</a></li>
+				
+					<li><a href="../Logger.html">Logger</a></li>
+				
+					<li><a href="../Logger/Application.html">Logger::Application</a></li>
+				
+					<li><a href="../Logger/Error.html">Logger::Error</a></li>
+				
+					<li><a href="../Logger/Formatter.html">Logger::Formatter</a></li>
+				
+					<li><a href="../Logger/LogDevice.html">Logger::LogDevice</a></li>
+				
+					<li><a href="../Logger/LogDevice/LogDeviceMutex.html">Logger::LogDevice::LogDeviceMutex</a></li>
+				
+					<li><a href="../Logger/Severity.html">Logger::Severity</a></li>
+				
+					<li><a href="../Logger/ShiftingError.html">Logger::ShiftingError</a></li>
+				
+					<li><a href="../Prime.html">Prime</a></li>
+				
+					<li><a href="../Prime/EratosthenesGenerator.html">Prime::EratosthenesGenerator</a></li>
+				
+					<li><a href="../Prime/EratosthenesSieve.html">Prime::EratosthenesSieve</a></li>
+				
+					<li><a href="../Prime/Generator23.html">Prime::Generator23</a></li>
+				
+					<li><a href="../Prime/OldCompatibility.html">Prime::OldCompatibility</a></li>
+				
+					<li><a href="../Prime/PseudoPrimeGenerator.html">Prime::PseudoPrimeGenerator</a></li>
+				
+					<li><a href="../Prime/TrialDivision.html">Prime::TrialDivision</a></li>
+				
+					<li><a href="../Prime/TrialDivisionGenerator.html">Prime::TrialDivisionGenerator</a></li>
+				
+					<li><a href="../Iconv.html">Iconv</a></li>
+				
+					<li><a href="../Iconv/BrokenLibrary.html">Iconv::BrokenLibrary</a></li>
+				
+					<li><a href="../Iconv/Failure.html">Iconv::Failure</a></li>
+				
+					<li><a href="../Iconv/IllegalSequence.html">Iconv::IllegalSequence</a></li>
+				
+					<li><a href="../Iconv/InvalidCharacter.html">Iconv::InvalidCharacter</a></li>
+				
+					<li><a href="../Iconv/InvalidEncoding.html">Iconv::InvalidEncoding</a></li>
+				
+					<li><a href="../Iconv/OutOfRange.html">Iconv::OutOfRange</a></li>
+				
+					<li><a href="../CGI.html">CGI</a></li>
+				
+					<li><a href="../CGI/Session.html">CGI::Session</a></li>
+				
+					<li><a href="../CGI/Session/FileStore.html">CGI::Session::FileStore</a></li>
+				
+					<li><a href="../CGI/Session/MemoryStore.html">CGI::Session::MemoryStore</a></li>
+				
+					<li><a href="../CGI/Session/NullStore.html">CGI::Session::NullStore</a></li>
+				
+					<li><a href="../Date.html">Date</a></li>
+				
+					<li><a href="../Date/Delta.html">Date::Delta</a></li>
+				
+					<li><a href="../Date/Delta/Parser.html">Date::Delta::Parser</a></li>
+				
+					<li><a href="../Encoding.html">Encoding</a></li>
+				
+					<li><a href="../Encoding/CompatibilityError.html">Encoding::CompatibilityError</a></li>
+				
+					<li><a href="../Encoding/Converter.html">Encoding::Converter</a></li>
+				
+					<li><a href="../Encoding/ConverterNotFoundError.html">Encoding::ConverterNotFoundError</a></li>
+				
+					<li><a href="../Encoding/InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a></li>
+				
+					<li><a href="../Encoding/UndefinedConversionError.html">Encoding::UndefinedConversionError</a></li>
+				
+					<li><a href="../FileUtils.html">FileUtils</a></li>
+				
+					<li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a></li>
+				
+					<li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a></li>
+				
+					<li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a></li>
+				
+					<li><a href="../FileUtils/Verbose.html">FileUtils::Verbose</a></li>
+				
+					<li><a href="../GetoptLong.html">GetoptLong</a></li>
+				
+					<li><a href="../GetoptLong/AmbiguousOption.html">GetoptLong::AmbiguousOption</a></li>
+				
+					<li><a href="../GetoptLong/Error.html">GetoptLong::Error</a></li>
+				
+					<li><a href="../GetoptLong/InvalidOption.html">GetoptLong::InvalidOption</a></li>
+				
+					<li><a href="../GetoptLong/MissingArgument.html">GetoptLong::MissingArgument</a></li>
+				
+					<li><a href="../GetoptLong/NeedlessArgument.html">GetoptLong::NeedlessArgument</a></li>
+				
+					<li><a href="../OpenURI.html">OpenURI</a></li>
+				
+					<li><a href="../OpenURI/HTTPError.html">OpenURI::HTTPError</a></li>
+				
+					<li><a href="../OpenURI/HTTPRedirect.html">OpenURI::HTTPRedirect</a></li>
+				
+					<li><a href="../OpenURI/Meta.html">OpenURI::Meta</a></li>
+				
+					<li><a href="../OpenURI/OpenRead.html">OpenURI::OpenRead</a></li>
+				
+					<li><a href="../PrettyPrint.html">PrettyPrint</a></li>
+				
+					<li><a href="../PrettyPrint/Breakable.html">PrettyPrint::Breakable</a></li>
+				
+					<li><a href="../PrettyPrint/Group.html">PrettyPrint::Group</a></li>
+				
+					<li><a href="../PrettyPrint/GroupQueue.html">PrettyPrint::GroupQueue</a></li>
+				
+					<li><a href="../PrettyPrint/SingleLine.html">PrettyPrint::SingleLine</a></li>
+				
+					<li><a href="../PrettyPrint/Text.html">PrettyPrint::Text</a></li>
+				
+					<li><a href="../CSV.html">CSV</a></li>
+				
+					<li><a href="../CSV/MalformedCSVError.html">CSV::MalformedCSVError</a></li>
+				
+					<li><a href="../CSV/Row.html">CSV::Row</a></li>
+				
+					<li><a href="../CSV/Table.html">CSV::Table</a></li>
+				
+					<li><a href="../CSV/row.html">CSV::row</a></li>
+				
+					<li><a href="../Process.html">Process</a></li>
+				
+					<li><a href="../Process/GID.html">Process::GID</a></li>
+				
+					<li><a href="../Process/Status.html">Process::Status</a></li>
+				
+					<li><a href="../Process/Sys.html">Process::Sys</a></li>
+				
+					<li><a href="../Process/UID.html">Process::UID</a></li>
+				
+					<li><a href="../Socket.html">Socket</a></li>
+				
+					<li><a href="../Socket/AncillaryData.html">Socket::AncillaryData</a></li>
+				
+					<li><a href="../Socket/Constants.html">Socket::Constants</a></li>
+				
+					<li><a href="../Socket/Option.html">Socket::Option</a></li>
+				
+					<li><a href="../Socket/UDPSource.html">Socket::UDPSource</a></li>
+				
+					<li><a href="../Sync_m.html">Sync_m</a></li>
+				
+					<li><a href="../Sync_m.html">Sync_m</a></li>
+				
+					<li><a href="../Sync_m/Err.html">Sync_m::Err</a></li>
+				
+					<li><a href="../Sync_m/Err/LockModeFailer.html">Sync_m::Err::LockModeFailer</a></li>
+				
+					<li><a href="../Sync_m/Err/UnknownLocker.html">Sync_m::Err::UnknownLocker</a></li>
+				
+					<li><a href="../Benchmark.html">Benchmark</a></li>
+				
+					<li><a href="../Benchmark/Tms.html">Benchmark::Tms</a></li>
+				
+					<li><a href="../Digest.html">Digest</a></li>
+				
+					<li><a href="../Digest/Base.html">Digest::Base</a></li>
+				
+					<li><a href="../Digest/Class.html">Digest::Class</a></li>
+				
+					<li><a href="../Digest/Instance.html">Digest::Instance</a></li>
+				
+					<li><a href="../Errno.html">Errno</a></li>
+				
+					<li><a href="../Errno/ECONNABORTED.html">Errno::ECONNABORTED</a></li>
+				
+					<li><a href="../Errno/ECONNRESET.html">Errno::ECONNRESET</a></li>
+				
+					<li><a href="../Errno/EPROTO.html">Errno::EPROTO</a></li>
+				
+					<li><a href="../Matrix.html">Matrix</a></li>
+				
+					<li><a href="../PP.html">PP</a></li>
+				
+					<li><a href="../PP/ObjectMixin.html">PP::ObjectMixin</a></li>
+				
+					<li><a href="../PP/PPMethods.html">PP::PPMethods</a></li>
+				
+					<li><a href="../PP/SingleLine.html">PP::SingleLine</a></li>
+				
+					<li><a href="../Racc.html">Racc</a></li>
+				
+					<li><a href="../Racc/ParseError.html">Racc::ParseError</a></li>
+				
+					<li><a href="../Racc/ParseError.html">Racc::ParseError</a></li>
+				
+					<li><a href="../Racc/Parser.html">Racc::Parser</a></li>
+				
+					<li><a href="../Test.html">Test</a></li>
+				
+					<li><a href="../Test/Unit.html">Test::Unit</a></li>
+				
+					<li><a href="../Test/Unit/Assertions.html">Test::Unit::Assertions</a></li>
+				
+					<li><a href="../Test/Unit/TestCase.html">Test::Unit::TestCase</a></li>
+				
+					<li><a href="../Timeout.html">Timeout</a></li>
+				
+					<li><a href="../Timeout/Error.html">Timeout::Error</a></li>
+				
+					<li><a href="../Timeout/Error.html">Timeout::Error</a></li>
+				
+					<li><a href="../YAML.html">YAML</a></li>
+				
+					<li><a href="../YAML/DBM.html">YAML::DBM</a></li>
+				
+					<li><a href="../YAML/Store.html">YAML::Store</a></li>
+				
+					<li><a href="../ACL.html">ACL</a></li>
+				
+					<li><a href="../ACL/ACLEntry.html">ACL::ACLEntry</a></li>
+				
+					<li><a href="../ACL/ACLList.html">ACL::ACLList</a></li>
+				
+					<li><a href="../Enumerator.html">Enumerator</a></li>
+				
+					<li><a href="../Enumerator/Generator.html">Enumerator::Generator</a></li>
+				
+					<li><a href="../Enumerator/Yielder.html">Enumerator::Yielder</a></li>
+				
+					<li><a href="../File.html">File</a></li>
+				
+					<li><a href="../File/Constants.html">File::Constants</a></li>
+				
+					<li><a href="../File/Stat.html">File::Stat</a></li>
+				
+					<li><a href="../IO.html">IO</a></li>
+				
+					<li><a href="../IO/WaitReadable.html">IO::WaitReadable</a></li>
+				
+					<li><a href="../IO/WaitWritable.html">IO::WaitWritable</a></li>
+				
+					<li><a href="../MonitorMixin.html">MonitorMixin</a></li>
+				
+					<li><a href="../MonitorMixin/ConditionVariable.html">MonitorMixin::ConditionVariable</a></li>
+				
+					<li><a href="../MonitorMixin/ConditionVariable/Timeout.html">MonitorMixin::ConditionVariable::Timeout</a></li>
+				
+					<li><a href="../PStore.html">PStore</a></li>
+				
+					<li><a href="../PStore/DummyMutex.html">PStore::DummyMutex</a></li>
+				
+					<li><a href="../PStore/Error.html">PStore::Error</a></li>
+				
+					<li><a href="../RubyVM.html">RubyVM</a></li>
+				
+					<li><a href="../RubyVM/Env.html">RubyVM::Env</a></li>
+				
+					<li><a href="../RubyVM/InstructionSequence.html">RubyVM::InstructionSequence</a></li>
+				
+					<li><a href="../Scanf.html">Scanf</a></li>
+				
+					<li><a href="../Scanf/FormatSpecifier.html">Scanf::FormatSpecifier</a></li>
+				
+					<li><a href="../Scanf/FormatString.html">Scanf::FormatString</a></li>
+				
+					<li><a href="../DEBUGGER__.html">DEBUGGER__</a></li>
+				
+					<li><a href="../DEBUGGER__/Context.html">DEBUGGER__::Context</a></li>
+				
+					<li><a href="../Dir.html">Dir</a></li>
+				
+					<li><a href="../GC.html">GC</a></li>
+				
+					<li><a href="../GC/Profiler.html">GC::Profiler</a></li>
+				
+					<li><a href="../Integer.html">Integer</a></li>
+				
+					<li><a href="../Integer.html">Integer</a></li>
+				
+					<li><a href="../Math.html">Math</a></li>
+				
+					<li><a href="../Math/DomainError.html">Math::DomainError</a></li>
+				
+					<li><a href="../NameError.html">NameError</a></li>
+				
+					<li><a href="../NameError/message.html">NameError::message</a></li>
+				
+					<li><a href="../PTY.html">PTY</a></li>
+				
+					<li><a href="../PTY/ChildExited.html">PTY::ChildExited</a></li>
+				
+					<li><a href="../Set.html">Set</a></li>
+				
+					<li><a href="../StringScanner.html">StringScanner</a></li>
+				
+					<li><a href="../StringScanner/Error.html">StringScanner::Error</a></li>
+				
+					<li><a href="../Sync.html">Sync</a></li>
+				
+					<li><a href="../Sync.html">Sync</a></li>
+				
+					<li><a href="../TSort.html">TSort</a></li>
+				
+					<li><a href="../TSort/Cyclic.html">TSort::Cyclic</a></li>
+				
+					<li><a href="../ThreadsWait.html">ThreadsWait</a></li>
+				
+					<li><a href="../ThreadsWait.html">ThreadsWait</a></li>
+				
+					<li><a href="../WeakRef.html">WeakRef</a></li>
+				
+					<li><a href="../WeakRef/RefError.html">WeakRef::RefError</a></li>
+				
+					<li><a href="../XML.html">XML</a></li>
+				
+					<li><a href="../XML/Parser.html">XML::Parser</a></li>
+				
+					<li><a href="../XMLEncoding_ja.html">XMLEncoding_ja</a></li>
+				
+					<li><a href="../XMLEncoding_ja/SJISHandler.html">XMLEncoding_ja::SJISHandler</a></li>
+				
+					<li><a href="../XMP.html">XMP</a></li>
+				
+					<li><a href="../XMP/StringInputMethod.html">XMP::StringInputMethod</a></li>
+				
+					<li><a href="../ARGF.html">ARGF</a></li>
+				
+					<li><a href="../Abbrev.html">Abbrev</a></li>
+				
+					<li><a href="../Addrinfo.html">Addrinfo</a></li>
+				
+					<li><a href="../ArgumentError.html">ArgumentError</a></li>
+				
+					<li><a href="../Array.html">Array</a></li>
+				
+					<li><a href="../Base64.html">Base64</a></li>
+				
+					<li><a href="../BasicObject.html">BasicObject</a></li>
+				
+					<li><a href="../BasicSocket.html">BasicSocket</a></li>
+				
+					<li><a href="../BigDecimal.html">BigDecimal</a></li>
+				
+					<li><a href="../BigMath.html">BigMath</a></li>
+				
+					<li><a href="../Bignum.html">Bignum</a></li>
+				
+					<li><a href="../Binding.html">Binding</a></li>
+				
+					<li><a href="../Class.html">Class</a></li>
+				
+					<li><a href="../Comparable.html">Comparable</a></li>
+				
+					<li><a href="../Complex.html">Complex</a></li>
+				
+					<li><a href="../ConditionVariable.html">ConditionVariable</a></li>
+				
+					<li><a href="../Continuation.html">Continuation</a></li>
+				
+					<li><a href="../Coverage.html">Coverage</a></li>
+				
+					<li><a href="../Data.html">Data</a></li>
+				
+					<li><a href="../DateTime.html">DateTime</a></li>
+				
+					<li><a href="../Delegator.html">Delegator</a></li>
+				
+					<li><a href="../ENV.html">ENV</a></li>
+				
+					<li><a href="../EOFError.html">EOFError</a></li>
+				
+					<li><a href="../EncodingError.html">EncodingError</a></li>
+				
+					<li><a href="../Enumerable.html">Enumerable</a></li>
+				
+					<li><a href="../Etc.html">Etc</a></li>
+				
+					<li><a href="../Exception.html">Exception</a></li>
+				
+					<li><a href="../FalseClass.html">FalseClass</a></li>
+				
+					<li><a href="../Fcntl.html">Fcntl</a></li>
+				
+					<li><a href="../Fiber.html">Fiber</a></li>
+				
+					<li><a href="../FiberError.html">FiberError</a></li>
+				
+					<li><a href="../FileTest.html">FileTest</a></li>
+				
+					<li><a href="../Find.html">Find</a></li>
+				
+					<li><a href="../Fixnum.html">Fixnum</a></li>
+				
+					<li><a href="../Float.html">Float</a></li>
+				
+					<li><a href="../FloatDomainError.html">FloatDomainError</a></li>
+				
+					<li><a href="../Foo.html">Foo</a></li>
+				
+					<li><a href="../Forwardable.html">Forwardable</a></li>
+				
+					<li><a href="../GDBM.html">GDBM</a></li>
+				
+					<li><a href="../GDBMError.html">GDBMError</a></li>
+				
+					<li><a href="../GDBMFatalError.html">GDBMFatalError</a></li>
+				
+					<li><a href="../GServer.html">GServer</a></li>
+				
+					<li><a href="../Hash.html">Hash</a></li>
+				
+					<li><a href="../IOError.html">IOError</a></li>
+				
+					<li><a href="../IPAddr.html">IPAddr</a></li>
+				
+					<li><a href="../IPSocket.html">IPSocket</a></li>
+				
+					<li><a href="../IndexError.html">IndexError</a></li>
+				
+					<li><a href="../Interrupt.html">Interrupt</a></li>
+				
+					<li><a href="../Jacobian.html">Jacobian</a></li>
+				
+					<li><a href="../Kconv.html">Kconv</a></li>
+				
+					<li><a href="../Kernel.html">Kernel</a></li>
+				
+					<li><a href="../KeyError.html">KeyError</a></li>
+				
+					<li><a href="../LUSolve.html">LUSolve</a></li>
+				
+					<li><a href="../LoadError.html">LoadError</a></li>
+				
+					<li><a href="../LocalJumpError.html">LocalJumpError</a></li>
+				
+					<li><a href="../Marshal.html">Marshal</a></li>
+				
+					<li><a href="../MatchData.html">MatchData</a></li>
+				
+					<li><a href="../Method.html">Method</a></li>
+				
+					<li><a href="../Module.html">Module</a></li>
+				
+					<li><a href="../Monitor.html">Monitor</a></li>
+				
+					<li><a href="../Mutex.html">Mutex</a></li>
+				
+					<li><a href="../Mutex_m.html">Mutex_m</a></li>
+				
+					<li><a href="../NKF.html">NKF</a></li>
+				
+					<li><a href="../Newton.html">Newton</a></li>
+				
+					<li><a href="../NilClass.html">NilClass</a></li>
+				
+					<li><a href="../NoMemoryError.html">NoMemoryError</a></li>
+				
+					<li><a href="../NoMethodError.html">NoMethodError</a></li>
+				
+					<li><a href="../NotImplementedError.html">NotImplementedError</a></li>
+				
+					<li><a href="../Numeric.html">Numeric</a></li>
+				
+					<li><a href="../Object.html">Object</a></li>
+				
+					<li><a href="../ObjectSpace.html">ObjectSpace</a></li>
+				
+					<li><a href="../Observable.html">Observable</a></li>
+				
+					<li><a href="../Open3.html">Open3</a></li>
+				
+					<li><a href="../OpenStruct.html">OpenStruct</a></li>
+				
+					<li><a href="../Pathname.html">Pathname</a></li>
+				
+					<li><a href="../Proc.html">Proc</a></li>
+				
+					<li><a href="../Profiler__.html">Profiler__</a></li>
+				
+					<li><a href="../Psych.html">Psych</a></li>
+				
+					<li><a href="../Queue.html">Queue</a></li>
+				
+					<li><a href="../Random.html">Random</a></li>
+				
+					<li><a href="../Range.html">Range</a></li>
+				
+					<li><a href="../RangeError.html">RangeError</a></li>
+				
+					<li><a href="../Rational.html">Rational</a></li>
+				
+					<li><a href="../Readline.html">Readline</a></li>
+				
+					<li><a href="../Regexp.html">Regexp</a></li>
+				
+					<li><a href="../RegexpError.html">RegexpError</a></li>
+				
+					<li><a href="../RubyLex.html">RubyLex</a></li>
+				
+					<li><a href="../RuntimeError.html">RuntimeError</a></li>
+				
+					<li><a href="../SOCKSSocket.html">SOCKSSocket</a></li>
+				
+					<li><a href="../ScriptError.html">ScriptError</a></li>
+				
+					<li><a href="../SecurityError.html">SecurityError</a></li>
+				
+					<li><a href="../Shellwords.html">Shellwords</a></li>
+				
+					<li><a href="../Signal.html">Signal</a></li>
+				
+					<li><a href="../SignalException.html">SignalException</a></li>
+				
+					<li><a href="../SimpleDelegator.html">SimpleDelegator</a></li>
+				
+					<li><a href="../SingleForwardable.html">SingleForwardable</a></li>
+				
+					<li><a href="../SizedQueue.html">SizedQueue</a></li>
+				
+					<li><a href="../SocketError.html">SocketError</a></li>
+				
+					<li><a href="../SortedSet.html">SortedSet</a></li>
+				
+					<li><a href="../StandardError.html">StandardError</a></li>
+				
+					<li><a href="../StopIteration.html">StopIteration</a></li>
+				
+					<li><a href="../String.html">String</a></li>
+				
+					<li><a href="../StringIO.html">StringIO</a></li>
+				
+					<li><a href="../Struct.html">Struct</a></li>
+				
+					<li><a href="../Syck.html">Syck</a></li>
+				
+					<li><a href="../Symbol.html">Symbol</a></li>
+				
+					<li><a href="../SyntaxError.html">SyntaxError</a></li>
+				
+					<li><a href="../SystemCallError.html">SystemCallError</a></li>
+				
+					<li><a href="../SystemExit.html">SystemExit</a></li>
+				
+					<li><a href="../SystemStackError.html">SystemStackError</a></li>
+				
+					<li><a href="../TCPServer.html">TCPServer</a></li>
+				
+					<li><a href="../TCPSocket.html">TCPSocket</a></li>
+				
+					<li><a href="../Tempfile.html">Tempfile</a></li>
+				
+					<li><a href="../Thread.html">Thread</a></li>
+				
+					<li><a href="../ThreadError.html">ThreadError</a></li>
+				
+					<li><a href="../ThreadGroup.html">ThreadGroup</a></li>
+				
+					<li><a href="../Time.html">Time</a></li>
+				
+					<li><a href="../Tracer.html">Tracer</a></li>
+				
+					<li><a href="../TrueClass.html">TrueClass</a></li>
+				
+					<li><a href="../TypeError.html">TypeError</a></li>
+				
+					<li><a href="../UDPSocket.html">UDPSocket</a></li>
+				
+					<li><a href="../UNIXServer.html">UNIXServer</a></li>
+				
+					<li><a href="../UNIXSocket.html">UNIXSocket</a></li>
+				
+					<li><a href="../UnboundMethod.html">UnboundMethod</a></li>
+				
+					<li><a href="../Vector.html">Vector</a></li>
+				
+					<li><a href="../ZeroDivisionError.html">ZeroDivisionError</a></li>
+				
+					<li><a href="../cASN1ObjectId.html">cASN1ObjectId</a></li>
+				
+					<li><a href="../cDigest.html">cDigest</a></li>
+				
+					<li><a href="../fatal.html">fatal</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="class">Encoding::Converter</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+		<div id="constants-list" class="section">
+			<h3 class="section-header">Constants</h3>
+			<dl>
+			
+				<dt><a name="INVALID_MASK">INVALID_MASK</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="INVALID_REPLACE">INVALID_REPLACE</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="UNDEF_MASK">UNDEF_MASK</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="UNDEF_REPLACE">UNDEF_REPLACE</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="UNDEF_HEX_CHARREF">UNDEF_HEX_CHARREF</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="PARTIAL_INPUT">PARTIAL_INPUT</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="AFTER_OUTPUT">AFTER_OUTPUT</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="UNIVERSAL_NEWLINE_DECORATOR">UNIVERSAL_NEWLINE_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="CRLF_NEWLINE_DECORATOR">CRLF_NEWLINE_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="CR_NEWLINE_DECORATOR">CR_NEWLINE_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="XML_TEXT_DECORATOR">XML_TEXT_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="XML_ATTR_CONTENT_DECORATOR">XML_ATTR_CONTENT_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+				<dt><a name="XML_ATTR_QUOTE_DECORATOR">XML_ATTR_QUOTE_DECORATOR</a></dt>
+				
+				<dd class="description"></dd>
+				
+			
+			</dl>
+		</div>
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="asciicompat-encoding-method" class="method-detail ">
+				<a name="method-c-asciicompat_encoding"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">asciicompat_encoding(encoding) &rarr; encoding or nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the corresponding ASCII compatible encoding.
+</p>
+<p>
+Returns nil if the argument is an ASCII compatible encoding.
+</p>
+<p>
+&#8220;corresponding ASCII compatible encoding&#8221; is a ASCII compatible
+encoding which can represents exactly the same characters as the given
+ASCII incompatible encoding. So, no conversion undefined error occurs when
+converting between the two encodings.
+</p>
+<pre>
+  Encoding::Converter.asciicompat_encoding(&quot;ISO-2022-JP&quot;) #=&gt; #&lt;Encoding:stateless-ISO-2022-JP&gt;
+  Encoding::Converter.asciicompat_encoding(&quot;UTF-16BE&quot;) #=&gt; #&lt;Encoding:UTF-8&gt;
+  Encoding::Converter.asciicompat_encoding(&quot;UTF-8&quot;) #=&gt; nil</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="asciicompat-encoding-source">
+<pre>
+static VALUE
+econv_s_asciicompat_encoding(VALUE klass, VALUE arg)
+{
+    const char *arg_name, *result_name;
+    rb_encoding *arg_enc, *result_enc;
+
+    enc_arg(&amp;arg, &amp;arg_name, &amp;arg_enc);
+
+    result_name = rb_econv_asciicompat_encoding(arg_name);
+
+    if (result_name == NULL)
+        return Qnil;
+
+    result_enc = make_encoding(result_name);
+
+    return rb_enc_from_encoding(result_enc);
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="method-c-new"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">new(convpath)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+possible options elements:
+</p>
+<pre>
+  hash form:
+    :invalid =&gt; nil            # raise error on invalid byte sequence (default)
+    :invalid =&gt; :replace       # replace invalid byte sequence
+    :undef =&gt; nil              # raise error on undefined conversion (default)
+    :undef =&gt; :replace         # replace undefined conversion
+    :replace =&gt; string         # replacement string (&quot;?&quot; or &quot;\uFFFD&quot; if not specified)
+    :universal_newline =&gt; true # decorator for converting CRLF and CR to LF
+    :crlf_newline =&gt; true      # decorator for converting LF to CRLF
+    :cr_newline =&gt; true        # decorator for converting LF to CR
+    :xml =&gt; :text              # escape as XML CharData.
+    :xml =&gt; :attr              # escape as XML AttValue
+  integer form:
+    Encoding::Converter::INVALID_REPLACE
+    Encoding::Converter::UNDEF_REPLACE
+    Encoding::Converter::UNDEF_HEX_CHARREF
+    Encoding::Converter::UNIVERSAL_NEWLINE_DECORATOR
+    Encoding::Converter::CRLF_NEWLINE_DECORATOR
+    Encoding::Converter::CR_NEWLINE_DECORATOR
+    Encoding::Converter::XML_TEXT_DECORATOR
+    Encoding::Converter::XML_ATTR_CONTENT_DECORATOR
+    Encoding::Converter::XML_ATTR_QUOTE_DECORATOR
+</pre>
+<p>
+Encoding::Converter.new creates an instance of <a
+href="Converter.html">Encoding::Converter</a>.
+</p>
+<p>
+Source_encoding and <a
+href="Converter.html#method-i-destination_encoding">destination_encoding</a>
+should be a string or <a href="../Encoding.html">Encoding</a> object.
+</p>
+<p>
+opt should be nil, a hash or an integer.
+</p>
+<p>
+convpath should be an array. convpath may contain
+</p>
+<ul>
+<li><p>
+two-element arrays which contain encodings or encoding names, or
+</p>
+</li>
+<li><p>
+strings representing decorator names.
+</p>
+</li>
+</ul>
+<p>
+Encoding::Converter.new optionally takes an option. The option should be a
+hash or an integer. The option hash can contain :invalid => nil, etc. The
+option integer should be logical-or of constants such as
+Encoding::Converter::INVALID_REPLACE, etc.
+</p>
+<dl>
+<dt>:invalid => nil</dt><dd><p>
+Raise error on invalid byte sequence.  This is a default behavior.
+</p>
+</dd>
+<dt>:invalid => :replace</dt><dd><p>
+Replace invalid byte sequence by replacement string.
+</p>
+</dd>
+<dt>:undef => nil</dt><dd><p>
+Raise an error if a character in <a
+href="Converter.html#method-i-source_encoding">source_encoding</a> is not
+defined in destination_encoding. This is a default behavior.
+</p>
+</dd>
+<dt>:undef => :replace</dt><dd><p>
+Replace undefined character in <a
+href="Converter.html#method-i-destination_encoding">destination_encoding</a>
+with replacement string.
+</p>
+</dd>
+<dt>:replace => string</dt><dd><p>
+Specify the replacement string. If not specified, &#8220;uFFFD&#8221; is
+used for Unicode encodings and &#8220;?&#8221; for others.
+</p>
+</dd>
+<dt>:universal_newline => true</dt><dd><p>
+Convert CRLF and CR to LF.
+</p>
+</dd>
+<dt>:crlf_newline => true</dt><dd><p>
+Convert LF to CRLF.
+</p>
+</dd>
+<dt>:cr_newline => true</dt><dd><p>
+Convert LF to CR.
+</p>
+</dd>
+<dt>:xml => :text</dt><dd><p>
+Escape as <a href="../XML.html">XML</a> CharData. This form can be used as
+a HTML 4.0 #PCDATA.
+</p>
+<ul>
+<li><p>
+&#8217;&amp;&#8217; -> &#8217;&amp;amp;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+&#8217;<&#8217; -> &#8217;&amp;lt;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+&#8217;>&#8217; -> &#8217;&amp;gt;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+undefined characters in <a
+href="Converter.html#method-i-destination_encoding">destination_encoding</a>
+-> hexadecimal CharRef such as &amp;#;
+</p>
+</li>
+</ul>
+</dd>
+<dt>:xml => :attr</dt><dd><p>
+Escape as <a href="../XML.html">XML</a> AttValue. The converted result is
+quoted as &#8220;&#8230;&#8221;. This form can be used as a HTML 4.0
+attribute value.
+</p>
+<ul>
+<li><p>
+&#8217;&amp;&#8217; -> &#8217;&amp;amp;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+&#8217;<&#8217; -> &#8217;&amp;lt;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+&#8217;>&#8217; -> &#8217;&amp;gt;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+&#8217;&#8221;&#8217; -> &#8217;&amp;quot;&#8217;
+</p>
+</li>
+</ul>
+<ul>
+<li><p>
+undefined characters in <a
+href="Converter.html#method-i-destination_encoding">destination_encoding</a>
+-> hexadecimal CharRef such as &amp;#;
+</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>
+Examples:
+</p>
+<pre>
+  # UTF-16BE to UTF-8
+  ec = Encoding::Converter.new(&quot;UTF-16BE&quot;, &quot;UTF-8&quot;)
+
+  # Usually, decorators such as newline conversion are inserted last.
+  ec = Encoding::Converter.new(&quot;UTF-16BE&quot;, &quot;UTF-8&quot;, :universal_newline =&gt; true)
+  p ec.convpath #=&gt; [[#&lt;Encoding:UTF-16BE&gt;, #&lt;Encoding:UTF-8&gt;],
+                #    &quot;universal_newline&quot;]
+
+  # But, if the last encoding is ASCII incompatible,
+  # decorators are inserted before the last conversion.
+  ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;, :crlf_newline =&gt; true)
+  p ec.convpath #=&gt; [&quot;crlf_newline&quot;,
+                #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-16BE&gt;]]
+
+  # Conversion path can be specified directly.
+  ec = Encoding::Converter.new([&quot;universal_newline&quot;, [&quot;EUC-JP&quot;, &quot;UTF-8&quot;], [&quot;UTF-8&quot;, &quot;UTF-16BE&quot;]])
+  p ec.convpath #=&gt; [&quot;universal_newline&quot;,
+                #    [#&lt;Encoding:EUC-JP&gt;, #&lt;Encoding:UTF-8&gt;],
+                #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-16BE&gt;]]</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+static VALUE
+econv_init(int argc, VALUE *argv, VALUE self)
+{
+    VALUE ecopts;
+    volatile VALUE snamev, dnamev;
+    const char *sname, *dname;
+    rb_encoding *senc, *denc;
+    rb_econv_t *ec;
+    int ecflags;
+    VALUE convpath;
+
+    if (rb_check_typeddata(self, &amp;econv_data_type)) {
+        rb_raise(rb_eTypeError, &quot;already initialized&quot;);
+    }
+
+    if (argc == 1 &amp;&amp; !NIL_P(convpath = rb_check_array_type(argv[0]))) {
+        ec = rb_econv_init_by_convpath(self, convpath, &amp;sname, &amp;dname, &amp;senc, &amp;denc);
+        ecflags = 0;
+        ecopts = Qnil;
+    }
+    else {
+        econv_args(argc, argv, &amp;snamev, &amp;dnamev, &amp;sname, &amp;dname, &amp;senc, &amp;denc, &amp;ecflags, &amp;ecopts);
+        ec = rb_econv_open_opts(sname, dname, ecflags, ecopts);
+    }
+
+    if (!ec) {
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+    }
+
+    if (!DECORATOR_P(sname, dname)) {
+        if (!senc)
+            senc = make_dummy_encoding(sname);
+        if (!denc)
+            denc = make_dummy_encoding(dname);
+    }
+
+    ec-&gt;source_encoding = senc;
+    ec-&gt;destination_encoding = denc;
+
+    DATA_PTR(self) = ec;
+
+    return self;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="search-convpath-method" class="method-detail ">
+				<a name="method-c-search_convpath"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">search_convpath(source_encoding, destination_encoding, opt)    &rarr; ary</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns a conversion path.
+</p>
+<pre>
+ p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;)
+ #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;]]
+
+ p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;, universal_newline: true)
+ #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;],
+ #    &quot;universal_newline&quot;]
+
+ p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;UTF-32BE&quot;, universal_newline: true)
+ #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+ #    &quot;universal_newline&quot;,
+ #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-32BE&gt;]]</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="search-convpath-source">
+<pre>
+static VALUE
+econv_s_search_convpath(int argc, VALUE *argv, VALUE klass)
+{
+    volatile VALUE snamev, dnamev;
+    const char *sname, *dname;
+    rb_encoding *senc, *denc;
+    int ecflags;
+    VALUE ecopts;
+    VALUE convpath;
+
+    econv_args(argc, argv, &amp;snamev, &amp;dnamev, &amp;sname, &amp;dname, &amp;senc, &amp;denc, &amp;ecflags, &amp;ecopts);
+
+    convpath = Qnil;
+    transcode_search_path(sname, dname, search_convpath_i, &amp;convpath);
+
+    if (NIL_P(convpath))
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+
+    if (decorate_convpath(convpath, ecflags) == -1)
+        rb_exc_raise(rb_econv_open_exc(sname, dname, ecflags));
+
+    return convpath;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="convert-method" class="method-detail ">
+				<a name="method-i-convert"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">convert(source_string) &rarr; destination_string</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Convert source_string and return destination_string.
+</p>
+<p>
+source_string is assumed as a part of source. i.e.  :partial_input=>true is
+specified internally. finish method should be used last.
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;euc-jp&quot;)
+  puts ec.convert(&quot;\u3042&quot;).dump     #=&gt; &quot;\xA4\xA2&quot;
+  puts ec.finish.dump                #=&gt; &quot;&quot;
+
+  ec = Encoding::Converter.new(&quot;euc-jp&quot;, &quot;utf-8&quot;)
+  puts ec.convert(&quot;\xA4&quot;).dump       #=&gt; &quot;&quot;
+  puts ec.convert(&quot;\xA2&quot;).dump       #=&gt; &quot;\xE3\x81\x82&quot;
+  puts ec.finish.dump                #=&gt; &quot;&quot;
+
+  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-2022-jp&quot;)
+  puts ec.convert(&quot;\xE3&quot;).dump       #=&gt; &quot;&quot;.force_encoding(&quot;ISO-2022-JP&quot;)
+  puts ec.convert(&quot;\x81&quot;).dump       #=&gt; &quot;&quot;.force_encoding(&quot;ISO-2022-JP&quot;)
+  puts ec.convert(&quot;\x82&quot;).dump       #=&gt; &quot;\e$B$\&quot;&quot;.force_encoding(&quot;ISO-2022-JP&quot;)
+  puts ec.finish.dump                #=&gt; &quot;\e(B&quot;.force_encoding(&quot;ISO-2022-JP&quot;)
+</pre>
+<p>
+If a conversion error occur, <a
+href="UndefinedConversionError.html">Encoding::UndefinedConversionError</a>
+or <a
+href="InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a>
+is raised. <a
+href="Converter.html#method-i-convert">Encoding::Converter#convert</a>
+doesn&#8217;t supply methods to recover or restart from these exceptions.
+When you want to handle these conversion errors, use <a
+href="Converter.html#method-i-primitive_convert">Encoding::Converter#primitive_convert</a>.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="convert-source">
+<pre>
+static VALUE
+econv_convert(VALUE self, VALUE source_string)
+{
+    VALUE ret, dst;
+    VALUE av[5];
+    int ac;
+    rb_econv_t *ec = check_econv(self);
+
+    StringValue(source_string);
+
+    dst = rb_str_new(NULL, 0);
+
+    av[0] = rb_str_dup(source_string);
+    av[1] = dst;
+    av[2] = Qnil;
+    av[3] = Qnil;
+    av[4] = INT2NUM(ECONV_PARTIAL_INPUT);
+    ac = 5;
+
+    ret = econv_primitive_convert(ac, av, self);
+
+    if (ret == sym_invalid_byte_sequence ||
+        ret == sym_undefined_conversion ||
+        ret == sym_incomplete_input) {
+        VALUE exc = make_econv_exception(ec);
+        rb_exc_raise(exc);
+    }
+
+    if (ret == sym_finished) {
+        rb_raise(rb_eArgError, &quot;converter already finished&quot;);
+    }
+
+    if (ret != sym_source_buffer_empty) {
+        rb_bug(&quot;unexpected result of econv_primitive_convert&quot;);
+    }
+
+    return dst;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="convpath-method" class="method-detail ">
+				<a name="method-i-convpath"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">convpath        &rarr; ary</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the conversion path of ec.
+</p>
+<p>
+The result is an array of conversions.
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;, crlf_newline: true)
+  p ec.convpath
+  #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
+  #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;],
+  #    &quot;crlf_newline&quot;]
+</pre>
+<p>
+Each element of the array is a pair of encodings or a string. A pair means
+an encoding conversion. A string means a decorator.
+</p>
+<p>
+In the above example, [#<Encoding:ISO-8859-1>, #<Encoding:UTF-8>] means a
+converter from ISO-8859-1 to UTF-8. &#8220;crlf_newline&#8220; means
+newline converter from LF to CRLF.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="convpath-source">
+<pre>
+static VALUE
+econv_convpath(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    VALUE result;
+    int i;
+
+    result = rb_ary_new();
+    for (i = 0; i &lt; ec-&gt;num_trans; i++) {
+        const rb_transcoder *tr = ec-&gt;elems[i].tc-&gt;transcoder;
+        VALUE v;
+        if (DECORATOR_P(tr-&gt;src_encoding, tr-&gt;dst_encoding))
+            v = rb_str_new_cstr(tr-&gt;dst_encoding);
+        else
+            v = rb_assoc_new(make_encobj(tr-&gt;src_encoding), make_encobj(tr-&gt;dst_encoding));
+        rb_ary_push(result, v);
+    }
+    return result;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="destination-encoding-method" class="method-detail ">
+				<a name="method-i-destination_encoding"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">destination_encoding &rarr; encoding</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the destination encoding as an <a
+href="../Encoding.html">Encoding</a> object.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="destination-encoding-source">
+<pre>
+static VALUE
+econv_destination_encoding(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    if (!ec-&gt;destination_encoding)
+        return Qnil;
+    return rb_enc_from_encoding(ec-&gt;destination_encoding);
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="finish-method" class="method-detail ">
+				<a name="method-i-finish"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">finish &rarr; string</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Finishes the converter. It returns the last part of the converted string.
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-2022-jp&quot;)
+  p ec.convert(&quot;\u3042&quot;)     #=&gt; &quot;\e$B$\&quot;&quot;
+  p ec.finish                #=&gt; &quot;\e(B&quot;</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="finish-source">
+<pre>
+static VALUE
+econv_finish(VALUE self)
+{
+    VALUE ret, dst;
+    VALUE av[5];
+    int ac;
+    rb_econv_t *ec = check_econv(self);
+
+    dst = rb_str_new(NULL, 0);
+
+    av[0] = Qnil;
+    av[1] = dst;
+    av[2] = Qnil;
+    av[3] = Qnil;
+    av[4] = INT2NUM(0);
+    ac = 5;
+
+    ret = econv_primitive_convert(ac, av, self);
+
+    if (ret == sym_invalid_byte_sequence ||
+        ret == sym_undefined_conversion ||
+        ret == sym_incomplete_input) {
+        VALUE exc = make_econv_exception(ec);
+        rb_exc_raise(exc);
+    }
+
+    if (ret != sym_finished) {
+        rb_bug(&quot;unexpected result of econv_primitive_convert&quot;);
+    }
+
+    return dst;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="insert-output-method" class="method-detail ">
+				<a name="method-i-insert_output"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">insert_output(string) &rarr; nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Inserts string into the encoding converter. The string will be converted to
+the destination encoding and output on later conversions.
+</p>
+<p>
+If the destination encoding is stateful, string is converted according to
+the state and the state is updated.
+</p>
+<p>
+This method should be used only when a conversion error occurs.
+</p>
+<pre>
+ ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-8859-1&quot;)
+ src = &quot;HIRAGANA LETTER A is \u{3042}.&quot;
+ dst = &quot;&quot;
+ p ec.primitive_convert(src, dst)    #=&gt; :undefined_conversion
+ puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;HIRAGANA LETTER A is &quot;, &quot;.&quot;]
+ ec.insert_output(&quot;&lt;err&gt;&quot;)
+ p ec.primitive_convert(src, dst)    #=&gt; :finished
+ puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;HIRAGANA LETTER A is &lt;err&gt;.&quot;, &quot;&quot;]
+
+ ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-2022-jp&quot;)
+ src = &quot;\u{306F 3041 3068 2661 3002}&quot; # U+2661 is not representable in iso-2022-jp
+ dst = &quot;&quot;
+ p ec.primitive_convert(src, dst)    #=&gt; :undefined_conversion
+ puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;\e$B$O$!$H&quot;.force_encoding(&quot;ISO-2022-JP&quot;), &quot;\xE3\x80\x82&quot;]
+ ec.insert_output &quot;?&quot;                # state change required to output &quot;?&quot;.
+ p ec.primitive_convert(src, dst)    #=&gt; :finished
+ puts &quot;[#{dst.dump}, #{src.dump}]&quot;   #=&gt; [&quot;\e$B$O$!$H\e(B?\e$B!#\e(B&quot;.force_encoding(&quot;ISO-2022-JP&quot;), &quot;&quot;]</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="insert-output-source">
+<pre>
+static VALUE
+econv_insert_output(VALUE self, VALUE string)
+{
+    const char *insert_enc;
+
+    int ret;
+
+    rb_econv_t *ec = check_econv(self);
+
+    StringValue(string);
+    insert_enc = rb_econv_encoding_to_insert_output(ec);
+    string = rb_str_encode(string, rb_enc_from_encoding(rb_enc_find(insert_enc)), 0, Qnil);
+
+    ret = rb_econv_insert_output(ec, (const unsigned char *)RSTRING_PTR(string), RSTRING_LEN(string), insert_enc);
+    if (ret == -1) {
+        rb_raise(rb_eArgError, &quot;too big string&quot;);
+    }
+
+    return Qnil;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="inspect-method" class="method-detail ">
+				<a name="method-i-inspect"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">inspect         &rarr; string</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns a printable version of <em>ec</em>
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;iso-8859-1&quot;, &quot;utf-8&quot;)
+  puts ec.inspect    #=&gt; #&lt;Encoding::Converter: ISO-8859-1 to UTF-8&gt;</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="inspect-source">
+<pre>
+static VALUE
+econv_inspect(VALUE self)
+{
+    const char *cname = rb_obj_classname(self);
+    rb_econv_t *ec;
+
+    TypedData_Get_Struct(self, rb_econv_t, &amp;econv_data_type, ec);
+    if (!ec)
+        return rb_sprintf(&quot;#&lt;%s: uninitialized&gt;&quot;, cname);
+    else {
+        const char *sname = ec-&gt;source_encoding_name;
+        const char *dname = ec-&gt;destination_encoding_name;
+        VALUE str;
+        str = rb_sprintf(&quot;#&lt;%s: &quot;, cname);
+        econv_description(sname, dname, ec-&gt;flags, str);
+        rb_str_cat2(str, &quot;&gt;&quot;);
+        return str;
+    }
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="last-error-method" class="method-detail ">
+				<a name="method-i-last_error"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">last_error &rarr; exception or nil</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns an exception object for the last conversion. Returns nil if the
+last conversion did not produce an error.
+</p>
+<p>
+&#8220;error&#8221; means that <a
+href="InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a>
+and <a
+href="UndefinedConversionError.html">Encoding::UndefinedConversionError</a>
+for <a
+href="Converter.html#method-i-convert">Encoding::Converter#convert</a> and
+:invalid_byte_sequence, :incomplete_input and :undefined_conversion for <a
+href="Converter.html#method-i-primitive_convert">Encoding::Converter#primitive_convert</a>.
+</p>
+<pre>
+ ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;iso-8859-1&quot;)
+ p ec.primitive_convert(src=&quot;\xf1abcd&quot;, dst=&quot;&quot;)       #=&gt; :invalid_byte_sequence
+ p ec.last_error      #=&gt; #&lt;Encoding::InvalidByteSequenceError: &quot;\xF1&quot; followed by &quot;a&quot; on UTF-8&gt;
+ p ec.primitive_convert(src, dst, nil, 1)             #=&gt; :destination_buffer_full
+ p ec.last_error      #=&gt; nil</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="last-error-source">
+<pre>
+static VALUE
+econv_last_error(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    VALUE exc;
+
+    exc = make_econv_exception(ec);
+    if (NIL_P(exc))
+        return Qnil;
+    return exc;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="primitive-convert-method" class="method-detail ">
+				<a name="method-i-primitive_convert"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">primitive_convert(source_buffer, destination_buffer, destination_byteoffset, destination_bytesize, opt) &rarr; symbol</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+possible opt elements:
+</p>
+<pre>
+  hash form:
+    :partial_input =&gt; true           # source buffer may be part of larger source
+    :after_output =&gt; true            # stop conversion after output before input
+  integer form:
+    Encoding::Converter::PARTIAL_INPUT
+    Encoding::Converter::AFTER_OUTPUT
+</pre>
+<p>
+possible results:
+</p>
+<pre>
+   :invalid_byte_sequence
+   :incomplete_input
+   :undefined_conversion
+   :after_output
+   :destination_buffer_full
+   :source_buffer_empty
+   :finished
+</pre>
+<p>
+<a href="Converter.html#method-i-primitive_convert">primitive_convert</a>
+converts source_buffer into destination_buffer.
+</p>
+<p>
+source_buffer should be a string or nil. nil means a empty string.
+</p>
+<p>
+destination_buffer should be a string.
+</p>
+<p>
+destination_byteoffset should be an integer or nil. nil means the end of
+destination_buffer. If it is omitted, nil is assumed.
+</p>
+<p>
+destination_bytesize should be an integer or nil. nil means unlimited. If
+it is omitted, nil is assumed.
+</p>
+<p>
+opt should be nil, a hash or an integer. nil means no flags. If it is
+omitted, nil is assumed.
+</p>
+<p>
+<a href="Converter.html#method-i-primitive_convert">primitive_convert</a>
+converts the content of source_buffer from beginning and store the result
+into destination_buffer.
+</p>
+<p>
+destination_byteoffset and destination_bytesize specify the region which
+the converted result is stored. destination_byteoffset specifies the start
+position in destination_buffer in bytes. If destination_byteoffset is nil,
+destination_buffer.bytesize is used for appending the result.
+destination_bytesize specifies maximum number of bytes. If
+destination_bytesize is nil, destination size is unlimited. After
+conversion, destination_buffer is resized to destination_byteoffset +
+actually produced number of bytes. Also destination_buffer&#8217;s encoding
+is set to destination_encoding.
+</p>
+<p>
+<a href="Converter.html#method-i-primitive_convert">primitive_convert</a>
+drops the converted part of source_buffer. the dropped part is converted in
+destination_buffer or buffered in <a
+href="Converter.html">Encoding::Converter</a> object.
+</p>
+<p>
+<a href="Converter.html#method-i-primitive_convert">primitive_convert</a>
+stops conversion when one of following condition met.
+</p>
+<ul>
+<li><p>
+invalid byte sequence found in source buffer (:invalid_byte_sequence)
+</p>
+</li>
+<li><p>
+unexpected end of source buffer (:incomplete_input) this occur only when
+:partial_input is not specified.
+</p>
+</li>
+<li><p>
+character not representable in output encoding (:undefined_conversion)
+</p>
+</li>
+<li><p>
+after some output is generated, before input is done (:after_output) this
+occur only when :after_output is specified.
+</p>
+</li>
+<li><p>
+destination buffer is full (:destination_buffer_full) this occur only when
+destination_bytesize is non-nil.
+</p>
+</li>
+<li><p>
+source buffer is empty (:source_buffer_empty) this occur only when
+:partial_input is specified.
+</p>
+</li>
+<li><p>
+conversion is finished (:finished)
+</p>
+</li>
+</ul>
+<p>
+example:
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;)
+  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, nil, 100)
+  p [ret, src, dst] #=&gt; [:finished, &quot;&quot;, &quot;\x00p\x00i&quot;]
+
+  ec = Encoding::Converter.new(&quot;UTF-8&quot;, &quot;UTF-16BE&quot;)
+  ret = ec.primitive_convert(src=&quot;pi&quot;, dst=&quot;&quot;, nil, 1)
+  p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;i&quot;, &quot;\x00&quot;]
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
+  p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;&quot;, &quot;p&quot;]
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
+  p [ret, src, dst] #=&gt; [:destination_buffer_full, &quot;&quot;, &quot;\x00&quot;]
+  ret = ec.primitive_convert(src, dst=&quot;&quot;, nil, 1)
+  p [ret, src, dst] #=&gt; [:finished, &quot;&quot;, &quot;i&quot;]</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="primitive-convert-source">
+<pre>
+static VALUE
+econv_primitive_convert(int argc, VALUE *argv, VALUE self)
+{
+    VALUE input, output, output_byteoffset_v, output_bytesize_v, opt, flags_v;
+    rb_econv_t *ec = check_econv(self);
+    rb_econv_result_t res;
+    const unsigned char *ip, *is;
+    unsigned char *op, *os;
+    long output_byteoffset, output_bytesize;
+    unsigned long output_byteend;
+    int flags;
+
+    rb_scan_args(argc, argv, &quot;23&quot;, &amp;input, &amp;output, &amp;output_byteoffset_v, &amp;output_bytesize_v, &amp;opt);
+
+    if (NIL_P(output_byteoffset_v))
+        output_byteoffset = 0; /* dummy */
+    else
+        output_byteoffset = NUM2LONG(output_byteoffset_v);
+
+    if (NIL_P(output_bytesize_v))
+        output_bytesize = 0; /* dummy */
+    else
+        output_bytesize = NUM2LONG(output_bytesize_v);
+
+    if (NIL_P(opt)) {
+        flags = 0;
+    }
+    else if (!NIL_P(flags_v = rb_check_to_integer(opt, &quot;to_int&quot;))) {
+        flags = NUM2INT(flags_v);
+    }
+    else {
+        VALUE v;
+        opt = rb_convert_type(opt, T_HASH, &quot;Hash&quot;, &quot;to_hash&quot;);
+        flags = 0;
+        v = rb_hash_aref(opt, sym_partial_input);
+        if (RTEST(v))
+            flags |= ECONV_PARTIAL_INPUT;
+        v = rb_hash_aref(opt, sym_after_output);
+        if (RTEST(v))
+            flags |= ECONV_AFTER_OUTPUT;
+    }
+
+    StringValue(output);
+    if (!NIL_P(input))
+        StringValue(input);
+    rb_str_modify(output);
+
+    if (NIL_P(output_bytesize_v)) {
+        output_bytesize = RSTRING_EMBED_LEN_MAX;
+        if (!NIL_P(input) &amp;&amp; output_bytesize &lt; RSTRING_LEN(input))
+            output_bytesize = RSTRING_LEN(input);
+    }
+
+  retry:
+
+    if (NIL_P(output_byteoffset_v))
+        output_byteoffset = RSTRING_LEN(output);
+
+    if (output_byteoffset &lt; 0)
+        rb_raise(rb_eArgError, &quot;negative output_byteoffset&quot;);
+
+    if (RSTRING_LEN(output) &lt; output_byteoffset)
+        rb_raise(rb_eArgError, &quot;output_byteoffset too big&quot;);
+
+    if (output_bytesize &lt; 0)
+        rb_raise(rb_eArgError, &quot;negative output_bytesize&quot;);
+
+    output_byteend = (unsigned long)output_byteoffset +
+                     (unsigned long)output_bytesize;
+
+    if (output_byteend &lt; (unsigned long)output_byteoffset ||
+        LONG_MAX &lt; output_byteend)
+        rb_raise(rb_eArgError, &quot;output_byteoffset+output_bytesize too big&quot;);
+
+    if (rb_str_capacity(output) &lt; output_byteend)
+        rb_str_resize(output, output_byteend);
+
+    if (NIL_P(input)) {
+        ip = is = NULL;
+    }
+    else {
+        ip = (const unsigned char *)RSTRING_PTR(input);
+        is = ip + RSTRING_LEN(input);
+    }
+
+    op = (unsigned char *)RSTRING_PTR(output) + output_byteoffset;
+    os = op + output_bytesize;
+
+    res = rb_econv_convert(ec, &amp;ip, is, &amp;op, os, flags);
+    rb_str_set_len(output, op-(unsigned char *)RSTRING_PTR(output));
+    if (!NIL_P(input))
+        rb_str_drop_bytes(input, ip - (unsigned char *)RSTRING_PTR(input));
+
+    if (NIL_P(output_bytesize_v) &amp;&amp; res == econv_destination_buffer_full) {
+        if (LONG_MAX / 2 &lt; output_bytesize)
+            rb_raise(rb_eArgError, &quot;too long conversion result&quot;);
+        output_bytesize *= 2;
+        output_byteoffset_v = Qnil;
+        goto retry;
+    }
+
+    if (ec-&gt;destination_encoding) {
+        rb_enc_associate(output, ec-&gt;destination_encoding);
+    }
+
+    return econv_result_to_symbol(res);
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="primitive-errinfo-method" class="method-detail ">
+				<a name="method-i-primitive_errinfo"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">primitive_errinfo &rarr; array</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+<a href="Converter.html#method-i-primitive_errinfo">primitive_errinfo</a>
+returns important information regarding the last error as a 5-element
+array:
+</p>
+<pre>
+  [result, enc1, enc2, error_bytes, readagain_bytes]
+</pre>
+<p>
+result is the last result of primitive_convert.
+</p>
+<p>
+Other elements are only meaningful when result is :invalid_byte_sequence,
+:incomplete_input or :undefined_conversion.
+</p>
+<p>
+enc1 and enc2 indicate a conversion step as a pair of strings. For example,
+a converter from EUC-JP to ISO-8859-1 converts a string as follows: EUC-JP
+-> UTF-8 -> ISO-8859-1. So [enc1, enc2] is either [&#8220;EUC-JP&#8221;,
+&#8220;UTF-8&#8221;] or [&#8220;UTF-8&#8221;, &#8220;ISO-8859-1&#8221;].
+</p>
+<p>
+error_bytes and readagain_bytes indicate the byte sequences which caused
+the error. error_bytes is discarded portion. readagain_bytes is buffered
+portion which is read again on next conversion.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # \xff is invalid as EUC-JP.
+  ec = Encoding::Converter.new(&quot;EUC-JP&quot;, &quot;Shift_JIS&quot;)
+  ec.primitive_convert(src=&quot;\xff&quot;, dst=&quot;&quot;, nil, 10)
+  p ec.primitive_errinfo
+  #=&gt; [:invalid_byte_sequence, &quot;EUC-JP&quot;, &quot;UTF-8&quot;, &quot;\xFF&quot;, &quot;&quot;]
+
+  # HIRAGANA LETTER A (\xa4\xa2 in EUC-JP) is not representable in ISO-8859-1.
+  # Since this error is occur in UTF-8 to ISO-8859-1 conversion,
+  # error_bytes is HIRAGANA LETTER A in UTF-8 (\xE3\x81\x82).
+  ec = Encoding::Converter.new(&quot;EUC-JP&quot;, &quot;ISO-8859-1&quot;)
+  ec.primitive_convert(src=&quot;\xa4\xa2&quot;, dst=&quot;&quot;, nil, 10)
+  p ec.primitive_errinfo
+  #=&gt; [:undefined_conversion, &quot;UTF-8&quot;, &quot;ISO-8859-1&quot;, &quot;\xE3\x81\x82&quot;, &quot;&quot;]
+
+  # partial character is invalid
+  ec = Encoding::Converter.new(&quot;EUC-JP&quot;, &quot;ISO-8859-1&quot;)
+  ec.primitive_convert(src=&quot;\xa4&quot;, dst=&quot;&quot;, nil, 10)
+  p ec.primitive_errinfo
+  #=&gt; [:incomplete_input, &quot;EUC-JP&quot;, &quot;UTF-8&quot;, &quot;\xA4&quot;, &quot;&quot;]
+
+  # Encoding::Converter::PARTIAL_INPUT prevents invalid errors by
+  # partial characters.
+  ec = Encoding::Converter.new(&quot;EUC-JP&quot;, &quot;ISO-8859-1&quot;)
+  ec.primitive_convert(src=&quot;\xa4&quot;, dst=&quot;&quot;, nil, 10, Encoding::Converter::PARTIAL_INPUT)
+  p ec.primitive_errinfo
+  #=&gt; [:source_buffer_empty, nil, nil, nil, nil]
+
+  # \xd8\x00\x00@ is invalid as UTF-16BE because
+  # no low surrogate after high surrogate (\xd8\x00).
+  # It is detected by 3rd byte (\00) which is part of next character.
+  # So the high surrogate (\xd8\x00) is discarded and
+  # the 3rd byte is read again later.
+  # Since the byte is buffered in ec, it is dropped from src.
+  ec = Encoding::Converter.new(&quot;UTF-16BE&quot;, &quot;UTF-8&quot;)
+  ec.primitive_convert(src=&quot;\xd8\x00\x00@&quot;, dst=&quot;&quot;, nil, 10)
+  p ec.primitive_errinfo
+  #=&gt; [:invalid_byte_sequence, &quot;UTF-16BE&quot;, &quot;UTF-8&quot;, &quot;\xD8\x00&quot;, &quot;\x00&quot;]
+  p src
+  #=&gt; &quot;@&quot;
+
+  # Similar to UTF-16BE, \x00\xd8@\x00 is invalid as UTF-16LE.
+  # The problem is detected by 4th byte.
+  ec = Encoding::Converter.new(&quot;UTF-16LE&quot;, &quot;UTF-8&quot;)
+  ec.primitive_convert(src=&quot;\x00\xd8@\x00&quot;, dst=&quot;&quot;, nil, 10)
+  p ec.primitive_errinfo
+  #=&gt; [:invalid_byte_sequence, &quot;UTF-16LE&quot;, &quot;UTF-8&quot;, &quot;\x00\xD8&quot;, &quot;@\x00&quot;]
+  p src
+  #=&gt; &quot;&quot;</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="primitive-errinfo-source">
+<pre>
+static VALUE
+econv_primitive_errinfo(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+
+    VALUE ary;
+
+    ary = rb_ary_new2(5);
+
+    rb_ary_store(ary, 0, econv_result_to_symbol(ec-&gt;last_error.result));
+    rb_ary_store(ary, 4, Qnil);
+
+    if (ec-&gt;last_error.source_encoding)
+        rb_ary_store(ary, 1, rb_str_new2(ec-&gt;last_error.source_encoding));
+
+    if (ec-&gt;last_error.destination_encoding)
+        rb_ary_store(ary, 2, rb_str_new2(ec-&gt;last_error.destination_encoding));
+
+    if (ec-&gt;last_error.error_bytes_start) {
+        rb_ary_store(ary, 3, rb_str_new((const char *)ec-&gt;last_error.error_bytes_start, ec-&gt;last_error.error_bytes_len));
+        rb_ary_store(ary, 4, rb_str_new((const char *)ec-&gt;last_error.error_bytes_start + ec-&gt;last_error.error_bytes_len, ec-&gt;last_error.readagain_len));
+    }
+
+    return ary;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="putback-method" class="method-detail ">
+				<a name="method-i-putback"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">putback</span><span
+						class="method-args">(...)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+call-seq
+</p>
+<pre>
+  ec.putback                    -&gt; string
+  ec.putback(max_numbytes)      -&gt; string
+</pre>
+<p>
+Put back the bytes which will be converted.
+</p>
+<p>
+The bytes are caused by invalid_byte_sequence error. When
+invalid_byte_sequence error, some bytes are discarded and some bytes are
+buffered to be converted later. The latter bytes can be put back. It can be
+observed by <a
+href="InvalidByteSequenceError.html#method-i-readagain_bytes">Encoding::InvalidByteSequenceError#readagain_bytes</a>
+and <a
+href="Converter.html#method-i-primitive_errinfo">Encoding::Converter#primitive_errinfo</a>.
+</p>
+<pre>
+  ec = Encoding::Converter.new(&quot;utf-16le&quot;, &quot;iso-8859-1&quot;)
+  src = &quot;\x00\xd8\x61\x00&quot;
+  dst = &quot;&quot;
+  p ec.primitive_convert(src, dst)   #=&gt; :invalid_byte_sequence
+  p ec.primitive_errinfo     #=&gt; [:invalid_byte_sequence, &quot;UTF-16LE&quot;, &quot;UTF-8&quot;, &quot;\x00\xD8&quot;, &quot;a\x00&quot;]
+  p ec.putback               #=&gt; &quot;a\x00&quot;
+  p ec.putback               #=&gt; &quot;&quot;          # no more bytes to put back</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="putback-source">
+<pre>
+static VALUE
+econv_putback(int argc, VALUE *argv, VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    int n;
+    int putbackable;
+    VALUE str, max;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;max);
+
+    if (NIL_P(max))
+        n = rb_econv_putbackable(ec);
+    else {
+        n = NUM2INT(max);
+        putbackable = rb_econv_putbackable(ec);
+        if (putbackable &lt; n)
+            n = putbackable;
+    }
+
+    str = rb_str_new(NULL, n);
+    rb_econv_putback(ec, (unsigned char *)RSTRING_PTR(str), n);
+
+    if (ec-&gt;source_encoding) {
+        rb_enc_associate(str, ec-&gt;source_encoding);
+    }
+
+    return str;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="replacement-method" class="method-detail ">
+				<a name="method-i-replacement"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">replacement &rarr; string</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the replacement string.
+</p>
+<pre>
+ ec = Encoding::Converter.new(&quot;euc-jp&quot;, &quot;us-ascii&quot;)
+ p ec.replacement    #=&gt; &quot;?&quot;
+
+ ec = Encoding::Converter.new(&quot;euc-jp&quot;, &quot;utf-8&quot;)
+ p ec.replacement    #=&gt; &quot;\uFFFD&quot;</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="replacement-source">
+<pre>
+static VALUE
+econv_get_replacement(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    int ret;
+    rb_encoding *enc;
+
+    ret = make_replacement(ec);
+    if (ret == -1) {
+        rb_raise(rb_eUndefinedConversionError, &quot;replacement character setup failed&quot;);
+    }
+
+    enc = rb_enc_find(ec-&gt;replacement_enc);
+    return rb_enc_str_new((const char *)ec-&gt;replacement_str, (long)ec-&gt;replacement_len, enc);
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="replacement--method" class="method-detail ">
+				<a name="method-i-replacement%3D"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">replacement = string</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Sets the replacement string.
+</p>
+<pre>
+ ec = Encoding::Converter.new(&quot;utf-8&quot;, &quot;us-ascii&quot;, :undef =&gt; :replace)
+ ec.replacement = &quot;&lt;undef&gt;&quot;
+ p ec.convert(&quot;a \u3042 b&quot;)      #=&gt; &quot;a &lt;undef&gt; b&quot;</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="replacement--source">
+<pre>
+static VALUE
+econv_set_replacement(VALUE self, VALUE arg)
+{
+    rb_econv_t *ec = check_econv(self);
+    VALUE string = arg;
+    int ret;
+    rb_encoding *enc;
+
+    StringValue(string);
+    enc = rb_enc_get(string);
+
+    ret = rb_econv_set_replacement(ec,
+            (const unsigned char *)RSTRING_PTR(string),
+            RSTRING_LEN(string),
+            rb_enc_name(enc));
+
+    if (ret == -1) {
+        /* xxx: rb_eInvalidByteSequenceError? */
+        rb_raise(rb_eUndefinedConversionError, &quot;replacement character setup failed&quot;);
+    }
+
+    return arg;
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+			<div id="source-encoding-method" class="method-detail ">
+				<a name="method-i-source_encoding"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-callseq">source_encoding &rarr; encoding</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Returns the source encoding as an <a href="../Encoding.html">Encoding</a>
+object.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="source-encoding-source">
+<pre>
+static VALUE
+econv_source_encoding(VALUE self)
+{
+    rb_econv_t *ec = check_econv(self);
+    if (!ec-&gt;source_encoding)
+        return Qnil;
+    return rb_enc_from_encoding(ec-&gt;source_encoding);
+}</pre>
+					</div>
+					
+				</div>
+
+				
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+

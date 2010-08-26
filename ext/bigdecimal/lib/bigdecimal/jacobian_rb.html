@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>File: jacobian.rb [RDoc Documentation]</title>
+
+	<link type="text/css" media="screen" href="../../../../rdoc.css" rel="stylesheet" />
+
+	<script src="../../../../js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../../../js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../../../js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="../../../../js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+</head>
+
+<body class="file file-popup">
+	<div id="metadata">
+		<dl>
+			<dt class="modified-date">Last Modified</dt>
+			<dd class="modified-date">2009-10-02 03:45:39 -0700</dd>
+
+			
+			<dt class="requires">Requires</dt>
+			<dd class="requires">
+				<ul>
+				
+				</ul>
+			</dd>
+			
+
+			
+		</dl>
+	</div>
+
+	<div id="documentation">
+		
+		<div class="description">
+			<h2>Description</h2>
+			<p>
+require &#8216;bigdecimal/jacobian&#8216;
+</p>
+<p>
+Provides methods to compute the <a
+href="../../../../Jacobian.html">Jacobian</a> matrix of a set of equations
+at a point x. In the methods below:
+</p>
+<p>
+f is an <a href="../../../../Object.html">Object</a> which is used to
+compute the <a href="../../../../Jacobian.html">Jacobian</a> matrix of the
+equations. It must provide the following methods:
+</p>
+<table>
+<tr><td valign="top">f.values(x)</td><td><p>
+returns the values of all functions at x
+</p>
+</td></tr>
+<tr><td valign="top">f.zero</td><td><p>
+returns 0.0
+</p>
+</td></tr>
+<tr><td valign="top">f.one</td><td><p>
+returns 1.0
+</p>
+</td></tr>
+<tr><td valign="top">f.two</td><td><p>
+returns 1.0
+</p>
+</td></tr>
+<tr><td valign="top">f.ten</td><td><p>
+returns 10.0
+</p>
+</td></tr>
+<tr><td valign="top">f.eps</td><td><p>
+returns the convergence criterion (epsilon value) used to determine whether
+two values are considered equal. If |a-b| < epsilon, the two values are
+considered equal.
+</p>
+</td></tr>
+</table>
+<p>
+x is the point at which to compute the <a
+href="../../../../Jacobian.html">Jacobian</a>.
+</p>
+<p>
+fx is f.values(x).
+</p>
+
+		</div>
+		
+	</div>
+</body>
+</html>
+
