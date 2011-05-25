@@ -1,54 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
 
-	<title>File: monitor.rb [RDoc Documentation]</title>
+  <title>File: monitor.rb [RDoc Documentation]</title>
 
-	<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
+  <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
 
-	<script src="../js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
+  <script src="../js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
 </head>
 
 <body class="file file-popup">
-	<div id="metadata">
-		<dl>
-			<dt class="modified-date">Last Modified</dt>
-			<dd class="modified-date">2010-02-06 04:31:52 -0800</dd>
+  <div id="metadata">
+    <dl>
+      <dt class="modified-date">Last Modified</dt>
+      <dd class="modified-date">2010-02-06 04:31:52 -0800</dd>
 
-			
-			<dt class="requires">Requires</dt>
-			<dd class="requires">
-				<ul>
-				
-					<li>thread</li>
-				
-				</ul>
-			</dd>
-			
+      
+      <dt class="requires">Requires</dt>
+      <dd class="requires">
+        <ul>
+        
+          <li>thread</li>
+        
+        </ul>
+      </dd>
+      
 
-			
-		</dl>
-	</div>
+      
+    </dl>
+  </div>
 
-	<div id="documentation">
-		
-		<div class="description">
-			<h2>Description</h2>
-			
-		</div>
-		
-	</div>
+  <div id="documentation">
+    
+    <div class="description">
+      <h2>Description</h2>
+      
+<h1>monitor.rb</h1>
+
+<p>Copyright (C) 2001  Shugo Maeda &lt;shugo@ruby-lang.org&gt;</p>
+
+<p>This library is distributed under the terms of the Ruby license. You can
+freely distribute/modify this library.</p>
+
+<h2>example</h2>
+
+<p>This is a simple example.</p>
+
+<pre>require 'monitor.rb'
+
+buf = []
+buf.extend(MonitorMixin)
+empty_cond = buf.new_cond
+
+# consumer
+Thread.start do
+  loop do
+    buf.synchronize do
+      empty_cond.wait_while { buf.empty? }
+      print buf.shift
+    end
+  end
+end
+
+# producer
+while line = ARGF.gets
+  buf.synchronize do
+    buf.push(line)
+    empty_cond.signal
+  end
+end</pre>
+
+<p>The consumer thread waits for the producer thread to push a line to buf
+while buf.empty?, and the producer thread (main thread) reads a line from
+<a href="../ARGF.html">ARGF</a> and push it to buf, then call
+empty_cond.signal.</p>
+
+    </div>
+    
+  </div>
 </body>
 </html>
 

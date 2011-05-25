@@ -1,117 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
 
-	<title>File: prettyprint.rb [RDoc Documentation]</title>
+  <title>File: prettyprint.rb [RDoc Documentation]</title>
 
-	<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
+  <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
 
-	<script src="../js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
+  <script src="../js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
 </head>
 
 <body class="file file-popup">
-	<div id="metadata">
-		<dl>
-			<dt class="modified-date">Last Modified</dt>
-			<dd class="modified-date">2009-02-14 15:36:45 -0800</dd>
+  <div id="metadata">
+    <dl>
+      <dt class="modified-date">Last Modified</dt>
+      <dd class="modified-date">2009-02-14 15:36:45 -0800</dd>
 
-			
-			<dt class="requires">Requires</dt>
-			<dd class="requires">
-				<ul>
-				
-				</ul>
-			</dd>
-			
+      
+      <dt class="requires">Requires</dt>
+      <dd class="requires">
+        <ul>
+        
+        </ul>
+      </dd>
+      
 
-			
-		</dl>
-	</div>
+      
+    </dl>
+  </div>
 
-	<div id="documentation">
-		
-		<div class="description">
-			<h2>Description</h2>
-			<p>
-This class implements a pretty printing algorithm. It finds line breaks and
-nice indentations for grouped structure.
-</p>
-<p>
-By default, the class assumes that primitive elements are strings and each
+  <div id="documentation">
+    
+    <div class="description">
+      <h2>Description</h2>
+      
+<p>This class implements a pretty printing algorithm. It finds line breaks and
+nice indentations for grouped structure.</p>
+
+<p>By default, the class assumes that primitive elements are strings and each
 byte in the strings have single column in width. But it can be used for
-other situations by giving suitable arguments for some methods:
-</p>
-<ul>
-<li><p>
-newline object and space generation block for PrettyPrint.new
-</p>
-</li>
-<li><p>
-optional width argument for <a
-href="../PrettyPrint.html#method-i-text">PrettyPrint#text</a>
-</p>
-</li>
-<li><p>
-<a href="../PrettyPrint.html#method-i-breakable">PrettyPrint#breakable</a>
-</p>
-</li>
-</ul>
-<p>
-There are several candidate uses:
-</p>
-<ul>
-<li><p>
-text formatting using proportional fonts
-</p>
-</li>
-<li><p>
-multibyte characters which has columns different to number of bytes
-</p>
-</li>
-<li><p>
-non-string formatting
-</p>
-</li>
-</ul>
-<h2>Bugs</h2>
-<ul>
-<li><p>
-Box based formatting?
-</p>
-</li>
-<li><p>
-Other (better) model/algorithm?
-</p>
-</li>
-</ul>
-<h2>References</h2>
-<p>
-Christian Lindig, Strictly Pretty, March 2000, <a
-href="http://www.st.cs.uni-sb.de/~lindig/papers/#pretty">www.st.cs.uni-sb.de/~lindig/papers/#pretty</a>
-</p>
-<p>
-Philip Wadler, A prettier printer, March 1998, <a
-href="http://homepages.inf.ed.ac.uk/wadler/topics/language-design.html#prettier">homepages.inf.ed.ac.uk/wadler/topics/language-design.html#prettier</a>
-</p>
-<h2>Author</h2>
-<p>
-Tanaka Akira <akr@m17n.org>
-</p>
+other situations by giving suitable arguments for some methods:</p>
+<ul><li>
+<p>newline object and space generation block for <a
+href="../PrettyPrint.html#method-c-new">PrettyPrint.new</a></p>
+</li><li>
+<p>optional width argument for <a
+href="../PrettyPrint.html#method-i-text">PrettyPrint#text</a></p>
+</li><li>
+<p><a href="../PrettyPrint.html#method-i-breakable">PrettyPrint#breakable</a></p>
+</li></ul>
 
-		</div>
-		
-	</div>
+<p>There are several candidate uses:</p>
+<ul><li>
+<p>text formatting using proportional fonts</p>
+</li><li>
+<p>multibyte characters which has columns different to number of bytes</p>
+</li><li>
+<p>non-string formatting</p>
+</li></ul>
+
+<h2>Bugs</h2>
+<ul><li>
+<p>Box based formatting?</p>
+</li><li>
+<p>Other (better) model/algorithm?</p>
+</li></ul>
+
+<h2>References</h2>
+
+<p>Christian Lindig, Strictly Pretty, March 2000, <a
+href="http://www.st.cs.uni-sb.de/~lindig/papers/#pretty">www.st.cs.uni-sb.de/~lindig/papers/#pretty</a></p>
+
+<p>Philip Wadler, A prettier printer, March 1998, <a
+href="http://homepages.inf.ed.ac.uk/wadler/topics/language-design.html#prettier">homepages.inf.ed.ac.uk/wadler/topics/language-design.html#prettier</a></p>
+
+<h2>Author</h2>
+
+<p>Tanaka Akira &lt;akr@m17n.org&gt;</p>
+
+    </div>
+    
+  </div>
 </body>
 </html>
 

@@ -1,174 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
 
-	<title>File: delegate.rb [RDoc Documentation]</title>
+  <title>File: delegate.rb [RDoc Documentation]</title>
 
-	<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
+  <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
 
-	<script src="../js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
+  <script src="../js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
 </head>
 
 <body class="file file-popup">
-	<div id="metadata">
-		<dl>
-			<dt class="modified-date">Last Modified</dt>
-			<dd class="modified-date">2010-06-21 21:29:59 -0700</dd>
+  <div id="metadata">
+    <dl>
+      <dt class="modified-date">Last Modified</dt>
+      <dd class="modified-date">2010-06-21 21:29:59 -0700</dd>
 
-			
-			<dt class="requires">Requires</dt>
-			<dd class="requires">
-				<ul>
-				
-				</ul>
-			</dd>
-			
+      
+      <dt class="requires">Requires</dt>
+      <dd class="requires">
+        <ul>
+        
+        </ul>
+      </dd>
+      
 
-			
-		</dl>
-	</div>
+      
+    </dl>
+  </div>
 
-	<div id="documentation">
-		
-		<div class="description">
-			<h2>Description</h2>
-			<h1>delegate &#8212; Support for the Delegation Pattern</h1>
-<p>
-Documentation by James Edward Gray II and Gavin Sinclair
-</p>
+  <div id="documentation">
+    
+    <div class="description">
+      <h2>Description</h2>
+      
+<h1>delegate -- Support for the Delegation Pattern</h1>
+
+<p>Documentation by James Edward Gray II and Gavin Sinclair</p>
+
 <h2>Introduction</h2>
-<p>
-This library provides three different ways to delegate method calls to an
+
+<p>This library provides three different ways to delegate method calls to an
 object.  The easiest to use is <a
 href="../SimpleDelegator.html">SimpleDelegator</a>.  Pass an object to the
 constructor and all methods supported by the object will be delegated. 
-This object can be changed later.
-</p>
-<p>
-Going a step further, the top level DelegateClass method allows you to
+This object can be changed later.</p>
+
+<p>Going a step further, the top level DelegateClass method allows you to
 easily setup delegation through class inheritance.  This is considerably
-more flexible and thus probably the most common use for this library.
-</p>
-<p>
-Finally, if you need full control over the delegation scheme, you can
+more flexible and thus probably the most common use for this library.</p>
+
+<p>Finally, if you need full control over the delegation scheme, you can
 inherit from the abstract class <a href="../Delegator.html">Delegator</a>
 and customize as needed.  (If you find yourself needing this control, have
 a look at <em>forwardable</em>, also in the standard library.  It may suit
-your needs better.)
-</p>
+your needs better.)</p>
+
 <h2>Notes</h2>
-<p>
-Be advised, <a href="../RDoc.html">RDoc</a> will not detect delegated
-methods.
-</p>
-<p>
-<b>delegate.rb provides full-class delegation via the DelegateClass()
+
+<p>Be advised, <a href="../RDoc.html">RDoc</a> will not detect delegated
+methods.</p>
+
+<p><b>delegate.rb provides full-class delegation via the DelegateClass()
 method.  For single-method delegation via def_delegator(), see
-forwardable.rb.</b>
-</p>
+forwardable.rb.</b></p>
+
 <h2>Examples</h2>
+
 <h3><a href="../SimpleDelegator.html">SimpleDelegator</a></h3>
-<p>
-Here&#8217;s a simple example that takes advantage of the fact that
-SimpleDelegator&#8217;s delegation object can be changed at any time.
-</p>
-<pre>
-  class Stats
-    def initialize
-      @source = SimpleDelegator.new([])
-    end
 
-    def stats( records )
-      @source.__setobj__(records)
+<p>Here's a simple example that takes advantage of the fact that
+SimpleDelegator's delegation object can be changed at any time.</p>
 
-      &quot;Elements:  #{@source.size}\n&quot; +
-      &quot; Non-Nil:  #{@source.compact.size}\n&quot; +
-      &quot;  Unique:  #{@source.uniq.size}\n&quot;
-    end
+<pre>class Stats
+  def initialize
+    @source = SimpleDelegator.new([])
   end
 
-  s = Stats.new
-  puts s.stats(%w{James Edward Gray II})
-  puts
-  puts s.stats([1, 2, 3, nil, 4, 5, 1, 2])
-</pre>
-<p>
-<em>Prints:</em>
-</p>
-<pre>
-  Elements:  4
-   Non-Nil:  4
-    Unique:  4
+  def stats( records )
+    @source.__setobj__(records)
 
-  Elements:  8
-   Non-Nil:  7
-    Unique:  6
-</pre>
+    &quot;Elements:  #{@source.size}\n&quot; +
+    &quot; Non-Nil:  #{@source.compact.size}\n&quot; +
+    &quot;  Unique:  #{@source.uniq.size}\n&quot;
+  end
+end
+
+s = Stats.new
+puts s.stats(%w{James Edward Gray II})
+puts
+puts s.stats([1, 2, 3, nil, 4, 5, 1, 2])</pre>
+
+<p><em>Prints:</em></p>
+
+<pre>Elements:  4
+ Non-Nil:  4
+  Unique:  4
+
+Elements:  8
+ Non-Nil:  7
+  Unique:  6</pre>
+
 <h3>DelegateClass()</h3>
-<p>
-Here&#8217;s a sample of use from <em>tempfile.rb</em>.
-</p>
-<p>
-A <em>Tempfile</em> object is really just a <em>File</em> object with a few
-special rules about storage location and/or when the <a
-href="../File.html">File</a> should be deleted.  That makes for an almost
-textbook perfect example of how to use delegation.
-</p>
-<pre>
-  class Tempfile &lt; DelegateClass(File)
-    # constant and class member data initialization...
 
-    def initialize(basename, tmpdir=Dir::tmpdir)
-      # build up file path/name in var tmpname...
+<p>Here's a sample of use from <em>tempfile.rb</em>.</p>
 
-      @tmpfile = File.open(tmpname, File::RDWR|File::CREAT|File::EXCL, 0600)
+<p>A <em><a href="../Tempfile.html">Tempfile</a></em> object is really just a
+<em><a href="../File.html">File</a></em> object with a few special rules
+about storage location and/or when the <a href="../File.html">File</a>
+should be deleted.  That makes for an almost textbook perfect example of
+how to use delegation.</p>
 
-      # ...
+<pre>class Tempfile &lt; DelegateClass(File)
+  # constant and class member data initialization...
 
-      super(@tmpfile)
+  def initialize(basename, tmpdir=Dir::tmpdir)
+    # build up file path/name in var tmpname...
 
-      # below this point, all methods of File are supported...
-    end
+    @tmpfile = File.open(tmpname, File::RDWR|File::CREAT|File::EXCL, 0600)
 
     # ...
+
+    super(@tmpfile)
+
+    # below this point, all methods of File are supported...
   end
-</pre>
+
+  # ...
+end</pre>
+
 <h3><a href="../Delegator.html">Delegator</a></h3>
-<p>
-SimpleDelegator&#8217;s implementation serves as a nice example here.
-</p>
-<pre>
-   class SimpleDelegator &lt; Delegator
-     def initialize(obj)
-       super             # pass obj to Delegator constructor, required
-       @delegate_sd_obj = obj    # store obj for future use
-     end
 
-     def __getobj__
-       @delegate_sd_obj          # return object we are delegating to, required
-     end
+<p>SimpleDelegator's implementation serves as a nice example here.</p>
 
-     def __setobj__(obj)
-       @delegate_sd_obj = obj    # change delegation object, a feature we're providing
-     end
+<pre>class SimpleDelegator &lt; Delegator
+  def initialize(obj)
+    super             # pass obj to Delegator constructor, required
+    @delegate_sd_obj = obj    # store obj for future use
+  end
 
-     # ...
-   end</pre>
+  def __getobj__
+    @delegate_sd_obj          # return object we are delegating to, required
+  end
 
-		</div>
-		
-	</div>
+  def __setobj__(obj)
+    @delegate_sd_obj = obj    # change delegation object, a feature we're providing
+  end
+
+  # ...
+end</pre>
+
+    </div>
+    
+  </div>
 </body>
 </html>
 
