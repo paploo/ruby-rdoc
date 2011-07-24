@@ -1,4 +1,4 @@
-The Ruby 1.9.2p180 RDoc documentation.
+The Ruby 1.9.2p290 RDoc documentation.
 
 Compiled by Jeff Reinecke <jeff@paploo.net> and posted at http://github.com/paploo/ruby-rdoc/.
 
