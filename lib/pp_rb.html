@@ -1,110 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=US-ASCII" http-equiv="Content-Type" />
 
-	<title>File: pp.rb [RDoc Documentation]</title>
+  <title>File: pp.rb [RDoc Documentation]</title>
 
-	<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
+  <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet" />
 
-	<script src="../js/jquery.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/thickbox-compressed.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/quicksearch.js" type="text/javascript"
-		charset="utf-8"></script>
-	<script src="../js/darkfish.js" type="text/javascript"
-		charset="utf-8"></script>
+  <script src="../js/jquery.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/thickbox-compressed.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript"
+    charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript"
+    charset="utf-8"></script>
 </head>
 
 <body class="file file-popup">
-	<div id="metadata">
-		<dl>
-			<dt class="modified-date">Last Modified</dt>
-			<dd class="modified-date">2010-04-24 07:41:22 -0700</dd>
+  <div id="metadata">
+    <dl>
+      <dt class="modified-date">Last Modified</dt>
+      <dd class="modified-date">2010-08-01 07:09:40 -0700</dd>
 
-			
-			<dt class="requires">Requires</dt>
-			<dd class="requires">
-				<ul>
-				
-					<li>prettyprint</li>
-				
-					<li>etc.so</li>
-				
-				</ul>
-			</dd>
-			
+      
+      <dt class="requires">Requires</dt>
+      <dd class="requires">
+        <ul>
+        
+          <li>prettyprint</li>
+        
+          <li>etc.so</li>
+        
+        </ul>
+      </dd>
+      
 
-			
-		</dl>
-	</div>
+      
+    </dl>
+  </div>
 
-	<div id="documentation">
-		
-		<div class="description">
-			<h2>Description</h2>
-			<h2>Pretty-printer for Ruby objects.</h2>
+  <div id="documentation">
+    
+    <div class="description">
+      <h2>Description</h2>
+      
+<h2>Pretty-printer for Ruby objects.</h2>
+
 <h1>Which seems better?</h1>
-<p>
-non-pretty-printed output by # is:
-</p>
-<pre>
-  #&lt;PP:0x81fedf0 @genspace=#&lt;Proc:0x81feda0&gt;, @group_queue=#&lt;PrettyPrint::GroupQueue:0x81fed3c @queue=[[#&lt;PrettyPrint::Group:0x81fed78 @breakables=[], @depth=0, @break=false&gt;], []]&gt;, @buffer=[], @newline=&quot;\n&quot;, @group_stack=[#&lt;PrettyPrint::Group:0x81fed78 @breakables=[], @depth=0, @break=false&gt;], @buffer_width=0, @indent=0, @maxwidth=79, @output_width=2, @output=#&lt;IO:0x8114ee4&gt;&gt;
-</pre>
-<p>
-pretty-printed output by # is:
-</p>
-<pre>
-  #&lt;PP:0x81fedf0
-   @buffer=[],
-   @buffer_width=0,
-   @genspace=#&lt;Proc:0x81feda0&gt;,
-   @group_queue=
-    #&lt;PrettyPrint::GroupQueue:0x81fed3c
-     @queue=
-      [[#&lt;PrettyPrint::Group:0x81fed78 @break=false, @breakables=[], @depth=0&gt;],
-       []]&gt;,
-   @group_stack=
-    [#&lt;PrettyPrint::Group:0x81fed78 @break=false, @breakables=[], @depth=0&gt;],
-   @indent=0,
-   @maxwidth=79,
-   @newline=&quot;\n&quot;,
-   @output=#&lt;IO:0x8114ee4&gt;,
-   @output_width=2&gt;
-</pre>
-<p>
-I like the latter.  If you do too, this library is for you.
-</p>
-<h1>Usage</h1>
-<pre>
-  pp(obj)
-</pre>
-<p>
-output <tt>obj</tt> to +$>+ in pretty printed format.
-</p>
-<p>
-It returns <tt>nil</tt>.
-</p>
-<h1>Output Customization</h1>
-<p>
-To define your customized pretty printing function for your classes,
-redefine a method #(<tt>pp</tt>) in the class. It takes an argument
-<tt>pp</tt> which is an instance of the class <a href="../PP.html">PP</a>.
-The method should use PP#text, PP#breakable, PP#nest, PP#group and PP#pp to
-print the object.
-</p>
-<h1>Author</h1>
-<p>
-Tanaka Akira <akr@m17n.org>
-</p>
 
-		</div>
-		
-	</div>
+<p>non-pretty-printed output by p is:</p>
+
+<pre>#&lt;PP:0x81fedf0 @genspace=#&lt;Proc:0x81feda0&gt;, @group_queue=#&lt;PrettyPrint::GroupQueue:0x81fed3c @queue=[[#&lt;PrettyPrint::Group:0x81fed78 @breakables=[], @depth=0, @break=false&gt;], []]&gt;, @buffer=[], @newline=&quot;\n&quot;, @group_stack=[#&lt;PrettyPrint::Group:0x81fed78 @breakables=[], @depth=0, @break=false&gt;], @buffer_width=0, @indent=0, @maxwidth=79, @output_width=2, @output=#&lt;IO:0x8114ee4&gt;&gt;</pre>
+
+<p>pretty-printed output by pp is:</p>
+
+<pre>#&lt;PP:0x81fedf0
+ @buffer=[],
+ @buffer_width=0,
+ @genspace=#&lt;Proc:0x81feda0&gt;,
+ @group_queue=
+  #&lt;PrettyPrint::GroupQueue:0x81fed3c
+   @queue=
+    [[#&lt;PrettyPrint::Group:0x81fed78 @break=false, @breakables=[], @depth=0&gt;],
+     []]&gt;,
+ @group_stack=
+  [#&lt;PrettyPrint::Group:0x81fed78 @break=false, @breakables=[], @depth=0&gt;],
+ @indent=0,
+ @maxwidth=79,
+ @newline=&quot;\n&quot;,
+ @output=#&lt;IO:0x8114ee4&gt;,
+ @output_width=2&gt;</pre>
+
+<p>I like the latter.  If you do too, this library is for you.</p>
+
+<h1>Usage</h1>
+
+<pre>pp(obj)</pre>
+
+<p>output <tt>obj</tt> to +$&gt;+ in pretty printed format.</p>
+
+<p>It returns <tt>nil</tt>.</p>
+
+<h1>Output Customization</h1>
+
+<p>To define your customized pretty printing function for your classes,
+redefine a method pretty_print(<tt>pp</tt>) in the class. It takes an
+argument <tt>pp</tt> which is an instance of the class <a
+href="../PP.html">PP</a>. The method should use <a
+href="../PrettyPrint.html#method-i-text">PP#text</a>, <a
+href="../PrettyPrint.html#method-i-breakable">PP#breakable</a>, <a
+href="../PrettyPrint.html#method-i-nest">PP#nest</a>, <a
+href="../PrettyPrint.html#method-i-group">PP#group</a> and <a
+href="../PP/PPMethods.html#method-i-pp">PP#pp</a> to print the object.</p>
+
+<h1>Author</h1>
+
+<p>Tanaka Akira &lt;akr@m17n.org&gt;</p>
+
+    </div>
+    
+  </div>
 </body>
 </html>
 
