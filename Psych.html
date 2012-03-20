@@ -3832,7 +3832,7 @@ Psych.dump(['a', ['b']], StringIO.new, :indentation =&gt; 3)</pre>
 
   <span class="ruby-identifier">visitor</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Visitors</span><span class="ruby-operator">::</span><span class="ruby-constant">YAMLTree</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">options</span>
   <span class="ruby-identifier">visitor</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">o</span>
-  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">to_yaml</span> <span class="ruby-identifier">io</span>, <span class="ruby-identifier">options</span>
+  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">yaml</span> <span class="ruby-identifier">io</span>, <span class="ruby-identifier">options</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- dump-source -->
             
@@ -3873,7 +3873,7 @@ Psych.dump(['a', ['b']], StringIO.new, :indentation =&gt; 3)</pre>
   <span class="ruby-identifier">objects</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">visitor</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">o</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">to_yaml</span>
+  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">yaml</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- dump_stream-source -->
             
@@ -4030,7 +4030,7 @@ contained in <tt>filename</tt> as a ruby object</p>
 <pre>
 <span class="ruby-comment"># File ext/psych/lib/psych.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">load_file</span> <span class="ruby-identifier">filename</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">load</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">load</span> <span class="ruby-identifier">f</span> }
 <span class="ruby-keyword">end</span></pre>
             </div><!-- load_file-source -->
             
@@ -4409,7 +4409,7 @@ handle multiple <a href="YAML.html">YAML</a> documents contained in
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_json</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">visitor</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Visitors</span><span class="ruby-operator">::</span><span class="ruby-constant">JSONTree</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">visitor</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">o</span>
-  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">to_yaml</span>
+  <span class="ruby-identifier">visitor</span>.<span class="ruby-identifier">tree</span>.<span class="ruby-identifier">yaml</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- to_json-source -->
             

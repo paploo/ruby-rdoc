@@ -3420,7 +3420,7 @@ All rights reserved.</pre>
 
 <h1>Version</h1>
 
-<pre>$Id: buffering.rb 32012 2011-06-11 14:07:42Z nahi $</pre>
+<pre>$Id: buffering.rb 34534 2012-02-10 17:27:22Z naruse $</pre>
 
 <p>## # <a href="../OpenSSL.html">OpenSSL</a> <a href="../IO.html">IO</a>
 buffering mix-in module. # # This module allows an <a
@@ -3547,7 +3547,7 @@ using <a href="../String.html#method-i-to_s">String#to_s</a>.</p>
             
             <div class="method-source-code" id="3C-3C-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 381</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 382</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">s</span>)
   <span class="ruby-identifier">do_write</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-keyword">self</span>
@@ -3581,7 +3581,7 @@ using <a href="../String.html#method-i-to_s">String#to_s</a>.</p>
             
             <div class="method-source-code" id="close-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 444</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 445</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">close</span>
   <span class="ruby-identifier">flush</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">sysclose</span>
@@ -3789,7 +3789,7 @@ be read.</p>
             
             <div class="method-source-code" id="flush-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 432</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 433</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">flush</span>
   <span class="ruby-identifier">osync</span> = <span class="ruby-ivar">@sync</span>
   <span class="ruby-ivar">@sync</span> = <span class="ruby-keyword">true</span>
@@ -3919,7 +3919,7 @@ provided if a limit is provided.</p>
             
             <div class="method-source-code" id="print-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 411</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 412</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">print</span>(*<span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">s</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">to_s</span> }
@@ -3959,7 +3959,7 @@ string details.</p>
             
             <div class="method-source-code" id="printf-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 424</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 425</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">printf</span>(<span class="ruby-identifier">s</span>, *<span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">do_write</span>(<span class="ruby-identifier">s</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">args</span>)
   <span class="ruby-keyword">nil</span>
@@ -3995,7 +3995,7 @@ string details.</p>
             
             <div class="method-source-code" id="puts-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 391</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 392</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">puts</span>(*<span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">s</span> = <span class="ruby-string">&quot;&quot;</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
@@ -4387,10 +4387,10 @@ Returns the number of bytes written.</p>
             
             <div class="method-source-code" id="write-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 334</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 335</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-identifier">do_write</span>(<span class="ruby-identifier">s</span>)
-  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bytesize</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- write-source -->
             
@@ -4462,7 +4462,7 @@ href="http://www.openssl.org/support/faq.html">www.openssl.org/support/faq.html<
             
             <div class="method-source-code" id="write_nonblock-source">
 <pre>
-<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 372</span>
+<span class="ruby-comment"># File ext/openssl/lib/openssl/buffering.rb, line 373</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">write_nonblock</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-identifier">flush</span>
   <span class="ruby-identifier">syswrite_nonblock</span>(<span class="ruby-identifier">s</span>)
@@ -4548,6 +4548,7 @@ flushed to the underlying socket.</p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">do_write</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-ivar">@wbuffer</span> = <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span> <span class="ruby-ivar">@wbuffer</span>
   <span class="ruby-ivar">@wbuffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">s</span>
+  <span class="ruby-ivar">@wbuffer</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">BINARY</span>)
   <span class="ruby-ivar">@sync</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@sync</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@wbuffer</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">BLOCK_SIZE</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">idx</span> = <span class="ruby-ivar">@wbuffer</span>.<span class="ruby-identifier">rindex</span>(<span class="ruby-identifier">$/</span>)
     <span class="ruby-identifier">remain</span> = <span class="ruby-identifier">idx</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">idx</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">$/</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@wbuffer</span>.<span class="ruby-identifier">length</span>

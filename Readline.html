@@ -4863,6 +4863,13 @@ readline_readline(int argc, VALUE *argv, VALUE self)
     }
 
     if (!isatty(fileno(rl_instream)) &amp;&amp; errno == EBADF) rb_raise(rb_eIOError, &quot;closed stdin&quot;);
+    if (rl_outstream) {
+        struct stat stbuf;
+        int fd = fileno(rl_outstream);
+        if (fd &lt; 0 || fstat(fd, &amp;stbuf) != 0) {
+            rb_raise(rb_eIOError, &quot;closed stdout&quot;);
+        }
+    }
 
 #ifdef _WIN32
     rl_prep_terminal(1);

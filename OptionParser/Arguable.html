@@ -3398,7 +3398,7 @@
             
             <div class="method-source-code" id="extend_object-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1907</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1908</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">extend_object</span>(<span class="ruby-identifier">obj</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">instance_eval</span> {<span class="ruby-ivar">@optparse</span> = <span class="ruby-keyword">nil</span>}
@@ -3432,7 +3432,7 @@
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1911</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1912</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">args</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-ivar">@optparse</span> = <span class="ruby-keyword">nil</span>
@@ -3480,7 +3480,7 @@ end</pre>
             
             <div class="method-source-code" id="getopts-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1900</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1901</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">getopts</span>(*<span class="ruby-identifier">args</span>)
   <span class="ruby-identifier">options</span>.<span class="ruby-identifier">getopts</span>(<span class="ruby-keyword">self</span>, *<span class="ruby-identifier">args</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3520,7 +3520,7 @@ STDERR and <tt>nil</tt> returned.</p>
             
             <div class="method-source-code" id="options-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1859</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1860</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">options</span>
   <span class="ruby-ivar">@optparse</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-ivar">@optparse</span>.<span class="ruby-identifier">default_argv</span> = <span class="ruby-keyword">self</span>
@@ -3568,7 +3568,7 @@ object.</p>
             
             <div class="method-source-code" id="options-3D-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1842</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1843</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">options=</span>(<span class="ruby-identifier">opt</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@optparse</span> = <span class="ruby-identifier">opt</span>
     <span class="ruby-keyword">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>
@@ -3607,7 +3607,7 @@ containing the rest arguments left unparsed.</p>
             
             <div class="method-source-code" id="order-21-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1875</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1876</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">order!</span>(&amp;<span class="ruby-identifier">blk</span>) <span class="ruby-identifier">options</span>.<span class="ruby-identifier">order!</span>(<span class="ruby-keyword">self</span>, &amp;<span class="ruby-identifier">blk</span>) <span class="ruby-keyword">end</span></pre>
             </div><!-- order-21-source -->
             
@@ -3639,7 +3639,7 @@ rest arguments left unparsed.</p>
             
             <div class="method-source-code" id="parse-21-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1887</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1888</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse!</span>() <span class="ruby-identifier">options</span>.<span class="ruby-identifier">parse!</span>(<span class="ruby-keyword">self</span>) <span class="ruby-keyword">end</span></pre>
             </div><!-- parse-21-source -->
             
@@ -3671,7 +3671,7 @@ rest arguments left unparsed.</p>
             
             <div class="method-source-code" id="permute-21-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1881</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1882</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">permute!</span>() <span class="ruby-identifier">options</span>.<span class="ruby-identifier">permute!</span>(<span class="ruby-keyword">self</span>) <span class="ruby-keyword">end</span></pre>
             </div><!-- permute-21-source -->
             

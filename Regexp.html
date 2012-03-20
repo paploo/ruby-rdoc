@@ -3552,7 +3552,7 @@ characters, and similar)</p>
 <ul><li>
 <p><tt>/[[:word:]]/</tt> - A character in one of the following Unicode general
 categories <em>Letter</em>, <em>Mark</em>, <em>Number</em>,
-&lt;i&gt;Connector_Punctuation&lt;i/i&gt;</p>
+<em>Connector_Punctuation</em></p>
 </li><li>
 <p><tt>/[[:ascii:]]/</tt> - A character in the ASCII character set</p>
 
@@ -3594,7 +3594,7 @@ are matched while still allowing the overall match to succeed. By contrast,
 overall success. A greedy metacharacter can be made lazy by following it
 with <tt>?</tt>.</p>
 
-<pre># Both patterns below match the string. The fist uses a greedy
+<pre># Both patterns below match the string. The first uses a greedy
 # quantifier so '.+' matches '&lt;a&gt;&lt;b&gt;'; the second uses a lazy
 # quantifier so '.+?' matches '&lt;a&gt;'.
 /&lt;.+&gt;/.match(&quot;&lt;a&gt;&lt;b&gt;&quot;)  #=&gt; #&lt;MatchData &quot;&lt;a&gt;&lt;b&gt;&quot;&gt;
@@ -3932,9 +3932,8 @@ matches just before newline</p>
 </li><li>
 <p><tt>\G</tt> - Matches point where last match finished</p>
 </li><li>
-<p><tt>\b</tt> - Matches word boundaries when outside brackets; backspace</p>
-
-<pre>(0x08) inside brackets</pre>
+<p><tt>\b</tt> - Matches word boundaries when outside brackets; backspace
+(0x08) when inside brackets</p>
 </li><li>
 <p><tt>\B</tt> - Matches non-word boundaries</p>
 </li><li>

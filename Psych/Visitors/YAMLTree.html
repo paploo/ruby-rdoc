@@ -74,6 +74,8 @@
           
           <li><a href="#method-i-accept">#accept</a></li>
           
+          <li><a href="#method-i-binary-3F">#binary?</a></li>
+          
           <li><a href="#method-i-dump_coder">#dump_coder</a></li>
           
           <li><a href="#method-i-dump_ivars">#dump_ivars</a></li>
@@ -3540,13 +3542,13 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             <div class="method-source-code" id="new-source">
 <pre>
 <span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">emitter</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">TreeBuilder</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">emitter</span> = <span class="ruby-constant">TreeBuilder</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">ss</span> = <span class="ruby-constant">ScalarScanner</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-keyword">super</span>()
   <span class="ruby-ivar">@started</span>  = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@finished</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@emitter</span>  = <span class="ruby-identifier">emitter</span>
   <span class="ruby-ivar">@st</span>       = {}
-  <span class="ruby-ivar">@ss</span>       = <span class="ruby-constant">ScalarScanner</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@ss</span>       = <span class="ruby-identifier">ss</span>
   <span class="ruby-ivar">@options</span>  = <span class="ruby-identifier">options</span>
 
   <span class="ruby-ivar">@dispatch_cache</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
@@ -3842,7 +3844,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Array-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 292</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Array</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">register</span> <span class="ruby-identifier">o</span>, <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">start_sequence</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">true</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Sequence</span><span class="ruby-operator">::</span><span class="ruby-constant">BLOCK</span>)
   <span class="ruby-identifier">o</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
@@ -3877,7 +3879,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Class-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 254</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 261</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Class</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;can't dump anonymous class: #{o}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">name</span>
   <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">scalar</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">'!ruby/class'</span>, <span class="ruby-keyword">false</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span><span class="ruby-operator">::</span><span class="ruby-constant">SINGLE_QUOTED</span>
@@ -4131,7 +4133,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Hash-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 267</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 274</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Hash</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">tag</span>      = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">Hash</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;!ruby/hash:#{o.class}&quot;</span>
   <span class="ruby-identifier">implicit</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">tag</span>
@@ -4211,7 +4213,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Module-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 249</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 256</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Module</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;can't dump anonymous module: #{o}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">name</span>
   <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">scalar</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">'!ruby/module'</span>, <span class="ruby-keyword">false</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span><span class="ruby-operator">::</span><span class="ruby-constant">SINGLE_QUOTED</span>
@@ -4245,7 +4247,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_NilClass-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 298</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 305</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_NilClass</span> <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">scalar</span>(<span class="ruby-string">''</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">'tag:yaml.org,2002:null'</span>, <span class="ruby-keyword">true</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span><span class="ruby-operator">::</span><span class="ruby-constant">ANY</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -4358,7 +4360,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Psych_Set-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 281</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 288</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Set</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">register</span>(<span class="ruby-identifier">o</span>, <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">start_mapping</span>(<span class="ruby-keyword">nil</span>, <span class="ruby-string">'!set'</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapping</span><span class="ruby-operator">::</span><span class="ruby-constant">BLOCK</span>))
 
@@ -4398,7 +4400,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Range-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 259</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 266</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Range</span> <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">start_mapping</span> <span class="ruby-keyword">nil</span>, <span class="ruby-string">'!ruby/range'</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapping</span><span class="ruby-operator">::</span><span class="ruby-constant">BLOCK</span>
   [<span class="ruby-string">'begin'</span>, <span class="ruby-identifier">o</span>.<span class="ruby-identifier">begin</span>, <span class="ruby-string">'end'</span>, <span class="ruby-identifier">o</span>.<span class="ruby-identifier">end</span>, <span class="ruby-string">'excl'</span>, <span class="ruby-identifier">o</span>.<span class="ruby-identifier">exclude_end?</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
@@ -4510,13 +4512,13 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_String-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 217</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 224</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_String</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">plain</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">quote</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">style</span> = <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span><span class="ruby-operator">::</span><span class="ruby-constant">ANY</span>
 
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">&quot;\x00&quot;</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">&quot;\x00-\x7F&quot;</span>, <span class="ruby-string">&quot;^ -~\t\r\n&quot;</span>).<span class="ruby-identifier">fdiv</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">length</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0.3</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">binary?</span>(<span class="ruby-identifier">o</span>)
     <span class="ruby-identifier">str</span>   = [<span class="ruby-identifier">o</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'m'</span>).<span class="ruby-identifier">chomp</span>
     <span class="ruby-identifier">tag</span>   = <span class="ruby-string">'!binary'</span> <span class="ruby-comment"># FIXME: change to below when syck is removed</span>
     <span class="ruby-comment">#tag   = 'tag:yaml.org,2002:binary'</span>
@@ -4614,7 +4616,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="visit_Symbol-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 302</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 309</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Symbol</span> <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@emitter</span>.<span class="ruby-identifier">scalar</span> <span class="ruby-node">&quot;:#{o}&quot;</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-keyword">true</span>, <span class="ruby-keyword">false</span>, <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span><span class="ruby-operator">::</span><span class="ruby-constant">ANY</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4697,6 +4699,41 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
         <h3 class="section-header">Private Instance Methods</h3>
 
       
+        <div id="binary-3F-method" class="method-detail ">
+          <a name="method-i-binary-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">binary?</span><span
+              class="method-args">(string)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="binary-3F-source">
+<pre>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">binary?</span> <span class="ruby-identifier">string</span>
+  <span class="ruby-identifier">string</span>.<span class="ruby-identifier">encoding</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">ASCII_8BIT</span> <span class="ruby-operator">||</span>
+    <span class="ruby-identifier">string</span>.<span class="ruby-identifier">index</span>(<span class="ruby-string">&quot;\x00&quot;</span>) <span class="ruby-operator">||</span>
+    <span class="ruby-identifier">string</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">&quot;\x00-\x7F&quot;</span>, <span class="ruby-string">&quot;^ -~\t\r\n&quot;</span>).<span class="ruby-identifier">fdiv</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0.3</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- binary-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- binary-3F-method -->
+
+      
         <div id="dump_coder-method" class="method-detail ">
           <a name="method-i-dump_coder"></a>
 
@@ -4716,7 +4753,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="dump_coder-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 338</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 361</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dump_coder</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">tag</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">dump_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">class</span>]
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tag</span>
@@ -4757,7 +4794,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="dump_ivars-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 372</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 395</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">dump_ivars</span> <span class="ruby-identifier">target</span>
   <span class="ruby-identifier">ivars</span> = <span class="ruby-identifier">find_ivars</span> <span class="ruby-identifier">target</span>
 
@@ -4795,7 +4832,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="emit_coder-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 350</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 373</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">emit_coder</span> <span class="ruby-identifier">c</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">type</span>
   <span class="ruby-keyword">when</span> <span class="ruby-value">:scalar</span>
@@ -4846,7 +4883,7 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="find_ivars-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 316</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 339</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_ivars</span> <span class="ruby-identifier">target</span>
   <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">loc</span> = <span class="ruby-identifier">target</span>.<span class="ruby-identifier">method</span>(<span class="ruby-value">:to_yaml_properties</span>).<span class="ruby-identifier">source_location</span>.<span class="ruby-identifier">first</span>
@@ -4892,13 +4929,18 @@ builder.tree # =&gt; #&lt;Psych::Nodes::Stream .. }</pre>
             
             <div class="method-source-code" id="format_time-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 307</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 316</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">format_time</span> <span class="ruby-identifier">time</span>
+  <span class="ruby-identifier">formatted</span> = <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&quot;%Y-%m-%d %H:%M:%S.%9N&quot;</span>)
+
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">time</span>.<span class="ruby-identifier">utc?</span>
-    <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&quot;%Y-%m-%d %H:%M:%S.%9N Z&quot;</span>)
+    <span class="ruby-identifier">formatted</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; Z&quot;</span>
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&quot;%Y-%m-%d %H:%M:%S.%9N %:z&quot;</span>)
+    <span class="ruby-identifier">zone</span> = <span class="ruby-identifier">time</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">'%z'</span>)
+    <span class="ruby-identifier">formatted</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot; #{zone[0,3]}:#{zone[3,5]}&quot;</span>
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">formatted</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- format_time-source -->
             
@@ -4965,7 +5007,7 @@ static VALUE private_iv_get(VALUE self, VALUE target, VALUE prop)
             
             <div class="method-source-code" id="register-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 333</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/yaml_tree.rb, line 356</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">register</span> <span class="ruby-identifier">target</span>, <span class="ruby-identifier">yaml_obj</span>
   <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">target</span>.<span class="ruby-identifier">object_id</span>] = <span class="ruby-identifier">yaml_obj</span>
   <span class="ruby-identifier">yaml_obj</span>

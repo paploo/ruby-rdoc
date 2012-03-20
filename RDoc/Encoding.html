@@ -3399,6 +3399,7 @@ unknown character in the target encoding will be replaced with '?'</p>
 <span class="ruby-comment"># File lib/rdoc/encoding.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">read_file</span> <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">encoding</span>, <span class="ruby-identifier">force_transcode</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">content</span> = <span class="ruby-identifier">open</span> <span class="ruby-identifier">filename</span>, <span class="ruby-string">&quot;rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">content</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-string">&quot;\r\n&quot;</span>, <span class="ruby-string">&quot;\n&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/mswin|mingw/</span>
 
   <span class="ruby-identifier">utf8</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\A\xef\xbb\xbf/</span>, <span class="ruby-string">''</span>)
 
@@ -3474,7 +3475,7 @@ unknown character in the target encoding will be replaced with '?'</p>
             
             <div class="method-source-code" id="set_encoding-source">
 <pre>
-<span class="ruby-comment"># File lib/rdoc/encoding.rb, line 72</span>
+<span class="ruby-comment"># File lib/rdoc/encoding.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">set_encoding</span> <span class="ruby-identifier">string</span>
   <span class="ruby-identifier">first_line</span> = <span class="ruby-identifier">string</span>[<span class="ruby-node">/\A(?:#!.*\n)?.*\n/</span>]
 

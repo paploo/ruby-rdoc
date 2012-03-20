@@ -5965,6 +5965,7 @@ argf_readlines(int argc, VALUE *argv, VALUE argf)
         ARGF.lineno = lineno + RARRAY_LEN(ary);
         ARGF.last_lineno = ARGF.lineno;
     }
+    ARGF.init_p = 0;
     return ary;
 }</pre>
             </div><!-- readlines-source -->
@@ -6396,6 +6397,7 @@ argf_readlines(int argc, VALUE *argv, VALUE argf)
         ARGF.lineno = lineno + RARRAY_LEN(ary);
         ARGF.last_lineno = ARGF.lineno;
     }
+    ARGF.init_p = 0;
     return ary;
 }</pre>
             </div><!-- to_a-source -->

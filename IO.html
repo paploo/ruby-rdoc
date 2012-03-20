@@ -3792,14 +3792,16 @@ rb_io_s_binread(int argc, VALUE *argv, VALUE io)
 
           <div class="method-description">
             
-            <p>Opens the file, optionally seeks to the given <em>offset</em>, write
+            <p>Opens the file, optionally seeks to the given <em>offset</em>, writes
 <em>string</em> then returns the length written. <tt>binwrite</tt> ensures
 the file is closed before returning. The open mode would be
 "wb:ASCII-8BIT". If <em>offset</em> is not given, the file is truncated. 
 Otherwise, it is not truncated.</p>
 
-<pre>IO.binwrite(&quot;testfile&quot;, &quot;0123456789&quot;)      #=&gt; &quot;0123456789&quot;
-IO.binwrite(&quot;testfile&quot;, &quot;0123456789&quot;, 20)  #=&gt; &quot;This is line one\nThi0123456789two\nThis is line three\nAnd so on...\n&quot;</pre>
+<pre>IO.binwrite(&quot;testfile&quot;, &quot;0123456789&quot;, 20) # =&gt; 10
+# File could contain:  &quot;This is line one\nThi0123456789two\nThis is line three\nAnd so on...\n&quot;
+IO.binwrite(&quot;testfile&quot;, &quot;0123456789&quot;)      #=&gt; 10
+# File would now read: &quot;0123456789&quot;</pre>
             
 
             
@@ -4506,13 +4508,22 @@ rb_io_s_pipe(int argc, VALUE *argv, VALUE klass)
 
     extract_binmode(opt, &amp;fmode);
 #if DEFAULT_TEXTMODE
-    if ((fptr-&gt;mode &amp; FMODE_TEXTMODE) &amp;&amp; (fmode &amp; FMODE_BINMODE))
+    if ((fptr-&gt;mode &amp; FMODE_TEXTMODE) &amp;&amp; (fmode &amp; FMODE_BINMODE)) {
         fptr-&gt;mode &amp;= ~FMODE_TEXTMODE;
+        setmode(fptr-&gt;fd, O_BINARY);
+    }
+#if defined(RUBY_TEST_CRLF_ENVIRONMENT) || defined(_WIN32)
+    if (fptr-&gt;encs.ecflags &amp; ECONV_DEFAULT_NEWLINE_DECORATOR) {
+        fptr-&gt;encs.ecflags |= ECONV_UNIVERSAL_NEWLINE_DECORATOR;
+    }
+#endif
 #endif
     fptr-&gt;mode |= fmode;
 #if DEFAULT_TEXTMODE
-    if ((fptr2-&gt;mode &amp; FMODE_TEXTMODE) &amp;&amp; (fmode &amp; FMODE_BINMODE))
+    if ((fptr2-&gt;mode &amp; FMODE_TEXTMODE) &amp;&amp; (fmode &amp; FMODE_BINMODE)) {
         fptr2-&gt;mode &amp;= ~FMODE_TEXTMODE;
+        setmode(fptr2-&gt;fd, O_BINARY);
+    }
 #endif
     fptr2-&gt;mode |= fmode;
 
@@ -5104,12 +5115,14 @@ perm: fixnum
 
  specifies perm argument for open().
 
-open_args: array of strings
+open_args: array
 
  specifies arguments for open() as an array.
 
-  IO.write(&quot;testfile&quot;, &quot;0123456789&quot;)      #=&gt; &quot;0123456789&quot;
-  IO.write(&quot;testfile&quot;, &quot;0123456789&quot;, 20)  #=&gt; &quot;This is line one\nThi0123456789two\nThis is line three\nAnd so on...\n&quot;</pre>
+  IO.write(&quot;testfile&quot;, &quot;0123456789&quot;, 20) # =&gt; 10
+  # File could contain:  &quot;This is line one\nThi0123456789two\nThis is line three\nAnd so on...\n&quot;
+  IO.write(&quot;testfile&quot;, &quot;0123456789&quot;)      #=&gt; 10
+  # File would now read: &quot;0123456789&quot;</pre>
             
 
             
@@ -6077,6 +6090,7 @@ rb_io_each_codepoint(VALUE io)
 
     READ_CHECK(fptr);
     if (NEED_READCONV(fptr)) {
+        SET_BINARY_MODE(fptr);
         for (;;) {
             make_readconv(fptr, 0);
             for (;;) {
@@ -6117,6 +6131,7 @@ rb_io_each_codepoint(VALUE io)
             rb_yield(UINT2NUM(c));
         }
     }
+    NEED_NEWLINE_DECORATOR_ON_READ_CHECK(fptr);
     enc = io_input_encoding(fptr);
     for (;;) {
         if (io_fillbuf(fptr) &lt; 0) {
@@ -6494,6 +6509,7 @@ rb_io_each_codepoint(VALUE io)
 
     READ_CHECK(fptr);
     if (NEED_READCONV(fptr)) {
+        SET_BINARY_MODE(fptr);
         for (;;) {
             make_readconv(fptr, 0);
             for (;;) {
@@ -6534,6 +6550,7 @@ rb_io_each_codepoint(VALUE io)
             rb_yield(UINT2NUM(c));
         }
     }
+    NEED_NEWLINE_DECORATOR_ON_READ_CHECK(fptr);
     enc = io_input_encoding(fptr);
     for (;;) {
         if (io_fillbuf(fptr) &lt; 0) {
@@ -7151,7 +7168,7 @@ rb_io_fdatasync(VALUE io)
     if (io_fflush(fptr) &lt; 0)
         rb_sys_fail(0);
 
-    if (fdatasync(fptr-&gt;fd) == 0)
+    if ((int)rb_thread_io_blocking_region(nogvl_fdatasync, fptr, fptr-&gt;fd) == 0)
         return INT2FIX(0);
 
     /* fall back */
@@ -7268,6 +7285,11 @@ rb_io_flush(VALUE io)
     if (fptr-&gt;mode &amp; FMODE_WRITABLE) {
         if (io_fflush(fptr) &lt; 0)
             rb_sys_fail(0);
+#ifdef _WIN32
+        if (GetFileType((HANDLE)rb_w32_get_osfhandle(fptr-&gt;fd)) == FILE_TYPE_DISK) {
+            fsync(fptr-&gt;fd);
+        }
+#endif
     }
     if (fptr-&gt;mode &amp; FMODE_READABLE) {
         io_unread(fptr);
@@ -7324,7 +7346,7 @@ rb_io_fsync(VALUE io)
     if (io_fflush(fptr) &lt; 0)
         rb_sys_fail(0);
 #ifndef _WIN32  /* already called in io_fflush() */
-    if (fsync(fptr-&gt;fd) &lt; 0)
+    if ((int)rb_thread_io_blocking_region(nogvl_fsync, fptr, fptr-&gt;fd) &lt; 0)
         rb_sys_fail_path(fptr-&gt;pathv);
 #endif
     return INT2FIX(0);
@@ -8795,6 +8817,9 @@ io_read(int argc, VALUE *argv, VALUE io)
     rb_io_t *fptr;
     long n, len;
     VALUE length, str;
+#if defined(RUBY_TEST_CRLF_ENVIRONMENT) || defined(_WIN32)
+    int previous_mode;
+#endif
 
     rb_scan_args(argc, argv, &quot;02&quot;, &amp;length, &amp;str);
 
@@ -8815,7 +8840,15 @@ io_read(int argc, VALUE *argv, VALUE io)
     if (len == 0) return str;
 
     READ_CHECK(fptr);
+#if defined(RUBY_TEST_CRLF_ENVIRONMENT) || defined(_WIN32)
+    previous_mode = set_binary_mode_with_seek_cur(fptr);
+#endif
     n = io_fread(str, 0, fptr);
+#if defined(RUBY_TEST_CRLF_ENVIRONMENT) || defined(_WIN32)
+    if (previous_mode == O_TEXT) {
+        setmode(fptr-&gt;fd, O_TEXT);
+    }
+#endif
     if (n == 0) {
         if (fptr-&gt;fd &lt; 0) return Qnil;
         rb_str_resize(str, 0);
@@ -9449,6 +9482,11 @@ rb_io_rewind(VALUE io)
 
     GetOpenFile(io, fptr);
     if (io_seek(fptr, 0L, 0) &lt; 0 &amp;&amp; errno) rb_sys_fail_path(fptr-&gt;pathv);
+#ifdef _WIN32
+    if (GetFileType((HANDLE)rb_w32_get_osfhandle(fptr-&gt;fd)) == FILE_TYPE_DISK) {
+        fsync(fptr-&gt;fd);
+    }
+#endif
     if (io == ARGF.current_file) {
         ARGF.lineno -= fptr-&gt;lineno;
     }
@@ -10348,6 +10386,7 @@ rb_io_ungetc(VALUE io, VALUE c)
         SafeStringValue(c);
     }
     if (NEED_READCONV(fptr)) {
+        SET_BINARY_MODE(fptr);
         len = RSTRING_LEN(c);
 #if SIZEOF_LONG &gt; SIZEOF_INT
         if (len &gt; INT_MAX)
@@ -10367,6 +10406,7 @@ rb_io_ungetc(VALUE io, VALUE c)
         MEMMOVE(fptr-&gt;cbuf.ptr+fptr-&gt;cbuf.off, RSTRING_PTR(c), char, len);
     }
     else {
+        NEED_NEWLINE_DECORATOR_ON_READ_CHECK(fptr);
         io_ungetbyte(c, fptr);
     }
     return Qnil;

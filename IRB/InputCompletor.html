@@ -3405,7 +3405,7 @@
             
             <div class="method-source-code" id="select_message-source">
 <pre>
-<span class="ruby-comment"># File lib/irb/completion.rb, line 210</span>
+<span class="ruby-comment"># File lib/irb/completion.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">select_message</span>(<span class="ruby-identifier">receiver</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">candidates</span>, <span class="ruby-identifier">sep</span> = <span class="ruby-string">&quot;.&quot;</span>)
   <span class="ruby-identifier">candidates</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-node">/^#{message}/</span>).<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">e</span>

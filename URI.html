@@ -3647,7 +3647,7 @@ href="URI.html#method-c-decode_www_form_component">URI.decode_www_form_component
             
             <div class="method-source-code" id="decode_www_form-source">
 <pre>
-<span class="ruby-comment"># File lib/uri/common.rb, line 985</span>
+<span class="ruby-comment"># File lib/uri/common.rb, line 972</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">decode_www_form</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">enc</span>=<span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>)
   <span class="ruby-keyword">return</span> [] <span class="ruby-keyword">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-node">/\A#{WFKV_}=#{WFKV_}(?:[;&amp;]#{WFKV_}=#{WFKV_})*\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">str</span>
@@ -3694,24 +3694,8 @@ href="URI.html#method-c-encode_www_form_component">URI.encode_www_form_component
             
             <div class="method-source-code" id="decode_www_form_component-source">
 <pre>
-<span class="ruby-comment"># File lib/uri/common.rb, line 894</span>
+<span class="ruby-comment"># File lib/uri/common.rb, line 897</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">decode_www_form_component</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">enc</span>=<span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">TBLDECWWWCOMP_</span>.<span class="ruby-identifier">empty?</span>
-    <span class="ruby-identifier">tbl</span> = {}
-    <span class="ruby-value">256</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span> = <span class="ruby-identifier">i</span><span class="ruby-operator">&gt;&gt;</span><span class="ruby-value">4</span>, <span class="ruby-identifier">i</span>&amp;<span class="ruby-value">15</span>
-      <span class="ruby-identifier">tbl</span>[<span class="ruby-string">'%%%X%X'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span>]] = <span class="ruby-identifier">i</span>.<span class="ruby-identifier">chr</span>
-      <span class="ruby-identifier">tbl</span>[<span class="ruby-string">'%%%x%X'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span>]] = <span class="ruby-identifier">i</span>.<span class="ruby-identifier">chr</span>
-      <span class="ruby-identifier">tbl</span>[<span class="ruby-string">'%%%X%x'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span>]] = <span class="ruby-identifier">i</span>.<span class="ruby-identifier">chr</span>
-      <span class="ruby-identifier">tbl</span>[<span class="ruby-string">'%%%x%x'</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span>]] = <span class="ruby-identifier">i</span>.<span class="ruby-identifier">chr</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">tbl</span>[<span class="ruby-string">'+'</span>] = <span class="ruby-string">' '</span>
-    <span class="ruby-keyword">begin</span>
-      <span class="ruby-constant">TBLDECWWWCOMP_</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">tbl</span>)
-      <span class="ruby-constant">TBLDECWWWCOMP_</span>.<span class="ruby-identifier">freeze</span>
-    <span class="ruby-keyword">rescue</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;invalid %-encoding (#{str})&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-regexp">/\A[^%]*(?:%\h\h[^%]*)*\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">str</span>
   <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\+|%\h\h/</span>, <span class="ruby-constant">TBLDECWWWCOMP_</span>).<span class="ruby-identifier">force_encoding</span>(<span class="ruby-identifier">enc</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3774,7 +3758,7 @@ href="URI.html#method-c-encode_www_form_component">URI.encode_www_form_component
             
             <div class="method-source-code" id="encode_www_form-source">
 <pre>
-<span class="ruby-comment"># File lib/uri/common.rb, line 943</span>
+<span class="ruby-comment"># File lib/uri/common.rb, line 930</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">encode_www_form</span>(<span class="ruby-identifier">enum</span>)
   <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
@@ -3833,20 +3817,8 @@ href="URI.html#method-c-decode_www_form_component">URI.decode_www_form_component
             
             <div class="method-source-code" id="encode_www_form_component-source">
 <pre>
-<span class="ruby-comment"># File lib/uri/common.rb, line 865</span>
+<span class="ruby-comment"># File lib/uri/common.rb, line 880</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">encode_www_form_component</span>(<span class="ruby-identifier">str</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">TBLENCWWWCOMP_</span>.<span class="ruby-identifier">empty?</span>
-    <span class="ruby-identifier">tbl</span> = {}
-    <span class="ruby-value">256</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">tbl</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">chr</span>] = <span class="ruby-string">'%%%02X'</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">i</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">tbl</span>[<span class="ruby-string">' '</span>] = <span class="ruby-string">'+'</span>
-    <span class="ruby-keyword">begin</span>
-      <span class="ruby-constant">TBLENCWWWCOMP_</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-identifier">tbl</span>)
-      <span class="ruby-constant">TBLENCWWWCOMP_</span>.<span class="ruby-identifier">freeze</span>
-    <span class="ruby-keyword">rescue</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">HTML5ASCIIINCOMPAT</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">str</span>.<span class="ruby-identifier">encoding</span>)
     <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>)

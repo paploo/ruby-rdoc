@@ -3578,18 +3578,29 @@ href="Module.html">Module</a>.</p>
             
           </div>
           
+          <div class="method-heading">
+            <span class="method-callseq">constants(inherited)   &rarr; array</span>
+            
+          </div>
+          
           
 
           <div class="method-description">
             
-            <p>Returns an array of the names of all constants defined in the system. This
-list includes the names of all modules and classes.</p>
+            <p>In the first form, returns an array of the names of all constants
+accessible from the point of call. This list includes the names of all
+modules and classes defined in the global scope.</p>
 
-<pre>p Module.constants.sort[1..5]</pre>
+<pre>Module.constants.first(4)
+   # =&gt; [:ARGF, :ARGV, :ArgumentError, :Array]
 
-<p><em>produces:</em></p>
+Module.constants.include?(:SEEK_SET)   # =&gt; false
 
-<pre>[&quot;ARGV&quot;, &quot;ArgumentError&quot;, &quot;Array&quot;, &quot;Bignum&quot;, &quot;Binding&quot;]</pre>
+class IO
+  Module.constants.include?(:SEEK_SET) # =&gt; true
+end</pre>
+
+<p>The second form calls the instance method <tt>constants</tt>.</p>
             
 
             

@@ -3461,7 +3461,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="filter_backtrace-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1744</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1745</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">filter_backtrace</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">$DEBUG</span>
     <span class="ruby-identifier">array</span>.<span class="ruby-identifier">delete_if</span>(&amp;<span class="ruby-node">%\A#{Regexp.quote(__FILE__)}:&quot;</span>.<span class="ruby-identifier">method</span>(<span class="ruby-value">:=~</span>))
@@ -3497,7 +3497,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1728</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1729</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">args</span>)
   <span class="ruby-ivar">@args</span> = <span class="ruby-identifier">args</span>
   <span class="ruby-ivar">@reason</span> = <span class="ruby-keyword">nil</span>
@@ -3537,7 +3537,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="inspect-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1771</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1772</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-node">&quot;#&lt;#{self.class.to_s}: #{args.join(' ')}&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3570,7 +3570,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="message-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1778</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1779</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">message</span>
   <span class="ruby-identifier">reason</span> <span class="ruby-operator">+</span> <span class="ruby-string">': '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3607,7 +3607,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="reason-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1767</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1768</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reason</span>
   <span class="ruby-ivar">@reason</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">Reason</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3640,7 +3640,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="recover-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1739</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1740</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">recover</span>(<span class="ruby-identifier">argv</span>)
   <span class="ruby-identifier">argv</span>[<span class="ruby-value">0</span>, <span class="ruby-value">0</span>] = <span class="ruby-ivar">@args</span>
   <span class="ruby-identifier">argv</span>
@@ -3674,7 +3674,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="set_backtrace-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1751</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1752</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_backtrace</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">filter_backtrace</span>(<span class="ruby-identifier">array</span>))
 <span class="ruby-keyword">end</span></pre>
@@ -3707,7 +3707,7 @@ href="../OptionParser.html">OptionParser</a>.</p>
             
             <div class="method-source-code" id="set_option-source">
 <pre>
-<span class="ruby-comment"># File lib/optparse.rb, line 1755</span>
+<span class="ruby-comment"># File lib/optparse.rb, line 1756</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_option</span>(<span class="ruby-identifier">opt</span>, <span class="ruby-identifier">eq</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">eq</span>
     <span class="ruby-ivar">@args</span>[<span class="ruby-value">0</span>] = <span class="ruby-identifier">opt</span>

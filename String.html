@@ -4016,10 +4016,11 @@ a.concat(33)   #=&gt; &quot;hello world!&quot;</pre>
 VALUE
 rb_str_concat(VALUE str1, VALUE str2)
 {
-    unsigned int lc;
+    unsigned int code;
+    rb_encoding *enc = STR_ENC_GET(str1);
 
     if (FIXNUM_P(str2) || TYPE(str2) == T_BIGNUM) {
-        if (rb_num_to_uint(str2, &amp;lc) == 0) {
+        if (rb_num_to_uint(str2, &amp;code) == 0) {
         }
         else if (FIXNUM_P(str2)) {
             rb_raise(rb_eRangeError, &quot;%ld out of char range&quot;, FIX2LONG(str2));
@@ -4031,22 +4032,46 @@ rb_str_concat(VALUE str1, VALUE str2)
     else {
         return rb_str_append(str1, str2);
     }
-    {
-        rb_encoding *enc = STR_ENC_GET(str1);
+
+    if (enc == rb_usascii_encoding()) {
+        /* US-ASCII automatically extended to ASCII-8BIT */
+        char buf[1] = {(char)code};
+        if (code &gt; 0xFF) {
+            rb_raise(rb_eRangeError, &quot;%u out of char range&quot;, code);
+        }
+        rb_str_cat(str1, buf, 1);
+        if (code &gt; 127) {
+            rb_enc_associate(str1, rb_ascii8bit_encoding());
+            ENC_CODERANGE_SET(str1, ENC_CODERANGE_VALID);
+        }
+    }
+    else {
         long pos = RSTRING_LEN(str1);
         int cr = ENC_CODERANGE(str1);
         int len;
+        char *buf;
 
-        if ((len = rb_enc_codelen(lc, enc)) &lt;= 0) {
-            rb_raise(rb_eRangeError, &quot;%u invalid char&quot;, lc);
+        switch (len = rb_enc_codelen(code, enc)) {
+          case ONIGERR_INVALID_CODE_POINT_VALUE:
+            rb_raise(rb_eRangeError, &quot;invalid codepoint 0x%X in %s&quot;, code, rb_enc_name(enc));
+            break;
+          case ONIGERR_TOO_BIG_WIDE_CHAR_VALUE:
+          case 0:
+            rb_raise(rb_eRangeError, &quot;%u out of char range&quot;, code);
+            break;
+        }
+        buf = ALLOCA_N(char, len + 1);
+        rb_enc_mbcput(code, buf, enc);
+        if (rb_enc_precise_mbclen(buf, buf + len + 1, enc) != len) {
+            rb_raise(rb_eRangeError, &quot;invalid codepoint 0x%X in %s&quot;, code, rb_enc_name(enc));
         }
         rb_str_resize(str1, pos+len);
-        rb_enc_mbcput(lc, RSTRING_PTR(str1)+pos, enc);
-        if (cr == ENC_CODERANGE_7BIT &amp;&amp; lc &gt; 127)
+        strncpy(RSTRING_PTR(str1) + pos, buf, len);
+        if (cr == ENC_CODERANGE_7BIT &amp;&amp; code &gt; 127)
             cr = ENC_CODERANGE_VALID;
         ENC_CODERANGE_SET(str1, cr);
-        return str1;
     }
+    return str1;
 }</pre>
             </div><!-- 3C-3C-source -->
             
@@ -5562,10 +5587,11 @@ a.concat(33)   #=&gt; &quot;hello world!&quot;</pre>
 VALUE
 rb_str_concat(VALUE str1, VALUE str2)
 {
-    unsigned int lc;
+    unsigned int code;
+    rb_encoding *enc = STR_ENC_GET(str1);
 
     if (FIXNUM_P(str2) || TYPE(str2) == T_BIGNUM) {
-        if (rb_num_to_uint(str2, &amp;lc) == 0) {
+        if (rb_num_to_uint(str2, &amp;code) == 0) {
         }
         else if (FIXNUM_P(str2)) {
             rb_raise(rb_eRangeError, &quot;%ld out of char range&quot;, FIX2LONG(str2));
@@ -5577,22 +5603,46 @@ rb_str_concat(VALUE str1, VALUE str2)
     else {
         return rb_str_append(str1, str2);
     }
-    {
-        rb_encoding *enc = STR_ENC_GET(str1);
+
+    if (enc == rb_usascii_encoding()) {
+        /* US-ASCII automatically extended to ASCII-8BIT */
+        char buf[1] = {(char)code};
+        if (code &gt; 0xFF) {
+            rb_raise(rb_eRangeError, &quot;%u out of char range&quot;, code);
+        }
+        rb_str_cat(str1, buf, 1);
+        if (code &gt; 127) {
+            rb_enc_associate(str1, rb_ascii8bit_encoding());
+            ENC_CODERANGE_SET(str1, ENC_CODERANGE_VALID);
+        }
+    }
+    else {
         long pos = RSTRING_LEN(str1);
         int cr = ENC_CODERANGE(str1);
         int len;
+        char *buf;
 
-        if ((len = rb_enc_codelen(lc, enc)) &lt;= 0) {
-            rb_raise(rb_eRangeError, &quot;%u invalid char&quot;, lc);
+        switch (len = rb_enc_codelen(code, enc)) {
+          case ONIGERR_INVALID_CODE_POINT_VALUE:
+            rb_raise(rb_eRangeError, &quot;invalid codepoint 0x%X in %s&quot;, code, rb_enc_name(enc));
+            break;
+          case ONIGERR_TOO_BIG_WIDE_CHAR_VALUE:
+          case 0:
+            rb_raise(rb_eRangeError, &quot;%u out of char range&quot;, code);
+            break;
+        }
+        buf = ALLOCA_N(char, len + 1);
+        rb_enc_mbcput(code, buf, enc);
+        if (rb_enc_precise_mbclen(buf, buf + len + 1, enc) != len) {
+            rb_raise(rb_eRangeError, &quot;invalid codepoint 0x%X in %s&quot;, code, rb_enc_name(enc));
         }
         rb_str_resize(str1, pos+len);
-        rb_enc_mbcput(lc, RSTRING_PTR(str1)+pos, enc);
-        if (cr == ENC_CODERANGE_7BIT &amp;&amp; lc &gt; 127)
+        strncpy(RSTRING_PTR(str1) + pos, buf, len);
+        if (cr == ENC_CODERANGE_7BIT &amp;&amp; code &gt; 127)
             cr = ENC_CODERANGE_VALID;
         ENC_CODERANGE_SET(str1, cr);
-        return str1;
     }
+    return str1;
 }</pre>
             </div><!-- concat-source -->
             
@@ -6723,10 +6773,12 @@ href="Encoding/UndefinedConversionError.html">Encoding::UndefinedConversionError
 string is "uFFFD" for Unicode encoding forms, and "?" otherwise.</p>
 </td></tr><tr><td class="rdoc-term"><p>:fallback </p></td>
 <td>
-<p>Sets the replacement string by the given hash for undefined character. Its
-key is an undefined character encoded in the source encoding of current
-transcoder. Its value can be any encoding until it can be converted into
-the destination encoding of the transcoder.</p>
+<p>Sets the replacement string by the given object for undefined character. 
+The object should be a <a href="Hash.html">Hash</a>, a <a
+href="Proc.html">Proc</a>, a <a href="Method.html">Method</a>, or an object
+which has [] method. Its key is an undefined character encoded in the
+source encoding of current transcoder. Its value can be any encoding until
+it can be converted into the destination encoding of the transcoder.</p>
 </td></tr><tr><td class="rdoc-term"><p>:xml </p></td>
 <td>
 <p>The value must be <tt>:text</tt> or <tt>:attr</tt>. If the value is
@@ -11372,9 +11424,9 @@ rb_str_intern(VALUE s)
 
           <div class="method-description">
             
-            <p>Returns a copy of <em>str</em> with the characters in <em>from_str</em> 
+            <p>Returns a copy of <em>str</em> with the characters in <em>from_str</em>
 replaced by the corresponding characters in <em><a
-href="String.html#method-i-to_str">to_str</a></em>. If  <em><a
+href="String.html#method-i-to_str">to_str</a></em>. If <em><a
 href="String.html#method-i-to_str">to_str</a></em> is shorter than
 <em>from_str</em>, it is padded with its last character in order to
 maintain the correspondence.</p>
@@ -13176,15 +13228,15 @@ href="String.html#method-i-scanf">String#scanf</a></p>
           <div class="method-description">
             
             <p>Escapes <tt>str</tt> so that it can be safely used in a Bourne shell
-command line.  See +<a
-href="Shellwords.html#method-c-shellescape">Shellwords::shellescape</a>+
-for details.</p>
+command line.  See <a
+href="Shellwords.html#method-c-shellescape">Shellwords::shellescape</a> for
+details.</p>
             
 
             
             <div class="method-source-code" id="shellescape-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 139</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellescape</span>
   <span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -13215,15 +13267,15 @@ for details.</p>
           <div class="method-description">
             
             <p>Splits <tt>str</tt> into an array of tokens in the same way the UNIX Bourne
-shell does.  See +<a
-href="Shellwords.html#method-c-shellsplit">Shellwords::shellsplit</a>+ for
+shell does.  See <a
+href="Shellwords.html#method-c-shellsplit">Shellwords::shellsplit</a> for
 details.</p>
             
 
             
             <div class="method-source-code" id="shellsplit-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 128</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellsplit</span>
   <span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">split</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>

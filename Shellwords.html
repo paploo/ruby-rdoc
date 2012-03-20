@@ -3479,26 +3479,31 @@ use in double quotes nor in single quotes.</p>
   # ...
 }</pre>
 
-<p>+<a href="String.html#method-i-shellescape">String#shellescape</a>+ is a
+<p><a href="String.html#method-i-shellescape">String#shellescape</a> is a
 shorthand for this function.</p>
 
 <pre>open(&quot;| grep #{pattern.shellescape} file&quot;) { |pipe|
   # ...
 }</pre>
+
+<p>It is caller's responsibility to encode the string in the right encoding
+for the shell environment where this string is used. Multibyte characters
+are treated as multibyte characters, not bytes.</p>
             
 
             
             <div class="method-source-code" id="shellescape-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 72</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellescape</span>(<span class="ruby-identifier">str</span>)
   <span class="ruby-comment"># An empty argument will be skipped, so return empty quotes.</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;''&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">empty?</span>
 
   <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">dup</span>
 
-  <span class="ruby-comment"># Process as a single byte sequence because not all shell</span>
-  <span class="ruby-comment"># implementations are multibyte aware.</span>
+  <span class="ruby-comment"># Treat multibyte characters as is.  It is caller's responsibility</span>
+  <span class="ruby-comment"># to encode the string in the right encoding for the shell</span>
+  <span class="ruby-comment"># environment.</span>
   <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">/([^A-Za-z0-9_\-.,:\/@\n])/</span>, <span class="ruby-string">&quot;\\\\\\1&quot;</span>)
 
   <span class="ruby-comment"># A LF cannot be escaped with a backslash because a backslash + LF</span>
@@ -3541,8 +3546,8 @@ all elements escaped for Bourne shell and separated by a space.</p>
   # ...
 }</pre>
 
-<p>+<a href="Array.html#method-i-shelljoin">Array#shelljoin</a>+ is a
-shorthand for this function.</p>
+<p><a href="Array.html#method-i-shelljoin">Array#shelljoin</a> is a shorthand
+for this function.</p>
 
 <pre>open('|' + ['grep', pattern, *files].shelljoin) { |pipe|
   # ...
@@ -3552,7 +3557,7 @@ shorthand for this function.</p>
             
             <div class="method-source-code" id="shelljoin-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 109</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shelljoin</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-identifier">array</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span> <span class="ruby-identifier">shellescape</span>(<span class="ruby-identifier">arg</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3589,7 +3594,7 @@ shell does.</p>
 <pre>argv = Shellwords.split('here are &quot;two words&quot;')
 argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]</pre>
 
-<p>+<a href="String.html#method-i-shellsplit">String#shellsplit</a>+ is a
+<p><a href="String.html#method-i-shellsplit">String#shellsplit</a> is a
 shorthand for this function.</p>
 
 <pre>argv = 'here are &quot;two words&quot;'.shellsplit
@@ -3599,14 +3604,14 @@ argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]</pre>
             
             <div class="method-source-code" id="shellsplit-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 32</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellsplit</span>(<span class="ruby-identifier">line</span>)
   <span class="ruby-identifier">words</span> = []
   <span class="ruby-identifier">field</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">line</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\G\s*(?&gt;([^\s\\\'\&quot;]+)|'([^\']*)'|&quot;((?:[^\&quot;\\]|\\.)*)&quot;|(\\.?)|(\S))(\s|\z)?/</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-operator">|</span><span class="ruby-identifier">word</span>, <span class="ruby-identifier">sq</span>, <span class="ruby-identifier">dq</span>, <span class="ruby-identifier">esc</span>, <span class="ruby-identifier">garbage</span>, <span class="ruby-identifier">sep</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unmatched double quote: #{line.inspect}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">garbage</span>
-    <span class="ruby-identifier">field</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">word</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sq</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">dq</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">esc</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\(?=.)/</span>, <span class="ruby-string">''</span>))
+    <span class="ruby-identifier">field</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">word</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sq</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">dq</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">esc</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\(.)/</span>, <span class="ruby-string">'\1'</span>))
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">sep</span>
       <span class="ruby-identifier">words</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">field</span>
       <span class="ruby-identifier">field</span> = <span class="ruby-string">''</span>
@@ -3715,26 +3720,31 @@ use in double quotes nor in single quotes.</p>
   # ...
 }</pre>
 
-<p>+<a href="String.html#method-i-shellescape">String#shellescape</a>+ is a
+<p><a href="String.html#method-i-shellescape">String#shellescape</a> is a
 shorthand for this function.</p>
 
 <pre>open(&quot;| grep #{pattern.shellescape} file&quot;) { |pipe|
   # ...
 }</pre>
+
+<p>It is caller's responsibility to encode the string in the right encoding
+for the shell environment where this string is used. Multibyte characters
+are treated as multibyte characters, not bytes.</p>
             
 
             
             <div class="method-source-code" id="shellescape-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 72</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellescape</span>(<span class="ruby-identifier">str</span>)
   <span class="ruby-comment"># An empty argument will be skipped, so return empty quotes.</span>
   <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;''&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">empty?</span>
 
   <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">dup</span>
 
-  <span class="ruby-comment"># Process as a single byte sequence because not all shell</span>
-  <span class="ruby-comment"># implementations are multibyte aware.</span>
+  <span class="ruby-comment"># Treat multibyte characters as is.  It is caller's responsibility</span>
+  <span class="ruby-comment"># to encode the string in the right encoding for the shell</span>
+  <span class="ruby-comment"># environment.</span>
   <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">/([^A-Za-z0-9_\-.,:\/@\n])/</span>, <span class="ruby-string">&quot;\\\\\\1&quot;</span>)
 
   <span class="ruby-comment"># A LF cannot be escaped with a backslash because a backslash + LF</span>
@@ -3777,8 +3787,8 @@ all elements escaped for Bourne shell and separated by a space.</p>
   # ...
 }</pre>
 
-<p>+<a href="Array.html#method-i-shelljoin">Array#shelljoin</a>+ is a
-shorthand for this function.</p>
+<p><a href="Array.html#method-i-shelljoin">Array#shelljoin</a> is a shorthand
+for this function.</p>
 
 <pre>open('|' + ['grep', pattern, *files].shelljoin) { |pipe|
   # ...
@@ -3788,7 +3798,7 @@ shorthand for this function.</p>
             
             <div class="method-source-code" id="shelljoin-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 109</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shelljoin</span>(<span class="ruby-identifier">array</span>)
   <span class="ruby-identifier">array</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span> <span class="ruby-identifier">shellescape</span>(<span class="ruby-identifier">arg</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3825,7 +3835,7 @@ shell does.</p>
 <pre>argv = Shellwords.split('here are &quot;two words&quot;')
 argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]</pre>
 
-<p>+<a href="String.html#method-i-shellsplit">String#shellsplit</a>+ is a
+<p><a href="String.html#method-i-shellsplit">String#shellsplit</a> is a
 shorthand for this function.</p>
 
 <pre>argv = 'here are &quot;two words&quot;'.shellsplit
@@ -3835,14 +3845,14 @@ argv #=&gt; [&quot;here&quot;, &quot;are&quot;, &quot;two words&quot;]</pre>
             
             <div class="method-source-code" id="shellsplit-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 32</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 30</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shellsplit</span>(<span class="ruby-identifier">line</span>)
   <span class="ruby-identifier">words</span> = []
   <span class="ruby-identifier">field</span> = <span class="ruby-string">''</span>
   <span class="ruby-identifier">line</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/\G\s*(?&gt;([^\s\\\'\&quot;]+)|'([^\']*)'|&quot;((?:[^\&quot;\\]|\\.)*)&quot;|(\\.?)|(\S))(\s|\z)?/</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-operator">|</span><span class="ruby-identifier">word</span>, <span class="ruby-identifier">sq</span>, <span class="ruby-identifier">dq</span>, <span class="ruby-identifier">esc</span>, <span class="ruby-identifier">garbage</span>, <span class="ruby-identifier">sep</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unmatched double quote: #{line.inspect}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">garbage</span>
-    <span class="ruby-identifier">field</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">word</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sq</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">dq</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">esc</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\(?=.)/</span>, <span class="ruby-string">''</span>))
+    <span class="ruby-identifier">field</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">word</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sq</span> <span class="ruby-operator">||</span> (<span class="ruby-identifier">dq</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">esc</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\(.)/</span>, <span class="ruby-string">'\1'</span>))
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">sep</span>
       <span class="ruby-identifier">words</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">field</span>
       <span class="ruby-identifier">field</span> = <span class="ruby-string">''</span>

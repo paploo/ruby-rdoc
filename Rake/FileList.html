@@ -3751,7 +3751,7 @@ Returns the number of matched items.</p>
   <span class="ruby-identifier">matched</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">fn</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">begin</span>
-      <span class="ruby-identifier">open</span>(<span class="ruby-identifier">fn</span>, <span class="ruby-string">&quot;rb&quot;</span>, *<span class="ruby-identifier">options</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inf</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">open</span>(<span class="ruby-identifier">fn</span>, <span class="ruby-string">&quot;r:ascii-8bit&quot;</span>, *<span class="ruby-identifier">options</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">inf</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
         <span class="ruby-identifier">inf</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
           <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>

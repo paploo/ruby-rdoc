@@ -5333,7 +5333,8 @@ rb_ary_delete_at_m(VALUE ary, VALUE pos)
           <div class="method-description">
             
             <p>Deletes every element of <tt>self</tt> for which <em>block</em> evaluates
-to true. See also <tt>Array#reject!</tt></p>
+to true. The array is changed instantly every time the block is called and
+not after the iteration is over. See also <tt>Array#reject!</tt></p>
 
 <p>If no block is given, an enumerator is returned instead.</p>
 
@@ -7934,7 +7935,7 @@ rb_ary_pop_m(int argc, VALUE *argv, VALUE ary)
 
           <div class="method-description">
             
-            <p>Returns an array of all combinations of elements from all arrays, The
+            <p>Returns an array of all combinations of elements from all arrays. The
 length of the returned array is the product of the length of <tt>self</tt>
 and the argument arrays. If given a block, <em>product</em> will yield all
 combinations and return <tt>self</tt> instead.</p>
@@ -8223,8 +8224,9 @@ rb_ary_reject(VALUE ary)
             
             <p>Equivalent to <tt>Array#delete_if</tt>, deleting elements from
 <tt>self</tt> for which the block evaluates to true, but returns
-<tt>nil</tt> if no changes were made. See also <tt>Enumerable#reject</tt>
-and <tt>Array#delete_if</tt>.</p>
+<tt>nil</tt> if no changes were made. The array is changed instantly every
+time the block is called and not after the iteration is over. See also
+<tt>Enumerable#reject</tt> and <tt>Array#delete_if</tt>.</p>
 
 <p>If no block is given, an enumerator is returned instead.</p>
             
@@ -9060,7 +9062,7 @@ rb_ary_select(VALUE ary)
           
           
           <div class="method-heading">
-            <span class="method-callseq">select! {|item| block } &rarr; new_ary or nil</span>
+            <span class="method-callseq">select! {|item| block } &rarr; ary or nil</span>
             
             <span class="method-click-advice">click to toggle source</span>
             
@@ -9134,15 +9136,15 @@ rb_ary_select_bang(VALUE ary)
           <div class="method-description">
             
             <p>Builds a command line string from an argument list <tt>array</tt> joining
-all elements escaped for Bourne shell and separated by a space. See +<a
-href="Shellwords.html#method-c-shelljoin">Shellwords::shelljoin</a>+ for
+all elements escaped for Bourne shell and separated by a space. See <a
+href="Shellwords.html#method-c-shelljoin">Shellwords::shelljoin</a> for
 details.</p>
             
 
             
             <div class="method-source-code" id="shelljoin-source">
 <pre>
-<span class="ruby-comment"># File lib/shellwords.rb, line 153</span>
+<span class="ruby-comment"># File lib/shellwords.rb, line 148</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">shelljoin</span>
   <span class="ruby-constant">Shellwords</span>.<span class="ruby-identifier">join</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>

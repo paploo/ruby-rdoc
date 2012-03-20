@@ -3943,7 +3943,7 @@ form element exceeds 10 KB</p>
 <span class="ruby-comment"># File lib/cgi/core.rb, line 463</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">read_multipart</span>(<span class="ruby-identifier">boundary</span>, <span class="ruby-identifier">content_length</span>)
   <span class="ruby-comment">## read first boundary</span>
-  <span class="ruby-identifier">stdin</span> = <span class="ruby-identifier">$stdin</span>
+  <span class="ruby-identifier">stdin</span> = <span class="ruby-identifier">stdinput</span>
   <span class="ruby-identifier">first_line</span> = <span class="ruby-node">&quot;--#{boundary}#{EOL}&quot;</span>
   <span class="ruby-identifier">content_length</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">first_line</span>.<span class="ruby-identifier">bytesize</span>
   <span class="ruby-identifier">status</span> = <span class="ruby-identifier">stdin</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">first_line</span>.<span class="ruby-identifier">bytesize</span>)

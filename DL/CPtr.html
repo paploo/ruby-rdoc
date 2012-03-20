@@ -3454,7 +3454,7 @@
 static VALUE
 rb_dlptr_s_to_ptr(VALUE self, VALUE val)
 {
-    VALUE ptr;
+    VALUE ptr, wrap = val, vptr;
 
     if (RTEST(rb_obj_is_kind_of(val, rb_cIO))){
         rb_io_t *fptr;
@@ -3467,20 +3467,22 @@ rb_dlptr_s_to_ptr(VALUE self, VALUE val)
         char *str = StringValuePtr(val);
         ptr = rb_dlptr_new(str, RSTRING_LEN(val), NULL);
     }
-    else if (rb_respond_to(val, id_to_ptr)){
-        VALUE vptr = rb_funcall(val, id_to_ptr, 0);
+    else if ((vptr = rb_check_funcall(val, id_to_ptr, 0, 0)) != Qundef){
         if (rb_obj_is_kind_of(vptr, rb_cDLCPtr)){
             ptr = vptr;
+            wrap = 0;
         }
         else{
             rb_raise(rb_eDLError, &quot;to_ptr should return a CPtr object&quot;);
         }
     }
     else{
-        ptr = rb_dlptr_new(NUM2PTR(rb_Integer(val)), 0, NULL);
+        VALUE num = rb_Integer(val);
+        if (num == val) wrap = 0;
+        ptr = rb_dlptr_new(NUM2PTR(num), 0, NULL);
     }
     OBJ_INFECT(ptr, val);
-    rb_iv_set(ptr, &quot;wrapping&quot;, val);
+    if (wrap) RPTR_DATA(ptr)-&gt;wrap[0] = wrap;
     return ptr;
 }</pre>
             </div><!-- 5B-5D-source -->
@@ -3521,7 +3523,7 @@ an instance of <a href="CFunc.html">DL::CFunc</a></p>
 static VALUE
 rb_dlptr_s_malloc(int argc, VALUE argv[], VALUE klass)
 {
-    VALUE size, sym, obj;
+    VALUE size, sym, obj, wrap = 0;
     long s;
     freefunc_t f;
 
@@ -3532,13 +3534,14 @@ rb_dlptr_s_malloc(int argc, VALUE argv[], VALUE klass)
         break;
       case 2:
         s = NUM2LONG(size);
-        f = get_freefunc(sym);
+        f = get_freefunc(sym, &amp;wrap);
         break;
       default:
         rb_bug(&quot;rb_dlptr_s_malloc&quot;);
     }
 
     obj = rb_dlptr_malloc(s,f);
+    if (wrap) RPTR_DATA(obj)-&gt;wrap[1] = wrap;
 
     return obj;
 }</pre>
@@ -3589,27 +3592,22 @@ garbage collected.</p>
 static VALUE
 rb_dlptr_initialize(int argc, VALUE argv[], VALUE self)
 {
-    VALUE ptr, sym, size;
+    VALUE ptr, sym, size, wrap = 0, funcwrap = 0;
     struct ptr_data *data;
     void *p = NULL;
     freefunc_t f = NULL;
     long s = 0;
 
-    switch (rb_scan_args(argc, argv, &quot;12&quot;, &amp;ptr, &amp;size, &amp;sym)) {
-      case 1:
-        p = (void*)(NUM2PTR(rb_Integer(ptr)));
-        break;
-      case 2:
-        p = (void*)(NUM2PTR(rb_Integer(ptr)));
+    if (rb_scan_args(argc, argv, &quot;12&quot;, &amp;ptr, &amp;size, &amp;sym) &gt;= 1) {
+        VALUE addrnum = rb_Integer(ptr);
+        if (addrnum != ptr) wrap = ptr;
+        p = NUM2PTR(addrnum);
+    }
+    if (argc &gt;= 2) {
         s = NUM2LONG(size);
-        break;
-      case 3:
-        p = (void*)(NUM2PTR(rb_Integer(ptr)));
-        s = NUM2LONG(size);
-        f = get_freefunc(sym);
-        break;
-      default:
-        rb_bug(&quot;rb_dlptr_initialize&quot;);
+    }
+    if (argc &gt;= 3) {
+        f = get_freefunc(sym, &amp;funcwrap);
     }
 
     if (p) {
@@ -3618,6 +3616,8 @@ rb_dlptr_initialize(int argc, VALUE argv[], VALUE self)
             /* Free previous memory. Use of inappropriate initialize may cause SEGV. */
             (*(data-&gt;free))(data-&gt;ptr);
         }
+        data-&gt;wrap[0] = wrap;
+        data-&gt;wrap[1] = funcwrap;
         data-&gt;ptr  = p;
         data-&gt;size = s;
         data-&gt;free = f;
@@ -3666,7 +3666,7 @@ rb_dlptr_initialize(int argc, VALUE argv[], VALUE self)
 static VALUE
 rb_dlptr_s_to_ptr(VALUE self, VALUE val)
 {
-    VALUE ptr;
+    VALUE ptr, wrap = val, vptr;
 
     if (RTEST(rb_obj_is_kind_of(val, rb_cIO))){
         rb_io_t *fptr;
@@ -3679,20 +3679,22 @@ rb_dlptr_s_to_ptr(VALUE self, VALUE val)
         char *str = StringValuePtr(val);
         ptr = rb_dlptr_new(str, RSTRING_LEN(val), NULL);
     }
-    else if (rb_respond_to(val, id_to_ptr)){
-        VALUE vptr = rb_funcall(val, id_to_ptr, 0);
+    else if ((vptr = rb_check_funcall(val, id_to_ptr, 0, 0)) != Qundef){
         if (rb_obj_is_kind_of(vptr, rb_cDLCPtr)){
             ptr = vptr;
+            wrap = 0;
         }
         else{
             rb_raise(rb_eDLError, &quot;to_ptr should return a CPtr object&quot;);
         }
     }
     else{
-        ptr = rb_dlptr_new(NUM2PTR(rb_Integer(val)), 0, NULL);
+        VALUE num = rb_Integer(val);
+        if (num == val) wrap = 0;
+        ptr = rb_dlptr_new(NUM2PTR(num), 0, NULL);
     }
     OBJ_INFECT(ptr, val);
-    rb_iv_set(ptr, &quot;wrapping&quot;, val);
+    if (wrap) RPTR_DATA(ptr)-&gt;wrap[0] = wrap;
     return ptr;
 }</pre>
             </div><!-- to_ptr-source -->
@@ -4015,16 +4017,19 @@ rb_dlptr_aref(int argc, VALUE argv[], VALUE self)
     VALUE arg0, arg1;
     VALUE retval = Qnil;
     size_t offset, len;
+    struct ptr_data *data;
 
+    TypedData_Get_Struct(self, struct ptr_data, &amp;dlptr_data_type, data);
+    if (!data-&gt;ptr) rb_raise(rb_eDLError, &quot;NULL pointer dereference&quot;);
     switch( rb_scan_args(argc, argv, &quot;11&quot;, &amp;arg0, &amp;arg1) ){
       case 1:
         offset = NUM2ULONG(arg0);
-        retval = INT2NUM(*((char*)RPTR_DATA(self)-&gt;ptr + offset));
+        retval = INT2NUM(*((char *)data-&gt;ptr + offset));
         break;
       case 2:
         offset = NUM2ULONG(arg0);
         len    = NUM2ULONG(arg1);
-        retval = rb_tainted_str_new((char *)RPTR_DATA(self)-&gt;ptr + offset, len);
+        retval = rb_tainted_str_new((char *)data-&gt;ptr + offset, len);
         break;
       default:
         rb_bug(&quot;rb_dlptr_aref()&quot;);
@@ -4078,17 +4083,20 @@ rb_dlptr_aset(int argc, VALUE argv[], VALUE self)
     VALUE retval = Qnil;
     size_t offset, len;
     void *mem;
+    struct ptr_data *data;
 
+    TypedData_Get_Struct(self, struct ptr_data, &amp;dlptr_data_type, data);
+    if (!data-&gt;ptr) rb_raise(rb_eDLError, &quot;NULL pointer dereference&quot;);
     switch( rb_scan_args(argc, argv, &quot;21&quot;, &amp;arg0, &amp;arg1, &amp;arg2) ){
       case 2:
         offset = NUM2ULONG(arg0);
-        ((char*)RPTR_DATA(self)-&gt;ptr)[offset] = NUM2UINT(arg1);
+        ((char*)data-&gt;ptr)[offset] = NUM2UINT(arg1);
         retval = arg1;
         break;
       case 3:
         offset = NUM2ULONG(arg0);
         len    = NUM2ULONG(arg1);
-        if( TYPE(arg2) == T_STRING ){
+        if (RB_TYPE_P(arg2, T_STRING)) {
             mem = StringValuePtr(arg2);
         }
         else if( rb_obj_is_kind_of(arg2, rb_cDLCPtr) ){
@@ -4097,7 +4105,7 @@ rb_dlptr_aset(int argc, VALUE argv[], VALUE self)
         else{
             mem    = NUM2PTR(arg2);
         }
-        memcpy((char *)RPTR_DATA(self)-&gt;ptr + offset, mem, len);
+        memcpy((char *)data-&gt;ptr + offset, mem, len);
         retval = arg2;
         break;
       default:
@@ -4236,7 +4244,7 @@ rb_dlptr_free_set(VALUE self, VALUE val)
     struct ptr_data *data;
 
     TypedData_Get_Struct(self, struct ptr_data, &amp;dlptr_data_type, data);
-    data-&gt;free = get_freefunc(val);
+    data-&gt;free = get_freefunc(val, &amp;data-&gt;wrap[1]);
 
     return Qnil;
 }</pre>

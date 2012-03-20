@@ -84,8 +84,6 @@
           
           <li><a href="#method-c-new">::new</a></li>
           
-          <li><a href="#method-i-block_size">#block_size</a></li>
-          
           <li><a href="#method-i-decrypt">#decrypt</a></li>
           
           <li><a href="#method-i-encrypt">#encrypt</a></li>
@@ -94,11 +92,7 @@
           
           <li><a href="#method-i-iv-3D">#iv=</a></li>
           
-          <li><a href="#method-i-iv_len">#iv_len</a></li>
-          
           <li><a href="#method-i-key-3D">#key=</a></li>
-          
-          <li><a href="#method-i-key_len">#key_len</a></li>
           
           <li><a href="#method-i-key_len-3D">#key_len=</a></li>
           
@@ -3400,6 +3394,165 @@
 
     <div id="description" class="description">
       
+<p>Provides symmetric algorithms for encryption and decryption. The algorithms
+that are available depend on the particular version of <a
+href="../OpenSSL.html">OpenSSL</a> that is installed.</p>
+
+<h3>Listing all supported algorithms</h3>
+
+<p>A list of supported algorithms can be obtained by</p>
+
+<pre>puts OpenSSL::Cipher.ciphers</pre>
+
+<h3>Instantiating a <a href="Cipher/Cipher.html">Cipher</a></h3>
+
+<p>There are several ways to create a <a href="Cipher/Cipher.html">Cipher</a>
+instance. Generally, a <a href="Cipher/Cipher.html">Cipher</a> algorithm is
+categorized by its name, the key length in bits and the cipher mode to be
+used. The most generic way to create a <a
+href="Cipher/Cipher.html">Cipher</a> is the following</p>
+
+<pre>cipher = OpenSSL::Cipher.new('&lt;name&gt;-&lt;key length&gt;-&lt;mode&gt;')</pre>
+
+<p>That is, a string consisting of the hyphenated concatenation of the
+individual components name, key length and mode. Either all uppercase or
+all lowercase strings may be used, for example:</p>
+
+<pre>cipher = OpenSSL::Cipher.new('AES-128-CBC')</pre>
+
+<p>For each algorithm supported, there is a class defined under the <a
+href="Cipher/Cipher.html">Cipher</a> class that goes by the name of the
+cipher, e.g. to obtain an instance of AES, you could also use</p>
+
+<pre># these are equivalent
+cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+cipher = OpenSSL::Cipher::AES.new(128, 'CBC')
+cipher = OpenSSL::Cipher::AES.new('128-CBC')</pre>
+
+<p>Finally, due to its wide-spread use, there are also extra classes defined
+for the different key sizes of AES</p>
+
+<pre>cipher = OpenSSL::Cipher::AES128.new(:CBC)
+cipher = OpenSSL::Cipher::AES192.new(:CBC)
+cipher = OpenSSL::Cipher::AES256.new(:CBC)</pre>
+
+<h3>Choosing either encryption or decryption mode</h3>
+
+<p>Encryption and decryption are often very similar operations for symmetric
+algorithms, this is reflected by not having to choose different classes for
+either operation, both can be done using the same class. Still, after
+obtaining a <a href="Cipher/Cipher.html">Cipher</a> instance, we need to
+tell the instance what it is that we intend to do with it, so we need to
+call either</p>
+
+<pre>cipher.encrypt</pre>
+
+<p>or</p>
+
+<pre>cipher.decrypt</pre>
+
+<p>on the <a href="Cipher/Cipher.html">Cipher</a> instance. This should be the
+first call after creating the instance, otherwise configuration that has
+already been set could get lost in the process.</p>
+
+<h3>Choosing a key</h3>
+
+<p>Symmetric encryption requires a key that is the same for the encrypting and
+for the decrypting party and after initial key establishment should be kept
+as private information. There are a lot of ways to create insecure keys,
+the most notable is to simply take a password as the key without processing
+the password further. A simple and secure way to create a key for a
+particular <a href="Cipher/Cipher.html">Cipher</a> is</p>
+
+<pre>cipher = OpenSSL::AES256.new(:CFB)
+cipher.encrypt
+key = cipher.random_key # also sets the generated key on the Cipher</pre>
+
+<p>If you absolutely need to use passwords as encryption keys, you should use
+Password-Based Key Derivation Function 2 (PBKDF2) by generating the key
+with the help of the functionality provided by <a
+href="PKCS5.html#method-c-pbkdf2_hmac_sha1">OpenSSL::PKCS5.pbkdf2_hmac_sha1</a>
+or <a
+href="PKCS5.html#method-c-pbkdf2_hmac">OpenSSL::PKCS5.pbkdf2_hmac</a>.</p>
+
+<p>Although there is <a
+href="Cipher.html#method-i-pkcs5_keyivgen">Cipher#pkcs5_keyivgen</a>, its
+use is deprecated and it should only be used in legacy applications because
+it does not use the newer PKCS#5 v2 algorithms.</p>
+
+<h3>Choosing an IV</h3>
+
+<p>The cipher modes CBC, CFB, OFB and CTR all need an "initialization vector",
+or short, IV. ECB mode is the only mode that does not require an IV, but
+there is almost no legitimate use case for this mode because of the fact
+that it does not sufficiently hide plaintext patterns. Therefore</p>
+
+<p><b>You should never use ECB mode unless you are absolutely sure that you
+absolutely need it</b></p>
+
+<p>Because of this, you will end up with a mode that explicitly requires an IV
+in any case. Note that for backwards compatibility reasons, setting an IV
+is not explicitly mandated by the <a href="Cipher/Cipher.html">Cipher</a>
+API. If not set, <a href="../OpenSSL.html">OpenSSL</a> itself defaults to
+an all-zeroes IV ("\0", not the character). Although the IV can be seen as
+public information, i.e. it may be transmitted in public once generated, it
+should still stay unpredictable to prevent certain kinds of attacks.
+Therefore, ideally</p>
+
+<p><b>Always create a secure random IV for every encryption of your <a
+href="Cipher/Cipher.html">Cipher</a></b></p>
+
+<p>A new, random IV should be created for every encryption of data. Think of
+the IV as a nonce (number used once) - it's public but random and
+unpredictable. A secure random IV can be created as follows</p>
+
+<pre>cipher = ...
+cipher.encrypt
+key = cipher.random_key
+iv = cipher.random_iv # also sets the generated IV on the Cipher
+
+Although the key is generally a random value, too, it is a bad choice
+as an IV. There are elaborate ways how an attacker can take advantage
+of such an IV. As a general rule of thumb, exposing the key directly
+or indirectly should be avoided at all cost and exceptions only be
+made with good reason.</pre>
+
+<h3>Calling <a href="Cipher.html#method-i-final">Cipher#final</a></h3>
+
+<p>ECB (which should not be used) and CBC are both block-based modes. This
+means that unlike for the other streaming-based modes, they operate on
+fixed-size blocks of data, and therefore they require a "finalization" step
+to produce or correctly decrypt the last block of data by appropriately
+handling some form of padding. Therefore it is essential to add the output
+of <a href="Cipher.html#method-i-final">OpenSSL::Cipher#final</a> to your
+encryption/decryption buffer or you will end up with decryption errors or
+truncated data.</p>
+
+<p>Although this is not really necessary for streaming-mode ciphers, it is
+still recommended to apply the same pattern of adding the output of <a
+href="Cipher.html#method-i-final">Cipher#final</a> there as well - it also
+enables you to switch between modes more easily in the future.</p>
+
+<h3>Encrypting and decrypting some data</h3>
+
+<pre>data = &quot;Very, very confidential data&quot;
+
+cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+cipher.encrypt
+key = cipher.random_key
+iv = cipher.random_iv
+
+encrypted = cipher.update(data) + cipher.final
+...
+decipher = OpenSSL::Cipher::AES.new(128, :CBC)
+decipher.decrypt
+decipher.key = key
+decipher.iv = iv
+
+plain = decipher.update(encrypted) + decipher.final
+
+puts data == plain #=&gt; true</pre>
+
     </div><!-- description -->
 
     
@@ -3535,72 +3688,6 @@ ossl_cipher_initialize(VALUE self, VALUE str)
         <h3 class="section-header">Public Instance Methods</h3>
 
       
-        <div id="block_size-method" class="method-detail ">
-          <a name="method-i-block_size"></a>
-
-          
-          
-          <div class="method-heading">
-            <span class="method-callseq">block_size &rarr; integer</span>
-            
-            <span class="method-click-advice">click to toggle source</span>
-            
-          </div>
-          
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="block_size-source">
-<pre>
-static VALUE ossl_cipher_block_size() { }
-#endif
-
-/*
- * INIT
- */
-void
-Init_ossl_cipher(void)
-{
-#if 0
-    mOSSL = rb_define_module(&quot;OpenSSL&quot;); /* let rdoc know about mOSSL */
-#endif
-    cCipher = rb_define_class_under(mOSSL, &quot;Cipher&quot;, rb_cObject);
-    eCipherError = rb_define_class_under(cCipher, &quot;CipherError&quot;, eOSSLError);
-
-    rb_define_alloc_func(cCipher, ossl_cipher_alloc);
-    rb_define_copy_func(cCipher, ossl_cipher_copy);
-    rb_define_module_function(cCipher, &quot;ciphers&quot;, ossl_s_ciphers, 0);
-    rb_define_method(cCipher, &quot;initialize&quot;, ossl_cipher_initialize, 1);
-    rb_define_method(cCipher, &quot;reset&quot;, ossl_cipher_reset, 0);
-    rb_define_method(cCipher, &quot;encrypt&quot;, ossl_cipher_encrypt, -1);
-    rb_define_method(cCipher, &quot;decrypt&quot;, ossl_cipher_decrypt, -1);
-    rb_define_method(cCipher, &quot;pkcs5_keyivgen&quot;, ossl_cipher_pkcs5_keyivgen, -1);
-    rb_define_method(cCipher, &quot;update&quot;, ossl_cipher_update, -1);
-    rb_define_method(cCipher, &quot;final&quot;, ossl_cipher_final, 0);
-    rb_define_method(cCipher, &quot;name&quot;, ossl_cipher_name, 0);
-    rb_define_method(cCipher, &quot;key=&quot;, ossl_cipher_set_key, 1);
-    rb_define_method(cCipher, &quot;key_len=&quot;, ossl_cipher_set_key_length, 1);
-    rb_define_method(cCipher, &quot;key_len&quot;, ossl_cipher_key_length, 0);
-    rb_define_method(cCipher, &quot;iv=&quot;, ossl_cipher_set_iv, 1);
-    rb_define_method(cCipher, &quot;iv_len&quot;, ossl_cipher_iv_length, 0);
-    rb_define_method(cCipher, &quot;block_size&quot;, ossl_cipher_block_size, 0);
-    rb_define_method(cCipher, &quot;padding=&quot;, ossl_cipher_set_padding, 1);
-}</pre>
-            </div><!-- block_size-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- block_size-method -->
-
-      
         <div id="decrypt-method" class="method-detail ">
           <a name="method-i-decrypt"></a>
 
@@ -3617,8 +3704,11 @@ Init_ossl_cipher(void)
 
           <div class="method-description">
             
-            <p>Make sure to call .encrypt or .decrypt before using any of the following
-methods:</p>
+            <p>Initializes the <a href="Cipher/Cipher.html">Cipher</a> for decryption.</p>
+
+<p>Make sure to call <a href="Cipher.html#method-i-encrypt">Cipher#encrypt</a>
+or <a href="Cipher.html#method-i-decrypt">Cipher#decrypt</a> before using
+any of the following methods:</p>
 <ul><li><dl class="rdoc-list"><dt>key=, iv=, <a href="Cipher.html#method-i-random_key">random_key</a>, <a href="Cipher.html#method-i-random_iv">random_iv</a>, <a href="Cipher.html#method-i-pkcs5_keyivgen">pkcs5_keyivgen</a></dt>
 <dd></dd></dl>
 </li></ul>
@@ -3660,8 +3750,11 @@ ossl_cipher_decrypt(int argc, VALUE *argv, VALUE self)
 
           <div class="method-description">
             
-            <p>Make sure to call .encrypt or .decrypt before using any of the following
-methods:</p>
+            <p>Initializes the <a href="Cipher/Cipher.html">Cipher</a> for encryption.</p>
+
+<p>Make sure to call <a href="Cipher.html#method-i-encrypt">Cipher#encrypt</a>
+or <a href="Cipher.html#method-i-decrypt">Cipher#decrypt</a> before using
+any of the following methods:</p>
 <ul><li><dl class="rdoc-list"><dt>key=, iv=, <a href="Cipher.html#method-i-random_key">random_key</a>, <a href="Cipher.html#method-i-random_iv">random_iv</a>, <a href="Cipher.html#method-i-pkcs5_keyivgen">pkcs5_keyivgen</a></dt>
 <dd></dd></dl>
 </li></ul>
@@ -3693,7 +3786,7 @@ ossl_cipher_encrypt(int argc, VALUE *argv, VALUE self)
           
           
           <div class="method-heading">
-            <span class="method-callseq">final &rarr; aString</span>
+            <span class="method-callseq">final &rarr; string</span>
             
             <span class="method-click-advice">click to toggle source</span>
             
@@ -3703,8 +3796,9 @@ ossl_cipher_encrypt(int argc, VALUE *argv, VALUE self)
 
           <div class="method-description">
             
-            <p>Returns the remaining data held in the cipher object.  Further calls to
-update() or final() will return garbage.</p>
+            <p>Returns the remaining data held in the cipher object.  Further calls to <a
+href="Cipher.html#method-i-update">Cipher#update</a> or <a
+href="Cipher.html#method-i-final">Cipher#final</a> will return garbage.</p>
 
 <p>See EVP_CipherFinal_ex for further information.</p>
             
@@ -3754,9 +3848,19 @@ ossl_cipher_final(VALUE self)
 
           <div class="method-description">
             
-            <p>Sets the cipher iv.</p>
+            <p>Sets the cipher IV. Please note that since you should never be using ECB
+mode, an IV is always explicitly required and should be set prior to
+encryption. The IV itself can be safely transmitted in public, but it
+should be unpredictable to prevent certain kinds of attacks. You may use <a
+href="Cipher.html#method-i-random_iv">Cipher#random_iv</a> to create a
+secure random IV.</p>
 
-<p>Only call this method after calling cipher.encrypt or cipher.decrypt.</p>
+<p>Only call this method after calling <a
+href="Cipher.html#method-i-encrypt">Cipher#encrypt</a> or <a
+href="Cipher.html#method-i-decrypt">Cipher#decrypt</a>.</p>
+
+<p>If not explicitly set, the <a href="../OpenSSL.html">OpenSSL</a> default of
+an all-zeroes ("\0") IV is used.</p>
             
 
             
@@ -3788,78 +3892,6 @@ ossl_cipher_set_iv(VALUE self, VALUE iv)
         </div><!-- iv-3D-method -->
 
       
-        <div id="iv_len-method" class="method-detail ">
-          <a name="method-i-iv_len"></a>
-
-          
-          
-          <div class="method-heading">
-            <span class="method-callseq">iv_len &rarr; integer</span>
-            
-            <span class="method-click-advice">click to toggle source</span>
-            
-          </div>
-          
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="iv_len-source">
-<pre>
-static VALUE ossl_cipher_iv_length() { }
-/*
- *  call-seq:
- *     cipher.block_size -&gt; integer
- *
- */
-static VALUE ossl_cipher_block_size() { }
-#endif
-
-/*
- * INIT
- */
-void
-Init_ossl_cipher(void)
-{
-#if 0
-    mOSSL = rb_define_module(&quot;OpenSSL&quot;); /* let rdoc know about mOSSL */
-#endif
-    cCipher = rb_define_class_under(mOSSL, &quot;Cipher&quot;, rb_cObject);
-    eCipherError = rb_define_class_under(cCipher, &quot;CipherError&quot;, eOSSLError);
-
-    rb_define_alloc_func(cCipher, ossl_cipher_alloc);
-    rb_define_copy_func(cCipher, ossl_cipher_copy);
-    rb_define_module_function(cCipher, &quot;ciphers&quot;, ossl_s_ciphers, 0);
-    rb_define_method(cCipher, &quot;initialize&quot;, ossl_cipher_initialize, 1);
-    rb_define_method(cCipher, &quot;reset&quot;, ossl_cipher_reset, 0);
-    rb_define_method(cCipher, &quot;encrypt&quot;, ossl_cipher_encrypt, -1);
-    rb_define_method(cCipher, &quot;decrypt&quot;, ossl_cipher_decrypt, -1);
-    rb_define_method(cCipher, &quot;pkcs5_keyivgen&quot;, ossl_cipher_pkcs5_keyivgen, -1);
-    rb_define_method(cCipher, &quot;update&quot;, ossl_cipher_update, -1);
-    rb_define_method(cCipher, &quot;final&quot;, ossl_cipher_final, 0);
-    rb_define_method(cCipher, &quot;name&quot;, ossl_cipher_name, 0);
-    rb_define_method(cCipher, &quot;key=&quot;, ossl_cipher_set_key, 1);
-    rb_define_method(cCipher, &quot;key_len=&quot;, ossl_cipher_set_key_length, 1);
-    rb_define_method(cCipher, &quot;key_len&quot;, ossl_cipher_key_length, 0);
-    rb_define_method(cCipher, &quot;iv=&quot;, ossl_cipher_set_iv, 1);
-    rb_define_method(cCipher, &quot;iv_len&quot;, ossl_cipher_iv_length, 0);
-    rb_define_method(cCipher, &quot;block_size&quot;, ossl_cipher_block_size, 0);
-    rb_define_method(cCipher, &quot;padding=&quot;, ossl_cipher_set_padding, 1);
-}</pre>
-            </div><!-- iv_len-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- iv_len-method -->
-
-      
         <div id="key-3D-method" class="method-detail ">
           <a name="method-i-key-3D"></a>
 
@@ -3876,9 +3908,16 @@ Init_ossl_cipher(void)
 
           <div class="method-description">
             
-            <p>Sets the cipher key.</p>
+            <p>Sets the cipher key. To generate a key, you should either use a secure
+random byte string or, if the key is to be derived from a password, you
+should rely on PBKDF2 functionality provided by <a
+href="PKCS5.html">OpenSSL::PKCS5</a>. To generate a secure random-based
+key, <a href="Cipher.html#method-i-random_key">Cipher#random_key</a> may be
+used.</p>
 
-<p>Only call this method after calling cipher.encrypt or cipher.decrypt.</p>
+<p>Only call this method after calling <a
+href="Cipher.html#method-i-encrypt">Cipher#encrypt</a> or <a
+href="Cipher.html#method-i-decrypt">Cipher#decrypt</a>.</p>
             
 
             
@@ -3908,84 +3947,6 @@ ossl_cipher_set_key(VALUE self, VALUE key)
 
           
         </div><!-- key-3D-method -->
-
-      
-        <div id="key_len-method" class="method-detail ">
-          <a name="method-i-key_len"></a>
-
-          
-          
-          <div class="method-heading">
-            <span class="method-callseq">key_len &rarr; integer</span>
-            
-            <span class="method-click-advice">click to toggle source</span>
-            
-          </div>
-          
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="key_len-source">
-<pre>
-static VALUE ossl_cipher_key_length() { }
-/*
- *  call-seq:
- *     cipher.iv_len -&gt; integer
- *
- */
-static VALUE ossl_cipher_iv_length() { }
-/*
- *  call-seq:
- *     cipher.block_size -&gt; integer
- *
- */
-static VALUE ossl_cipher_block_size() { }
-#endif
-
-/*
- * INIT
- */
-void
-Init_ossl_cipher(void)
-{
-#if 0
-    mOSSL = rb_define_module(&quot;OpenSSL&quot;); /* let rdoc know about mOSSL */
-#endif
-    cCipher = rb_define_class_under(mOSSL, &quot;Cipher&quot;, rb_cObject);
-    eCipherError = rb_define_class_under(cCipher, &quot;CipherError&quot;, eOSSLError);
-
-    rb_define_alloc_func(cCipher, ossl_cipher_alloc);
-    rb_define_copy_func(cCipher, ossl_cipher_copy);
-    rb_define_module_function(cCipher, &quot;ciphers&quot;, ossl_s_ciphers, 0);
-    rb_define_method(cCipher, &quot;initialize&quot;, ossl_cipher_initialize, 1);
-    rb_define_method(cCipher, &quot;reset&quot;, ossl_cipher_reset, 0);
-    rb_define_method(cCipher, &quot;encrypt&quot;, ossl_cipher_encrypt, -1);
-    rb_define_method(cCipher, &quot;decrypt&quot;, ossl_cipher_decrypt, -1);
-    rb_define_method(cCipher, &quot;pkcs5_keyivgen&quot;, ossl_cipher_pkcs5_keyivgen, -1);
-    rb_define_method(cCipher, &quot;update&quot;, ossl_cipher_update, -1);
-    rb_define_method(cCipher, &quot;final&quot;, ossl_cipher_final, 0);
-    rb_define_method(cCipher, &quot;name&quot;, ossl_cipher_name, 0);
-    rb_define_method(cCipher, &quot;key=&quot;, ossl_cipher_set_key, 1);
-    rb_define_method(cCipher, &quot;key_len=&quot;, ossl_cipher_set_key_length, 1);
-    rb_define_method(cCipher, &quot;key_len&quot;, ossl_cipher_key_length, 0);
-    rb_define_method(cCipher, &quot;iv=&quot;, ossl_cipher_set_iv, 1);
-    rb_define_method(cCipher, &quot;iv_len&quot;, ossl_cipher_iv_length, 0);
-    rb_define_method(cCipher, &quot;block_size&quot;, ossl_cipher_block_size, 0);
-    rb_define_method(cCipher, &quot;padding=&quot;, ossl_cipher_set_padding, 1);
-}</pre>
-            </div><!-- key_len-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- key_len-method -->
 
       
         <div id="key_len-3D-method" class="method-detail ">
@@ -4146,13 +4107,15 @@ ossl_cipher_set_padding(VALUE self, VALUE padding)
 
           <div class="method-description">
             
-            <p>Generates and sets the key/iv based on a password.</p>
+            <p>Generates and sets the key/IV based on a password.</p>
 
 <p>WARNING: This method is only <a href="PKCS5.html">PKCS5</a> v1.5 compliant
-when using RC2, RC4-40, or DES with MD5 or SHA1.  Using anything else (like
+when using RC2, RC4-40, or DES with MD5 or SHA1. Using anything else (like
 AES) will generate the key/iv using an <a
-href="../OpenSSL.html">OpenSSL</a> specific method.  Use a <a
-href="PKCS5.html">PKCS5</a> v2 key generation method instead.</p>
+href="../OpenSSL.html">OpenSSL</a> specific method. This method is
+deprecated and should no longer be used. Use a <a
+href="PKCS5.html">PKCS5</a> v2 key generation method from <a
+href="PKCS5.html">OpenSSL::PKCS5</a> instead.</p>
 
 <h3>Parameters</h3>
 
@@ -4293,7 +4256,12 @@ cipher.decrypt before calling this method.</p>
 
           <div class="method-description">
             
-            <p>Internally calls EVP_CipherInit_ex(ctx, NULL, NULL, NULL, NULL, -1).</p>
+            <p>Fully resets the internal state of the <a
+href="Cipher/Cipher.html">Cipher</a>. By using this, the same <a
+href="Cipher/Cipher.html">Cipher</a> instance may be used several times for
+en- or decryption tasks.</p>
+
+<p>Internally calls EVP_CipherInit_ex(ctx, NULL, NULL, NULL, NULL, -1).</p>
             
 
             
@@ -4336,7 +4304,13 @@ ossl_cipher_reset(VALUE self)
 
           <div class="method-description">
             
-            <h3>Parameters</h3>
+            <p>Encrypts data in a streaming fashion. Hand consecutive blocks of data to
+the <tt>update</tt> method in order to encrypt it. Returns the encrypted
+data chunk. When done, the output of <a
+href="Cipher.html#method-i-final">Cipher#final</a> should be additionally
+added to the result.</p>
+
+<h3>Parameters</h3>
 
 <p><tt>data</tt> is a nonempty string. <tt>buffer</tt> is an optional string
 to store the result.</p>

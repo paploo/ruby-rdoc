@@ -190,6 +190,9 @@
             <li><a href="./ext/psych/lib/psych/deprecated_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
               class="thickbox" title="ext/psych/lib/psych/deprecated.rb">ext/psych/lib/psych/deprecated.rb</a></li>
           
+            <li><a href="./ext/psych/lib/psych/visitors/to_ruby_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="ext/psych/lib/psych/visitors/to_ruby.rb">ext/psych/lib/psych/visitors/to_ruby.rb</a></li>
+          
             <li><a href="./ext/ripper/ripper_c.html?TB_iframe=true&amp;height=550&amp;width=785"
               class="thickbox" title="ext/ripper/ripper.c">ext/ripper/ripper.c</a></li>
           
@@ -3889,6 +3892,11 @@ variables.</p>
           <dd class="description"><p>An alias of <tt>nil</tt></p></dd>
           
         
+          <dt><a name="NOENCODING">NOENCODING</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
           <dt><a name="NotImplementedError">NotImplementedError</a></dt>
           
           <dd class="description"></dd>
@@ -6924,6 +6932,15 @@ rb_obj_inspect(VALUE obj)
             
             <p>Returns <tt>true</tt> if <em>obj</em> is an instance of the given class.
 See also <tt>Object#kind_of?</tt>.</p>
+
+<pre>class A;     end
+class B &lt; A; end
+class C &lt; B; end
+
+b = B.new
+b.instance_of? A   #=&gt; false
+b.instance_of? B   #=&gt; true
+b.instance_of? C   #=&gt; false</pre>
             
 
             
@@ -7198,11 +7215,13 @@ class A
 end
 class B &lt; A; end
 class C &lt; B; end
+
 b = B.new
-b.instance_of? A   #=&gt; false
-b.instance_of? B   #=&gt; true
-b.instance_of? C   #=&gt; false
-b.instance_of? M   #=&gt; false
+b.is_a? A          #=&gt; true
+b.is_a? B          #=&gt; true
+b.is_a? C          #=&gt; false
+b.is_a? M          #=&gt; true
+
 b.kind_of? A       #=&gt; true
 b.kind_of? B       #=&gt; true
 b.kind_of? C       #=&gt; false
@@ -7275,11 +7294,13 @@ class A
 end
 class B &lt; A; end
 class C &lt; B; end
+
 b = B.new
-b.instance_of? A   #=&gt; false
-b.instance_of? B   #=&gt; true
-b.instance_of? C   #=&gt; false
-b.instance_of? M   #=&gt; false
+b.is_a? A          #=&gt; true
+b.is_a? B          #=&gt; true
+b.is_a? C          #=&gt; false
+b.is_a? M          #=&gt; true
+
 b.kind_of? A       #=&gt; true
 b.kind_of? B       #=&gt; true
 b.kind_of? C       #=&gt; false

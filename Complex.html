@@ -4930,7 +4930,7 @@ nucomp_rationalize(int argc, VALUE *argv, VALUE self)
        rb_raise(rb_eRangeError, &quot;can't convert %s into Rational&quot;,
                 StringValuePtr(s));
     }
-    return rb_funcall(dat-&gt;real, rb_intern(&quot;rationalize&quot;), argc, argv);
+    return rb_funcall2(dat-&gt;real, rb_intern(&quot;rationalize&quot;), argc, argv);
 }</pre>
             </div><!-- rationalize-source -->
             

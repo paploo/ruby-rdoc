@@ -71,6 +71,8 @@
           
           <li><a href="#method-c-search_convpath">::search_convpath</a></li>
           
+          <li><a href="#method-i-3D-3D">#==</a></li>
+          
           <li><a href="#method-i-convert">#convert</a></li>
           
           <li><a href="#method-i-convpath">#convpath</a></li>
@@ -3573,6 +3575,9 @@ econv_s_asciicompat_encoding(VALUE klass, VALUE arg)
   :undef =&gt; nil              # raise error on undefined conversion (default)
   :undef =&gt; :replace         # replace undefined conversion
   :replace =&gt; string         # replacement string (&quot;?&quot; or &quot;\uFFFD&quot; if not specified)
+  :newline =&gt; :universal     # decorator for converting CRLF and CR to LF
+  :newline =&gt; :crlf          # decorator for converting LF to CRLF
+  :newline =&gt; :cr            # decorator for converting LF to CR
   :universal_newline =&gt; true # decorator for converting CRLF and CR to LF
   :crlf_newline =&gt; true      # decorator for converting LF to CRLF
   :cr_newline =&gt; true        # decorator for converting LF to CR
@@ -3780,11 +3785,15 @@ econv_init(int argc, VALUE *argv, VALUE self)
 #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;]]
 
 p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;, universal_newline: true)
+or
+p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;EUC-JP&quot;, newline: :universal)
 #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
 #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:EUC-JP&gt;],
 #    &quot;universal_newline&quot;]
 
 p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;UTF-32BE&quot;, universal_newline: true)
+or
+p Encoding::Converter.search_convpath(&quot;ISO-8859-1&quot;, &quot;UTF-32BE&quot;, newline: :universal)
 #=&gt; [[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;],
 #    &quot;universal_newline&quot;,
 #    [#&lt;Encoding:UTF-8&gt;, #&lt;Encoding:UTF-32BE&gt;]]</pre>
@@ -3830,6 +3839,72 @@ econv_s_search_convpath(int argc, VALUE *argv, VALUE klass)
     
       <div id="public-instance-method-details" class="method-section section">
         <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="3D-3D-method" class="method-detail ">
+          <a name="method-i-3D-3D"></a>
+
+          
+          
+          <div class="method-heading">
+            <span class="method-callseq">ec == other        &rarr; true or false</span>
+            
+            <span class="method-click-advice">click to toggle source</span>
+            
+          </div>
+          
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="3D-3D-source">
+<pre>
+static VALUE
+econv_equal(VALUE self, VALUE other)
+{
+    rb_econv_t *ec1 = check_econv(self);
+    rb_econv_t *ec2;
+    int i;
+
+    if (!rb_typeddata_is_kind_of(other, &amp;econv_data_type)) {
+        return Qnil;
+    }
+    ec2 = DATA_PTR(other);
+    if (!ec2) return Qfalse;
+    if (ec1-&gt;source_encoding_name != ec2-&gt;source_encoding_name &amp;&amp;
+        strcmp(ec1-&gt;source_encoding_name, ec2-&gt;source_encoding_name))
+        return Qfalse;
+    if (ec1-&gt;destination_encoding_name != ec2-&gt;destination_encoding_name &amp;&amp;
+        strcmp(ec1-&gt;destination_encoding_name, ec2-&gt;destination_encoding_name))
+        return Qfalse;
+    if (ec1-&gt;flags != ec2-&gt;flags) return Qfalse;
+    if (ec1-&gt;replacement_enc != ec2-&gt;replacement_enc &amp;&amp;
+        strcmp(ec1-&gt;replacement_enc, ec2-&gt;replacement_enc))
+        return Qfalse;
+    if (ec1-&gt;replacement_len != ec2-&gt;replacement_len) return Qfalse;
+    if (ec1-&gt;replacement_str != ec2-&gt;replacement_str &amp;&amp;
+        memcmp(ec1-&gt;replacement_str, ec2-&gt;replacement_str, ec2-&gt;replacement_len))
+        return Qfalse;
+
+    if (ec1-&gt;num_trans != ec2-&gt;num_trans) return Qfalse;
+    for (i = 0; i &lt; ec1-&gt;num_trans; i++) {
+        if (ec1-&gt;elems[i].tc-&gt;transcoder != ec2-&gt;elems[i].tc-&gt;transcoder)
+            return Qfalse;
+    }
+    return Qtrue;
+}</pre>
+            </div><!-- 3D-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- 3D-3D-method -->
 
       
         <div id="convert-method" class="method-detail ">

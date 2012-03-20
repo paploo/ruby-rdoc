@@ -4683,7 +4683,12 @@ ossl_sslctx_setup(VALUE self)
     if(!NIL_P(val)) SSL_CTX_set_verify_depth(ctx, NUM2INT(val));
 
     val = ossl_sslctx_get_options(self);
-    if(!NIL_P(val)) SSL_CTX_set_options(ctx, NUM2LONG(val));
+    if(!NIL_P(val)) {
+        SSL_CTX_set_options(ctx, NUM2LONG(val));
+    }
+    else {
+        SSL_CTX_set_options(ctx, SSL_OP_ALL);
+    }
     rb_obj_freeze(self);
 
     val = ossl_sslctx_get_sess_id_ctx(self);

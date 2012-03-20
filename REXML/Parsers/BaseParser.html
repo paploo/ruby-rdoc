@@ -83,6 +83,8 @@
           
           <li><a href="#method-i-pull">#pull</a></li>
           
+          <li><a href="#method-i-pull_event">#pull_event</a></li>
+          
           <li><a href="#method-i-stream-3D">#stream=</a></li>
           
           <li><a href="#method-i-unnormalize">#unnormalize</a></li>
@@ -3791,6 +3793,7 @@ messages more informative.</p></dd>
 <span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>( <span class="ruby-identifier">source</span> )
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">stream</span> = <span class="ruby-identifier">source</span>
+  <span class="ruby-ivar">@listeners</span> = []
 <span class="ruby-keyword">end</span></pre>
             </div><!-- new-source -->
             
@@ -3827,12 +3830,8 @@ messages more informative.</p></dd>
             
             <div class="method-source-code" id="add_listener-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 119</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 120</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_listener</span>( <span class="ruby-identifier">listener</span> )
-  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@listeners</span>) <span class="ruby-keyword">or</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@listeners</span>
-    <span class="ruby-ivar">@listeners</span> = []
-    <span class="ruby-identifier">instance_eval</span> <span class="ruby-string">            alias :_old_pull :pull            def pull              event = _old_pull              @listeners.each do |listener|                listener.receive event              end              event            end</span>
-  <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@listeners</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">listener</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- add_listener-source -->
@@ -3864,7 +3863,7 @@ messages more informative.</p></dd>
             
             <div class="method-source-code" id="empty-3F-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 158</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword">return</span> (<span class="ruby-ivar">@source</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">empty?</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3897,7 +3896,7 @@ messages more informative.</p></dd>
             
             <div class="method-source-code" id="entity-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 444</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 441</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">entity</span>( <span class="ruby-identifier">reference</span>, <span class="ruby-identifier">entities</span> )
   <span class="ruby-identifier">value</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">value</span> = <span class="ruby-identifier">entities</span>[ <span class="ruby-identifier">reference</span> ] <span class="ruby-keyword">if</span> <span class="ruby-identifier">entities</span>
@@ -3936,7 +3935,7 @@ messages more informative.</p></dd>
             
             <div class="method-source-code" id="has_next-3F-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 163</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 151</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">has_next?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-operator">!</span>(<span class="ruby-ivar">@source</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">empty?</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3969,7 +3968,7 @@ messages more informative.</p></dd>
             
             <div class="method-source-code" id="normalize-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 455</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 452</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">normalize</span>( <span class="ruby-identifier">input</span>, <span class="ruby-identifier">entities</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword">nil</span> )
   <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-comment"># Doing it like this rather than in a loop improves the speed</span>
@@ -4018,7 +4017,7 @@ entire thing into memory) using this method.</p>
             
             <div class="method-source-code" id="peek-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 179</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 167</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">peek</span> <span class="ruby-identifier">depth</span>=<span class="ruby-value">0</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-node">%[Illegal argument &quot;#{depth}&quot;]</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">depth</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">-1</span>
   <span class="ruby-identifier">temp</span> = []
@@ -4061,7 +4060,7 @@ entire thing into memory) using this method.</p>
             
             <div class="method-source-code" id="position-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 148</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">position</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:position</span>
     <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">position</span>
@@ -4099,8 +4098,182 @@ entire thing into memory) using this method.</p>
             
             <div class="method-source-code" id="pull-source">
 <pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 194</span>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pull</span>
+  <span class="ruby-identifier">pull_event</span>.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">event</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">listener</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">receive</span> <span class="ruby-identifier">event</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- pull-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pull-method -->
+
+      
+        <div id="stream-3D-method" class="method-detail ">
+          <a name="method-i-stream-3D"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">stream=</span><span
+              class="method-args">( source )</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="stream-3D-source">
+<pre>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stream=</span>( <span class="ruby-identifier">source</span> )
+  <span class="ruby-ivar">@source</span> = <span class="ruby-constant">SourceFactory</span>.<span class="ruby-identifier">create_from</span>( <span class="ruby-identifier">source</span> )
+  <span class="ruby-ivar">@closed</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@document_status</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@tags</span> = []
+  <span class="ruby-ivar">@stack</span> = []
+  <span class="ruby-ivar">@entities</span> = []
+  <span class="ruby-ivar">@nsstack</span> = []
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- stream-3D-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- stream-3D-method -->
+
+      
+        <div id="unnormalize-method" class="method-detail ">
+          <a name="method-i-unnormalize"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">unnormalize</span><span
+              class="method-args">( string, entities=nil, filter=nil )</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Unescapes all possible entities</p>
+            
+
+            
+            <div class="method-source-code" id="unnormalize-source">
+<pre>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 468</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unnormalize</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">entities</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">filter</span>=<span class="ruby-keyword">nil</span> )
+  <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">string</span>.<span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-regexp">/\r\n?/</span>, <span class="ruby-string">&quot;\n&quot;</span> )
+  <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">scan</span>( <span class="ruby-constant">REFERENCE_RE</span> )
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">rv</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-node">/&amp;#0*((?:\d+)|(?:x[a-fA-F0-9]+));/</span> ) {
+    <span class="ruby-identifier">m</span>=<span class="ruby-node">$1</span>
+    <span class="ruby-identifier">m</span> = <span class="ruby-node">&quot;0#{m}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">xx</span>
+    [<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">m</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'U*'</span>)
+  }
+  <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">collect!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span><span class="ruby-identifier">x</span>[<span class="ruby-value">0</span>]}.<span class="ruby-identifier">compact!</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+    <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entity_reference</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">filter</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">entity_reference</span>)
+        <span class="ruby-identifier">entity_value</span> = <span class="ruby-identifier">entity</span>( <span class="ruby-identifier">entity_reference</span>, <span class="ruby-identifier">entities</span> )
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">entity_value</span>
+          <span class="ruby-identifier">re</span> = <span class="ruby-node">/&amp;#{entity_reference};/</span>
+          <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">re</span>, <span class="ruby-identifier">entity_value</span> )
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">er</span> = <span class="ruby-constant">DEFAULT_ENTITIES</span>[<span class="ruby-identifier">entity_reference</span>]
+          <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">er</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">er</span>[<span class="ruby-value">2</span>] ) <span class="ruby-keyword">if</span> <span class="ruby-identifier">er</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-regexp">/&amp;amp;/</span>, <span class="ruby-string">'&amp;'</span> )
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">rv</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- unnormalize-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- unnormalize-method -->
+
+      
+        <div id="unshift-method" class="method-detail ">
+          <a name="method-i-unshift"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">unshift</span><span
+              class="method-args">(token)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Push an event back on the head of the stream.  This method has
+(theoretically) infinite depth.</p>
+            
+
+            
+            <div class="method-source-code" id="unshift-source">
+<pre>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">unshift</span> <span class="ruby-identifier">token</span>
+  <span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">token</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- unshift-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- unshift-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+      <div id="private-instance-method-details" class="method-section section">
+        <h3 class="section-header">Private Instance Methods</h3>
+
+      
+        <div id="pull_event-method" class="method-detail ">
+          <a name="method-i-pull_event"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pull_event</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="pull_event-source">
+<pre>
+<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 190</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pull_event</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@closed</span>
     <span class="ruby-identifier">x</span>, <span class="ruby-ivar">@closed</span> = <span class="ruby-ivar">@closed</span>, <span class="ruby-keyword">nil</span>
     <span class="ruby-keyword">return</span> [ <span class="ruby-value">:end_element</span>, <span class="ruby-identifier">x</span> ]
@@ -4349,148 +4522,17 @@ entire thing into memory) using this method.</p>
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">return</span> [ <span class="ruby-value">:dummy</span> ]
 <span class="ruby-keyword">end</span></pre>
-            </div><!-- pull-source -->
+            </div><!-- pull_event-source -->
             
           </div>
 
           
 
           
-        </div><!-- pull-method -->
+        </div><!-- pull_event-method -->
 
       
-        <div id="stream-3D-method" class="method-detail ">
-          <a name="method-i-stream-3D"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">stream=</span><span
-              class="method-args">( source )</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            
-            
-
-            
-            <div class="method-source-code" id="stream-3D-source">
-<pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 138</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">stream=</span>( <span class="ruby-identifier">source</span> )
-  <span class="ruby-ivar">@source</span> = <span class="ruby-constant">SourceFactory</span>.<span class="ruby-identifier">create_from</span>( <span class="ruby-identifier">source</span> )
-  <span class="ruby-ivar">@closed</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@document_status</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-ivar">@tags</span> = []
-  <span class="ruby-ivar">@stack</span> = []
-  <span class="ruby-ivar">@entities</span> = []
-  <span class="ruby-ivar">@nsstack</span> = []
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- stream-3D-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- stream-3D-method -->
-
-      
-        <div id="unnormalize-method" class="method-detail ">
-          <a name="method-i-unnormalize"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">unnormalize</span><span
-              class="method-args">( string, entities=nil, filter=nil )</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            <p>Unescapes all possible entities</p>
-            
-
-            
-            <div class="method-source-code" id="unnormalize-source">
-<pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 471</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">unnormalize</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">entities</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">filter</span>=<span class="ruby-keyword">nil</span> )
-  <span class="ruby-identifier">rv</span> = <span class="ruby-identifier">string</span>.<span class="ruby-identifier">clone</span>
-  <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-regexp">/\r\n?/</span>, <span class="ruby-string">&quot;\n&quot;</span> )
-  <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">scan</span>( <span class="ruby-constant">REFERENCE_RE</span> )
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">rv</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
-  <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-node">/&amp;#0*((?:\d+)|(?:x[a-fA-F0-9]+));/</span> ) {
-    <span class="ruby-identifier">m</span>=<span class="ruby-node">$1</span>
-    <span class="ruby-identifier">m</span> = <span class="ruby-node">&quot;0#{m}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">xx</span>
-    [<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">m</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'U*'</span>)
-  }
-  <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">collect!</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span><span class="ruby-identifier">x</span>[<span class="ruby-value">0</span>]}.<span class="ruby-identifier">compact!</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-    <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entity_reference</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">filter</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">entity_reference</span>)
-        <span class="ruby-identifier">entity_value</span> = <span class="ruby-identifier">entity</span>( <span class="ruby-identifier">entity_reference</span>, <span class="ruby-identifier">entities</span> )
-        <span class="ruby-keyword">if</span> <span class="ruby-identifier">entity_value</span>
-          <span class="ruby-identifier">re</span> = <span class="ruby-node">/&amp;#{entity_reference};/</span>
-          <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">re</span>, <span class="ruby-identifier">entity_value</span> )
-        <span class="ruby-keyword">else</span>
-          <span class="ruby-identifier">er</span> = <span class="ruby-constant">DEFAULT_ENTITIES</span>[<span class="ruby-identifier">entity_reference</span>]
-          <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-identifier">er</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">er</span>[<span class="ruby-value">2</span>] ) <span class="ruby-keyword">if</span> <span class="ruby-identifier">er</span>
-        <span class="ruby-keyword">end</span>
-      <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-regexp">/&amp;amp;/</span>, <span class="ruby-string">'&amp;'</span> )
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">rv</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- unnormalize-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- unnormalize-method -->
-
-      
-        <div id="unshift-method" class="method-detail ">
-          <a name="method-i-unshift"></a>
-
-          
-          <div class="method-heading">
-            <span class="method-name">unshift</span><span
-              class="method-args">(token)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-          
-
-          <div class="method-description">
-            
-            <p>Push an event back on the head of the stream.  This method has
-(theoretically) infinite depth.</p>
-            
-
-            
-            <div class="method-source-code" id="unshift-source">
-<pre>
-<span class="ruby-comment"># File lib/rexml/parsers/baseparser.rb, line 169</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">unshift</span> <span class="ruby-identifier">token</span>
-  <span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">token</span>)
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- unshift-source -->
-            
-          </div>
-
-          
-
-          
-        </div><!-- unshift-method -->
-
-      
-      </div><!-- public-instance-method-details -->
+      </div><!-- private-instance-method-details -->
     
     </div><!-- 5Buntitled-5D -->
   

@@ -4391,9 +4391,8 @@ negative.</p>
 static VALUE
 int_round(int argc, VALUE* argv, VALUE num)
 {
-    VALUE n, f, h, r;
+    VALUE n;
     int ndigits;
-    ID op;
 
     if (argc == 0) return num;
     rb_scan_args(argc, argv, &quot;1&quot;, &amp;n);
@@ -4404,27 +4403,7 @@ int_round(int argc, VALUE* argv, VALUE num)
     if (ndigits == 0) {
         return num;
     }
-    ndigits = -ndigits;
-    if (ndigits &lt; 0) {
-        rb_raise(rb_eArgError, &quot;ndigits out of range&quot;);
-    }
-    f = int_pow(10, ndigits);
-    if (FIXNUM_P(num) &amp;&amp; FIXNUM_P(f)) {
-        SIGNED_VALUE x = FIX2LONG(num), y = FIX2LONG(f);
-        int neg = x &lt; 0;
-        if (neg) x = -x;
-        x = (x + y / 2) / y * y;
-        if (neg) x = -x;
-        return LONG2NUM(x);
-    }
-    h = rb_funcall(f, '/', 1, INT2FIX(2));
-    r = rb_funcall(num, '%', 1, f);
-    n = rb_funcall(num, '-', 1, r);
-    op = RTEST(rb_funcall(num, '&lt;', 1, INT2FIX(0))) ? rb_intern(&quot;&lt;=&quot;) : '&lt;';
-    if (!RTEST(rb_funcall(r, op, 1, h))) {
-        n = rb_funcall(n, '+', 1, f);
-    }
-    return n;
+    return int_round_0(num, ndigits);
 }</pre>
             </div><!-- round-source -->
             

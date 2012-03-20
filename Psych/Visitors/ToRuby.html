@@ -3409,7 +3409,7 @@ node to ruby</p>
           
           <div class="method-heading">
             <span class="method-name">new</span><span
-              class="method-args">()</span>
+              class="method-args">(ss = ScalarScanner.new)</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
           
@@ -3422,11 +3422,11 @@ node to ruby</p>
             
             <div class="method-source-code" id="new-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 8</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
-  <span class="ruby-keyword">super</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">ss</span> = <span class="ruby-constant">ScalarScanner</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">super</span>()
   <span class="ruby-ivar">@st</span> = {}
-  <span class="ruby-ivar">@ss</span> = <span class="ruby-constant">ScalarScanner</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@ss</span> = <span class="ruby-identifier">ss</span>
   <span class="ruby-ivar">@domain_types</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">domain_types</span>
 <span class="ruby-keyword">end</span></pre>
             </div><!-- new-source -->
@@ -3464,7 +3464,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="accept-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 15</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">target</span>
   <span class="ruby-identifier">result</span> = <span class="ruby-keyword">super</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@domain_types</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">target</span>.<span class="ruby-identifier">tag</span>
@@ -3508,7 +3508,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Alias-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 203</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 207</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Alias</span> <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -3541,7 +3541,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Document-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 195</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Document</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">accept</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">root</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3574,7 +3574,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Mapping-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 121</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Mapping</span> <span class="ruby-identifier">o</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">revive</span>(<span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>], <span class="ruby-identifier">o</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>]
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">revive_hash</span>({}, <span class="ruby-identifier">o</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
@@ -3677,7 +3677,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Scalar-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 30</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 34</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Scalar</span> <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
 
@@ -3768,7 +3768,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Sequence-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 92</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Sequence</span> <span class="ruby-identifier">o</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>]
     <span class="ruby-identifier">instance</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
@@ -3826,7 +3826,7 @@ node to ruby</p>
             
             <div class="method-source-code" id="visit_Psych_Nodes_Stream-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 199</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 203</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">visit_Psych_Nodes_Stream</span> <span class="ruby-identifier">o</span>
   <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -3905,7 +3905,7 @@ static VALUE build_exception(VALUE self, VALUE klass, VALUE mesg)
             
             <div class="method-source-code" id="init_with-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 240</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 244</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">init_with</span> <span class="ruby-identifier">o</span>, <span class="ruby-identifier">h</span>, <span class="ruby-identifier">node</span>
   <span class="ruby-identifier">c</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Coder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">node</span>.<span class="ruby-identifier">tag</span>)
   <span class="ruby-identifier">c</span>.<span class="ruby-identifier">map</span> = <span class="ruby-identifier">h</span>
@@ -3991,7 +3991,7 @@ static VALUE path2class(VALUE self, VALUE path)
             
             <div class="method-source-code" id="resolve_class-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 258</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 262</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_class</span> <span class="ruby-identifier">klassname</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">klassname</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">klassname</span>.<span class="ruby-identifier">empty?</span>
 
@@ -4038,7 +4038,7 @@ static VALUE path2class(VALUE self, VALUE path)
             
             <div class="method-source-code" id="revive-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 233</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 237</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">revive</span> <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">node</span>
   <span class="ruby-identifier">s</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
   <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">node</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">s</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">node</span>.<span class="ruby-identifier">anchor</span>
@@ -4074,7 +4074,7 @@ static VALUE path2class(VALUE self, VALUE path)
             
             <div class="method-source-code" id="revive_hash-source">
 <pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 208</span>
+<span class="ruby-comment"># File ext/psych/lib/psych/visitors/to_ruby.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">revive_hash</span> <span class="ruby-identifier">hash</span>, <span class="ruby-identifier">o</span>
   <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">hash</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
 

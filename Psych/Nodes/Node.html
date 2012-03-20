@@ -75,6 +75,8 @@
           
           <li><a href="#method-i-transform">#transform</a></li>
           
+          <li><a href="#method-i-yaml">#yaml</a></li>
+          
         </ul>
       </div>
       
@@ -3545,7 +3547,7 @@ depth first.</p>
         </div><!-- to_ruby-method -->
 
       
-        <div id="to_yaml-method" class="method-detail ">
+        <div id="to_yaml-method" class="method-detail method-alias">
           <a name="method-i-to_yaml"></a>
 
           
@@ -3558,28 +3560,18 @@ depth first.</p>
 
           <div class="method-description">
             
-            <p>Convert this node to <a href="../../YAML.html">YAML</a>.</p>
-
-<p>See also <a href="../Visitors/Emitter.html">Psych::Visitors::Emitter</a></p>
+            
             
 
-            
-            <div class="method-source-code" id="to_yaml-source">
-<pre>
-<span class="ruby-comment"># File ext/psych/lib/psych/nodes/node.rb, line 43</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_yaml</span> <span class="ruby-identifier">io</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span> = {}
-  <span class="ruby-identifier">real_io</span> = <span class="ruby-identifier">io</span> <span class="ruby-operator">||</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">''</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-string">'utf-8'</span>))
-
-  <span class="ruby-constant">Visitors</span><span class="ruby-operator">::</span><span class="ruby-constant">Emitter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">real_io</span>, <span class="ruby-identifier">options</span>).<span class="ruby-identifier">accept</span> <span class="ruby-keyword">self</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">real_io</span>.<span class="ruby-identifier">string</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">io</span>
-  <span class="ruby-identifier">io</span>
-<span class="ruby-keyword">end</span></pre>
-            </div><!-- to_yaml-source -->
             
           </div>
 
           
 
+          
+          <div class="aliases">
+            Alias for: <a href="Node.html#method-i-yaml">yaml</a>
+          </div>
           
         </div><!-- to_yaml-method -->
 
@@ -3611,6 +3603,49 @@ depth first.</p>
           </div>
           
         </div><!-- transform-method -->
+
+      
+        <div id="yaml-method" class="method-detail ">
+          <a name="method-i-yaml"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">yaml</span><span
+              class="method-args">(io = nil, options = {})</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>Convert this node to <a href="../../YAML.html">YAML</a>.</p>
+
+<p>See also <a href="../Visitors/Emitter.html">Psych::Visitors::Emitter</a></p>
+            
+
+            
+            <div class="method-source-code" id="yaml-source">
+<pre>
+<span class="ruby-comment"># File ext/psych/lib/psych/nodes/node.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">yaml</span> <span class="ruby-identifier">io</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span> = {}
+  <span class="ruby-identifier">real_io</span> = <span class="ruby-identifier">io</span> <span class="ruby-operator">||</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">''</span>.<span class="ruby-identifier">encode</span>(<span class="ruby-string">'utf-8'</span>))
+
+  <span class="ruby-constant">Visitors</span><span class="ruby-operator">::</span><span class="ruby-constant">Emitter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">real_io</span>, <span class="ruby-identifier">options</span>).<span class="ruby-identifier">accept</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">real_io</span>.<span class="ruby-identifier">string</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">io</span>
+  <span class="ruby-identifier">io</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- yaml-source -->
+            
+          </div>
+
+          
+          <div class="aliases">
+            Also aliased as: <a href="Node.html#method-i-to_yaml">to_yaml</a>
+          </div>
+          
+
+          
+        </div><!-- yaml-method -->
 
       
       </div><!-- public-instance-method-details -->

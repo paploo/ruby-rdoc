@@ -3471,14 +3471,15 @@ return type of <tt>type</tt>, a name of <tt>name</tt> and a calltype of
 static VALUE
 rb_dlcfunc_initialize(int argc, VALUE argv[], VALUE self)
 {
-    VALUE addr, name, type, calltype;
+    VALUE addr, name, type, calltype, addrnum;
     struct cfunc_data *data;
     void *saddr;
     const char *sname;
 
     rb_scan_args(argc, argv, &quot;13&quot;, &amp;addr, &amp;type, &amp;name, &amp;calltype);
 
-    saddr = (void*)(NUM2PTR(rb_Integer(addr)));
+    addrnum = rb_Integer(addr);
+    saddr = (void*)(NUM2PTR(addrnum));
     sname = NIL_P(name) ? NULL : StringValuePtr(name);
 
     TypedData_Get_Struct(self, struct cfunc_data, &amp;dlcfunc_data_type, data);
@@ -3487,6 +3488,7 @@ rb_dlcfunc_initialize(int argc, VALUE argv[], VALUE self)
     data-&gt;name = sname ? strdup(sname) : 0;
     data-&gt;type = NIL_P(type) ? DLTYPE_VOID : NUM2INT(type);
     data-&gt;calltype = NIL_P(calltype) ? CFUNC_CDECL : SYM2ID(calltype);
+    data-&gt;wrap = (addrnum == addr) ? 0 : addr;
 
     return Qnil;
 }</pre>
