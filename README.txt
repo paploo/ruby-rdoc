@@ -1,4 +1,4 @@
-The Ruby 1.9.3-p125 RDoc documentation.
+The Ruby 1.9.3-p194 RDoc documentation.
 
 Compiled by Jeff Reinecke <jeff@paploo.net> and posted at http://github.com/paploo/ruby-rdoc/.
 
