@@ -1,7 +1,6 @@
-The Ruby 1.9.3-p194 RDoc documentation.
+The Ruby 2.0.0-p0 RDoc documentation.
 
 Compiled by Jeff Reinecke <jeff@paploo.net> and posted at http://github.com/paploo/ruby-rdoc/.
 
-After having installed ruby 1.9.3, I changed directories to the root of the source directory and ran:
-  $ rdoc --all -o rdocs .
-Note that now the arguments --line-numbers and --promiscuous no longer exist.  Also, I removed the 'p' from '-op'.
+After having installed ruby 2.0.0-p0, I changed directories to the root of the source directory and ran:
+  $ rdoc --all --visibility=private -o rdocs .
