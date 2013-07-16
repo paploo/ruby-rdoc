@@ -502,6 +502,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -777,6 +779,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1649,8 +1653,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3711,9 +3713,10 @@ instances of <a href="APISpecification.html">APISpecification</a>.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
   <span class="ruby-ivar">@data</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
+  <span class="ruby-ivar">@dep_uri</span> = <span class="ruby-constant">URI</span> <span class="ruby-string">&#39;https://rubygems.org/api/v1/dependencies&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- new-source -->
           
@@ -3752,7 +3755,7 @@ objects matching <a href="DependencyRequest.html">DependencyRequest</a>
 
           
           <div class="method-source-code" id="find_all-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 116</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_all</span>(<span class="ruby-identifier">req</span>)
   <span class="ruby-identifier">res</span> = []
 
@@ -3794,15 +3797,15 @@ fetch data for DependencyRequests <code>reqs</code>.</p>
 
           
           <div class="method-source-code" id="prefetch-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 131</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">prefetch</span>(<span class="ruby-identifier">reqs</span>)
   <span class="ruby-identifier">names</span> = <span class="ruby-identifier">reqs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">name</span> }
   <span class="ruby-identifier">needed</span> = <span class="ruby-identifier">names</span>.<span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@data</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">d</span>) }
 
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">needed</span>.<span class="ruby-identifier">empty?</span>
 
-  <span class="ruby-identifier">u</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span> <span class="ruby-node">&quot;http://rubygems.org/api/v1/dependencies?gems=#{needed.join &#39;,&#39;}&quot;</span>
-  <span class="ruby-identifier">str</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">u</span>)
+  <span class="ruby-identifier">uri</span> = <span class="ruby-ivar">@dep_uri</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;?gems=#{needed.sort.join &#39;,&#39;}&quot;</span>
+  <span class="ruby-identifier">str</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RemoteFetcher</span>.<span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">fetch_path</span> <span class="ruby-identifier">uri</span>
 
   <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ver</span><span class="ruby-operator">|</span>
     <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">ver</span>[<span class="ruby-value">:name</span>]] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ver</span>
@@ -3837,14 +3840,14 @@ fetch data for DependencyRequests <code>reqs</code>.</p>
 
           
           <div class="method-source-code" id="versions-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 98</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">versions</span>(<span class="ruby-identifier">name</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">name</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">name</span>]
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">u</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span> <span class="ruby-node">&quot;http://rubygems.org/api/v1/dependencies?gems=#{name}&quot;</span>
-  <span class="ruby-identifier">str</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">u</span>)
+  <span class="ruby-identifier">uri</span> = <span class="ruby-ivar">@dep_uri</span> <span class="ruby-operator">+</span> <span class="ruby-node">&quot;?gems=#{name}&quot;</span>
+  <span class="ruby-identifier">str</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RemoteFetcher</span>.<span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">fetch_path</span> <span class="ruby-identifier">uri</span>
 
   <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ver</span><span class="ruby-operator">|</span>
     <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">ver</span>[<span class="ruby-value">:name</span>]] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ver</span>

@@ -502,6 +502,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -777,6 +779,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1649,8 +1653,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3710,7 +3712,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 192</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
   <span class="ruby-ivar">@f</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">SpecFetcher</span>.<span class="ruby-identifier">fetcher</span>
 
@@ -3762,7 +3764,7 @@ objects matching <a href="DependencyRequest.html">DependencyRequest</a>
 
           
           <div class="method-source-code" id="find_all-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 199</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 210</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_all</span>(<span class="ruby-identifier">req</span>)
   <span class="ruby-identifier">res</span> = []
 
@@ -3807,7 +3809,7 @@ a true <a href="../Specification.html">Specification</a> object.</p>
 
           
           <div class="method-source-code" id="load_spec-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 223</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 234</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_spec</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ver</span>, <span class="ruby-identifier">source</span>)
   <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;#{name}-#{ver}&quot;</span>
   <span class="ruby-ivar">@specs</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">source</span>.<span class="ruby-identifier">fetch_spec</span>(<span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">NameTuple</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ver</span>))
@@ -3841,7 +3843,7 @@ a true <a href="../Specification.html">Specification</a> object.</p>
 
           
           <div class="method-source-code" id="prefetch-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 217</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">prefetch</span>(<span class="ruby-identifier">gems</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- prefetch-source -->

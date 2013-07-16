@@ -471,6 +471,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -746,6 +748,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1618,8 +1622,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3711,7 +3713,10 @@ $stdin if no files were given).</p>
 <p>The array contains the module names loaded by require.</p>
 </dd><dt>$DEBUG
 <dd>
-<p>The status of the -d switch.</p>
+<p>The debug flag, which is set by the -d switch.  Enabling debug output
+prints each exception raised to $stderr (but not its backtrace).  Setting
+this to a true value enables debug output as if -d were given on the
+command line.  Setting this to a false value disables debug output.</p>
 </dd><dt>$FILENAME
 <dd>
 <p>Current input file from $&lt;. Same as $&lt;.filename.</p>
@@ -3729,7 +3734,10 @@ $stdin if no files were given).</p>
 <p>The current standard output.</p>
 </dd><dt>$VERBOSE
 <dd>
-<p>The verbose flag, which is set by the -v switch.</p>
+<p>The verbose flag, which is set by the -w or -v switch.  Setting this to a
+true value enables warnings as if -w or -v were given on the command line. 
+Setting this to nil disables warnings, including from <a
+href="../Kernel.html#method-i-warn">Kernel#warn</a>.</p>
 </dd><dt>$-0
 <dd>
 <p>The alias to $/.</p>
@@ -3738,7 +3746,7 @@ $stdin if no files were given).</p>
 <p>True if option -a is set. Read-only variable.</p>
 </dd><dt>$-d
 <dd>
-<p>The alias to $DEBUG.</p>
+<p>The alias of $DEBUG.  See $DEBUG above for further discusison.</p>
 </dd><dt>$-F
 <dd>
 <p>The alias to $;.</p>
@@ -3756,10 +3764,10 @@ $stdin if no files were given).</p>
 <p>True if option -p is set. Read-only variable.</p>
 </dd><dt>$-v
 <dd>
-<p>The alias to $VERBOSE.</p>
+<p>An alias of $VERBOSE.  See $VERBOSE above for further discussion.</p>
 </dd><dt>$-w
 <dd>
-<p>True if option -w is set.</p>
+<p>An alias of $VERBOSE.  See $VERBOSE above for further discussion.</p>
 </dd></dl>
 
 <h2 id="label-Pre-defined+global+constants">Pre-defined global constants<span><a href="#label-Pre-defined+global+constants">&para;</a> <a href="#documentation">&uarr;</a></span></h2>

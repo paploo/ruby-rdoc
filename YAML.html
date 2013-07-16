@@ -44,12 +44,25 @@
 
 
   
+<div id="table-of-contents">
+  <nav class="section">
+    <h3 class="section-header">Table of Contents</h3>
+    <ul>
+      <li><a href="#label-Usage">Usage</a>
+      <li><a href="#label-Security">Security</a>
+      <li><a href="#label-History">History</a>
+      <li><a href="#label-More+info">More info</a>
+    </ul>
+  </nav>
+</div>
+
 
   <div id="file-metadata">
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
     <li>lib/rubygems/syck_hack.rb
+    <li>lib/yaml.rb
     <li>lib/yaml/dbm.rb
     <li>lib/yaml/store.rb
   </ul>
@@ -482,6 +495,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -757,6 +772,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1629,8 +1646,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3649,6 +3664,52 @@
 
   <div id="description" class="description">
     
+<p>YAML Ain&#39;t Markup Language</p>
+
+<p>This module provides a Ruby interface for data serialization in YAML
+format.</p>
+
+<p>The underlying implementation is the libyaml wrapper <a
+href="Psych.html">Psych</a>.</p>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Working with YAML can be very simple, for example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;yaml&#39;</span> <span class="ruby-comment"># STEP ONE, REQUIRE YAML!</span>
+<span class="ruby-comment"># Parse a YAML string</span>
+<span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-string">&quot;--- foo&quot;</span>) <span class="ruby-comment">#=&gt; &quot;foo&quot;</span>
+
+<span class="ruby-comment"># Emit some YAML</span>
+<span class="ruby-constant">YAML</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-string">&quot;foo&quot;</span>)     <span class="ruby-comment"># =&gt; &quot;--- foo\n...\n&quot;</span>
+{ :<span class="ruby-identifier">a</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;b&#39;</span>}.<span class="ruby-identifier">to_yaml</span>  <span class="ruby-comment"># =&gt; &quot;---\n:a: b\n&quot;</span>
+</pre>
+
+<h2 id="label-Security">Security<span><a href="#label-Security">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Do not use YAML to load untrusted data. Doing so is unsafe and could allow
+malicious input to execute arbitrary code inside your application. Please
+see <a href="doc/security_rdoc.html">doc/security.rdoc</a> for more
+information.</p>
+
+<h2 id="label-History">History<span><a href="#label-History">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>Syck was the original for YAML implementation in Ruby&#39;s standard
+library developed by why the lucky stiff.</p>
+
+<p>You can still use Syck, if you prefer, for parsing and emitting YAML, but
+you must install the &#39;syck&#39; gem now in order to use it.</p>
+
+<p>In older Ruby versions, ie. &lt;= 1.9, Syck is still provided, however it
+was completely removed with the release of Ruby 2.0.0.</p>
+
+<h2 id="label-More+info">More info<span><a href="#label-More+info">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>For more advanced details on the implementation see <a
+href="Psych.html">Psych</a>, and also check out <a
+href="http://yaml.org">yaml.org</a> for spec details and other helpful
+information.</p>
+
   </div><!-- description -->
 
   

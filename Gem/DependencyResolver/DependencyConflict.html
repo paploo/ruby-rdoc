@@ -502,6 +502,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -777,6 +779,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1649,8 +1653,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3744,7 +3746,7 @@ would be activated.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 288</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">dependency</span>, <span class="ruby-identifier">activated</span>, <span class="ruby-identifier">failed_dep</span>=<span class="ruby-identifier">dependency</span>)
   <span class="ruby-ivar">@dependency</span> = <span class="ruby-identifier">dependency</span>
   <span class="ruby-ivar">@activated</span> = <span class="ruby-identifier">activated</span>
@@ -3785,7 +3787,7 @@ would be activated.</p>
 
           
           <div class="method-source-code" id="conflicting_dependencies-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 308</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 319</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">conflicting_dependencies</span>
   [<span class="ruby-ivar">@failed_dep</span>.<span class="ruby-identifier">dependency</span>, <span class="ruby-ivar">@activated</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">dependency</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -3818,7 +3820,7 @@ would be activated.</p>
 
           
           <div class="method-source-code" id="for_spec-3F-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 302</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 313</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">for_spec?</span>(<span class="ruby-identifier">spec</span>)
   <span class="ruby-ivar">@dependency</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3852,7 +3854,7 @@ the dependency</p>
 
           
           <div class="method-source-code" id="requester-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 298</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 309</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">requester</span>
   <span class="ruby-ivar">@failed_dep</span>.<span class="ruby-identifier">requester</span>
 <span class="ruby-keyword">end</span></pre>

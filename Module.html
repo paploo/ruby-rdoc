@@ -233,8 +233,6 @@
     
     <li ><a href="#method-i-undef_method">#undef_method</a>
     
-    <li ><a href="#method-i-used">#used</a>
-    
     <li ><a href="#method-i-yaml_as">#yaml_as</a>
     
   </ul>
@@ -658,6 +656,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -933,6 +933,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1805,8 +1807,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4158,6 +4158,7 @@ rb_class_inherited_p(VALUE mod, VALUE arg)
     if (!CLASS_OR_MODULE_P(arg)) {
         rb_raise(rb_eTypeError, &quot;compared with non class/module&quot;);
     }
+    arg = RCLASS_ORIGIN(arg);
     while (mod) {
         if (RCLASS_M_TBL(mod) == RCLASS_M_TBL(arg))
             return Qtrue;
@@ -4186,7 +4187,7 @@ rb_class_inherited_p(VALUE mod, VALUE arg)
         
         <div class="method-heading">
           <span class="method-callseq">
-            mod &lt;=&gt; other_mod   &rarr; -1, 0, +1, or nil
+            module &lt;=&gt; other_module   &rarr; -1, 0, +1, or nil
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4197,11 +4198,14 @@ rb_class_inherited_p(VALUE mod, VALUE arg)
 
         <div class="method-description">
           
-          <p>Comparison—Returns -1 if <em>mod</em> includes <em>other_mod</em>, 0 if
-<em>mod</em> is the same as <em>other_mod</em>, and +1 if <em>mod</em> is
-included by <em>other_mod</em>. Returns <code>nil</code> if <em>mod</em>
-has no relationship with <em>other_mod</em> or if <em>other_mod</em> is not
-a module.</p>
+          <p>Comparison—Returns -1, 0, +1 or nil depending on whether
+<code>module</code> includes <code>other_module</code>, they are the same,
+or if <code>module</code> is included by <code>other_module</code>. This is
+the basis for the tests in <a href="Comparable.html">Comparable</a>.</p>
+
+<p>Returns <code>nil</code> if <code>module</code> has no relationship with
+<code>other_module</code>, if <code>other_module</code> is not a module, or
+if the two values are incomparable.</p>
           
           
 
@@ -5490,10 +5494,13 @@ rb_mod_included_modules(VALUE mod)
 {
     VALUE ary = rb_ary_new();
     VALUE p;
+    VALUE origin = RCLASS_ORIGIN(mod);
 
     for (p = RCLASS_SUPER(mod); p; p = RCLASS_SUPER(p)) {
-	if (BUILTIN_TYPE(p) == T_ICLASS) {
-	    rb_ary_push(ary, RBASIC(p)-&gt;klass);
+	if (p != origin &amp;&amp; BUILTIN_TYPE(p) == T_ICLASS) {
+	    VALUE m = RBASIC(p)-&gt;klass;
+	    if (RB_TYPE_P(m, T_MODULE))
+		rb_ary_push(ary, m);
 	}
     }
     return ary;
@@ -5918,7 +5925,7 @@ constructor <code>new</code>.</p>
             <pre>static VALUE
 rb_mod_private_method(int argc, VALUE *argv, VALUE obj)
 {
-    set_method_visibility(CLASS_OF(obj), argc, argv, NOEX_PRIVATE);
+    set_method_visibility(rb_singleton_class(obj), argc, argv, NOEX_PRIVATE);
     return obj;
 }</pre>
           </div><!-- private_class_method-source -->
@@ -6235,7 +6242,7 @@ rb_mod_protected_method_defined(VALUE mod, VALUE mid)
             <pre>static VALUE
 rb_mod_public_method(int argc, VALUE *argv, VALUE obj)
 {
-    set_method_visibility(CLASS_OF(obj), argc, argv, NOEX_PUBLIC);
+    set_method_visibility(rb_singleton_class(obj), argc, argv, NOEX_PUBLIC);
     return obj;
 }</pre>
           </div><!-- public_class_method-source -->
@@ -8127,40 +8134,6 @@ rb_mod_undef_method(int argc, VALUE *argv, VALUE mod)
 
         
       </div><!-- undef_method-method -->
-
-    
-      <div id="method-i-used" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">used</span><span
-            class="method-args">(p1)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Not documented</p>
-          
-          
-
-          
-          <div class="method-source-code" id="used-source">
-            <pre>static VALUE
-rb_obj_dummy(void)
-{
-    return Qnil;
-}</pre>
-          </div><!-- used-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- used-method -->
 
     
     </section><!-- private-instance-method-details -->

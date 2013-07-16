@@ -594,6 +594,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -869,6 +871,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1741,8 +1745,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -7303,7 +7305,7 @@ succeeds if one socket can be used at least.</p>
 <p>If a block is given, the block is called with the sockets. The value of the
 block is returned. The socket is closed when this method returns.</p>
 
-<p>If <em>port</em> is 0, actual port number is choosen dynamically. However
+<p>If <em>port</em> is 0, actual port number is chosen dynamically. However
 all sockets in the result has same port number.</p>
 
 <pre class="ruby"><span class="ruby-comment"># tcp_server_sockets returns two sockets.</span>
@@ -7315,7 +7317,7 @@ all sockets in the result has same port number.</p>
 <span class="ruby-comment">#=&gt; #&lt;Addrinfo: [::]:1296 TCP&gt;</span>
 <span class="ruby-comment">#   #&lt;Addrinfo: 0.0.0.0:1296 TCP&gt;</span>
 
-<span class="ruby-comment"># IPv6 and IPv4 socket has same port number, 53114, even if it is choosen dynamically.</span>
+<span class="ruby-comment"># IPv6 and IPv4 socket has same port number, 53114, even if it is chosen dynamically.</span>
 <span class="ruby-identifier">sockets</span> = <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">tcp_server_sockets</span>(<span class="ruby-value">0</span>)
 <span class="ruby-identifier">sockets</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">local_address</span> }
 <span class="ruby-comment">#=&gt; #&lt;Addrinfo: [::]:53114 TCP&gt;</span>
@@ -7576,8 +7578,8 @@ implemented using this method as follows.</p>
 <p>If a block is given, the block is called with the sockets. The value of the
 block is returned. The sockets are closed when this method returns.</p>
 
-<p>If <em>port</em> is zero, some port is choosen. But the choosen port is
-used for the all sockets.</p>
+<p>If <em>port</em> is zero, some port is chosen. But the chosen port is used
+for the all sockets.</p>
 
 <pre class="ruby"><span class="ruby-comment"># UDP/IP echo server</span>
 <span class="ruby-constant">Socket</span>.<span class="ruby-identifier">udp_server_sockets</span>(<span class="ruby-value">0</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">sockets</span><span class="ruby-operator">|</span>

@@ -580,6 +580,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -855,6 +857,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1727,8 +1731,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4000,10 +4002,19 @@ OpenSSL::SSL::ExtensionFactory to indicate the purpose of the certificate.</p>
 
 <pre>extension_factory = OpenSSL::X509::ExtensionFactory.new nil, cert
 
-extension_factory.create_extension &#39;basicConstraints&#39;, &#39;CA:FALSE&#39;
-extension_factory.create_extension &#39;keyUsage&#39;,
-  &#39;keyEncipherment,dataEncipherment,digitalSignature&#39;
-extension_factory.create_extension &#39;subjectKeyIdentifier&#39;, &#39;hash&#39;</pre>
+cert.add_extension \
+  extension_factory.create_extension(&#39;basicConstraints&#39;, &#39;CA:FALSE&#39;, true)
+
+cert.add_extension \
+  extension_factory.create_extension(
+    &#39;keyUsage&#39;, &#39;keyEncipherment,dataEncipherment,digitalSignature&#39;)
+
+cert.add_extension \
+  extension_factory.create_extension(&#39;subjectKeyIdentifier&#39;, &#39;hash&#39;)</pre>
+
+<p>The list of supported extensions (and in some cases their possible values)
+can be derived from the “objects.h” file in the <a
+href="OpenSSL.html">OpenSSL</a> source code.</p>
 
 <h3 id="label-Signing+a+Certificate">Signing a Certificate<span><a href="#label-Signing+a+Certificate">&para;</a> <a href="#documentation">&uarr;</a></span></h3>
 
@@ -4074,16 +4085,20 @@ extension_factory = OpenSSL::X509::ExtensionFactory.new
 extension_factory.subject_certificate = ca_cert
 extension_factory.issuer_certificate = ca_cert
 
-extension_factory.create_extension &#39;subjectKeyIdentifier&#39;, &#39;hash&#39;</pre>
+ca_cert.add_extension \
+  extension_factory.create_extension(&#39;subjectKeyIdentifier&#39;, &#39;hash&#39;)</pre>
 
 <p>This extension indicates the CA&#39;s key may be used as a CA.</p>
 
-<pre>extension_factory.create_extension &#39;basicConstraints&#39;, &#39;CA:TRUE&#39;, true</pre>
+<pre>ca_cert.add_extension \
+  extension_factory.create_extension(&#39;basicConstraints&#39;, &#39;CA:TRUE&#39;, true)</pre>
 
 <p>This extension indicates the CA&#39;s key may be used to verify signatures
 on both certificates and certificate revocations.</p>
 
-<pre>extension_factory.create_extension &#39;keyUsage&#39;, &#39;cRLSign,keyCertSign&#39;, true</pre>
+<pre>ca_cert.add_extension \
+  extension_factory.create_extension(
+    &#39;keyUsage&#39;, &#39;cRLSign,keyCertSign&#39;, true)</pre>
 
 <p>Root CA certificates are self-signed.</p>
 
@@ -4141,10 +4156,12 @@ signed with the CA key and returned to the requester.</p>
 <span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">subject_certificate</span> = <span class="ruby-identifier">csr_cert</span>
 <span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">issuer_certificate</span> = <span class="ruby-identifier">ca_cert</span>
 
-<span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span> <span class="ruby-string">&#39;basicConstraints&#39;</span>, <span class="ruby-string">&#39;CA:FALSE&#39;</span>
-<span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span> <span class="ruby-string">&#39;keyUsage&#39;</span>,
-  <span class="ruby-string">&#39;keyEncipherment,dataEncipherment,digitalSignature&#39;</span>
-<span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span> <span class="ruby-string">&#39;subjectKeyIdentifier&#39;</span>, <span class="ruby-string">&#39;hash&#39;</span>
+<span class="ruby-identifier">csr_cert</span>.<span class="ruby-identifier">add_extension</span>    <span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-string">&#39;basicConstraints&#39;</span>, <span class="ruby-string">&#39;CA:FALSE&#39;</span>)
+
+<span class="ruby-identifier">csr_cert</span>.<span class="ruby-identifier">add_extension</span>    <span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span>(
+    <span class="ruby-string">&#39;keyUsage&#39;</span>, <span class="ruby-string">&#39;keyEncipherment,dataEncipherment,digitalSignature&#39;</span>)
+
+<span class="ruby-identifier">csr_cert</span>.<span class="ruby-identifier">add_extension</span>    <span class="ruby-identifier">extension_factory</span>.<span class="ruby-identifier">create_extension</span>(<span class="ruby-string">&#39;subjectKeyIdentifier&#39;</span>, <span class="ruby-string">&#39;hash&#39;</span>)
 
 <span class="ruby-identifier">csr_cert</span>.<span class="ruby-identifier">sign</span> <span class="ruby-identifier">ca_key</span>, <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">new</span>
 

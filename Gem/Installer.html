@@ -573,6 +573,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -848,6 +850,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1720,8 +1724,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -4259,7 +4261,7 @@ configure scripts and rakefiles or mkrf_conf files.</p>
         <span class="ruby-identifier">say</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">really_verbose</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">rescue</span>
-      <span class="ruby-identifier">extension_build_error</span>(<span class="ruby-identifier">extension_dir</span>, <span class="ruby-identifier">results</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>))
+      <span class="ruby-identifier">extension_build_error</span>(<span class="ruby-identifier">extension_dir</span>, <span class="ruby-identifier">results</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>), <span class="ruby-identifier">$@</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4559,7 +4561,7 @@ for this gem is loadable upon installation.</p>
         
         <div class="method-heading">
           <span class="method-name">extension_build_error</span><span
-            class="method-args">(build_dir, output)</span>
+            class="method-args">(build_dir, output, backtrace = nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -4576,7 +4578,7 @@ for this gem is loadable upon installation.</p>
           
           <div class="method-source-code" id="extension_build_error-source">
             <pre><span class="ruby-comment"># File lib/rubygems/installer.rb, line 692</span>
-  <span class="ruby-keyword">def</span> <span class="ruby-identifier">extension_build_error</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">extension_build_error</span>(<span class="ruby-identifier">build_dir</span>, <span class="ruby-identifier">output</span>, <span class="ruby-identifier">backtrace</span> = <span class="ruby-keyword">nil</span>)
     <span class="ruby-identifier">gem_make_out</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">build_dir</span>, <span class="ruby-string">&#39;gem_make.out&#39;</span>
 
     <span class="ruby-identifier">open</span> <span class="ruby-identifier">gem_make_out</span>, <span class="ruby-string">&#39;wb&#39;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">output</span> <span class="ruby-keyword">end</span>
@@ -4590,7 +4592,7 @@ Gem files will remain installed in #{gem_dir} for inspection.
 Results logged to #{gem_make_out}
 EOF</span>
 
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ExtensionBuildError</span>, <span class="ruby-identifier">message</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ExtensionBuildError</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">backtrace</span>
   <span class="ruby-keyword">end</span></pre>
           </div><!-- extension_build_error-source -->
           

@@ -505,6 +505,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -780,6 +782,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1652,8 +1656,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3739,7 +3741,7 @@ queries only against the already installed gems.</p>
 
           
           <div class="method-source-code" id="for_current_gems-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 259</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 270</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">for_current_gems</span>(<span class="ruby-identifier">needed</span>)
   <span class="ruby-identifier">new</span> <span class="ruby-identifier">needed</span>, <span class="ruby-constant">CurrentSet</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3779,7 +3781,7 @@ rubygems.org.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 249</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 260</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">needed</span>, <span class="ruby-identifier">set</span>=<span class="ruby-constant">IndexSet</span>.<span class="ruby-identifier">new</span>)
   <span class="ruby-ivar">@set</span> = <span class="ruby-identifier">set</span> <span class="ruby-operator">||</span> <span class="ruby-constant">IndexSet</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment"># Allow nil to mean IndexSet</span>
   <span class="ruby-ivar">@needed</span> = <span class="ruby-identifier">needed</span>
@@ -3821,7 +3823,7 @@ rubygems.org.</p>
 
           
           <div class="method-source-code" id="requests-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 424</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 437</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">requests</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">act</span>)
   <span class="ruby-identifier">reqs</span> = []
   <span class="ruby-identifier">s</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
@@ -3864,7 +3866,7 @@ objects.</p>
 
           
           <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 270</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 281</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve</span>
   <span class="ruby-ivar">@conflicts</span> = []
 
@@ -3913,7 +3915,7 @@ objects.</p>
 
           
           <div class="method-source-code" id="resolve_for-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 440</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 453</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">resolve_for</span>(<span class="ruby-identifier">needed</span>, <span class="ruby-identifier">specs</span>)
   <span class="ruby-keyword">until</span> <span class="ruby-identifier">needed</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-identifier">dep</span> = <span class="ruby-identifier">needed</span>.<span class="ruby-identifier">shift</span>

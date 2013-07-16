@@ -514,6 +514,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -789,6 +791,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1661,8 +1665,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3871,7 +3873,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="cache_update_path-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 66</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">cache_update_path</span> <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">path</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">update</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">data</span> = <span class="ruby-identifier">fetch_path</span>(<span class="ruby-identifier">uri</span>)
     <span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;wb&#39;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">data</span> } <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">update</span>
@@ -3909,7 +3911,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="download-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 114</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">download</span> <span class="ruby-identifier">spec</span>, <span class="ruby-identifier">source_uri</span>, <span class="ruby-identifier">install_dir</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>
   <span class="ruby-identifier">name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">cache_file</span>
   <span class="ruby-identifier">path</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">install_dir</span> <span class="ruby-keyword">then</span> <span class="ruby-comment"># see fetch_command</span>
@@ -3919,8 +3921,6 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
          <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">name</span>
-
-  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">ensure_gem_subdirectories</span> <span class="ruby-identifier">install_dir</span>
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">source_uri</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^http/</span> <span class="ruby-keyword">then</span>
     <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">path</span>, <span class="ruby-string">&quot;wb&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
@@ -3961,7 +3961,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="download_to_cache-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">download_to_cache</span> <span class="ruby-identifier">dependency</span>
   <span class="ruby-identifier">found</span>, <span class="ruby-identifier">_</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">SpecFetcher</span>.<span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">spec_for_dependency</span> <span class="ruby-identifier">dependency</span>
 
@@ -3985,7 +3985,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
         
         <div class="method-heading">
           <span class="method-name">fetch_path</span><span
-            class="method-args">(path, mtime = nil)</span>
+            class="method-args">(path, mtime = nil, head = false)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -4000,8 +4000,8 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="fetch_path-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 52</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_path</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">mtime</span> = <span class="ruby-keyword">nil</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_path</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">mtime</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">head</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">data</span> = <span class="ruby-identifier">find_data</span>(<span class="ruby-identifier">path</span>)
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:call</span>) <span class="ruby-keyword">then</span>
@@ -4043,7 +4043,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="fetch_size-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 99</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fetch_size</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_s</span>
   <span class="ruby-ivar">@paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
@@ -4089,6 +4089,11 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
           <div class="method-source-code" id="find_data-source">
             <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_data</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">URI</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">path</span> <span class="ruby-keyword">and</span> <span class="ruby-node">&quot;URI::#{path.scheme.upcase}&quot;</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
+      <span class="ruby-node">&quot;mismatch for scheme #{path.scheme} and class #{path.class}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
   <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_s</span>
   <span class="ruby-ivar">@paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;need full URI&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r^https?://&#39;</span>
@@ -4128,7 +4133,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="open_uri_or_path-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 76</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">open_uri_or_path</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">data</span> = <span class="ruby-identifier">find_data</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">body</span>, <span class="ruby-identifier">code</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">data</span>
@@ -4167,7 +4172,7 @@ href="FakeFetcher.html">FakeFetcher</a>.</p>
 
           
           <div class="method-source-code" id="request-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_utilities.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">request_class</span>, <span class="ruby-identifier">last_modified</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">data</span> = <span class="ruby-identifier">find_data</span>(<span class="ruby-identifier">uri</span>)
   <span class="ruby-identifier">body</span>, <span class="ruby-identifier">code</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">data</span>

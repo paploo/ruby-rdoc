@@ -558,6 +558,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -833,6 +835,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1705,8 +1709,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4090,10 +4092,10 @@ range_begin(VALUE range)
         <div class="method-description">
           
           <p>By using binary search, finds a value in range which meets the given
-condition in O(log n) where n is the size of the array.</p>
+condition in O(log n) where n is the size of the range.</p>
 
 <p>You can use this method in two use cases: a find-minimum mode and a
-find-any mode.  In either case, the elements of the array must be monotone
+find-any mode.  In either case, the elements of the range must be monotone
 (or sorted) with respect to the block.</p>
 
 <p>In find-minimum mode (this is a good choice for typical use case), the

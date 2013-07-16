@@ -716,6 +716,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -991,6 +993,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1863,8 +1867,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4205,6 +4207,20 @@ rb_obj_not_match(VALUE obj1, VALUE obj2)
         <div class="method-description">
           
           <p>Returns 0 if obj === other, otherwise nil.</p>
+
+<p>The &lt;=&gt; is used by various methods to compare objects, for example <a
+href="Enumerable.html#method-i-sort">Enumerable#sort</a>, <a
+href="Enumerable.html#method-i-max">Enumerable#max</a> etc.</p>
+
+<p>Your implementation of &lt;=&gt; should return one of the following values:
+-1, 0, 1 or nil. -1 means self is smaller than other. 0 means self is equal
+to other. 1 means self is bigger than other. Nil means the two values could
+not be compared.</p>
+
+<p>When you defined &lt;=&gt;, you can include <a
+href="Comparable.html">Comparable</a> to gain the methods &lt;=, &lt;,</p>
+
+<h2 id="method-i-3C-3D-3E-label-%2C+%3E%3D%2C+%3E+and+between%3F.">, &gt;=, &gt; and between?.<span><a href="#method-i-3C-3D-3E-label-%2C+%3E%3D%2C+%3E+and+between%3F.">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
           
           
 
@@ -5960,6 +5976,7 @@ rb_obj_is_kind_of(VALUE obj, VALUE c)
     VALUE cl = CLASS_OF(obj);
 
     c = class_or_module_required(c);
+    c = RCLASS_ORIGIN(c);
     while (cl) {
         if (cl == c || RCLASS_M_TBL(cl) == RCLASS_M_TBL(c))
             return Qtrue;
@@ -6033,6 +6050,7 @@ rb_obj_is_kind_of(VALUE obj, VALUE c)
     VALUE cl = CLASS_OF(obj);
 
     c = class_or_module_required(c);
+    c = RCLASS_ORIGIN(c);
     while (cl) {
         if (cl == c || RCLASS_M_TBL(cl) == RCLASS_M_TBL(c))
             return Qtrue;
@@ -7559,7 +7577,7 @@ instead.</p>
 
           
           <div class="method-source-code" id="timeout-source">
-            <pre><span class="ruby-comment"># File lib/timeout.rb, line 95</span>
+            <pre><span class="ruby-comment"># File lib/timeout.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">e</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">e</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>

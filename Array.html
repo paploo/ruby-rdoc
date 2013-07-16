@@ -728,6 +728,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -1003,6 +1005,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1875,8 +1879,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3918,7 +3920,7 @@ of the Array) or two arguments (the initial size and a default object).</p>
 
 <pre class="ruby"><span class="ruby-identifier">ary</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>    <span class="ruby-comment">#=&gt; []</span>
 <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">3</span>)       <span class="ruby-comment">#=&gt; [nil, nil, nil]</span>
-<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">3</span>, <span class="ruby-keyword">true</span>) <span class="ruby-comment">#=&gt; [0, 0, 0]</span>
+<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">3</span>, <span class="ruby-keyword">true</span>) <span class="ruby-comment">#=&gt; [true, true, true]</span>
 </pre>
 
 <p>Note that the second argument populates the array with references to the
@@ -3940,9 +3942,9 @@ other arrays:</p>
 </pre>
 
 <p>An array can also be created by using the Array() method, provided by <a
-href="Kernel.html">Kernel</a>, which calls  <a
-href="Array.html#method-i-to_ary">to_ary</a> or <a
-href="Array.html#method-i-to_a">to_a</a> on it&#39;s argument.</p>
+href="Kernel.html">Kernel</a>, which tries to call <a
+href="Array.html#method-i-to_ary">to_ary</a>, then <a
+href="Array.html#method-i-to_a">to_a</a> on its argument.</p>
 
 <pre class="ruby"><span class="ruby-constant">Array</span>({:<span class="ruby-identifier">a</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;a&quot;</span>, :<span class="ruby-identifier">b</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;b&quot;</span>}) <span class="ruby-comment">#=&gt; [[:a, &quot;a&quot;], [:b, &quot;b&quot;]]</span>
 </pre>
@@ -4158,7 +4160,7 @@ selected elements, but leave the original array unchanged.</p>
 
 <pre class="ruby"><span class="ruby-identifier">arr</span> = [<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-value">4</span>, <span class="ruby-value">5</span>, <span class="ruby-value">6</span>]
 <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">3</span> }     <span class="ruby-comment">#=&gt; [4, 5, 6]</span>
-<span class="ruby-identifier">arr</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">3</span> }     <span class="ruby-comment">#=&gt; [4, 5, 6]</span>
+<span class="ruby-identifier">arr</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">3</span> }     <span class="ruby-comment">#=&gt; [3, 4, 5, 6]</span>
 <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">drop_while</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">4</span> } <span class="ruby-comment">#=&gt; [4, 5, 6]</span>
 <span class="ruby-identifier">arr</span>                          <span class="ruby-comment">#=&gt; [1, 2, 3, 4, 5, 6]</span>
 </pre>
@@ -4473,7 +4475,8 @@ rb_ary_s_try_convert(VALUE dummy, VALUE ary)
         <div class="method-description">
           
           <p><a href="Set.html">Set</a> Intersection — Returns a new array containing
-elements common to the two arrays, excluding any duplicates.</p>
+elements common to the two arrays, excluding any duplicates. The order is
+preserved from the original array.</p>
 
 <p>It compares elements using their <a
 href="Array.html#method-i-hash">hash</a> and <a
@@ -4690,7 +4693,8 @@ rb_ary_plus(VALUE x, VALUE y)
           <p>Array Difference</p>
 
 <p>Returns a new array that is a copy of the original array, removing any
-items that also appear in <code>other_ary</code>.</p>
+items that also appear in <code>other_ary</code>. The order is preserved
+from the original array.</p>
 
 <p>It compares elements using their <a
 href="Array.html#method-i-hash">hash</a> and <a
@@ -4799,6 +4803,8 @@ rb_ary_push(VALUE ary, VALUE item)
           <p>Comparison — Returns an integer (<code>-1</code>, <code>0</code>, or
 <code>+1</code>) if this array is less than, equal to, or greater than
 <code>other_ary</code>.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
 
 <p>Each object in each array is compared (using the &lt;=&gt; operator).</p>
 
@@ -6576,7 +6582,8 @@ rb_ary_empty_p(VALUE ary)
         <div class="method-description">
           
           <p>Returns <code>true</code> if <code>self</code> and <code>other</code> are
-the same object, or are both arrays with the same content.</p>
+the same object, or are both arrays with the same content (according to <a
+href="Object.html#method-i-eql-3F">Object#eql?</a>).</p>
           
           
 
@@ -7234,7 +7241,7 @@ rb_ary_hash(VALUE ary)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the given <code>object</code> is present in
-<code>self</code> (that is, if any object <code>==</code>
+<code>self</code> (that is, if any element <code>==</code>
 <code>object</code>), otherwise returns <code>false</code>.</p>
 
 <pre class="ruby"><span class="ruby-identifier">a</span> = [ <span class="ruby-string">&quot;a&quot;</span>, <span class="ruby-string">&quot;b&quot;</span>, <span class="ruby-string">&quot;c&quot;</span> ]
@@ -9054,15 +9061,14 @@ rb_ary_product(int argc, VALUE *argv, VALUE ary)
     else {
         /* Compute the length of the result array; return [] if any is empty */
         for (i = 0; i &lt; n; i++) {
-            long k = RARRAY_LEN(arrays[i]), l = resultlen;
+            long k = RARRAY_LEN(arrays[i]);
             if (k == 0) {
                 result = rb_ary_new2(0);
                 goto done;
             }
-            resultlen *= k;
-            if (resultlen &lt; k || resultlen &lt; l || resultlen / k != l) {
+            if (MUL_OVERFLOW_LONG_P(resultlen, k))
                 rb_raise(rb_eRangeError, &quot;too big to product&quot;);
-            }
+            resultlen *= k;
         }
         result = rb_ary_new2(resultlen);
     }
@@ -11612,7 +11618,7 @@ rb_ary_values_at(int argc, VALUE *argv, VALUE ary)
 with corresponding elements from each argument.</p>
 
 <p>This generates a sequence of <code>ary.size</code> <em>n</em>-element
-arrays, where <em>n</em> is one more that the count of arguments.</p>
+arrays, where <em>n</em> is one more than the count of arguments.</p>
 
 <p>If the size of any argument is less than the size of the initial array,
 <code>nil</code> values are supplied.</p>
@@ -11689,7 +11695,8 @@ rb_ary_zip(int argc, VALUE *argv, VALUE ary)
         <div class="method-description">
           
           <p><a href="Set.html">Set</a> Union — Returns a new array by joining
-<code>ary</code> with <code>other_ary</code>, excluding any duplicates.</p>
+<code>ary</code> with <code>other_ary</code>, excluding any duplicates and
+preserving the order from the original array.</p>
 
 <p>It compares elements using their <a
 href="Array.html#method-i-hash">hash</a> and <a

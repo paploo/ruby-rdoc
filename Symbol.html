@@ -49,9 +49,11 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>ext/json/lib/json/add/symbol.rb
-    <li>lib/rexml/xpath_parser.rb
-    <li>string.c
+    <li>ext/bigdecimal/lib/bigdecimal/util.rb
+    <li>ext/openssl/lib/openssl/bn.rb
+    <li>lib/prime.rb
+    <li>numeric.c
+    <li>rational.c
   </ul>
 </nav>
 
@@ -63,23 +65,11 @@
     <nav id="parent-class-section" class="section">
   <h3 class="section-header">Parent</h3>
   
-  <p class="link"><a href="Object.html">Object</a>
+  <p class="link"><a href="Numeric.html">Numeric</a>
   
 </nav>
 
-    <!-- Included Modules -->
-<nav id="includes-section" class="section">
-  <h3 class="section-header">Included Modules</h3>
-
-  <ul class="link-list">
-  
-  
-    <li><a class="include" href="Comparable.html">Comparable</a>
-  
-  
-  </ul>
-</nav>
-
+    
     
     <!-- Method Quickref -->
 <nav id="method-list-section" class="section">
@@ -87,63 +77,65 @@
 
   <ul class="link-list">
     
-    <li ><a href="#method-c-all_symbols">::all_symbols</a>
+    <li ><a href="#method-c-each_prime">::each_prime</a>
     
-    <li ><a href="#method-c-json_create">::json_create</a>
+    <li ><a href="#method-c-from_prime_division">::from_prime_division</a>
     
-    <li ><a href="#method-i-3C-3D-3E">#&lt;=&gt;</a>
+    <li ><a href="#method-i-ceil">#ceil</a>
     
-    <li ><a href="#method-i-3D-3D">#==</a>
+    <li ><a href="#method-i-chr">#chr</a>
     
-    <li ><a href="#method-i-3D-3D-3D">#===</a>
+    <li ><a href="#method-i-denominator">#denominator</a>
     
-    <li ><a href="#method-i-3D-7E">#=~</a>
+    <li ><a href="#method-i-downto">#downto</a>
     
-    <li ><a href="#method-i-5B-5D">#[]</a>
+    <li ><a href="#method-i-even-3F">#even?</a>
     
-    <li ><a href="#method-i-as_json">#as_json</a>
+    <li ><a href="#method-i-floor">#floor</a>
     
-    <li ><a href="#method-i-capitalize">#capitalize</a>
+    <li ><a href="#method-i-gcd">#gcd</a>
     
-    <li ><a href="#method-i-casecmp">#casecmp</a>
+    <li ><a href="#method-i-gcdlcm">#gcdlcm</a>
     
-    <li ><a href="#method-i-dclone">#dclone</a>
+    <li ><a href="#method-i-integer-3F">#integer?</a>
     
-    <li ><a href="#method-i-downcase">#downcase</a>
-    
-    <li ><a href="#method-i-empty-3F">#empty?</a>
-    
-    <li ><a href="#method-i-encoding">#encoding</a>
-    
-    <li ><a href="#method-i-id2name">#id2name</a>
-    
-    <li ><a href="#method-i-inspect">#inspect</a>
-    
-    <li ><a href="#method-i-intern">#intern</a>
-    
-    <li ><a href="#method-i-length">#length</a>
-    
-    <li ><a href="#method-i-match">#match</a>
+    <li ><a href="#method-i-lcm">#lcm</a>
     
     <li ><a href="#method-i-next">#next</a>
     
-    <li ><a href="#method-i-size">#size</a>
+    <li ><a href="#method-i-numerator">#numerator</a>
     
-    <li ><a href="#method-i-slice">#slice</a>
+    <li ><a href="#method-i-odd-3F">#odd?</a>
+    
+    <li ><a href="#method-i-ord">#ord</a>
+    
+    <li ><a href="#method-i-pred">#pred</a>
+    
+    <li ><a href="#method-i-prime-3F">#prime?</a>
+    
+    <li ><a href="#method-i-prime_division">#prime_division</a>
+    
+    <li ><a href="#method-i-rationalize">#rationalize</a>
+    
+    <li ><a href="#method-i-round">#round</a>
     
     <li ><a href="#method-i-succ">#succ</a>
     
-    <li ><a href="#method-i-swapcase">#swapcase</a>
+    <li ><a href="#method-i-times">#times</a>
     
-    <li ><a href="#method-i-to_json">#to_json</a>
+    <li ><a href="#method-i-to_bn">#to_bn</a>
     
-    <li ><a href="#method-i-to_proc">#to_proc</a>
+    <li ><a href="#method-i-to_d">#to_d</a>
     
-    <li ><a href="#method-i-to_s">#to_s</a>
+    <li ><a href="#method-i-to_i">#to_i</a>
     
-    <li ><a href="#method-i-to_sym">#to_sym</a>
+    <li ><a href="#method-i-to_int">#to_int</a>
     
-    <li ><a href="#method-i-upcase">#upcase</a>
+    <li ><a href="#method-i-to_r">#to_r</a>
+    
+    <li ><a href="#method-i-truncate">#truncate</a>
+    
+    <li ><a href="#method-i-upto">#upto</a>
     
   </ul>
 </nav>
@@ -566,6 +558,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -841,6 +835,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1713,8 +1709,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3733,34 +3727,10 @@
 
   <div id="description" class="description">
     
-<p><a href="Symbol.html">Symbol</a> serialization/deserialization</p>
+<p>Add double dispatch to <a href="Integer.html">Integer</a></p>
 
-<p><code>Symbol</code> objects represent names and some strings inside the
-Ruby interpreter. They are generated using the <code>:name</code> and
-<code>:&quot;string&quot;</code> literals syntax, and by the various
-<code>to_sym</code> methods. The same <code>Symbol</code> object will be
-created for a given name or string for the duration of a program&#39;s
-execution, regardless of the context or meaning of that name. Thus if
-<code>Fred</code> is a constant in one context, a method in another, and a
-class in a third, the <code>Symbol</code> <code>:Fred</code> will be the
-same object in all three contexts.</p>
-
-<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">One</span>
-  <span class="ruby-keyword">class</span> <span class="ruby-constant">Fred</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">$f1</span> = :<span class="ruby-constant">Fred</span>
-<span class="ruby-keyword">end</span>
-<span class="ruby-keyword">module</span> <span class="ruby-constant">Two</span>
-  <span class="ruby-constant">Fred</span> = <span class="ruby-value">1</span>
-  <span class="ruby-identifier">$f2</span> = :<span class="ruby-constant">Fred</span>
-<span class="ruby-keyword">end</span>
-<span class="ruby-keyword">def</span> <span class="ruby-constant">Fred</span>()
-<span class="ruby-keyword">end</span>
-<span class="ruby-identifier">$f3</span> = :<span class="ruby-constant">Fred</span>
-<span class="ruby-identifier">$f1</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment">#=&gt; 2514190</span>
-<span class="ruby-identifier">$f2</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment">#=&gt; 2514190</span>
-<span class="ruby-identifier">$f3</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment">#=&gt; 2514190</span>
-</pre>
+<p><code>Integer</code> is the basis for the two concrete classes that hold
+whole numbers, <code>Bignum</code> and <code>Fixnum</code>.</p>
 
   </div><!-- description -->
 
@@ -3782,60 +3752,46 @@ same object in all three contexts.</p>
       <h3 class="section-header">Public Class Methods</h3>
 
     
-      <div id="method-c-all_symbols" class="method-detail ">
-        
+      <div id="method-c-each_prime" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-callseq">
-            all_symbols    &rarr; array
-          </span>
+          <span class="method-name">each_prime</span><span
+            class="method-args">(ubound) { |prime| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
-        
 
         <div class="method-description">
           
-          <p>Returns an array of all the symbols currently in Ruby&#39;s symbol table.</p>
+          <p>Iterates the given block over all prime numbers.</p>
 
-<pre class="ruby"><span class="ruby-constant">Symbol</span>.<span class="ruby-identifier">all_symbols</span>.<span class="ruby-identifier">size</span>    <span class="ruby-comment">#=&gt; 903</span>
-<span class="ruby-constant">Symbol</span>.<span class="ruby-identifier">all_symbols</span>[<span class="ruby-value">1</span>,<span class="ruby-value">20</span>]   <span class="ruby-comment">#=&gt; [:floor, :ARGV, :Binding, :symlink,</span>
-                                :<span class="ruby-identifier">chown</span>, :<span class="ruby-constant">EOFError</span>, :<span class="ruby-identifier">$;</span>, :<span class="ruby-constant">String</span>,
-                                :<span class="ruby-constant">LOCK_SH</span>, :<span class="ruby-string">&quot;setuid?&quot;</span>, :<span class="ruby-identifier">$&lt;</span>,
-                                :<span class="ruby-identifier">default_proc</span>, :<span class="ruby-identifier">compact</span>, :<span class="ruby-identifier">extend</span>,
-                                :<span class="ruby-constant">Tms</span>, :<span class="ruby-identifier">getwd</span>, :<span class="ruby-identifier">$=</span>, :<span class="ruby-constant">ThreadGroup</span>,
-                                :<span class="ruby-identifier">wait2</span>, :<span class="ruby-identifier">$&gt;</span>]
-</pre>
+<p>See <code>Prime</code>#each for more details.</p>
           
           
 
           
-          <div class="method-source-code" id="all_symbols-source">
-            <pre>VALUE
-rb_sym_all_symbols(void)
-{
-    VALUE ary = rb_ary_new2(global_symbols.sym_id-&gt;num_entries);
-
-    st_foreach(global_symbols.sym_id, symbols_i, ary);
-    return ary;
-}</pre>
-          </div><!-- all_symbols-source -->
+          <div class="method-source-code" id="each_prime-source">
+            <pre><span class="ruby-comment"># File lib/prime.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Integer</span>.<span class="ruby-identifier">each_prime</span>(<span class="ruby-identifier">ubound</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-comment"># :yields: prime</span>
+  <span class="ruby-constant">Prime</span>.<span class="ruby-identifier">each</span>(<span class="ruby-identifier">ubound</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- each_prime-source -->
           
         </div>
 
         
 
         
-      </div><!-- all_symbols-method -->
+      </div><!-- each_prime-method -->
 
     
-      <div id="method-c-json_create" class="method-detail ">
+      <div id="method-c-from_prime_division" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">json_create</span><span
-            class="method-args">(o)</span>
+          <span class="method-name">from_prime_division</span><span
+            class="method-args">(pd)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -3844,26 +3800,28 @@ rb_sym_all_symbols(void)
 
         <div class="method-description">
           
-          <p>Deserializes <a href="JSON.html">JSON</a> string by converting the
-<code>string</code> value stored in the object to a <a
-href="Symbol.html">Symbol</a></p>
+          <p>Re-composes a prime factorization and returns the product.</p>
+
+<p>See <a
+href="Prime.html#method-i-int_from_prime_division">Prime#int_from_prime_division</a>
+for more details.</p>
           
           
 
           
-          <div class="method-source-code" id="json_create-source">
-            <pre><span class="ruby-comment"># File ext/json/lib/json/add/symbol.rb, line 22</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">json_create</span>(<span class="ruby-identifier">o</span>)
-  <span class="ruby-identifier">o</span>[<span class="ruby-string">&#39;s&#39;</span>].<span class="ruby-identifier">to_sym</span>
+          <div class="method-source-code" id="from_prime_division-source">
+            <pre><span class="ruby-comment"># File lib/prime.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-constant">Integer</span>.<span class="ruby-identifier">from_prime_division</span>(<span class="ruby-identifier">pd</span>)
+  <span class="ruby-constant">Prime</span>.<span class="ruby-identifier">int_from_prime_division</span>(<span class="ruby-identifier">pd</span>)
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- json_create-source -->
+          </div><!-- from_prime_division-source -->
           
         </div>
 
         
 
         
-      </div><!-- json_create-method -->
+      </div><!-- from_prime_division-method -->
 
     
     </section><!-- public-class-method-details -->
@@ -3872,15 +3830,43 @@ href="Symbol.html">Symbol</a></p>
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="method-i-3C-3D-3E" class="method-detail ">
+      <div id="method-i-ceil" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            str &lt;=&gt; other       &rarr; -1, 0, +1 or nil
+            to_i      &rarr;  integer
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_int    &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            floor     &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ceil      &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            truncate  &rarr;  integer
+          </span>
           
         </div>
         
@@ -3888,36 +3874,34 @@ href="Symbol.html">Symbol</a></p>
 
         <div class="method-description">
           
-          <p>Compares <em>sym</em> with <em>other</em> in string form.</p>
+          <p>As <em>int</em> is already an <code>Integer</code>, all these methods
+simply return the receiver.</p>
           
           
 
           
-          <div class="method-source-code" id="3C-3D-3E-source">
+          <div class="method-source-code" id="ceil-source">
             <pre>static VALUE
-sym_cmp(VALUE sym, VALUE other)
+int_to_i(VALUE num)
 {
-    if (!SYMBOL_P(other)) {
-        return Qnil;
-    }
-    return rb_str_cmp_m(rb_sym_to_s(sym), rb_sym_to_s(other));
+    return num;
 }</pre>
-          </div><!-- 3C-3D-3E-source -->
+          </div><!-- ceil-source -->
           
         </div>
 
         
 
         
-      </div><!-- 3C-3D-3E-method -->
+      </div><!-- ceil-method -->
 
     
-      <div id="method-i-3D-3D" class="method-detail ">
+      <div id="method-i-chr" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            sym == obj   &rarr; true or false
+            chr([encoding])  &rarr;  string
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -3928,573 +3912,77 @@ sym_cmp(VALUE sym, VALUE other)
 
         <div class="method-description">
           
-          <p>Equality—If <em>sym</em> and <em>obj</em> are exactly the same symbol,
-returns <code>true</code>.</p>
-          
-          
+          <p>Returns a string containing the character represented by the receiver&#39;s
+value according to <code>encoding</code>.</p>
 
-          
-          <div class="method-source-code" id="3D-3D-source">
-            <pre>static VALUE
-sym_equal(VALUE sym1, VALUE sym2)
-{
-    if (sym1 == sym2) return Qtrue;
-    return Qfalse;
-}</pre>
-          </div><!-- 3D-3D-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- 3D-3D-method -->
-
-    
-      <div id="method-i-3D-3D-3D" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            sym == obj   &rarr; true or false
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Equality—If <em>sym</em> and <em>obj</em> are exactly the same symbol,
-returns <code>true</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="3D-3D-3D-source">
-            <pre>static VALUE
-sym_equal(VALUE sym1, VALUE sym2)
-{
-    if (sym1 == sym2) return Qtrue;
-    return Qfalse;
-}</pre>
-          </div><!-- 3D-3D-3D-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- 3D-3D-3D-method -->
-
-    
-      <div id="method-i-3D-7E" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            sym =~ obj   &rarr; fixnum or nil
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns <code>sym.to_s =~ obj</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="3D-7E-source">
-            <pre>static VALUE
-sym_match(VALUE sym, VALUE other)
-{
-    return rb_str_match(rb_sym_to_s(sym), other);
-}</pre>
-          </div><!-- 3D-7E-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- 3D-7E-method -->
-
-    
-      <div id="method-i-5B-5D" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            sym[idx]      &rarr; char
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            sym[b, n]     &rarr; char
-          </span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns <code>sym.to_s[]</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="5B-5D-source">
-            <pre>static VALUE
-sym_aref(int argc, VALUE *argv, VALUE sym)
-{
-    return rb_str_aref_m(argc, argv, rb_sym_to_s(sym));
-}</pre>
-          </div><!-- 5B-5D-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- 5B-5D-method -->
-
-    
-      <div id="method-i-as_json" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">as_json</span><span
-            class="method-args">(*)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Returns a hash, that will be turned into a <a href="JSON.html">JSON</a>
-object and represent this object.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="as_json-source">
-            <pre><span class="ruby-comment"># File ext/json/lib/json/add/symbol.rb, line 9</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">as_json</span>(<span class="ruby-operator">*</span>)
-  {
-    <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">create_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>,
-    <span class="ruby-string">&#39;s&#39;</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">to_s</span>,
-  }
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- as_json-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- as_json-method -->
-
-    
-      <div id="method-i-capitalize" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            capitalize  &rarr; symbol
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Same as <code>sym.to_s.capitalize.intern</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="capitalize-source">
-            <pre>static VALUE
-sym_capitalize(VALUE sym)
-{
-    return rb_str_intern(rb_str_capitalize(rb_id2str(SYM2ID(sym))));
-}</pre>
-          </div><!-- capitalize-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- capitalize-method -->
-
-    
-      <div id="method-i-casecmp" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            casecmp(other)  &rarr; -1, 0, +1 or nil
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Case-insensitive version of <code>Symbol#&lt;=&gt;</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="casecmp-source">
-            <pre>static VALUE
-sym_casecmp(VALUE sym, VALUE other)
-{
-    if (!SYMBOL_P(other)) {
-        return Qnil;
-    }
-    return rb_str_casecmp(rb_sym_to_s(sym), rb_sym_to_s(other));
-}</pre>
-          </div><!-- casecmp-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- casecmp-method -->
-
-    
-      <div id="method-i-dclone" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">dclone</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>provides a unified <code>clone</code> operation, for <a
-href="REXML/XPathParser.html">REXML::XPathParser</a> to use across multiple
-<a href="Object.html">Object</a> types</p>
-          
-          
-
-          
-          <div class="method-source-code" id="dclone-source">
-            <pre><span class="ruby-comment"># File lib/rexml/xpath_parser.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dclone</span> ; <span class="ruby-keyword">self</span> ; <span class="ruby-keyword">end</span></pre>
-          </div><!-- dclone-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- dclone-method -->
-
-    
-      <div id="method-i-downcase" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            downcase  &rarr; symbol
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Same as <code>sym.to_s.downcase.intern</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="downcase-source">
-            <pre>static VALUE
-sym_downcase(VALUE sym)
-{
-    return rb_str_intern(rb_str_downcase(rb_id2str(SYM2ID(sym))));
-}</pre>
-          </div><!-- downcase-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- downcase-method -->
-
-    
-      <div id="method-i-empty-3F" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            empty?   &rarr; true or false
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns that <em>sym</em> is :“” or not.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="empty-3F-source">
-            <pre>static VALUE
-sym_empty(VALUE sym)
-{
-    return rb_str_empty(rb_id2str(SYM2ID(sym)));
-}</pre>
-          </div><!-- empty-3F-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- empty-3F-method -->
-
-    
-      <div id="method-i-encoding" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            encoding   &rarr; encoding
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns the <a href="Encoding.html">Encoding</a> object that represents the
-encoding of <em>sym</em>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="encoding-source">
-            <pre>static VALUE
-sym_encoding(VALUE sym)
-{
-    return rb_obj_encoding(rb_id2str(SYM2ID(sym)));
-}</pre>
-          </div><!-- encoding-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- encoding-method -->
-
-    
-      <div id="method-i-id2name" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            id2name   &rarr; string
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            to_s      &rarr; string
-          </span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns the name or string corresponding to <em>sym</em>.</p>
-
-<pre class="ruby">:<span class="ruby-identifier">fred</span>.<span class="ruby-identifier">id2name</span>   <span class="ruby-comment">#=&gt; &quot;fred&quot;</span>
+<pre class="ruby"><span class="ruby-value">65</span>.<span class="ruby-identifier">chr</span>    <span class="ruby-comment">#=&gt; &quot;A&quot;</span>
+<span class="ruby-value">230</span>.<span class="ruby-identifier">chr</span>   <span class="ruby-comment">#=&gt; &quot;\346&quot;</span>
+<span class="ruby-value">255</span>.<span class="ruby-identifier">chr</span>(<span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>)   <span class="ruby-comment">#=&gt; &quot;\303\277&quot;</span>
 </pre>
           
           
 
           
-          <div class="method-source-code" id="id2name-source">
-            <pre>VALUE
-rb_sym_to_s(VALUE sym)
-{
-    ID id = SYM2ID(sym);
-
-    return str_new3(rb_cString, rb_id2str(id));
-}</pre>
-          </div><!-- id2name-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- id2name-method -->
-
-    
-      <div id="method-i-inspect" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            inspect    &rarr; string
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>Returns the representation of <em>sym</em> as a symbol literal.</p>
-
-<pre class="ruby">:<span class="ruby-identifier">fred</span>.<span class="ruby-identifier">inspect</span>   <span class="ruby-comment">#=&gt; &quot;:fred&quot;</span>
-</pre>
-          
-          
-
-          
-          <div class="method-source-code" id="inspect-source">
+          <div class="method-source-code" id="chr-source">
             <pre>static VALUE
-sym_inspect(VALUE sym)
+int_chr(int argc, VALUE *argv, VALUE num)
 {
-    VALUE str;
-    const char *ptr;
-    long len;
-    ID id = SYM2ID(sym);
-    char *dest;
+    char c;
+    unsigned int i;
+    rb_encoding *enc;
 
-    sym = rb_id2str(id);
-    if (!rb_str_symname_p(sym)) {
-        str = rb_str_inspect(sym);
-        len = RSTRING_LEN(str);
-        rb_str_resize(str, len + 1);
-        dest = RSTRING_PTR(str);
-        memmove(dest + 1, dest, len);
-        dest[0] = &#39;:&#39;;
+    if (rb_num_to_uint(num, &amp;i) == 0) {
+    }
+    else if (FIXNUM_P(num)) {
+        rb_raise(rb_eRangeError, &quot;%ld out of char range&quot;, FIX2LONG(num));
     }
     else {
-        rb_encoding *enc = STR_ENC_GET(sym);
-        ptr = RSTRING_PTR(sym);
-        len = RSTRING_LEN(sym);
-        str = rb_enc_str_new(0, len + 1, enc);
-        dest = RSTRING_PTR(str);
-        dest[0] = &#39;:&#39;;
-        memcpy(dest + 1, ptr, len);
+        rb_raise(rb_eRangeError, &quot;bignum out of char range&quot;);
     }
-    return str;
+
+    switch (argc) {
+      case 0:
+        if (0xff &lt; i) {
+            enc = rb_default_internal_encoding();
+            if (!enc) {
+                rb_raise(rb_eRangeError, &quot;%d out of char range&quot;, i);
+            }
+            goto decode;
+        }
+        c = (char)i;
+        if (i &lt; 0x80) {
+            return rb_usascii_str_new(&amp;c, 1);
+        }
+        else {
+            return rb_str_new(&amp;c, 1);
+        }
+      case 1:
+        break;
+      default:
+        rb_check_arity(argc, 0, 1);
+        break;
+    }
+    enc = rb_to_encoding(argv[0]);
+    if (!enc) enc = rb_ascii8bit_encoding();
+  decode:
+    return rb_enc_uint_chr(i, enc);
 }</pre>
-          </div><!-- inspect-source -->
+          </div><!-- chr-source -->
           
         </div>
 
         
 
         
-      </div><!-- inspect-method -->
+      </div><!-- chr-method -->
 
     
-      <div id="method-i-intern" class="method-detail ">
+      <div id="method-i-denominator" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            to_sym   &rarr; sym
-          </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            intern   &rarr; sym
-          </span>
-          
-        </div>
-        
-        
-
-        <div class="method-description">
-          
-          <p>In general, <code>to_sym</code> returns the <code>Symbol</code>
-corresponding to an object. As <em>sym</em> is already a symbol,
-<code>self</code> is returned in this case.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="intern-source">
-            <pre>static VALUE
-sym_to_sym(VALUE sym)
-{
-    return sym;
-}</pre>
-          </div><!-- intern-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- intern-method -->
-
-    
-      <div id="method-i-length" class="method-detail ">
-        
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            length    &rarr; integer
+            denominator  &rarr;  1
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4505,33 +3993,106 @@ sym_to_sym(VALUE sym)
 
         <div class="method-description">
           
-          <p>Same as <code>sym.to_s.length</code>.</p>
+          <p>Returns 1.</p>
           
           
 
           
-          <div class="method-source-code" id="length-source">
+          <div class="method-source-code" id="denominator-source">
             <pre>static VALUE
-sym_length(VALUE sym)
+integer_denominator(VALUE self)
 {
-    return rb_str_length(rb_id2str(SYM2ID(sym)));
+    return INT2FIX(1);
 }</pre>
-          </div><!-- length-source -->
+          </div><!-- denominator-source -->
           
         </div>
 
         
 
         
-      </div><!-- length-method -->
+      </div><!-- denominator-method -->
 
     
-      <div id="method-i-match" class="method-detail ">
+      <div id="method-i-downto" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            sym =~ obj   &rarr; fixnum or nil
+            downto(limit) {|i| block }  &rarr;  self
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            downto(limit)               &rarr;  an_enumerator
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Iterates <em>block</em>, passing decreasing values from <em>int</em> down
+to and including <em>limit</em>.</p>
+
+<p>If no block is given, an enumerator is returned instead.</p>
+
+<pre class="ruby"><span class="ruby-value">5</span>.<span class="ruby-identifier">downto</span>(<span class="ruby-value">1</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">print</span> <span class="ruby-identifier">n</span>, <span class="ruby-string">&quot;.. &quot;</span> }
+<span class="ruby-identifier">print</span> <span class="ruby-string">&quot;  Liftoff!\n&quot;</span>
+</pre>
+
+<p><em>produces:</em></p>
+
+<pre>5.. 4.. 3.. 2.. 1..   Liftoff!</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="downto-source">
+            <pre>static VALUE
+int_downto(VALUE from, VALUE to)
+{
+    RETURN_SIZED_ENUMERATOR(from, 1, &amp;to, int_downto_size);
+    if (FIXNUM_P(from) &amp;&amp; FIXNUM_P(to)) {
+        long i, end;
+
+        end = FIX2LONG(to);
+        for (i=FIX2LONG(from); i &gt;= end; i--) {
+            rb_yield(LONG2FIX(i));
+        }
+    }
+    else {
+        VALUE i = from, c;
+
+        while (!(c = rb_funcall(i, &#39;&lt;&#39;, 1, to))) {
+            rb_yield(i);
+            i = rb_funcall(i, &#39;-&#39;, 1, INT2FIX(1));
+        }
+        if (NIL_P(c)) rb_cmperr(i, to);
+    }
+    return from;
+}</pre>
+          </div><!-- downto-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- downto-method -->
+
+    
+      <div id="method-i-even-3F" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            even?  &rarr;  true or false
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4542,25 +4103,262 @@ sym_length(VALUE sym)
 
         <div class="method-description">
           
-          <p>Returns <code>sym.to_s =~ obj</code>.</p>
+          <p>Returns <code>true</code> if <em>int</em> is an even number.</p>
           
           
 
           
-          <div class="method-source-code" id="match-source">
+          <div class="method-source-code" id="even-3F-source">
             <pre>static VALUE
-sym_match(VALUE sym, VALUE other)
+int_even_p(VALUE num)
 {
-    return rb_str_match(rb_sym_to_s(sym), other);
+    if (rb_funcall(num, &#39;%&#39;, 1, INT2FIX(2)) == INT2FIX(0)) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
-          </div><!-- match-source -->
+          </div><!-- even-3F-source -->
           
         </div>
 
         
 
         
-      </div><!-- match-method -->
+      </div><!-- even-3F-method -->
+
+    
+      <div id="method-i-floor" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_i      &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_int    &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            floor     &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ceil      &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            truncate  &rarr;  integer
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>As <em>int</em> is already an <code>Integer</code>, all these methods
+simply return the receiver.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="floor-source">
+            <pre>static VALUE
+int_to_i(VALUE num)
+{
+    return num;
+}</pre>
+          </div><!-- floor-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- floor-method -->
+
+    
+      <div id="method-i-gcd" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            gcd(int2)  &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the greatest common divisor (always positive).  0.gcd(x) and
+x.gcd(0) return abs(x).</p>
+
+<pre class="ruby"><span class="ruby-value">2</span>.<span class="ruby-identifier">gcd</span>(<span class="ruby-value">2</span>)                    <span class="ruby-comment">#=&gt; 2</span>
+<span class="ruby-value">3</span>.<span class="ruby-identifier">gcd</span>(<span class="ruby-value">-7</span>)                   <span class="ruby-comment">#=&gt; 1</span>
+((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">31</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>).<span class="ruby-identifier">gcd</span>((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">61</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>)  <span class="ruby-comment">#=&gt; 1</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="gcd-source">
+            <pre>VALUE
+rb_gcd(VALUE self, VALUE other)
+{
+    other = nurat_int_value(other);
+    return f_gcd(self, other);
+}</pre>
+          </div><!-- gcd-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- gcd-method -->
+
+    
+      <div id="method-i-gcdlcm" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            gcdlcm(int2)  &rarr;  array
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns an array; [int.gcd(int2), int.lcm(int2)].</p>
+
+<pre class="ruby"><span class="ruby-value">2</span>.<span class="ruby-identifier">gcdlcm</span>(<span class="ruby-value">2</span>)                    <span class="ruby-comment">#=&gt; [2, 2]</span>
+<span class="ruby-value">3</span>.<span class="ruby-identifier">gcdlcm</span>(<span class="ruby-value">-7</span>)                   <span class="ruby-comment">#=&gt; [1, 21]</span>
+((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">31</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>).<span class="ruby-identifier">gcdlcm</span>((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">61</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>)  <span class="ruby-comment">#=&gt; [1, 4951760154835678088235319297]</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="gcdlcm-source">
+            <pre>VALUE
+rb_gcdlcm(VALUE self, VALUE other)
+{
+    other = nurat_int_value(other);
+    return rb_assoc_new(f_gcd(self, other), f_lcm(self, other));
+}</pre>
+          </div><!-- gcdlcm-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- gcdlcm-method -->
+
+    
+      <div id="method-i-integer-3F" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            integer?  &rarr;  true
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Always returns <code>true</code>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="integer-3F-source">
+            <pre>static VALUE
+int_int_p(VALUE num)
+{
+    return Qtrue;
+}</pre>
+          </div><!-- integer-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- integer-3F-method -->
+
+    
+      <div id="method-i-lcm" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            lcm(int2)  &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the least common multiple (always positive).  0.lcm(x) and x.lcm(0)
+return zero.</p>
+
+<pre class="ruby"><span class="ruby-value">2</span>.<span class="ruby-identifier">lcm</span>(<span class="ruby-value">2</span>)                    <span class="ruby-comment">#=&gt; 2</span>
+<span class="ruby-value">3</span>.<span class="ruby-identifier">lcm</span>(<span class="ruby-value">-7</span>)                   <span class="ruby-comment">#=&gt; 21</span>
+((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">31</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>).<span class="ruby-identifier">lcm</span>((<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">61</span>)<span class="ruby-operator">-</span><span class="ruby-value">1</span>)  <span class="ruby-comment">#=&gt; 4951760154835678088235319297</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="lcm-source">
+            <pre>VALUE
+rb_lcm(VALUE self, VALUE other)
+{
+    other = nurat_int_value(other);
+    return f_lcm(self, other);
+}</pre>
+          </div><!-- lcm-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- lcm-method -->
 
     
       <div id="method-i-next" class="method-detail ">
@@ -4568,10 +4366,17 @@ sym_match(VALUE sym, VALUE other)
         
         <div class="method-heading">
           <span class="method-callseq">
-            succ
+            next  &rarr;  integer
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            succ  &rarr;  integer
+          </span>
           
         </div>
         
@@ -4579,16 +4384,24 @@ sym_match(VALUE sym, VALUE other)
 
         <div class="method-description">
           
-          <p>Same as <code>sym.to_s.succ.intern</code>.</p>
+          <p>Returns the <code>Integer</code> equal to <em>int</em> + 1.</p>
+
+<pre class="ruby"><span class="ruby-value">1</span>.<span class="ruby-identifier">next</span>      <span class="ruby-comment">#=&gt; 2</span>
+(<span class="ruby-value">-1</span>).<span class="ruby-identifier">next</span>   <span class="ruby-comment">#=&gt; 0</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="next-source">
             <pre>static VALUE
-sym_succ(VALUE sym)
+int_succ(VALUE num)
 {
-    return rb_str_intern(rb_str_succ(rb_sym_to_s(sym)));
+    if (FIXNUM_P(num)) {
+        long i = FIX2LONG(num) + 1;
+        return LONG2NUM(i);
+    }
+    return rb_funcall(num, &#39;+&#39;, 1, INT2FIX(1));
 }</pre>
           </div><!-- next-source -->
           
@@ -4600,12 +4413,12 @@ sym_succ(VALUE sym)
       </div><!-- next-method -->
 
     
-      <div id="method-i-size" class="method-detail ">
+      <div id="method-i-numerator" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            length    &rarr; integer
+            numerator  &rarr;  self
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4616,43 +4429,36 @@ sym_succ(VALUE sym)
 
         <div class="method-description">
           
-          <p>Same as <code>sym.to_s.length</code>.</p>
+          <p>Returns self.</p>
           
           
 
           
-          <div class="method-source-code" id="size-source">
+          <div class="method-source-code" id="numerator-source">
             <pre>static VALUE
-sym_length(VALUE sym)
+integer_numerator(VALUE self)
 {
-    return rb_str_length(rb_id2str(SYM2ID(sym)));
+    return self;
 }</pre>
-          </div><!-- size-source -->
+          </div><!-- numerator-source -->
           
         </div>
 
         
 
         
-      </div><!-- size-method -->
+      </div><!-- numerator-method -->
 
     
-      <div id="method-i-slice" class="method-detail ">
+      <div id="method-i-odd-3F" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            sym[idx]      &rarr; char
+            odd?  &rarr;  true or false
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-        <div class="method-heading">
-          <span class="method-callseq">
-            sym[b, n]     &rarr; char
-          </span>
           
         </div>
         
@@ -4660,25 +4466,281 @@ sym_length(VALUE sym)
 
         <div class="method-description">
           
-          <p>Returns <code>sym.to_s[]</code>.</p>
+          <p>Returns <code>true</code> if <em>int</em> is an odd number.</p>
           
           
 
           
-          <div class="method-source-code" id="slice-source">
+          <div class="method-source-code" id="odd-3F-source">
             <pre>static VALUE
-sym_aref(int argc, VALUE *argv, VALUE sym)
+int_odd_p(VALUE num)
 {
-    return rb_str_aref_m(argc, argv, rb_sym_to_s(sym));
+    if (rb_funcall(num, &#39;%&#39;, 1, INT2FIX(2)) != INT2FIX(0)) {
+        return Qtrue;
+    }
+    return Qfalse;
 }</pre>
-          </div><!-- slice-source -->
+          </div><!-- odd-3F-source -->
           
         </div>
 
         
 
         
-      </div><!-- slice-method -->
+      </div><!-- odd-3F-method -->
+
+    
+      <div id="method-i-ord" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ord  &rarr;  self
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the int itself.</p>
+
+<pre class="ruby"><span class="ruby-string">a</span>.<span class="ruby-identifier">ord</span>    <span class="ruby-comment">#=&gt; 97</span>
+</pre>
+
+<p>This method is intended for compatibility to character constant in Ruby
+1.9. For example, ?a.ord returns 97 both in 1.8 and 1.9.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="ord-source">
+            <pre>static VALUE
+int_ord(VALUE num)
+{
+    return num;
+}</pre>
+          </div><!-- ord-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ord-method -->
+
+    
+      <div id="method-i-pred" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            pred  &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the <code>Integer</code> equal to <em>int</em> - 1.</p>
+
+<pre class="ruby"><span class="ruby-value">1</span>.<span class="ruby-identifier">pred</span>      <span class="ruby-comment">#=&gt; 0</span>
+(<span class="ruby-value">-1</span>).<span class="ruby-identifier">pred</span>   <span class="ruby-comment">#=&gt; -2</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="pred-source">
+            <pre>static VALUE
+int_pred(VALUE num)
+{
+    if (FIXNUM_P(num)) {
+        long i = FIX2LONG(num) - 1;
+        return LONG2NUM(i);
+    }
+    return rb_funcall(num, &#39;-&#39;, 1, INT2FIX(1));
+}</pre>
+          </div><!-- pred-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- pred-method -->
+
+    
+      <div id="method-i-prime-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">prime?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns true if <code>self</code> is a prime number, false for a composite.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="prime-3F-source">
+            <pre><span class="ruby-comment"># File lib/prime.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">prime?</span>
+  <span class="ruby-constant">Prime</span>.<span class="ruby-identifier">prime?</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- prime-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- prime-3F-method -->
+
+    
+      <div id="method-i-prime_division" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">prime_division</span><span
+            class="method-args">(generator = Prime::Generator23.new)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns the factorization of <code>self</code>.</p>
+
+<p>See <a href="Prime.html#method-i-prime_division">Prime#prime_division</a>
+for more details.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="prime_division-source">
+            <pre><span class="ruby-comment"># File lib/prime.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">prime_division</span>(<span class="ruby-identifier">generator</span> = <span class="ruby-constant">Prime</span><span class="ruby-operator">::</span><span class="ruby-constant">Generator23</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-constant">Prime</span>.<span class="ruby-identifier">prime_division</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">generator</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- prime_division-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- prime_division-method -->
+
+    
+      <div id="method-i-rationalize" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            rationalize([eps])  &rarr;  rational
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Returns the value as a rational.  The optional argument eps is always
+ignored.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="rationalize-source">
+            <pre>static VALUE
+integer_rationalize(int argc, VALUE *argv, VALUE self)
+{
+    rb_scan_args(argc, argv, &quot;01&quot;, NULL);
+    return integer_to_r(self);
+}</pre>
+          </div><!-- rationalize-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- rationalize-method -->
+
+    
+      <div id="method-i-round" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            round([ndigits])  &rarr;  integer or float
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Rounds <em>flt</em> to a given precision in decimal digits (default 0
+digits). Precision may be negative.  Returns a floating point number when
+<code>ndigits</code> is positive, <code>self</code> for zero, and round
+down for negative.</p>
+
+<pre class="ruby"><span class="ruby-value">1</span>.<span class="ruby-identifier">round</span>        <span class="ruby-comment">#=&gt; 1</span>
+<span class="ruby-value">1</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">2</span>)     <span class="ruby-comment">#=&gt; 1.0</span>
+<span class="ruby-value">15</span>.<span class="ruby-identifier">round</span>(<span class="ruby-value">-1</span>)   <span class="ruby-comment">#=&gt; 20</span>
+</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="round-source">
+            <pre>static VALUE
+int_round(int argc, VALUE* argv, VALUE num)
+{
+    VALUE n;
+    int ndigits;
+
+    if (argc == 0) return num;
+    rb_scan_args(argc, argv, &quot;1&quot;, &amp;n);
+    ndigits = NUM2INT(n);
+    if (ndigits &gt; 0) {
+        return rb_Float(num);
+    }
+    if (ndigits == 0) {
+        return num;
+    }
+    return int_round_0(num, ndigits);
+}</pre>
+          </div><!-- round-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- round-method -->
 
     
       <div id="method-i-succ" class="method-detail ">
@@ -4686,10 +4748,17 @@ sym_aref(int argc, VALUE *argv, VALUE sym)
         
         <div class="method-heading">
           <span class="method-callseq">
-            succ
+            next  &rarr;  integer
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            succ  &rarr;  integer
+          </span>
           
         </div>
         
@@ -4697,16 +4766,24 @@ sym_aref(int argc, VALUE *argv, VALUE sym)
 
         <div class="method-description">
           
-          <p>Same as <code>sym.to_s.succ.intern</code>.</p>
+          <p>Returns the <code>Integer</code> equal to <em>int</em> + 1.</p>
+
+<pre class="ruby"><span class="ruby-value">1</span>.<span class="ruby-identifier">next</span>      <span class="ruby-comment">#=&gt; 2</span>
+(<span class="ruby-value">-1</span>).<span class="ruby-identifier">next</span>   <span class="ruby-comment">#=&gt; 0</span>
+</pre>
           
           
 
           
           <div class="method-source-code" id="succ-source">
             <pre>static VALUE
-sym_succ(VALUE sym)
+int_succ(VALUE num)
 {
-    return rb_str_intern(rb_str_succ(rb_sym_to_s(sym)));
+    if (FIXNUM_P(num)) {
+        long i = FIX2LONG(num) + 1;
+        return LONG2NUM(i);
+    }
+    return rb_funcall(num, &#39;+&#39;, 1, INT2FIX(1));
 }</pre>
           </div><!-- succ-source -->
           
@@ -4718,86 +4795,22 @@ sym_succ(VALUE sym)
       </div><!-- succ-method -->
 
     
-      <div id="method-i-swapcase" class="method-detail ">
+      <div id="method-i-times" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            swapcase  &rarr; symbol
+            times {|i| block }  &rarr;  self
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
-        
-
-        <div class="method-description">
-          
-          <p>Same as <code>sym.to_s.swapcase.intern</code>.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="swapcase-source">
-            <pre>static VALUE
-sym_swapcase(VALUE sym)
-{
-    return rb_str_intern(rb_str_swapcase(rb_id2str(SYM2ID(sym))));
-}</pre>
-          </div><!-- swapcase-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- swapcase-method -->
-
-    
-      <div id="method-i-to_json" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">to_json</span><span
-            class="method-args">(*a)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Stores class name (Symbol) with String representation of <a
-href="Symbol.html">Symbol</a> as a <a href="JSON.html">JSON</a> string.</p>
-          
-          
-
-          
-          <div class="method-source-code" id="to_json-source">
-            <pre><span class="ruby-comment"># File ext/json/lib/json/add/symbol.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_json</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>)
-  <span class="ruby-identifier">as_json</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- to_json-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- to_json-method -->
-
-    
-      <div id="method-i-to_proc" class="method-detail ">
-        
-        
         <div class="method-heading">
           <span class="method-callseq">
-            to_proc
+            times               &rarr;  an_enumerator
           </span>
-          
-          <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
@@ -4805,71 +4818,100 @@ href="Symbol.html">Symbol</a> as a <a href="JSON.html">JSON</a> string.</p>
 
         <div class="method-description">
           
-          <p>Returns a <em>Proc</em> object which respond to the given method by
-<em>sym</em>.</p>
+          <p>Iterates block <em>int</em> times, passing in values from zero to
+<em>int</em> - 1.</p>
 
-<pre class="ruby">(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">3</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span>:<span class="ruby-identifier">to_s</span>)  <span class="ruby-comment">#=&gt; [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]</span>
+<p>If no block is given, an enumerator is returned instead.</p>
+
+<pre class="ruby"><span class="ruby-value">5</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">print</span> <span class="ruby-identifier">i</span>, <span class="ruby-string">&quot; &quot;</span>
+<span class="ruby-keyword">end</span>
 </pre>
+
+<p><em>produces:</em></p>
+
+<pre>0 1 2 3 4</pre>
           
           
 
           
-          <div class="method-source-code" id="to_proc-source">
+          <div class="method-source-code" id="times-source">
             <pre>static VALUE
-sym_to_proc(VALUE sym)
+int_dotimes(VALUE num)
 {
-    static VALUE sym_proc_cache = Qfalse;
-    enum {SYM_PROC_CACHE_SIZE = 67};
-    VALUE proc;
-    long id, index;
-    VALUE *aryp;
+    RETURN_SIZED_ENUMERATOR(num, 0, 0, int_dotimes_size);
 
-    if (!sym_proc_cache) {
-        sym_proc_cache = rb_ary_tmp_new(SYM_PROC_CACHE_SIZE * 2);
-        rb_gc_register_mark_object(sym_proc_cache);
-        rb_ary_store(sym_proc_cache, SYM_PROC_CACHE_SIZE*2 - 1, Qnil);
-    }
+    if (FIXNUM_P(num)) {
+        long i, end;
 
-    id = SYM2ID(sym);
-    index = (id % SYM_PROC_CACHE_SIZE) &lt;&lt; 1;
-
-    aryp = RARRAY_PTR(sym_proc_cache);
-    if (aryp[index] == sym) {
-        return aryp[index + 1];
+        end = FIX2LONG(num);
+        for (i=0; i&lt;end; i++) {
+            rb_yield(LONG2FIX(i));
+        }
     }
     else {
-        proc = rb_proc_new(sym_call, (VALUE)id);
-        aryp[index] = sym;
-        aryp[index + 1] = proc;
-        return proc;
+        VALUE i = INT2FIX(0);
+
+        for (;;) {
+            if (!RTEST(rb_funcall(i, &#39;&lt;&#39;, 1, num))) break;
+            rb_yield(i);
+            i = rb_funcall(i, &#39;+&#39;, 1, INT2FIX(1));
+        }
     }
+    return num;
 }</pre>
-          </div><!-- to_proc-source -->
+          </div><!-- times-source -->
           
         </div>
 
         
 
         
-      </div><!-- to_proc-method -->
+      </div><!-- times-method -->
 
     
-      <div id="method-i-to_s" class="method-detail ">
-        
+      <div id="method-i-to_bn" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-callseq">
-            id2name   &rarr; string
-          </span>
+          <span class="method-name">to_bn</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_bn-source">
+            <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/bn.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_bn</span>
+  <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">BN</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>), <span class="ruby-value">16</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_bn-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_bn-method -->
+
+    
+      <div id="method-i-to_d" class="method-detail ">
+        
+        
         <div class="method-heading">
           <span class="method-callseq">
-            to_s      &rarr; string
+            to_d  &rarr; bigdecimal
           </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
           
         </div>
         
@@ -4877,38 +4919,40 @@ sym_to_proc(VALUE sym)
 
         <div class="method-description">
           
-          <p>Returns the name or string corresponding to <em>sym</em>.</p>
+          <p>Convert <code>int</code> to a <a href="BigDecimal.html">BigDecimal</a> and
+return it.</p>
 
-<pre class="ruby">:<span class="ruby-identifier">fred</span>.<span class="ruby-identifier">id2name</span>   <span class="ruby-comment">#=&gt; &quot;fred&quot;</span>
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;bigdecimal&#39;</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">&#39;bigdecimal/util&#39;</span>
+
+<span class="ruby-value">42</span>.<span class="ruby-identifier">to_d</span>
+<span class="ruby-comment"># =&gt; #&lt;BigDecimal:1008ef070,&#39;0.42E2&#39;,9(36)&gt;</span>
 </pre>
           
           
 
           
-          <div class="method-source-code" id="to_s-source">
-            <pre>VALUE
-rb_sym_to_s(VALUE sym)
-{
-    ID id = SYM2ID(sym);
-
-    return str_new3(rb_cString, rb_id2str(id));
-}</pre>
-          </div><!-- to_s-source -->
+          <div class="method-source-code" id="to_d-source">
+            <pre><span class="ruby-comment"># File ext/bigdecimal/lib/bigdecimal/util.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_d</span>
+  <span class="ruby-constant">BigDecimal</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_d-source -->
           
         </div>
 
         
 
         
-      </div><!-- to_s-method -->
+      </div><!-- to_d-method -->
 
     
-      <div id="method-i-to_sym" class="method-detail ">
+      <div id="method-i-to_i" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            to_sym   &rarr; sym
+            to_i      &rarr;  integer
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4917,7 +4961,28 @@ rb_sym_to_s(VALUE sym)
         
         <div class="method-heading">
           <span class="method-callseq">
-            intern   &rarr; sym
+            to_int    &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            floor     &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ceil      &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            truncate  &rarr;  integer
           </span>
           
         </div>
@@ -4926,35 +4991,100 @@ rb_sym_to_s(VALUE sym)
 
         <div class="method-description">
           
-          <p>In general, <code>to_sym</code> returns the <code>Symbol</code>
-corresponding to an object. As <em>sym</em> is already a symbol,
-<code>self</code> is returned in this case.</p>
+          <p>As <em>int</em> is already an <code>Integer</code>, all these methods
+simply return the receiver.</p>
           
           
 
           
-          <div class="method-source-code" id="to_sym-source">
+          <div class="method-source-code" id="to_i-source">
             <pre>static VALUE
-sym_to_sym(VALUE sym)
+int_to_i(VALUE num)
 {
-    return sym;
+    return num;
 }</pre>
-          </div><!-- to_sym-source -->
+          </div><!-- to_i-source -->
           
         </div>
 
         
 
         
-      </div><!-- to_sym-method -->
+      </div><!-- to_i-method -->
 
     
-      <div id="method-i-upcase" class="method-detail ">
+      <div id="method-i-to_int" class="method-detail ">
         
         
         <div class="method-heading">
           <span class="method-callseq">
-            upcase    &rarr; symbol
+            to_i      &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_int    &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            floor     &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ceil      &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            truncate  &rarr;  integer
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>As <em>int</em> is already an <code>Integer</code>, all these methods
+simply return the receiver.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="to_int-source">
+            <pre>static VALUE
+int_to_i(VALUE num)
+{
+    return num;
+}</pre>
+          </div><!-- to_int-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_int-method -->
+
+    
+      <div id="method-i-to_r" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_r  &rarr;  rational
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4965,25 +5095,167 @@ sym_to_sym(VALUE sym)
 
         <div class="method-description">
           
-          <p>Same as <code>sym.to_s.upcase.intern</code>.</p>
+          <p>Returns the value as a rational.</p>
+
+<pre class="ruby"><span class="ruby-value">1</span>.<span class="ruby-identifier">to_r</span>        <span class="ruby-comment">#=&gt; (1/1)</span>
+(<span class="ruby-value">1</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value">64</span>).<span class="ruby-identifier">to_r</span>  <span class="ruby-comment">#=&gt; (18446744073709551616/1)</span>
+</pre>
           
           
 
           
-          <div class="method-source-code" id="upcase-source">
+          <div class="method-source-code" id="to_r-source">
             <pre>static VALUE
-sym_upcase(VALUE sym)
+integer_to_r(VALUE self)
 {
-    return rb_str_intern(rb_str_upcase(rb_id2str(SYM2ID(sym))));
+    return rb_rational_new1(self);
 }</pre>
-          </div><!-- upcase-source -->
+          </div><!-- to_r-source -->
           
         </div>
 
         
 
         
-      </div><!-- upcase-method -->
+      </div><!-- to_r-method -->
+
+    
+      <div id="method-i-truncate" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_i      &rarr;  integer
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            to_int    &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            floor     &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            ceil      &rarr;  integer
+          </span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            truncate  &rarr;  integer
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>As <em>int</em> is already an <code>Integer</code>, all these methods
+simply return the receiver.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="truncate-source">
+            <pre>static VALUE
+int_to_i(VALUE num)
+{
+    return num;
+}</pre>
+          </div><!-- truncate-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- truncate-method -->
+
+    
+      <div id="method-i-upto" class="method-detail ">
+        
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            upto(limit) {|i| block }  &rarr;  self
+          </span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+        <div class="method-heading">
+          <span class="method-callseq">
+            upto(limit)               &rarr;  an_enumerator
+          </span>
+          
+        </div>
+        
+        
+
+        <div class="method-description">
+          
+          <p>Iterates <em>block</em>, passing in integer values from <em>int</em> up to
+and including <em>limit</em>.</p>
+
+<p>If no block is given, an enumerator is returned instead.</p>
+
+<pre class="ruby"><span class="ruby-value">5</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-value">10</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">print</span> <span class="ruby-identifier">i</span>, <span class="ruby-string">&quot; &quot;</span> }
+</pre>
+
+<p><em>produces:</em></p>
+
+<pre>5 6 7 8 9 10</pre>
+          
+          
+
+          
+          <div class="method-source-code" id="upto-source">
+            <pre>static VALUE
+int_upto(VALUE from, VALUE to)
+{
+    RETURN_SIZED_ENUMERATOR(from, 1, &amp;to, int_upto_size);
+    if (FIXNUM_P(from) &amp;&amp; FIXNUM_P(to)) {
+        long i, end;
+
+        end = FIX2LONG(to);
+        for (i = FIX2LONG(from); i &lt;= end; i++) {
+            rb_yield(LONG2FIX(i));
+        }
+    }
+    else {
+        VALUE i = from, c;
+
+        while (!(c = rb_funcall(i, &#39;&gt;&#39;, 1, to))) {
+            rb_yield(i);
+            i = rb_funcall(i, &#39;+&#39;, 1, INT2FIX(1));
+        }
+        if (NIL_P(c)) rb_cmperr(i, to);
+    }
+    return from;
+}</pre>
+          </div><!-- upto-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- upto-method -->
 
     
     </section><!-- public-instance-method-details -->

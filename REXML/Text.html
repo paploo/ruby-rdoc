@@ -550,6 +550,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -825,6 +827,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1697,8 +1701,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3837,7 +3839,7 @@ the value alone</p>
 
           
           <div class="method-source-code" id="check-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 128</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Text</span>.<span class="ruby-identifier">check</span> <span class="ruby-identifier">string</span>, <span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">doctype</span>
 
   <span class="ruby-comment"># illegal anywhere</span>
@@ -3910,7 +3912,7 @@ the value alone</p>
 
           
           <div class="method-source-code" id="expand-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 395</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 396</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Text</span>.<span class="ruby-identifier">expand</span>(<span class="ruby-identifier">ref</span>, <span class="ruby-identifier">doctype</span>, <span class="ruby-identifier">filter</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">ref</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">#</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">ref</span>[<span class="ruby-value">2</span>] <span class="ruby-operator">==</span> <span class="ruby-string">x</span>
@@ -4003,7 +4005,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 92</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">arg</span>, <span class="ruby-identifier">respect_whitespace</span>=<span class="ruby-keyword">false</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">raw</span>=<span class="ruby-keyword">nil</span>,
   <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">illegal</span>=<span class="ruby-constant">NEEDS_A_SECOND_CHECK</span> )
 
@@ -4062,7 +4064,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="normalize-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 360</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 361</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">normalize</span>( <span class="ruby-identifier">input</span>, <span class="ruby-identifier">doctype</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">entity_filter</span>=<span class="ruby-keyword">nil</span> )
   <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">to_s</span>
   <span class="ruby-comment"># Doing it like this rather than in a loop improves the speed</span>
@@ -4112,7 +4114,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="read_with_substitution-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 334</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 335</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">read_with_substitution</span>( <span class="ruby-identifier">input</span>, <span class="ruby-identifier">illegal</span>=<span class="ruby-keyword">nil</span> )
   <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">clone</span>
 
@@ -4165,12 +4167,12 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="unnormalize-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 382</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 383</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">unnormalize</span>( <span class="ruby-identifier">string</span>, <span class="ruby-identifier">doctype</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">filter</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">illegal</span>=<span class="ruby-keyword">nil</span> )
   <span class="ruby-identifier">sum</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-regexp">/\r\n?/</span>, <span class="ruby-string">&quot;\n&quot;</span> ).<span class="ruby-identifier">gsub</span>( <span class="ruby-constant">REFERENCE</span> ) {
     <span class="ruby-identifier">s</span> = <span class="ruby-constant">Text</span>.<span class="ruby-identifier">expand</span>(<span class="ruby-node">$&amp;</span>, <span class="ruby-identifier">doctype</span>, <span class="ruby-identifier">filter</span>)
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">Document</span>.<span class="ruby-identifier">entity_expansion_text_limit</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">REXML</span>.<span class="ruby-identifier">entity_expansion_text_limit</span>
       <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;entity expansion has grown too large&quot;</span>
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">bytesize</span>
@@ -4214,7 +4216,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="3C-3C-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 188</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 189</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span>( <span class="ruby-identifier">to_append</span> )
   <span class="ruby-ivar">@string</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">to_append</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-regexp">/\r\n?/</span>, <span class="ruby-string">&quot;\n&quot;</span> )
 <span class="ruby-keyword">end</span></pre>
@@ -4248,7 +4250,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="3C-3D-3E-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 195</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 196</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;=&gt;</span>( <span class="ruby-identifier">other</span> )
   <span class="ruby-identifier">to_s</span>() <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_s</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4281,7 +4283,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="clone-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">clone</span>
   <span class="ruby-keyword">return</span> <span class="ruby-constant">Text</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -4314,7 +4316,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="doctype-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 199</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 200</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">doctype</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>
     <span class="ruby-identifier">doc</span> = <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">document</span>
@@ -4350,7 +4352,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="empty-3F-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 176</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 177</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
   <span class="ruby-ivar">@string</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4383,7 +4385,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="indent_text-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 274</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 275</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">indent_text</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">level</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">style</span>=<span class="ruby-string">&quot;\t&quot;</span>, <span class="ruby-identifier">indentfirstline</span>=<span class="ruby-keyword">true</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">string</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
   <span class="ruby-identifier">new_string</span> = <span class="ruby-string">&#39;&#39;</span>
@@ -4424,7 +4426,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 227</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-ivar">@string</span>.<span class="ruby-identifier">inspect</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4457,7 +4459,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="node_type-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 172</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 173</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">node_type</span>
   <span class="ruby-value">:text</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4495,7 +4497,7 @@ Text.new( &quot;sean russell&quot;, false, nil, true, [&quot;s&quot;] ) #-&gt; &
 
           
           <div class="method-source-code" id="parent-3D-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parent=</span> <span class="ruby-identifier">parent</span>
   <span class="ruby-keyword">super</span>(<span class="ruby-identifier">parent</span>)
   <span class="ruby-constant">Text</span>.<span class="ruby-identifier">check</span>(<span class="ruby-ivar">@string</span>, <span class="ruby-constant">NEEDS_A_SECOND_CHECK</span>, <span class="ruby-identifier">doctype</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@raw</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@parent</span>
@@ -4541,7 +4543,7 @@ u.to_s   #-&gt; &quot;sean russell&quot;</pre>
 
           
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 220</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 221</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@string</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@raw</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@normalized</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@normalized</span>
@@ -4588,7 +4590,7 @@ u.value   #-&gt; &quot;sean russell&quot;</pre>
 
           
           <div class="method-source-code" id="value-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 244</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 245</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">value</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@unnormalized</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@unnormalized</span>
   <span class="ruby-ivar">@unnormalized</span> = <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">unnormalize</span>( <span class="ruby-ivar">@string</span>, <span class="ruby-identifier">doctype</span> )
@@ -4628,7 +4630,7 @@ e[0].value = &quot;&lt;a&gt;&quot;    # &lt;a&gt;&amp;lt;a&amp;gt;&lt;/a&gt;</pr
 
           
           <div class="method-source-code" id="value-3D-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 256</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 257</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">value=</span>( <span class="ruby-identifier">val</span> )
   <span class="ruby-ivar">@string</span> = <span class="ruby-identifier">val</span>.<span class="ruby-identifier">gsub</span>( <span class="ruby-regexp">/\r\n?/</span>, <span class="ruby-string">&quot;\n&quot;</span> )
   <span class="ruby-ivar">@unnormalized</span> = <span class="ruby-keyword">nil</span>
@@ -4664,7 +4666,7 @@ e[0].value = &quot;&lt;a&gt;&quot;    # &lt;a&gt;&amp;lt;a&amp;gt;&lt;/a&gt;</pr
 
           
           <div class="method-source-code" id="wrap-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 263</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 264</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">width</span>, <span class="ruby-identifier">addnewline</span>=<span class="ruby-keyword">false</span>)
   <span class="ruby-comment"># Recursively wrap string at width.</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">string</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">width</span>
@@ -4706,7 +4708,7 @@ e[0].value = &quot;&lt;a&gt;&quot;    # &lt;a&gt;&amp;lt;a&amp;gt;&lt;/a&gt;</pr
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 289</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 290</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">write</span>( <span class="ruby-identifier">writer</span>, <span class="ruby-identifier">indent</span>=<span class="ruby-value">-1</span>, <span class="ruby-identifier">transitive</span>=<span class="ruby-keyword">false</span>, <span class="ruby-identifier">ie_hack</span>=<span class="ruby-keyword">false</span> )
   <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-node">&quot;#{self.class.name}.write is deprecated.  See REXML::Formatters&quot;</span>)
   <span class="ruby-identifier">formatter</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">indent</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">-1</span>
@@ -4760,7 +4762,7 @@ the write out</p>
 
           
           <div class="method-source-code" id="write_with_substitution-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 321</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 322</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">write_with_substitution</span> <span class="ruby-identifier">out</span>, <span class="ruby-identifier">input</span>
   <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">clone</span>
   <span class="ruby-comment"># Doing it like this rather than in a loop improves the speed</span>
@@ -4801,7 +4803,7 @@ the write out</p>
 
           
           <div class="method-source-code" id="xpath-source">
-            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 301</span>
+            <pre><span class="ruby-comment"># File lib/rexml/text.rb, line 302</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xpath</span>
   <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">xpath</span>
   <span class="ruby-identifier">path</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;/text()&quot;</span>

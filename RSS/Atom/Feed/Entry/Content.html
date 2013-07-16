@@ -540,6 +540,8 @@
   
     <li><a href="../../../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -815,6 +817,8 @@
     <li><a href="../../../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1687,8 +1691,6 @@
     <li><a href="../../../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../../../Psych/Error.html">Psych::Error</a>
   
@@ -3766,7 +3768,7 @@
 
           
           <div class="method-source-code" id="xml_getter-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 456</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 533</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xml_getter</span>
   <span class="ruby-string">&quot;xml&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3799,7 +3801,7 @@
 
           
           <div class="method-source-code" id="xml_setter-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 452</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 529</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xml_setter</span>
   <span class="ruby-string">&quot;xml=&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3838,7 +3840,7 @@
 
           
           <div class="method-source-code" id="atom_validate-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 498</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 575</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">atom_validate</span>(<span class="ruby-identifier">ignore_unknown_element</span>, <span class="ruby-identifier">tags</span>, <span class="ruby-identifier">uri</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">out_of_line?</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">MissingAttributeError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-string">&quot;type&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@type</span>.<span class="ruby-identifier">nil?</span>
@@ -3883,7 +3885,7 @@
 
           
           <div class="method-source-code" id="have_xml_content-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 472</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 549</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">have_xml_content?</span>
   <span class="ruby-identifier">inline_xhtml?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">inline_other_xml?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3916,7 +3918,7 @@
 
           
           <div class="method-source-code" id="inline_html-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 518</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 595</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_html?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">out_of_line?</span>
   <span class="ruby-ivar">@type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;html&quot;</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">mime_split</span> <span class="ruby-operator">==</span> [<span class="ruby-string">&quot;text&quot;</span>, <span class="ruby-string">&quot;html&quot;</span>]
@@ -3950,7 +3952,7 @@
 
           
           <div class="method-source-code" id="inline_other-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 527</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 604</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_other?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">out_of_line?</span>
   <span class="ruby-identifier">media_type</span>, <span class="ruby-identifier">subtype</span> = <span class="ruby-identifier">mime_split</span>
@@ -3986,7 +3988,7 @@
 
           
           <div class="method-source-code" id="inline_other_base64-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 557</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 634</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_other_base64?</span>
   <span class="ruby-identifier">inline_other?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">inline_other_text?</span> <span class="ruby-keyword">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">inline_other_xml?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4019,7 +4021,7 @@
 
           
           <div class="method-source-code" id="inline_other_text-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 534</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 611</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_other_text?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">inline_other?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">inline_other_xml?</span>
@@ -4057,7 +4059,7 @@
 
           
           <div class="method-source-code" id="inline_other_xml-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 543</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 620</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_other_xml?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">inline_other?</span>
 
@@ -4100,7 +4102,7 @@
 
           
           <div class="method-source-code" id="inline_text-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 514</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 591</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_text?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">out_of_line?</span> <span class="ruby-keyword">and</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-string">&quot;text&quot;</span>, <span class="ruby-string">&quot;html&quot;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@type</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -4133,7 +4135,7 @@
 
           
           <div class="method-source-code" id="inline_xhtml-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 523</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 600</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inline_xhtml?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">out_of_line?</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;xhtml&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4166,7 +4168,7 @@
 
           
           <div class="method-source-code" id="mime_split-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 565</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 642</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">mime_split</span>
   <span class="ruby-identifier">media_type</span> = <span class="ruby-identifier">subtype</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\A\s*([a-z]+)\/([a-z\+]+)\s*(?:;.*)?\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-ivar">@type</span>.<span class="ruby-identifier">to_s</span>
@@ -4204,7 +4206,7 @@
 
           
           <div class="method-source-code" id="need_base64_encode-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 574</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 651</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">need_base64_encode?</span>
   <span class="ruby-identifier">inline_other_base64?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4237,7 +4239,7 @@
 
           
           <div class="method-source-code" id="out_of_line-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 561</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 638</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">out_of_line?</span>
   <span class="ruby-keyword">not</span> <span class="ruby-ivar">@src</span>.<span class="ruby-identifier">nil?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4270,7 +4272,7 @@
 
           
           <div class="method-source-code" id="xhtml-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 490</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 567</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xhtml</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">inline_xhtml?</span>
     <span class="ruby-identifier">xml</span>
@@ -4307,7 +4309,7 @@
 
           
           <div class="method-source-code" id="xml-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 476</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 553</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xml</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@xml</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">inline_xhtml?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@xml</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@xml</span>.<span class="ruby-identifier">nil?</span>
@@ -4361,7 +4363,7 @@
 
           
           <div class="method-source-code" id="empty_content-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 579</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 656</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">empty_content?</span>
   <span class="ruby-identifier">out_of_line?</span> <span class="ruby-keyword">or</span> <span class="ruby-keyword">super</span>
 <span class="ruby-keyword">end</span></pre>

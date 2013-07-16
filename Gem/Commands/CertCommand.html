@@ -508,6 +508,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -783,6 +785,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1655,8 +1659,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3719,7 +3721,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 6</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
   <span class="ruby-keyword">super</span> <span class="ruby-string">&#39;cert&#39;</span>, <span class="ruby-string">&#39;Manage RubyGems certificates and signing settings&#39;</span>,
         <span class="ruby-value">:add</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:remove</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:list</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:build</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:sign</span> =<span class="ruby-operator">&gt;</span> []
@@ -3829,7 +3831,7 @@
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 116</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">build</span> <span class="ruby-identifier">name</span>
   <span class="ruby-identifier">key</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span>.<span class="ruby-identifier">create_key</span>
 
@@ -3871,7 +3873,7 @@
 
           
           <div class="method-source-code" id="certificates_matching-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 129</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">certificates_matching</span> <span class="ruby-identifier">filter</span>
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span> <span class="ruby-identifier">__method__</span>, <span class="ruby-identifier">filter</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
 
@@ -3913,7 +3915,7 @@
 
           
           <div class="method-source-code" id="execute-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">execute</span>
   <span class="ruby-identifier">options</span>[<span class="ruby-value">:add</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span>.<span class="ruby-identifier">trust_dir</span>.<span class="ruby-identifier">trust_cert</span> <span class="ruby-identifier">certificate</span>
@@ -3977,9 +3979,9 @@
 
           
           <div class="method-source-code" id="load_default_cert-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 182</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_default_cert</span>
-  <span class="ruby-identifier">cert_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_home</span>, <span class="ruby-string">&#39;gem-public_cert.pem&#39;</span>
+  <span class="ruby-identifier">cert_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_cert_path</span>
   <span class="ruby-identifier">cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">cert_file</span>
   <span class="ruby-identifier">options</span>[<span class="ruby-value">:issuer_cert</span>] = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">cert</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
@@ -4020,9 +4022,9 @@
 
           
           <div class="method-source-code" id="load_default_key-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 197</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 198</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">load_default_key</span>
-  <span class="ruby-identifier">key_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_home</span>, <span class="ruby-string">&#39;gem-private_key.pem&#39;</span>
+  <span class="ruby-identifier">key_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_key_path</span>
   <span class="ruby-identifier">key</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">key_file</span>
   <span class="ruby-identifier">options</span>[<span class="ruby-value">:key</span>] = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">key</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
@@ -4063,7 +4065,7 @@
 
           
           <div class="method-source-code" id="sign-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 213</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sign</span> <span class="ruby-identifier">cert_file</span>
   <span class="ruby-identifier">cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">cert_file</span>
   <span class="ruby-identifier">cert</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">cert</span>

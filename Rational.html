@@ -547,6 +547,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -822,6 +824,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1694,8 +1698,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4218,7 +4220,7 @@ nurat_div(VALUE self, VALUE other)
         
         <div class="method-heading">
           <span class="method-callseq">
-            rat &lt;=&gt; numeric  &rarr;  -1, 0, +1 or nil
+            rational &lt;=&gt; numeric  &rarr;  -1, 0, +1 or nil
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4230,6 +4232,8 @@ nurat_div(VALUE self, VALUE other)
         <div class="method-description">
           
           <p>Performs comparison and returns -1, 0, or +1.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
 
 <pre class="ruby"><span class="ruby-constant">Rational</span>(<span class="ruby-value">2</span>, <span class="ruby-value">3</span>)  <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">2</span>, <span class="ruby-value">3</span>)  <span class="ruby-comment">#=&gt; 0</span>
 <span class="ruby-constant">Rational</span>(<span class="ruby-value">5</span>)     <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-value">5</span>               <span class="ruby-comment">#=&gt; 0</span>

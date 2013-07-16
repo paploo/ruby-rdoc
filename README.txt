@@ -1,4 +1,4 @@
-The Ruby 2.0.0-p0 RDoc documentation.
+The Ruby 2.0.0-p247 RDoc documentation.
 
 Compiled by Jeff Reinecke <jeff@paploo.net> and posted at http://github.com/paploo/ruby-rdoc/.
 

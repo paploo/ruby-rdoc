@@ -498,6 +498,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -773,6 +775,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1645,8 +1649,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3760,12 +3762,12 @@ certificates or paths to certificates.</p>
   <span class="ruby-ivar">@key</span>        = <span class="ruby-identifier">key</span>
 
   <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@key</span> <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">default_key</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_home</span>, <span class="ruby-string">&#39;gem-private_key.pem&#39;</span>
+    <span class="ruby-identifier">default_key</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_key_path</span>
     <span class="ruby-ivar">@key</span> = <span class="ruby-identifier">default_key</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">default_key</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@cert_chain</span> <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">default_cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_home</span>, <span class="ruby-string">&#39;gem-public_cert.pem&#39;</span>
+    <span class="ruby-identifier">default_cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_cert_path</span>
     <span class="ruby-ivar">@cert_chain</span> = [<span class="ruby-identifier">default_cert</span>] <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">default_cert</span>
   <span class="ruby-keyword">end</span>
 

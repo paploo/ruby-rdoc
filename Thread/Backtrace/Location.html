@@ -508,6 +508,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -783,6 +785,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1655,8 +1659,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3869,12 +3871,27 @@ location_inspect_m(VALUE self)
 
 <p>Usually consists of method, class, module, etc names with decoration.</p>
 
-<p>For example, using <code>caller_locations.rb</code> from <a
-href="Location.html">Thread::Backtrace::Location</a></p>
+<p>Consider the following example:</p>
 
-<pre class="ruby"><span class="ruby-identifier">loc</span> = <span class="ruby-identifier">c</span>(<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>).<span class="ruby-identifier">first</span>
-<span class="ruby-identifier">loc</span>.<span class="ruby-identifier">label</span> <span class="ruby-comment">#=&gt; a</span>
+<pre class="ruby"><span class="ruby-keyword">def</span> <span class="ruby-identifier">foo</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">caller_locations</span>(<span class="ruby-value">0</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">label</span>
+
+  <span class="ruby-value">1</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">caller_locations</span>(<span class="ruby-value">0</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">label</span>
+
+    <span class="ruby-value">1</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">caller_locations</span>(<span class="ruby-value">0</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">label</span>
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
 </pre>
+
+<p>The result of calling <code>foo</code> is this:</p>
+
+<pre>label: foo
+label: block in foo
+label: block (2 levels) in foo</pre>
           
           
 

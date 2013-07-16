@@ -492,6 +492,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -767,6 +769,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1639,8 +1643,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3659,6 +3661,15 @@
 
   <div id="description" class="description">
     
+<p>The <a href="PersonConstruct.html">PersonConstruct</a> module is used to
+define a Person <a href="../Atom.html">Atom</a> element that can be used to
+describe a person, corporation, or similar entity</p>
+
+<p>The <a href="PersonConstruct.html">PersonConstruct</a> has a <a
+href="PersonConstruct/Name.html">Name</a>, <a
+href="PersonConstruct/Uri.html">Uri</a>, and <a
+href="PersonConstruct/Email.html">Email</a> child elements</p>
+
   </div><!-- description -->
 
   
@@ -3692,7 +3703,7 @@
 
         <div class="method-description">
           
-          
+          <p>Adds attributes for name, uri, and email to the <code>klass</code></p>
           
           
             <div class="method-calls-super">
@@ -3703,7 +3714,7 @@
 
           
           <div class="method-source-code" id="append_features-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 152</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 172</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">append_features</span>(<span class="ruby-identifier">klass</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
@@ -3751,7 +3762,7 @@
 
           
           <div class="method-source-code" id="maker_target-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 165</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 185</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">maker_target</span>(<span class="ruby-identifier">target</span>)
   <span class="ruby-identifier">target</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-node">&quot;new_#{self.class.name.split(/::/).last.downcase}&quot;</span>)
 <span class="ruby-keyword">end</span></pre>

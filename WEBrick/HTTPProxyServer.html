@@ -496,6 +496,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -771,6 +773,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1643,8 +1647,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3672,10 +3674,10 @@
 
 <span class="ruby-identifier">proxy</span> = <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPProxyServer</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">Port</span><span class="ruby-operator">:</span> <span class="ruby-value">8000</span>
 
-<span class="ruby-identifier">trap</span> <span class="ruby-string">&#39;INT&#39;</span>  <span class="ruby-keyword">do</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">shutdown</span> <span class="ruby-keyword">end</span>
-<span class="ruby-identifier">trap</span> <span class="ruby-string">&#39;TERM&#39;</span> <span class="ruby-keyword">do</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">shutdown</span> <span class="ruby-keyword">end</span>
+<span class="ruby-identifier">trap</span> <span class="ruby-string">&#39;INT&#39;</span>  <span class="ruby-keyword">do</span> <span class="ruby-identifier">proxy</span>.<span class="ruby-identifier">shutdown</span> <span class="ruby-keyword">end</span>
+<span class="ruby-identifier">trap</span> <span class="ruby-string">&#39;TERM&#39;</span> <span class="ruby-keyword">do</span> <span class="ruby-identifier">proxy</span>.<span class="ruby-identifier">shutdown</span> <span class="ruby-keyword">end</span>
 
-<span class="ruby-identifier">p</span>.<span class="ruby-identifier">start</span>
+<span class="ruby-identifier">proxy</span>.<span class="ruby-identifier">start</span>
 </pre>
 
 <p>See <a href="HTTPProxyServer.html#method-c-new">::new</a> for

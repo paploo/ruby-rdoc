@@ -502,6 +502,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -777,6 +779,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1649,8 +1653,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3708,7 +3710,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 973</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 1031</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">specs</span>)
   <span class="ruby-ivar">@specs</span> = <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">full_name</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -3747,7 +3749,7 @@
 
           
           <div class="method-source-code" id="find_all-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 983</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 1041</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_all</span>(<span class="ruby-identifier">dep</span>)
   <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">matches_spec?</span> <span class="ruby-identifier">s</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -3780,7 +3782,7 @@
 
           
           <div class="method-source-code" id="find_spec-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 977</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 1035</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_spec</span>(<span class="ruby-identifier">dep</span>)
   <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">reverse_each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">s</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">matches_spec?</span> <span class="ruby-identifier">s</span>
@@ -3815,7 +3817,7 @@
 
           
           <div class="method-source-code" id="prefetch-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 987</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/test_case.rb, line 1045</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">prefetch</span>(<span class="ruby-identifier">reqs</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- prefetch-source -->

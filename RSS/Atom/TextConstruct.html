@@ -504,6 +504,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -779,6 +781,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1651,8 +1655,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3671,6 +3673,13 @@
 
   <div id="description" class="description">
     
+<p>The <a href="TextConstruct.html">TextConstruct</a> module is used to define
+a Text construct <a href="../Atom.html">Atom</a> element, which is used to
+store small quantities of human-readable text</p>
+
+<p>The <a href="TextConstruct.html">TextConstruct</a> has a type attribute,
+e.g. text, html, xhtml</p>
+
   </div><!-- description -->
 
   
@@ -3735,7 +3744,7 @@
 
           
           <div class="method-source-code" id="append_features-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">append_features</span>(<span class="ruby-identifier">klass</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
@@ -3788,7 +3797,7 @@
 
           
           <div class="method-source-code" id="xml_getter-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 99</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xml_getter</span>
   <span class="ruby-string">&quot;xhtml&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3821,7 +3830,7 @@
 
           
           <div class="method-source-code" id="xml_setter-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xml_setter</span>
   <span class="ruby-string">&quot;xhtml=&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3860,7 +3869,7 @@
 
           
           <div class="method-source-code" id="atom_validate-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 128</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">atom_validate</span>(<span class="ruby-identifier">ignore_unknown_element</span>, <span class="ruby-identifier">tags</span>, <span class="ruby-identifier">uri</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">have_xml_content?</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@xhtml</span>.<span class="ruby-identifier">nil?</span>
@@ -3894,13 +3903,13 @@
 
         <div class="method-description">
           
-          
+          <p>Returns true if type is “xhtml”</p>
           
           
 
           
           <div class="method-source-code" id="have_xml_content-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 124</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">have_xml_content?</span>
   <span class="ruby-ivar">@type</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;xhtml&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3933,7 +3942,7 @@
 
           
           <div class="method-source-code" id="xhtml-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 111</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">xhtml</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@xhtml</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@xhtml</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@xhtml</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>) <span class="ruby-keyword">and</span>
@@ -3981,7 +3990,7 @@
 
           
           <div class="method-source-code" id="maker_target-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">maker_target</span>(<span class="ruby-identifier">target</span>)
   <span class="ruby-identifier">target</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/::/</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">downcase</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -4014,7 +4023,7 @@
 
           
           <div class="method-source-code" id="setup_maker_attributes-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 158</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">setup_maker_attributes</span>(<span class="ruby-identifier">target</span>)
   <span class="ruby-identifier">target</span>.<span class="ruby-identifier">type</span> = <span class="ruby-identifier">type</span>
   <span class="ruby-identifier">target</span>.<span class="ruby-identifier">content</span> = <span class="ruby-identifier">content</span>

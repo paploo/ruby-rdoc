@@ -508,6 +508,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -783,6 +785,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1655,8 +1659,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3877,7 +3879,7 @@ cookies are only transmitted to HTTPS servers.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">value</span>)
   <span class="ruby-ivar">@domain</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@expires</span> = <span class="ruby-keyword">nil</span>
@@ -3942,7 +3944,7 @@ cookies are only transmitted to HTTPS servers.</p>
 
           
           <div class="method-source-code" id="parse-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 145</span>
 <span class="ruby-keyword">def</span> <span class="ruby-constant">Cookie</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse</span>(<span class="ruby-identifier">raw_cookie</span>)
   <span class="ruby-identifier">cookies</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>([])
   <span class="ruby-keyword">return</span> <span class="ruby-identifier">cookies</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">raw_cookie</span>
@@ -3999,7 +4001,7 @@ is a secure cookie or not.</p>
 
           
           <div class="method-source-code" id="secure-3D-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 120</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 121</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">secure=</span>(<span class="ruby-identifier">val</span>)
   <span class="ruby-ivar">@secure</span> = <span class="ruby-identifier">val</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">val</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
   <span class="ruby-ivar">@secure</span>
@@ -4033,7 +4035,7 @@ is a secure cookie or not.</p>
 
           
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 126</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-identifier">val</span> = <span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-identifier">escape</span>(<span class="ruby-identifier">v</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;&amp;&quot;</span>)
   <span class="ruby-identifier">buf</span> = <span class="ruby-node">&quot;#{@name}=#{val}&quot;</span>
@@ -4072,7 +4074,7 @@ is a secure cookie or not.</p>
 
           
           <div class="method-source-code" id="value-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 108</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">value</span>
   <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4105,7 +4107,7 @@ is a secure cookie or not.</p>
 
           
           <div class="method-source-code" id="value-3D-source">
-            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/cgi/cookie.rb, line 114</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">value=</span>(<span class="ruby-identifier">val</span>)
   <span class="ruby-identifier">replace</span>(<span class="ruby-constant">Array</span>(<span class="ruby-identifier">val</span>))
 <span class="ruby-keyword">end</span></pre>

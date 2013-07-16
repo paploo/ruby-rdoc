@@ -505,6 +505,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -780,6 +782,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1652,8 +1656,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3895,7 +3897,7 @@ marshal_dump(int argc, VALUE *argv)
     VALUE obj, port, a1, a2;
     int limit = -1;
     struct dump_arg *arg;
-    VALUE wrapper;
+    volatile VALUE wrapper;
 
     port = Qnil;
     rb_scan_args(argc, argv, &quot;12&quot;, &amp;obj, &amp;a1, &amp;a2);
@@ -3995,7 +3997,7 @@ marshal_load(int argc, VALUE *argv)
     VALUE port, proc;
     int major, minor, infection = 0;
     VALUE v;
-    VALUE wrapper;
+    volatile VALUE wrapper;
     struct load_arg *arg;
 
     rb_scan_args(argc, argv, &quot;11&quot;, &amp;port, &amp;proc);
@@ -4099,7 +4101,7 @@ marshal_load(int argc, VALUE *argv)
     VALUE port, proc;
     int major, minor, infection = 0;
     VALUE v;
-    VALUE wrapper;
+    volatile VALUE wrapper;
     struct load_arg *arg;
 
     rb_scan_args(argc, argv, &quot;11&quot;, &amp;port, &amp;proc);

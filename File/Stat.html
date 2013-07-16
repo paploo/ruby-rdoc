@@ -595,6 +595,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -870,6 +872,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1742,8 +1746,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3867,8 +3869,10 @@ rb_stat_init(VALUE obj, VALUE fname)
 
         <div class="method-description">
           
-          <p>Compares <code>File::Stat</code> objects by comparing their respective
-modification times.</p>
+          <p>Compares <a href="Stat.html">File::Stat</a> objects by comparing their
+respective modification times.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
 
 <pre class="ruby"><span class="ruby-identifier">f1</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;f1&quot;</span>, <span class="ruby-string">&quot;w&quot;</span>)
 <span class="ruby-identifier">sleep</span> <span class="ruby-value">1</span>
@@ -4323,6 +4327,8 @@ rb_stat_dev_minor(VALUE self)
           
           <p>Returns <code>true</code> if the named file is a directory, or a symlink
 that points at a directory, and <code>false</code> otherwise.</p>
+
+<p><em>file_name</em> can be an <a href="../IO.html">IO</a> object.</p>
 
 <pre>File.directory?(&quot;.&quot;)</pre>
           

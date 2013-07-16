@@ -639,6 +639,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -914,6 +916,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1786,8 +1790,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -5753,19 +5755,37 @@ curses_cols(void)
 
         <div class="method-description">
           
-          <p>Put the terminal into normal mode (out of cbreak mode).</p>
+          <p>Put the terminal into cbreak mode.</p>
 
-<p>See <a href="Curses.html#method-c-cbreak">::cbreak</a> for more detail.</p>
+<p>Normally, the tty driver buffers typed characters until a newline or
+carriage return is typed. The <a
+href="Curses.html#method-c-cbreak">::cbreak</a> routine disables line
+buffering and erase/kill character-processing (interrupt and flow control
+characters are unaffected), making characters typed by the user immediately
+available to the program.</p>
+
+<p>The <a href="Curses.html#method-c-nocbreak">::nocbreak</a> routine returns
+the terminal to normal (cooked) mode.</p>
+
+<p>Initially the terminal may or may not be in cbreak mode, as the mode is
+inherited; therefore, a program should call <a
+href="Curses.html#method-c-cbreak">::cbreak</a> or <a
+href="Curses.html#method-c-nocbreak">::nocbreak</a> explicitly. Most
+interactive programs using curses set the cbreak mode. Note that <a
+href="Curses.html#method-c-cbreak">::cbreak</a> overrides <a
+href="Curses.html#method-c-raw">::raw</a>.</p>
+
+<p>see also <a href="Curses.html#method-c-raw">::raw</a></p>
           
           
 
           
           <div class="method-source-code" id="crmode-source">
             <pre>static VALUE
-curses_nocbreak(VALUE obj)
+curses_cbreak(VALUE obj)
 {
     curses_stdscr();
-    nocbreak();
+    cbreak();
     return Qnil;
 }</pre>
           </div><!-- crmode-source -->

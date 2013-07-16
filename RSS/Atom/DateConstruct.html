@@ -504,6 +504,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -779,6 +781,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1651,8 +1655,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3671,6 +3673,16 @@
 
   <div id="description" class="description">
     
+<p><a href="../Element.html">Element</a> used to describe an <a
+href="../Atom.html">Atom</a> date and time in the ISO 8601 format</p>
+
+<p>Examples:</p>
+<ul><li>
+<p>2013-03-04T15:30:02Z</p>
+</li><li>
+<p>2013-03-04T10:30:02-05:00</p>
+</li></ul>
+
   </div><!-- description -->
 
   
@@ -3715,7 +3727,7 @@
 
           
           <div class="method-source-code" id="append_features-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 186</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 214</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">append_features</span>(<span class="ruby-identifier">klass</span>)
   <span class="ruby-keyword">super</span>
   <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
@@ -3752,13 +3764,14 @@
 
         <div class="method-description">
           
-          
+          <p>Raises <a href="../NotAvailableValueError.html">NotAvailableValueError</a>
+if element content is nil</p>
           
           
 
           
           <div class="method-source-code" id="atom_validate-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 194</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 223</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">atom_validate</span>(<span class="ruby-identifier">ignore_unknown_element</span>, <span class="ruby-identifier">tags</span>, <span class="ruby-identifier">uri</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotAvailableValueError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tag_name</span>, <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">nil?</span>
 <span class="ruby-keyword">end</span></pre>

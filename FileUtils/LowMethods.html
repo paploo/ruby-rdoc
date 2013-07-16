@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-<title>class Psych::EngineManager - RDoc Documentation</title>
+<title>module FileUtils::LowMethods - RDoc Documentation</title>
 
 <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
 
@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
 
 
-<body id="top" class="class">
+<body id="top" class="module">
 <nav id="metadata">
   <nav id="home-section" class="section">
   <h3 class="section-header">
@@ -49,7 +49,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>lib/yaml.rb
+    <li>lib/fileutils.rb
   </ul>
 </nav>
 
@@ -58,26 +58,10 @@
 
   <div id="class-metadata">
     
-    <nav id="parent-class-section" class="section">
-  <h3 class="section-header">Parent</h3>
-  
-  <p class="link"><a href="../Object.html">Object</a>
-  
-</nav>
-
     
     
-    <!-- Method Quickref -->
-<nav id="method-list-section" class="section">
-  <h3 class="section-header">Methods</h3>
-
-  <ul class="link-list">
     
-    <li ><a href="#method-i-yamler-3D">#yamler=</a>
     
-  </ul>
-</nav>
-
   </div>
 
   <div id="project-metadata">
@@ -496,6 +480,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -771,6 +757,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1643,8 +1631,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3659,7 +3645,7 @@
 </nav>
 
 <div id="documentation">
-  <h1 class="class">class Psych::EngineManager</h1>
+  <h1 class="module">module FileUtils::LowMethods</h1>
 
   <div id="description" class="description">
     
@@ -3676,91 +3662,9 @@
     
 
     
-    <!-- Attributes -->
-    <section id="attribute-method-details" class="method-section section">
-      <h3 class="section-header">Attributes</h3>
-
-      
-      <div id="attribute-i-yamler" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">yamler</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        <p>Returns the YAML engine in use.</p>
-
-<p>By default <a href="../Psych.html">Psych</a> is used but the old and
-unmaintained Syck may be chosen.</p>
-
-<p>See <a href="EngineManager.html#method-i-yamler-3D">yamler=</a> for more
-information.</p>
-        
-        </div>
-      </div>
-      
-    </section><!-- attribute-method-details -->
-    
 
     <!-- Methods -->
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
-      <h3 class="section-header">Public Instance Methods</h3>
-
-    
-      <div id="method-i-yamler-3D" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">yamler=</span><span
-            class="method-args">(engine)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>By default <a href="../Psych.html">Psych</a> is used but the old and
-unmaintained Syck may be chosen.</p>
-
-<p>After installing the &#39;syck&#39; gem, you can set the YAML engine to
-syck:</p>
-
-<pre>YAML::ENGINE.yamler = &#39;syck&#39;</pre>
-
-<p>To set the YAML engine back to psych:</p>
-
-<pre>YAML::ENGINE.yamler = &#39;psych&#39;</pre>
-          
-          
-
-          
-          <div class="method-source-code" id="yamler-3D-source">
-            <pre><span class="ruby-comment"># File lib/yaml.rb, line 41</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">yamler=</span> <span class="ruby-identifier">engine</span>
-  <span class="ruby-keyword">case</span> <span class="ruby-identifier">engine</span>
-  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;syck&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">warn</span> <span class="ruby-string">&quot;syck has been removed&quot;</span>
-  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;psych&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@yamler</span> = <span class="ruby-string">&#39;psych&#39;</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;bad engine&quot;</span>)
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">engine</span>
-<span class="ruby-keyword">end</span></pre>
-          </div><!-- yamler-3D-source -->
-          
-        </div>
-
-        
-
-        
-      </div><!-- yamler-3D-method -->
-
-    
-    </section><!-- public-instance-method-details -->
-  
   </section><!-- 5Buntitled-5D -->
 
 </div><!-- documentation -->

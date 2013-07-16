@@ -526,6 +526,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -801,6 +803,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1673,8 +1677,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -4098,7 +4100,7 @@ assert_not_send([[1, 2], :member?, 4]) # -&gt; pass</pre>
 
           
           <div class="method-source-code" id="assert_not_send-source">
-            <pre><span class="ruby-comment"># File lib/test/unit/assertions.rb, line 297</span>
+            <pre><span class="ruby-comment"># File lib/test/unit/assertions.rb, line 303</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">assert_not_send</span> <span class="ruby-identifier">send_ary</span>, <span class="ruby-identifier">m</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">recv</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> = <span class="ruby-identifier">send_ary</span>
   <span class="ruby-identifier">m</span> = <span class="ruby-identifier">message</span>(<span class="ruby-identifier">m</span>) {
@@ -4323,7 +4325,13 @@ assert_respond_to(&quot;hello&quot;, :does_not_exist)  #Fails</pre>
           
           <div class="method-source-code" id="assert_respond_to-source">
             <pre><span class="ruby-comment"># File lib/test/unit/assertions.rb, line 253</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">meth</span>, <span class="ruby-identifier">msg</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">obj</span>, (<span class="ruby-identifier">meth</span>, <span class="ruby-identifier">priv</span>), <span class="ruby-identifier">msg</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">priv</span>
+    <span class="ruby-identifier">msg</span> = <span class="ruby-identifier">message</span>(<span class="ruby-identifier">msg</span>) {
+      <span class="ruby-node">&quot;Expected #{mu_pp(obj)} (#{obj.class}) to respond to ##{meth}#{&quot; privately&quot; if priv}&quot;</span>
+    }
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">assert</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-identifier">priv</span>), <span class="ruby-identifier">msg</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-comment">#get rid of overcounting</span>
   <span class="ruby-keyword">super</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">caller</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">rindex</span>(<span class="ruby-constant">MINI_DIR</span>, <span class="ruby-value">0</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">meth</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -4373,7 +4381,7 @@ assert_send([[1, 2], :member?, 4]) # -&gt; fail</pre>
 
           
           <div class="method-source-code" id="assert_send-source">
-            <pre><span class="ruby-comment"># File lib/test/unit/assertions.rb, line 271</span>
+            <pre><span class="ruby-comment"># File lib/test/unit/assertions.rb, line 277</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">assert_send</span> <span class="ruby-identifier">send_ary</span>, <span class="ruby-identifier">m</span> = <span class="ruby-keyword">nil</span>
   <span class="ruby-identifier">recv</span>, <span class="ruby-identifier">msg</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> = <span class="ruby-identifier">send_ary</span>
   <span class="ruby-identifier">m</span> = <span class="ruby-identifier">message</span>(<span class="ruby-identifier">m</span>) {

@@ -583,6 +583,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -858,6 +860,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1730,8 +1734,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3975,7 +3977,8 @@ unique-id is a hash of the message.</p>
         
         <p>Seconds to wait until a connection is opened. If the <a
 href="POP3.html">POP3</a> object cannot open a connection within this time,
-it raises a <a href="OpenTimeout.html">Net::OpenTimeout</a> exception.</p>
+it raises a <a href="OpenTimeout.html">Net::OpenTimeout</a> exception. The
+default value is 30 seconds.</p>
         
         </div>
       </div>
@@ -3990,7 +3993,8 @@ it raises a <a href="OpenTimeout.html">Net::OpenTimeout</a> exception.</p>
         
         <p>Seconds to wait until reading one block (by one read(1) call). If the <a
 href="POP3.html">POP3</a> object cannot complete a read() within this time,
-it raises a <a href="ReadTimeout.html">Net::ReadTimeout</a> exception.</p>
+it raises a <a href="ReadTimeout.html">Net::ReadTimeout</a> exception. The
+default value is 60 seconds.</p>
         
         </div>
       </div>

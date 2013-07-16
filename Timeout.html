@@ -503,6 +503,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -778,6 +780,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1650,8 +1654,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3733,12 +3735,13 @@ href="Timeout.html#method-i-timeout">#timeout</a> instead.</p>
 
         <div class="method-description">
           
-          <p>Perform an operation in a block, timing it out if it takes longer than
+          <p>Perform an operation in a block, raising an error if it takes longer than
 <code>sec</code> seconds to complete.</p>
 <dl class="rdoc-list note-list"><dt><code>sec</code>
 <dd>
 <p>Number of seconds to wait for the block to terminate. Any number may be
-used, including Floats to specify fractional seconds.</p>
+used, including Floats to specify fractional seconds. A value of 0 or
+<code>nil</code> will execute the block without any timeout.</p>
 </dd><dt><code>klass</code>
 <dd>
 <p><a href="Exception.html">Exception</a> <a href="Class.html">Class</a> to
@@ -3762,7 +3765,7 @@ href="Timeout.html#method-i-timeout">#timeout</a>.</p>
 
           
           <div class="method-source-code" id="timeout-source">
-            <pre><span class="ruby-comment"># File lib/timeout.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/timeout.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-identifier">klass</span> = <span class="ruby-keyword">nil</span>)   <span class="ruby-comment">#:yield: +sec+</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">sec</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">sec</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sec</span>.<span class="ruby-identifier">zero?</span>
   <span class="ruby-identifier">exception</span> = <span class="ruby-identifier">klass</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ExitException</span>)
@@ -3827,12 +3830,13 @@ href="Timeout.html#method-i-timeout">#timeout</a>.</p>
 
         <div class="method-description">
           
-          <p>Perform an operation in a block, timing it out if it takes longer than
+          <p>Perform an operation in a block, raising an error if it takes longer than
 <code>sec</code> seconds to complete.</p>
 <dl class="rdoc-list note-list"><dt>sec
 <dd>
 <p>Number of seconds to wait for the block to terminate. Any number may be
-used, including Floats to specify fractional seconds.</p>
+used, including Floats to specify fractional seconds. A value of 0 or
+<code>nil</code> will execute the block without any timeout.</p>
 </dd><dt>klass
 <dd>
 <p><a href="Exception.html">Exception</a> <a href="Class.html">Class</a> to
@@ -3856,7 +3860,7 @@ href="Timeout.html#method-i-timeout">#timeout</a>.</p>
 
           
           <div class="method-source-code" id="timeout-source">
-            <pre><span class="ruby-comment"># File lib/timeout.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/timeout.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">timeout</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-identifier">klass</span> = <span class="ruby-keyword">nil</span>)   <span class="ruby-comment">#:yield: +sec+</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">sec</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">sec</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sec</span>.<span class="ruby-identifier">zero?</span>
   <span class="ruby-identifier">exception</span> = <span class="ruby-identifier">klass</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ExitException</span>)

@@ -537,6 +537,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -812,6 +814,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1684,8 +1688,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3847,11 +3849,11 @@ ossl_bn_initialize(int argc, VALUE *argv, VALUE self)
     if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;str, &amp;bs) == 2) {
         base = NUM2INT(bs);
     }
-    StringValue(str);
-    GetBN(self, bn);
+
     if (RTEST(rb_obj_is_kind_of(str, cBN))) {
         BIGNUM *other;
 
+        GetBN(self, bn);
         GetBN(str, other); /* Safe - we checked kind_of? above */
         if (!BN_copy(bn, other)) {
             ossl_raise(eBNError, NULL);
@@ -3859,6 +3861,8 @@ ossl_bn_initialize(int argc, VALUE *argv, VALUE self)
         return self;
     }
 
+    StringValue(str);
+    GetBN(self, bn);
     switch (base) {
     case 0:
         if (!BN_mpi2bn((unsigned char *)RSTRING_PTR(str), RSTRING_LENINT(str), bn)) {

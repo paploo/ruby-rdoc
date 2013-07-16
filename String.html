@@ -797,6 +797,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -1072,6 +1074,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1944,8 +1948,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4509,6 +4511,8 @@ separated by an underscore.  Returns zero for null or garbage string.</p>
 <span class="ruby-string">&#39;1/2+3/4i&#39;</span>.<span class="ruby-identifier">to_c</span>    <span class="ruby-comment">#=&gt; ((1/2)+(3/4)*i)</span>
 <span class="ruby-string">&#39;ruby&#39;</span>.<span class="ruby-identifier">to_c</span>        <span class="ruby-comment">#=&gt; (0+0i)</span>
 </pre>
+
+<p>See <a href="Kernel.html">Kernel</a>.Complex.</p>
           
           
 
@@ -5251,7 +5255,7 @@ rb_str_concat(VALUE str1, VALUE str2)
         
         <div class="method-heading">
           <span class="method-callseq">
-            str &lt;=&gt; other_str   &rarr; -1, 0, +1 or nil
+            string &lt;=&gt; other_string   &rarr; -1, 0, +1 or nil
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -5262,18 +5266,21 @@ rb_str_concat(VALUE str1, VALUE str2)
 
         <div class="method-description">
           
-          <p>Comparison—Returns -1 if <em>other_str</em> is greater than, 0 if
-<em>other_str</em> is equal to, and +1 if <em>other_str</em> is less than
-<em>str</em>. If the strings are of different lengths, and the strings are
-equal when compared up to the shortest length, then the longer string is
-considered greater than the shorter one. In older versions of Ruby, setting
-<code>$=</code> allowed case-insensitive comparisons; this is now
-deprecated in favor of using <code>String#casecmp</code>.</p>
+          <p>Comparison—Returns -1, 0, +1 or nil depending on whether
+<code>string</code> is less than, equal to, or greater than
+<code>other_string</code>.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
+
+<p>If the strings are of different lengths, and the strings are equal when
+compared up to the shortest length, then the longer string is considered
+greater than the shorter one.</p>
 
 <p><code>&lt;=&gt;</code> is the basis for the methods <code>&lt;</code>,
 <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, and
-<code>between?</code>, included from module <code>Comparable</code>.  The
-method <code>String#==</code> does not use <code>Comparable#==</code>.</p>
+<code>between?</code>, included from module <a
+href="Comparable.html">Comparable</a>. The method String#== does not use
+Comparable#==.</p>
 
 <pre class="ruby"><span class="ruby-string">&quot;abcdef&quot;</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-string">&quot;abcde&quot;</span>     <span class="ruby-comment">#=&gt; 1</span>
 <span class="ruby-string">&quot;abcdef&quot;</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-string">&quot;abcdef&quot;</span>    <span class="ruby-comment">#=&gt; 0</span>
@@ -8224,7 +8231,7 @@ capture groups of the form <code>\\d</code>, where <em>d</em> is a group
 number, or <code>\\k&lt;n&gt;</code>, where <em>n</em> is a group name. If
 it is a double-quoted string, both back-references must be preceded by an
 additional backslash. However, within <em>replacement</em> the special
-match variables, such as <code>&amp;$</code>, will not refer to the current
+match variables, such as <code>$&amp;</code>, will not refer to the current
 match.</p>
 
 <p>If the second argument is a <code>Hash</code>, and the matched text is one
@@ -8764,7 +8771,6 @@ rb_str_inspect(VALUE str)
             }
         }
         switch (c) {
-          case &#39;\0&#39;: cc = &#39;0&#39;; break;
           case &#39;\n&#39;: cc = &#39;n&#39;; break;
           case &#39;\r&#39;: cc = &#39;r&#39;; break;
           case &#39;\t&#39;: cc = &#39;t&#39;; break;
@@ -10282,7 +10288,7 @@ href="String.html#method-i-scanf">#scanf</a></p>
         
         <div class="method-heading">
           <span class="method-callseq">
-            setbyte(index, int) &rarr; int
+            setbyte(index, integer) &rarr; integer
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -10293,7 +10299,7 @@ href="String.html#method-i-scanf">#scanf</a></p>
 
         <div class="method-description">
           
-          <p>modifies the <em>index</em>th byte as <em>int</em>.</p>
+          <p>modifies the <em>index</em>th byte as <em>integer</em>.</p>
           
           
 
@@ -12046,6 +12052,8 @@ equivalent to &#39;3/10&#39;.to_r, but the latter isn&#39;t so.</p>
 <span class="ruby-string">&#39;21/06/09&#39;</span>.<span class="ruby-identifier">to_r</span>    <span class="ruby-comment">#=&gt; (7/2)</span>
 <span class="ruby-string">&#39;bwv 1079&#39;</span>.<span class="ruby-identifier">to_r</span>    <span class="ruby-comment">#=&gt; (0/1)</span>
 </pre>
+
+<p>See <a href="Kernel.html">Kernel</a>.Rational.</p>
           
           
 

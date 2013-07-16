@@ -542,6 +542,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -817,6 +819,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1689,8 +1693,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3935,7 +3937,7 @@
         
         <div class="method-heading">
           <span class="method-name">entry_details</span><span
-            class="method-args">(entry, spec, specs, platforms)</span>
+            class="method-args">(entry, detail_tuple, specs, platforms)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -3951,8 +3953,12 @@
           
           <div class="method-source-code" id="entry_details-source">
             <pre><span class="ruby-comment"># File lib/rubygems/commands/query_command.rb, line 195</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">entry_details</span> <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">spec</span>, <span class="ruby-identifier">specs</span>, <span class="ruby-identifier">platforms</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">entry_details</span> <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">detail_tuple</span>, <span class="ruby-identifier">specs</span>, <span class="ruby-identifier">platforms</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:details</span>]
+
+  <span class="ruby-identifier">name_tuple</span>, <span class="ruby-identifier">spec</span> = <span class="ruby-identifier">detail_tuple</span>
+
+  <span class="ruby-identifier">spec</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">fetch_spec</span> <span class="ruby-identifier">name_tuple</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">spec</span>
 
   <span class="ruby-identifier">entry</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;\n&quot;</span>
 
@@ -3992,7 +3998,7 @@
 
           
           <div class="method-source-code" id="entry_versions-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/query_command.rb, line 208</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/query_command.rb, line 212</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">entry_versions</span> <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">name_tuples</span>, <span class="ruby-identifier">platforms</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:versions</span>]
 
@@ -4075,22 +4081,18 @@
 
           
           <div class="method-source-code" id="make_entry-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/commands/query_command.rb, line 229</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/commands/query_command.rb, line 233</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">make_entry</span> <span class="ruby-identifier">entry_tuples</span>, <span class="ruby-identifier">platforms</span>
   <span class="ruby-identifier">detail_tuple</span> = <span class="ruby-identifier">entry_tuples</span>.<span class="ruby-identifier">first</span>
-  <span class="ruby-identifier">name_tuple</span>, <span class="ruby-identifier">latest_spec</span> = <span class="ruby-identifier">detail_tuple</span>
-
-  <span class="ruby-identifier">latest_spec</span> = <span class="ruby-identifier">latest_spec</span>.<span class="ruby-identifier">fetch_spec</span> <span class="ruby-identifier">name_tuple</span> <span class="ruby-keyword">unless</span>
-    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">latest_spec</span>
 
   <span class="ruby-identifier">name_tuples</span>, <span class="ruby-identifier">specs</span> = <span class="ruby-identifier">entry_tuples</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">partition</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">NameTuple</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">item</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">entry</span> = [<span class="ruby-identifier">latest_spec</span>.<span class="ruby-identifier">name</span>]
+  <span class="ruby-identifier">entry</span> = [<span class="ruby-identifier">name_tuples</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">name</span>]
 
   <span class="ruby-identifier">entry_versions</span> <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">name_tuples</span>, <span class="ruby-identifier">platforms</span>
-  <span class="ruby-identifier">entry_details</span>  <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">latest_spec</span>, <span class="ruby-identifier">specs</span>, <span class="ruby-identifier">platforms</span>
+  <span class="ruby-identifier">entry_details</span>  <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">detail_tuple</span>, <span class="ruby-identifier">specs</span>, <span class="ruby-identifier">platforms</span>
 
   <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">join</span>
 <span class="ruby-keyword">end</span></pre>

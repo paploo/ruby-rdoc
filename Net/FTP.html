@@ -610,6 +610,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -885,6 +887,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1757,8 +1761,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3929,7 +3931,7 @@ ftp.close</pre>
 used, including Floats for fractional seconds. If the <a
 href="FTP.html">FTP</a> object cannot open a connection in this many
 seconds, it raises a <a href="OpenTimeout.html">Net::OpenTimeout</a>
-exception.</p>
+exception. The default value is <code>nil</code>.</p>
         
         </div>
       </div>
@@ -3959,7 +3961,8 @@ exception.</p>
         <p>Number of seconds to wait for one block to be read (via one read(2) call).
 Any number may be used, including Floats for fractional seconds. If the <a
 href="FTP.html">FTP</a> object cannot read data in this many seconds, it
-raises a <a href="../Timeout/TimeoutError.html">TimeoutError</a> exception.</p>
+raises a <a href="../Timeout/TimeoutError.html">TimeoutError</a> exception.
+The default value is 60 seconds.</p>
         
         </div>
       </div>

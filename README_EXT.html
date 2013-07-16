@@ -528,6 +528,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -803,6 +805,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1675,8 +1679,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3935,6 +3937,12 @@ should be tainted.</p>
 <dt>rb_vsprintf(const char *format, va_list ap) 
 <dd>
 <p>Creates a new Ruby string with printf(3) format.</p>
+
+<p>Note: In the format string, %i is used for <a
+href="Object.html#method-i-to_s">Object#to_s</a> (or <a
+href="Object.html#method-i-inspect">Object#inspect</a> if &#39;+&#39; flag
+is set) output (and related argument must be a VALUE).  For integers in
+format strings, use %d.</p>
 </dd><dt>rb_str_cat(VALUE str, const char *ptr, long len) 
 <dd>
 <p>Appends len bytes of data from ptr to the Ruby string.</p>
@@ -5136,6 +5144,12 @@ will be done for fatal errors, but ensure blocks will be executed.</p>
 under the situation caused by the bug in the interpreter.  No exception
 handling nor ensure execution will be done.</p>
 </dd></dl>
+
+<p>Note: In the format string, %i is used for <a
+href="Object.html#method-i-to_s">Object#to_s</a> (or <a
+href="Object.html#method-i-inspect">Object#inspect</a> if &#39;+&#39; flag
+is set) output (and related argument must be a VALUE).  For integers in
+format strings, use %d.</p>
 
 <h2 id="label-Initialize+and+Start+the+Interpreter">Initialize and Start the Interpreter<span><a href="#label-Initialize+and+Start+the+Interpreter">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 

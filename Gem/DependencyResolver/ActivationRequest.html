@@ -514,6 +514,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -789,6 +791,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1661,8 +1665,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3757,7 +3759,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 353</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 364</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">spec</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">others_possible</span>=<span class="ruby-keyword">true</span>)
   <span class="ruby-ivar">@spec</span> = <span class="ruby-identifier">spec</span>
   <span class="ruby-ivar">@request</span> = <span class="ruby-identifier">req</span>
@@ -3798,7 +3800,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="3D-3D-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 401</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 414</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">other</span>
   <span class="ruby-keyword">when</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>
@@ -3838,13 +3840,15 @@ this activation.</p>
 
           
           <div class="method-source-code" id="download-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 391</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 402</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">download</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:source</span>
     <span class="ruby-identifier">source</span> = <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">source</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">source</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">sources</span>.<span class="ruby-identifier">first</span>
   <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">ensure_gem_subdirectories</span> <span class="ruby-identifier">path</span>
 
   <span class="ruby-identifier">source</span>.<span class="ruby-identifier">download</span> <span class="ruby-identifier">full_spec</span>, <span class="ruby-identifier">path</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3877,7 +3881,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="full_name-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 379</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 390</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">full_name</span>
   <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">full_name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3910,7 +3914,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="full_spec-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 387</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 398</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">full_spec</span>
   <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@spec</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@spec</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">spec</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3943,7 +3947,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="installed-3F-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 415</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 428</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">installed?</span>
   <span class="ruby-identifier">this_spec</span> = <span class="ruby-identifier">full_spec</span>
 
@@ -3980,7 +3984,7 @@ this activation.</p>
 
           
           <div class="method-source-code" id="name-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 375</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 386</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">name</span>
   <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4014,7 +4018,7 @@ same <a href="../Dependency.html">Dependency</a> request.</p>
 
           
           <div class="method-source-code" id="others_possible-3F-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 364</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 375</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">others_possible?</span>
   <span class="ruby-ivar">@others_possible</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4048,7 +4052,7 @@ contained the dependency that we were activated for.</p>
 
           
           <div class="method-source-code" id="parent-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 371</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 382</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parent</span>
   <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">requester</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4081,7 +4085,7 @@ contained the dependency that we were activated for.</p>
 
           
           <div class="method-source-code" id="version-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 383</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 394</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">version</span>
   <span class="ruby-ivar">@spec</span>.<span class="ruby-identifier">version</span>
 <span class="ruby-keyword">end</span></pre>

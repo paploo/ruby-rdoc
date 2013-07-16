@@ -524,6 +524,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -799,6 +801,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1671,8 +1675,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3881,6 +3883,7 @@ href="Security.html">Gem::Security</a>.</p>
   <span class="ruby-comment"># we absolutely must.</span>
   <span class="ruby-ivar">@minimal_deps</span>        = <span class="ruby-identifier">options</span>[<span class="ruby-value">:minimal_deps</span>]
 
+  <span class="ruby-ivar">@available</span>      = <span class="ruby-keyword">nil</span>
   <span class="ruby-ivar">@installed_gems</span> = []
   <span class="ruby-ivar">@toplevel_specs</span> = <span class="ruby-keyword">nil</span>
 
@@ -3925,7 +3928,7 @@ href="Security.html">Gem::Security</a>.</p>
 
           
           <div class="method-source-code" id="add_found_dependencies-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 201</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 218</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_found_dependencies</span> <span class="ruby-identifier">to_do</span>, <span class="ruby-identifier">dependency_list</span>
   <span class="ruby-identifier">seen</span> = {}
   <span class="ruby-identifier">dependencies</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">name</span> }
@@ -4004,7 +4007,7 @@ considered.</p>
 
           
           <div class="method-source-code" id="consider_local-3F-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 107</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">consider_local?</span>
   <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:both</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:local</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4038,7 +4041,7 @@ considered.</p>
 
           
           <div class="method-source-code" id="consider_remote-3F-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 115</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">consider_remote?</span>
   <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:both</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:remote</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4074,7 +4077,7 @@ gems preferred over older gems, and local gems preferred over remote gems.</p>
 
           
           <div class="method-source-code" id="find_gems_with_sources-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_gems_with_sources</span>(<span class="ruby-identifier">dep</span>)
   <span class="ruby-identifier">set</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">AvailableSet</span>.<span class="ruby-identifier">new</span>
 
@@ -4145,7 +4148,7 @@ for installation of the gem.</p>
 
           
           <div class="method-source-code" id="find_spec_by_name_and_version-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 255</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 272</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find_spec_by_name_and_version</span>(<span class="ruby-identifier">gem_name</span>,
                                   <span class="ruby-identifier">version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>,
                                   <span class="ruby-identifier">prerelease</span> = <span class="ruby-keyword">false</span>)
@@ -4210,7 +4213,7 @@ remote sources unless the ignore_dependencies was given.</p>
 
           
           <div class="method-source-code" id="gather_dependencies-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 169</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">gather_dependencies</span>
   <span class="ruby-identifier">specs</span> = <span class="ruby-ivar">@available</span>.<span class="ruby-identifier">all_specs</span>
 
@@ -4271,7 +4274,7 @@ remote sources unless the ignore_dependencies was given.</p>
 
           
           <div class="method-source-code" id="in_background-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 381</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 389</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">in_background</span> <span class="ruby-identifier">what</span>
   <span class="ruby-identifier">fork_happened</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@build_docs_in_background</span> <span class="ruby-keyword">and</span> <span class="ruby-constant">Process</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:fork</span>)
@@ -4326,15 +4329,9 @@ separately.</p>
 
           
           <div class="method-source-code" id="install-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 304</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 321</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">install</span> <span class="ruby-identifier">dep_or_name</span>, <span class="ruby-identifier">version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">dep_or_name</span> <span class="ruby-keyword">then</span>
-    <span class="ruby-identifier">find_spec_by_name_and_version</span> <span class="ruby-identifier">dep_or_name</span>, <span class="ruby-identifier">version</span>, <span class="ruby-ivar">@prerelease</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">dep</span> = <span class="ruby-identifier">dep_or_name</span>.<span class="ruby-identifier">dup</span>
-    <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">prerelease</span> = <span class="ruby-ivar">@prerelease</span>
-    <span class="ruby-ivar">@available</span> = <span class="ruby-identifier">find_gems_with_sources</span>(<span class="ruby-identifier">dep</span>).<span class="ruby-identifier">pick_best!</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">available_set_for</span> <span class="ruby-identifier">dep_or_name</span>, <span class="ruby-identifier">version</span>
 
   <span class="ruby-ivar">@installed_gems</span> = []
 
@@ -4393,12 +4390,9 @@ separately.</p>
   <span class="ruby-comment"># it&#39;s documentation. Ideally the hook adder could decide whether to be in</span>
   <span class="ruby-comment"># the background or not, and what to call it.</span>
   <span class="ruby-identifier">in_background</span> <span class="ruby-string">&quot;Installing documentation&quot;</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-identifier">start</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
     <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">done_installing_hooks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hook</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">hook</span>.<span class="ruby-identifier">call</span> <span class="ruby-keyword">self</span>, <span class="ruby-ivar">@installed_gems</span>
     <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">finish</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-    <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Done installing documentation for #{@installed_gems.map(&amp;:name).join(&#39;, &#39;)} (#{(finish-start).to_i} sec).&quot;</span>
   <span class="ruby-keyword">end</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">done_installing_hooks</span>.<span class="ruby-identifier">empty?</span>
 
   <span class="ruby-ivar">@installed_gems</span>

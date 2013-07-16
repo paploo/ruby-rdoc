@@ -498,6 +498,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -773,6 +775,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1645,8 +1649,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3755,7 +3757,7 @@ the name, version, and dependencies.</p>
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">set</span>, <span class="ruby-identifier">api_data</span>)
   <span class="ruby-ivar">@set</span> = <span class="ruby-identifier">set</span>
   <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">api_data</span>[<span class="ruby-value">:name</span>]
@@ -3799,7 +3801,7 @@ the name, version, and dependencies.</p>
 
           
           <div class="method-source-code" id="full_name-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/dependency_resolver.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">full_name</span>
   <span class="ruby-node">&quot;#{@name}-#{@version}&quot;</span>
 <span class="ruby-keyword">end</span></pre>

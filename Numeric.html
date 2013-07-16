@@ -602,6 +602,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -877,6 +879,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1749,8 +1753,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3964,7 +3966,7 @@ num_uminus(VALUE num)
         
         <div class="method-heading">
           <span class="method-callseq">
-            num &lt;=&gt; other  &rarr;  0 or nil
+            number &lt;=&gt; other  &rarr;  0 or nil
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -3975,8 +3977,8 @@ num_uminus(VALUE num)
 
         <div class="method-description">
           
-          <p>Returns zero if <em>num</em> equals <em>other</em>, <code>nil</code>
-otherwise.</p>
+          <p>Returns zero if <code>number</code> equals <code>other</code>, otherwise
+<code>nil</code> is returned if the two values are incomparable.</p>
           
           
 
@@ -4796,8 +4798,12 @@ numeric_imag(VALUE self)
 
         <div class="method-description">
           
-          <p>Returns <code>true</code> if <em>num</em> is an <code>Integer</code>
-(including <code>Fixnum</code> and <code>Bignum</code>).</p>
+          <p>Returns <code>true</code> if <code>num</code> is an <a
+href="Integer.html">Integer</a> (including Fixnum and Bignum).</p>
+
+<pre class="ruby">(<span class="ruby-value">1.0</span>).<span class="ruby-identifier">integer?</span> <span class="ruby-comment">#=&gt; false</span>
+(<span class="ruby-value">1</span>).<span class="ruby-identifier">integer?</span>   <span class="ruby-comment">#=&gt; true</span>
+</pre>
           
           
 
@@ -5577,7 +5583,12 @@ numeric_to_c(VALUE self)
         <div class="method-description">
           
           <p>Invokes the child class&#39;s <code>to_i</code> method to convert
-<em>num</em> to an integer.</p>
+<code>num</code> to an integer.</p>
+
+<pre class="ruby"><span class="ruby-value">1.0</span>.<span class="ruby-identifier">class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Float</span>
+<span class="ruby-value">1.0</span>.<span class="ruby-identifier">to_int</span>.<span class="ruby-identifier">class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Fixnum</span>
+<span class="ruby-value">1.0</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Fixnum</span>
+</pre>
           
           
 

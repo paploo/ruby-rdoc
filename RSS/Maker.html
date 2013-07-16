@@ -517,6 +517,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -792,6 +794,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1664,8 +1668,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3684,6 +3686,26 @@
 
   <div id="description" class="description">
     
+<p>Provides a set of builders for various <a href="../RSS.html">RSS</a>
+objects</p>
+<ul><li>
+<p>Feeds</p>
+<ul><li>
+<p><a href="../RSS.html">RSS</a> 0.91</p>
+</li><li>
+<p><a href="../RSS.html">RSS</a> 1.0</p>
+</li><li>
+<p><a href="../RSS.html">RSS</a> 2.0</p>
+</li><li>
+<p><a href="Maker/Atom.html">Atom</a> 1.0</p>
+</li></ul>
+</li><li>
+<p>Elements</p>
+<ul><li>
+<p><a href="Maker/Atom/Entry.html">Atom::Entry</a></p>
+</li></ul>
+</li></ul>
+
   </div><!-- description -->
 
   
@@ -3702,7 +3724,7 @@
       
         <dt id="MAKERS">MAKERS
         
-        <dd class="description">
+        <dd class="description"><p>Collection of supported makers</p>
         
       
       </dl>
@@ -3730,13 +3752,13 @@
 
         <div class="method-description">
           
-          
+          <p>Returns the maker for the <code>version</code></p>
           
           
 
           
           <div class="method-source-code" id="5B-5D-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">version</span>)
   <span class="ruby-identifier">maker_info</span> = <span class="ruby-identifier">maker</span>(<span class="ruby-identifier">version</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnsupportedMakerVersionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">version</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">maker_info</span>.<span class="ruby-identifier">nil?</span>
@@ -3765,13 +3787,13 @@
 
         <div class="method-description">
           
-          
+          <p>Adds a maker to the set of supported makers</p>
           
           
 
           
           <div class="method-source-code" id="add_maker-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_maker</span>(<span class="ruby-identifier">version</span>, <span class="ruby-identifier">normalized_version</span>, <span class="ruby-identifier">maker</span>)
   <span class="ruby-constant">MAKERS</span>[<span class="ruby-identifier">version</span>] = {<span class="ruby-value">:maker</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">maker</span>, <span class="ruby-value">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">normalized_version</span>}
 <span class="ruby-keyword">end</span></pre>
@@ -3798,13 +3820,17 @@
 
         <div class="method-description">
           
-          
+          <p>Builder for an <a href="../RSS.html">RSS</a> object Creates an object of
+the type passed in <code>args</code></p>
+
+<p>Executes the <code>block</code> to populate elements of the created <a
+href="../RSS.html">RSS</a> object</p>
           
           
 
           
           <div class="method-source-code" id="make-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 8</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">make</span>(<span class="ruby-identifier">version</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">self</span>[<span class="ruby-identifier">version</span>].<span class="ruby-identifier">make</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3831,15 +3857,15 @@
 
         <div class="method-description">
           
-          
+          <p>Returns collection of supported makers</p>
           
           
 
           
           <div class="method-source-code" id="makers-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 26</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">makers</span>
-  <span class="ruby-constant">MAKERS</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">info</span><span class="ruby-operator">|</span> <span class="ruby-identifier">info</span>[<span class="ruby-value">:maker</span>]}.<span class="ruby-identifier">uniq</span>
+  <span class="ruby-constant">MAKERS</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">info</span><span class="ruby-operator">|</span> <span class="ruby-identifier">info</span>[<span class="ruby-value">:maker</span>] }.<span class="ruby-identifier">uniq</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- makers-source -->
           
@@ -3864,13 +3890,13 @@
 
         <div class="method-description">
           
-          
+          <p>Returns true if the version is supported</p>
           
           
 
           
           <div class="method-source-code" id="supported-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 30</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">supported?</span>(<span class="ruby-identifier">version</span>)
   <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">version</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3897,13 +3923,13 @@
 
         <div class="method-description">
           
-          
+          <p>Returns collection of supported maker versions</p>
           
           
 
           
           <div class="method-source-code" id="versions-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 22</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">versions</span>
   <span class="ruby-constant">MAKERS</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">sort</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3942,7 +3968,7 @@
 
           
           <div class="method-source-code" id="maker-source">
-            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/rss/maker.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">maker</span>(<span class="ruby-identifier">version</span>)
   <span class="ruby-constant">MAKERS</span>[<span class="ruby-identifier">version</span>]
 <span class="ruby-keyword">end</span></pre>

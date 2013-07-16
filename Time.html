@@ -701,6 +701,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -976,6 +978,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1848,8 +1852,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -6039,11 +6041,12 @@ time_minus(VALUE time1, VALUE time2)
 
         <div class="method-description">
           
-          <p>Comparison—Compares <em>time</em> with <code>other_time</code>. The return
-value is +<code>1</code> if <em>time</em> is greater than
-<code>other_time</code>, <code>0</code> if <em>time</em> is equal to
-<code>other_time</code> and <code>-1</code> if <em>time</em> is smaller
-than <code>other_time</code>.</p>
+          <p>Comparison—Compares <code>time</code> with <code>other_time</code>.</p>
+
+<p>-1, 0, +1 or nil depending on whether <code>time</code> is less  than,
+equal to, or greater than <code>other_time</code>.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
 
 <pre class="ruby"><span class="ruby-identifier">t</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>       <span class="ruby-comment">#=&gt; 2007-11-19 08:12:12 -0600</span>
 <span class="ruby-identifier">t2</span> = <span class="ruby-identifier">t</span> <span class="ruby-operator">+</span> <span class="ruby-value">2592000</span>   <span class="ruby-comment">#=&gt; 2007-12-19 08:12:12 -0600</span>

@@ -523,6 +523,8 @@
   
     <li><a href="../../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -798,6 +800,8 @@
     <li><a href="../../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1670,8 +1674,6 @@
     <li><a href="../../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../../Psych/Error.html">Psych::Error</a>
   
@@ -3690,6 +3692,10 @@
 
   <div id="description" class="description">
     
+<p>Defines a child <a href="../../Atom.html">Atom</a> <a
+href="Entry.html">Entry</a> element for an <a
+href="../../Atom.html">Atom</a> <a href="../Feed.html">Feed</a></p>
+
   </div><!-- description -->
 
   
@@ -3771,13 +3777,21 @@
 
         <div class="method-description">
           
-          
+          <p>Returns whether any of the following are true</p>
+<ul><li>
+<p>There are any authors in the feed</p>
+</li><li>
+<p>If the parent element has an author and the <code>check_parent</code>
+parameter was given.</p>
+</li><li>
+<p>There is a source element that has an author</p>
+</li></ul>
           
           
 
           
           <div class="method-source-code" id="have_author-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 419</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 496</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">have_author?</span>(<span class="ruby-identifier">check_parent</span>=<span class="ruby-keyword">true</span>)
   <span class="ruby-identifier">authors</span>.<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">author</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">author</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">empty?</span>} <span class="ruby-keyword">or</span>
     (<span class="ruby-identifier">check_parent</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@parent</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">have_author?</span>) <span class="ruby-keyword">or</span>
@@ -3818,7 +3832,7 @@
 
           
           <div class="method-source-code" id="atom_validate-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 426</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 503</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">atom_validate</span>(<span class="ruby-identifier">ignore_unknown_element</span>, <span class="ruby-identifier">tags</span>, <span class="ruby-identifier">uri</span>)
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">have_author?</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">MissingTagError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;author&quot;</span>, <span class="ruby-identifier">tag_name</span>)
@@ -3859,7 +3873,7 @@
 
           
           <div class="method-source-code" id="have_required_elements-3F-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 433</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 510</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">have_required_elements?</span>
   <span class="ruby-keyword">super</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">have_author?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3892,7 +3906,7 @@
 
           
           <div class="method-source-code" id="maker_target-source">
-            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 437</span>
+            <pre><span class="ruby-comment"># File lib/rss/atom.rb, line 514</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">maker_target</span>(<span class="ruby-identifier">items</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">items</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-string">&quot;items&quot;</span>)
     <span class="ruby-comment"># For backward compatibility</span>

@@ -530,6 +530,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -805,6 +807,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1677,8 +1681,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3804,7 +3806,7 @@
 
           
           <div class="method-source-code" id="bind-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 114</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bind</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">DL</span>.<span class="ruby-identifier">fiddle?</span>
     <span class="ruby-ivar">@cfunc</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">FiddleClosureCFunc</span>) {
@@ -3881,7 +3883,7 @@
 
           
           <div class="method-source-code" id="bind_at_call-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 199</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bind_at_call</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">bind</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -3914,7 +3916,7 @@
 
           
           <div class="method-source-code" id="bound-3F-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 195</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 198</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">bound?</span>()
   <span class="ruby-ivar">@cfunc</span>.<span class="ruby-identifier">ptr</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3961,6 +3963,9 @@
     <span class="ruby-keyword">super</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">funcs</span> = []
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">$SAFE</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">tainted?</span> }
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">SecurityError</span>, <span class="ruby-string">&quot;tainted parameter not allowed&quot;</span>
+    <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">_args</span> = <span class="ruby-identifier">wrap_args</span>(<span class="ruby-identifier">args</span>, <span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">types</span>, <span class="ruby-identifier">funcs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">r</span> = <span class="ruby-ivar">@cfunc</span>.<span class="ruby-identifier">call</span>(<span class="ruby-ivar">@stack</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-identifier">_args</span>))
     <span class="ruby-identifier">funcs</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">unbind_at_call</span>()}
@@ -4062,7 +4067,7 @@
 
           
           <div class="method-source-code" id="unbind-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 162</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 165</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">unbind</span>()
   <span class="ruby-keyword">if</span> <span class="ruby-constant">DL</span>.<span class="ruby-identifier">fiddle?</span> <span class="ruby-keyword">then</span>
     <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cfunc</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Fiddle</span><span class="ruby-operator">::</span><span class="ruby-constant">Closure</span>) <span class="ruby-keyword">and</span> <span class="ruby-ivar">@cfunc</span>.<span class="ruby-identifier">ptr</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span>
@@ -4124,7 +4129,7 @@
 
           
           <div class="method-source-code" id="unbind_at_call-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 203</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 206</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">unbind_at_call</span>()
 <span class="ruby-keyword">end</span></pre>
           </div><!-- unbind_at_call-source -->
@@ -4156,7 +4161,7 @@
 
           
           <div class="method-source-code" id="wrap_result-source">
-            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 102</span>
+            <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">wrap_result</span>(<span class="ruby-identifier">r</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-ivar">@cfunc</span>.<span class="ruby-identifier">ctype</span>
   <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_VOIDP</span>

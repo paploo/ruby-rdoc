@@ -529,6 +529,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -804,6 +806,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1676,8 +1680,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3921,7 +3923,10 @@ rb_str_new(ptr, strlen(ptr))と同等である．</pre>
 ap)</p>
 
 <pre>Cの文字列formatと続く引数をprintf(3)のフォーマットにしたがって
-整形し，Rubyの文字列を生成する．</pre>
+整形し，Rubyの文字列を生成する．
+
+注意: %iはObject#to_s(&#39;+&#39;フラグが指定されているときはObject#inspect)を
+使ったVALUEの出力に使用されているため，整数には%dを使用すること．</pre>
 
 <p>rb_str_cat(VALUE str, const char *ptr, long len)</p>
 
@@ -4271,8 +4276,8 @@ RubyオブジェクトにCの構造体(へのポインタ)をくるむことでR
 
 <p>このマクロの戻り値は生成されたDataオブジェクトです．</p>
 
-<p>klassはこのDataオブジェクトのクラスです．ptrはカプセル化する Cの構造体へのポインタです．markはこの構造体がRubyのオブジェ
-クトへの参照がある時に使う関数です．そのような参照を含まない 時には0を指定します．</p>
+<p>klassはこのDataオブジェクトのクラスです．markはこの構造体が Rubyのオブジェクトへの参照がある時に使う関数です．そのような
+参照を含まない時には0を指定します．</p>
 
 <p># そのような参照は勧められません．</p>
 
@@ -4285,7 +4290,9 @@ markおよびfree関数でRubyオブジェクトのアロケーシ ョンは行�
 
 <pre>Data_Make_Struct(klass, type, mark, free, sval)</pre>
 
-<p>このマクロの戻り値は生成されたDataオブジェクトです．</p>
+<p>このマクロの戻り値は生成されたDataオブジェクトです．このマク ロは以下の式のように働きます:</p>
+
+<pre>(sval = ALLOC(type), Data_Wrap_Struct(klass, mark, free, sval))</pre>
 
 <p>klass, mark, freeはData_Wrap_Structと同じ働きをします．type
 は割り当てるC構造体の型です．割り当てられた構造体は変数sval に代入されます．この変数の型は (type*) である必要があります．</p>
@@ -4983,6 +4990,9 @@ rb_set_errinfo(Qnil)でエラー情報をクリアしなければならない．
 <dd>
 <p>インタープリタなどプログラムのバグでしか発生するはずのない 状況の時呼ぶ．インタープリタはコアダンプし直ちに終了する． 例外処理は一切行なわれない．</p>
 </dd></dl>
+
+<p>注意: %iはObject#to_s(&#39;+&#39;フラグが指定されているときはObject#inspect)を
+使ったVALUEの出力に使用されているため，整数には%dを使用すること．</p>
 
 <h2 id="label-Ruby%E3%81%AE%E5%88%9D%E6%9C%9F%E5%8C%96%E3%83%BB%E5%AE%9F%E8%A1%8C">Rubyの初期化・実行<span><a href="#label-Ruby%E3%81%AE%E5%88%9D%E6%9C%9F%E5%8C%96%E3%83%BB%E5%AE%9F%E8%A1%8C">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
 

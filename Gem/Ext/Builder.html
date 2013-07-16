@@ -502,6 +502,8 @@
   
     <li><a href="../../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -777,6 +779,8 @@
     <li><a href="../../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1649,8 +1653,6 @@
     <li><a href="../../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../../Psych/Error.html">Psych::Error</a>
   
@@ -3748,13 +3750,6 @@
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">InstallError</span>, <span class="ruby-node">&quot;Makefile not found:\n\n#{results.join &quot;\n&quot;}&quot;</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">mf</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">read_binary</span> <span class="ruby-string">&#39;Makefile&#39;</span>
-  <span class="ruby-identifier">mf</span> = <span class="ruby-identifier">mf</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^RUBYARCHDIR\s*=\s*\$[^$]*/</span>, <span class="ruby-node">&quot;RUBYARCHDIR = #{dest_path}&quot;</span>)
-  <span class="ruby-identifier">mf</span> = <span class="ruby-identifier">mf</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^RUBYLIBDIR\s*=\s*\$[^$]*/</span>, <span class="ruby-node">&quot;RUBYLIBDIR = #{dest_path}&quot;</span>)
-  <span class="ruby-identifier">mf</span> = <span class="ruby-identifier">mf</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\s*\S+\.time$/</span>, <span class="ruby-string">&quot;&quot;</span>)
-
-  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">&#39;Makefile&#39;</span>, <span class="ruby-string">&#39;wb&#39;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">print</span> <span class="ruby-identifier">mf</span>}
-
   <span class="ruby-comment"># try to find make program from Ruby configure arguments first</span>
   <span class="ruby-constant">RbConfig</span><span class="ruby-operator">::</span><span class="ruby-constant">CONFIG</span>[<span class="ruby-string">&#39;configure_args&#39;</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/with-make-prog\=(\w+)/</span>
   <span class="ruby-identifier">make_program</span> = <span class="ruby-node">$1</span> <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;MAKE&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;make&#39;</span>]
@@ -3762,9 +3757,14 @@
     <span class="ruby-identifier">make_program</span> = (<span class="ruby-regexp">/mswin/</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">RUBY_PLATFORM</span>) <span class="ruby-operator">?</span> <span class="ruby-string">&#39;nmake&#39;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&#39;make&#39;</span>
   <span class="ruby-keyword">end</span>
 
-  [<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39; install&#39;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">cmd</span> = <span class="ruby-node">&quot;#{make_program}#{target}&quot;</span>
-    <span class="ruby-identifier">run</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">results</span>, <span class="ruby-node">&quot;make#{target}&quot;</span>)
+  [<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;install&#39;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">target</span><span class="ruby-operator">|</span>
+    <span class="ruby-comment"># Pass DESTDIR via command line to override what&#39;s in MAKEFLAGS</span>
+    <span class="ruby-identifier">cmd</span> = [
+      <span class="ruby-identifier">make_program</span>,
+      <span class="ruby-string">&#39;&quot;DESTDIR=%s&quot;&#39;</span> <span class="ruby-operator">%</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;DESTDIR&#39;</span>],
+      <span class="ruby-identifier">target</span>
+    ].<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; &#39;</span>).<span class="ruby-identifier">rstrip</span>
+    <span class="ruby-identifier">run</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">results</span>, <span class="ruby-node">&quot;make #{target}&quot;</span>.<span class="ruby-identifier">rstrip</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- make-source -->
@@ -3796,7 +3796,7 @@
 
           
           <div class="method-source-code" id="redirector-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/ext/builder.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/ext/builder.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">redirector</span>
   <span class="ruby-string">&#39;2&gt;&amp;1&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -3829,7 +3829,7 @@
 
           
           <div class="method-source-code" id="run-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/ext/builder.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/ext/builder.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">results</span>, <span class="ruby-identifier">command_name</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">verbose</span> = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">really_verbose</span>
 

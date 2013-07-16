@@ -501,6 +501,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -776,6 +778,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1648,8 +1652,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -3722,14 +3724,22 @@ connections.</p>
   <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;subjectAltName&quot;</span>
-    <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/,\s+/</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">general_name</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\ADNS:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+    <span class="ruby-identifier">id</span>, <span class="ruby-identifier">ostr</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">ASN1</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">ext</span>.<span class="ruby-identifier">to_der</span>).<span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">sequence</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">ASN1</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">ostr</span>.<span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">sequence</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">san</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">tag</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">2</span> <span class="ruby-comment"># dNSName in GeneralName (RFC5280)</span>
         <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
-        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-node">$1</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
+        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">/\A#{reg}\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">hostname</span>
-      <span class="ruby-keyword">elsif</span> <span class="ruby-regexp">/\AIP Address:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">7</span> <span class="ruby-comment"># iPAddress in GeneralName (RFC5280)</span>
         <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
-        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">$1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-comment"># follows GENERAL_NAME_print() in x509v3/v3_alt.c</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span>
+          <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&#39;C*&#39;</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;.&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">16</span>
+          <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&#39;n*&#39;</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-string">&quot;%X&quot;</span>, <span class="ruby-identifier">e</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;:&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">end</span>
     }
   }
@@ -3783,14 +3793,22 @@ connections.</p>
   <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;subjectAltName&quot;</span>
-    <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/,\s+/</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">general_name</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\ADNS:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+    <span class="ruby-identifier">id</span>, <span class="ruby-identifier">ostr</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">ASN1</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">ext</span>.<span class="ruby-identifier">to_der</span>).<span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">sequence</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">ASN1</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">ostr</span>.<span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">sequence</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">san</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">tag</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">2</span> <span class="ruby-comment"># dNSName in GeneralName (RFC5280)</span>
         <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
-        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-node">$1</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
+        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
         <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">/\A#{reg}\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">hostname</span>
-      <span class="ruby-keyword">elsif</span> <span class="ruby-regexp">/\AIP Address:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">7</span> <span class="ruby-comment"># iPAddress in GeneralName (RFC5280)</span>
         <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
-        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">$1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-comment"># follows GENERAL_NAME_print() in x509v3/v3_alt.c</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">4</span>
+          <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&#39;C*&#39;</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;.&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">16</span>
+          <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">san</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&#39;n*&#39;</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sprintf</span>(<span class="ruby-string">&quot;%X&quot;</span>, <span class="ruby-identifier">e</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;:&#39;</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+        <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">end</span>
     }
   }

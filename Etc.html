@@ -519,6 +519,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -794,6 +796,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1666,8 +1670,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4060,7 +4062,7 @@ etc_getgrnam(VALUE obj, VALUE nam)
     rb_secure(4);
     SafeStringValue(nam);
     grp = getgrnam(RSTRING_PTR(nam));
-    if (grp == 0) rb_raise(rb_eArgError, &quot;can&#39;t find group for %s&quot;, RSTRING_PTR(nam));
+    if (grp == 0) rb_raise(rb_eArgError, &quot;can&#39;t find group for %&quot;PRIsVALUE, nam);
     return setup_group(grp);
 #else
     return Qnil;
@@ -4231,7 +4233,7 @@ etc_getpwnam(VALUE obj, VALUE nam)
 
     SafeStringValue(nam);
     pwd = getpwnam(RSTRING_PTR(nam));
-    if (pwd == 0) rb_raise(rb_eArgError, &quot;can&#39;t find user for %s&quot;, RSTRING_PTR(nam));
+    if (pwd == 0) rb_raise(rb_eArgError, &quot;can&#39;t find user for %&quot;PRIsVALUE, nam);
     return setup_passwd(pwd);
 #else
     return Qnil;

@@ -669,6 +669,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -944,6 +946,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1816,8 +1820,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -3980,6 +3982,8 @@ rb_file_s_absolute_path(int argc, VALUE *argv)
           <p>Returns the last access time for the named file as a <a
 href="Time.html">Time</a> object).</p>
 
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
 <pre class="ruby"><span class="ruby-constant">File</span>.<span class="ruby-identifier">atime</span>(<span class="ruby-string">&quot;testfile&quot;</span>)   <span class="ruby-comment">#=&gt; Wed Apr 09 08:51:48 CDT 2003</span>
 </pre>
           
@@ -4107,6 +4111,8 @@ rb_file_s_basename(int argc, VALUE *argv)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file is a block device.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -4159,6 +4165,8 @@ rb_file_blockdev_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file is a character device.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -4323,6 +4331,8 @@ rb_file_s_chown(int argc, VALUE *argv)
           <p>Returns the change time for the named file (the time at which directory
 information about the file was changed, not the file itself).</p>
 
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
 <p>Note that on Windows (NTFS), returns creation time (birth time).</p>
 
 <pre class="ruby"><span class="ruby-constant">File</span>.<span class="ruby-identifier">ctime</span>(<span class="ruby-string">&quot;testfile&quot;</span>)   <span class="ruby-comment">#=&gt; Wed Apr 09 08:53:13 CDT 2003</span>
@@ -4421,6 +4431,8 @@ rb_file_s_unlink(VALUE klass, VALUE args)
           <p>Returns <code>true</code> if the named file is a directory, or a symlink
 that points at a directory, and <code>false</code> otherwise.</p>
 
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
 <pre>File.directory?(&quot;.&quot;)</pre>
           
           
@@ -4455,7 +4467,7 @@ rb_file_directory_p(VALUE obj, VALUE fname)
         
         <div class="method-heading">
           <span class="method-callseq">
-            dirname(file_name )  &rarr;  dir_name
+            dirname(file_name)  &rarr;  dir_name
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -4564,7 +4576,7 @@ rb_file_executable_real_p(VALUE obj, VALUE fname)
     rb_secure(2);
     FilePathValue(fname);
     fname = rb_str_encode_ospath(fname);
-    if (access_internal(StringValueCStr(fname), X_OK) &lt; 0) return Qfalse;
+    if (access(StringValueCStr(fname), X_OK) &lt; 0) return Qfalse;
     return Qtrue;
 }</pre>
           </div><!-- executable_real-3F-source -->
@@ -4601,6 +4613,10 @@ rb_file_executable_real_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Return <code>true</code> if the named file exists.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
+<p>“file exists” means that stat() or fstat() system call is successful.</p>
           
           
 
@@ -4648,6 +4664,10 @@ rb_file_exist_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Return <code>true</code> if the named file exists.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
+<p>“file exists” means that stat() or fstat() system call is successful.</p>
           
           
 
@@ -4807,6 +4827,8 @@ rb_file_s_extname(VALUE klass, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file exists and is a regular file.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -4904,7 +4926,7 @@ same glob pattern and flags are used by <code>Dir::glob</code>.</p>
 
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\?&#39;</span>,   <span class="ruby-string">&#39;?&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # escaped wildcard becomes ordinary</span>
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;a&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # escaped ordinary remains ordinary</span>
-<span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;\a&#39;</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_NOESCAPE</span>)  <span class="ruby-comment">#=&gt; true  # FNM_NOESACPE makes &#39;\&#39; ordinary</span>
+<span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;\a&#39;</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_NOESCAPE</span>)  <span class="ruby-comment">#=&gt; true  # FNM_NOESCAPE makes &#39;\&#39; ordinary</span>
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;[\?]&#39;</span>, <span class="ruby-string">&#39;?&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # can escape inside bracket expression</span>
 
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;*&#39;</span>,   <span class="ruby-string">&#39;.profile&#39;</span>)                      <span class="ruby-comment">#=&gt; false # wildcard doesn&#39;t match leading</span>
@@ -4961,8 +4983,9 @@ file_s_fnmatch(int argc, VALUE *argv, VALUE obj)
             return Qtrue;
     }
     else {
-        if (fnmatch(RSTRING_PTR(pattern), rb_enc_get(pattern), RSTRING_PTR(path),
-                    flags) == 0)
+        rb_encoding *enc = rb_enc_compatible(pattern, path);
+        if (!enc) return Qfalse;
+        if (fnmatch(RSTRING_PTR(pattern), enc, RSTRING_PTR(path), flags) == 0)
             return Qtrue;
     }
     RB_GC_GUARD(pattern);
@@ -5052,7 +5075,7 @@ same glob pattern and flags are used by <code>Dir::glob</code>.</p>
 
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\?&#39;</span>,   <span class="ruby-string">&#39;?&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # escaped wildcard becomes ordinary</span>
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;a&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # escaped ordinary remains ordinary</span>
-<span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;\a&#39;</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_NOESCAPE</span>)  <span class="ruby-comment">#=&gt; true  # FNM_NOESACPE makes &#39;\&#39; ordinary</span>
+<span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;\a&#39;</span>,   <span class="ruby-string">&#39;\a&#39;</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_NOESCAPE</span>)  <span class="ruby-comment">#=&gt; true  # FNM_NOESCAPE makes &#39;\&#39; ordinary</span>
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;[\?]&#39;</span>, <span class="ruby-string">&#39;?&#39;</span>)                       <span class="ruby-comment">#=&gt; true  # can escape inside bracket expression</span>
 
 <span class="ruby-constant">File</span>.<span class="ruby-identifier">fnmatch</span>(<span class="ruby-string">&#39;*&#39;</span>,   <span class="ruby-string">&#39;.profile&#39;</span>)                      <span class="ruby-comment">#=&gt; false # wildcard doesn&#39;t match leading</span>
@@ -5109,8 +5132,9 @@ file_s_fnmatch(int argc, VALUE *argv, VALUE obj)
             return Qtrue;
     }
     else {
-        if (fnmatch(RSTRING_PTR(pattern), rb_enc_get(pattern), RSTRING_PTR(path),
-                    flags) == 0)
+        rb_encoding *enc = rb_enc_compatible(pattern, path);
+        if (!enc) return Qfalse;
+        if (fnmatch(RSTRING_PTR(pattern), enc, RSTRING_PTR(path), flags) == 0)
             return Qtrue;
     }
     RB_GC_GUARD(pattern);
@@ -5202,6 +5226,8 @@ rb_file_s_ftype(VALUE klass, VALUE fname)
           <p>Returns <code>true</code> if the named file exists and the effective group
 id of the calling process is the owner of the file. Returns
 <code>false</code> on Windows.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -5245,6 +5271,9 @@ rb_file_grpowned_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named files are identical.</p>
+
+<p><em>file_1</em> and <em>file_2</em> can be an <a href="IO.html">IO</a>
+object.</p>
 
 <pre class="ruby"><span class="ruby-identifier">open</span>(<span class="ruby-string">&quot;a&quot;</span>, <span class="ruby-string">&quot;w&quot;</span>) {}
 <span class="ruby-identifier">p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">identical?</span>(<span class="ruby-string">&quot;a&quot;</span>, <span class="ruby-string">&quot;a&quot;</span>)      <span class="ruby-comment">#=&gt; true</span>
@@ -5594,6 +5623,8 @@ rb_file_s_lstat(VALUE klass, VALUE fname)
           <p>Returns the modification time for the named file as a <a
 href="Time.html">Time</a> object.</p>
 
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
 <pre class="ruby"><span class="ruby-constant">File</span>.<span class="ruby-identifier">mtime</span>(<span class="ruby-string">&quot;testfile&quot;</span>)   <span class="ruby-comment">#=&gt; Tue Apr 08 12:58:04 CDT 2003</span>
 </pre>
           
@@ -5787,6 +5818,8 @@ rb_io_s_open(int argc, VALUE *argv, VALUE klass)
           
           <p>Returns <code>true</code> if the named file exists and the effective used
 id of the calling process is the owner of the file.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -5869,6 +5902,8 @@ rb_file_s_path(VALUE klass, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file is a pipe.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -5971,7 +6006,7 @@ rb_file_readable_real_p(VALUE obj, VALUE fname)
     rb_secure(2);
     FilePathValue(fname);
     fname = rb_str_encode_ospath(fname);
-    if (access_internal(StringValueCStr(fname), R_OK) &lt; 0) return Qfalse;
+    if (access(StringValueCStr(fname), R_OK) &lt; 0) return Qfalse;
     return Qtrue;
 }</pre>
           </div><!-- readable_real-3F-source -->
@@ -6285,6 +6320,8 @@ rb_file_suid_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Returns the size of <code>file_name</code>.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -6329,6 +6366,8 @@ rb_file_s_size(VALUE klass, VALUE fname)
           
           <p>Returns <code>nil</code> if <code>file_name</code> doesn&#39;t exist or has
 zero size, the size of the file otherwise.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -6370,6 +6409,8 @@ rb_file_size_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file is a socket.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -6912,6 +6953,8 @@ representing the file permission bits of <em>file_name</em>. Returns
 <code>nil</code> otherwise. The meaning of the bits is platform dependent;
 on Unix systems, see <code>stat(2)</code>.</p>
 
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
+
 <pre class="ruby"><span class="ruby-constant">File</span>.<span class="ruby-identifier">world_readable?</span>(<span class="ruby-string">&quot;/etc/passwd&quot;</span>)           <span class="ruby-comment">#=&gt; 420</span>
 <span class="ruby-identifier">m</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">world_readable?</span>(<span class="ruby-string">&quot;/etc/passwd&quot;</span>)
 <span class="ruby-identifier">sprintf</span>(<span class="ruby-string">&quot;%o&quot;</span>, <span class="ruby-identifier">m</span>)                              <span class="ruby-comment">#=&gt; &quot;644&quot;</span>
@@ -6964,6 +7007,8 @@ rb_file_world_readable_p(VALUE obj, VALUE fname)
 representing the file permission bits of <em>file_name</em>. Returns
 <code>nil</code> otherwise. The meaning of the bits is platform dependent;
 on Unix systems, see <code>stat(2)</code>.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
 
 <pre class="ruby"><span class="ruby-constant">File</span>.<span class="ruby-identifier">world_writable?</span>(<span class="ruby-string">&quot;/tmp&quot;</span>)                  <span class="ruby-comment">#=&gt; 511</span>
 <span class="ruby-identifier">m</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">world_writable?</span>(<span class="ruby-string">&quot;/tmp&quot;</span>)
@@ -7068,7 +7113,7 @@ rb_file_writable_real_p(VALUE obj, VALUE fname)
     rb_secure(2);
     FilePathValue(fname);
     fname = rb_str_encode_ospath(fname);
-    if (access_internal(StringValueCStr(fname), W_OK) &lt; 0) return Qfalse;
+    if (access(StringValueCStr(fname), W_OK) &lt; 0) return Qfalse;
     return Qtrue;
 }</pre>
           </div><!-- writable_real-3F-source -->
@@ -7098,6 +7143,8 @@ rb_file_writable_real_p(VALUE obj, VALUE fname)
         <div class="method-description">
           
           <p>Returns <code>true</code> if the named file exists and has a zero size.</p>
+
+<p><em>file_name</em> can be an <a href="IO.html">IO</a> object.</p>
           
           
 
@@ -7360,7 +7407,7 @@ rb_file_ctime(VALUE obj)
         
         <div class="method-heading">
           <span class="method-callseq">
-            flock (locking_constant )&rarr; 0 or false
+            flock(locking_constant) &rarr; 0 or false
           </span>
           
           <span class="method-click-advice">click to toggle source</span>

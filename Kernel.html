@@ -683,6 +683,8 @@
   
     <li><a href="./FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="./FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="./FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="./FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -958,6 +960,8 @@
     <li><a href="./Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="./Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="./OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="./Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1830,8 +1834,6 @@
     <li><a href="./Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="./Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="./Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="./Psych/Error.html">Psych::Error</a>
   
@@ -4280,6 +4282,28 @@ BigDecimal_global_new(int argc, VALUE *argv, VALUE self)
 <pre class="ruby"><span class="ruby-constant">Complex</span>(<span class="ruby-value">1</span>, <span class="ruby-value">2</span>)    <span class="ruby-comment">#=&gt; (1+2i)</span>
 <span class="ruby-constant">Complex</span>(<span class="ruby-string">&#39;1+2i&#39;</span>)  <span class="ruby-comment">#=&gt; (1+2i)</span>
 </pre>
+
+<p>Syntax of string form:</p>
+
+<pre>string form = extra spaces , complex , extra spaces ;
+complex = real part | [ sign ] , imaginary part
+        | real part , sign , imaginary part
+        | rational , &quot;@&quot; , rational ;
+real part = rational ;
+imaginary part = imaginary unit | unsigned rational , imaginary unit ;
+rational = [ sign ] , unsigned rational ;
+unsigned rational = numerator | numerator , &quot;/&quot; , denominator ;
+numerator = integer part | fractional part | integer part , fractional part ;
+denominator = digits ;
+integer part = digits ;
+fractional part = &quot;.&quot; , digits , [ ( &quot;e&quot; | &quot;E&quot; ) , [ sign ] , digits ] ;
+imaginary unit = &quot;i&quot; | &quot;I&quot; | &quot;j&quot; | &quot;J&quot; ;
+sign = &quot;-&quot; | &quot;+&quot; ;
+digits = digit , { digit | &quot;_&quot; , digit };
+digit = &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | &quot;8&quot; | &quot;9&quot; ;
+extra spaces = ? \s* ? ;</pre>
+
+<p>See <a href="String.html#method-i-to_c">String#to_c</a>.</p>
           
           
 
@@ -4508,6 +4532,22 @@ path_f_pathname(VALUE self, VALUE str)
 <pre class="ruby"><span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">2</span>)   <span class="ruby-comment">#=&gt; (1/2)</span>
 <span class="ruby-constant">Rational</span>(<span class="ruby-string">&#39;1/2&#39;</span>)  <span class="ruby-comment">#=&gt; (1/2)</span>
 </pre>
+
+<p>Syntax of string form:</p>
+
+<pre>string form = extra spaces , rational , extra spaces ;
+rational = [ sign ] , unsigned rational ;
+unsigned rational = numerator | numerator , &quot;/&quot; , denominator ;
+numerator = integer part | fractional part | integer part , fractional part ;
+denominator = digits ;
+integer part = digits ;
+fractional part = &quot;.&quot; , digits , [ ( &quot;e&quot; | &quot;E&quot; ) , [ sign ] , digits ] ;
+sign = &quot;-&quot; | &quot;+&quot; ;
+digits = digit , { digit | &quot;_&quot; , digit } ;
+digit = &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | &quot;8&quot; | &quot;9&quot; ;
+extra spaces = ? \s* ? ;</pre>
+
+<p>See <a href="String.html#method-i-to_r">String#to_r</a>.</p>
           
           
 
@@ -6539,10 +6579,10 @@ when called.</p>
 
           
           <div class="method-source-code" id="lambda-source">
-            <pre>static VALUE
-proc_lambda(void)
+            <pre>VALUE
+rb_block_lambda(void)
 {
-    return rb_block_lambda();
+    return proc_new(rb_cProc, TRUE);
 }</pre>
           </div><!-- lambda-source -->
           
@@ -8751,7 +8791,7 @@ rb_f_system(int argc, VALUE *argv)
         
         <div class="method-heading">
           <span class="method-callseq">
-            test(int_cmd, file1 [, file2] ) &rarr; obj
+            test(cmd, file1 [, file2] ) &rarr; obj
           </span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -8762,13 +8802,13 @@ rb_f_system(int argc, VALUE *argv)
 
         <div class="method-description">
           
-          <p>Uses the integer <code>int_cmd</code> to perform various tests on
+          <p>Uses the integer <code>cmd</code> to perform various tests on
 <code>file1</code> (first table below) or on <code>file1</code> and
 <code>file2</code> (second table).</p>
 
 <p><a href="File.html">File</a> tests on a single file:</p>
 
-<pre>Test   Returns   Meaning
+<pre>Cmd    Returns   Meaning
 &quot;A&quot;  | Time    | Last access time for file1
 &quot;b&quot;  | boolean | True if file1 is a block device
 &quot;c&quot;  | boolean | True if file1 is a character device
@@ -9980,13 +10020,15 @@ href="Kernel.html#method-i-scanf">#scanf</a>.</p>
 
         <div class="method-description">
           
-          
+          <p>An alias for <a
+href="Psych.html#method-c-dump_stream">Psych.dump_stream</a> meant to be
+used with IRB.</p>
           
           
 
           
           <div class="method-source-code" id="y-source">
-            <pre><span class="ruby-comment"># File ext/psych/lib/psych/y.rb, line 2</span>
+            <pre><span class="ruby-comment"># File ext/psych/lib/psych/y.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">y</span> <span class="ruby-operator">*</span><span class="ruby-identifier">objects</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">dump_stream</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">objects</span>)
 <span class="ruby-keyword">end</span></pre>

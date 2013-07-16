@@ -539,6 +539,8 @@
   
     <li><a href="../FileUtils/DryRun.html">FileUtils::DryRun</a>
   
+    <li><a href="../FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+  
     <li><a href="../FileUtils/NoWrite.html">FileUtils::NoWrite</a>
   
     <li><a href="../FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
@@ -814,6 +816,8 @@
     <li><a href="../Gem/Requirement/BadRequirementError.html">Gem::Requirement::BadRequirementError</a>
   
     <li><a href="../Gem/Security.html">Gem::Security</a>
+  
+    <li><a href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>
   
     <li><a href="../Gem/Security/Exception.html">Gem::Security::Exception</a>
   
@@ -1686,8 +1690,6 @@
     <li><a href="../Psych/BadAlias.html">Psych::BadAlias</a>
   
     <li><a href="../Psych/Coder.html">Psych::Coder</a>
-  
-    <li><a href="../Psych/EngineManager.html">Psych::EngineManager</a>
   
     <li><a href="../Psych/Error.html">Psych::Error</a>
   
@@ -4198,7 +4200,7 @@ key when signing a gem</p>
 
           
           <div class="method-source-code" id="alt_name_or_x509_entry-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 372</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 392</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">alt_name_or_x509_entry</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">x509_entry</span>
   <span class="ruby-identifier">alt_name</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">extension</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">extension</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">==</span> <span class="ruby-node">&quot;#{x509_entry}AltName&quot;</span>
@@ -4241,7 +4243,7 @@ key when signing a gem</p>
 
           
           <div class="method-source-code" id="create_cert-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 388</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 408</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_cert</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>,
                      <span class="ruby-identifier">serial</span> = <span class="ruby-value">1</span>
   <span class="ruby-identifier">cert</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>
@@ -4294,7 +4296,7 @@ the given <code>extensions</code> for the <code>key</code>.</p>
 
           
           <div class="method-source-code" id="create_cert_email-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 415</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 435</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_cert_email</span> <span class="ruby-identifier">email</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>
   <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">email_to_name</span> <span class="ruby-identifier">email</span>
 
@@ -4333,7 +4335,7 @@ the given <code>extensions</code> for the <code>key</code>.</p>
 
           
           <div class="method-source-code" id="create_cert_self_signed-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 427</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 447</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_cert_self_signed</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>,
                                  <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>, <span class="ruby-identifier">serial</span> = <span class="ruby-value">1</span>
   <span class="ruby-identifier">certificate</span> = <span class="ruby-identifier">create_cert</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span>, <span class="ruby-identifier">extensions</span>
@@ -4370,7 +4372,7 @@ the given <code>extensions</code> for the <code>key</code>.</p>
 
           
           <div class="method-source-code" id="create_key-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 438</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 458</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_key</span> <span class="ruby-identifier">length</span> = <span class="ruby-constant">KEY_LENGTH</span>, <span class="ruby-identifier">algorithm</span> = <span class="ruby-constant">KEY_ALGORITHM</span>
   <span class="ruby-identifier">algorithm</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">length</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4404,7 +4406,7 @@ href="../OpenSSL/X509/Name.html">OpenSSL::X509::Name</a></p>
 
           
           <div class="method-source-code" id="email_to_name-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 445</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 465</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">email_to_name</span> <span class="ruby-identifier">email_address</span>
   <span class="ruby-identifier">email_address</span> = <span class="ruby-identifier">email_address</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[^\w@.-]+/</span>, <span class="ruby-string">&#39;_&#39;</span>)
 
@@ -4446,7 +4448,7 @@ keys match and the expired certificate was self-signed.</p>
 
           
           <div class="method-source-code" id="re_sign-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 463</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 483</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">re_sign</span> <span class="ruby-identifier">expired_certificate</span>, <span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>,
                  <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>,
@@ -4498,7 +4500,7 @@ keys match and the expired certificate was self-signed.</p>
 
           
           <div class="method-source-code" id="reset-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 489</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 509</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@trust_dir</span> = <span class="ruby-keyword">nil</span>
 <span class="ruby-keyword">end</span></pre>
@@ -4526,9 +4528,9 @@ keys match and the expired certificate was self-signed.</p>
         <div class="method-description">
           
           <p>Sign the public key from <code>certificate</code> with the
-<code>signing_key</code> and <code>signing_cert</code>, using the
-Gem::Security::DIGEST_ALGORITHM.  Uses the default certificate validity
-range and extensions.</p>
+<code>signing_key</code> and <code>signing_cert</code>, using the <a
+href="../OpenSSL/Digest/SHA1.html">Gem::Security::DIGEST_ALGORITHM</a>. 
+Uses the default certificate validity range and extensions.</p>
 
 <p>Returns the newly signed certificate.</p>
           
@@ -4536,7 +4538,7 @@ range and extensions.</p>
 
           
           <div class="method-source-code" id="sign-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 500</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 520</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">sign</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">signing_key</span>, <span class="ruby-identifier">signing_cert</span>,
               <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>, <span class="ruby-identifier">serial</span> = <span class="ruby-value">1</span>
   <span class="ruby-identifier">signee_subject</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">subject</span>
@@ -4591,7 +4593,7 @@ which wraps the directory where trusted certificates live.</p>
 
           
           <div class="method-source-code" id="trust_dir-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 529</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 549</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">trust_dir</span>
   <span class="ruby-keyword">return</span> <span class="ruby-ivar">@trust_dir</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@trust_dir</span>
 
@@ -4629,7 +4631,7 @@ href="Security/TrustDir.html">Gem::Security::TrustDir</a>.</p>
 
           
           <div class="method-source-code" id="trusted_certificates-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 540</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 560</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">trusted_certificates</span> <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
   <span class="ruby-identifier">trust_dir</span>.<span class="ruby-identifier">each_certificate</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -4663,7 +4665,7 @@ href="Security/TrustDir.html">Gem::Security::TrustDir</a>.</p>
 
           
           <div class="method-source-code" id="write-source">
-            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 548</span>
+            <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 568</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">pemmable</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">permissions</span> = <span class="ruby-value">0600</span>
   <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span> <span class="ruby-identifier">path</span>
 
